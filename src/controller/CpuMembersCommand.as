@@ -1,0 +1,1042 @@
+package controller
+{
+	
+	
+	import controller.FloxCommand;
+	import controller.FloxInterface;
+	
+	import data.Config;
+	import data.DataContainer;
+	
+	import events.BattleEvent;
+	
+	import model.BattleData;
+	import model.SaveGame;
+	
+	import utils.DebugTrace;
+	import utils.ViewsContainer;
+	
+	import views.BattleScene;
+	import views.Member;
+	public class CpuMembersCommand implements CpuMembersInterface
+	{
+		// teams
+		private var teamsno:uint=10;
+		// maxsium members in a team
+		private var mem_perteam:uint=8;
+		private var flox:FloxInterface=new FloxCommand();
+		//main team  properties;
+		private var main_team:Array=new Array();
+		private var backup_team:Array=new Array();
+		private var team:Array;
+		private static var cputeam:Array=new Array();
+		//private var cpu_power:Array;
+		//private var memberscom:MembersInterface=new MemebersCommand();
+		private var combinTeam:String="t0";
+		private var cpuIndex:Number=0;
+		private var gems_req:Number=0;
+		//Attack
+		private var atkPers:Array=[15,15,40,75,50];
+		private var atklist:Array=["f3,a3,w3,e3","f2,e2","f1,a1,w1,e1","f0,a1,w1,e0","a0,w0"];
+		//Healing
+		//SE current lv_gems requirement
+		private var se_lv:String="0";
+		private var healgems:Object={"0_1":0,"0_2":0,"0_3":8,"0_5":8,
+			"1_1":0,"1_2":20,"1_3":12,"1_5":4,
+			"2_1":10,"2_2":25,"2_3":8,"2_5":2,
+			"3_1":30,"3_2":25,"3_3":8,"3_5":1}
+		public static function set cputeamMember(members:Array):void
+		{
+			//cpu member
+			cputeam=members;
+		}
+		public static function get cputeamMember():Array
+		{
+			
+			return cputeam;
+		}
+		public function nextRound():void
+		{
+			gems_req=0;
+			
+		}
+		public  function setupCPU():void
+		{
+			
+			var cpu_teams:Object=flox.getSaveData("cpu_teams");
+			var elements:Array=Config.elements;
+			//setup  se,id,element
+			for(var i:uint=0;i<teamsno;i++)
+			{
+				
+				for(var j:uint=0;j<mem_perteam;j++)
+				{
+					
+					var member:Object=new Object();
+					var id:String="t"+i+"_"+j;
+					member.id=id;
+					member.from="cpu";
+					member.target="";
+					member.se=cpu_teams[id].se;
+					member.seMax=cpu_teams[id].seMax;
+					member.ele=elements[uint(Math.random()*elements.length)];
+					member.skillID="";
+					cpu_teams[id]=member;
+					
+				}
+				//for
+				
+			}
+			//for
+			var savegame:SaveGame=FloxCommand.savegame;
+			savegame.cpu_teams=cpu_teams;
+			FloxCommand.savegame=savegame;
+			
+		}
+		public  function setupBattleTeam():void
+		{
+			var membersEffect:Object=DataContainer.MembersEffect;
+			var date:String=flox.getSaveData("date").split(".")[1];
+			var month:String=flox.getSaveData("date").split(".")[2];
+			//DebugTrace.msg("CpuMembersCommand. setupBattleTeam month:"+month+", date:"+date); 
+			cpuIndex=Config.team_schedule.indexOf(month+"_"+date)%teamsno;
+			//DebugTrace.msg("CpuMembersCommand. setupBattleTeam cpuIndex:"+cpuIndex); 
+			DataContainer.setCputID=cpuIndex;
+			var teams:Object=flox.getSaveData("cpu_teams");
+			team=new Array();
+			for(var t:uint=0;t<mem_perteam;t++)
+			{
+				var id:String="t"+cpuIndex+"_"+t;
+				if(teams[id].se>0)
+				{
+					teams[id].id=id;
+					teams[id].combat=0;
+					team.push(teams[id]);
+				}
+				//if
+			}
+			//for
+			main_team.push(team[0]);
+			
+			if(main_team[0].id.indexOf(combinTeam)!=-1)
+			{
+				main_team.push(team[1]);
+				
+			}
+			var _backup_team:Array=team.splice(main_team.length);
+			backup_team=_backup_team;
+			//backup_team=team.concat(_backup_team);
+			var mamerMax:Number=5-main_team.length;
+			
+			for(var i:uint=0;i<mamerMax;i++)
+			{
+				var index:Number=Math.floor(Math.random()*backup_team.length);
+				main_team.push(backup_team[index]);
+				var __backup_team:Array=backup_team.splice(index);
+				__backup_team.shift();
+				var new_backup_team:Array=backup_team.concat(__backup_team);
+				backup_team=new_backup_team;
+			}
+			//for
+			var _main_team:Array=new Array();
+			for(var m:uint=0;m<5;m++)
+			{
+				index=Math.floor(Math.random()*main_team.length);	
+				_main_team.push(main_team[index]);
+				var main_team1:Array=main_team.splice(index);
+				main_team1.shift();
+				var new_main_team:Array=main_team.concat(main_team1);
+				main_team=new_main_team;
+			}
+			//for
+			main_team=_main_team;
+			for(var j:uint=0;j<backup_team.length;j++)
+			{
+				DebugTrace.msg("CpuMembersCommand.setupBattleTeam backup_team:"+JSON.stringify(backup_team[j]));
+			}
+			//for
+			//main team's sel from savegame
+			for(var k:uint=0;k<main_team.length;k++)
+			{
+				DebugTrace.msg("CpuMembersCommand.setupBattleTeam main_team:"+JSON.stringify(main_team[k]));
+				membersEffect[main_team[k].id]="";
+			}
+			//for
+			DataContainer.MembersEffect=membersEffect;
+		}
+		public function commanderSkill():void
+		{
+			
+			var cupsys:Object=flox.getSyetemData("cpu_teams");
+			var comsItems:Object=flox.getSyetemData("commander_items");
+			
+			for(var i:uint=0;i<cputeam.length;i++)
+			{
+				var member:Member=cputeam[i];
+				var id:String=member.name;
+				var skillID:String="";
+				if(id.split("_")[1]=="0")
+				{
+					//commander
+					var formaiton:Boolean=commanderChangeFromation();
+					DebugTrace.msg("CpuMembersCommand.commanderSkill formaiton="+formaiton);
+					var skill:Object=new Object();
+					if(!formaiton)
+					{
+						var batttlecry:Boolean=commanderBattleCry();
+						//batttlecry=true;
+						DebugTrace.msg("CpuMembersCommand.commanderSkill batttlecry="+batttlecry);
+						if(batttlecry)
+						{
+							//use  battle cry
+							skill=comsItems.com1;
+							skill.skillID="com1";
+						}
+						//if
+					}
+					else
+					{
+						//use change formatoin
+						
+						skill=comsItems.com0;
+						skill.skillID="com0";
+						
+					}
+					//if
+					if(formaiton || batttlecry)
+					{
+						var power:Object=member.power
+						for(var j:String in skill)
+						{
+							power[j]=skill[j];
+						}
+						//for
+						member.updatePower(power);
+						if(formaiton)
+						{
+							var itemid:String="com0";
+						}
+						//if
+						if(batttlecry)
+						{
+							itemid="com1";
+						}
+						//if
+						var battleEvt:BattleEvent=BattleScene.battleEvt;
+						battleEvt.itemid=itemid;
+						battleEvt.commander=member;
+						battleEvt.onCPUCommaderItems();
+						DebugTrace.msg("CpuMembersCommand.commanderSkill member:"+member.name);
+						//DebugTrace.msg("CpuMembersCommand.commanderSkill power:"+JSON.stringify(power));
+					}
+					//if
+					break
+				}
+				//if
+				
+			}
+			//for
+			
+		}
+		private var sIndex:Number=0;
+		private var skillIDs:Array;
+		private var match:Boolean=false;
+		private var atk_index:Number=0;
+		 
+		private var member_id:String;
+		private function getMemberSkills():void
+		{
+			skillIDs=new Array();
+			member_id=cputeam[atk_index].name;
+			
+			var skillID:String=cupsys[member_id].skill;
+			if(skillID.indexOf(",")!=-1)
+			{
+				skillIDs=skillID.split(",");
+			}
+			else
+			{
+				skillIDs.push(skillID);
+			}
+			//if
+		}
+		private var  atkskills:Array;
+		private  function checkSkillChance():void
+		{
+			//skill chance 
+		
+			atk_index=0;	
+			getMemberSkills();
+			DebugTrace.msg("CpuMembersCommand.checkSkillChance atk_index="+atk_index+" ; gems_req="+gems_req+" ; sIndex="+sIndex);
+			var atkper:Number=atkPers[sIndex];
+			var ran:Number=Math.floor(Math.random()*100);
+			DebugTrace.msg("CpuMembersCommand.checkSkillChance ran="+ran+" <-> atkper="+atkper);
+			
+			var squskill:Array=new Array();
+			atkskills=atklist[sIndex].split(",");	
+			var battledata:BattleData=new BattleData();
+			atkskills=battledata.shuffleHandle(atkskills);
+		
+			DebugTrace.msg("CpuMembersCommand.checkSkillChance skillIDs="+skillIDs);
+			DebugTrace.msg("CpuMembersCommand.checkSkillChance atkskills="+atkskills);
+			
+			if(ran<atkper)
+			{
+				//check match
+			 
+				checkSkillMatch();
+				
+			}
+			else
+			{
+				//no chance , check next skill
+				DebugTrace.msg("CpuMembersCommand.checkSkillChance : No Chance --> Next Skill ; sIndex="+sIndex);
+				
+				if(sIndex==atkPers.length-1)
+				{
+					//no any skills chance
+					DebugTrace.msg("CpuMembersCommand.checkSkillChance : No Any Chance Check around gems_req="+gems_req);
+					gems_req++;
+				}
+				//if
+			 
+				checkNextSkillChance();
+				 
+				
+			}
+			//if
+			
+		}
+		private function checkSkillMatch():void
+		{
+			//member match what skill it's
+			DebugTrace.msg("CpuMembersCommand.checkSkillMatch atk_index="+atk_index+" ; gems_req="+gems_req+" ; sIndex="+sIndex);
+			match=false;
+			var skillID:String="";
+			var member:Member=getMember(member_id);
+			DebugTrace.msg("CpuMembersCommand.checkSkillMatch: create cputeam["+member_id+"].power ="+JSON.stringify(member.power));
+			for(var i:uint=0;i<atkskills.length;i++)
+			{
+				//check each atkskills
+				skillID=atkskills[i];
+				if(skillIDs.indexOf(skillID)!=-1)
+				{
+					//skill match
+					
+					var current_req:Number=Number(skillsSys[skillID].jewel.split("|")[0]);
+					var _gems_req:Number=gems_req+current_req;
+					if(_gems_req<7 && member.power.skillID=="")
+					{
+						
+						//gems are enough && not set up skill yet --> set up current skill , check next skill
+						match=true;
+						gems_req+=current_req;
+						 
+						
+						createPower(skillID,member);
+						
+						checkNextSkillChance();
+						break
+					}
+					//if
+				}
+				//if
+			}
+			//for
+			DebugTrace.msg("CpuMembersCommand.checkSkillMatch: match="+match);
+			if(!match)
+			{
+				//current member didn't match skill	--> check next member;
+				
+				atk_index++;
+				if(atk_index<cputeam.length)
+				{
+					//check next member
+					getMemberSkills();
+					checkSkillMatch();
+				}
+				else
+				{
+					//check all members already  -->check next skill
+					 
+					checkNextSkillChance();
+				}
+				//if
+			}
+			//if
+			 
+			
+		}
+		private function checkNextSkillChance():void
+		{
+			sIndex++;
+			if(sIndex>atklist.length-1)
+			{
+				sIndex=0;
+			}
+			//if
+			if(gems_req<7)
+			{
+				checkSkillChance();	
+			}
+			//if
+		}
+		private var  cupsys:Object;
+		private var skillsSys:Object;
+		private function shuffleCpuTeam():void
+		{
+			//random cpu team
+			var battledata:BattleData=new BattleData();
+			var shuffle_cputeam:Array=new Array();
+			var _cputeam:Array=battledata.shuffleHandle(cputeam);
+			
+			for(var i:uint=0;i<_cputeam.length;i++)
+			{
+				if(_cputeam[i].name.split("_")[1]=="0")
+				{
+					shuffle_cputeam.push(_cputeam[i]);
+					_cputeam.splice(i,1)[0];
+					break
+				}
+				//if
+			}
+			//for
+			for(var j:uint=0;j<_cputeam.length;j++)
+			{
+				shuffle_cputeam.push(_cputeam[j])
+			}
+			//for	
+			cputeamMember=shuffle_cputeam;
+			MemebersCommand.cpuTeam=shuffle_cputeam;
+			
+		}
+		public function setupSkillCard():void
+		{
+			sIndex=0;
+			atk_index=0;
+			cupsys=flox.getSyetemData("cpu_teams");
+			//var teams:Object=flox.getSaveData("cpu_teams");
+			skillsSys=flox.getSyetemData("skillsys");
+			 
+			shuffleCpuTeam();
+			checkSkillChance();
+			
+			DebugTrace.msg("CpuMembersCommand.setupSkillCard match="+match);
+			
+			 
+		}
+		private function createPower(skillID:String,member:Member):void
+		{
+			var power:Object=member.power;
+			var skillsSys:Object=flox.getSyetemData("skillsys");
+			var battledata:BattleData=new BattleData();
+			var skill:Object=skillsSys[skillID];
+			power.skillID=skillID;
+			if(skillID!="")
+			{
+				for(var j:String in skill)
+				{
+					power[j]=skill[j];
+				}
+				//for
+				var skillpower:Object=battledata.skillCard(member,skill);
+				for(var m:String in skillpower)
+				{
+					power[m]=skillpower[m];			
+				}
+				//for
+			}
+			//if
+			//power.id=id;
+			power.target="";
+			//power.speeded="false";
+			power.shielded="false";
+			//power.reincarnation="false";
+			power.seMax=power.seMax;
+			
+			if(!power.speeded)
+			{
+				power.speeded="false";
+			}
+			//if
+			if(power.status!="dizzy")
+			{
+				member.updatePower(power);
+			}
+			//if
+			DebugTrace.msg("CpuMembersCommand.setupSkillCard id:"+member.name+".power:"+JSON.stringify(power));
+			
+			
+			
+		}
+		private function delCombinSkill(index:Number,skills:Array):Array
+		{
+			var _skills:Array=skills.splice(index);
+			_skills.shift();
+			var new_skills:Array=skills.concat(_skills);
+			return new_skills;
+		}
+		private function getMember(id:String):Member
+		{
+			var member:Member
+			for(var i:uint=0;i<cputeam.length;i++)
+			{
+				if(cputeam[i].name==id)
+				{
+					member=cputeam[i];
+					break
+				}
+				//if
+			}
+			//for
+			
+			return member
+		}
+		private function commanderChangeFromation():Boolean
+		{
+			var used:Array=new Array(0,10,30,70);
+			var formation:Boolean=false;
+			var front_died:Number=0;
+			var back_died:Number=0;
+			for(var i:uint=0;i<cputeam.length;i++)
+			{
+				var member:Member=cputeam[i];
+				if(member.power.comabat<3 && member.power.se==0)
+				{
+					//front row
+					front_died++;
+				}
+				//if
+				if(member.power.comabat>2 && member.power.se==0)
+				{
+					//back row
+					back_died++;
+				}
+				//if
+			}
+			//for
+			if(front_died>2 || back_died>2)
+			{
+				//only one row
+				formation=true;
+			}
+			else
+			{
+				var died:Number=front_died+back_died;
+				if(died>0 && died<4)
+				{
+					var used_per:Number=used[died];
+					var ran:Number=Math.floor(Math.random()*100);
+					if(ran<used_per)
+					{
+						formation=true;
+					}
+					
+				}
+				//if
+				
+			}
+			//if
+			
+			return formation;
+		}
+		private function commanderBattleCry():Boolean
+		{
+			var bc:Boolean=false;
+			var used:Array=new Array(10,15,35,75,100,100);
+			var effNum:Number=0;
+			var front:Boolean=false;
+			for(var i:uint=0;i<cputeam.length;i++)
+			{
+				var member:Member=cputeam[i];
+				var _id:String=member.name.split("_")[1]; 
+				if( _id=="0" && member.power.combat<3)
+				{
+					//front row
+					front=true;
+				}
+				//if
+				if(member.power.effect=="dizzy" || member.power.effect=="scared")
+				{
+					effNum++;
+				}
+				//if
+			}
+			//for
+			var ran:Number=Math.floor(Math.random()*100);
+			var used_per:Number=used[effNum];
+			if(front && ran<used_per)
+			{
+				bc=true;
+			}
+			
+			return bc;
+		}
+		private function getBossPower(boss_id):Object
+		{
+			var power:Object;
+			for(var i:uint=0;i<cputeam.length;i++)
+			{
+				var cpu_power:Object=cputeam[i].power;
+				if(cpu_power.id==boss_id)
+				{
+					power=cpu_power;
+					break
+				}
+				//if
+			}
+			//for
+			return power
+		}
+		public function healSetUp():void
+		{
+			//Healing set up;
+			for(var i:uint=0;i<2;i++)
+			{
+				healingHandle();
+			}
+			//for
+		}
+		private function healingHandle():void
+		{
+			
+			var skillsys:Object=flox.getSyetemData("skillsys"); 
+			var cpu_teamsSys:Object=flox.getSyetemData("cpu_teams"); 
+			var memberscom:MembersInterface=new MemebersCommand();
+			var assist:Boolean=false;
+			var boss_id:String="t"+cpuIndex+"_0";
+			var boss_power:Object=getBossPower(boss_id);
+			var boss_se:Number=boss_power.se;
+			var boss_seMax:Number=boss_power.seMax;
+			var seper:Number=Number((boss_se/boss_seMax).toFixed(2))*100;
+			var gems_reqs:Array=["5","3","2","1"];
+			;
+			if(seper<100 && seper<=80)
+			{
+				se_lv="0";
+			}
+			else if(seper<80 && seper<=55)
+			{
+				se_lv="1";
+			}
+			else if(seper<55 && seper<=30)
+			{
+				se_lv="2";
+			}
+			else if(seper<30 && seper<=0)
+			{
+				se_lv="3";
+			}
+			var attr_index:Number=0;
+			if(gems_req>=Number(gems_reqs[0]))
+			{
+				attr_index=1;
+			}		
+			for(var i:uint=attr_index ;i<gems_reqs.length;i++)
+			{
+				var skill_attr:String=se_lv+"_"+gems_reqs[i];
+				var skill_per:Number=Math.floor(Math.random()*100);
+				var pre:Number=healgems[skill_attr];
+				if(skill_per<pre)
+				{
+					assist=true;
+					break
+				}
+				//if
+				
+			}
+			//for
+			DebugTrace.msg("CpuMembersCommand.assistHandle assist="+assist+" ; skill_attr="+skill_attr);
+			if(assist)
+			{
+				//assist chance
+				var now_gems_req:Number=Number(skill_attr.split("_")[1]);
+				var _gems_req:Number=gems_req+now_gems_req;
+				
+				var jewel:String=now_gems_req+"|n";
+				var skillID:String="";
+				if(_gems_req<7)
+				{
+					for(var skill_id:String in skillsys)
+					{
+						var skill:Object=skillsys[skill_id];
+						if(skill_id.indexOf("n")!=-1 && skill.jewel==jewel)
+						{
+							//neutral
+							skillID=skill_id;
+							break
+						}
+						//if	 
+						
+					}
+					//for
+				}
+				//if
+				DebugTrace.msg("CpuMembersCommand.assistHandle skillID="+skillID);
+				
+				for(var k:uint=0;k<cputeam.length;k++)
+				{
+					var cpu_power:Object=cputeam[k].power;
+					if(cpu_power.se>0)
+					{
+						var skillstr:String=cpu_teamsSys[cpu_power.id].skill;
+						if(skillstr.indexOf(skillID)!=-1)
+						{
+							cpu_power.skillID=skillID;
+							var skills:Object=skillsys[skillID];
+							for(var m:String in skills)
+							{
+								cpu_power[m]=skills[m];
+							}
+							//for
+							cputeam[k].updatePower(cpu_power);
+							gems_req+=now_gems_req;
+							DebugTrace.msg("CpuMembersCommand.assistHandle cputeam["+k+"].power="+JSON.stringify(cpu_power));
+							break
+						}
+						//if
+					}
+					//if
+				}
+				//for
+			}
+			//if
+			
+		}
+		private var player_team:Array;
+		private function getMemberCombate(index:String):Number
+		{
+			var combat:Number=0;
+			var memberscom:MembersInterface=new MemebersCommand();
+			var cputeam:Array=memberscom.getCpuTeam();
+			for(var i:uint=0;i<cputeam.length;i++)
+			{
+				var id:String=cputeam[i].power.id;
+				var _id:String=id.split("_")[1];
+				if(_id==index)
+				{
+					
+					combat=cputeam[i].power.combat;
+					break
+				}
+				//if
+			}
+			//for
+			
+			return combat
+		}
+		private function getMemberID(combat:Number):String
+		{
+			var id:String="";	
+			var memberscom:MembersInterface=new MemebersCommand();
+			var cputeam:Array=memberscom.getCpuTeam();
+			for(var i:uint=0;i<cputeam.length;i++)
+			{
+				var cpu_power:Object=cputeam[i].power;
+				if(cpu_power.combat==combat)
+				{
+					id=cpu_power.id;
+					break
+				}
+			}
+			//for
+			return id
+		}
+		private function sumMemberSE(combatlist:Array):Number
+		{
+			var sum:Number=0;
+			var memberscom:MembersInterface=new MemebersCommand();
+			var cputeam:Array=memberscom.getCpuTeam();
+			var healarea:Array=new Array();
+			for(var m:uint=0;m<combatlist.length;m++)
+			{
+				for(var k:uint=0;k<cputeam.length;k++)
+				{
+					var cpu_power:Object=cputeam[k].power;
+					if(combatlist[m]==cpu_power.combat && cpu_power.se>0)
+					{
+						sum+=cpu_power.se;
+						
+					}
+					//if
+				}
+				//for
+			}
+			//for
+			
+			return sum
+		}
+		private function currentTeamCombat(combats:Array):Array
+		{
+			var _combats:Array=new Array();
+			
+			var memberscom:MembersInterface=new MemebersCommand();
+			var cputeam:Array=memberscom.getCpuTeam();
+			for(var i:uint=0;i<cputeam.length;i++)
+			{
+				var cpu_power:Object=cputeam[i].power
+				if(combats.indexOf(cpu_power.combat)!=-1)
+				{
+					_combats.push(cpu_power.combat);	
+				}
+				//if
+			}
+			//for
+			
+			return _combats
+		}
+		public function setupCpuTarget():void
+		{
+			
+			var battledata:BattleData=new BattleData();
+			player_team=battledata.checkPlayerTeam();
+			var survivePlayer:Array=BattleData.checkPlayerSurvive();
+			//var _targetlist:Array=new Array();
+			var memberscom:MembersInterface=new MemebersCommand();
+			var cputeam:Array=memberscom.getCpuTeam();
+			for(var i:uint=0;i<cputeam.length;i++)
+			{
+				var cpu_power:Object=cputeam[i].power;
+				if(cpu_power.skillID!="" && cpu_power.se>0)
+				{
+					DebugTrace.msg("CpuMembersCommand.setupCpuTarget cpu_power:"+JSON.stringify(cpu_power));
+					
+					var skillarea:Array=BattleData.rangeMatrix(cpu_power);
+					
+					DebugTrace.msg("CpuMembersCommand.setupCpuTarget skillarea:"+skillarea);
+					
+					var ran:Number=Math.floor(Math.random()*skillarea.length);
+					var combat:Number=skillarea[ran];
+					var target:String;
+					var targetlist:Array=new Array();
+					DebugTrace.msg("CpuMembersCommand.setupCpuTarget effect: "+cpu_power.effect);
+					
+					if(cpu_power.effect=="regenerate")
+					{
+						//n0
+						targetlist.push(Number(cpu_power.combat));
+						target=cpu_power.id;
+					}
+					else if(cpu_power.effect=="heal")
+					{
+						
+						//var _ran:Number=Math.floor(Math.random()*cputeam.length);
+						//var _cpu_power:Object=cputeam[_ran].power;
+						//targetlist.push(_cpu_power.id.split("_")[1]);
+						//target=_cpu_power.id;
+						
+						
+						var battleteam:Object=ViewsContainer.battleteam;
+						//var _cputeam:Array=battledata.checkCPUTeam();
+						//_cputeam.sortOn("se",Array.NUMERIC | Array.DESCENDING);
+						//var _cpu_power:Object=_cputeam[_cputeam.length-1];
+						//target=_cpu_power.id;
+						target=cpu_power.id;
+						//DebugTrace.msg("CpuMembersCommand.setupCpuTarget cpu_power: "+JSON.stringify(cpu_power));
+						
+						if(cpu_power.skillID=="n1")
+						{
+							//targetlist.push(Number(target.split("_")[1]));
+							targetlist.push(cpu_power.combat);
+							//target=cpu_power.id;
+						}
+							//if
+						else if(cpu_power.skillID=="n2")
+						{
+							var combatlist:Array;
+							var boss_combat:Number=getMemberCombate("0");
+							if(boss_combat==1 || boss_combat==4)
+							{
+								
+								var combatlist1:Array=battledata.praseTargetList(cpu_power,0);
+								var combats1:Array=currentTeamCombat(combatlist1);
+								var combatlist2:Array=battledata.praseTargetList(cpu_power,1);
+								var combats2:Array=currentTeamCombat(combatlist2);
+								var sum1:Number=sumMemberSE(combats1);
+								var sum2:Number=sumMemberSE(combats2);
+								combatlist=combats1;
+								if(sum2<sum1)
+								{
+									combatlist=combats2;
+								}
+								//if
+							}
+							else
+							{
+								combatlist=battledata.praseTargetList(cpu_power,boss_combat);
+								
+							}
+							//if
+							DebugTrace.msg("CpuMembersCommand.setupCpuTarget combatlist: "+combatlist);
+							var healarea:Array=new Array();
+							
+							for(var k:uint=0;k<cputeam.length;k++)
+							{
+								var _cpu_power:Object=cputeam[k].power;
+								if(combatlist.indexOf(_cpu_power.combat)!=-1 && _cpu_power.se>0)
+								{
+									//targetlist.push(Number(_cputeam[k].id.split("_")[1]));
+									healarea.push(_cpu_power.combat);
+									//healarea.push(battleteam[cputeam[k].id]);
+								}
+								//if
+							}
+							//for
+							
+							//DataContainer.healArea=healarea;
+							combat=healarea[Math.floor(Math.random()*healarea.length)];
+							targetlist=healarea;
+							target=getMemberID(combat);
+						}
+						//if
+					}
+					else
+					{
+						if(cpu_power.skillID=="n3")
+						{
+							target=cpu_power.id;
+						}
+						else
+						{
+							targetlist=battledata.praseTargetList(cpu_power,combat);
+							ran=Math.floor(Math.random()*targetlist.length);
+							
+							target="player"+targetlist[ran];
+						}
+						//if
+					}
+					//if
+					//------->target's combate
+					DebugTrace.msg("CpuMembersCommand.setupCpuTarget targetlist: "+targetlist);
+					DebugTrace.msg("CpuMembersCommand.setupCpuTarget target: "+target);
+					if(cpu_power.se==0)
+					{
+						targetlist=new Array();
+						target="";
+						
+					}
+					else
+					{
+						var player_team:Array=memberscom.getPlayerTeam();
+						if(cpu_power.skillID.indexOf("n")==-1)
+						{
+							//skill isn't neutral
+							var __targetlist:Array=new Array();
+							
+							
+							
+							for(var p:uint=0;p<player_team.length;p++)
+							{
+								var player_power:Object=player_team[p].power;
+								//DebugTrace.msg("CpuMembersCommand.setupCpuTarget player_team["+p+"].power="+JSON.stringify(player_power));
+								if(targetlist.indexOf(player_power.combat)!=-1)
+								{
+									
+									var _id:Number=Number(player_power.id.split("player").join(""));
+									
+									__targetlist.push(_id);
+								}
+								//if
+							}
+							//for
+							
+							ran=Math.floor(Math.random()*__targetlist.length);
+							targetlist=__targetlist;
+							
+							target="player"+targetlist[ran];
+						}
+						//if
+					}
+					//if
+					//--------->target's id
+					DebugTrace.msg("CpuMembersCommand.setupCpuTarget -- targetlist: "+targetlist);
+					DebugTrace.msg("CpuMembersCommand.setupCpuTarget -- target: "+target);
+					cpu_power.targetlist=targetlist;
+					cpu_power.target=target;
+					if(cpu_power.status!="dizzy")
+					{
+						cputeam[i].updatePower(cpu_power);
+					}
+					//if
+					DebugTrace.msg("CpuMembersCommand.setupCpuTarget cpu_power["+i+"]="+JSON.stringify(cpu_power));
+					
+					var cpuMemberEvt:BattleEvent=cputeam[i].memberEvt;
+					cpuMemberEvt.act="";
+					cpuMemberEvt.updateMemberAct();
+				}
+				//if can use skill && survive
+			}
+			//for
+			
+		}
+		
+		
+		private function searchSurviveTarget():Array
+		{
+			
+			var new_player_team:Array=new Array();
+			for(var i:uint=0;i<player_team.length;i++)
+			{
+				if(player_team[i].se>0)
+				{
+					//target survive
+					new_player_team.push(player_team[i]);
+				}
+				//if
+			}
+			//for
+			
+			return new_player_team;
+			
+		}
+		/*public function showupMember():void
+		{
+		cpu_team=new Array();
+		
+		for(var i:uint=0;i<main_team.length;i++)
+		{
+		
+		
+		//DebugTrace.msg("formation_info:"+formation_info);
+		//fake 
+		var boymc:MovieClip=new Boy();		 
+		cpu_team.push(boymc);
+		
+		
+		}
+		//cpu_team[0].visible=true;
+		//player_team[0].gotoAndStop("A_SPDragon");
+		
+		
+		}
+		public function getCpuTeam():Array
+		{
+		
+		return cpu_team;
+		}*/
+		public function getCpuMainTeam():Array
+		{
+			//DebugTrace.msg("CpuMembersCommand.getCpuMainTeam mainTeam="+main_team.length);
+			return main_team;
+		}
+		/*public function getCpuPower():Array
+		{
+		return cpu_power;
+		
+		}*/
+		/*public function overidePower(powers:Array):void
+		{
+		cpu_power=powers;
+		}*/
+		/*public function overideMainTeam(teams:Array):void
+		{
+		main_team=teams;
+		DataContainer.cpuMainTeam=main_team;
+		}*/
+		/*public function set cputeamMember(members:Array):void
+		{
+		cputeam=members;
+		}*/
+		
+	}
+}

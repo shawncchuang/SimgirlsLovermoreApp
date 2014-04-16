@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:921ae09ec5f7f55710f626101a0e1653:1/1$ -->
+<TextureAtlas imagePath="malefeatures.png">
+    <SubTexture name="features0" x="2" y="63" width="1" height="1" frameX="0" frameY="0" frameWidth="225" frameHeight="255"/>
+    <SubTexture name="features1" x="2" y="2" width="59" height="59" frameX="-80" frameY="-196" frameWidth="225" frameHeight="255"/>
+</TextureAtlas>

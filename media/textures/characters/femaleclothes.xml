@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:4d6347c71556e174f1a443a520aca776:1/1$ -->
+<TextureAtlas imagePath="femaleclothes.png">
+    <SubTexture name="clothes0" x="2" y="2" width="269" height="229"/>
+</TextureAtlas>

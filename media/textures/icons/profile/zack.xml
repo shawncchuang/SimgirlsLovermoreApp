@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="zack.png">
+	<!-- Created with Adobe Flash Professional version 13.1.0.217 -->
+	<!-- http://www.adobe.com/products/flash.html -->
+	<SubTexture name="angry" x="0" y="0" width="199" height="199" pivotX="0.05" pivotY="-0.95"/>
+	<SubTexture name="blush" x="199" y="0" width="199" height="199"/>
+	<SubTexture name="bored" x="0" y="199" width="199" height="199"/>
+	<SubTexture name="normal" x="199" y="199" width="199" height="199"/>
+	<SubTexture name="pleasant" x="0" y="398" width="199" height="199"/>
+	<SubTexture name="sad" x="199" y="398" width="199" height="199"/>
+	<SubTexture name="scared" x="0" y="597" width="199" height="199"/>
+	<SubTexture name="sick" x="199" y="597" width="199" height="199"/>
+	<SubTexture name="vhappy" x="0" y="796" width="199" height="199"/>
+</TextureAtlas>

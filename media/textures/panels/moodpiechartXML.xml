@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:462e6df398f283cdc61a36ce7ec74e85:1ad2decfef401e916e2cb267bda2dcd5:79b2f1bfdf293f31f85c18cf84d9e839$ -->
+<TextureAtlas imagePath="moodpiechart.png">
+    <SubTexture name="piechart0001" x="1018" y="179" width="1" height="1" frameX="0" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0002" x="1014" y="356" width="7" height="87" frameX="-86" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0003" x="1004" y="710" width="13" height="87" frameX="-86" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0004" x="996" y="978" width="19" height="87" frameX="-86" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0005" x="996" y="887" width="23" height="89" frameX="-87" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0006" x="789" y="1354" width="31" height="89" frameX="-86" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0007" x="862" y="1246" width="35" height="89" frameX="-86" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0008" x="952" y="1246" width="39" height="89" frameX="-87" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0009" x="793" y="1263" width="45" height="89" frameX="-86" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0010" x="901" y="1246" width="49" height="89" frameX="-87" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0011" x="846" y="1581" width="53" height="89" frameX="-87" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0012" x="785" y="1581" width="59" height="89" frameX="-86" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0013" x="785" y="1490" width="63" height="89" frameX="-86" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0014" x="793" y="1172" width="67" height="89" frameX="-86" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0015" x="937" y="1155" width="69" height="89" frameX="-87" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0016" x="862" y="1155" width="73" height="89" frameX="-87" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0017" x="781" y="1766" width="77" height="89" frameX="-86" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0018" x="781" y="1675" width="79" height="89" frameX="-87" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0019" x="910" y="1064" width="81" height="89" frameX="-87" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0020" x="825" y="1064" width="83" height="89" frameX="-87" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0021" x="453" y="1952" width="85" height="89" frameX="-87" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0022" x="364" y="1952" width="87" height="89" frameX="-86" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0023" x="275" y="1952" width="87" height="89" frameX="-87" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0024" x="184" y="1952" width="89" height="89" frameX="-86" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0025" x="93" y="1952" width="89" height="89" frameX="-86" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0026" x="2" y="1952" width="89" height="91" frameX="-86" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0027" x="540" y="1946" width="89" height="97" frameX="-86" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0028" x="734" y="1067" width="89" height="103" frameX="-86" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0029" x="631" y="1934" width="89" height="107" frameX="-86" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0030" x="702" y="1208" width="89" height="113" frameX="-86" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0031" x="698" y="1369" width="89" height="119" frameX="-86" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0032" x="694" y="1550" width="89" height="123" frameX="-86" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0033" x="722" y="1870" width="89" height="129" frameX="-86" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0034" x="690" y="1735" width="89" height="133" frameX="-86" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0035" x="643" y="1067" width="89" height="139" frameX="-86" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0036" x="611" y="1224" width="89" height="143" frameX="-86" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0037" x="607" y="1401" width="89" height="147" frameX="-86" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0038" x="603" y="1582" width="89" height="151" frameX="-86" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0039" x="552" y="1067" width="89" height="155" frameX="-86" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0040" x="520" y="1240" width="89" height="159" frameX="-86" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0041" x="516" y="1419" width="89" height="161" frameX="-86" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0042" x="599" y="1767" width="89" height="165" frameX="-86" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0043" x="512" y="1598" width="89" height="167" frameX="-86" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0044" x="508" y="1775" width="89" height="169" frameX="-86" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0045" x="461" y="1067" width="89" height="171" frameX="-86" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0046" x="429" y="1244" width="89" height="173" frameX="-86" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0047" x="425" y="1421" width="89" height="175" frameX="-86" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0048" x="421" y="1598" width="89" height="175" frameX="-86" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0049" x="417" y="1775" width="89" height="175" frameX="-86" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0050" x="326" y="1775" width="89" height="175" frameX="-86" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0051" x="326" y="1598" width="93" height="175" frameX="-82" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0052" x="324" y="1421" width="99" height="175" frameX="-76" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0053" x="322" y="1244" width="105" height="175" frameX="-70" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0054" x="885" y="887" width="109" height="175" frameX="-66" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0055" x="887" y="710" width="115" height="175" frameX="-60" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0056" x="887" y="533" width="121" height="175" frameX="-54" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0057" x="887" y="356" width="125" height="175" frameX="-50" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0058" x="887" y="179" width="129" height="175" frameX="-46" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0059" x="887" y="2" width="135" height="175" frameX="-40" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0060" x="320" y="1067" width="139" height="175" frameX="-36" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0061" x="175" y="1067" width="143" height="175" frameX="-32" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0062" x="173" y="1244" width="147" height="175" frameX="-28" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0063" x="171" y="1421" width="151" height="175" frameX="-24" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0064" x="169" y="1598" width="155" height="175" frameX="-20" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0065" x="165" y="1775" width="159" height="175" frameX="-16" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0066" x="2" y="1775" width="161" height="175" frameX="-14" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0067" x="2" y="1598" width="165" height="175" frameX="-10" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0068" x="2" y="1421" width="167" height="175" frameX="-8" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0069" x="2" y="1244" width="169" height="175" frameX="-6" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0070" x="2" y="1067" width="171" height="175" frameX="-4" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0071" x="710" y="887" width="173" height="175" frameX="-2" frameY="0" frameWidth="175" frameHeight="175"/>
+    <SubTexture name="piechart0072" x="533" y="887" width="175" height="175"/>
+    <SubTexture name="piechart0073" x="356" y="887" width="175" height="175"/>
+    <SubTexture name="piechart0074" x="179" y="887" width="175" height="175"/>
+    <SubTexture name="piechart0075" x="2" y="887" width="175" height="175"/>
+    <SubTexture name="piechart0076" x="710" y="710" width="175" height="175"/>
+    <SubTexture name="piechart0077" x="533" y="710" width="175" height="175"/>
+    <SubTexture name="piechart0078" x="356" y="710" width="175" height="175"/>
+    <SubTexture name="piechart0079" x="179" y="710" width="175" height="175"/>
+    <SubTexture name="piechart0080" x="2" y="710" width="175" height="175"/>
+    <SubTexture name="piechart0081" x="710" y="533" width="175" height="175"/>
+    <SubTexture name="piechart0082" x="533" y="533" width="175" height="175"/>
+    <SubTexture name="piechart0083" x="356" y="533" width="175" height="175"/>
+    <SubTexture name="piechart0084" x="179" y="533" width="175" height="175"/>
+    <SubTexture name="piechart0085" x="2" y="533" width="175" height="175"/>
+    <SubTexture name="piechart0086" x="710" y="356" width="175" height="175"/>
+    <SubTexture name="piechart0087" x="533" y="356" width="175" height="175"/>
+    <SubTexture name="piechart0088" x="356" y="356" width="175" height="175"/>
+    <SubTexture name="piechart0089" x="179" y="356" width="175" height="175"/>
+    <SubTexture name="piechart0090" x="2" y="356" width="175" height="175"/>
+    <SubTexture name="piechart0091" x="710" y="179" width="175" height="175"/>
+    <SubTexture name="piechart0092" x="533" y="179" width="175" height="175"/>
+    <SubTexture name="piechart0093" x="356" y="179" width="175" height="175"/>
+    <SubTexture name="piechart0094" x="179" y="179" width="175" height="175"/>
+    <SubTexture name="piechart0095" x="2" y="179" width="175" height="175"/>
+    <SubTexture name="piechart0096" x="710" y="2" width="175" height="175"/>
+    <SubTexture name="piechart0097" x="533" y="2" width="175" height="175"/>
+    <SubTexture name="piechart0098" x="356" y="2" width="175" height="175"/>
+    <SubTexture name="piechart0099" x="179" y="2" width="175" height="175"/>
+    <SubTexture name="piechart0100" x="2" y="2" width="175" height="175"/>
+</TextureAtlas>

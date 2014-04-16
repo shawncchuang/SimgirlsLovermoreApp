@@ -1,0 +1,88 @@
+package model
+{
+	import com.gamua.flox.Entity;
+	
+	public class SaveGame extends Entity
+	{
+		
+		private var _engine:Number;
+		private var _ap:Number;
+		private var _cash:Number;
+		private var _date:String;
+		
+		
+		public var status:String;
+		public var first_name:String;
+		public var last_name:String;
+	    public var ch_cash:Object;
+		public var int:Object;
+		public var image:Object;
+		public var max_ap:Number;
+		public var assets:Array;
+		public var owned_assets:Object;
+		public var items:Object;
+		public var gifts:Object;
+		public var accessories:Object;
+		public var estate:Object;
+		public var pts:Object;
+		public var rel:Object;
+		public var rank:String;
+		public var honor:Object;
+		public var mood:Object;
+		public var wealth:String;
+		public var love:Object;
+		//sprite engine
+		public var se:Object;
+		public var s_ele:String;
+        public var dating:String;
+		public var skills:Object;
+		/*public var skills_player:Object;
+		public var skills_lenus:Object;
+		public var skills_sirena:Object;
+		public var skills_sao:Object;
+		public var skills_dea:Object;
+		public var skills_klaire:Object;
+		public var skills_tomoru:Object;
+		public var skills_ceil:Object;
+		public var skills_zack:Object;*/
+		public var avatar:Object;
+		public var formation:Array;
+		public var scenelikes:Object;
+		public var secrets:Object;
+		
+		public var cpu_teams:Object;
+		
+		public function SaveGame()
+		{
+			
+		}
+		public function set cash(value:Number):void
+		{
+			_cash=value;
+		}
+		public function get cash():Number
+		{
+			return _cash;
+		}
+		public function set ap(value:Number):void
+		{
+			_ap=value
+		}
+		public function get ap():Number
+		{
+			return _ap;
+		}
+		 
+		 
+		public function set date(value:String):void
+		{
+			_date=value;
+		}
+		public function get date():String
+		{
+			return _date;
+		}
+		 
+		
+	}
+}

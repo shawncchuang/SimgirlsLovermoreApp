@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:34565de2ea2e892d790e67d31e9a4383:1/1$ -->
+<TextureAtlas imagePath="pantstyle.png">
+    <SubTexture name="pant0" x="2" y="2" width="346" height="188"/>
+</TextureAtlas>

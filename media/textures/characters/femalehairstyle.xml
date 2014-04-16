@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:0a6b77754b71d4103752e740665088b4:1/1$ -->
+<TextureAtlas imagePath="femalehairstyle.png">
+    <SubTexture name="hair0" x="2" y="748" width="216" height="247" frameX="-96" frameY="-2" frameWidth="390" frameHeight="431"/>
+    <SubTexture name="hair1" x="2" y="435" width="230" height="311" frameX="-91" frameY="-2" frameWidth="390" frameHeight="431"/>
+    <SubTexture name="hair2" x="2" y="2" width="386" height="431" frameX="-4" frameY="0" frameWidth="390" frameHeight="431"/>
+</TextureAtlas>
