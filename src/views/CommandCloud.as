@@ -140,7 +140,7 @@ package views
 			var currentScene:String=DataContainer.currentScene;
 			var scene_index:Number=currentlable.indexOf("Scene");
 			var looking_index:Number=_label.indexOf("Look");
-			
+			var start_dating:Number=_label.indexOf("Dating");
 			DebugTrace.msg("CommandCloud.checkSceneCommand currentlable:"+currentlable+" ; currentScene:"+currentScene);
 			
 			
@@ -148,6 +148,7 @@ package views
 			gameEvent._name="clear_comcloud";
 			gameEvent.displayHandler();
 			var sussess:Boolean=false;
+			var _data:Object=new Object();
 			if(looking_index!=-1)
 			{
 				//Looking for at scene
@@ -156,7 +157,7 @@ package views
 				if(sussess)
 				{
 					
-					var _data:Object=new Object();
+					
 					_data.name="FoundSomeScene";
 					command.sceneDispatch(SceneEvent.CHANGED,_data);
 				}
@@ -189,6 +190,15 @@ package views
 						break
 				}
 				//switch
+				
+			}
+			//if
+			if(start_dating!=-1)
+			{
+			   //start dating
+				_data=new Object();
+				_data.name="DatingScene";
+				command.sceneDispatch(SceneEvent.CHANGED,_data)
 				
 			}
 			//if

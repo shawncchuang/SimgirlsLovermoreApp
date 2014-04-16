@@ -72,7 +72,7 @@ package data
 				"date":"Tue.1.Mar.2022|12",
 				"ap":100,
 				"max_ap":100,
-				"dating":null,
+				"dating":"dea",
 				"ch_cash":{
 					lenus:500,
 					sirena:100,

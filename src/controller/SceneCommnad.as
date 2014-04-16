@@ -78,10 +78,60 @@ package controller
 			
 			var library:Array=DataContainer.characterTalklibrary;
 			talks=library[part_index];
+			DebugTrace.msg("SceneCommand.init talks:"+talks);
 			
-			
+			datingComCloudHandle();
 		}
-		
+		private function datingComCloudHandle():void
+		{
+			var dating:String=DataContainer.currentDating
+			if(dating)
+			{
+				if(scene.indexOf("Scene")!=-1  && talks.indexOf("choice|ComCloud_R1_Start^Dating")==-1)
+				{
+					
+					//at any scene
+					var bk_talk:Array= talks.slice(1);
+					
+					for(var j:uint=0;j<bk_talk.length;j++)
+					{
+						var _talk:String=bk_talk[j];
+						DebugTrace.msg("SceneCommand.datingHandle _talk:"+_talk);
+						if(_talk.indexOf("R1")!=-1)
+						{
+							_talk=_talk.split("R1").join("R2");
+						}
+						else if(_talk.indexOf("R2")!=-1)
+						{
+							_talk=_talk.split("R2").join("R3");
+						}
+						else if(_talk.indexOf("R3")!=-1)
+						{
+							_talk=_talk.split("R3").join("R4");
+						}
+						else if(_talk.indexOf("R4")!=-1)
+						{
+							_talk=_talk.split("R4").join("R5");
+						}
+						//if
+						
+						bk_talk[j]=_talk;
+					}
+					//for
+					DebugTrace.msg("SceneCommand.datingHandle bk_talk:"+bk_talk);
+					talks.splice(1);	
+					talks.push("choice|ComCloud_R1_Start^Dating");
+					for(var k:uint=0;k<bk_talk.length;k++)
+					{
+						talks.push(bk_talk[k]);
+					}
+					//for
+					DebugTrace.msg("SceneCommand.datingHandle talks:"+talks);
+				}
+				//if
+			}
+			//if
+		}
 		public function start():void
 		{
 			addTouchArea();
@@ -146,6 +196,9 @@ package controller
 		}
 		private function showChat():void
 		{
+			
+			
+			
 			
 			com_content=talks[talk_index];
 			DebugTrace.msg("SceneCommand.showChat com_content:"+com_content);

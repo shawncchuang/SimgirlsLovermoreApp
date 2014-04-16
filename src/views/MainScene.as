@@ -136,7 +136,7 @@ package views
 				gy=movieY*hover.globalY;
 				
 			}
-			
+			//for
 		}
 		private function onSceneTouched(e:TouchEvent):void
 		{

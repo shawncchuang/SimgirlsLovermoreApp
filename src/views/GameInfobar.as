@@ -547,6 +547,7 @@ package views
 			var savegame:SaveGame=FloxCommand.savegame;
 			if(savegame.dating)
 			{
+				DataContainer.currentDating=savegame.dating;
 				dating_icon=new Sprite();
 				dating_icon.x=151;
 				dating_icon.y=50;

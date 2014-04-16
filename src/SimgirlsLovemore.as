@@ -4,20 +4,20 @@ package
 	import com.greensock.loading.LoaderMax;
 	import com.greensock.loading.SWFLoader;
 	
-	import flash.display.Bitmap;
-	import flash.display.BitmapData;
+	//import flash.display.Bitmap;
+	//import flash.display.BitmapData;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
-	import flash.display.StageScaleMode;
+	//import flash.display.StageScaleMode;
 	import flash.events.Event;
 	
-	import controller.Assets;
+	//import controller.Assets;
 	import controller.FloxCommand;
 	import controller.FloxInterface;
 	import controller.MainCommand;
 	import controller.MainInterface;
-	import controller.FloxManagerController;
+	//import controller.FloxManagerController;
 	
 	import data.Config;
 	import data.DataContainer;
@@ -28,9 +28,9 @@ package
 	
 	import model.CustomPlayer;
 	
-	import services.PayPal;
-	import services.SocialEngine;
-	import services.TurboSMTP;
+	//import services.PayPal;
+	//import services.SocialEngine;
+	//import services.TurboSMTP;
 	
 	import starling.core.Starling;
 	import starling.events.Event;
@@ -44,7 +44,7 @@ package
 	import views.CommandCloud;
 	
 	import views.GameStartPanel;
-	import views.InputNamePannel;
+	//import views.InputNamePannel;
 	import views.LoginPanel;
 	import views.QADisplayContainer;
 	import views.SceneVideo;
@@ -135,10 +135,12 @@ package
 			}
 			
 			//flox manager -----------------
-			/*var floxMg:FloxManagerController=new FloxManagerController();
+			/*
+			var floxMg:FloxManagerController=new FloxManagerController();
 			floxMg.init();
 			addChild(floxMg);
-			ViewsContainer.FloxManager=floxMg;*/
+			ViewsContainer.FloxManager=floxMg;
+			*/
 			//---------------------------
 		}
 		 

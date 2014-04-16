@@ -59,8 +59,8 @@ package controller
 		
 		public static function set savegame(data:*):void
 		{
-			var currentPlayer:CustomPlayer=Player.current as CustomPlayer;
-			
+			/*var currentPlayer:CustomPlayer=Player.current as CustomPlayer;
+		 
 			_savegame.id=currentPlayer.id+"_saved"+currentPlayer.inGameProgress;
 			if(data)
 			{
@@ -80,8 +80,11 @@ package controller
 			{
 				
 				MainCommand.addAlertMsg(SAVE_ERROR_MSG);
-			}
+			}*/
+			_savegame=data;
+			 
 		}
+		
 		
 		public static function get savegame():SaveGame
 		{
@@ -415,7 +418,7 @@ package controller
 			var currentPlayer:CustomPlayer=Player.current as CustomPlayer;
 			
 			var entity_target:String=currentPlayer.id+"_saved"+currentPlayer.inGameProgress;
-			//DebugTrace.msg("FloxCommand.setupSaveGame entity_target:"+entity_target);
+			DebugTrace.msg("FloxCommand.setupSaveGame entity_target:"+entity_target);
 			savegame=new SaveGame();
 			//savegame.publicAccess="owner" ; current_saved="saved1"
 			
@@ -427,6 +430,7 @@ package controller
 				
 			}
 			//for
+			//_savegame.save(onSetUPSaveComplete,onSavedError)
 			//var savegamestr:String=JSON.stringify(savegame);
 			
 			
@@ -435,9 +439,11 @@ package controller
 			
 			Flox.logEvent("GameStarted");
 			SimgirlsLovemore.gameStart();
+
 			
-			
-			
+		}
+		private function onSetUPSaveComplete():void
+		{
 			
 		}
 		private function onSaveGameComplete():void

@@ -481,7 +481,7 @@ package views
 		private function initCharacter():void
 		{
 			var dating:String=DataContainer.currentDating;
-			
+		 
 			character=Assets.getDynamicAtlas(dating);
 			character.x=260;
 			

@@ -58,7 +58,7 @@ com|bg_BankScene,choice|ComCloud_R1_^Leave,choice|ComCloud_R1_Look^Around,choice
 Private Island,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 com|bg_PrivateIslandScene,choice|ComCloud_R1_^Leave,choice|ComCloud_R1_Look^Around,choice|ComCloud_R2_^Leave,END,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Garden,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-com|bg_GardenScene,choice|ComCloud_R1_^Leave,choice|ComCloud_R1_Look^Around,choice|ComCloud_R2_^Leave,END,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+com|bg_GardenScene,choice|ComCloud_R1_Look^Around,choice|ComCloud_R2_^Leave,END,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 BlackSotre,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 com|bg_BlackMarketScene,choice|ComCloud_R1_Look^Around,choice|ComCloud_R2_^Leave,choice|ComCloud_L1_^Buy,END,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Changing Room,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
