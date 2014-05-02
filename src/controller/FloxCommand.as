@@ -31,7 +31,7 @@ package controller
 	
 	public class FloxCommand implements FloxInterface
 	{
-		private var permision:String="black!@spears#$";
+		private var permision:String="";
 		private var player_name:String="";
 		private var password:String="";
 		public static var my_email:String="";
@@ -104,7 +104,7 @@ package controller
 			
 			Flox.playerClass = CustomPlayer;
 			
-			Flox.init("jGAFFu973M7tlxp7", "wLDwYIitcQwtMmtZ", "1.0.1");
+			Flox.init("", "", "1.0.1");
 			Flox.traceLogs=true;
 			
 			//Flox.addEventListener(QueueEvent.QUEUE_PROCESSED,onInitComplete);
