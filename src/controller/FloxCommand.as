@@ -33,14 +33,14 @@ package controller
 	public class FloxCommand implements FloxInterface
 	{
 		
-		private var permision:String="black!@spears#$"
+		private var permision:String=""
 		//Release--------------
-		//private var gameID:String="jGAFFu973M7tlxp7";
-		//private var gameKey:String="wLDwYIitcQwtMmtZ";
+		//private var gameID:String="";
+		//private var gameKey:String="";
 		
 		//Developer--------------------
-		private var gameID:String="NwkAI894Yh6egcxz";
-		private var gameKey:String="CFDklZTXxRvlDyRO";
+		private var gameID:String="";
+		private var gameKey:String="";
 		
 		
 		private var version:String;

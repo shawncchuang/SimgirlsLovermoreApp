@@ -152,12 +152,14 @@ package controller
 			}
 			//for
 			main_team.push(team[0]);
-			
+
+            /*
 			if(main_team[0].id.indexOf("t"+cpuIndex)!=-1)
 			{
 				main_team.push(team[1]);
 				
 			}
+			*/
 			var _backup_team:Array=team.splice(main_team.length);
 			backup_team=_backup_team;
 			//backup_team=team.concat(_backup_team);

@@ -5,10 +5,10 @@
       <configuration name="Main" target-platform="Desktop" pure-as="true" main-class="Main" output-file="Main.swf" output-folder="$MODULE_DIR$/bin-debug">
         <dependencies>
           <entries>
-            <entry library-id="4747289c-c027-4d42-81d7-0dd4145a1084">
+            <entry library-id="e192c506-61e8-4717-86ca-9f7fc6c3182d">
               <dependency linkage="Merged" />
             </entry>
-            <entry library-id="a81d089a-fc75-47a2-82b1-71be45e7ce91">
+            <entry library-id="f47ba6dc-319a-413f-aa29-5f3fea4cc3e0">
               <dependency linkage="Merged" />
             </entry>
           </entries>
@@ -34,6 +34,7 @@
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/swf/skills/Gn.swf" path-in-package="swf/skills/Gn.swf" />
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/swf/skills/Gw.swf" path-in-package="swf/skills/Gw.swf" />
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/swf/skills/GOR.swf" path-in-package="swf/skills/GOR.swf" />
+            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/swf/skills/Gs1.swf" path-in-package="swf/skills/Gs1.swf" />
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/swf/skills/Ba_SP.swf" path-in-package="swf/skills/Ba_SP.swf" />
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/swf/skills/Be_SP.swf" path-in-package="swf/skills/Be_SP.swf" />
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/swf/skills/Bf_SP.swf" path-in-package="swf/skills/Bf_SP.swf" />
@@ -58,8 +59,16 @@
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/swf/skillsCardsNote.swf" path-in-package="swf/skillsCardsNote.swf" />
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/fonts" path-in-package="fonts" />
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/video/video_test.swf" path-in-package="video/video_test.swf" />
+            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/video/rest-animated.flv" path-in-package="video/rest-animated.flv" />
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/video/plane-departing.flv" path-in-package="video/plane-departing.flv" />
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/video/arriving-shambala.flv" path-in-package="video/arriving-shambala.flv" />
+            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/video/meditate-animated.flv" path-in-package="video/meditate-animated.flv" />
+            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/video/training-animated.flv" path-in-package="video/training-animated.flv" />
+            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/video/BankScene-work-animated.flv" path-in-package="video/BankScene-work-animated.flv" />
+            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/video/MuseumScene-learn-animated.flv" path-in-package="video/MuseumScene-learn-animated.flv" />
+            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/video/AcademyScene-learn-animated.flv" path-in-package="video/AcademyScene-learn-animated.flv" />
+            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/video/NightclubScene-work-animated.flv" path-in-package="video/NightclubScene-work-animated.flv" />
+            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/video/ThemedParkScene-work-animated.flv" path-in-package="video/ThemedParkScene-work-animated.flv" />
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/images/bm" path-in-package="images/bm" />
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/images/icons" path-in-package="images/icons" />
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/images/items" path-in-package="images/items" />
@@ -82,7 +91,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library" exported="">
       <library type="flex">
-        <properties id="4747289c-c027-4d42-81d7-0dd4145a1084" />
+        <properties id="e192c506-61e8-4717-86ca-9f7fc6c3182d" />
         <CLASSES>
           <root url="file://$MODULE_DIR$/lib" />
         </CLASSES>
@@ -93,7 +102,7 @@
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library type="flex">
-        <properties id="a81d089a-fc75-47a2-82b1-71be45e7ce91" />
+        <properties id="f47ba6dc-319a-413f-aa29-5f3fea4cc3e0" />
         <CLASSES>
           <root url="file://$MODULE_DIR$/bin" />
         </CLASSES>
