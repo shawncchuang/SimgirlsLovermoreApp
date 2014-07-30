@@ -23,8 +23,7 @@ package views
 		private var flox:FloxInterface=new FloxCommand();
 		public function ExcerptBox()
 		{
-			
-			ViewsContainer.ExcerptBox=this;
+		
 			
 			var texture:Texture=Assets.getTexture("ExcerptBox");
 			excerptbox=new Image(texture);
@@ -42,19 +41,33 @@ package views
 		}
 		private function onUpdateExcerpt(e:Event):void
 		{
-			var id:String=e.data.id;
-			var attr:String="assets";
-			if(e.data.attr)
+			//DebugTrace.msg("ExcerptBox.onUpdateExcerpt type="+e.data.type+" ,id="+e.data.id+" ,skill="+e.data.skill);
+			switch(e.data.type)
 			{
-				attr=e.data.attr;
+				case "assets":
+					var id:String=e.data.id;
+					var attr:String="assets";
+					if(e.data.attr)
+					{
+						attr=e.data.attr;
+					}
+					var systemdata:Object=flox.getSyetemData(attr);
+					var assetsLog:Object=systemdata[id];
+					var excerpt:String=assetsLog.exc;
+					
+					DebugTrace.msg("ProfileScene.onUpdateExcerpt id:"+ id);
+					break
+				case "skill_card":
+					var skills:Object=flox.getSyetemData("skillsys");
+					var skillObj:Object=skills[e.data.skill];
+					excerpt=skillObj.note;
+					break;
 			}
-			var systemdata:Object=flox.getSyetemData(attr);
-			var assetsLog:Object=systemdata[id];
-			var excerpt:String=assetsLog.exc;
-			excerptTxt.text=excerpt;
-			DebugTrace.msg("ProfileScene.onUpdateExcerpt id:"+ id);
-			
-			this.visible=true;
+			if(excerpt!="")
+			{
+				excerptTxt.text=excerpt;
+				this.visible=true;
+			}
 			
 		}
 		private function onClearExcerpt(e:Event):void

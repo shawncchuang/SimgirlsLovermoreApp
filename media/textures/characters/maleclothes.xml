@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:6adca1ae8ab073ef969f7cf171ccdf50:1/1$ -->
+<!-- $TexturePacker:SmartUpdate:e094ba4e0a84fa70d0ae2b98ae3d6fca:d5ca401d35489c2cb6ec911b90800a90:f08d24e3c11379be2d9e7de095b2697f$ -->
 <TextureAtlas imagePath="maleclothes.png">
-    <SubTexture name="clothes0" x="2" y="2" width="430" height="584"/>
+    <SubTexture name="clothes0" x="666" y="2" width="330" height="366"/>
+    <SubTexture name="clothes1" x="334" y="2" width="330" height="366"/>
+    <SubTexture name="clothes2" x="2" y="370" width="330" height="366"/>
+    <SubTexture name="clothes3" x="2" y="2" width="330" height="366"/>
 </TextureAtlas>

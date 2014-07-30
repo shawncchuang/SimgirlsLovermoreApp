@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:36db2da24a7262d9173e515c80ac40cf:7a6f2da8c7603907ac691b4c008672f1:705989fe7cabedf15675e6389f53d590$ -->
+<!-- $TexturePacker:SmartUpdate:ef122e936a655b28c30da9d03f3f8988:716182d0f46211917e5ccccdccb7e021:705989fe7cabedf15675e6389f53d590$ -->
 <TextureAtlas imagePath="skillcards.png">
     <SubTexture name="a0" x="798" y="683" width="197" height="225"/>
     <SubTexture name="a1" x="599" y="683" width="197" height="225"/>

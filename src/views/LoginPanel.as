@@ -15,6 +15,7 @@ package views
 	public class LoginPanel extends MovieClip
 	{
 		private var panel:LoginUI;
+		//beta version
 		private var newaccount:MovieClip;
 		private var signin:MovieClip;
 		private var signup_submit:MovieClip;
@@ -56,6 +57,7 @@ package views
 			signin.addEventListener(MouseEvent.ROLL_OVER,doMouseOverHandle);
 			signin.addEventListener(MouseEvent.ROLL_OUT,doMouseOutHandle);
 			
+			newaccount.visible=false;
 			newaccount.buttonMode=true;
 			newaccount.mouseChildren=false;
 			newaccount.addEventListener(MouseEvent.CLICK,doSignup);
@@ -116,6 +118,7 @@ package views
 			var mail:String=panel.signup_ui.account.text;
 			var pwd:String=panel.signup_ui.pswd.text;
 			//var player_name:String=panel.signup_ui.player_name.text;
+			DebugTrace.msg("LoingPaenl.doSubmitSignup mail="+mail+" , pwd="+pwd);
 			var success:Boolean=false;
 			var msg:String="";
 			if(mail!="" && pwd!="")
@@ -145,7 +148,7 @@ package views
 				}
 				//if
 				
-				flox.signupAccount(panel.signup_ui.account.text,panel.signup_ui.pswd.text);
+				flox.signupAccount(mail,pwd);
 			}
 			//if
 		}
@@ -200,7 +203,7 @@ package views
 		private function praseNowType():void
 		{
 			
-			newaccount.gotoAndStop(1);
+			//newaccount.gotoAndStop(1);
 			signin.gotoAndStop(1);
 			preorder.gotoAndStop(1);
 			
@@ -213,7 +216,7 @@ package views
 			}
 			else if(type=="signup")
 			{
-				newaccount.gotoAndStop(2);
+				//newaccount.gotoAndStop(2);
 				panel.signup_ui.visible=true;
 			}
 			else

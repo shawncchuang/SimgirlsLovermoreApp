@@ -2,7 +2,10 @@ package views
 {
 	import flash.geom.Point;
 	
+	import controller.AssetEmbeds;
 	import controller.Assets;
+	import controller.FloxCommand;
+	import controller.FloxInterface;
 	import controller.MainCommand;
 	import controller.MainInterface;
 	
@@ -15,16 +18,18 @@ package views
 	import starling.display.Sprite;
 	import starling.text.TextField;
 	import starling.textures.Texture;
+	import starling.utils.AssetManager;
 	
 	import utils.DebugTrace;
 	
 	public class CharacterBubble extends Sprite
 	{
+		private var flox:FloxInterface=new FloxCommand();
 		private var command:MainInterface=new MainCommand();
-		
 		private var pos:Point;
 		private var bubble:Image
 		private var talks:Array;
+		private var pure_talks:Array=new Array();
 		private var bubbletext:TextField;
 		private var scene:String;
 		private var talk_index:uint=0;
@@ -44,16 +49,29 @@ package views
 		}
 		private function addBubble():void
 		{
-			var library:Array=DataContainer.characterTalklibrary;
-			talks=library[part_index];
 			
-			/*if(talks[talk_index].indexOf("|think|")!=-1)
+	 
+			
+			var library:Array;
+			talks=new Array();
+			pure_talks=new Array();
+			switch(scene)
 			{
-			texture_name="BubbleThink";
+				case "NPC":
+					talks=DataContainer.NpcTalkinglibrary;
+					break
+				case "Story":
+					library=flox.getSyetemData("main_story");
+					talks=library[part_index];
+					break
+				default:
+					library=flox.getSyetemData("scenelibrary");
+					talks=library[part_index];
+					break
 			}
-			//if*/
+			 
 			var type:String=talks[talk_index].split("|")[0];
-		 
+			
 			if(type.indexOf("sp")!=-1)
 			{
 				texture_name="Bubble";
@@ -62,11 +80,18 @@ package views
 			{
 				texture_name="BubbleThink";
 			}
-			 
+			
 			if(talks[talk_index].indexOf("|")!=-1)
 			{
-				talks[talk_index]=talks[talk_index].split("|")[1];
+				for(var i:uint=0;i<talks.length;i++)
+				{
+					pure_talks.push("");
+				}
+				pure_talks[talk_index]=talks[talk_index].split("|")[1];
+				//talks[talk_index]=talks[talk_index].split("|")[1];
 			}
+			 
+			
 			var texture:Texture=Assets.getTexture(texture_name);
 			bubble=new Image(texture);
 			bubble.pivotX=bubble.width/2+20;
@@ -92,20 +117,20 @@ package views
 		}
 		private function addBubbleTxt():void
 		{
-			var library:Array=DataContainer.characterTalklibrary;
-			talks=library[part_index]
-			if(talks[talk_index]==undefined)
+			//var library:Array=DataContainer.characterTalklibrary;
+			//talks=library[part_index]
+			if(pure_talks[talk_index]==undefined)
 			{
 				//talks=command.filterTalking(talks);
-				var sentence:String=filterScentance(talks[talks.length-1]);
+				var sentence:String=filterScentance(pure_talks[pure_talks.length-1]);
 			}
 			else
 			{
-				sentence=filterScentance(talks[talk_index]);
+				sentence=filterScentance(pure_talks[talk_index]);
 			}
 			//DebugTrace.msg("addBubbleTxt: "+talks[talk_index]);
 			
-			bubbletext=new TextField(200,200,"","Eras Demi ITC",22,0x000000);
+			bubbletext=new TextField(200,200,"","SimImpact",22,0x000000);
 			bubbletext.hAlign="center";
 			bubbletext.autoScale=true;
 			bubbletext.text=sentence;
@@ -122,7 +147,7 @@ package views
 		private function filterScentance(src:String):String
 		{
 			var re:String=src;
-			 
+			
 			switch(scene)
 			{
 				case "TarotReading":

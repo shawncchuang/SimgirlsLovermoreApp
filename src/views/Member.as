@@ -3,6 +3,8 @@ package views
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	
+	import data.Config;
+	
 	import events.BattleEvent;
 	
 	import utils.DebugTrace;
@@ -11,13 +13,15 @@ package views
 	{
 		public  var memberEvt:BattleEvent;
 		public var character:MovieClip;
+		public var skillAni:MovieClip;
 		public var membermc:MovieClip;
 		public var status:String;
 		public var power:Object;
 		//public var selected:Boolean;
 		public var chname:String;
+		public var gender:String;
 		public var plus_speed:Number;
-		
+		public var ett:MovieClip;
 		public function Member()
 		{
 			super();
@@ -26,11 +30,14 @@ package views
 			//this.buttonMode=true;
 			var evt:BattleEvent=new BattleEvent();
 			evt.addEventListener(BattleEvent.UPDATE_ACT,updateMemberAct);
+			evt.addEventListener(BattleEvent.PROCESS_ACT,processAction);
 			evt.addEventListener(BattleEvent.HEAL,enabledMemberHeal);
 			evt.addEventListener(BattleEvent.AREA_HEAL,enabledAreaMemberHeal);
 			evt.addEventListener(BattleEvent.DISABLED_HEAL,disabledAreaMemberHeal);
 			evt.addEventListener(BattleEvent.REMOVE_HEAL,removeMemberHeal);
 			evt.addEventListener(BattleEvent.COMPLETE_ACT,actComplete);
+			evt.addEventListener(BattleEvent.HIT,hitHandle);
+			evt.addEventListener(BattleEvent.END,battleEndHandle);
 			memberEvt=evt;
 		}
 		override public function initPlayer(index:Number):void
@@ -40,9 +47,8 @@ package views
 			status=super.status;
 			character=super.character;
 			membermc=super.membermc;
-			membermc.mouseChildren=false;
-			membermc.buttonMode=true;
 			chname=super.ch_name;
+			 
 			DebugTrace.msg("Member.initPlayer id:"+super.id);
 			
 		}
@@ -53,11 +59,15 @@ package views
 			status=super.status;
 			character=super.character;
 			membermc=super.membermc;
-			membermc.mouseChildren=false;
-			membermc.buttonMode=true;
 			chname=super.ch_name;
 			DebugTrace.msg("Member.initCpuPlayer id:"+super.id);
 			
+		}
+		public function getMemberMC():void
+		{
+			membermc=super.membermc;
+			membermc.mouseChildren=false;
+			membermc.buttonMode=true;
 		}
 		override public function updateStatus(type:String):void
 		{
@@ -97,7 +107,7 @@ package views
 			
 			return status;
 		}
-		public function processAction():void
+		private function processAction(e:Event):void
 		{
 			super.processAction();
 		}
@@ -137,6 +147,43 @@ package views
         public function getPlusSpeed():Number
 		{
 			return super.plus_speed;
+		}
+		public function setupSkillAni():void
+		{
+			super.setupSkillAni();
+			skillAni=super.skillAni;
+		}
+		public function getSkillAni():void
+		{
+		 
+			
+			skillAni=super.skillAni;
+		}
+		public function removeSkillAni():void
+		{
+			super.removeSkillAni();
+		}
+		public function getEtt():void
+		{
+			//neutral target area mc
+			ett=super.ett;
+		}
+		private function hitHandle(e:Event):void
+		{
+			
+			super.hitHandle();
+			
+		}
+		private function battleEndHandle(e:Event):void
+		{
+			var boss_index:Number=Config.bossModels.indexOf(chname)
+			if(boss_index==-1)
+			super.setupVictoryDace();
+		}
+		public function getGender():void
+		{
+			gender=super.gender;
+			 
 		}
 	}
 }

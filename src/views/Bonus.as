@@ -1,5 +1,9 @@
 package views
 {
+	 
+	import flash.display.DisplayObjectContainer;
+	import flash.geom.Point;
+
 	public class Bonus extends Star
 	{
 	    public var max:Number=0;
@@ -16,6 +20,10 @@ package views
 		{
 			super.doFalling();
 			 
+		}
+		override public function starPhysics(target:DisplayObjectContainer,pos:Point,maximum:Number):void
+		{
+			super.starPhysics(target,pos,maximum);
 		}
 	}
 }

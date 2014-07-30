@@ -14,13 +14,21 @@ package model
 		public var from:String;
 		public var verify:String="disabled";
 		public var player_name:String="";
-		public var password:String;
+		public var password:String="";
 		private var currentPlayer:Player;
 		
 		public var saved:Array;
 		public var assets:Object;
 		public var paid:Boolean;
-		public var items:Object;
+		
+		/*
+		com0 :change formation
+		com1 :battle cry
+		com2 :boot skills
+		com3 :boot honors
+		*/
+		public var items:Array=[  { "id": "com1", "qty": 3 },{ "id": "com2", "qty": 9999 }, { "id": "com3", "qty": 9999 } ];
+	
 		public function CustomPlayer()
 		{
 			currentPlayer=Player.current
@@ -35,5 +43,6 @@ package model
 			return _progress;
 		}
 		*/
+		 
 	}
 }

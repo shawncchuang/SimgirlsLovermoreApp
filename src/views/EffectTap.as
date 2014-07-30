@@ -3,7 +3,7 @@ package views
 	import flash.display.MovieClip;
 	
 	import utils.DebugTrace;
-
+	
 	public class EffectTap extends MovieClip
 	{
 		protected var type:String;
@@ -17,6 +17,11 @@ package views
 			this.mouseChildren=false;
 			this.name=tap_name;
 			var effectTap:MovieClip=new EffectTapIcon();
+			if(tap_name.indexOf("player")==-1)
+			{
+				//cpu
+				effectTap.finger.visible=false;
+			}
 			addChild(effectTap);
 		}
 	}

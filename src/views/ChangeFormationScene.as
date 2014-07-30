@@ -79,6 +79,8 @@ package views
 			base_sprite.flatten();
 			
 			
+			command.playBackgroudSound("FormationMusic");
+			
 			init();
 			initLayout();
 			initSoldiersTiles();
@@ -105,7 +107,7 @@ package views
 		{
 			scencom.init("ChangeFormationScene",base_sprite,18,onCallback);
 			scencom.start();
-			scencom.disableAll();
+			
 			
 			
 			var title:Image=new Image(getTexture("ChangeFormationTitle"));
@@ -118,8 +120,8 @@ package views
 			layout_sprite.alpha=0;
 			addChild(layout_sprite);
 			
-			var sum_firststr:String="Drag and drop up to five soldiers to the combat zone";
-			var sum_first:TextField=new TextField(650,40,sum_firststr,"Neogrey Medium",18,0xFFFD38);
+			var sum_firststr:String="Drag and drop one to five soldiers to the combat zone";
+			var sum_first:TextField=new TextField(650,40,sum_firststr,"SimNeogreyMedium",18,0xFFFD38);
 			sum_first.hAlign="left";
 			//var sum_secstr:String="Front Row: ATK +20%  DEF -20%  AGI +20%\nMid Row: No Special Effect\nBack Row: ATK -20%  DEF +20%  AGI -20%";
 			//var sum_sec:TextField=new TextField(1024,100,sum_secstr,"Neogrey",18,0xFFFFFF);
@@ -226,13 +228,13 @@ package views
 		}
 		private function initSubstitues():void
 		{
-			
+			var avatar:Object=flox.getSaveData("avatar");
 			avatar_pos=[new Point(790,150),new Point(898,150),
 				new Point(754,246),new Point(859,246),
 				new Point(718,353),new Point(822,353),
 				new Point(683,452),new Point(788,452)];
-			DebugTrace.msg("ChangeFormationScene.initSubstitues soldilers name:"+ soldilers_name[subsindex])
-			var avatar_attr:Object={"name":soldilers_name[subsindex],"side":-1,"pos":avatar_pos[subsindex]};
+			//DebugTrace.msg("ChangeFormationScene.initSubstitues soldilers name:"+ soldilers_name[subsindex])
+			var avatar_attr:Object={"name":soldilers_name[subsindex],"side":-1,"pos":avatar_pos[subsindex],"gender":avatar.gender};
 			avatarcom.createAvatar(onReadyComplete,avatar_attr);
 			
 		}
@@ -400,8 +402,6 @@ package views
 					currentTile.y=soldiers_tiles_pos[tile_index].y;
 					currentTile=null;
 					
-					
-					
 				}
 				else
 				{
@@ -409,7 +409,7 @@ package views
 					Starling.juggler.removeTweens(per_combat_tile)
 					
 					
-					avatarTween.moveTo(combatpos[combat_index].x-20,combatpos[combat_index].y-40);
+					avatarTween.moveTo(combatpos[combat_index].x-20,combatpos[combat_index].y-40+20);
 					Starling.juggler.add(avatarTween);
 					
 					var avatar_name:String=soldilers_name[tile_index];
@@ -506,23 +506,7 @@ package views
 				}
 				var sum:Number=0;
 				maximum=checkTeamMaxium()
-				/*for(var j:uint=0;j<combat_zone.length;j++)
-				{
-				_data=combat_zone[j];
-				if(_data)
-				{
-				sum++;
-				}
-				//if
-				}
-				//for
-				if(sum==5)
-				{
-				//maxinum 5
-				maximum=false;
-				
-				}
-				//if*/
+				//DebugTrace.msg("ChangeFormationScene.checkCombatTile maximum:"+maximum); 
 				if(!space || !maximum)
 				{
 					index=-1;
@@ -532,6 +516,7 @@ package views
 			return index;
 			
 		}
+		private var teamSum:Number=0;
 		private function checkTeamMaxium():Boolean
 		{
 			var sum:uint=0;
@@ -548,12 +533,12 @@ package views
 			//for
 			if(sum==5)
 			{
-				//maxinum 5
+				//maxinum >1
 				maximum=false;
 				
 			}
 			//if
-			
+			teamSum=sum;
 			return maximum
 		}
 		private function removeCombatZone():void
@@ -605,21 +590,9 @@ package views
 		private function initConfirm():void
 		{
 			
-			/*var confirm:Button=new Button(getTexture("CheckAlt"));
-			confirm.name="confirm";
-			confirm.x=904;
-			confirm.y=720;
-			addChild(confirm);
-			confirm.addEventListener(Event.TRIGGERED,doFinished);*/
-			
-			/*var cancel:Button=new Button(getTexture("XAlt"));
-			cancel.name="cancel";
-			cancel.x=964;
-			cancel.y=720;
-			addChild(cancel);
-			cancel.addEventListener(Event.TRIGGERED,doFinished);*/
+	 
 			command.addedConfirmButton(this,doFinished)
-			command.addedCancelButton(this,doFinished);
+			//command.addedCancelButton(this,doFinished);
 			
 		}
 		private function doFinished(e:TouchEvent):void
@@ -635,8 +608,12 @@ package views
 				{
 				DebugTrace.obj("combat_zone :"+JSON.stringify(combat_zone[i]));
 				}*/
-				if(!checkTeamMaxium())
+				checkTeamMaxium();
+				
+				if(teamSum>=1 && teamSum<=5)
 				{
+					
+					command.stopBackgroudSound();
 					
 					var savegame:SaveGame=FloxCommand.savegame;	 
 					savegame.formation=combat_zone;
@@ -648,7 +625,7 @@ package views
 				else
 				{
 					
-					var msg:String="Sorry,please select 5 team members."; 
+					var msg:String="Drag and drop at least one soldier to the combat zone."; 
 					var alert:AlertMessage=new AlertMessage(msg);
 					addChild(alert)
 					
@@ -674,6 +651,9 @@ package views
 			var textture:Texture=Assets.getTexture(src);
 			return textture;
 		}
-		private function onCallback():void{}
+		private function onCallback():void
+		{
+			scencom.disableAll();
+		}
 	}
 }

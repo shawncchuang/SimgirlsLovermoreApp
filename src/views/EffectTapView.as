@@ -18,7 +18,8 @@ package views
 		private var count:Number=0;
 		private var max:Number=0;
 		private var member:Member;
-	
+		private var tapMin:Number=50;
+	    private var tapMax:Number=70
 		public function EffectTapView(name:String)
 		{
 			
@@ -35,7 +36,7 @@ package views
 			//DebugTrace.msg("DizzyTapView.onClickDizzyTap type="+ super.name+" ,name:"+this.name);
 			
 			
-			max=Math.floor(Math.random()*20)+10;
+			max=Math.floor(Math.random()*(tapMax-tapMin))+tapMin;
 			super.buttonMode=true;
 			
 			if(name.indexOf("player")!=-1)

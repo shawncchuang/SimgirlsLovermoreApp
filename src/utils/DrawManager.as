@@ -50,7 +50,8 @@ package utils
 		private var porperties:Object;
 		private var gender:String;
 		private var basemodel:Sprite;
-		private var body:MovieClip;
+		//private var body:MovieClip;
+		private var body:Image;
 		private var hair:Image;
 		private var eyes:Image;
 		private var pants:Image;
@@ -102,108 +103,59 @@ package utils
 			porperties=obj
 			
 		}
-		
+	 
 		public function copyAsBitmapData(sprite:DisplayObject,rec:Rectangle=null,point:Point=null):BitmapData
 		{
-			/*var nativeWidth:Number = Starling.current.stage.stageWidth;
-			var nativeHeight:Number = Starling.current.stage.stageHeight;
-			
-			if (sprite == null) 
-			return null;
-			
-			//var resultRect:Rectangle=rec;
-			var resultRect:Rectangle = new Rectangle();
-			sprite.getBounds(sprite, resultRect);
-			
-			var result:BitmapData = new BitmapData(rec.width, rec.height, porperties.transparent,porperties.bgcolor);
-			var context:Context3D = Starling.context;
-			var scale:Number = Starling.contentScaleFactor;
-			
-			var support:RenderSupport = new RenderSupport();
-			RenderSupport.clear();
-			
-			support.setOrthographicProjection(rec.x,rec.y, nativeWidth, nativeWidth);
-			support.applyBlendMode(true);
+			 
 			
 			
-			support.translateMatrix( -point.x, -point.y);
-			support.pushMatrix(); 
-			support.blendMode = sprite.blendMode;
-			sprite.render(support, 1.0);
-			support.popMatrix();
-			support.finishQuadBatch();
-			
-			context.drawToBitmapData(result);	
-			
-			
-			return result;*/
-			
-	 
 			if ( sprite == null) {
 				return null;
 			}
-			 
 			
-			var resultRect:Rectangle = new Rectangle();
-			sprite.getBounds(sprite, resultRect);
 			
-			var context:Context3D = Starling.context;
+			var rc:Rectangle = new Rectangle();
+			sprite.getBounds(sprite, rc);
+			
+			//var context:Context3D = Starling.context;
 			var scale:Number = Starling.contentScaleFactor;
 			
 			var nativeWidth:Number = Starling.current.stage.stageWidth;
 			var nativeHeight:Number = Starling.current.stage.stageHeight;
+			 
+			var rs:RenderSupport = new RenderSupport();
+			rs.clear();
+			rs.setOrthographicProjection(0,0,nativeWidth, nativeHeight);
 			
-			var support:RenderSupport = new RenderSupport();
-			RenderSupport.clear();
-			support.setOrthographicProjection(0,0,nativeWidth, nativeHeight);
-			support.applyBlendMode(true);
 			
-			if (sprite.parent){
-				support.transformMatrix(sprite.parent);
-			}
+			rs.translateMatrix(-rc.x, -rc.y); // move to 0,0
+			sprite.render(rs,1);
+			rs.finishQuadBatch();
 			
-			support.translateMatrix(-point.x, -point.y);
+			var returnBMPD:BitmapData = new BitmapData(rc.width, rc.height, true);
+			 
+			Starling.context.drawToBitmapData(returnBMPD);
 			
-			var result:BitmapData = new BitmapData(nativeWidth, nativeHeight, true, 0x00000000);
-			
-			support.pushMatrix();
-			
-			support.blendMode = sprite.blendMode;
-			support.transformMatrix(sprite);
-			sprite.render(support, 1.0);
-			support.popMatrix();
-			
-			support.finishQuadBatch();
-			
-			context.drawToBitmapData(result);   
-			
-			var w:Number = sprite.width;
-			var h:Number = sprite.height;
-			
-			if (w == 0 || h == 0) {
-				return null;
-			}
-			
-			var returnBMPD:BitmapData = new BitmapData(w, h, true, 0);
-			//var cropArea:Rectangle = new Rectangle(0, 0, sprite.width, sprite.height);
-			
-			returnBMPD.draw( result, null, null, null, rec, true );
 			return returnBMPD;
 			
 			
 			
 		}
-		 
+		
 		public function drawCharacter(model:Sprite,attr:Object):void
 		{
 			basemodel=model;
-			 
+			
 			var savedata:SaveGame=FloxCommand.savegame;
-			gender=attr.gender
+			gender=attr.gender;
+			
 			DebugTrace.msg("DrawManager.drawCharacter gender:"+gender);
 			
-			body=Assets.getDynamicAtlas(gender+"Body");
-			body.smoothing=TextureSmoothing.TRILINEAR;
+			var texture:Texture=Assets.getTexture(gender+"Body");
+			body=new Image(texture);
+			
+			//body=Assets.getDynamicAtlas(gender+"Body");
+			//body.smoothing=TextureSmoothing.TRILINEAR;
 			
 			var _color:Number=savedata.avatar.skincolor;
 			body.color=Color.rgb(Color.getRed(_color),Color.getGreen(_color),Color.getBlue(_color));
@@ -220,7 +172,7 @@ package utils
 				basemodel.scaleX=attr.scaleX
 				basemodel.scaleY=attr.scaleY;
 			}
-		
+			
 		}
 		public function updateBaseModel(target:String):void
 		{
@@ -236,12 +188,13 @@ package utils
 			//DebugTrace.msg("DrawManager.updateBaseModel featuresIndex:"+ featuresIndex)
 			var pos:Point=switchPosition(target);
 			var _color:Number;
+			var xml:XML=new XML();
 			switch(target)
 			{
 				case "Hair":
 					
 					var texture:Texture=Assets.getTexture(gender+"HairStyle");
-					var xml:XML=Assets.getAtalsXML(gender+"HairStyleXML");
+					xml=Assets.getAtalsXML(gender+"HairStyleXML");
 					hairAtlas = new TextureAtlas(texture, xml);
 					var atlas_texture:Texture=hairAtlas.getTexture("hair"+hairIndex);
 					hair=new Image(atlas_texture);
@@ -288,6 +241,8 @@ package utils
 					atlas_texture=clothesAtlas.getTexture("clothes"+clothesIndex);
 					clothes=new Image(atlas_texture);
 					clothes.smoothing=TextureSmoothing.TRILINEAR;
+					//clothes.scaleX=2;
+					//clothes.scaleY=2;
 					clothes.name=target;
 					clothes.x=pos.x;
 					clothes.y=pos.y;
@@ -300,7 +255,7 @@ package utils
 					var featureTexture:Texture=featureAtlas.getTexture("features"+featuresIndex);
 					features=new Image(featureTexture);
 					features.smoothing=TextureSmoothing.TRILINEAR;
-					features.name=target
+					features.name=target;
 					features.x=pos.x
 					features.y=pos.y;
 					basemodel.addChild(features);
@@ -345,26 +300,28 @@ package utils
 		}
 		public function playerModelCopy(target:Sprite,pos:Point):void
 		{
-			 
 			
-		
-				
-				var bitmapdata:BitmapData=copyAsBitmapData(basemodel,new Rectangle(0,0,basemodel.width,basemodel.height),new Point(0,-50)); 
-				var bmp:BitmapData=new BitmapData(basemodel.width,550);
-				bmp.copyPixels(bitmapdata,new Rectangle(0,0,basemodel.width,550),new Point(0,0));
-				
-				var profileTexture:Texture = Texture.fromBitmapData(bmp);
-				var _player_icon:Sprite=new Sprite();
-				_player_icon.useHandCursor=true;
-				_player_icon.name="Player";
-				var img:Image=new Image(profileTexture);
-				img.smoothing=TextureSmoothing.TRILINEAR;
-				img.x=pos.x;
-				img.y=pos.y;
-			  
-				target.addChild(img);
-				
-			 
+			//basemodel.clipRect=new Rectangle(0,-30,basemodel.width,540);
+			//basemodel.x=pos.x;
+			//basemodel.y=pos.y;
+			target.addChild(basemodel);
+			/*
+			var bitmapdata:BitmapData=copyAsBitmapData(basemodel,new Rectangle(0,0,basemodel.width,basemodel.height),new Point(0,-50)); 
+			var bmp:BitmapData=new BitmapData(basemodel.width,550);
+			bmp.copyPixels(bitmapdata,new Rectangle(0,0,basemodel.width,550),new Point(0,0));
+			
+			var profileTexture:Texture = Texture.fromBitmapData(bmp);
+			var _player_icon:Sprite=new Sprite();
+			_player_icon.useHandCursor=true;
+			_player_icon.name="Player";
+			var img:Image=new Image(profileTexture);
+			img.smoothing=TextureSmoothing.TRILINEAR;
+			img.x=pos.x;
+			img.y=pos.y;
+			
+			target.addChild(img);
+			*/
+			
 			
 		}
 		public function drawPlayerProfileIcon(target:Sprite,scale:Number,point:Point):void
@@ -373,15 +330,14 @@ package utils
 			var player_icon:Sprite=target;
 			player_icon.useHandCursor=true;
 			var shapObj:Object=new Object()
-			 
-			var rec:Rectangle=new Rectangle(-85,-5,100,100);
-			var copyPixelRec:Rectangle=new Rectangle(0,0,100,100);
+			
+			var rec:Rectangle=new Rectangle(-87,-21,100,100);
+			
 			if(gender=="Female")
 			{
-				rec=new Rectangle(-58,10,100,100);
-				copyPixelRec=new Rectangle(0,0,100,100);
+				rec=new Rectangle(-82,-6,100,100);
 			}	
-				
+			
 			var texture:Texture=Assets.getTexture("ProEmpty");
 			var bgImg:Image=new Image(texture);
 			bgImg.pivotX=bgImg.width/2;
@@ -393,39 +349,29 @@ package utils
 			var maskImg:Image=new Image(texture);
 			maskImg.width=rec.width;
 			maskImg.height=rec.height;
-			 
-			var maskDisplayObject:Sprite = new Sprite();
-			maskDisplayObject.addChild(basemodel);
-			maskDisplayObject.x=rec.x;
-			maskDisplayObject.y=rec.y;
+			
+			basemodel.clipRect=new Rectangle(0,-50,150,150);
+			basemodel.x=rec.x;
+			basemodel.y=rec.y;
+			player_icon.addChild(basemodel);
+			
 			var maskedDisplayObject:PixelMaskDisplayObject = new PixelMaskDisplayObject(-1, false);
-			maskedDisplayObject.addChild(maskDisplayObject);
+			maskedDisplayObject.addChild(basemodel);
 			maskedDisplayObject.mask=maskImg;
+			
+			maskedDisplayObject.x=-(player_icon.width/2);
+			maskedDisplayObject.y=-(player_icon.height/2);
 			player_icon.addChild(maskedDisplayObject);
 			
-			var bitmapdata:BitmapData=copyAsBitmapData(maskedDisplayObject,new Rectangle(0,0,maskedDisplayObject.width,maskedDisplayObject.height),new Point(0,0)); 
-			var bmp:BitmapData=new BitmapData(rec.width,rec.height);
-			bmp.copyPixels(bitmapdata,copyPixelRec,new Point(0,0));
-			var profileTexture:Texture = Texture.fromBitmapData(bmp);
 			
-			var _player_icon:Sprite=new Sprite();
-			_player_icon.useHandCursor=true;
-			_player_icon.name="Player";
-			var img:Image=new Image(profileTexture);
-			img.smoothing=TextureSmoothing.TRILINEAR;
-			//trace("DrawManager img width:",img.width," ;img height:",img.height);
-			img.pivotX=img.width/2;
-			img.pivotY=img.height/2;	 
-		    _player_icon.addChild(img);
-		 
-		    player_icon.addChild(_player_icon);
-			maskedDisplayObject.removeFromParent(true);
-		 
 			//trace("DrawManager player_icon width:",player_icon.width," ;player_icon height:",player_icon.height);
 			player_icon.scaleX=0.89;
 			player_icon.scaleY=0.89;
 			player_icon.x=point.x;
 			player_icon.y=point.y;
+			
+			
+			ViewsContainer.PlayerProfile=player_icon;
 			
 		}
 		public function drawCharacterProfileIcon(target:Sprite,ch:String,scale:Number):void
@@ -433,12 +379,12 @@ package utils
 			//var fisrtword:String=ch.charAt(0).toUpperCase();
 			//var _ch:String=ch.slice(1,ch.length);
 			//ch=fisrtword+_ch;
-			DebugTrace.msg("DrawManager.drwaCharacterProfileIcon ch:"+ch);
+			//DebugTrace.msg("DrawManager.drwaCharacterProfileIcon ch:"+ch);
 			var texture:Texture=Assets.getTexture("Pro"+ch);
 			var xml:XML=Assets.getAtalsXML("Pro"+ch+"XML");
 			var atlas:TextureAtlas=new TextureAtlas(texture,xml);
-		    var mood:String=DataContainer.getFacialMood(ch);
-			DebugTrace.msg("DrawManager.drwaCharacterProfileIcon mood:"+mood);
+			var mood:String=DataContainer.getFacialMood(ch);
+			//DebugTrace.msg("DrawManager.drwaCharacterProfileIcon mood:"+mood);
 			var facail_texture:Texture=atlas.getTexture(mood);
 			//var texture:Texture=Assets.getTexture("Pro"+ch);
 			var img:Image=new Image(facail_texture);
@@ -450,8 +396,25 @@ package utils
 			img.scaleX=scale;
 			img.scaleY=scale;
 			target.addChild(img);
-
 			
+			
+		}
+		public function drawNPCProfileIcon(target:Sprite,id:String,scale:Number):void
+		{
+			var texture:Texture=Assets.getTexture("NPCs");
+			var xml:XML=Assets.getAtalsXML("NPCsXML");
+			var atlas:TextureAtlas=new TextureAtlas(texture,xml);
+			var npc_texture:Texture=atlas.getTexture(id);
+			DebugTrace.msg("DrawManager.drawNPCProfileIcon id:"+id);
+			var img:Image=new Image(npc_texture);
+			img.useHandCursor=true;
+			img.name=id;
+			img.smoothing=TextureSmoothing.TRILINEAR;
+			img.pivotX=img.width/2;
+			img.pivotY=img.height/2;
+			img.scaleX=scale;
+			img.scaleY=scale;
+			target.addChild(img);
 		}
 		public function drawCircyleImage(target:Sprite):void
 		{
@@ -514,22 +477,22 @@ package utils
 		}
 		private function switchPosition(part:String):Point
 		{
-		//	
+			//	
 			var p:Point=new Point();
 			var attr:String=gender+"_"+part;
 			var pos:Object={
-				"Male_Hair":new Point(223,-33),
-				"Female_Hair":new Point(54,-45),
+				"Male_Hair":new Point(69,-30),
+				"Female_Hair":new Point(44,-17),
 				"Male_HairStyle":new Point(223,-33),
 				"Female_HairStyle":new Point(54,-39),
-				"Male_Eyes":new Point(284,135),
-				"Female_Eyes":new Point(199,106),
-				"Male_Pants":new Point(164,837),
-				"Female_Pants":new Point(99,766),
-				"Male_Clothes":new Point(125,264),
-				"Female_Clothes":new Point(119,259),
-				"Male_Features":new Point(223,0),
-				"Female_Features":new Point(152,-4)
+				"Male_Eyes":new Point(112,70),
+				"Female_Eyes":new Point(108,59),
+				"Male_Pants":new Point(-2,401),
+				"Female_Pants":new Point(16,352),
+				"Male_Clothes":new Point(-21,81),
+				"Female_Clothes":new Point(7,117),
+				"Male_Features":new Point(80,3),
+				"Female_Features":new Point(30,-14)
 			}
 			p=pos[attr];
 			return p;
@@ -637,7 +600,7 @@ package utils
 				currentScene=DataContainer.currentScene+"Night";
 			}
 			var scene:String=DataContainer.currentScene;
-			if(scene=="BeachScene" || scene=="ParkScene" || scene=="PierScene" || scene=="LovemoreMansionScene")
+			if(scene=="BeachScene" || scene=="ParkScene" || scene=="PierScene" || scene=="LovemoreMansionScene" || scene=="HotelScene")
 			{
 				var bgTexture:Texture=Assets.getTexture(currentScene);
 				var bgImg:*=new Image(bgTexture);
@@ -645,12 +608,12 @@ package utils
 			}
 			else
 			{
-				DebugTrace.msg("DrawManager.drawBackground  currentScene:"+DataContainer.currentScene);
+				
 				bgImg=Assets.getDynamicAtlas(DataContainer.currentScene);
 				bgImg.stop();
 			}
 			
-			
+			DebugTrace.msg("DrawManager.drawBackground  currentScene:"+DataContainer.currentScene);
 			return bgImg
 			
 		}

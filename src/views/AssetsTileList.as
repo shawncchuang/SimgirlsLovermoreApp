@@ -77,14 +77,14 @@ package views
 			{
 				try
 				{
-				var profileScene:starling.display.Sprite= ViewsContainer.ExcerptBox;
-				profileScene.dispatchEventWith("CLEAR");
+					var profileScene:starling.display.Sprite= ViewsContainer.ExcerptBox;
+					profileScene.dispatchEventWith("CLEAR");
 				}
 				catch(e:Error)
 				{
 					DebugTrace.msg("AssetsTileList.init No Assets");
 				}
-		    }
+			}
 			
 		}
 		private function initAssetsGrid():void
@@ -200,9 +200,9 @@ package views
 			if(_type=="dating_assets_form")
 			{
 				var assets:Object=flox.getSyetemData("assets");
-				 
+				
 				var assets_item:Object=assets[item_id];
-				 
+				
 				itemscon=new UILoader();
 				itemscon.source=assets_item.data;
 				itemscon.width=60;
@@ -223,7 +223,7 @@ package views
 			var sysAssets:Object=flox.getSyetemData("assets");
 			var owned_assets:Object=flox.getSaveData("owned_assets");
 			var assetslist:Array=owned_assets.player;
-			var dating:String=DataContainer.currentDating;
+			var dating:String=flox.getSaveData("dating")
 			var datingItems:Array=owned_assets[dating];
 			var index:Number=searchID(assetslist,item_id);
 			DebugTrace.msg("AssetsTileList.sentItemHandler  dating:"+dating+" ;item_id:"+item_id)
@@ -231,13 +231,13 @@ package views
 			qty--;
 			if(qty==0)
 			{
-			
+				
 				var _assetslist:Array=assetslist.splice(index);
 				_assetslist.shift();
 				var new_assetslist:Array=assetslist.concat(_assetslist);
 				/*for(var j:uint=0;j<new_assetslist.length;j++)
 				{
-					DebugTrace.msg("AssetsTileList.sentItemHandler   assetslist:"+JSON.stringify(new_assetslist[j]));
+				DebugTrace.msg("AssetsTileList.sentItemHandler   assetslist:"+JSON.stringify(new_assetslist[j]));
 				}
 				//for*/
 				owned_assets.player=new_assetslist;
@@ -268,12 +268,14 @@ package views
 				datingItems[index1].qty=qty;
 			}
 			//if
-		
-			owned_assets[dating]=datingItems;
-			var savegame:SaveGame= FloxCommand.savegame;
-			savegame.owned_assets=owned_assets;
-			FloxCommand.savegame=savegame;
 			
+			if(dating)
+			{
+				owned_assets[dating]=datingItems;
+				var savegame:SaveGame= FloxCommand.savegame;
+				savegame.owned_assets=owned_assets;
+				FloxCommand.savegame=savegame;
+			}
 			removeChild(datagrid);
 			removeChild(assetstags);
 			init();
@@ -325,7 +327,8 @@ package views
 				var assets_item:Object=assets[id]
 				//DebugTrace.msg(assets_item.cate);
 				var _data:Object=new Object();
-				_data.id=id
+				_data.id=id;
+				_data.type="assets";
 				profileScene.dispatchEventWith("UPDATE",false,_data);
 				
 			}

@@ -25,7 +25,7 @@ package views
 	
 	import utils.DebugTrace;
 	import utils.ViewsContainer;
-	
+	import data.DataContainer;
 	public class ArenaScene extends Scenes
 	{
 		private var speaker_sprite:Sprite;
@@ -45,6 +45,7 @@ package views
 			button=new Button(pointbgTexture);
 			addChild(button);
 			button.addEventListener(Event.TRIGGERED, onSceneTriggered);*/
+			DataContainer.BatttleScene="Arena";
 			ViewsContainer.currentScene=this;
 			this.addEventListener(TopViewEvent.REMOVE,doTopViewDispatch);
 			speaker_sprite=new Sprite();

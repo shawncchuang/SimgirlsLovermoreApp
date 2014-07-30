@@ -197,34 +197,34 @@ package views
 			if(gender=="Male")
 			{
 				basemodel=new Sprite();
-				basemodel.x=394;
-				basemodel.y=90;
+				basemodel.x=380;
+				basemodel.y=106;
 				addChild(basemodel);
 				
 				var modelAttr:Object=new Object();
 				modelAttr.gender=gender;
-				modelAttr.width=220;
-				modelAttr.height=635;
+				modelAttr.width=276;
+				modelAttr.height=661;
 				
 				drawcom.drawCharacter(basemodel,modelAttr);
 				drawcom.updateBaseModel("Hair");
-				
 				drawcom.updateBaseModel("Eyes");
 				drawcom.updateBaseModel("Pants");
+				drawcom.updateBaseModel("Clothes");
 				drawcom.updateBaseModel("Features");
 			}
 			else
 			{
 				
 				basemodel=new Sprite();
-				basemodel.x=418;
-				basemodel.y=108;
+				basemodel.x=372;
+				basemodel.y=169;
 				addChild(basemodel);
 				
 				modelAttr=new Object();
 				modelAttr.gender=gender;
-				modelAttr.width=170;
-				modelAttr.height=612;
+				modelAttr.width=262;
+				modelAttr.height=613;
 				drawcom.drawCharacter(basemodel,modelAttr);
 				drawcom.updateBaseModel("Eyes");
 				drawcom.updateBaseModel("Pants");
@@ -283,16 +283,16 @@ package views
 			if(gender=="Male")
 			{
 				hairImg.name="HairDemo";
-				hairdemo.x=109;
-				hairdemo.y=290.55; 
-				hairImg.width=113;
-				hairImg.height=155;
+				hairdemo.x=100;
+				hairdemo.y=276; 
+				hairImg.width=130;
+				hairImg.height=204;
 				hairdemo.addChild(hairImg);
 			}else
 			{
 				
-				hairdemo.x=71.5;
-				hairdemo.y=300; 
+				hairdemo.x=77;
+				hairdemo.y=286; 
 				
 				var copy_sprite:Sprite=new Sprite();
 				copy_sprite.addChild(hairImg);
@@ -301,17 +301,18 @@ package views
 				properties.transparent=true;
 				properties.bgcolor=0x000000;
 				drawcom.setBitmapPorperties(properties);
-				var rec:Rectangle=new Rectangle(0,0,386,300);
+				var rec:Rectangle=new Rectangle(0,0,175,158);
 				var point:Point=new Point(0,0);
-				var bitmapdata:BitmapData=drawcom.copyAsBitmapData(copy_sprite,rec,point); 
 				
-				var copy_hairImg_ttr:Texture = Texture.fromBitmapData(bitmapdata);
-				var copy_hairImg:Image = new Image(copy_hairImg_ttr);
-				copy_hairImg.smoothing=TextureSmoothing.TRILINEAR;
-				copy_hairImg.name="HairDemo";
-				copy_hairImg.width=180;
-				copy_hairImg.height=201;
-				hairdemo.addChild(copy_hairImg);
+				//var bitmapdata:BitmapData=drawcom.copyAsBitmapData(copy_sprite,rec,point); 
+				//var copy_hairImg_ttr:Texture = Texture.fromBitmapData(bitmapdata);
+			//	var copy_hairImg:Image = new Image(copy_hairImg_ttr);
+				//copy_hairImg.smoothing=TextureSmoothing.TRILINEAR;
+				//copy_hairImg.name="HairDemo";
+				//copy_hairImg.width=175;
+				//copy_hairImg.height=200;
+				 
+				//hairdemo.addChild(copy_hairImg);
 				copy_sprite.removeFromParent();
 				
 				 
@@ -320,10 +321,7 @@ package views
 			addChild(hairdemo);
 			DebugTrace.msg("CharacterDesignScene.addHairSytleDemo haircolor:"+haircolor+" ; hairdemo:"+hairdemo);
 			
-			//swapChildren(haircolor,hairdemo);
-			 
-			//if(gender=="Male")
-			//swapChildren(fake_head,hairdemo);
+			
 			 
 			 
 		}
@@ -423,10 +421,10 @@ package views
 				var feateursTexture:Texture=featuresAtlas.getTexture("features"+featuresIndex);
 				var featuresImg:Image=new Image(feateursTexture);
 				featuresImg.name="FeaturesDemo";
-				featuresdemo.x=835;
-				featuresdemo.y=532; 
-				featuresImg.width=31;
-				featuresImg.height=30;
+				featuresdemo.x=795;
+				featuresdemo.y=440; 
+				featuresImg.width=113;
+				featuresImg.height=123;
 				featuresdemo.addChild(featuresImg);
 				addChild(featuresdemo);
 				updateSaveData();

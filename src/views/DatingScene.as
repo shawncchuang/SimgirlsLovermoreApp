@@ -41,6 +41,7 @@ package views
 	
 	public class DatingScene extends Scenes
 	{
+		private var font:String="SimFutura";
 		private var base_sprite:Sprite;
 		private var character:MovieClip;
 		private var filter:FilterInterface=new FilterManager();
@@ -212,7 +213,7 @@ package views
 			}
 			content+=_love;
 			loveSprite=new Sprite();
-			var moodTxt:TextField=new TextField(200,50,content,"Neogrey Medium",20,0xFFFFFF);
+			var moodTxt:TextField=new TextField(200,50,content,"SimNeogreyMedium",20,0xFFFFFF);
 			moodTxt.hAlign="center";
 			loveSprite.addChild(moodTxt);
 			
@@ -395,18 +396,18 @@ package views
 			datingTopic.addChild(rel_txt);*/
 			var loveObj:Object=flox.getSaveData("love");
 			
-			playerloveTxt=new TextField(120,55,loveObj.player,"Futura",40,0xFFFFFF);
+			playerloveTxt=new TextField(120,55,loveObj.player,font,40,0xFFFFFF);
 			playerloveTxt.x=290;
 			playerloveTxt.y=54;
 			datingTopic.addChild(playerloveTxt);
 			 
-			var ch_love_txt:TextField=new TextField(55,55,dating+"\nLove","Futura",18,0xFFFFFF);
+			var ch_love_txt:TextField=new TextField(55,55,dating+"\nLove",font,18,0xFFFFFF);
 			ch_love_txt.x=420;
 			ch_love_txt.y=54;
 			datingTopic.addChild(ch_love_txt);
 				
 			
-			chloveTxt=new TextField(120,55,loveObj[dating],"Futura",40,0xFFFFFF);
+			chloveTxt=new TextField(120,55,loveObj[dating],font,40,0xFFFFFF);
 			chloveTxt.x=500;
 			chloveTxt.y=54;
 			datingTopic.addChild(chloveTxt);
@@ -572,9 +573,11 @@ package views
 			{
 				//success dating
 				chatlist=talking.y;
-				var savegame:SaveGame=FloxCommand.savegame;
+			/*	var savegame:SaveGame=FloxCommand.savegame;
 				savegame.date=dating;
 				FloxCommand.savegame=savegame;
+				*/
+				flox.save("dating",dating);
 				
 				var gameinfo:Sprite=ViewsContainer.gameinfo;
 				var _data:Object=new Object();
@@ -641,7 +644,7 @@ package views
 			
 			
 			
-			chatTxt=new TextField(255,190,chat,"Futura",20,0x000000)
+			chatTxt=new TextField(255,190,chat,font,20,0x000000)
 			chatTxt.hAlign="left";
 			chatTxt.x=634;
 			chatTxt.y=110;

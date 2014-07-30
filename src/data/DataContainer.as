@@ -12,11 +12,16 @@ package data
 	
 	public class DataContainer
 	{
+		
+	
+		
+		private static var version:String;
 		private static var _deadline:Boolean;
 		private static var scene:String;
 		private static var label:String;
 		private static var player_talkllibrary:Array;
 		private static var ch_talkllibrary:Array;
+		private static var npc_talkinglibrary:Array;
 		private static var playerdata:Object;
 		
 		private static var _battle:Boolean;
@@ -37,6 +42,17 @@ package data
 		private static var _healArea:Array;
 		private static var _stageID:Number;
 		private static var cpuID:Number;
+		private static var skills:Array;
+		private static var _battleScene:String;
+		private static var battlecode:String;
+		public static function set currentVersion(ver:String):void
+		{
+			version=ver;
+		}
+		public static function get currentVersion():String
+		{
+			return version
+		}
 		public static function set deadline(boolean:Boolean):void
 		{
 			_deadline=boolean;
@@ -83,6 +99,16 @@ package data
 			return ch_talkllibrary;
 		}
 		
+		public static function set NpcTalkinglibrary(re:Array):void
+		{
+			
+			npc_talkinglibrary=re;
+		}
+		public static function get NpcTalkinglibrary():Array
+		{
+			
+			return npc_talkinglibrary;
+		}
 		public static function set player(_data:Object):void
 		{
 			
@@ -129,821 +155,7 @@ package data
 			var num_currency:String=String(currecy.split(localID).join(""));
 			return 	num_currency;
 		}
-		
-		/*
-		public static function get AssetsData():Object
-		{
-		
-		var assetsData:Object =
-		{
-		
-		cons_1_1:
-		{
-		cate:"cons",
-		name:"Chocolae",
-		brand:"Lin",
-		price:"20",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE.Must be used during sleep. Only Captain can use this skill during battle. Captain must be in the front row.\nEffect: All enemy will stop moving for one round. "
-		},
-		cons_1_2:
-		{
-		cate:"cons",
-		name:"Chocolae",
-		brand:"Ferro",
-		price:"30",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		cons_1_3:
-		{
-		cate:"cons",
-		name:"Chocolae",
-		brand:"Nesie",
-		price:"10",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		cons_1_4:
-		{
-		cate:"cons",
-		name:"Chocolae",
-		brand:"Herley",
-		price:"10",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		cons_1_5:
-		{
-		cate:"cons",
-		name:"Chocolae",
-		brand:"Godiff",
-		price:"50",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		cons_2_1:
-		{
-		cate:"cons",
-		name:"Perfume",
-		brand:"Dio",
-		price:"20",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		cons_2_2:
-		{
-		cate:"cons",
-		name:"Perfume",
-		brand:"S&G",
-		price:"30",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		cons_2_3:
-		{
-		cate:"cons",
-		name:"Perfume",
-		brand:"Berry",
-		price:"40",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		cons_2_4:
-		{
-		cate:"cons",
-		name:"Perfume",
-		brand:"Chanelle",
-		price:"40",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		cons_2_5:
-		{
-		cate:"cons",
-		name:"Perfume",
-		brand:"Guccy",
-		price:"60",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		cons_3_1:
-		{
-		cate:"cons",
-		name:"Flowers",
-		brand:"Dio",
-		price:"10",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		cons_3_2:
-		{
-		cate:"cons",
-		name:"Flowers",
-		brand:"S&G",
-		price:"10",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		cons_3_3:
-		{
-		cate:"cons",
-		name:"Flowers",
-		brand:"Berry",
-		price:"30",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		cons_3_4:
-		{
-		cate:"cons",
-		name:"Flowers",
-		brand:"Chanelle",
-		price:"40",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		cons_3_5:
-		{
-		cate:"cons",
-		name:"Flowers",
-		brand:"Guccy",
-		price:"20",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		misc_4_1:
-		{
-		cate:"misc",
-		name:"Book",
-		brand:"Lenus L.",
-		price:"20",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		misc_4_2:
-		{
-		cate:"misc",
-		name:"Book",
-		brand:"Ryuji S.",
-		price:"30",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		misc_4_3:
-		{
-		cate:"misc",
-		name:"Book",
-		brand:"Junta M.",
-		price:"40",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		misc_4_4:
-		{
-		cate:"misc",
-		name:"Book",
-		brand:"Sana R.",
-		price:"50",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		misc_4_5:
-		{
-		cate:"misc",
-		name:"Book",
-		brand:"Akira K.",
-		price:"10",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		misc_5_1:
-		{
-		cate:"misc",
-		name:"Game",
-		brand:"Playbox",
-		price:"30",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		misc_5_2:
-		{
-		cate:"misc",
-		name:"Game",
-		brand:"X-station",
-		price:"40",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		misc_5_3:
-		{
-		cate:"misc",
-		name:"Game",
-		brand:"PC",
-		price:"40",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		misc_5_4:
-		{
-		cate:"misc",
-		name:"Game",
-		brand:"Ninga",
-		price:"40",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		misc_5_5:
-		{
-		cate:"misc",
-		name:"Game",
-		brand:"Handhelds",
-		price:"40",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		misc_6_1:
-		{
-		cate:"misc",
-		name:"Plush Toy",
-		brand:"Pikumon",
-		price:"40",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		misc_6_2:
-		{
-		cate:"misc",
-		name:"Plush Toy",
-		brand:"Desly",
-		price:"80",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		misc_6_3:
-		{
-		cate:"misc",
-		name:"Plush Toy",
-		brand:"Teddi",
-		price:"30",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		misc_6_4:
-		{
-		cate:"misc",
-		name:"Simgirls",
-		brand:"Teddi",
-		price:"20",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		misc_6_5:
-		{
-		cate:"misc",
-		name:"Simgirls",
-		brand:"Super Heros",
-		price:"100",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		misc_10_1:
-		{
-		cate:"misc",
-		name:"Electronic Device",
-		brand:"Semseng",
-		price:"650",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		misc_10_2:
-		{
-		cate:"misc",
-		name:"Electronic Device",
-		brand:"Soni",
-		price:"350",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		misc_10_3:
-		{
-		cate:"misc",
-		name:"Electronic Device",
-		brand:"Orange",
-		price:"400",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		misc_10_4:
-		{
-		cate:"misc",
-		name:"Electronic Device",
-		brand:"Blueberry",
-		price:"420",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		misc_10_5:
-		{
-		cate:"misc",
-		name:"Electronic Device",
-		brand:"Koogle",
-		price:"300",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		misc_11_1:
-		{
-		cate:"misc",
-		name:"Art",
-		brand:"Vincent",
-		price:"1000",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		misc_11_2:
-		{
-		cate:"misc",
-		name:"Art",
-		brand:"Leonardo",
-		price:"1500",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		misc_11_3:
-		{
-		cate:"misc",
-		name:"Art",
-		brand:"Pablo",
-		price:"2000",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		misc_11_4:
-		{
-		cate:"misc",
-		name:"Art",
-		brand:"Raphael",
-		price:"1000",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		misc_11_5:
-		{
-		cate:"misc",
-		name:"Art",
-		brand:"Claude",
-		price:"2000",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		misc_13_1:
-		{
-		cate:"misc",
-		name:"Camera",
-		brand:"Canno",
-		price:"1100",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		misc_13_2:
-		{
-		cate:"misc",
-		name:"Camera",
-		brand:"Niko",
-		price:"1200",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		misc_13_3:
-		{
-		cate:"misc",
-		name:"Camera",
-		brand:"Pantax",
-		price:"1300",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		misc_13_4:
-		{
-		cate:"misc",
-		name:"Camera",
-		brand:"Rica",
-		price:"2500",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		misc_13_5:
-		{
-		cate:"misc",
-		name:"Camera",
-		brand:"Luminar",
-		price:"3000",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		app_7_1:
-		{
-		cate:"app",
-		name:"Earrings",
-		brand:"Cartia",
-		price:"500",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		app_7_2:
-		{
-		cate:"app",
-		name:"Earrings",
-		brand:"Tiffy",
-		price:"900",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		app_7_3:
-		{
-		cate:"app",
-		name:"Earrings",
-		brand:"Hermas",
-		price:"1500",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		app_7_4:
-		{
-		cate:"app",
-		name:"Earrings",
-		brand:"Oharu",
-		price:"750",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		app_7_5:
-		{
-		cate:"app",
-		name:"Earrings",
-		brand:"Chopp",
-		price:"950",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		app_8_1:
-		{
-		cate:"app",
-		name:"Necklace",
-		brand:"Cartia",
-		price:"950",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		app_8_2:
-		{
-		cate:"app",
-		name:"Necklace",
-		brand:"Tiffy",
-		price:"800",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		app_8_3:
-		{
-		cate:"app",
-		name:"Necklace",
-		brand:"Hermas",
-		price:"900",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		app_8_4:
-		{
-		cate:"app",
-		name:"Necklace",
-		brand:"Oharu",
-		price:"900",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		app_8_5:
-		{
-		cate:"app",
-		name:"Necklace",
-		brand:"Chopp",
-		price:"1000",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		app_9_1:
-		{
-		cate:"app",
-		name:"Shoes",
-		brand:"Dio",
-		price:"1000",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		app_9_2:
-		{
-		cate:"app",
-		name:"Shoes",
-		brand:"Berry",
-		price:"1300",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		app_9_3:
-		{
-		cate:"app",
-		name:"Shoes",
-		brand:"Bali",
-		price:"1400",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		app_9_4:
-		{
-		cate:"app",
-		name:"Shoes",
-		brand:"S&G",
-		price:"900",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		app_9_5:
-		{
-		cate:"app",
-		name:"Shoes",
-		brand:"Coast",
-		price:"1200",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		app_12_1:
-		{
-		cate:"app",
-		name:"Small Leather Good",
-		brand:"Louis Vernon",
-		price:"1500",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		app_12_2:
-		{
-		cate:"app",
-		name:"Small Leather Good",
-		brand:"Hermas",
-		price:"1600",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		app_12_3:
-		{
-		cate:"app",
-		name:"Small Leather Good",
-		brand:"Guccy",
-		price:"1100",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		app_12_4:
-		{
-		cate:"app",
-		name:"Small Leather Good",
-		brand:"Chanelle",
-		price:"1800",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		app_12_5:
-		{
-		cate:"app",
-		name:"Small Leather Good",
-		brand:"Parna",
-		price:"2100",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		app_14_1:
-		{
-		cate:"app",
-		name:"Handbag",
-		brand:"Louis",
-		price:"2500",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		app_14_2:
-		{
-		cate:"app",
-		name:"Handbag",
-		brand:"Hermas",
-		price:"3100",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		app_14_3:
-		{
-		cate:"app",
-		name:"Handbag",
-		brand:"Guccy",
-		price:"2800",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		app_14_4:
-		{
-		cate:"app",
-		name:"Handbag",
-		brand:"Chanelle",
-		price:"3600",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		app_14_5:
-		{
-		cate:"app",
-		name:"Handbag",
-		brand:"Parna",
-		price:"4000",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		app_15_1:
-		{
-		cate:"app",
-		name:"Watch",
-		brand:"Rolix",
-		price:"120000",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		app_15_2:
-		{
-		cate:"app",
-		name:"Watch",
-		brand:"Cartia",
-		price:"120000",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		app_15_3:
-		{
-		cate:"app",
-		name:"Watch",
-		brand:"Sigma",
-		price:"130000",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		app_15_4:
-		{
-		cate:"app",
-		name:"Watch",
-		brand:"Hermas",
-		price:"150000",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		app_15_5:
-		{
-		cate:"app",
-		name:"Watch",
-		brand:"Tinsot",
-		price:"900",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		app_16_1:
-		{
-		cate:"app",
-		name:"Diamond Ring",
-		brand:"Cartia",
-		price:"130000",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		app_16_2:
-		{
-		cate:"app",
-		name:"Diamond Ring",
-		brand:"Tiffy",
-		price:"140000",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		app_16_3:
-		{
-		cate:"app",
-		name:"Diamond Ring",
-		brand:"Boboli",
-		price:"150000",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		app_16_4:
-		{
-		cate:"app",
-		name:"Diamond Ring",
-		brand:"Hermas",
-		price:"200000",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		},
-		app_16_5:
-		{
-		cate:"app",
-		name:"Diamond Ring",
-		brand:"Chopp",
-		price:"10000",
-		blackstore:"0",
-		data:"images/items/cons_1_1.png",
-		exc:"Increase 100% of SE."
-		}
-		
-		
-		}
-		return assetsData;
-		}
-		
-		*/
+	
 		private var chlikesScene:Array;
 		public function initChacacterLikeScene():void
 		{
@@ -1303,6 +515,31 @@ package data
 		public static function get setCputID():Number
 		{
 			return  cpuID;
+		}
+		public static function set skillsLabel(list:Array):void
+		{
+			skills=list;
+		}
+		public static function get skillsLabel():Array
+		{
+			return skills;
+		}
+		public static function set BatttleScene(name:String):void
+		{
+			//Story , Arena
+			_battleScene=name;
+		}
+		public static function get BatttleScene():String
+		{
+			return _battleScene;
+		}
+		public static  function set battleCode(code:String):void
+		{
+			battlecode=code;
+		}
+		public static  function get battleCode():String
+		{
+			return battlecode;
 		}
 	}
 }

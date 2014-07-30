@@ -8,6 +8,8 @@ package views
 	import controller.SceneCommnad;
 	import controller.SceneInterface;
 	
+	import data.DataContainer;
+	
 	import events.SceneEvent;
 	
 	import model.Scenes;
@@ -26,7 +28,6 @@ package views
 	
 	import utils.DebugTrace;
 	import utils.ViewsContainer;
-    import data.DataContainer;
 	public class MenuScene extends Scenes
 	{
 		private var scencom:SceneInterface=new SceneCommnad();
@@ -91,10 +92,17 @@ package views
 		}
 		private function doCannelHandler():void
 		{
+			
 			click_type=DataContainer.currentLabel;
 			DebugTrace.msg("MenuScene.doCencaleHandler click_type:"+click_type);
 			//click_type="MainScene";
+			
+			var infobar:Sprite=ViewsContainer.gameinfo;
+			infobar.dispatchEventWith("DRAW_PROFILE");
+			
 			doFadeoutTransatoin();
+			
+			
 			
 		}
 		private function onNetworkComplete():void

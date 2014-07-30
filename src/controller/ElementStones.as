@@ -7,7 +7,7 @@ package controller
 	public interface ElementStones
 	{
 		function initStoneBar(menu:Sprite):void
-		function readyElementStones():void
+		function readyElementStones(cate:String=null):void
 		function releaseStones(readystones:Array):void
 		function spentStones():void
 		function doSpentStones():void

@@ -118,11 +118,14 @@ package views
 		private function initCharacter():void
 		{
 			
-			var dating:String=DataContainer.currentDating;
-			var character:MovieClip=Assets.getDynamicAtlas(dating);
-			character.x=260;
-			
-			addChild(character);
+			var dating:String=flox.getSaveData("dating");
+			if(dating)
+			{
+				var character:MovieClip=Assets.getDynamicAtlas(dating);
+				character.x=260;
+				
+				addChild(character);
+			}
 		}
 		
 		private function initBubble():void
@@ -390,7 +393,7 @@ package views
 		{
 			Starling.juggler.removeTweens(bubble);
 			
-			var chatTxt:TextField=new TextField(255,190,sentence,"Futura",20,0x000000)
+			var chatTxt:TextField=new TextField(255,190,sentence,"SimImpact",20,0x000000)
 			chatTxt.hAlign="left";
 			chatTxt.x=634;
 			chatTxt.y=110;
@@ -401,7 +404,7 @@ package views
 		{
 			var scene:String;
 			var scenelikes:Object=flox.getSaveData("scenelikes");
-			var dating:String=DataContainer.currentDating;
+			var dating:String=flox.getSaveData("dating");
 			var datinglikes:Object=scenelikes[dating];
 			//var sceneslikes:Array=new Array();
 			var sceneslist:Array=new Array();

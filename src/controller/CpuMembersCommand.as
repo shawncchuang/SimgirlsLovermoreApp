@@ -21,7 +21,7 @@ package controller
 	public class CpuMembersCommand implements CpuMembersInterface
 	{
 		// teams
-		private var teamsno:uint=10;
+		private var teamsno:uint=11;
 		// maxsium members in a team
 		private var mem_perteam:uint=8;
 		private var flox:FloxInterface=new FloxCommand();
@@ -32,19 +32,23 @@ package controller
 		private static var cputeam:Array=new Array();
 		//private var cpu_power:Array;
 		//private var memberscom:MembersInterface=new MemebersCommand();
-		private var combinTeam:String="t0";
+		//private var combinTeam:String="t0";
 		private var cpuIndex:Number=0;
 		private var gems_req:Number=0;
 		//Attack
-		private var atkPers:Array=[15,15,40,75,50];
+		//private var atkPers:Array=[15,15,40,75,50];
+		//private var atkPers:Array=[15,15,40,75,30];
+		private var atkPers:Array=[10,15,30,60,30];
 		private var atklist:Array=["f3,a3,w3,e3","f2,e2","f1,a1,w1,e1","f0,a1,w1,e0","a0,w0"];
 		//Healing
 		//SE current lv_gems requirement
 		private var se_lv:String="0";
-		private var healgems:Object={"0_1":0,"0_2":0,"0_3":8,"0_5":8,
+		private var healgems:Object={"0_1":0,"0_2":0,"0_3":0,"0_5":3,
 			"1_1":0,"1_2":20,"1_3":12,"1_5":4,
 			"2_1":10,"2_2":25,"2_3":8,"2_5":2,
-			"3_1":30,"3_2":25,"3_3":8,"3_5":1}
+			"3_1":30,"3_2":25,"3_3":8,"3_5":1};
+		private var bossName:Object=new Object();
+		private var cpu:String="";
 		public static function set cputeamMember(members:Array):void
 		{
 			//cpu member
@@ -63,6 +67,9 @@ package controller
 		public  function setupCPU():void
 		{
 			
+			
+			
+			
 			var cpu_teams:Object=flox.getSaveData("cpu_teams");
 			var elements:Array=Config.elements;
 			//setup  se,id,element
@@ -71,9 +78,9 @@ package controller
 				
 				for(var j:uint=0;j<mem_perteam;j++)
 				{
+					var id:String="t"+i+"_"+j;
 					
 					var member:Object=new Object();
-					var id:String="t"+i+"_"+j;
 					member.id=id;
 					member.from="cpu";
 					member.target="";
@@ -91,19 +98,35 @@ package controller
 			var savegame:SaveGame=FloxCommand.savegame;
 			savegame.cpu_teams=cpu_teams;
 			FloxCommand.savegame=savegame;
-			
 		}
+		
 		public  function setupBattleTeam():void
 		{
 			var membersEffect:Object=DataContainer.MembersEffect;
-			var date:String=flox.getSaveData("date").split(".")[1];
-			var month:String=flox.getSaveData("date").split(".")[2];
+			
 			//DebugTrace.msg("CpuMembersCommand. setupBattleTeam month:"+month+", date:"+date); 
-			cpuIndex=Config.team_schedule.indexOf(month+"_"+date)%teamsno;
-			//DebugTrace.msg("CpuMembersCommand. setupBattleTeam cpuIndex:"+cpuIndex); 
+			var scene:String=DataContainer.BatttleScene;
+			if(scene=="Arena")
+			{
+				var date:String=flox.getSaveData("date").split(".")[1];
+				var month:String=flox.getSaveData("date").split(".")[2];
+				cpuIndex=Config.team_schedule.indexOf(month+"_"+date)%teamsno;
+				
+				//fake CPU index
+				cpuIndex=2;
+			}
+			else
+			{
+				var battleCode:String=DataContainer.battleCode;
+				//var current_switch:String=flox.getSaveData("current_switch").split("|")[0];
+				cpuIndex=flox.getSyetemData("story_battle")[battleCode];
+				
+			}
+			DebugTrace.msg("CpuMembersCommand. setupBattleTeam cpuIndex:"+cpuIndex); 
 			DataContainer.setCputID=cpuIndex;
 			var teams:Object=flox.getSaveData("cpu_teams");
 			team=new Array();
+			bossName=Config.bossName;
 			for(var t:uint=0;t<mem_perteam;t++)
 			{
 				var id:String="t"+cpuIndex+"_"+t;
@@ -111,6 +134,18 @@ package controller
 				{
 					teams[id].id=id;
 					teams[id].combat=0;
+					var boss_index:Number=Config.bossModels.indexOf(bossName[id]);
+					teams[id].ch_name=bossName[id];
+					/*
+					if(boss_index!=-1)
+					{
+						teams[id].ch_name=bossName[id];
+					}
+					else
+					{
+						teams[id].ch_name=Config.bossModels[id];
+					}
+					*/
 					team.push(teams[id]);
 				}
 				//if
@@ -118,7 +153,7 @@ package controller
 			//for
 			main_team.push(team[0]);
 			
-			if(main_team[0].id.indexOf(combinTeam)!=-1)
+			if(main_team[0].id.indexOf("t"+cpuIndex)!=-1)
 			{
 				main_team.push(team[1]);
 				
@@ -141,8 +176,9 @@ package controller
 			var _main_team:Array=new Array();
 			for(var m:uint=0;m<5;m++)
 			{
-				index=Math.floor(Math.random()*main_team.length);	
-				_main_team.push(main_team[index]);
+				index=Math.floor(Math.random()*main_team.length);
+				if(main_team[index])
+					_main_team.push(main_team[index]);
 				var main_team1:Array=main_team.splice(index);
 				main_team1.shift();
 				var new_main_team:Array=main_team.concat(main_team1);
@@ -150,12 +186,15 @@ package controller
 			}
 			//for
 			main_team=_main_team;
+			/*
 			for(var j:uint=0;j<backup_team.length;j++)
 			{
-				DebugTrace.msg("CpuMembersCommand.setupBattleTeam backup_team:"+JSON.stringify(backup_team[j]));
+			DebugTrace.msg("CpuMembersCommand.setupBattleTeam backup_team:"+JSON.stringify(backup_team[j]));
 			}
 			//for
+			*/
 			//main team's sel from savegame
+			DebugTrace.msg("CpuMembersCommand.setupBattleTeam main_team:"+main_team);
 			for(var k:uint=0;k<main_team.length;k++)
 			{
 				DebugTrace.msg("CpuMembersCommand.setupBattleTeam main_team:"+JSON.stringify(main_team[k]));
@@ -173,9 +212,10 @@ package controller
 			for(var i:uint=0;i<cputeam.length;i++)
 			{
 				var member:Member=cputeam[i];
+				member.getStatus();
 				var id:String=member.name;
 				var skillID:String="";
-				if(id.split("_")[1]=="0")
+				if(id.split("_")[1]=="0" && member.power.se>0 && member.status!="dizzy")
 				{
 					//commander
 					var formaiton:Boolean=commanderChangeFromation();
@@ -203,6 +243,9 @@ package controller
 						
 					}
 					//if
+					formaiton=false;
+					batttlecry=false;
+					var itemid:String="";
 					if(formaiton || batttlecry)
 					{
 						var power:Object=member.power
@@ -214,7 +257,7 @@ package controller
 						member.updatePower(power);
 						if(formaiton)
 						{
-							var itemid:String="com0";
+							itemid="com0";
 						}
 						//if
 						if(batttlecry)
@@ -222,14 +265,16 @@ package controller
 							itemid="com1";
 						}
 						//if
-						var battleEvt:BattleEvent=BattleScene.battleEvt;
-						battleEvt.itemid=itemid;
-						battleEvt.commander=member;
-						battleEvt.onCPUCommaderItems();
+						
 						DebugTrace.msg("CpuMembersCommand.commanderSkill member:"+member.name);
 						//DebugTrace.msg("CpuMembersCommand.commanderSkill power:"+JSON.stringify(power));
 					}
 					//if
+					var battleEvt:BattleEvent=BattleScene.battleEvt;
+					//battleEvt.itemid=itemid;
+					battleEvt.itemid="";
+					battleEvt.commander=member;
+					battleEvt.onCPUCommaderItems();
 					break
 				}
 				//if
@@ -242,7 +287,7 @@ package controller
 		private var skillIDs:Array;
 		private var match:Boolean=false;
 		private var atk_index:Number=0;
-		 
+		
 		private var member_id:String;
 		private function getMemberSkills():void
 		{
@@ -264,44 +309,44 @@ package controller
 		private  function checkSkillChance():void
 		{
 			//skill chance 
-		
+			
 			atk_index=0;	
 			getMemberSkills();
-			DebugTrace.msg("CpuMembersCommand.checkSkillChance atk_index="+atk_index+" ; gems_req="+gems_req+" ; sIndex="+sIndex);
+			//DebugTrace.msg("CpuMembersCommand.checkSkillChance atk_index="+atk_index+" ; gems_req="+gems_req+" ; sIndex="+sIndex);
 			var atkper:Number=atkPers[sIndex];
 			var ran:Number=Math.floor(Math.random()*100);
-			DebugTrace.msg("CpuMembersCommand.checkSkillChance ran="+ran+" <-> atkper="+atkper);
+			//DebugTrace.msg("CpuMembersCommand.checkSkillChance ran="+ran+" <-> atkper="+atkper);
 			
 			var squskill:Array=new Array();
 			atkskills=atklist[sIndex].split(",");	
 			var battledata:BattleData=new BattleData();
 			atkskills=battledata.shuffleHandle(atkskills);
-		
-			DebugTrace.msg("CpuMembersCommand.checkSkillChance skillIDs="+skillIDs);
-			DebugTrace.msg("CpuMembersCommand.checkSkillChance atkskills="+atkskills);
+			
+			//DebugTrace.msg("CpuMembersCommand.checkSkillChance skillIDs="+skillIDs);
+			//DebugTrace.msg("CpuMembersCommand.checkSkillChance atkskills="+atkskills);
 			
 			if(ran<atkper)
 			{
 				//check match
-			 
+				
 				checkSkillMatch();
 				
 			}
 			else
 			{
 				//no chance , check next skill
-				DebugTrace.msg("CpuMembersCommand.checkSkillChance : No Chance --> Next Skill ; sIndex="+sIndex);
+				//DebugTrace.msg("CpuMembersCommand.checkSkillChance : No Chance --> Next Skill ; sIndex="+sIndex);
 				
 				if(sIndex==atkPers.length-1)
 				{
 					//no any skills chance
-					DebugTrace.msg("CpuMembersCommand.checkSkillChance : No Any Chance Check around gems_req="+gems_req);
+					//DebugTrace.msg("CpuMembersCommand.checkSkillChance : No Any Chance Check around gems_req="+gems_req);
 					gems_req++;
 				}
 				//if
-			 
+				
 				checkNextSkillChance();
-				 
+				
 				
 			}
 			//if
@@ -310,11 +355,16 @@ package controller
 		private function checkSkillMatch():void
 		{
 			//member match what skill it's
-			DebugTrace.msg("CpuMembersCommand.checkSkillMatch atk_index="+atk_index+" ; gems_req="+gems_req+" ; sIndex="+sIndex);
+			//DebugTrace.msg("CpuMembersCommand.checkSkillMatch atk_index="+atk_index+" ; gems_req="+gems_req+" ; sIndex="+sIndex);
 			match=false;
 			var skillID:String="";
 			var member:Member=getMember(member_id);
-			DebugTrace.msg("CpuMembersCommand.checkSkillMatch: create cputeam["+member_id+"].power ="+JSON.stringify(member.power));
+			member.getStatus();
+			//DebugTrace.msg("CpuMembersCommand.checkSkillMatch: create cputeam["+member_id+"].power ="+JSON.stringify(member.power));
+			//DebugTrace.msg("CpuMembersCommand.checkSkillMatch: status:"+member.status);
+			var battledata:BattleData=new BattleData();
+			atkskills=battledata.shuffleHandle(atkskills);
+			//DebugTrace.msg("CpuMembersCommand.checkSkillMatch: atkskills:"+atkskills);
 			for(var i:uint=0;i<atkskills.length;i++)
 			{
 				//check each atkskills
@@ -322,16 +372,17 @@ package controller
 				if(skillIDs.indexOf(skillID)!=-1)
 				{
 					//skill match
-					
+					//DebugTrace.msg("CpuMembersCommand.checkSkillMatch:  skill match  skillID="+skillID);
 					var current_req:Number=Number(skillsSys[skillID].jewel.split("|")[0]);
 					var _gems_req:Number=gems_req+current_req;
-					if(_gems_req<7 && member.power.skillID=="")
+					
+					if(_gems_req<7 && member.power.skillID=="" && member.power.se>0 && member.status!="dizzy")
 					{
 						
 						//gems are enough && not set up skill yet --> set up current skill , check next skill
 						match=true;
 						gems_req+=current_req;
-						 
+						
 						
 						createPower(skillID,member);
 						
@@ -343,7 +394,7 @@ package controller
 				//if
 			}
 			//for
-			DebugTrace.msg("CpuMembersCommand.checkSkillMatch: match="+match);
+			//DebugTrace.msg("CpuMembersCommand.checkSkillMatch: match="+match);
 			if(!match)
 			{
 				//current member didn't match skill	--> check next member;
@@ -358,18 +409,19 @@ package controller
 				else
 				{
 					//check all members already  -->check next skill
-					 
+					
 					checkNextSkillChance();
 				}
 				//if
 			}
 			//if
-			 
+			
 			
 		}
 		private function checkNextSkillChance():void
 		{
 			sIndex++;
+			//DebugTrace.msg("CpuMembersCommand.checkNextSkillChance: gems_req="+gems_req);
 			if(sIndex>atklist.length-1)
 			{
 				sIndex=0;
@@ -417,13 +469,13 @@ package controller
 			cupsys=flox.getSyetemData("cpu_teams");
 			//var teams:Object=flox.getSaveData("cpu_teams");
 			skillsSys=flox.getSyetemData("skillsys");
-			 
+			
 			shuffleCpuTeam();
 			checkSkillChance();
 			
 			DebugTrace.msg("CpuMembersCommand.setupSkillCard match="+match);
 			
-			 
+			
 		}
 		private function createPower(skillID:String,member:Member):void
 		{
@@ -439,12 +491,94 @@ package controller
 					power[j]=skill[j];
 				}
 				//for
-				var skillpower:Object=battledata.skillCard(member,skill);
-				for(var m:String in skillpower)
+				
+				//var skillpower:Object=battledata.skillCard(member,skill);
+				var skillPower:Number=battledata.skillCard(member,skill.power);
+				/*	for(var m:String in skillpower)
 				{
-					power[m]=skillpower[m];			
+				power[m]=skillpower[m];			
 				}
 				//for
+				*/
+				var boss_index:Number=Config.bossModels.indexOf(power.ch_name);
+				if(power.id=="t2_0")
+				{
+					//mia
+					var skillLv:Number=Number(power.skillID.charAt(1));
+					if(skillLv==3)
+					{
+						//super skill - mind control
+						var sID:String="s1";
+						
+						power.skillID=sID;
+						power.ele=skillsSys[sID].ele;
+						power.effect=skillsSys[sID].effect;
+						power.enemy=skillsSys[sID].enemy;
+						power.jewel=skillsSys[sID].jewel;
+						power.area=skillsSys[sID].area;
+						power.label=skillsSys[sID].label;
+					}
+					//if
+				}
+				//if
+				if(boss_index!=-1)
+				{
+					//boss
+					var bossSkill:Object=Config.bossSkill;
+					var boss:String=power.ch_name;
+					var jewel:Number=Number(power.jewel.split("|")[0]);
+					switch(boss)
+					{
+						case "gor":
+							if(jewel<=2)
+							{
+								var level:String="lv1";
+							}
+							else
+							{
+								level="lv2";
+							}
+							break
+						case "fat":
+							level="lv1";
+							break
+						case "tgr":
+							if(jewel<=2)
+							{
+								level="lv1";
+							}
+							if(jewel>=3 && jewel<=4)
+							{
+								level="lv2";
+							}
+							if(jewel==5)
+							{
+								level="lv3";
+							}
+							break
+					}
+					
+					power.skillID=bossSkill[power.ch_name][level].skillID;
+					power.label=bossSkill[power.ch_name][level].label;
+					power.type=bossSkill[power.ch_name][level].type;
+					var enemy:Number=bossSkill[power.ch_name][level].enemy;
+					var area:Number=bossSkill[power.ch_name][level].area;
+				
+					if(enemy)
+						power.enemy=enemy;
+					if(area)
+					{
+						power.area=area;
+					}
+				}
+				//if
+				if(skillPower==0)
+				{
+					//shield skill
+					skillPower=Math.floor(Math.random()*100)+100;
+				}
+				power.power=skillPower;
+				trace("CPU power :",JSON.stringify(power));
 			}
 			//if
 			//power.id=id;
@@ -459,12 +593,10 @@ package controller
 				power.speeded="false";
 			}
 			//if
-			if(power.status!="dizzy")
-			{
-				member.updatePower(power);
-			}
-			//if
-			DebugTrace.msg("CpuMembersCommand.setupSkillCard id:"+member.name+".power:"+JSON.stringify(power));
+			
+			member.updatePower(power);
+			
+			DebugTrace.msg("CpuMembersCommand.createPower id:"+member.name+" , power:"+JSON.stringify(power));
 			
 			
 			
@@ -543,7 +675,7 @@ package controller
 		private function commanderBattleCry():Boolean
 		{
 			var bc:Boolean=false;
-			var used:Array=new Array(10,15,35,75,100,100);
+			var used:Array=new Array(10,15,35,60,80,100);
 			var effNum:Number=0;
 			var front:Boolean=false;
 			for(var i:uint=0;i<cputeam.length;i++)
@@ -588,14 +720,13 @@ package controller
 			//for
 			return power
 		}
+		private var checkHeal:Number=0;
 		public function healSetUp():void
 		{
 			//Healing set up;
-			for(var i:uint=0;i<2;i++)
-			{
-				healingHandle();
-			}
-			//for
+			
+			healingHandle();
+			
 		}
 		private function healingHandle():void
 		{
@@ -608,35 +739,38 @@ package controller
 			var boss_power:Object=getBossPower(boss_id);
 			var boss_se:Number=boss_power.se;
 			var boss_seMax:Number=boss_power.seMax;
-			var seper:Number=Number((boss_se/boss_seMax).toFixed(2))*100;
-			var gems_reqs:Array=["5","3","2","1"];
-			;
-			if(seper<100 && seper<=80)
+			var seper:Number=Math.floor(Number((boss_se/boss_seMax).toFixed(2))*100);
+			var gems_reqs:Array=["1","2","3","5"];
+			var lvP:Array=[80,55,30,0];
+			if(seper<100 && seper>=lvP[0])
 			{
 				se_lv="0";
 			}
-			else if(seper<80 && seper<=55)
+			else if(seper<lvP[0] && seper>=lvP[1])
 			{
 				se_lv="1";
 			}
-			else if(seper<55 && seper<=30)
+			else if(seper<lvP[1] && seper>=lvP[2])
 			{
 				se_lv="2";
 			}
-			else if(seper<30 && seper<=0)
+			else if(seper<lvP[2] && seper>=lvP[3])
 			{
 				se_lv="3";
 			}
+			//DebugTrace.msg("CpuMembersCommand.assistHandle gems_req="+gems_req);
 			var attr_index:Number=0;
 			if(gems_req>=Number(gems_reqs[0]))
 			{
 				attr_index=1;
 			}		
-			for(var i:uint=attr_index ;i<gems_reqs.length;i++)
+			for(var i:uint=attr_index;i<gems_reqs.length;i++)
 			{
 				var skill_attr:String=se_lv+"_"+gems_reqs[i];
 				var skill_per:Number=Math.floor(Math.random()*100);
 				var pre:Number=healgems[skill_attr];
+				
+				//DebugTrace.msg("CpuMembersCommand.assistHandle skill_per="+skill_per+" ; pre="+pre);
 				if(skill_per<pre)
 				{
 					assist=true;
@@ -646,6 +780,17 @@ package controller
 				
 			}
 			//for
+			if(!assist)
+			{
+				if(checkHeal<2)
+					
+				{
+					checkHeal++;
+					healingHandle();
+				}
+				//if
+			}
+			//if
 			DebugTrace.msg("CpuMembersCommand.assistHandle assist="+assist+" ; skill_attr="+skill_attr);
 			if(assist)
 			{
@@ -677,7 +822,9 @@ package controller
 				for(var k:uint=0;k<cputeam.length;k++)
 				{
 					var cpu_power:Object=cputeam[k].power;
-					if(cpu_power.se>0)
+					var member:Member=cputeam[k];
+					member.getStatus();
+					if(cpu_power.se>0 && member.status!="dizzy")
 					{
 						var skillstr:String=cpu_teamsSys[cpu_power.id].skill;
 						if(skillstr.indexOf(skillID)!=-1)
@@ -794,6 +941,7 @@ package controller
 			//var _targetlist:Array=new Array();
 			var memberscom:MembersInterface=new MemebersCommand();
 			var cputeam:Array=memberscom.getCpuTeam();
+			
 			for(var i:uint=0;i<cputeam.length;i++)
 			{
 				var cpu_power:Object=cputeam[i].power;
@@ -820,28 +968,14 @@ package controller
 					else if(cpu_power.effect=="heal")
 					{
 						
-						//var _ran:Number=Math.floor(Math.random()*cputeam.length);
-						//var _cpu_power:Object=cputeam[_ran].power;
-						//targetlist.push(_cpu_power.id.split("_")[1]);
-						//target=_cpu_power.id;
-						
 						
 						var battleteam:Object=ViewsContainer.battleteam;
-						//var _cputeam:Array=battledata.checkCPUTeam();
-						//_cputeam.sortOn("se",Array.NUMERIC | Array.DESCENDING);
-						//var _cpu_power:Object=_cputeam[_cputeam.length-1];
-						//target=_cpu_power.id;
+						
 						target=cpu_power.id;
 						//DebugTrace.msg("CpuMembersCommand.setupCpuTarget cpu_power: "+JSON.stringify(cpu_power));
 						
-						if(cpu_power.skillID=="n1")
-						{
-							//targetlist.push(Number(target.split("_")[1]));
-							targetlist.push(cpu_power.combat);
-							//target=cpu_power.id;
-						}
-							//if
-						else if(cpu_power.skillID=="n2")
+						
+						if(cpu_power.skillID=="n1" || cpu_power.skillID=="n2")
 						{
 							var combatlist:Array;
 							var boss_combat:Number=getMemberCombate("0");
@@ -863,7 +997,16 @@ package controller
 							}
 							else
 							{
-								combatlist=battledata.praseTargetList(cpu_power,boss_combat);
+								if(cpu_power.skillID=="n1")
+								{
+									var _combat:Number=cpu_power.combat;
+									
+								}
+								else
+								{
+									_combat=boss_combat;
+								}
+								combatlist=battledata.praseTargetList(cpu_power,_combat);
 								
 							}
 							//if
@@ -875,9 +1018,15 @@ package controller
 								var _cpu_power:Object=cputeam[k].power;
 								if(combatlist.indexOf(_cpu_power.combat)!=-1 && _cpu_power.se>0)
 								{
-									//targetlist.push(Number(_cputeam[k].id.split("_")[1]));
-									healarea.push(_cpu_power.combat);
-									//healarea.push(battleteam[cputeam[k].id]);
+									if(cpu_power.skillID=="n1" && cpu_power.id!=_cpu_power.id)
+									{
+										healarea.push(_cpu_power.combat);
+									}
+									if(cpu_power.skillID=="n2")
+									{
+										healarea.push(_cpu_power.combat);
+									}
+									
 								}
 								//if
 							}
@@ -885,8 +1034,23 @@ package controller
 							
 							//DataContainer.healArea=healarea;
 							combat=healarea[Math.floor(Math.random()*healarea.length)];
-							targetlist=healarea;
 							target=getMemberID(combat);
+							if(cpu_power.skillID=="n2")
+							{
+								targetlist=healarea;
+							}
+							else
+							{
+								
+								//n1
+								for(var j:uint=1;j<healarea.length;j++)
+								{
+									healarea=new Array();
+									healarea.push(combat)
+								}
+								//DebugTrace.msg("CpuMembersCommand.setupCpuTarget n1 healarea="+healarea);
+								targetlist=healarea;
+							}
 						}
 						//if
 					}
@@ -915,6 +1079,11 @@ package controller
 						target="";
 						
 					}
+					else if(cpu_power.skillID=="w0" || cpu_power.skillID=="a0")
+					{
+						target=cpu_power.id;
+						targetlist=new Array();
+					}
 					else
 					{
 						var player_team:Array=memberscom.getPlayerTeam();
@@ -924,11 +1093,10 @@ package controller
 							var __targetlist:Array=new Array();
 							
 							
-							
 							for(var p:uint=0;p<player_team.length;p++)
 							{
 								var player_power:Object=player_team[p].power;
-								//DebugTrace.msg("CpuMembersCommand.setupCpuTarget player_team["+p+"].power="+JSON.stringify(player_power));
+								DebugTrace.msg("CpuMembersCommand.setupCpuTarget player_team["+p+"].power="+JSON.stringify(player_power));
 								if(targetlist.indexOf(player_power.combat)!=-1)
 								{
 									
@@ -949,8 +1117,8 @@ package controller
 					}
 					//if
 					//--------->target's id
-					DebugTrace.msg("CpuMembersCommand.setupCpuTarget -- targetlist: "+targetlist);
-					DebugTrace.msg("CpuMembersCommand.setupCpuTarget -- target: "+target);
+					//DebugTrace.msg("CpuMembersCommand.setupCpuTarget -- targetlist: "+targetlist);
+					//	DebugTrace.msg("CpuMembersCommand.setupCpuTarget -- target: "+target);
 					cpu_power.targetlist=targetlist;
 					cpu_power.target=target;
 					if(cpu_power.status!="dizzy")
@@ -960,9 +1128,16 @@ package controller
 					//if
 					DebugTrace.msg("CpuMembersCommand.setupCpuTarget cpu_power["+i+"]="+JSON.stringify(cpu_power));
 					
-					var cpuMemberEvt:BattleEvent=cputeam[i].memberEvt;
-					cpuMemberEvt.act="";
-					cpuMemberEvt.updateMemberAct();
+					if(cpu_power.skillID=="")
+					{
+						var cpuMemberEvt:BattleEvent=cputeam[i].memberEvt;
+						cpuMemberEvt.act="ready";
+						cpuMemberEvt.updateMemberAct();
+					}
+					else
+					{
+						cputeam[i].setupSkillAni();
+					}
 				}
 				//if can use skill && survive
 			}

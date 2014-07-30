@@ -21,7 +21,7 @@ package controller
 		//function setCpuPower(cpupower:Array):void
 		function getTopIndex():uint
 		function nextRound():void
-		function equipedCard(card:MovieClip):void
+		function equipedCard(target:String,card:MovieClip):void
 		function removeEquipedCard():void
 		function removeAllEquidedCards():void
 		//function praseMemberStatus():void
@@ -31,5 +31,6 @@ package controller
 		function clearPlayerTarget():void
 		function getBattleOver():Boolean
 		function reseatCPUPower(name:String):void
+		 
 	}
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:921ae09ec5f7f55710f626101a0e1653:1/1$ -->
+<!-- $TexturePacker:SmartUpdate:6bee2b9260e8e02b4c743d039fd35376:baf735537ac754b1421975c6b3bae3a1:df89aac49825119bf37d9397b71d55b8$ -->
 <TextureAtlas imagePath="malefeatures.png">
-    <SubTexture name="features0" x="2" y="63" width="1" height="1" frameX="0" frameY="0" frameWidth="225" frameHeight="255"/>
-    <SubTexture name="features1" x="2" y="2" width="59" height="59" frameX="-80" frameY="-196" frameWidth="225" frameHeight="255"/>
+    <SubTexture name="features0" x="2" y="33" width="1" height="1" frameX="0" frameY="0" frameWidth="108" frameHeight="129"/>
+    <SubTexture name="features1" x="2" y="2" width="28" height="29" frameX="-40" frameY="-97" frameWidth="108" frameHeight="129"/>
 </TextureAtlas>

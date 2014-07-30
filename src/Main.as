@@ -1,23 +1,29 @@
 package 
 {
 	//import flash.display.DisplayObject;
+	import flash.desktop.NativeApplication;
 	import flash.display.MovieClip;
 	import flash.display.Shape;
 	import flash.display.StageAlign;
-	//import flash.display.StageScaleMode;
+	import flash.events.ErrorEvent;
 	import flash.events.Event;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
 	import flash.utils.getDefinitionByName;
+	import flash.filesystem.File;
+	
+	import air.update.ApplicationUpdaterUI;
+	import air.update.events.UpdateEvent;
+	import air.update.events.StatusUpdateErrorEvent;
 	
 	import data.Config;
-	
+	import data.DataContainer;
 	import starling.utils.Color;
 	
 	import utils.DebugTrace;
 	import utils.ViewsContainer;
-	
+
 	// To show a Preloader while the SWF is being transferred from the server, 
 	// set this class as your 'default application' and add the following 
 	// compiler argument: '-frame StartupFrame Demo_Web'
@@ -33,6 +39,7 @@ package
 		private var mFrameCount:int = 0;
 		public static var verifyKey:String;
 		
+		private var appUpdater:ApplicationUpdaterUI=new ApplicationUpdaterUI();
 		public function Main()
 		{
 			 
@@ -72,6 +79,7 @@ package
 			if (bytesLoaded >= bytesTotal)
 			{
 				dispose();
+				checkAppVersion();
 				run();
 			}
 			else
@@ -137,7 +145,39 @@ package
 				removeChild(progressTxt);
 			}
 		}
-		
+		private function checkAppVersion():void
+		{
+			setApplicationVersion();
+		 
+			appUpdater.configurationFile = File.applicationDirectory.resolvePath("update_config.xml");
+			appUpdater.addEventListener(UpdateEvent.INITIALIZED, onUpdate);
+			appUpdater.addEventListener(StatusUpdateErrorEvent.UPDATE_ERROR, onStatusUpdateError);
+			appUpdater.addEventListener(ErrorEvent.ERROR, onError);
+			appUpdater.initialize(); 
+		}
+		private function setApplicationVersion():void
+		{
+			var appXML:XML=NativeApplication.nativeApplication.applicationDescriptor;
+			var ns:Namespace=appXML.namespace();
+			trace("checkAppVersion Current version is " +appXML.ns::versionNumber);
+			DataContainer.currentVersion=appXML.ns::versionNumber;
+		}
+		private function onUpdate(e:UpdateEvent):void
+		{
+			 
+			appUpdater.checkNow();
+			
+		}
+		private function onStatusUpdateError(e:StatusUpdateErrorEvent):void
+		{
+			trace(e.toString());
+		}
+		private function onError(e:ErrorEvent):void
+		{
+			trace(e.toString());
+			
+		}
+	
 		private function run():void 
 		{
 			nextFrame();

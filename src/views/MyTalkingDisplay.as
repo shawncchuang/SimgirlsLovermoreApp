@@ -1,15 +1,19 @@
 package views
 {
-	import com.emibap.textureAtlas.DynamicAtlas;
+	//import com.emibap.textureAtlas.DynamicAtlas;
+	
+	import controller.Assets;
 	
 	import model.WordsSlide;
 	
 	import starling.animation.Transitions;
 	import starling.animation.Tween;
 	import starling.core.Starling;
+	import starling.display.Image;
 	import starling.display.MovieClip;
 	import starling.display.Sprite;
 	import starling.text.TextField;
+	import starling.textures.Texture;
 	import starling.textures.TextureAtlas;
 
 	public class MyTalkingDisplay extends Sprite
@@ -17,12 +21,15 @@ package views
 		private var tween:Tween;
 		private var sentence:String;
 		private var subtitle:TextField;
+	
 		public function addMask(callback:Function=null):void
 		{
 		 
-			var _mask:SceneMask = new SceneMask();
-			var atlas:TextureAtlas = DynamicAtlas.fromMovieClipContainer(_mask, .5, 0, true, true);
-			var scene_mask:MovieClip = new MovieClip(atlas.getTextures("mc"), 30);
+			//var _mask:SceneMask = new SceneMask();
+			//var atlas:TextureAtlas = DynamicAtlas.fromMovieClipContainer(_mask, .5, 0, true, true);
+			//var scene_mask:MovieClip = new MovieClip(atlas.getTextures("mc"), 30);
+			var texture:Texture=Assets.getTexture("SceneMask");
+			var scene_mask:Image=new Image(texture);
 			scene_mask.width=Starling.current.stage.stageWidth;
 			scene_mask.height=Starling.current.stage.stageHeight;
 			scene_mask.alpha=0;
@@ -39,7 +46,7 @@ package views
 		{
 			//Starling.juggler.remove(tween);
 			
-			var subtitle:TextField=new TextField(785,90,"","Eras Demi ITC",25,0xFFFFFF);
+			var subtitle:TextField=new TextField(785,120,"","SimImpact",24,0xFFFFFF);
 			subtitle.hAlign="center";
 			subtitle.x=125;
 			subtitle.y=650;

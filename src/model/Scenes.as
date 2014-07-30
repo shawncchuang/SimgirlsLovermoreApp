@@ -4,6 +4,8 @@ package model
 	import controller.Assets;
 	import controller.MainCommand;
 	import controller.MainInterface;
+	import controller.SceneCommnad;
+	import controller.SceneInterface;
 	
 	import data.DataContainer;
 	
@@ -28,8 +30,11 @@ package model
 	import views.ArenaScene;
 	import views.BankScene;
 	import views.BeachScene;
+	import views.BetaScene;
+	import views.BlackMarketScene;
 	import views.CasinoScene;
 	import views.ChangeFormationScene;
+	import views.ChangingRoomScene;
 	import views.CharacterDesignScene;
 	import views.CinemaScene;
 	import views.DatingScene;
@@ -42,6 +47,7 @@ package model
 	import views.LovemoreMansionScene;
 	import views.MainScene;
 	import views.MenuScene;
+	import views.MiniGameScene;
 	import views.MuseumScene;
 	import views.NightClubScene;
 	import views.ParkScene;
@@ -49,15 +55,13 @@ package model
 	import views.PoliceStationScene;
 	import views.PrivateIslandScene;
 	import views.ProfileScene;
+	import views.RestaurantScene;
 	import views.ShoppingCentreScene;
 	import views.SportsBarScene;
 	import views.StarlingBattleScene;
 	import views.TarotreadingScene;
 	import views.TempleScene;
 	import views.ThemedParkScene;
-	import views.BlackMarketScene;
-	import views.ChangingRoomScene;
-	import views.RestaurantScene;
 	
 	
 	
@@ -69,6 +73,7 @@ package model
 		private var current_scence:Sprite;
 		private var mainstage:Sprite
 		private var command:MainInterface=new MainCommand();
+		 
 		private var scene_container:Sprite;
 		private var next_scene:String;
 		private var sceneObj:Object;
@@ -126,6 +131,7 @@ package model
 		private function changeSceneHandle():void
 		{
 			
+			 
 			//var scene:Sprite=ViewsContainer.MainScene;
 			ViewsContainer.InfoDataView.visible=true;
 			if(next_scene!="MenuScene" && next_scene!="ProfileScene")
@@ -229,7 +235,7 @@ package model
 				case "SSCCArenaScene":
 					current_scence=new ArenaScene();
 					break
-				case "SMAAcademyScene":
+				case "AcademyScene":
 					current_scence=new AcademyScene();
 					break
 				case "SpiritTempleScene":
@@ -285,6 +291,15 @@ package model
 					break
 				case "RestaurantScene":
 					current_scence=new RestaurantScene();
+					break
+				case "TraceGame":
+				case "TrainingGame":
+					infobar=false;
+					current_scence=new MiniGameScene(next_scene);
+					break
+				case "BetaScene":
+					infobar=false;
+					current_scence=new BetaScene();
 					break
 			
 			}

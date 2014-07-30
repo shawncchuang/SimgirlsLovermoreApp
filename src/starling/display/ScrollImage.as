@@ -16,7 +16,7 @@ package starling.display
 		private var _clipMask:Rectangle;
 		
 		public function ScrollImage(texture:Texture) {
-			texture.repeat =    true;
+			//texture.repeat =    true;
 			super(texture);
 			
 			_clipMask =     new Rectangle(0, 0, width, height);

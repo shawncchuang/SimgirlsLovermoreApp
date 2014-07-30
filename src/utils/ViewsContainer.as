@@ -2,6 +2,9 @@ package utils
 {
 	
 	
+	import com.greensock.loading.LoaderMax;
+	import com.greensock.loading.display.ContentDisplay;
+	
 	import flash.display.Bitmap;
 	import flash.display.MovieClip;
 	import flash.display.Stage;
@@ -10,7 +13,7 @@ package utils
 	
 	import starling.display.Sprite;
 	
-  
+	
 	
 	public class ViewsContainer
 	{
@@ -33,6 +36,15 @@ package utils
 		private static var groundeff_player:MovieClip;
 		private static var groundeff_cpu:MovieClip;
 		private static var _battlescene:flash.display.Sprite;
+		private static var content:LoaderMax;
+		private static var battleview:MovieClip;
+		private static var battletop:MovieClip;
+		private static var battlealert:MovieClip;
+		private static var enemy_bike:MovieClip;
+		private static var mini_game:MovieClip;
+		private static var skillexcerptbox:Sprite;
+		private static var skill_store:Sprite;
+		private static var player_profile:Sprite;
 		public static function set GameStage(st:Stage):void
 		{
 			game_st=st;	
@@ -116,6 +128,15 @@ package utils
 		{
 			return excerptboxpanel;
 		}
+		public static function set SkillExcerptBox(target:Sprite):void
+		{
+			skillexcerptbox=target
+		}
+		public static function get SkillExcerptBox():Sprite
+		{
+			return skillexcerptbox;
+		}
+		
 		public static function set baseSprite(target:Sprite):void
 		{
 			basesprite=target;	
@@ -193,6 +214,74 @@ package utils
 		public static function get battlescene():flash.display.Sprite
 		{
 			return _battlescene;
+		}
+		public static function set loaderQueue(loader:LoaderMax):void
+		{
+			content=loader;
+			
+		}
+		public static function get loaderQueue():LoaderMax
+		{
+			return content;
+			
+		}
+		public static function set battleView(view:MovieClip):void
+		{
+			battleview=view;
+		}
+		public static function get battleView():MovieClip
+		{
+			return battleview;
+		}
+		public static function set battleTop(view:MovieClip):void
+		{
+			battletop=view;
+		}
+		public static function get battleTop():MovieClip
+		{
+			return battletop;
+		}
+		public static function set BattleAlert(view:MovieClip):void
+		{
+			battlealert=view;
+		}
+		public static function get BattleAlert():MovieClip
+		{
+			return battlealert;
+		}
+		public static function set EnemyBike(view:MovieClip):void
+		{
+			enemy_bike=view;	
+		}
+		public static function get EnemyBike():MovieClip
+		{
+			return enemy_bike;	
+		}
+		public static function set MiniGame(view:MovieClip):void
+		{
+			mini_game=view;
+		}
+		public static function get MiniGame():MovieClip
+		{
+			return mini_game
+		}
+		public static function set SkillStore(target:Sprite):void
+		{
+			
+			skill_store=target;
+		}
+		public static function get SkillStore():Sprite
+		{
+			
+			return skill_store;
+		}
+		public static function set PlayerProfile(target:Sprite):void
+		{
+			player_profile=target;
+		}
+		public static function get PlayerProfile():Sprite
+		{
+			return player_profile;
 		}
 	}
 }

@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:b90920f44479b97f5a05e7004dcd2e14:1/1$ -->
+<!-- $TexturePacker:SmartUpdate:371475186f18f15f4d40a59eeda86b38:689a84708815e06f20290268ff8cef33:ac3708d17c953f7413fec53587081316$ -->
 <TextureAtlas imagePath="femalepantstyle.png">
-    <SubTexture name="pant0" x="2" y="2" width="300" height="111"/>
+    <SubTexture name="pant0" x="2" y="354" width="143" height="54" frameX="-42" frameY="-27" frameWidth="239" frameHeight="260"/>
+    <SubTexture name="pant1" x="239" y="2" width="201" height="142" frameX="-20" frameY="-28" frameWidth="239" frameHeight="260"/>
+    <SubTexture name="pant2" x="239" y="146" width="169" height="132" frameX="-34" frameY="-22" frameWidth="239" frameHeight="260"/>
+    <SubTexture name="pant3" x="2" y="2" width="235" height="236" frameX="-2" frameY="-15" frameWidth="239" frameHeight="260"/>
+    <SubTexture name="pant4" x="2" y="240" width="161" height="112" frameX="-36" frameY="0" frameWidth="239" frameHeight="260"/>
 </TextureAtlas>

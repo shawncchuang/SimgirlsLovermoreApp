@@ -6,17 +6,33 @@ package views
 	import controller.FloxCommand;
 	import controller.FloxInterface;
 	import controller.MainCommand;
+	import controller.MainInterface;
+	import controller.SceneCommnad;
+	import controller.SceneInterface;
 	
 	import data.DataContainer;
+	
+	import events.SceneEvent;
+	
 	import model.SaveGame;
+	
 	import utils.DebugTrace;
 
 	public class QADisplayContainer extends MovieClip
 	{
 		private var qa_label:String="";
 		private var onComplete:Function;
+		private var qacom:QAComponent;
 		private var templete:MovieClip;
 		private var floxcom:FloxInterface=new FloxCommand();
+		private var command:MainInterface=new MainCommand();
+		private var scenecom:SceneInterface=new SceneCommnad();
+		private var tempOption:Object={
+			"nickname":"nickname",
+			"airplane-phonenumber":"Yes&No",
+			"battle-s003-1":"Yes&No"
+			
+		}
 		public function QADisplayContainer(label:String,callback:Function=null)
 		{
 			qa_label=label
@@ -27,8 +43,8 @@ package views
 		private function init():void
 		{
 			
-			var qacom:QAComponent=new QAComponent();
-			qacom.gotoAndStop(qa_label);
+			qacom=new QAComponent();
+			qacom.gotoAndStop(tempOption[qa_label]);
 			addChild(qacom);
 		    templete=qacom.templete;
 			switch(qa_label)
@@ -44,6 +60,16 @@ package views
 					break
 			}
 			//switch
+			if(qa_label.indexOf("battle")!=-1)
+			{
+				var battle_code:String=qa_label.split("-")[1]+"-"+qa_label.split("-")[2];
+				DataContainer.battleCode=battle_code;
+				
+				templete.yesbtn.mouseChildren=false;
+				templete.nobtn.mouseChildren=false;
+				templete.yesbtn.addEventListener(MouseEvent.CLICK,doBattleHandle);
+				templete.nobtn.addEventListener(MouseEvent.CLICK,doCancelHandle);
+			}
 		}
 		private function doNickNameSubmit(e:MouseEvent):void
 		{
@@ -91,6 +117,30 @@ package views
 		{
 			floxcom.refreshEntites();
 			onComplete();
+		}
+		
+		private function doBattleHandle(e:MouseEvent):void
+		{
+			scenecom.initStory();
+			scenecom.onStoryFinished();
+			
+	 
+			onComplete();
+			DataContainer.BatttleScene="Story";
+			
+			var _data:Object=new Object();
+			_data.name="ChangeFormationScene";
+			command.sceneDispatch(SceneEvent.CHANGED,_data);
+			
+		}
+		private function doCancelHandle(e:MouseEvent):void
+		{
+			onComplete();
+		 
+			scenecom.initStory();
+			scenecom.onStoryFinished();
+		 
+			
 		}
 	}
 }

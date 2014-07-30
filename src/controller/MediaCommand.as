@@ -46,7 +46,7 @@ package controller
 		private var size:Point;
 		private var position:Point;
 		private var fps:int;
-		private var callback:Function;
+		private var onFinished:Function;
 		
 		/*== Play Properties ==*/
 		private var loop:Boolean;
@@ -63,8 +63,8 @@ package controller
 		
 		private function onVideoComplete(e:Event):void
 		{
-			if(callback != null){
-				callback();
+			if(onFinished != null){
+				onFinished();
 			}
 		}
 		
@@ -81,14 +81,14 @@ package controller
 			ns.addEventListener(NetStatusEvent.NET_STATUS, onPlayStatus);
 			var sw:Number=Starling.current.stage.stageWidth;
 			var sh:Number=Starling.current.stage.stageHeight;
-			var pixelX:Number=800;
-			var pixelY:Number=600;
 			
 			
-			video = new Video(640,480); 
+			video = new Video(size.x,size.y); 
+			video.x=position.x;
+			video.y=position.y;
 			video.attachNetStream(ns);
 			
-			
+			Starling.current.nativeOverlay.addChild(video);
 			
 		}
 		
@@ -97,33 +97,37 @@ package controller
 			this.loop = loop;
 			this.currentPath = path;
 			
+			
 			if(callback != null){
-				this.callback = callback;
+				onFinished = callback;
 			}
-			
+			/*
 			if(videosList[currentPath]){
-				showMovieClip();
-				return;
-			}
+			showMovieClip();
+			return;
+			}*/
 			
-			addEventListener(Event.ENTER_FRAME, onFrame);
+			//addEventListener(Event.ENTER_FRAME, onFrame);
 			ns.play(path);
 			
-			setupVideoImageCarrier();
+			//setupVideoImageCarrier();
 			
 			//Register for caching. Dont put it into dictionary until all frames were populated
-			tmpVector = new Vector.<Texture>();
+			//tmpVector = new Vector.<Texture>();
 		}
 		
 		public function stop(cleanup:Boolean = false):void
 		{
 			ns.close();
+			Starling.current.nativeOverlay.removeChild(video);
+			/*
 			onVideoComplete(null);
 			removeEventListener(Event.ENTER_FRAME, onFrame);
 			
 			if(cleanup){
-				removeChildren(0, -1, true);
+			removeChildren(0, -1, true);
 			}
+			*/
 		}
 		
 		/*== Alias Methods ==*/
@@ -174,12 +178,16 @@ package controller
 			}
 			
 			if(e.info.code == VIDEO_FINISHED){
-				videosList[currentPath] = tmpVector;
+				//videosList[currentPath] = tmpVector;
 				stop();
-				
-				if(loop){
-					showMovieClip();
+				if(onFinished)
+				{
+					onFinished();
 				}
+				/*	if(loop){
+				showMovieClip();
+				}
+				*/
 			}
 		}
 		

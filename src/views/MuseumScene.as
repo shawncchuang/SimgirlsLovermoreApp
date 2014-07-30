@@ -55,13 +55,18 @@ package views
 		private function init():void
 		{
 			
-			scencom.init("MuseumScene",speaker_sprite,10,onCallback);
+			scencom.init("MuseumScene",speaker_sprite,10,onStartStory);
 			scencom.start();
-			scencom.disableAll();
+			 
 		}
-		private function onCallback():void
+		private function onStartStory():void
 		{
 			
+			scencom.disableAll();	
+			var switch_verifies:Array=scencom.switchGateway("MuseumScene");
+			DebugTrace.msg("MuseumScene.onStartStory switch_verifies="+switch_verifies[0]);
+			if(switch_verifies[0])
+				scencom.start();
 		}
 		private function onSceneTriggered(e:Event):void
 		{

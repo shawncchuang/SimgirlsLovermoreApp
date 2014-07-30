@@ -103,6 +103,9 @@ package views
 		//skills tag form arrow
 		private var left_arrow:Button;
 		private var right_arrow:Button;
+		private var font:String="SimNeogreyMedium";
+		private var skillexcbox:Sprite;
+		public static var SKILL_EXC:String="skill_exc";
 		public static function set CharacterName(str:String):void
 		{
 			ch_name=str;
@@ -118,8 +121,10 @@ package views
 			base_sprite=new Sprite();
 			addChild(base_sprite);
 			base_sprite.flatten();
-			initBaseModel();
+			
 			initLayout();
+			
+			initBaseModel();
 			initPersonalData();
 			initAsssetsData();
 			initSkillsData();
@@ -127,29 +132,26 @@ package views
 			initProIcons();
 			initCancelHandle();
 			
+			
+			
 		}
 		private function initCancelHandle():void
 		{
-			//cancel button
+			//setup cancel button
 			command.addedCancelButton(this,doCannelHandler);
-			
-			/*var cancel:Button=new Button(Assets.getTexture("XAlt"));
-			cancel.name="cancel";
-			cancel.x=964;
-			cancel.y=720;
-			addChild(cancel);
-			cancel.addEventListener(Event.TRIGGERED,doCencaleHandler);*/
 			
 		}
 		private function doCannelHandler():void
 		{
+			
+			player_icon.removeEventListener(TouchEvent.TOUCH,onTouchCharaterIcon);
 			var _data:Object=new Object();
 			_data.name="MenuScene";
 			command.sceneDispatch(SceneEvent.CHANGED,_data)
 		}
 		private function initLayout():void
 		{
-			scencom.init("ProfileScene",base_sprite,22,onCallback);
+			scencom.init("ProfileScene",base_sprite,22,onSceneReady);
 			scencom.start();
 			scencom.disableAll();
 			
@@ -175,7 +177,7 @@ package views
 			title.y=21;
 			addChild(title);
 			
-			nametile=new TextField(1024,34,"Primero Lovemore’s Profile","Neogrey Medium",25,0xFFFFFF);
+			nametile=new TextField(1024,34,"Primero Lovemore’s Profile",font,25,0xFFFFFF);
 			nametile.hAlign="left"
 			nametile.x=18;
 			nametile.y=25;
@@ -212,6 +214,11 @@ package views
 				tagObj.tag=tag;
 				tags.push(tagObj);
 			}
+			
+		}
+		private function onSceneReady():void
+		{
+			
 			
 		}
 		private function updateTitle():void
@@ -311,7 +318,7 @@ package views
 			panelbase.addChild(personal);
 			
 			var format:Object=new Object();
-			format.font="Neogrey Medium";
+			format.font=font;
 			format.size=20;
 			format.color=0xFFFFFF;
 			
@@ -392,10 +399,10 @@ package views
 			panelbase.addChild(assets);
 			
 			//var savedata:SaveGame=FloxCommand.savegame;
-		    //var cash:Number=savedata.cash;
+			//var cash:Number=savedata.cash;
 			var cash:Number=flox.getSaveData("cash");
 			var format:Object=new Object();
-			format.font="Neogrey Medium";
+			format.font=font;
 			format.size=20;
 			format.color=0xFFFFFF;
 			format.txt=	DataContainer.currencyFormat(cash);
@@ -404,9 +411,6 @@ package views
 			casshtext.x=149;
 			casshtext.y=81;
 			assets.addChild(casshtext);
-			
-			
-			
 			
 			initAssetesForm();
 			
@@ -431,7 +435,7 @@ package views
 			excerptbox.x=-345;
 			excerptbox.y=113;
 			assets.addChild(excerptbox)
-			
+			ViewsContainer.ExcerptBox=excerptbox;
 			//var savedata:SaveGame=FloxCommand.savegame;
 			var chName:String
 			if(ch_index==-1)
@@ -795,15 +799,19 @@ package views
 		private function initProIcons():void
 		{
 			
-			player_icon=new Sprite();
-			player_icon.name="Player";
+			var savedata:SaveGame=FloxCommand.savegame;
+			var gender:String=savedata.avatar.gender;
+			
+			player_icon=ViewsContainer.PlayerProfile;
+			player_icon.alpha=1;
+			player_icon.x=60;
+			player_icon.y=710; 
 			addChild(player_icon);
-			drawcom.drawPlayerProfileIcon(player_icon,1,new Point(60,710));
-			//drawcom.drawPlayerProfileIcon(player_icon,1,new Point(54,50));
+			
 			player_icon.addEventListener(TouchEvent.TOUCH,onTouchCharaterIcon);
 			
-			 
-			var savedata:SaveGame=FloxCommand.savegame;
+			
+			
 			var characters:Array=Config.characters;
 			for(var i:uint=0;i<characters.length;i++)
 			{
@@ -895,6 +903,8 @@ package views
 			//if
 			if(began)
 			{
+				
+				
 				ch_index=Config.characters.indexOf(target.name);
 				character=target.name.toLowerCase();
 				CharacterName=character;
@@ -931,6 +941,12 @@ package views
 			}
 			//if
 			
+			
+			skillexcbox=new ExcerptBox();
+			skillexcbox.x=-345;
+			skillexcbox.y=113;
+			skills.addChild(skillexcbox)
+			ViewsContainer.SkillExcerptBox=skillexcbox;
 		}
 		private function initSkillsGate():void
 		{
@@ -971,6 +987,7 @@ package views
 		{
 			var _data:Object=new Object();
 			_data.character=character;
+			_data.list="profile";
 			_data.cate=cate;
 			cardlist=new CardsList(_data);
 			cardlist.x=49;
@@ -994,12 +1011,14 @@ package views
 			var arrow_data:Object=new Object();
 			arrow_data.left_arrow=left_arrow;
 			arrow_data.right_arrow=right_arrow;
+			arrow_data.profile=this;
 			cardlist.dispatchEventWith(CardsList.INIT,false,arrow_data)
 			
 			skills.addChild(left_arrow);
 			skills.addChild(right_arrow);
 			skills.addChild(cardlist);
 		}
+		
 		private function onTriggeredSkillList(e:Event):void
 		{
 			var target:Button=e.currentTarget as Button;
@@ -1012,25 +1031,28 @@ package views
 			cardlist.dispatchEvent(cardsEvent);
 			
 		}
-		private var copyModel:Sprite
+		
+		
+		//private var copyModel:Sprite
 		private function initBaseModel():void
 		{
 			
 			var savedata:SaveGame=FloxCommand.savegame;
 			var gender:String=savedata.avatar.gender;
 			
-			var modelObj:Object={"Male":new Rectangle(0,0,270,797),
-				"Female":new Rectangle(0,0,214,768)}
-			var modelRec:Rectangle=modelObj[gender];
 			
+			var modelRec:Rectangle=Config.modelObj[gender];
+			
+			//other character
 			chmodel=new Sprite();
 			chmodel.y=50;
 			addChild(chmodel);
 			
 			
 			basemodel=new Sprite();
-			basemodel.x=modelRec.x;
-			basemodel.y=modelRec.y;
+			
+			basemodel.x=54
+			basemodel.y=115;
 			addChild(basemodel);
 			
 			
@@ -1045,23 +1067,17 @@ package views
 			drawcom.updateBaseModel("Pants");
 			drawcom.updateBaseModel("Clothes");
 			drawcom.updateBaseModel("Features");
+			basemodel.clipRect=new Rectangle(0,-30,276,575);
 			
-			copyModel=new Sprite();
-			addChild(copyModel);
-			var pos:Point=new Point(55,100);
-			if(gender=="Female")
-			{
-				pos=new Point(95,140);
-			}
-			drawcom.playerModelCopy(copyModel,pos);
+			
 		}
 		private function updateCharacter():void
 		{
-			copyModel.visible=false;
+			basemodel.visible=false;
 			chmodel.visible=true;
 			if(ch_index==-1)
 			{
-				copyModel.visible=true;
+				basemodel.visible=true;
 				chmodel.visible=false;
 			}
 			else
@@ -1070,7 +1086,7 @@ package views
 				if(old_chmc)
 				{
 					old_chmc.removeFromParent(true);
-				 
+					
 				}
 				var ch_name:String=Config.characters[ch_index];
 				//fake

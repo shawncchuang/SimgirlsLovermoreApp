@@ -6,6 +6,7 @@ package controller
 		//[Embed(source = "../../media/textures/scenes/tarot_room.jpg")]
 		//public static const Tarotreading:Class;
 		
+		
 		[Embed(source = "../../media/textures/scenes/map_day.jpg")]
 		public static const MainSceneDay:Class;
 		[Embed(source = "../../media/textures/scenes/map_night.jpg")]
@@ -52,9 +53,12 @@ package controller
 		[Embed(source = "../../media/textures/scenes/mansion_night.jpg")]
 		public static const LovemoreMansionSceneNight:Class;	
 		
-		
 		[Embed(source = "../../media/textures/scenes/normalbackground.jpg")]
 		public static const NormalBackground:Class;	
+	
+		[Embed(source = "../../media/textures/scenes/ChangingRoomScene.jpg")]
+		public static const ChangingRoomScene:Class;	
+		
 		
 		//[Embed(source = "../../media/textures/scenes/gametitle.jpg")]
 		//public static const GameTitle:Class;	 
@@ -62,7 +66,8 @@ package controller
 		//[Embed(source = "../../fla/SceneBackground.swf", symbol="MainSceneBg")]
 		//public static const MainSceneBg:Class;	
 		
-		
+		[Embed(source = "../../media/textures/scenes/beta-testing.jpg")]
+		public static const BetaBackground:Class;	
 		
 	   //-----------------scenes-------------------------------------------------*/
 		
@@ -177,6 +182,12 @@ package controller
 		[Embed(source="../../media/textures/icons/pro_empty.png")]
 		public static const ProEmpty:Class;
 		
+		[Embed(source="../../media/textures/icons/icon_mouseclick.xml", mimeType="application/octet-stream")]
+		public static const IconMouseXML:Class;
+		[Embed(source="../../media/textures/icons/icon_mouseclick.png")]
+		public static const IconMouse:Class;
+		
+		
 		[Embed(source="../../media/textures/icons/profile/sao.xml", mimeType="application/octet-stream")]
 		public static const ProsaoXML:Class;
 		[Embed(source="../../media/textures/icons/profile/sao.png")]
@@ -217,6 +228,11 @@ package controller
 		public static const ProsirenaXML:Class;
 		[Embed(source="../../media/textures/icons/profile/sirena.png")]
 		public static const Prosirena:Class;
+		
+		[Embed(source="../../media/textures/icons/profile/NPCs.xml", mimeType="application/octet-stream")]
+		public static const NPCsXML:Class;
+		[Embed(source="../../media/textures/icons/profile/NPCs.png")]
+		public static const NPCs:Class;
 		
 		/*[Embed(source="../../media/textures/icons/items/items.xml", mimeType="application/octet-stream")]
 		public static const ItemsXML:Class;
@@ -304,10 +320,32 @@ package controller
 		
 		[Embed(source="../../media/textures/icons/assets_tag/estate.png")]
 		public static const estatecarTag:Class;*/
+		
+		[Embed(source="../../media/textures/icons/beta_battle.png")]
+		public static const BetaBattle:Class;
+		
+		[Embed(source="../../media/textures/icons/beta_race.png")]
+		public static const BetaRace:Class;
+		
+		//skilllocked
+		[Embed(source="../../media/textures/icons/skilllocked.png")]
+		public static const SkillLocked:Class;
+		
+		[Embed(source="../../media/textures/icons/icon_skillPts.png")]
+		public static const SkillPtsIcon:Class;
+		
+		[Embed(source="../../media/textures/icons/icon_skillPts1.png")]
+		public static const SkillPtsValueIcon:Class;
 		/*------------------icons-------------------------------------------------*/
 		
 		
 		/*------------------characters-------------------------------------------------*/
+		[Embed(source="../../media/textures/characters/malebody.png")]
+		public static const MaleBody:Class;
+		
+		[Embed(source="../../media/textures/characters/femalebody.png")]
+		public static const FemaleBody:Class;
+		
 		[Embed(source="../../media/textures/characters/malehairstyle.xml", mimeType="application/octet-stream")]
 		public static const MaleHairStyleXML:Class;
 		[Embed(source="../../media/textures/characters/malehairstyle.png")]
@@ -359,6 +397,19 @@ package controller
 		public static const FemaleFeatures:Class;
 		
 		//change formation
+		
+		[Embed(source="../../media/textures/characters/rdy_akr.png")]
+		public static const akrRdy:Class;
+		
+		[Embed(source="../../media/textures/characters/rdy_chef.png")]
+		public static const chefRdy:Class;
+		
+		[Embed(source="../../media/textures/characters/rdy_mia.png")]
+		public static const miaRdy:Class;
+		
+		[Embed(source="../../media/textures/characters/rdy_san.png")]
+		public static const sanRdy:Class;
+		
 		[Embed(source="../../media/textures/characters/rdy_ceil.png")]
 		public static const ceilRdy:Class;
 		
@@ -374,7 +425,7 @@ package controller
 		[Embed(source="../../media/textures/characters/rdy_sirena.png")]
 		public static const sirenaRdy:Class;
 		
-		[Embed(source="../../media/textures/characters/rdy_sirena.png")]
+		[Embed(source="../../media/textures/characters/rdy_klr.png")]
 		public static const klrRdy:Class;
 		
 		[Embed(source="../../media/textures/characters/rdy_tomoru.png")]
@@ -383,28 +434,33 @@ package controller
 		[Embed(source="../../media/textures/characters/rdy_zack.png")]
 		public static const zackRdy:Class;
 		
-		[Embed(source="../../media/textures/characters/rdy_player.png")]
-		public static const playerRdy:Class;
+		[Embed(source="../../media/textures/characters/rdy_player_m.png")]
+		public static const playerMaleRdy:Class;
 		
+		[Embed(source="../../media/textures/characters/rdy_player_f.png")]
+		public static const playerFemaleRdy:Class;
 		
 		[Embed(source="../../media/textures/characters/rdy_bdh.png")]
-		public static const BdhRdy:Class;
+		public static const bdhRdy:Class;
 		
 		
 		[Embed(source="../../media/textures/characters/rdy_prml.png")]
-		public static const PrmlRdy:Class;
+		public static const prmlRdy:Class;
 		
 		[Embed(source="../../media/textures/characters/rdy_prms.png")]
-		public static const PrmsRdy:Class;
+		public static const prmsRdy:Class;
 		
 		[Embed(source="../../media/textures/characters/rdy_smn.png")]
-		public static const SmnRdy:Class;
+		public static const smnRdy:Class;
 		
 		[Embed(source="../../media/textures/characters/rdy_vdk.png")]
-		public static const VdkRdy:Class;
+		public static const vdkRdy:Class;
 				
 		[Embed(source="../../media/textures/characters/rdy_xns.png")]
-		public static const XnsRdy:Class;
+		public static const xnsRdy:Class;
+		
+		[Embed(source="../../media/textures/characters/bunny.png")]
+		public static const Bunny:Class;
 		
 	 
 		//change formation
@@ -418,8 +474,56 @@ package controller
 		public static const SkillCardsXML:Class;
 		[Embed(source="../../media/textures/cards/skillcards.png")]
 		public static const SkillCards:Class;
-		 
-		 
+		
+		
+		[Embed(source="../../media/textures/npc/npc001.png")]
+		public static const npc001:Class;
+		[Embed(source="../../media/textures/npc/npc002.png")]
+		public static const npc002:Class;
+		[Embed(source="../../media/textures/npc/npc003.png")]
+		public static const npc003:Class;
+		[Embed(source="../../media/textures/npc/npc004.png")]
+		public static const npc004:Class;
+		[Embed(source="../../media/textures/npc/npc005.png")]
+		public static const npc005:Class;
+		[Embed(source="../../media/textures/npc/npc006.png")]
+		public static const npc006:Class;
+		[Embed(source="../../media/textures/npc/npc007.png")]
+		public static const npc007:Class;
+		[Embed(source="../../media/textures/npc/npc008.png")]
+		public static const npc008:Class;
+		[Embed(source="../../media/textures/npc/npc009.png")]
+		public static const npc009:Class;
+		[Embed(source="../../media/textures/npc/npc010.png")]
+		public static const npc010:Class;
+		[Embed(source="../../media/textures/npc/npc011.png")]
+		public static const npc011:Class;
+		[Embed(source="../../media/textures/npc/npc012.png")]
+		public static const npc012:Class;
+		[Embed(source="../../media/textures/npc/npc013.png")]
+		public static const npc013:Class;
+		[Embed(source="../../media/textures/npc/npc014.png")]
+		public static const npc014:Class;
+		[Embed(source="../../media/textures/npc/npc015.png")]
+		public static const npc015:Class;
+		[Embed(source="../../media/textures/npc/npc016.png")]
+		public static const npc016:Class;
+		[Embed(source="../../media/textures/npc/npc017.png")]
+		public static const npc017:Class;
+		[Embed(source="../../media/textures/npc/npc018.png")]
+		public static const npc018:Class;
+		[Embed(source="../../media/textures/npc/npc019.png")]
+		public static const npc019:Class;
+		[Embed(source="../../media/textures/npc/npc020.png")]
+		public static const npc020:Class;
+		[Embed(source="../../media/textures/npc/npc021.png")]
+		public static const npc021:Class;
+		[Embed(source="../../media/textures/npc/npc022.png")]
+		public static const npc022:Class;
+		[Embed(source="../../media/textures/npc/npc023.png")]
+		public static const npc023:Class;
+		[Embed(source="../../media/textures/npc/npc024.png")]
+		public static const npc024:Class;
 		/*------------------characters-------------------------------------------------*/
 		
 			
@@ -427,7 +531,8 @@ package controller
 		[Embed(source = "../../media/textures/panels/departureListbg.png")]
 		public static const departureListbg:Class;	
 		[Embed(source="../../media/textures/panels/polaroid_frame.png")]
-		public static const photoframe:Class;
+		public static const magazine:Class;
+		//public static const photoframe:Class;
 		[Embed(source="../../media/textures/panels/alertmsgbg.png")]
 		public static const AlertMsgBg:Class;
 		
@@ -453,7 +558,7 @@ package controller
 		[Embed(source="../../media/textures/panels/dating_title_bg.png")]
 		public static const DatingTitleBg:Class;
 		
-		[Embed(source="../../media/textures/panels/command_direction.png")]
+		[Embed(source="../../media/textures/panels/command_direction1.png")]
 		public static const ComDirections:Class;
 		
 	
@@ -472,6 +577,14 @@ package controller
 		
 		[Embed(source="../../media/textures/panels/marketlist.png")]
 		public static const MarketListForm:Class;
+		
+		[Embed(source="../../media/textures/panels/keyboard_guild.png")]
+		public static const KeyboardGuild:Class;
+		
+		
+		[Embed(source="../../media/textures/panels/mask.png")]
+		public static const SceneMask:Class;
+	
 		/*-------------------panels-------------------------------------------------------------------*/
 		
 		
@@ -558,6 +671,15 @@ package controller
 		*/
 		[Embed(source="../../media/textures/btns/btn_buynow.png")]
 		public static const BuyNowBtn:Class;
-	
+		
+		[Embed(source="../../media/textures/panels/panel_skills_img.png")]
+		public static const PanelSkillsStore:Class;
+		/*-------------------panels-------------------------------------------------------------------*/
+		
+		//[Embed(source="../../media/textures/photos/watch.jpg")]
+		[Embed(source="../../media/textures/photos/CEIL_cat.jpg")]
+		public static const CeilCat:Class;
+		
+		/*----------------------------------------*/
 	}
 }

@@ -15,6 +15,7 @@ package views
 	import controller.SceneCommnad;
 	import controller.SceneInterface;
 	
+	import data.Config;
 	import data.DataContainer;
 	
 	import events.GameEvent;
@@ -35,6 +36,8 @@ package views
 	import starling.text.TextField;
 	import starling.textures.Texture;
 	import starling.textures.TextureSmoothing;
+	import starling.utils.HAlign;
+	import starling.utils.VAlign;
 	
 	import utils.DebugTrace;
 	import utils.DrawManager;
@@ -42,7 +45,7 @@ package views
 	
 	public class GameInfobar extends Sprite
 	{
-		private var font:String="Neogrey Medium";
+		private var font:String="SimNeogreyMedium";
 		private var attrlist:Array;
 		private var valuelist:Array;
 		private var flox:FloxInterface=new FloxCommand();
@@ -77,6 +80,7 @@ package views
 		private var comDirView:Sprite;
 		private var comDirTxt:TextField;
 		private var payApTxt:TextField;
+		private var apIcon:Image;
 		public function GameInfobar()
 		{
 			
@@ -113,6 +117,7 @@ package views
 			this.addEventListener("UPDATE_DIRECTION",onUpdateDirections);
 			this.addEventListener("UPDATE_DATING",onUpdateDating);
 			this.addEventListener("CANCEL_DATING",onCancelDating);
+			this.addEventListener("DRAW_PROFILE",onDrawProfile);
 			this.dispatchEventWith("UPDATE_INFO");
 			this.dispatchEventWith("UPDATE_DATING");
 		}
@@ -125,7 +130,7 @@ package views
 			
 			
 		}
-		 
+		
 		private function onUpdateInformation(e:Event):void
 		{
 			DebugTrace.msg("GameInfobar.onUpdateInformation");
@@ -371,22 +376,23 @@ package views
 			//began
 			
 		}
-		
+		private function onDrawProfile(e:Event):void
+		{
+			DebugTrace.msg("GameInfobar.onDrawProfile");
+			drawProfile();
+		}
 		private function drawProfile():void
 		{
 			
 			var savedata:SaveGame=FloxCommand.savegame;
 			var gender:String=savedata.avatar.gender;
 			
-			var modelObj:Object={"Male":new Rectangle(0,0,270,797),
-				"Female":new Rectangle(0,0,214,768)}
+			var modelObj:Object=Config.modelObj;
 			var modelRec:Rectangle=modelObj[gender];
-		
+			
 			basemodel=new Sprite();
 			basemodel.x=modelRec.x;
 			basemodel.y=modelRec.y;
-			//addChild(basemodel);
-			
 			
 			var modelAttr:Object=new Object();
 			modelAttr.gender=gender;
@@ -394,22 +400,34 @@ package views
 			modelAttr.height=modelRec.height;
 			
 			drawcom.drawCharacter(basemodel,modelAttr);
-			drawcom.updateBaseModel("Hair");
 			drawcom.updateBaseModel("Eyes");
+			drawcom.updateBaseModel("Hair");
 			drawcom.updateBaseModel("Features");
 			playerProfile();
 			
 			
 		}
+		private var proTxt:TextField;
 		private function playerProfile():void
 		{
+			
+		 
 			player_icon=new Sprite();
-			player_icon.name="Player";
-			addChild(player_icon);
 			drawcom.drawPlayerProfileIcon(player_icon,1,new Point(54,50));
 			
+			player_icon.name="Player";
+			addChild(player_icon);
 			player_icon.addEventListener(TouchEvent.TOUCH,displayCharacterInfo);
-			 
+			
+			var progress:Number=flox.getPlayerData("inGameProgress");
+			proTxt=new TextField(100,65,"","SimNeogreyMedium",40,0xFFFFFF,true);
+			proTxt.x=100;
+			proTxt.y=18;
+			proTxt.hAlign="left";
+			proTxt.vAlign="center";
+			proTxt.text=" # "+progress;
+			addChild(proTxt);
+			
 		}
 		private function displayCharacterInfo(e:TouchEvent):void
 		{
@@ -439,6 +457,10 @@ package views
 			
 			if(began)
 			{
+                profileFadeout();
+				removeChild(proTxt);
+				player_icon.removeEventListener(TouchEvent.TOUCH,displayCharacterInfo);
+				
 				var main_index:Number=currentScene.indexOf("MainScene");
 				if(main_index==-1)
 				{
@@ -453,6 +475,20 @@ package views
 			}
 			//if
 		}
+		private function profileFadeout():void
+		{
+			var tween:Tween=new Tween(player_icon,0.25);
+			tween.animate("alpha",0);
+			tween.onComplete=onProfileIconFadeout;
+			Starling.juggler.add(tween);
+			
+		}
+		private function onProfileIconFadeout():void
+		{
+			Starling.juggler.removeTweens(player_icon);
+			removeChild(player_icon);
+			
+		}
 		private function showCommandDirections():void
 		{
 			comDirView=new Sprite();
@@ -462,19 +498,29 @@ package views
 			var comdir:Image=new Image(comdirTexture);
 			comDirView.addChild(comdir);
 			var msg:String="";
-			comDirTxt=new TextField(530,59,msg,"Futura",20,0xFFFFFF);
-			comDirTxt.x=15;
-			comDirTxt.y=2;
-			comDirTxt.hAlign="left";
+			comDirTxt=new TextField(550,75,msg,"SimNeogreyMedium",18,0xFFFFFF);
+			comDirTxt.vAlign=VAlign.CENTER;
+			comDirTxt.hAlign=HAlign.LEFT;
+			comDirTxt.x=14;
+			comDirTxt.y=9;
 			comDirView.addChild(comDirTxt);
 			comDirView.visible=false;
 			
 			
-			payApTxt=new TextField(80,40,"","Neogrey Medium",25,0xFFFFFF);
-			payApTxt.hAlign="left"
+			payApTxt=new TextField(70,70,"","SimNeogreyMedium",25,0xFFFFFF);
+			payApTxt.vAlign=VAlign.CENTER;
+			payApTxt.hAlign=HAlign.LEFT;
 			payApTxt.x=622;
-			payApTxt.y=10;
+			payApTxt.y=13;
 			comDirView.addChild(payApTxt);
+			
+			//apIcon
+			var apTexture:Texture=Assets.getTexture("ApIcon");
+			apIcon=new Image(apTexture);
+			apIcon.x=565;
+			apIcon.y=25;
+			comDirView.addChild(apIcon);
+			
 			
 			addChild(comDirView);
 			
@@ -487,8 +533,11 @@ package views
 			
 			DebugTrace.msg("GameInfobar.onUpdateDirections attr:"+attr);
 			var commandData:Object=flox.getSyetemData("command");
+			//trace(JSON.stringify(commandData));
 			comDirView.visible=e.data.enabled;
 			var currentscene:String=DataContainer.currentLabel;
+			apIcon.visible=true;
+			payApTxt.visible=true;
 			
 			if(currentscene=="HotelScene" && attr=="Rest")
 			{
@@ -508,21 +557,39 @@ package views
 					
 				}
 			}
+			//if
 			
-			 
 			
 			if(e.data.enabled)
 			{
 				
 				var dec:String=commandData[attr].dec;
 				var value:Number=Number(commandData[attr].ap);
+				
+				
+				if(attr.indexOf("Rest")!=-1)
+				{
+					var switch_verifies:Array=scenecom.switchGateway("Rest||Stay");
+					if(switch_verifies[0])
+					{
+						apIcon.visible=false;
+						payApTxt.visible=false;
+						value=0;
+						var switchID:String=flox.getSaveData("next_switch");
+						var switchs:Object=flox.getSyetemData("switchs");
+						var values:Object=switchs[switchID];
+						dec=values.hints;
+					}
+					//if
+				}
+				//if
+				
 				comDirTxt.text=dec;
 				payApTxt.text=String(value);
 				if(value>0)
 				{
 					payApTxt.text="+"+value;
 				}
-				
 				
 				comDirView.alpha=0;
 				var tween:Tween=new Tween(comDirView,0.5,Transitions.EASE_OUT)
@@ -544,21 +611,22 @@ package views
 		private var dating_icon:Sprite;
 		private function onUpdateDating(e:Event):void
 		{
-			var savegame:SaveGame=FloxCommand.savegame;
-			if(savegame.dating)
+			var dating:String=flox.getSaveData("dating");
+			if(dating)
 			{
-				DataContainer.currentDating=savegame.dating;
+				DataContainer.currentDating=dating;
 				dating_icon=new Sprite();
 				dating_icon.x=151;
 				dating_icon.y=50;
 				addChild(dating_icon);
 				var drawcom:DrawerInterface=new DrawManager();
-				drawcom.drawCharacterProfileIcon(dating_icon,savegame.dating,0.45);
+				drawcom.drawCharacterProfileIcon(dating_icon,dating,0.45);
 			}
 			
 		}
 		private function onCancelDating(e:Event):void
 		{
+			DataContainer.currentDating=null;
 			removeChild(dating_icon);
 			
 		}

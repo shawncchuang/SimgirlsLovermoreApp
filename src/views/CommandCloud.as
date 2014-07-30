@@ -4,11 +4,16 @@ package views
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
+	import flash.text.TextField;
+	import flash.text.TextFormat;
+	import flash.text.TextFormatAlign;
 	
 	import controller.FloxCommand;
 	import controller.FloxInterface;
 	import controller.MainCommand;
 	import controller.MainInterface;
+	import controller.SceneCommnad;
+	import controller.SceneInterface;
 	
 	import data.DataContainer;
 	
@@ -29,7 +34,9 @@ package views
 	{
 		private var _label:String
 		private var comcloud:MovieClip;
+		private var cloudTxt:TextField;
 		private var command:MainInterface=new MainCommand();
+		private var scenecom:SceneInterface=new SceneCommnad();
 		private var pos:Object={"L1":new Point(3,374),"L2":new Point(-11,469),"L3":new Point(-8,278),"L4":new Point(2,565),"L5":new Point(1,182),
 			"R1":new Point(872,375),"R2":new Point(860,469),"R3":new Point(826,279),"R4":new Point(872,566),"R5":new Point(872,183)}
 		private var de_label:String="";
@@ -41,16 +48,32 @@ package views
 			_label=src.split("_")[1];
 			//DebugTrace.msg("CommandCloud.addDisplayObj _label:"+_label);
 			
-			comcloud=new ComCloud();
+			var format:TextFormat=new TextFormat();
+			format.font="SimImpact";
+			format.align=TextFormatAlign.CENTER;
+			format.color=0x66CCFF;
+			format.size=25;
+			cloudTxt=new TextField();
+			cloudTxt.x=22;
+			cloudTxt.y=20;
+			cloudTxt.width=114;
+			cloudTxt.height=80;
+			cloudTxt.embedFonts=true;
+			cloudTxt.multiline=true;
+			cloudTxt.defaultTextFormat=format;
 			
+			comcloud=new ComCloud();
+			comcloud.name=_label;
 			comcloud.x=pos[p].x;
 			comcloud.y=pos[p].y;
 			comcloud.buttonMode=true;
 			comcloud.mouseChildren=false;
-			comcloud.addEventListener(MouseEvent.CLICK,doClickComCloud);
+			comcloud.addEventListener(MouseEvent.MOUSE_DOWN,doClickComCloud);
 			comcloud.addEventListener(MouseEvent.MOUSE_OVER,doOverComCloud);
 			comcloud.addEventListener(MouseEvent.MOUSE_OUT,doOutComCloud);
-			comcloud.addEventListener(Event.ENTER_FRAME,doComCloudEnterFrame)
+			comcloud.addEventListener(Event.ENTER_FRAME,doComCloudEnterFrame);
+			
+			comcloud.addChild(cloudTxt);
 			addChild(comcloud);
 			
 			
@@ -58,13 +81,32 @@ package views
 		}
 		private function doClickComCloud(e:MouseEvent):void
 		{
-			comcloud.removeEventListener(MouseEvent.CLICK,doClickComCloud);
-			comcloud.removeEventListener(MouseEvent.MOUSE_OVER,doOverComCloud);
-			comcloud.removeEventListener(MouseEvent.MOUSE_OUT,doOutComCloud);
-			comcloud.gotoAndPlay("broke");
-			command.playSound("Break");
 			
 			
+			var target:String=e.target.name.split("^").join("");
+			var flox:FloxInterface=new FloxCommand();
+			var turn_switch:String=flox.getSaveData("current_switch").split("|")[1];
+			if(target=="Rest" || target=="Stay")
+			{
+				
+				var switch_verifies:Array=scenecom.switchGateway("Rest||Stay");
+				DebugTrace.msg("CommandCloud.doClickComCloud switch_verify="+switch_verifies);
+				if(!switch_verifies[0])
+				{
+					disabledComCloud();
+					comcloud.gotoAndPlay("broke");
+					command.playSound("Break");
+				}
+				//if
+				
+			}
+			else
+			{
+				disabledComCloud();
+				comcloud.gotoAndPlay("broke");
+				command.playSound("Break");
+			}
+			//if
 			visibleCommandDirecation();
 		}
 		private function doOverComCloud(e:MouseEvent):void
@@ -100,20 +142,36 @@ package views
 			gameinfo.dispatchEventWith("UPDATE_DIRECTION",false,_data);
 			
 		}
+		private function disabledComCloud():void
+		{
+			comcloud.removeEventListener(MouseEvent.MOUSE_DOWN,doClickComCloud);
+			comcloud.removeEventListener(MouseEvent.MOUSE_OVER,doOverComCloud);
+			comcloud.removeEventListener(MouseEvent.MOUSE_OUT,doOutComCloud);
+			
+		}
 		private function doComCloudEnterFrame(e:Event):void
 		{
+			
+			
+			
 			if(comcloud.currentFrameLabel=="showed")
 			{
 				if(_label.indexOf("^")!=-1)
 				{
+					if(_label.split("^")[0]!="")
+						cloudTxt.y=35;
+					
 					_label=String(_label.split("^").join("\n"));
+					
 				}
+				//if
 				
-				comcloud.txt.text=_label;
+				cloudTxt.text=_label;
 			}
 			
 			if(comcloud.currentFrame==comcloud.totalFrames)
 			{
+				
 				
 				comcloud.removeEventListener(Event.ENTER_FRAME,doComCloudEnterFrame);
 				//removeChild(comcloud);
@@ -151,16 +209,15 @@ package views
 			var _data:Object=new Object();
 			if(looking_index!=-1)
 			{
-				//Looking for at scene
+				//Looking for someone at scene
 				
-				sussess=paidAP();
-				if(sussess)
-				{
-					
-					
-					_data.name="FoundSomeScene";
-					command.sceneDispatch(SceneEvent.CHANGED,_data);
-				}
+				//sussess=paidAP();
+				//if(sussess)
+				//{
+				
+				_data.name="FoundSomeScene";
+				command.sceneDispatch(SceneEvent.CHANGED,_data);
+				//}
 				//if
 			}
 			//if
@@ -179,7 +236,7 @@ package views
 						{
 							var scene:Sprite=ViewsContainer.MainScene;
 							valueTween=new Tween(scene,0.5);
-							valueTween.delay=0.25;
+							valueTween.delay=0.5;
 							valueTween.onComplete=onInitCurrentScene;
 							Starling.juggler.add(valueTween);
 						}
@@ -195,10 +252,10 @@ package views
 			//if
 			if(start_dating!=-1)
 			{
-			   //start dating
+				//start dating
 				_data=new Object();
 				_data.name="DatingScene";
-				command.sceneDispatch(SceneEvent.CHANGED,_data)
+				//command.sceneDispatch(SceneEvent.CHANGED,_data)
 				
 			}
 			//if
@@ -251,12 +308,14 @@ package views
 		}
 		private function onInitCurrentScene():void
 		{
+			DebugTrace.msg("CommandCloud.onInitCurrentScene")
+			
 			Starling.juggler.remove(valueTween);
 			
 			var _data:Object=new Object();
 			_data.com=de_label;
 			var basesprite:Sprite=ViewsContainer.baseSprite;
-			basesprite.dispatchEventWith("commit",false,_data);
+			basesprite.dispatchEventWith(DatingScene.COMMIT,false,_data);
 			
 			/*switch(de_label)
 			{

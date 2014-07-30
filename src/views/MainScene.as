@@ -70,6 +70,7 @@ package views
 			stageH=Starling.current.stage.stageHeight;
 			
 			
+			
 			initScene();
 			initWaving();
 			initSigns();

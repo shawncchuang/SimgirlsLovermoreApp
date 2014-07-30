@@ -12,10 +12,12 @@ package model
 	
 	import utils.DebugTrace;
 	
+	import views.Member;
+	
 	public class BattleData
 	{
 		//base point
-		private var bp:Number=29;
+		private static var bp:Number=29;
 		private var flox:FloxInterface=new FloxCommand();
 		private var allpowers:Array;
 		private static var _stoneElements:Array;
@@ -23,6 +25,8 @@ package model
 		private static var memberscom:MembersInterface=new MemebersCommand();
 		private static var from:String;
 		public static var surviveCombats:Array
+		private var targetArea:Array;
+		private var skillarea:Array=new Array();
 		public static function rangeMatrix(power:Object):Array
 		{
 			var matrix:Array=new Array();
@@ -85,7 +89,7 @@ package model
 				}
 				//if
 			}
-			else if(area==1)
+			if(area==1)
 			{
 				//check back row
 				_matrix=[3,4,5];
@@ -106,7 +110,7 @@ package model
 				}
 				//if
 			}
-			 //if
+			//if
 			
 			var _area:Array=areaMatrix[area];
 			for(var k:uint=0;k<_area.length;k++)
@@ -123,41 +127,74 @@ package model
 			//matrix=areaMatrix[aera];
 			return matrix
 		}
-		public function skillCard(member:Object,cupsys:Object):Object
+		/*public function skillCard(member:Member,skill:Object):Object
 		{
-			var powers:Object=new Object();
-			 
+		//var member_power:Object=cupsys;
+		var _skill:Object=new Object();
+		var se:Number=member.power.se;
+		var power:Number=Number(skill.power);
+		if(member.power.skillID.indexOf("n")!=-1)
+		{
+		se=member.power.seMax;
+		}
+		
+		
+		var dp:Number=BattleData.bp;
+		//power=Math.floor(power+power*bp*Number((se/9999).toFixed(2)));
+		power=Math.floor(power*bp*Number((se/9999).toFixed(2)));
+		var extra:Number=10-Math.floor(Math.random()*20);
+		skill.power=power+extra;
+		
+		for(var attr:String in skill)
+		{
+		_skill[attr]=skill[attr];
+		}
+		
+		
+		return _skill;
+		}*/
+		public function skillCard(member:Member,power:Number):Number
+		{
+			//var member_power:Object=cupsys;
+			var skill_power:Number=power;
+			var de_power:Number=power;
+			var _skill:Object=new Object();
 			var se:Number=member.power.se;
-			var power:Number=cupsys.power;
+			
 			if(member.power.skillID.indexOf("n")!=-1)
 			{
 				se=member.power.seMax;
 			}
 			
-			//var def:Number=cupsys.def;
-			var speed:Number=cupsys.speed;
 			
+			var dp:Number=BattleData.bp;
 			
-			power=power+power*bp*Number((se/9999).toFixed(2));
-			var extra:Number=Math.floor(Math.random()*10)/100;
-			//def=def+def*bp*Number((se/9999).toFixed(2));
-			//speed=speed+speed*bp*Number((se/9999).toFixed(2));
-			powers.power=Math.floor(power+power*extra);
-			//powers.def=def;
-			powers.speed=speed;
+			//power=Math.floor(power+power*bp*Number((se/9999).toFixed(2)));
+			power=Number(Math.floor(power*bp*Number((se/9999).toFixed(2))));
+			//var extra_power:Number=Math.floor(power/10);
+			//var extra:Number=extra_power-Math.floor(Math.random()*(extra_power*2));
+			var extra:Number=0;
+			skill_power=skill_power+power+extra;
+			if(skill_power==0)
+			{
+				skill_power=de_power
+			}
 			
-			return powers;
+			return skill_power;
 		}
-		public function damageCaculator(powers:Array,index:Number):Number
+		public function damageCaculator(member_power:Object):Number
 		{
 			var damage:Number;
-			allpowers=powers;
 			
+			var power:Number=member_power.power;
+			var extra_power:Number=Math.floor(power/10)
+			var extra:Number=extra_power-(Math.floor(Math.random()*(extra_power*2)));
 			
+			//DebugTrace.msg("BattleData.damageCaculator power="+power);
+			//DebugTrace.msg("BattleData.damageCaculator extra="+extra);
 			
-			var extra:Number=5-(Math.floor(Math.random()*10)+1);
-			var power:Number=allpowers[index].power;
 			damage=power+extra;
+			
 			return damage;
 		}
 		private function getTargetPower(target:String):Object
@@ -191,7 +228,7 @@ package model
 			{
 				
 				var ran:Number=Math.floor(Math.random()*100);
-				if(ran<=8)
+				if(ran<=12)
 				{
 					var ele:String="neutral";	
 				}
@@ -203,10 +240,10 @@ package model
 				}
 				//if
 				stones.push(ele);
-				//fake
-				//stones=["neutral","earth","earth","earth","earth","earth","neutral"];
 			}
 			//for
+			//fake
+			// stones=["air","air","air","air","air","air","air"];
 			stoneElements=stones;
 		}
 		public function praseRequestStones(elements:Array,reqs:Array):Array
@@ -269,48 +306,27 @@ package model
 			DebugTrace.msg("BattleData.praseTargetList power= "+JSON.stringify(power));
 			from=power.from;
 			
-			var targetArea:Array=new Array();
+			targetArea=new Array();
 			var area:Number=power.area;
 			var enemy:Number=power.enemy;
 			var skillID:String=power.skillID;
-			var skillarea:Array=rangeMatrix(power);
+			skillarea=rangeMatrix(power);
 			var areaMatrix:Object=new Object();
-			 
 			var target:Number;
 			
+			DebugTrace.msg("BattleData.praseTargetList skillarea= "+skillarea);
 			switch(enemy)
 			{
+				case 0:
+					targetArea=surviveCombats;
+					break
 				case 1:
 					
-					/*if(skillarea.indexOf(combat)!=-1)
+					if(skillarea.indexOf(combat)!=-1)
 					{
-						//target's combat is at skill area 
-						if(skillarea.indexOf(combat)!=-1)
-						{
-						   targetArea.push(combat);
-						}
-						//if
+						targetArea.push(combat);
 					}
-					else
-					{
 					
-						for(var i:uint=1;i<=3;i++)
-						{
-							if(surviveCombats.indexOf(i)!=-1)
-							{
-								targetArea.push(i);
-								break
-							}
-							//if
-						}
-						//for
-					}
-					//if*/
-					 if(skillarea.indexOf(combat)!=-1)
-					 {
-						 targetArea.push(combat);
-					 }
-				 	
 					
 					break
 				case 2:
@@ -325,9 +341,9 @@ package model
 					}
 					break
 				case 3:
-					 
-					targetArea=skillarea;
-					 
+					
+					createTargetArea(skillID,combat);
+					
 					break
 				case 4:
 					
@@ -352,12 +368,88 @@ package model
 				
 			}
 			//switch
-			
+			if(surviveCombats.length==1)
+			{
+				targetArea=new Array();
+				targetArea.push(surviveCombats[0]);
+			}
 			DebugTrace.msg("BattleData.surviveCombats: "+surviveCombats);
 			DebugTrace.msg("BattleData.targetArea: "+targetArea);
-			 
+			
 			//DebugTrace.msg("BattleData._targetArea="+_targetArea);
 			return targetArea;
+		}
+		private function createTargetArea(skillID:String,combat:Number):void
+		{
+			
+			switch(skillID)
+			{
+				case "f2":
+					
+					if(combat<3)
+					{
+						//font row
+						var _skillarea:Array=[0,1,2];
+					}
+					else
+					{
+						_skillarea=[3,4,5];
+						
+					}
+					//if
+					for(var v:uint=0;v<_skillarea.length;v++)
+					{
+						if(surviveCombats.indexOf(_skillarea[v])!=-1)
+						{
+							targetArea.push(_skillarea[v]);
+						}
+						//if
+					}
+					//for
+					break
+				case "gor_s_1": 
+				case "tgr_s_1":
+					//front row
+					_skillarea=[0,1,2];
+					
+					for(var w:uint=0;w<_skillarea.length;w++)
+					{
+						if(surviveCombats.indexOf(_skillarea[w])!=-1)
+						{
+							targetArea.push(_skillarea[w]);
+						}
+						//if
+					}
+					//for
+					if(targetArea.length==0)
+					{
+						//front row all death
+						_skillarea=[3,4,5];
+						for(w=0;w<_skillarea.length;w++)
+						{
+							if(surviveCombats.indexOf(_skillarea[w])!=-1)
+							{
+								targetArea.push(_skillarea[w]);
+							}
+							//if
+						}
+						//for	
+					}
+					//if
+					break
+				default:
+					for(var t:uint=0;t<skillarea.length;t++)
+					{
+						if(t<3)
+						{
+							targetArea.push(skillarea[t]);
+						}
+					}
+					//for
+					break
+			}
+			//switch
+			
 		}
 		public function checkPlayerTeam():Array
 		{
@@ -368,7 +460,7 @@ package model
 			
 			for(var j:uint=0;j<playerteam.length;j++)
 			{
-			 
+				
 				player_team.push(playerteam[j].power);
 			}
 			//for
@@ -458,7 +550,7 @@ package model
 		{
 			var re:Array=new Array();
 			
-			 
+			
 			while (sample.length > 0)
 			{
 				re.push(sample.splice(Math.round(Math.random() * (sample.length - 1)),1)[0]);
@@ -468,6 +560,25 @@ package model
 			
 			return re
 			
+		}
+		public function backStoryScene():String
+		{
+			//back to scent and switch story
+			var scene:String="";
+			var current_switch:String=flox.getSaveData("current_switch").split("|")[0];
+			var switchs:Object=flox.getSyetemData("switchs");
+			var location:String=switchs[current_switch].location;
+			var sceneObj:Object=Config.stagepoints;
+			for(var _name:String in sceneObj)
+			{
+				if(_name.toLowerCase()==location)
+				{
+					scene=_name+"Scene";
+					break
+				}
+				
+			}
+			return scene;
 		}
 	}
 }

@@ -1,11 +1,6 @@
 package
 {
 	
-	
-	
-	
-	 
-	
 	import controller.Assets;
 	import controller.FloxCommand;
 	import controller.FloxInterface;
@@ -77,6 +72,9 @@ package
 			
 			this.addEventListener("PAY_CHECK",onPayCheck);
 			
+			var assets:Assets=new Assets();
+			assets.initMusicAssetsManager();
+			assets.initSoundAssetsManager();
 			
 			if(loadgame)
 			{
@@ -184,19 +182,21 @@ package
 			
 			
 			var _data:Object=new Object();
-			
-			
 			//_data.name="BattleScene";
 			//_data.name="HotelScene";
 			//_data.name="ProfileScene";
 			//_data.name="MenuScene";
 			//_data.name="CharacterDesignScene";
-			//_data.name="ChangeFormationScene";
-			_data.name="MainScene";
+			// _data.name="ChangeFormationScene";
+			//_data.name="MainScene";
 			//_data.name="Tarotreading";
 			//_data.name="AirplaneScene";
 			//_data.name="BlackMarketScene";
+			//_data.name="TraceGame";
+			//_data.name="TrainingGame";
+			_data.name="BetaScene";
 			command.sceneDispatch(SceneEvent.CHANGED,_data)
+			
 			
 			
 		}
@@ -211,7 +211,7 @@ package
 			ViewsContainer.UIViews=uiView;
 			uiView.visible=false
 		}
-	    private function onPayCheck(e:starling.events.Event):void
+		private function onPayCheck(e:starling.events.Event):void
 		{
 			paymentScene=new Sprite();
 			paymentScene.alpha=0;
@@ -219,14 +219,14 @@ package
 			var bgImg:Image=new Image(bgTexture);
 			
 			var msg:String="GameOver";
-			var msgTxt:TextField=new TextField(1024,270,msg,"Neogrey Medium",20,0xFFFFFF);
+			var msgTxt:TextField=new TextField(1024,270,msg,"SimNeogreyMedium",20,0xFFFFFF);
 			msgTxt.y=200;
 			msgTxt.vAlign="center";
 			msgTxt.hAlign="center";
 			
 			var btnTexture:Texture=Assets.getTexture("OptionBg");
 			var paybtn:Button=new Button(btnTexture,"Buy Now");
-			paybtn.fontName="Neogrey Medium";
+			paybtn.fontName="SimNeogreyMedium";
 			paybtn.fontSize=30;
 			paybtn.fontColor=0xFFFFFF;
 			paybtn.x=336;
@@ -253,9 +253,9 @@ package
 			target.text="Continue";
 			
 			command.addLoadind("");
-						
+			
 			flox.refreshPlayer(onRefreshPlayerComplete)
-
+			
 		}
 		private function onRefreshPlayerComplete():void
 		{

@@ -14,5 +14,11 @@ package controller
 	    function clearMouseClickIcon():void
 	    function filterBackground():void
 		function addDisplayContainer(src:String):void
+		function set currentSwitch(id:String):void
+		function get currentSwitch():String
+		function switchGateway(type:String ,callback:Function=null):*
+		function doClearAll():void
+		function initStory(finshed:Function=null):void
+		function onStoryFinished():void
 	}
 }

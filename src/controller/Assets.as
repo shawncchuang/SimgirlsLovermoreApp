@@ -65,7 +65,6 @@ package controller
 			"dea":new Dea(),
 			"klr":new Klaire(),
 			"ceil":new Ceil(),
-			"bunny":new Bunny(),
 			"MaleBody":new MaleBody(),
 			"FemaleBody":new FemaleBody(),
 			"FrameFilterSex":new FrameFilterSex(),
@@ -83,7 +82,8 @@ package controller
 			"TileGreen":new TileGreen(),
 			"TileBlue":new TileBlue(),
 			"AlertTalking":new AlertTalkingUI(),
-			"WavingCrash1":new WavingCrash1()
+			"WavingCrash1":new WavingCrash1(),
+			"daz":new NPC001_daz()
 		}
 		private static var sContentScaleFactor:int = 1;
 		private static var sTextures:Dictionary = new Dictionary();
@@ -94,6 +94,7 @@ package controller
 		private static var sound_manager:AssetManager;
 		private static var music:String;
 		private static var sound:String;
+		
 		public static function set MusicChannel(sh:SoundChannel):void
 		{
 			music_channel=sh;
@@ -102,38 +103,57 @@ package controller
 		{
 			return music_channel;
 		}
-		public function initSoundAssetsManager(src:String):void
+		
+		public static function set MusicManager(mm:AssetManager):void
 		{
-			sound=src;
+			music_manager=mm
+		}
+		public static function get MusicManager():AssetManager
+		{
+			return music_manager;
+		}
+		public static function set SoundManager(mm:AssetManager):void
+		{
+			sound_manager=mm
+			
+		}
+		public static function get SoundManager():AssetManager
+		{
+			return sound_manager;
+		}
+		public function initSoundAssetsManager():void
+		{
+			//sound=src;
 			sound_manager=new AssetManager();
 			sound_manager.verbose=true
 			sound_manager.enqueue(SoundEmbed);
 			sound_manager.loadQueue(onLoadedSoundEnquese);
 			
-			
+			SoundManager=sound_manager;
 		}
 		private function onLoadedSoundEnquese(ratio:Number):void
 		{
 			
 			//DebugTrace.msg("Loading assets, progress:"+ratio);
-			sound_manager.playSound(sound,0);
+			// sound_manager.playSound(sound,0,-1);
 			
 		}
-		public  function initMusicAssetsManager(src:String):void
+		public  function initMusicAssetsManager():void
 		{
-			music=src;
+			//music=src;
 			music_manager=new AssetManager();
+			
 			music_manager.verbose=true
 			music_manager.enqueue(MusicEmbed);
 			music_manager.loadQueue(onLoadedMusicEnquese);
 			
-			
+			MusicManager=music_manager;
 		}
 		private function onLoadedMusicEnquese(ratio:Number):void
 		{
+			trace(music_manager.getSoundNames());
+			//music_manager.playSound(music,0);
 			
-			//DebugTrace.msg("Loading assets, progress:"+ratio);
-			Assets.MusicChannel=music_manager.playSound(music,0,1000);
 			
 		}
 		public static function getTexture(name:String):Texture

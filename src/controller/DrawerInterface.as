@@ -15,7 +15,8 @@ package controller
 		function drawCircle(attr:Object):void
 		function getBitmapdata():BitmapData
 		function setBitmapPorperties(obj:Object):void
-		function copyAsBitmapData(sprite:DisplayObject,rec:Rectangle=null,point:Point=null):BitmapData
+		 
+		function copyAsBitmapData(sprite:DisplayObject,rec:Rectangle=null,point:Point=null):BitmapData;
 		function drawCharacter(model:Sprite,attr:Object):void
 		function updateBaseModel(target:String):void
 		function updateModelColor(type:String,rgb:Object):void
@@ -26,6 +27,7 @@ package controller
 		function drawPieChart(target:Sprite,texture:String):void
 		function updatePieChart(value:Number):void
 		function drawCharacterProfileIcon(target:Sprite,ch:String,scale:Number):void
+		function drawNPCProfileIcon(target:Sprite,id:String,scale:Number):void
 		function drawBackground():*
 	    function playerModelCopy(target:Sprite,pos:Point):void
 	}

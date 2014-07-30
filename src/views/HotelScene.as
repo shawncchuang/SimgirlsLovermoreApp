@@ -63,18 +63,37 @@ package views
 			addChild(speaker_sprite);
 			speaker_sprite.flatten();
 			init();
+			
+			
+			
 		}
 		private function init():void
 		{
 			days=1;
-			scencom.init("HotelScene",speaker_sprite,6,onCallBack);
+			scencom.init("HotelScene",speaker_sprite,6,onStartStory);
 			scencom.start();
-			scencom.disableAll();
+			
+		
+			
 		}
-		private function onCallBack():void
+		private function onStartStory():void
+		{
+			 DebugTrace.msg("HotelScene.onStartStory")
+			
+			scencom.disableAll();
+			var switch_verifies:Array=scencom.switchGateway("HotelScene");
+			if(switch_verifies[0])
+			scencom.start();
+			 
+		}
+		private function onStoryComplete():void
 		{
 			
 			
+			scencom.disableAll();
+			var _data:Object=new Object();
+			_data.name= "HotelScene";
+			command.sceneDispatch(SceneEvent.CHANGED,_data);
 		}
 		private function onSceneTriggered(e:Event):void
 		{
@@ -307,8 +326,8 @@ package views
 		
 		private function commitCommand():void
 		{
-			var savegame:SaveGame=FloxCommand.savegame;
-			var cash:Number=savegame.cash;
+			//var savegame:SaveGame=FloxCommand.savegame;
+			var cash:Number=flox.getSaveData("cash");
 			
 			if(cash>=Math.abs(pay))
 			{

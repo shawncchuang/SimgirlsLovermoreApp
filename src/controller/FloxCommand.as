@@ -16,6 +16,7 @@ package controller
 	
 	import model.CusomAssets;
 	import model.CustomPlayer;
+	import model.DataSave;
 	import model.SaveGame;
 	import model.SystemData;
 	
@@ -31,7 +32,18 @@ package controller
 	
 	public class FloxCommand implements FloxInterface
 	{
-		private var permision:String="";
+		
+		private var permision:String="black!@spears#$"
+		//Release--------------
+		//private var gameID:String="jGAFFu973M7tlxp7";
+		//private var gameKey:String="wLDwYIitcQwtMmtZ";
+		
+		//Developer--------------------
+		private var gameID:String="NwkAI894Yh6egcxz";
+		private var gameKey:String="CFDklZTXxRvlDyRO";
+		
+		
+		private var version:String;
 		private var player_name:String="";
 		private var password:String="";
 		public static var my_email:String="";
@@ -60,29 +72,29 @@ package controller
 		public static function set savegame(data:*):void
 		{
 			/*var currentPlayer:CustomPlayer=Player.current as CustomPlayer;
-		 
+			
 			_savegame.id=currentPlayer.id+"_saved"+currentPlayer.inGameProgress;
 			if(data)
 			{
-				for(var attr:String in data)
-				{
-					_savegame[attr]=data[attr];
-				}
-				//for
+			for(var attr:String in data)
+			{
+			_savegame[attr]=data[attr];
+			}
+			//for
 			}
 			//if
 			_savegame.save(onSaveComplete,onSaveError);
 			function onSaveComplete():void
 			{
-				
+			
 			}
 			function onSaveError(error:String):void
 			{
-				
-				MainCommand.addAlertMsg(SAVE_ERROR_MSG);
+			
+			MainCommand.addAlertMsg(SAVE_ERROR_MSG);
 			}*/
 			_savegame=data;
-			 
+			
 		}
 		
 		
@@ -100,11 +112,11 @@ package controller
 		}
 		public function init():void
 		{
-			
+			version=DataContainer.currentVersion;
 			
 			Flox.playerClass = CustomPlayer;
 			
-			Flox.init("", "", "1.0.1");
+			Flox.init(gameID, gameKey,version);
 			Flox.traceLogs=true;
 			
 			//Flox.addEventListener(QueueEvent.QUEUE_PROCESSED,onInitComplete);
@@ -158,6 +170,13 @@ package controller
 			//currentPlayer.saveQueued();
 			currentPlayer.save(callback,onSavedError);
 		}
+		public function savePlayerData(attr:String,data:*,callback:Function=null):void
+		{
+			
+			var currentPlayer:CustomPlayer=Player.current as CustomPlayer;
+			currentPlayer[attr]=data;
+			currentPlayer.save(callback,onSavedError);
+		}
 		private function onSavePlayerComplete():void
 		{
 			switch(save_player_type)
@@ -179,7 +198,7 @@ package controller
 			currentPlayer.verify="enabled";
 			currentPlayer.paid=false;
 			currentPlayer.saved=new Array();
-			currentPlayer.items=Config.PlayerItems;
+			//currentPlayer.items=Config.PlayerItems;
 			//currentPlayer.saveQueued();
 			currentPlayer.save(onSetupPlayerComplete,onSavedError);	
 			
@@ -323,6 +342,7 @@ package controller
 			//indicesPlayer(cons,key,onSignUpIndices,onIndicesError);
 			//don't need player_name
 			//var query:Query=new Query(CustomPlayer,cons,key,my_email,player_name);
+			
 			var query:Query=new Query(CustomPlayer,cons,key,my_email);
 			query.find(onSignUpIndices,onIndicesError);
 			
@@ -386,14 +406,16 @@ package controller
 			
 			//savegame=DataContainer.saveData; 
 			
-			DebugTrace.msg("FloxCommand.save savegame:"+_savegame+" ; inGameProgress:"+currentPlayer.inGameProgress);
+			//DebugTrace.msg("FloxCommand.save savegame:"+_savegame+" ; inGameProgress:"+currentPlayer.inGameProgress);
 			
 			_savegame.id=currentPlayer.id+"_saved"+currentPlayer.inGameProgress;
 			
-			var SaveGameJSON:String=JSON.stringify(_savegame)
-			DebugTrace.msg("FloxCommand.save SaveGameJSON:"+SaveGameJSON);
+		
 			if(data)
 			{
+				var dataJSON:String=JSON.stringify(data)
+				DebugTrace.msg("FloxCommand.save dataJSON:"+dataJSON);
+				
 				_savegame[attr]=data;
 			}
 			//savegame.saveQueued();
@@ -405,8 +427,14 @@ package controller
 		private function onSavedError(error:String):void
 		{
 			//DebugTrace.msg("onSavedError:"+error);
+			var msg:String="The game is temporarily disconnected from the server.\nYou can continune to play however."
 			
-			MainCommand.addAlertMsg(SAVE_ERROR_MSG);
+			MainCommand.addAlertMsg(msg);
+			
+			
+			var errorObj:Object=new Object();
+			errorObj.FloxCommand="SaveError";
+			Flox.logError(errorObj,error);
 		}
 		public function setupSaveGame():void
 		{
@@ -439,7 +467,7 @@ package controller
 			
 			Flox.logEvent("GameStarted");
 			SimgirlsLovemore.gameStart();
-
+			
 			
 		}
 		private function onSetUPSaveComplete():void
@@ -480,6 +508,16 @@ package controller
 			//DebugTrace.msg("onRefreshComplete:"+result.ap);
 			
 		}
+		public function saveSystemDataEntities():void
+		{
+			//_savegame.id="HeroesSaved";
+			//_savegame.publicAccess=Access.READ;
+			//_sysdata.save(onSaveSystemDataComplete,onSavedError);
+			var systemdata:SystemData=new SystemData();
+			systemdata.id="HeroesSaved";
+			systemdata.publicAccess=Access.READ_WRITE;
+			systemdata.save(onSaveSystemDataComplete,onSavedError)
+		}
 		public function loadSystemDataEntities():void
 		{
 			//for new game load system data
@@ -496,7 +534,8 @@ package controller
 		private function onLoadSystemDataComplete(result:SystemData):void
 		{
 			systemdata=result;
-			//DebugTrace.obj(result.datingchat);
+			
+			//DebugTrace.obj(systemdata.command);
 			DebugTrace.msg("FloxCommand.onLoadSystemDataComplete");
 			
 			if(game_type=="newgame")
@@ -509,11 +548,21 @@ package controller
 			
 			
 		}
-		private function _onLoadSystemDataComplete(result:SystemData):void
+		public function saveSystemData(attr:String,value:*):void
 		{
 			
-			DebugTrace.msg("FloxCommand._onLoadSystemDataComplete");
-			//DebugTrace.obj(result.datingchat);
+			
+			systemdata.id="HeroesSaved";
+			systemdata[attr]=value;
+			systemdata.save(onSaveComplete,onSavedError)
+			
+			
+		}
+		private function onSaveComplete(result:SystemData):void
+		{
+			systemdata=result;
+			DebugTrace.msg("FloxCommand.onSaveComplete");
+			
 		}
 		public function loadEntities():void
 		{
@@ -603,6 +652,7 @@ package controller
 				msg="Something went wrong during the load operation: The player's device may be offline.";
 				
 			}
+			
 			MainCommand.addAlertMsg(msg);
 			if(_onComplete)
 			{
@@ -610,6 +660,9 @@ package controller
 				_onComplete=null;
 				
 			}
+			var errorObj:Object=new Object();
+			errorObj.FloxCommand="onLoadEntitiesError";
+			Flox.logError(errorObj,error);
 			
 		}
 		private function setupSystemData():void
@@ -656,7 +709,8 @@ package controller
 		}*/
 		public function indicesPlayer(cons:String,value1:String,onSuccess:Function,onFailed:Function,value2:String=null,value3:String=null):void
 		{
-			DebugTrace.msg("indicesPlayer: " + cons+" ; "+value1+" ; "+value2);
+			
+			DebugTrace.msg("Floxcommand.indicesPlayer: " + cons+" ; "+value1+" ; "+value2);
 			
 			var query:Query=new Query(CustomPlayer);
 			
@@ -677,6 +731,28 @@ package controller
 			query.find(onSuccess,onFailed);
 		}
 		
+		private var updateValue:*;
+		public function updatePlayer(cons:String,key:String,value:*):void
+		{
+			//var cons:String="authId == ? AND from == ?";
+			updateValue=value;
+			var query:Query=new Query(CustomPlayer);	
+			query.where(cons,key);
+			query.find(onQueryUpdatePlayer,onIndicesError);
+			
+		}
+		private function onQueryUpdatePlayer(players:Array):void
+		{
+			
+			DebugTrace.msg("Floxcommand.onQueryUpdatePlayer: " + players);
+			
+			
+			
+			
+			
+			
+			
+		}
 		private function onIndicesError(error:String):void
 		{
 			
@@ -684,6 +760,10 @@ package controller
 			var msg:String="Opps.It cann't connect to Server.\nPlaeae try again later."
 			MainCommand.addAlertMsg(msg);
 			command.removeLoading();
+			
+			var errorObj:Object=new Object();
+			errorObj.FloxCommand="onIndicesError";
+			Flox.logError(errorObj,error);
 		}
 		public function submitCoins():void
 		{
@@ -736,8 +816,8 @@ package controller
 		public function showlog(msg:String):void
 		{
 			
-			Flox.logInfo(msg);
-			
+			//Flox.logInfo(msg);
+			trace(msg);
 		}
 		
 		//Pre Order --------------------------------------------------
@@ -781,8 +861,8 @@ package controller
 		private function onPreorderLoginFailed(error:String, httpStatus:int, confirmationEmailSent:Boolean):void
 		{
 			command.removeLoading()
-			DebugTrace.msg("FloxCommand.onPreorderLoginFailed error:"+error);
-			DebugTrace.msg("FloxCommand.onPreorderLoginFailed httpStatus:"+httpStatus);
+			//DebugTrace.msg("FloxCommand.onPreorderLoginFailed error:"+error);
+			//DebugTrace.msg("FloxCommand.onPreorderLoginFailed httpStatus:"+httpStatus);
 			SimgirlsLovemore.failedLogin(error)
 			if(confirmationEmailSent) 
 			{
@@ -794,13 +874,16 @@ package controller
 				
 			}
 			//if
+			var errorObj:Object=new Object();
+			errorObj.FloxCommand="onPreorderLoginFailed";
+			Flox.logError(errorObj,error);
 		}
 		public function signupWithEmail(email:String):void
 		{
 			//for Pre Order User signin
 			
 			command.addLoadind("");
-			Player.loginWithEmail(email,onSignupWithEmailComplete,onLoginFailed);
+			Player.loginWithEmail(email,onSignupWithEmailComplete,onEmailSignInFailed);
 			
 		}
 		private function onSignupWithEmailComplete():void
@@ -810,6 +893,15 @@ package controller
 			
 			setupPreOrderPlayer();
 			
+		}
+		private function onEmailSignInFailed(error:String):void
+		{
+			//DebugTrace.msg("FloxCommand.onEmailSignInFailed :"+error);
+			
+			
+			var errorObj:Object=new Object();
+			errorObj.FloxCommand="onEmailSignInFailed";
+			Flox.logError(errorObj,error);
 		}
 		private function setupPreOrderPlayer():void
 		{
@@ -836,7 +928,7 @@ package controller
 		}
 		
 		//------------------------------------------------------------------------
-		public function LoginForDestroyPlayer(key:String,email:String):void
+		public function LoginForDestroyPlayer(key:String="",email:String=""):void
 		{
 			if(key!="")
 			{
@@ -848,7 +940,7 @@ package controller
 			}
 			
 		}
-		import model.DataSave;
+		
 		public function destoryEntities(type:String,id:String):void
 		{
 			switch(type)
@@ -882,16 +974,19 @@ package controller
 			
 			DebugTrace.msg("FloxCommand onLoginForDestoryComplete");
 			//backup systemdata
-			//Entity.load(SystemData,"AdministerSaved",onLoadSystemDataBackUp,onLoadEntitiesError);
+			Entity.load(SystemData,"HeroesSaved",onLoadSystemDataBackUp,onLoadEntitiesError);
 			
 		}
 		private function onLoadSystemDataBackUp(result:SystemData):void
 		{
+			systemdata=result;
+			/*
 			
 			var _sysdata:SystemData=result;
 			_sysdata.id="HeroesSaved";
 			_sysdata.publicAccess=Access.READ;
 			_sysdata.save(onSaveSystemDataComplete,onSavedError);
+			*/
 		}
 		private function onSaveSystemDataComplete():void
 		{

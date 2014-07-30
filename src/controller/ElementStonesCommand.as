@@ -16,7 +16,7 @@ package controller
 	import views.BattleScene;
 	import views.Member;
 	
-
+	
 	public class ElementStonesCommand implements ElementStones
 	{
 		private var menuscene:Sprite;
@@ -63,7 +63,7 @@ package controller
 			
 			DataContainer.stonesList=stoneslist;
 		}
-		public function readyElementStones():void
+		public function readyElementStones(cate:String=null):void
 		{
 			//play_power=BattleScene.play_power;
 			var playerteam:Array=MemebersCommand.playerTeam;
@@ -99,21 +99,25 @@ package controller
 				//switch
 				readystones.push(index);
 				stoneslist[index].status="ready";
-				 
-				TweenMax.to(target_stone, 0.5, {y:0,colorTransform:{tint:0x000000, tintAmount:0.5},scaleX:0.85,scaleY:0.85,glowFilter:{color:color, alpha:1, blurX:10, blurY:10, strength:2.5, quality:3},ease:Quart.easeOut,onComplete:onTweenComplete});
+				
+				TweenMax.to(target_stone, 0.5, {y:0,colorTransform:{tint:0x000000, tintAmount:0.5},scaleX:0.85,scaleY:0.85,glowFilter:{color:color, alpha:1, blurX:10, blurY:10, strength:2.5, quality:3},ease:Quart.easeOut});
 				
 				
 			}
 			//for
-			power.readystones=readystones;
-			member.updatePower(power);
+			if(!cate)
+			{
+				//from skill card shuild update power
+				power.readystones=readystones;
+				member.updatePower(power);
+			}
 			
 			DataContainer.stonesList=stoneslist;
 			
 			/*for(var k:uint=0;k<stoneslist.length;k++)
 			{
-				DebugTrace.msg("ElementStonesCommand.readyElementStones stoneslist["+k+"].id="+stoneslist[k].id);
-				DebugTrace.msg("ElementStonesCommand.readyElementStones stoneslist["+k+"].status="+stoneslist[k].status);
+			DebugTrace.msg("ElementStonesCommand.readyElementStones stoneslist["+k+"].id="+stoneslist[k].id);
+			DebugTrace.msg("ElementStonesCommand.readyElementStones stoneslist["+k+"].status="+stoneslist[k].status);
 			}
 			//for	
 			*/
@@ -125,7 +129,7 @@ package controller
 				stoneslist[readystones[i]].status="empty";
 				var target_stone:MovieClip=stoneslist[readystones[i]].src;
 				target_stone.stone.scanlight.gotoAndStop(1);
-				TweenMax.to(target_stone, 0.5, {colorTransform:{tint:0x000000, tintAmount:0},scaleX:0.85,scaleY:0.85,glowFilter:{remove:true},onComplete:onTweenComplete});
+				TweenMax.to(target_stone, 0.5, {colorTransform:{tint:0x000000, tintAmount:0},scaleX:0.85,scaleY:0.85,glowFilter:{remove:true}});
 			}
 			
 		}
@@ -137,7 +141,7 @@ package controller
 				if(stoneslist[i].status=="ready")
 				{
 					var target_stone:MovieClip=stoneslist[i].src;
-					TweenMax.to(target_stone, 0.5, {alpha:0,glowFilter:{remove:true},onComplete:onTweenComplete});
+					TweenMax.to(target_stone, 0.5, {alpha:0,glowFilter:{remove:true}});
 					
 					
 				}
@@ -150,7 +154,7 @@ package controller
 		}
 		public function doSpentStones():void
 		{
-			TweenMax.killAll(true);
+			
 			var new_stoneslist:Array=new Array();
 			var new_elementslist:Array=new Array();
 			var max:Number=stoneslist.length;
@@ -192,7 +196,7 @@ package controller
 			{
 				var target_stone:MovieClip=stoneslist[i].src;
 				var posX:Number=i*50;
-				TweenMax.to(target_stone,0.5,{x:posX,onComplete:onTweenComplete});
+				TweenMax.to(target_stone,0.5,{x:posX});
 			}
 			//for
 			var battledata:BattleData=new BattleData();
@@ -226,9 +230,9 @@ package controller
 			}
 			/*for(var k:uint=0;k<stoneslist.length;k++)
 			{
-				DebugTrace.msg("BattleScene.onNewRoundWithStones stoneslist["+k+"].id="+stoneslist[k].id);
-				DebugTrace.msg("BattleScene.onNewRoundWithStones stoneslist["+k+"].status="+stoneslist[k].status);
-				DebugTrace.msg("BattleScene.onNewRoundWithStones elementslist["+k+"]="+elementslist[k]);
+			DebugTrace.msg("BattleScene.onNewRoundWithStones stoneslist["+k+"].id="+stoneslist[k].id);
+			DebugTrace.msg("BattleScene.onNewRoundWithStones stoneslist["+k+"].status="+stoneslist[k].status);
+			DebugTrace.msg("BattleScene.onNewRoundWithStones elementslist["+k+"]="+elementslist[k]);
 			}
 			//for	
 			*/
@@ -271,11 +275,11 @@ package controller
 				DebugTrace.msg("stoneObj:"+JSON.stringify(stoneObj));
 			}
 			//for
-				
+			
 			new_req_list=new Array();	 
 			var battledata:BattleData=new BattleData();
 			new_req_list=battledata.praseRequestStones(elementslist,reqlist);
-		 
+			
 			for(var j:uint=0;j<new_req_list.length;j++)
 			{
 				if(new_req_list[j])
@@ -297,7 +301,7 @@ package controller
 			{
 				var target_stone:MovieClip=stoneslist[i].src;
 				target_stone.stone.scanlight.gotoAndStop(1);
-				TweenMax.to(target_stone,0.5,{y:0,scaleX:0.85,scaleY:0.85,ease:Elastic.easeOut,onComplete:onTweenComplete});
+				TweenMax.to(target_stone,0.5,{y:0,scaleX:0.85,scaleY:0.85,ease:Elastic.easeOut});
 			}
 			//for
 			

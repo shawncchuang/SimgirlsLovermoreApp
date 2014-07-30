@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:34565de2ea2e892d790e67d31e9a4383:1/1$ -->
-<TextureAtlas imagePath="pantstyle.png">
-    <SubTexture name="pant0" x="2" y="2" width="346" height="188"/>
+<!-- $TexturePacker:SmartUpdate:237de3073abb20db18222781b48c2238:da45472d634434587dc3e8433a4a6a55:614f4b9d3a5da25ff052b0103be844c7$ -->
+<TextureAtlas imagePath="malepantstyle.png">
+    <SubTexture name="pant0" x="2" y="271" width="179" height="93" frameX="-49" frameY="-14" frameWidth="279" frameHeight="271"/>
+    <SubTexture name="pant1" x="2" y="2" width="187" height="267" frameX="-47" frameY="-3" frameWidth="279" frameHeight="271"/>
 </TextureAtlas>

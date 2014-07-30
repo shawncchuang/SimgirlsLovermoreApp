@@ -2,6 +2,7 @@ package model
 {
 	import com.gamua.flox.Entity;
 	
+	import data.Config;
 	public class SaveGame extends Entity
 	{
 		
@@ -49,12 +50,16 @@ package model
 		public var formation:Array;
 		public var scenelikes:Object;
 		public var secrets:Object;
-		
 		public var cpu_teams:Object;
-		
+		public var victory:Object;
+		public var defeat:Object;
+		public var collapses:Object;
+		public var skillPts:Object;
+		public var current_switch:String;
+		public var next_switch:String;
 		public function SaveGame()
 		{
-			
+	 
 		}
 		public function set cash(value:Number):void
 		{
@@ -83,6 +88,6 @@ package model
 			return _date;
 		}
 		 
-		
+	   
 	}
 }

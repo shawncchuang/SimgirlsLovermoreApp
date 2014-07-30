@@ -28,10 +28,10 @@ package views
 		private var skinfilters:Array;
 		private var eyesfilters:Array;
 		private var tilefilters:Array;
-		private var hairColors:Array=[0xEA212C,0xF9AF48,0xD9DE3B,0x2DB475,0x33ACE0,
+		private var hairColors:Array=[0xEA212C,0xF9AF48,0xFFFF00,0x2DB475,0x33ACE0,
 			0x2F3590,0x5F3817,0x333333,0xCCCCCC,0xFD7DAC];
 		private var skinColors:Array=[0xFFFFFF,0xFED0CB,0xFEDBC1,0xC59C70,0x736358];
-		private var eyesColors:Array=[0xEA212C,0xF9AF48,0xD9DE3B,0x3EB34F,0x0F73B9,0x2F3590,0x5F3817,0x333333];
+		private var eyesColors:Array=[0xEA212C,0xF9AF48,0xFFFF00,0x3EB34F,0x0F73B9,0x2F3590,0x5F3817,0x333333];
 		private var cate:String;
 		private var index:Number=-1;
 		private var rgbObj:Object

@@ -34,7 +34,7 @@ package views
 		private var scencom:SceneInterface=new SceneCommnad();
 		private var floxcom:FloxInterface=new FloxCommand();
 		
-	 
+		private var store:Sprite;
 		public function AcademyScene()
 		{
 			/*var pointbgTexture:Texture=Assets.getTexture("PointsBg");
@@ -78,7 +78,7 @@ package views
 			var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
 			var savegame:SaveGame=FloxCommand.savegame;
 			var _data:Object=new Object();
-		
+			
 			switch(e.data.removed)
 			{
 				case "Leave":
@@ -87,12 +87,13 @@ package views
 					_data.name="MainScene";
 					command.sceneDispatch(SceneEvent.CHANGED,_data);
 					break
-				case "":
+				case "LearnSkills":
 					
+					store=new SkillsStore();
+					addChild(store);
 					
 					break
 				case "ani_complete":
-				 
 					
 					var value_data:Object=new Object();
 					value_data.attr="honor";
@@ -104,13 +105,13 @@ package views
 			}
 			
 		}
-		 
+		
 		private function onClosedAlert():void
 		{
 			var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
 			gameEvent._name="clear_comcloud";
 			gameEvent.displayHandler();
-			 
+			
 			init();
 			
 		}

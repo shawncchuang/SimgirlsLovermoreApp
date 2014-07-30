@@ -7,14 +7,16 @@ package views
 	import controller.FloxCommand;
 	import controller.FloxInterface;
 	import controller.MainCommand;
+	import controller.MainInterface;
 	
 	import data.DataContainer;
 	
 	import utils.DebugTrace;
-
+	
 	public class FloxManagerView extends MovieClip
 	{
 		private var flox:FloxInterface=new FloxCommand();
+		private var command:MainInterface=new MainCommand();
 		private var index:Number=-1;
 		private var managerUI:MovieClip;
 		private var mail:String;
@@ -33,24 +35,37 @@ package views
 			managerUI.preorderbtn.addEventListener(MouseEvent.CLICK,doPreOrderEmailAccount);
 			managerUI.typebox.addEventListener(Event.CHANGE,doTypeChanged);
 			managerUI.loginbtn.addEventListener(MouseEvent.CLICK,doLoginAccount);
+			managerUI.sysbtn.addEventListener(MouseEvent.CLICK,doSaveSystemData);
 			managerUI.delbtn.addEventListener(MouseEvent.CLICK,doDestoryEntites);
-		 
+			managerUI.scenelbr.addEventListener(MouseEvent.CLICK,doSaveSceneLibraryEntites);
+			managerUI.schedulelbr.addEventListener(MouseEvent.CLICK,doSaveScheduleEntites);
+			managerUI.mainstory.addEventListener(MouseEvent.CLICK,doSaveMainStoryEntites);
+			managerUI.updateitems.addEventListener(MouseEvent.CLICK,doUpdatePlayerItems);
 			addChild(managerUI);
 			
 			
 		}
 		private function doCreateEmailAccount(e:MouseEvent):void
 		{
-			
+			index=-1;
 			DebugTrace.msg("FloxManagerView.doCreateEmailAccount mail="+mail);
-			createAccount();
-		
+			var maillist:Array=new Array();
+			maillist.push(managerUI.mailtxt.text);
+			
+				
+			DataContainer.MembersMail=maillist;
+			currentAccount();
+			
 			
 		}
 		private  function createAccount():void
 		{
-			flox.signupWithEmail(mail)
+			flox.signupWithEmail(mail);
 			managerUI.createbtn.label="Saving";
+			
+		}
+		private function onSignupComplete():void
+		{
 			
 		}
 		private function doPreOrderEmailAccount(e:MouseEvent):void
@@ -65,13 +80,14 @@ package views
 			index++;
 			var emails:Array=DataContainer.MembersMail;
 			mail=emails[index];
-			managerUI.mailtxt.text=mail;		
-			//DebugTrace.msg("FloxManagerView.doCreateEmailAccount emails="+emails);
-			if(index<emails.length)
+			
+			
+			if(index<emails.length && mail) 
 			{
-				//createAccount();
+				managerUI.mailtxt.text="List["+index+"]/"+emails.length+":"+mail+" created Account";		
+				DebugTrace.msg("FloxManagerView.currentAccount mail="+mail);
+				createAccount();
 			}
-			//if
 		}
 		private function doTypeChanged(e:Event):void
 		{
@@ -81,16 +97,43 @@ package views
 		private function doLoginAccount(e:MouseEvent):void
 		{
 			var key:String=managerUI.playerkey.text;
-			var email:String=managerUI.playermail.text;
-			flox.LoginForDestroyPlayer(key,email);
+			//var email:String=managerUI.playermail.text;
+			flox.LoginForDestroyPlayer(key,"");
 		}
-	
+		private function doSaveSystemData(e:MouseEvent):void
+		{
+			//flox.saveSystemDataEntities();
+			
+		}
 		private function doDestoryEntites(e:MouseEvent):void
 		{
 			
 			var entitiesID:String=managerUI.entitiesID.text;
 			flox.destoryEntities(type,entitiesID);
 		}
-		 
+		private function doSaveSceneLibraryEntites(e:MouseEvent):void
+		{
+			command.initSceneLibrary();
+			
+		}
+		private function doSaveScheduleEntites(e:MouseEvent):void
+		{
+			command.initSchedule();
+		}
+		private function doSaveMainStoryEntites(e:MouseEvent):void
+		{
+			command.initMainStory();
+		}
+		private function doUpdatePlayerItems(e:MouseEvent):void
+		{
+			//var cons:String="from == ?"
+			var cons:String=managerUI.con.text+" == ?";
+			var key:String=managerUI.key.text;
+			var items:Array=[  { "id": "com1", "qty": 3 },{ "id": "com2", "qty": 9999 }, { "id": "com3", "qty": 9999 } ];
+			flox.updatePlayer(cons,key,items);
+			
+			
+		}
+		
 	}
 }

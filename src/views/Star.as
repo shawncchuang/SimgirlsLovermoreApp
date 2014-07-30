@@ -5,10 +5,12 @@ package views
 	import com.greensock.plugins.Physics2DPlugin;
 	import com.greensock.plugins.TweenPlugin;
 	
+	import flash.display.DisplayObjectContainer;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.geom.Point;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 	
@@ -29,6 +31,7 @@ package views
 		private var posY:Number;
 		private var bonusTxt:TextField;
 		TweenPlugin.activate([Physics2DPlugin]);
+		public var star_target:DisplayObjectContainer;
 		public function Star()
 		{
 			
@@ -51,9 +54,10 @@ package views
 			
 			var format:TextFormat=new TextFormat();
 			format.color=0xFFFFFF;
-			format.font="Impact";
+			format.font="SimNeogreyMedium";
 			format.size=40;
 			bonusTxt=new TextField();
+			bonusTxt.embedFonts=true
 			bonusTxt.name="bonus";
 			bonusTxt.width=50;
 			bonusTxt.height=50;
@@ -118,15 +122,21 @@ package views
 			TweenMax.killTweensOf(_star);
 			removeChild(_star);
 			
-			for (var i:int = 0; i <20; i++) 
+			starPhysics(this,new Point(_star.x,_star.y),20)
+			
+		}
+		public function starPhysics(target:DisplayObjectContainer,pos:Point,maximum:Number):void
+		{
+			 
+			for (var i:int = 0; i <maximum; i++) 
 			{
 				var starDot:MovieClip=new BonusStar();
 				starDot.scaleX=0.3;
 				starDot.scaleY=0.3;
-				starDot.x = _star.x;
-				starDot.y = _star.y;
+				starDot.x = pos.x;
+				starDot.y = pos.y;
 				starDot.alpha=0.8;
-				addChild(starDot);
+				target.addChild(starDot);
 				tweenDot(starDot, getRandom(0, 1));
 				//TweenLite.to(starDot,0.5,{x:75,y:50});
 			}
@@ -152,11 +162,11 @@ package views
 			
 			TweenLite.to(dot,0.5, {physics2D:{velocity:getRandom(650, 950), angle:getRandom(-60, 205),friction:0.15},alpha:0, delay:delay, onComplete:onTweenDotFadout, onCompleteParams:[dot, 0]});
 			
-			function onTweenDotFadout(starDot:MovieClip,delay:Number):void
-			{
-				TweenMax.killTweensOf(starDot);
-				removeChild(starDot);
-			}
+		}
+		private function onTweenDotFadout(starDot:MovieClip,delay:Number):void
+		{
+			TweenMax.killTweensOf(starDot);
+			starDot.parent.removeChild(starDot);
 		}
 		private function getRandom(min:Number, max:Number):Number 
 		{

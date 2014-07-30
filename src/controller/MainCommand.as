@@ -1,6 +1,10 @@
 package controller
 {
-	import com.greensock.TweenLite;
+	
+	import com.greensock.TweenMax;
+	import com.greensock.events.LoaderEvent;
+	import com.greensock.loading.LoaderMax;
+	import com.greensock.loading.SWFLoader;
 	import com.shortybmc.data.parser.CSV;
 	
 	import flash.display.Bitmap;
@@ -11,10 +15,11 @@ package controller
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.globalization.CurrencyFormatter;
+	import flash.media.Sound;
 	import flash.media.SoundChannel;
+	import flash.media.SoundTransform;
 	import flash.net.URLRequest;
 	import flash.text.TextFormat;
-	import flash.utils.getDefinitionByName;
 	
 	import controller.Assets;
 	
@@ -57,11 +62,13 @@ package controller
 		private var item:flash.display.MovieClip;
 		private static var alertmsg:flash.display.MovieClip;
 		private static var csv:CSV;
-		private var talkcsv:CSV;
 		private var ch_talk_csv:CSV;
 		private var schedule_csv:CSV;
+		private var main_story:CSV;
 		private var loading:flash.display.MovieClip;
-	 
+		private static var bgsound_channel:SoundChannel;
+		private var sound_channel:SoundChannel;
+		private var switch_verify:Boolean=false;
 		public function sceneDispatch(type:String,data:Object=null):void
 		{
 			var mainstage:Sprite=ViewsContainer.MainStage;
@@ -71,6 +78,14 @@ package controller
 		{
 			var target:Sprite=ViewsContainer.currentScene;
 			target.dispatchEvent(new TopViewEvent(type,true,false,data));
+		}
+		public static function set BgSoundChannel(ch:SoundChannel):void
+		{
+			bgsound_channel=ch;
+		}
+		public static function get BgSoundChannel():SoundChannel
+		{
+			return bgsound_channel;
 		}
 		public function addDisplayObj(current:String,target:String):void
 		{
@@ -120,9 +135,15 @@ package controller
 					gameEvent.displayHandler();
 					break
 				
-				
 			}
-			
+			//switch
+			if(txt.indexOf("battle")!=-1)
+			{
+				gameEvent._name="QA";
+				gameEvent.qa_label=txt;
+				gameEvent.displayHandler();
+			}
+			//if
 		}
 		public function addLoadind(msg:String):void
 		{
@@ -145,7 +166,77 @@ package controller
 				
 			}
 		}
+		private var att_msg:String;
+		//private var att:Boolean=false;
+		public function addAttention(msg:String):void
+		{
+			att_msg=msg;
+			//var topview:flash.display.MovieClip=SimgirlsLovemore.topview;	
+			DebugTrace.msg("MainCommand.addAttention swfloader");
+			
+			// var swfLoader:SWFLoader=LoaderMax.getLoader("attention");
+			//trace( swfLoader)
+			/*if(swfLoader)
+			{
+			var  loaderQueue:LoaderMax=ViewsContainer.loaderQueue;
+			loaderQueue.remove(swfLoader);
+			}*/
+			var topview:flash.display.MovieClip=ViewsContainer.battleTop;
+			var loaderReq:LoaderRequest=new LoaderRequest();
+			loaderReq.setLoaderQueue("attention","../swf/attention.swf",topview,onAttentionComplete);
+			
+			var command:MainInterface=new MainCommand();
+			command.playSound("ErrorSound");
+			
+		}
 		
+		private function onAttentionComplete(e:LoaderEvent):void
+		{
+			DebugTrace.msg("MainCommand.onAttentionComplete att_msg="+att_msg);
+			//var content:ContentDisplay=LoaderMax.getContent("attention");	
+			var swfloader:SWFLoader = LoaderMax.getLoader("attention");
+			var attMC:flash.display.MovieClip=swfloader.getSWFChild("att") as flash.display.MovieClip;
+			
+			try
+			{
+				attMC.msg.text=att_msg;
+				attMC.mouseChildren=false;
+				attMC.addEventListener(MouseEvent.CLICK,doColseAttention);
+				//attMC.alpha=0;
+				//TweenMax.to(attMC,0.5,{alpha:1});
+			}
+			catch(e:Error)
+			{
+				DebugTrace.msg("MainCommand.onAttentionComplete swfloader ERROR");
+				//LoaderMax.getLoader("attention").unload();
+				//var queue:LoaderMax=ViewsContainer.loaderQueue;
+				//queue.unload();
+				//swfloader.unload();
+				var battleScene:flash.display.Sprite=ViewsContainer.battlescene;
+				var battletop:flash.display.MovieClip=ViewsContainer.battleTop;
+				battleScene.removeChild(battletop);
+				
+				battletop=new flash.display.MovieClip();
+				battleScene.addChild(battletop);
+				ViewsContainer.battleTop=battletop;
+			}
+			//try
+		}
+		private function doColseAttention(e:MouseEvent):void
+		{
+			
+			TweenMax.killTweensOf(e.target);
+			//TweenMax.to(e.target,0.5,{alpha:0,onComplete:onAttentionFadout});
+			LoaderMax.getLoader("attention").unload();
+			
+			
+			
+			function onAttentionFadout():void
+			{
+				LoaderMax.getLoader("attention").unload();
+				
+			}
+		}
 		public static function addAlertMsg(msg:String):void
 		{
 			
@@ -157,12 +248,16 @@ package controller
 			alertmsg.msg.defaultTextFormat=format;
 			alertmsg.confirm.buttonMode=true;
 			alertmsg.cancelbtn.buttonMode=true;
-			alertmsg.confirm.addEventListener(MouseEvent.CLICK,doColseAlertmsg);
-			alertmsg.cancelbtn.addEventListener(MouseEvent.CLICK,doColseAlertmsg);
+			alertmsg.mouseChildren=false;
+			alertmsg.addEventListener(MouseEvent.MOUSE_DOWN,doColseAlertmsg);
+			//alertmsg.cancelbtn.addEventListener(MouseEvent.CLICK,doColseAlertmsg);
 			alertmsg.x=1024/2;
 			alertmsg.y=768/2;
 			alertmsg.msg.text=msg;
 			topview.addChild(alertmsg);
+			
+			//var command:MainInterface=new MainCommand();
+			//command.playSound("ErrorSound");
 			
 		}
 		
@@ -185,7 +280,8 @@ package controller
 		private static function doColseAlertmsg(e:MouseEvent):void
 		{
 			var topview:flash.display.MovieClip=SimgirlsLovemore.topview;	
-			topview.removeChild(alertmsg);
+			var _alert:flash.display.MovieClip=e.target as flash.display.MovieClip;
+			topview.removeChild(_alert);
 		}
 		public static function initPreOrderAccount():void
 		{
@@ -202,6 +298,7 @@ package controller
 			//var emails:Array=csv.header[0].split("\n");
 			var emails:Array=csv.data;
 			DebugTrace.msg("completeBlackPreasAccount:\n"+csv.data);
+			DebugTrace.msg("completeBlackPreasAccount:"+emails[0]);
 			Config.AccType="";
 			if(emails.indexOf(FloxCommand.my_email)!=-1)
 			{
@@ -212,33 +309,12 @@ package controller
 			var _data:Object=new Object();
 			_data.from=Config.AccType;
 			floxcom.savePlayer(_data);*/
-			if(emails.length>1)
+			if(emails.length>0)
 			{
-			DataContainer.MembersMail=emails;
-			var floxMg:FloxManagerView=ViewsContainer.FloxManager;
-			floxMg.currentAccount();
+				DataContainer.MembersMail=emails;
+				var floxMg:FloxManagerView=ViewsContainer.FloxManager;
+				floxMg.currentAccount();
 			}
-		}
-		/*public function initPlayerTalkLibrary(callback:Function=null):void
-		{
-		talkcsv=new CSV();
-		talkcsv.addEventListener( Event.COMPLETE, onPlayerTalkLibraryComplete );
-		talkcsv.load ( new URLRequest('csv/talklibrary_player.csv') );
-		
-		}*/
-		private function onPlayerTalkLibraryComplete(e:Event):void
-		{
-			//var library:Array=e.target.header[0].split("\n");
-			//trace(talkcsv.dump());
-			
-			var library:Array=talkcsv.data;
-			for(var i:uint=0;i<library.length;i++)
-			{
-				var _header:Array=library[i];
-				library[i] =filterTalking(_header);
-			}
-			//for
-			DataContainer.playerTalklibrary=library;
 		}
 		public function initSceneLibrary():void
 		{
@@ -251,7 +327,7 @@ package controller
 		private function onChTalkLibrary(e:Event):void
 		{
 			//trace("onChTalkLibrary library:")
-			DebugTrace.msg("MainCommand.onChTalkLibrary :"+ch_talk_csv.dump());
+			//DebugTrace.msg("MainCommand.onChTalkLibrary :"+ch_talk_csv.dump());
 			
 			var library:Array=ch_talk_csv.data;
 			for(var i:uint=0;i<library.length;i++)
@@ -261,8 +337,10 @@ package controller
 				
 			}
 			//for
-			DataContainer.characterTalklibrary=library;
-			initSchedule();
+			//DataContainer.characterTalklibrary=library;
+			//initSchedule();
+			var flox:FloxInterface=new FloxCommand();
+			flox.saveSystemData("scenelibrary",library);	
 		}
 		public function filterTalking(source:Array):Array
 		{
@@ -290,6 +368,7 @@ package controller
 		}
 		public function initSchedule():void
 		{
+			
 			schedule_csv=new CSV();
 			schedule_csv.addEventListener(Event.COMPLETE,onScheduleComplete);
 			schedule_csv.load(new URLRequest('csv/schedule.csv'));
@@ -298,35 +377,67 @@ package controller
 		}
 		private function onScheduleComplete(e:Event):void
 		{
-			DebugTrace.msg("MainCommand.onScheduleComplete :"+schedule_csv.dump());
-			var schedlue:Array=schedule_csv.data;
-			for(var i:uint=0;i<schedlue.length;i++)
+			//trace("MainCommand.onScheduleComplete :"+schedule_csv.dump());
+			var schedule:Array=schedule_csv.data;
+			for(var i:uint=0;i<schedule.length;i++)
 			{
 				
-				var months:Array=schedlue[i];
+				var months:Array=schedule[i];
 				months.shift();
-				schedlue[i]=months;
+				schedule[i]=months;
 				//DebugTrace.msg(months.toString()+" ; length:"+months.length);
 			}
-			DataContainer.scheduleListbrary=schedlue;
+			//DataContainer.scheduleListbrary=schedlue;
 			
+			var flox:FloxInterface=new FloxCommand();
+			flox.saveSystemData("schedule",schedule);
 			
 			
 			
 		}
-		public function playBackgroudSound(src:String):void
+		
+		public function initMainStory():void
+		{
+			trace("initMainStory")
+			main_story=new CSV();
+			main_story.addEventListener(Event.COMPLETE,onMainStoryComplete);
+			main_story.load(new URLRequest('csv/main_story_scenes.csv'));
+		}
+		private function onMainStoryComplete(e:Event):void
+		{
+			var stories:Array=main_story.data;
+			for(var i:uint=0;i<stories.length;i++)
+			{
+				
+				var story:Array=stories[i];
+				stories[i]=filterTalking(story);
+				DebugTrace.msg("MainCommand.onMainStoryComplete story="+filterTalking(story)+" ; length:"+story.length);
+			}
+			
+			var flox:FloxInterface=new FloxCommand();
+			flox.saveSystemData("main_story",stories);
+			
+		}
+		public function playBackgroudSound(src:String,st:SoundTransform=null):void
 		{
 			//DebugTrace.msg("playBackgroudSound:"+src);
-			var assets:Assets=new Assets();
-			assets.initMusicAssetsManager(src);
+			//var assets:Assets=new Assets();
+			//assets.initMusicAssetsManager(src);
+			bgsound_channel=Assets.MusicManager.playSound(src,0,1000,st);
+			//bgsound_channel.stop();
 			
 		}
 		public function stopBackgroudSound():void
 		{
-			var sound_channel:SoundChannel=Assets.MusicChannel;
+			
+			//var sound_channel:SoundChannel=Assets.MusicChannel;
+			var sound_channel:SoundChannel=BgSoundChannel;
+			sound_channel.stop();
 			try
 			{
-				sound_channel.stop();
+				//Assets.music_manager.removeSound("")
+				
+				
 			}
 			catch(errot:Error)
 			{
@@ -334,10 +445,37 @@ package controller
 			}
 			
 		}
-		public function playSound(src:String):void
+		public function playSound(src:String,repeat:Number=0,st:SoundTransform=null):SoundChannel
 		{
-			var assets:Assets=new Assets();
-			assets.initSoundAssetsManager(src);
+			
+			
+			var mute:Boolean=SoundController.Mute;
+			
+			if(!mute)
+			{
+				sound_channel=new SoundChannel();
+				sound_channel=Assets.SoundManager.playSound(src,0,repeat,st);
+				
+			}
+			return sound_channel
+		}
+		public function stopSound():void
+		{
+			
+			//sound_channel.stop();
+		}
+		public function verifySwitch():Boolean
+		{
+			/*
+			var flox:FloxInterface=new FloxCommand();
+			var switchID:String=flox.getSaveData("current_switch");
+			var switchs:Object=flox.getSyetemData("switchs");
+			var values:Object=switchs[switchID];
+			*/
+			var scencom:SceneInterface=new SceneCommnad();
+			switch_verify=scencom.switchGateway("Rest||Stay");
+			
+			return switch_verify
 			
 		}
 		public  function dateManager(type:String):void
@@ -423,7 +561,8 @@ package controller
 			var _data:Object=new Object();
 			_data.date=new_date;
 			var flox:FloxInterface=new FloxCommand();
-			flox.updateSavegame(_data);
+			//flox.updateSavegame(_data);
+			flox.save("date",new_date);
 			var pay:Boolean=flox.getPlayerData("paid");
 			if(!pay && _type!="Rest" && _type!="Stay")
 			{
@@ -520,7 +659,7 @@ package controller
 			var savegame:SaveGame=FloxCommand.savegame;
 			savegame.owned_assets=ownedAssets;
 			FloxCommand.savegame=savegame;
-			 
+			
 		}
 		public function filterScene(target:Sprite):void
 		{
@@ -615,8 +754,8 @@ package controller
 			savegame.mood[dating]=nowMood;
 			FloxCommand.savegame=savegame;
 			
-			 
-			 
+			
+			
 			
 		}
 		public function updateRelationship(mood:Number):void
@@ -732,7 +871,7 @@ package controller
 			var stageCW:Number=Starling.current.stage.stageWidth/2;
 			var stageCH:Number=Starling.current.stage.stageHeight/2;
 			
-			var font:String="Futura";
+			var font:String="SimNeogreyMedium";
 			for(var i:uint=0;i<attrlist.length;i++)
 			{
 				var attr:String=attrlist[i];
@@ -942,7 +1081,7 @@ package controller
 			}
 			//if
 		}
-		public function addedCancelButton(target:Sprite,callback:Function,pos:Point=null):void
+		public function addedCancelButton(target:Sprite,callback:Function,pos:Point=null):Image
 		{
 			
 			onTouchCancelBegan=callback;
@@ -966,7 +1105,9 @@ package controller
 			//if
 			cancelbtn.addEventListener(TouchEvent.TOUCH,onTouchCancel);
 			target.addChild(cancelbtn);
+			return cancelbtn
 		}
+		
 		private function onTouchCancel(e:TouchEvent):void
 		{
 			var target:Image=e.currentTarget as Image;
@@ -1011,8 +1152,11 @@ package controller
 			var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
 			gameEvent._name="clear_comcloud";
 			gameEvent.displayHandler();
-			gameEvent._name="rest_animation";
-			gameEvent.displayHandler();
+			
+			var mediacom:MediaInterface=new MediaCommand();
+			mediacom.VideoPlayer(new Point(1024,250),new Point(0,260))
+			mediacom.play("video/rest-animated.flv",false,onFinishAnimated);
+			
 			if(free)
 			{
 				var restObj:Object=sysCommad.FreeRest;
@@ -1046,15 +1190,13 @@ package controller
 			var cash:Number=flox.getSaveData("cash");
 			var sysCommad:Object=flox.getSyetemData("command");
 			
-			
-			
-			
 			var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
 			gameEvent._name="clear_comcloud";
 			gameEvent.displayHandler();
-			gameEvent._name="stay_animation";
-			gameEvent.displayHandler();
-			copyPlayerAndCharacter();
+			
+			var mediacom:MediaInterface=new MediaCommand();
+			mediacom.VideoPlayer(new Point(1024,250),new Point(0,260))
+			mediacom.play("video/rest-animated.flv",false,onFinishAnimated);
 			
 			var restObj:Object=sysCommad.Stay;
 			var getAP:Number=restObj.ap;
@@ -1078,15 +1220,15 @@ package controller
 		{
 			
 			
-			
 			var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
 			gameEvent._name="clear_comcloud";
 			gameEvent.displayHandler();
-			gameEvent._name="train_animation";
-			gameEvent.displayHandler();
-			copyPlayerAndCharacter();
 			
-			//var command:MainInterface=new MainCommand();
+			
+			var mediacom:MediaInterface=new MediaCommand();
+			mediacom.VideoPlayer(new Point(1024,250),new Point(0,260))
+			mediacom.play("video/training-animated.flv",false,onFinishAnimated);
+			
 			var savegame:SaveGame=new SaveGame();
 			var flox:FloxInterface=new FloxCommand();
 			var sysCommand:Object=flox.getSyetemData("command");
@@ -1122,11 +1264,15 @@ package controller
 			var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
 			gameEvent._name="clear_comcloud";
 			gameEvent.displayHandler();
-			gameEvent._name="working_animation";
-			gameEvent.displayHandler();
-			copyPlayerAndCharacter();
 			
 			var scene:String=DataContainer.currentScene;
+			var mediacom:MediaInterface=new MediaCommand();
+			mediacom.VideoPlayer(new Point(1024,250),new Point(0,260))
+			mediacom.play("video/"+scene+"-work-animated.flv",false,onFinishAnimated);
+			
+			copyPlayerAndCharacter();
+			
+			
 			var attr:String=scene.split("Scene").join("Work");
 			var savegame:SaveGame=FloxCommand.savegame;
 			var flox:FloxInterface=new FloxCommand();
@@ -1157,8 +1303,13 @@ package controller
 			var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
 			gameEvent._name="clear_comcloud";
 			gameEvent.displayHandler();
-			gameEvent._name="learning_animation";
-			gameEvent.displayHandler();
+			
+			var scene:String=DataContainer.currentScene;
+		
+			var mediacom:MediaInterface=new MediaCommand();
+			mediacom.VideoPlayer(new Point(1024,250),new Point(0,260))
+			mediacom.play("video/"+scene+"-learn-animated.flv",false,onFinishAnimated);
+			
 			copyPlayerAndCharacter();
 			
 			var savegame:SaveGame=FloxCommand.savegame;
@@ -1195,8 +1346,11 @@ package controller
 			var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
 			gameEvent._name="clear_comcloud";
 			gameEvent.displayHandler();
-			gameEvent._name="meditate_animation";
-			gameEvent.displayHandler();
+			 
+			var mediacom:MediaInterface=new MediaCommand();
+			mediacom.VideoPlayer(new Point(1024,250),new Point(0,260))
+			mediacom.play("video/meditate-animated.flv",false,onFinishAnimated);
+			
 			copyPlayerAndCharacter();
 			
 			
@@ -1247,22 +1401,23 @@ package controller
 			gameinfo.dispatchEventWith("CANCEL_DATING");
 		}
 		private var playerBitmap:Bitmap;
-		private var playerTween:TweenLite;
+		private var playerTween:TweenMax;
 		
 		private var character:flash.display.MovieClip;
-		private var chTween:TweenLite;
+		private var chTween:TweenMax;
 		public function copyPlayerAndCharacter():void
 		{
 			
 			var savedata:SaveGame=FloxCommand.savegame;
 			var gender:String=savedata.avatar.gender;
 			var dating:String=savedata.dating;
-			var modelObj:Object={"Male":new Rectangle(0,0,378,1117),
-				"Female":new Rectangle(0,0,288,1034)};
-			var pos:Point=new Point(44,58);
+			
+			var modelObj:Object=Config.modelObj;
+			
+			var pos:Point=new Point(44,120);
 			if(gender=="Female")
 			{
-				pos=new Point(80,120);
+				pos=new Point(80,150);
 			}
 			var modelRec:Rectangle=modelObj[gender];
 			
@@ -1284,17 +1439,18 @@ package controller
 			drawcom.updateBaseModel("Clothes");
 			drawcom.updateBaseModel("Features");
 			
-			var bitmapdata:BitmapData=drawcom.copyAsBitmapData(basemodel,new Rectangle(0,0,basemodel.width,basemodel.height),new Point(0,-50)); 
-			var bmp:BitmapData=new BitmapData(basemodel.width,basemodel.height);
-			bmp.copyPixels(bitmapdata,new Rectangle(0,0,basemodel.width,basemodel.height),new Point(0,0));
 			
-			playerBitmap=new Bitmap(bmp);
+			var bitmapdata:BitmapData=drawcom.copyAsBitmapData(basemodel,new Rectangle(0,0,basemodel.width,basemodel.height),new Point(0,-50)); 
+			
+			
+			playerBitmap=new Bitmap(bitmapdata);
 			playerBitmap.name="player"
 			playerBitmap.x=-100;
 			playerBitmap.y=pos.y;
 			playerBitmap.alpha=0;
-			playerTween=new TweenLite(playerBitmap,0.5,{"alpha":1,"x":pos.x,onComplete:onShowed});
-			SimgirlsLovemore.topview.addChild(playerBitmap);
+			playerTween=new TweenMax(playerBitmap,0.5,{"alpha":1,"x":pos.x,onComplete:onShowed});
+			Starling.current.nativeOverlay.addChild(playerBitmap);
+			
 			
 			if(dating)
 			{
@@ -1303,19 +1459,12 @@ package controller
 				character=container[dating];
 				character.x=1300;
 				character.alpha=0;
-				chTween=new TweenLite(character,0.5,{"alpha":1,"x":550,onComplete:onShowed});
-				SimgirlsLovemore.topview.addChild(character);
-				
+				chTween=new TweenMax(character,0.5,{"alpha":1,"x":550,onComplete:onShowed});
+				Starling.current.nativeOverlay.addChild(character);
 			}
-			/*var profileTexture:Texture = Texture.fromBitmapData(bmp);
-			var _player_icon:Sprite=new Sprite();
-			_player_icon.name="Player";
-			var img:Image=new Image(profileTexture);
-			img.smoothing=TextureSmoothing.TRILINEAR;
-			var mainStage:Sprite=ViewsContainer.MainStage;*/
-			//mainStage.addChild(basemodel);
 			
-			//mainStage.addChild(img);
+			
+			
 		}
 		private function onShowed():void
 		{
@@ -1335,6 +1484,43 @@ package controller
 				DebugTrace.msg("ManCommand.clearCopyPixel character NULL !");
 			}
 			
+		}
+		private function onFinishAnimated():void
+		{
+			try
+			{
+				Starling.current.nativeOverlay.removeChild(playerBitmap);
+			}
+			catch(err:Error)
+			{
+				DebugTrace.msg("ManCommand.onFinishAnimated playerBitmap NULL !");
+			}
+			try
+			{
+				
+				Starling.current.nativeOverlay.removeChild(character);
+			}
+			catch(err:Error)
+			{
+				DebugTrace.msg("ManCommand.onFinishAnimated character NULL !");
+			}
+			
+			var _data:Object=new Object();
+			switch(SceneEvent.scene)
+			{
+				case "Tarotreading":
+					
+					_data.name="AirplaneScene";
+					break
+				case "AirplaneScene":
+					_data.name="MainScene";
+					break
+				default:
+					_data.name=DataContainer.currentScene;
+					break
+			}
+			//switch
+			sceneDispatch(SceneEvent.CHANGED,_data);
 		}
 	}
 }

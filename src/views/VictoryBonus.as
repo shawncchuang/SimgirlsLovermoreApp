@@ -2,6 +2,9 @@ package views
 {
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Elastic;
+	import com.greensock.events.LoaderEvent;
+	import com.greensock.loading.LoaderMax;
+	import com.greensock.loading.SWFLoader;
 	import com.greensock.plugins.MotionBlurPlugin;
 	import com.greensock.plugins.ShortRotationPlugin;
 	import com.greensock.plugins.TransformAroundCenterPlugin;
@@ -11,6 +14,8 @@ package views
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
+	import flash.geom.Point;
 	import flash.text.TextFormat;
 	
 	import controller.FloxCommand;
@@ -26,9 +31,13 @@ package views
 	import events.GameEvent;
 	import events.SceneEvent;
 	
+	import model.BattleData;
+	
+	import services.LoaderRequest;
+	
 	import utils.DebugTrace;
 	import utils.ViewsContainer;
-
+	
 	TweenPlugin.activate([MotionBlurPlugin, TransformAroundPointPlugin, TransformAroundCenterPlugin, ShortRotationPlugin]);
 	public class VictoryBonus extends MovieClip
 	{
@@ -38,6 +47,7 @@ package views
 		private var bonus:Bonus;
 		private var num:Number=0;
 		private var bonustitle:MovieClip;
+		private var score_num:Number=0;
 		private var score:Number=0;
 		public static var bonusEvt:BattleEvent;
 		private var bunosAlert:MovieClip;
@@ -60,15 +70,36 @@ package views
 			bonusMax=50;
 			DebugTrace.msg("VictoryBonus.init bonusMax="+bonusMax);
 			var battlescene:Sprite=ViewsContainer.battlescene;
-			var satageID:Number=DataContainer.stageID;
+			
+			
+			/*
 			var batllestage:MovieClip=new BattleStage();
 			batllestage.gotoAndStop(satageID);
 			batllestage.y=-786+150;
 			addChild(batllestage);
+			*/
+			
+			var loaderReq:LoaderRequest=new LoaderRequest();
+			loaderReq.setLoaderQueue("background","../swf/BattleStage.swf",this,onStageBGComplete);
+			
+			
+		}
+		private function onStageBGComplete(e:LoaderEvent):void
+		{
+			var satageID:Number=DataContainer.stageID;
+			var swfloader:SWFLoader = LoaderMax.getLoader("background");
+			var background:MovieClip=swfloader.getSWFChild("bg") as MovieClip;
+			background.gotoAndStop(satageID);
+			
+			initLayout();
+			
+		}
+		private function initLayout():void
+		{
 			
 			bonus=new Bonus();
 			addChild(bonus);
-			 
+			
 			bonustitle=new BonusTitle();
 			bonustitle.honour.text="+0";
 			addChild(bonustitle);
@@ -77,8 +108,7 @@ package views
 			evt.addEventListener(BattleEvent.UPADATE_BONUS,updateBonus);
 			bonusEvt=evt;
 			callNewStar();
-			
-			 
+
 		}
 		private function updateBonus(e:Event):void
 		{
@@ -90,8 +120,8 @@ package views
 			
 			
 			TweenMax.to(bonustitle, 0.5, {transformAroundCenter:{scaleX:1.2,scaleY:1.2},
-			glowFilter:{color:0xFFFFFF, alpha:1, blurX:30, blurY:30},onComplete:onTitleShowup,ease:Elastic.easeOut});
-		 
+				glowFilter:{color:0xFFFFFF, alpha:1, blurX:30, blurY:30},onComplete:onTitleShowup,ease:Elastic.easeOut});
+			
 			
 		}
 		private function onTitleShowup():void
@@ -126,25 +156,55 @@ package views
 				DebugTrace.msg("VictoryBonus.createNewStar Stop Bonus");
 				var honors:Object=flox.getSaveData("honor");
 				var player_power:Array=DataContainer.PlayerPower;
-				var per_honor:Number=Math.floor(score/player_power.length);
+				//var per_honor:Number=Math.floor(score/player_power.length);
 				for(var i:uint=0;i<player_power.length;i++)
 				{
 					DebugTrace.msg("VictoryBonus.createNewStar power="+JSON.stringify(player_power[i]));
 					var _name:String=player_power[i].name;
-					honors[_name]+=per_honor;
+					honors[_name]+=score;
 					
 				}
 				//for
 				
 				flox.save("honor",honors);
-	        
 				
+				var format:TextFormat=new TextFormat();
+				format.color=0xFFFFFF;
+				format.font="SimNeogreyMedium";
 				bunosAlert=new BonusAlert();
-				bunosAlert.honor.text="+"+score;
+				bunosAlert.honor.embedFonts=true;
+				bunosAlert.honor.defaultTextFormat=format;
+			 
 				addChild(bunosAlert);
-				TweenMax.delayedCall(3,onBonusFadeout)
+				bunosAlert.addEventListener(Event.ENTER_FRAME,doScoreRunning);
+				bunosAlert.confirm.addEventListener(MouseEvent.MOUSE_DOWN,doConfirmHandle)
+				//TweenMax.delayedCall(3,onBonusFadeout)
+					
+				starPhysicsHandle();
+					
 			}
 			//if
+			
+		}
+		private function doScoreRunning(e:Event):void
+		{
+			score_num++;
+			bunosAlert.honor.text="+"+score_num;
+			if(score_num==score)
+			{
+				bunosAlert.removeEventListener(Event.ENTER_FRAME,doScoreRunning);
+			}
+			//if
+		}
+		private function starPhysicsHandle():void
+		{
+		
+			bonus.starPhysics(this,new Point(bunosAlert.star.x,bunosAlert.star.y),50);
+		}
+		private function doConfirmHandle(e:MouseEvent):void
+		{
+			
+			onBonusFadeout();
 			
 		}
 		private function onBonusFadeout():void
@@ -154,9 +214,21 @@ package views
 			gameEvt._name="remove_battle";
 			gameEvt.displayHandler();
 			
+			var scene:String=DataContainer.BatttleScene;
+			if(scene!="Story")
+			{
+				scene="SSCCArenaScene";
+			}
+			else
+			{
+				var battleData:BattleData=new BattleData();
+				scene=battleData.backStoryScene();
+				
+			}
+			
 			var command:MainInterface=new MainCommand();	
 			var _data:Object=new Object();
-			_data.name= "SSCCArenaScene";
+			_data.name= scene;
 			command.sceneDispatch(SceneEvent.CHANGED,_data);
 			
 		}

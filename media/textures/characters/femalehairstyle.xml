@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:0a6b77754b71d4103752e740665088b4:1/1$ -->
+<!-- $TexturePacker:SmartUpdate:54bc1774573fa57c910ad8b061c958f0:bd64aaa6777117c57ea40c1c4887c230:e7a68b17a23fb97babb6c0cdbe31aa41$ -->
 <TextureAtlas imagePath="femalehairstyle.png">
-    <SubTexture name="hair0" x="2" y="748" width="216" height="247" frameX="-96" frameY="-2" frameWidth="390" frameHeight="431"/>
-    <SubTexture name="hair1" x="2" y="435" width="230" height="311" frameX="-91" frameY="-2" frameWidth="390" frameHeight="431"/>
-    <SubTexture name="hair2" x="2" y="2" width="386" height="431" frameX="-4" frameY="0" frameWidth="390" frameHeight="431"/>
+    <SubTexture name="hair0" x="368" y="106" width="98" height="94" frameX="-40" frameY="-6" frameWidth="176" frameHeight="204"/>
+    <SubTexture name="hair1" x="210" y="360" width="106" height="128" frameX="-33" frameY="-11" frameWidth="176" frameHeight="204"/>
+    <SubTexture name="hair2" x="368" y="202" width="94" height="106" frameX="-40" frameY="-20" frameWidth="176" frameHeight="204"/>
+    <SubTexture name="hair3" x="2" y="190" width="148" height="178" frameX="-14" frameY="-12" frameWidth="176" frameHeight="204"/>
+    <SubTexture name="hair4" x="274" y="162" width="92" height="118" frameX="-41" frameY="-14" frameWidth="176" frameHeight="204"/>
+    <SubTexture name="hair5" x="2" y="370" width="106" height="136" frameX="-37" frameY="-14" frameWidth="176" frameHeight="204"/>
+    <SubTexture name="hair6" x="152" y="190" width="120" height="168" frameX="-35" frameY="-18" frameWidth="176" frameHeight="204"/>
+    <SubTexture name="hair7" x="110" y="370" width="98" height="134" frameX="-43" frameY="-20" frameWidth="176" frameHeight="204"/>
+    <SubTexture name="hair8" x="318" y="2" width="128" height="102" frameX="-20" frameY="-1" frameWidth="176" frameHeight="204"/>
+    <SubTexture name="hair9" x="2" y="2" width="164" height="186" frameX="-6" frameY="-17" frameWidth="176" frameHeight="204"/>
+    <SubTexture name="hair10" x="168" y="2" width="110" height="158" frameX="-34" frameY="-22" frameWidth="176" frameHeight="204"/>
 </TextureAtlas>

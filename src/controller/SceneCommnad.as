@@ -2,13 +2,17 @@ package controller
 {
 	
 	
+	import flash.desktop.NativeApplication;
+	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	
 	import data.DataContainer;
 	
 	import events.GameEvent;
+	import events.SceneEvent;
 	
 	import model.SaveGame;
+	import model.Scenes;
 	
 	import starling.animation.Transitions;
 	import starling.animation.Tween;
@@ -36,7 +40,9 @@ package controller
 	
 	public class SceneCommnad implements SceneInterface
 	{
+		private var flox:FloxInterface=new FloxCommand();
 		private var scene:String;
+		private var scene_sprite:Sprite;
 		private var display_container:Object=new Object();
 		private var talks:Array=new Array();
 		private var end_index:Number;
@@ -51,8 +57,8 @@ package controller
 		private var com_content:String=new String();
 		private var character:Image;
 		
-		//private var hitArea:Image;
-		private var hitArea:Button;
+		private var hitArea:Image;
+		
 		private var clickmouse:ClickMouseIcon=null;
 		private var ch_pos:Object={"center":new Point(330,0),"left":new Point(-54,0),"right":new Point(650,0)};
 		private var bubble:CharacterBubble=null;
@@ -66,17 +72,25 @@ package controller
 		private var bgSprtie:Image=null;
 		private var scene_container:Sprite
 		private var day:String;
-		public function init(current:String,target:Sprite,part:Number,finshed:Function=null):void
+		private var switchID:String="";
+		private var location:String="";
+		private var part:Number=0;
+		public function init(current:String,target:Sprite,lbr_part:Number,finshed:Function=null):void
 		{
+			
+			switchID=flox.getSaveData("current_switch");
+			currentSwitch=switchID;
+			scene_sprite=ViewsContainer.currentScene;
 			talk_index=0;
 			scene=current;
 			display_container=new Object();
 			fishedcallback=finshed;
 			
 			_target=target;
-			part_index=part;
+			part_index=lbr_part;
 			
-			var library:Array=DataContainer.characterTalklibrary;
+			
+			var library:Array=flox.getSyetemData("scenelibrary");
 			talks=library[part_index];
 			DebugTrace.msg("SceneCommand.init talks:"+talks);
 			
@@ -84,7 +98,10 @@ package controller
 		}
 		private function datingComCloudHandle():void
 		{
-			var dating:String=DataContainer.currentDating
+			
+			//var dating:String=DataContainer.currentDating;
+			var dating:String=flox.getSaveData("dating");
+			DebugTrace.msg("SceneCommand.datingComCloudHandle dating="+dating);
 			if(dating)
 			{
 				if(scene.indexOf("Scene")!=-1  && talks.indexOf("choice|ComCloud_R1_Start^Dating")==-1)
@@ -139,20 +156,23 @@ package controller
 			
 		}
 		private function addTouchArea():void
-		{
+		{ 
+			
 			
 			var texture:Texture=Assets.getTexture("Whitebg");
 			
-			hitArea=new Button(texture);
-			hitArea.name="hitArea";
-			//hitArea=new Image(texture);
+			//hitArea=new Button(texture);
+			
+			hitArea=new Image(texture);
+			//hitArea.useHandCursor=true;
+			//hitArea.name="hitArea";
 			hitArea.width=Starling.current.stage.stageWidth;
 			hitArea.height=Starling.current.stage.stageHeight;
 			hitArea.alpha=0;
+			scene_sprite.addChild(hitArea)
+			//hitArea.addEventListener(TouchEvent.TOUCH,onChatSceneTouched);
 			
-			_target.addChild(hitArea)
-			_target.addEventListener(TouchEvent.TOUCH,onChatSceneTouched);
-			
+			scene_sprite.addEventListener(TouchEvent.TOUCH,onChatSceneTouched);
 		}
 		
 		private function onChatSceneTouched(e:TouchEvent):void
@@ -160,6 +180,7 @@ package controller
 			
 			var target:Sprite=e.currentTarget as Sprite;
 			//DebugTrace.msg("SceneCommand.onChatSceneTouched name:"+target.name);
+			
 			var BEGAN:Touch = e.getTouch(target, TouchPhase.BEGAN);
 			if(BEGAN)
 			{
@@ -168,7 +189,7 @@ package controller
 			
 			
 		}
-		private function onTouchedScene():void
+		public function onTouchedScene():void
 		{
 			talk_index++;
 			DebugTrace.msg("SceneCommand.onChatSceneTouched talk_index:"+talk_index);
@@ -188,7 +209,8 @@ package controller
 				//finish
 				doClearAll();
 				DebugTrace.msg("SceneCommand finished");
-				_target.removeEventListener(TouchEvent.TOUCH,onChatSceneTouched);
+				//_target.removeEventListener(TouchEvent.TOUCH,onChatSceneTouched);
+				disableAll();
 				fishedcallback();
 			}
 			//if
@@ -196,10 +218,7 @@ package controller
 		}
 		private function showChat():void
 		{
-			
-			
-			
-			
+			trace("SceneCommand.showChat talk_index=",talk_index)
 			com_content=talks[talk_index];
 			DebugTrace.msg("SceneCommand.showChat com_content:"+com_content);
 			var comlists:Array=com_content.split("|");
@@ -209,6 +228,13 @@ package controller
 				
 				_target.removeChild(talkmask);
 				talkmask=null;
+			}
+			try
+			{
+				_target.removeChild(talkfield);
+			}
+			catch(e:Error){
+				
 			}
 			switch(todo)
 			{
@@ -243,7 +269,7 @@ package controller
 		}
 		public function createMouseClickIcon():void
 		{
-			DebugTrace.msg("SceneCommand.createMouseClickIcon");
+			//DebugTrace.msg("SceneCommand.createMouseClickIcon");
 			clickmouse=new ClickMouseIcon();
 			clickmouse.x=973;
 			clickmouse.y=704;
@@ -251,7 +277,7 @@ package controller
 		}
 		public function clearMouseClickIcon():void
 		{
-			DebugTrace.msg("SceneCommand.clearMouseClickIcon");
+			//DebugTrace.msg("SceneCommand.clearMouseClickIcon");
 			if(clickmouse)
 			{
 				_target.removeChild(clickmouse);
@@ -270,16 +296,26 @@ package controller
 			talking=command.filterTalking(talks);
 			//DebugTrace.msg("TarotreadingScene.creartePlayerChat talking:"+talking);
 			
-			_target.removeChild(talkfield);
+			//_target.removeChild(talkfield);
 			
 			if(!talkmask)
 			{
 				talkmask=new MyTalkingDisplay();
 				_target.addChild(talkmask);
 				talkmask.addMask();
+				
+				try
+				{
+					_target.swapChildren(talkmask,photoframe)
+				}
+				catch(e:Error){
+					
+				}
 			}
 			//if
 			createTalkField();
+			
+			
 			
 		}
 		
@@ -362,7 +398,7 @@ package controller
 				if(talkmask)
 				{
 					_target.swapChildren(talkmask,photoframe);
-					_target.swapChildren(talkmask,hitArea);
+					//_target.swapChildren(talkmask,hitArea);
 				}
 				else if(bubble)
 				{
@@ -374,7 +410,8 @@ package controller
 		}
 		public function createCharacter(name:String,p:String):void
 		{
-			DebugTrace.msg("createCharacter : "+name);
+			
+			DebugTrace.msg("SceneCommand.createCharacter :"+name);
 			character=Assets.getDynamicAtlas(name)
 			//var texture:Texture=Assets.getTexture(name);
 			//character=new Image(texture);
@@ -403,7 +440,7 @@ package controller
 			
 			
 			var _pos:String=comlists[0];
-			DebugTrace.msg("ChatCommand.createBubble talk_index:"+talk_index+" ; _pos:"+_pos+" ; scene:"+scene);
+			DebugTrace.msg("SceneCommand.createBubble talk_index:"+talk_index+" ; _pos:"+_pos+" ; scene:"+scene);
 			var dir:Number=1;
 			var bubble_pos:Object;
 			if(_pos.indexOf("sp")!=-1)
@@ -449,29 +486,36 @@ package controller
 			photoframe.y=Starling.current.stage.stageHeight/2;
 			
 			_target.addChild(photoframe);
-			swapHitAreaTouch(0)
+			
+			
+			//swapHitAreaTouch(0)
+			
+			
+			
 		}
 		private function onPhotoRemoved():void
 		{
 			_target.removeChild(photoframe);
 			photoframe=null;
-			swapHitAreaTouch(1)
+			//swapHitAreaTouch(1)
 		}
+		/*	
 		private function swapHitAreaTouch(id:Number):void
 		{
-			
-			if(id==0)
-			{
-				_target.removeEventListener(TouchEvent.TOUCH,onChatSceneTouched);
-				hitArea.addEventListener(Event.TRIGGERED,onHitAreaTouched);
-			}
-			else
-			{
-				_target.addEventListener(TouchEvent.TOUCH,onChatSceneTouched);
-				hitArea.removeEventListener(Event.TRIGGERED,onHitAreaTouched);
-			}
-			
+		
+		if(id==0)
+		{
+		_target.removeEventListener(TouchEvent.TOUCH,onChatSceneTouched);
+		hitArea.addEventListener(Event.TRIGGERED,onHitAreaTouched);
 		}
+		else
+		{
+		_target.addEventListener(TouchEvent.TOUCH,onChatSceneTouched);
+		hitArea.removeEventListener(Event.TRIGGERED,onHitAreaTouched);
+		}
+		
+		}
+		*/
 		private function onHitAreaTouched(e:Event):void
 		{
 			var target:Button=e.currentTarget as Button;
@@ -487,7 +531,9 @@ package controller
 			gameEvent.video=src;
 			gameEvent.displayHandler();
 			command.stopBackgroudSound();
-			_target.removeEventListener(TouchEvent.TOUCH,onChatSceneTouched);
+			//_target.removeEventListener(TouchEvent.TOUCH,onChatSceneTouched);
+			//NativeApplication.nativeApplication.removeEventListener(MouseEvent.MOUSE_DOWN,onChatSceneTouched);
+			disableAll();
 		}
 		
 		public function addDisplayContainer(src:String):void
@@ -496,31 +542,38 @@ package controller
 			command.addDisplayObj(scene,src);
 			if(_target)
 			{
-				_target.removeEventListener(TouchEvent.TOUCH,onChatSceneTouched);
+				//_target.removeEventListener(TouchEvent.TOUCH,onChatSceneTouched);
+				//disableAll();
 				var src_index:Number=src.indexOf("ComCloud");
 				//DebugTrace.msg("SceneCommand.addDisplayContainer src_index:"+src_index);
 				var scene_index:Number=scene.indexOf("Scene");
 				
-				
-				if(src_index==-1)
+				if(scene!="Story")
 				{
-					onTouchedScene();
+					if(src_index==-1 || scene.indexOf("Scene")!=-1)
+					{
+						onTouchedScene();
+					}
 				}
-				if(scene.indexOf("Scene")!=-1)
+				else
 				{
-					onTouchedScene();
+					disableAll();
+					//onTouchedScene();
 				}
+				//if
 			}
 			
 		}
 		public function enableTouch():void
 		{
 			DebugTrace.msg("SceneCommand.enableTouch ");
-			_target.addEventListener(TouchEvent.TOUCH,onChatSceneTouched);
+			//_target.addEventListener(TouchEvent.TOUCH,onChatSceneTouched);
+			NativeApplication.nativeApplication.addEventListener(MouseEvent.MOUSE_DOWN,onChatSceneTouched);
 			onTouchedScene();
 			
 		}
 		private var filter:FilterInterface=new FilterManager();
+		private var bgSrc:String="";
 		public function createBackground(src:String):void
 		{
 			var scene:Sprite=ViewsContainer.MainScene;
@@ -534,7 +587,7 @@ package controller
 				//night	
 				day="Night";
 			}
-			
+			bgSrc=src;
 			DebugTrace.msg("SceneCommand.createBackground day:"+src+day);
 			if(background)
 			{
@@ -547,8 +600,9 @@ package controller
 				bgSprtie.removeFromParent(true);
 				bgSprtie=null;
 			}
+			
+			
 			background=Assets.getDynamicAtlas(src);
-			//background.loop=false;
 			background.stop();
 			scene_container.addChild(background);
 			
@@ -582,8 +636,30 @@ package controller
 				//day night filter
 				//command.filterScene(scene_container);
 			}
+			//if
+			if(scene=="Story")
+			{
+				if(location=="hotel" || location=="park" || location=="beach" || location=="pier" || location=="lovemoremansion")
+				{
+					var bg_scene:String=bgSrc.split("Scene").join("").toLowerCase();
+					trace("SceneCommand.onBackgroundComplete bgSrc="+bgSrc)
+					if(bg_scene!=location)
+					{
+						bgTexture=Assets.getTexture(bgSrc);
+					}
+					else
+					{
+						bgTexture=Assets.getTexture(bgSrc+day);
+					}
+					//if
+					bgSprtie=new Image(bgTexture);
+					scene_container.addChild(bgSprtie);
+				}
+				//if
+			}
+			//if
 		}
-		private function doClearAll():void
+		public function doClearAll():void
 		{
 			for(var i:String in display_container)
 			{
@@ -602,8 +678,223 @@ package controller
 		}
 		public function disableAll():void
 		{
-			_target.removeEventListener(TouchEvent.TOUCH,onChatSceneTouched);
-			_target.removeChild(hitArea)
+			//trace("SceneCommand.disableAll")
+			//hitArea.removeEventListener(TouchEvent.TOUCH,onChatSceneTouched);
+			try
+			{
+			scene_sprite.removeEventListener(TouchEvent.TOUCH,onChatSceneTouched);
+			}
+			catch(e:Error)
+			{
+				DebugTrace.msg("SceneCommand.disableAll scene_sprite NUll");	
+			}
+			try
+			{
+				scene_sprite.removeChild(hitArea)
+			}
+			catch(e:Error)
+			{
+				DebugTrace.msg("SceneCommand.disableAll hitArea NUll");	
+			}
+			//_target.removeChild(hitArea)
+		}
+		
+		public function set currentSwitch(id:String):void
+		{
+			switchID=id.split("|")[0];	
+		}
+		public function get currentSwitch():String
+		{
+			return switchID.split("|")[0];
+		}
+		public function switchGateway(type:String ,callback:Function=null):*
+		{
+			
+			var flox:FloxInterface=new FloxCommand();
+			switchID=flox.getSaveData("current_switch").split("|")[0];
+		 
+			var next_switch:String=flox.getSaveData("next_switch");
+			DebugTrace.msg("SceneCommand.switchGateway switchID="+switchID);	
+			DebugTrace.msg("SceneCommand.switchGateway next_switch="+next_switch);	
+			switchID=next_switch;
+			var switchs:Object=flox.getSyetemData("switchs");
+			scene=DataContainer.currentScene;
+			var value:Object=switchs[switchID];
+			var _scene:String=scene.split("Scene").join("").toLowerCase();
+			location=value.location;
+			
+		 
+			var verify:Boolean=false;
+			var local_verify:Boolean=false;
+			var date_verify:Boolean=false;
+			var time_verify:Boolean=false;
+			var date:String=flox.getSaveData("date");
+			var switch_date:String=value.date;
+			var switch_time:String=String(value.time);
+			 
+			//------------Local------------------------------------------
+			if(location!="")
+			{
+				if(_scene==location)
+				{
+					local_verify=true;
+					var turn_switch:String=flox.getSaveData("current_switch").split("|")[1];
+					//trace("SceneCommand.switchGateway turn_switch="+turn_switch);
+				}
+			}
+			else
+			{
+				local_verify=true;
+			}
+			//if
+			//------------Date------------------------------------------
+			if(switch_date!="")
+			{
+				//should check date and time
+				var _date:String=date.split("|")[0];
+				var _day:Number=Number(_date.split(".")[1]);
+				var _month:String=_date.split(".")[2];
+				var switch_day:Number=Number(switch_date.split(".")[1]);
+				var switch_mon:String=switch_date.split(".")[2];
+				trace("SceneCommand.switchGateway _day="+_day);	
+				trace("SceneCommand.switchGateway switch_day="+switch_day);	
+				if(switch_day==Number(_day) && switch_mon==_month)
+				{
+					
+					date_verify=true;
+				}
+				
+			}
+			else
+			{
+				date_verify=true;
+			}
+			//if
+			//--------------Time----------------------------------------
+			if(switch_time!="")
+			{
+				
+				var _time:Number=Number(date.split("|")[1]);
+				
+				if(Number(switch_time)==_time)
+				{
+					time_verify=true;
+				}
+				//if
+			}
+			else
+			{
+				time_verify=true;
+			}
+			//if
+			//------------------------------------------------------
+			DebugTrace.msg("SceneCommand.switchGateway date_verify="+date_verify+",time_verify="+time_verify+
+				",local_verify="+local_verify);
+			
+			if(date_verify && time_verify && local_verify)
+			{
+				verify=true;
+				ViewsContainer.gameinfo.visible=false;
+				
+				clearCommandCloud();
+				doClearAll();
+				part=Number(switchID.split("s").join(""))-1;
+				initStory(callback);
+				
+			}
+			// verify: math switch  ;  !verify:no match switch
+			if(type=="Rest||Stay")
+			{
+				if(date_verify && time_verify)
+				{
+					
+					verify=true;
+					updateCurrentSwitch();
+				}
+				
+			}
+			return [verify,date_verify,time_verify,local_verify]
+		}
+		private function updateCurrentSwitch():void
+		{
+			
+			var switchs:Object=flox.getSyetemData("switchs");
+			var value:Object=switchs[switchID];
+			var result:Object=value.result;
+			var turn_on_id:String=result.on;
+			var turn_off_id:String=result.off;
+			var current_switch:String=""
+			if(turn_off_id!="")
+			{
+				current_switch=turn_off_id+"|off";
+				
+			}
+			if(turn_on_id!="")
+			{
+				current_switch=turn_on_id+"|on";
+				
+			}
+			currentSwitch=current_switch;
+			flox.save("current_switch",current_switch);
+		}
+		private var switchIDlist:Array;
+		public function initStory(finshed:Function=null):void
+		{
+			_target=scene_sprite;
+			talk_index=0;
+			scene="Story";
+			display_container=new Object();
+			fishedcallback=onStoryFinished;
+			
+			part_index=part;
+			var library:Array=flox.getSyetemData("main_story");
+			talks=library[part_index];
+			
+			var switchs:Object=flox.getSyetemData("switchs");
+			switchIDlist=new Array();
+			for(var id:String in switchs)
+			{
+				switchIDlist.push(id);
+			}
+			switchIDlist.sort();
+			
+		}
+		public function onStoryFinished():void
+		{
+			DebugTrace.msg("SceneCommand.onStoryComplete switchIDlist="+switchIDlist);	
+			
+			var next_switch:String="";
+			//var current_switch:String=flox.getSaveData("current_switch").split("|")[0];
+			switchID=flox.getSaveData("next_switch").split("|")[0];
+			
+			
+			var current_index:Number=switchIDlist.indexOf(switchID);
+			current_index++;
+			if(current_index<switchIDlist.length)
+			{
+				next_switch=switchIDlist[current_index];
+			}
+			DebugTrace.msg("SceneCommand.onStoryComplete switchID="+switchID);	
+			DebugTrace.msg("SceneCommand.onStoryComplete next_switch="+next_switch);	
+			
+			flox.save("next_switch",next_switch,onUpdatedNextSwitch);
+			
+			disableAll();
+			var _data:Object=new Object();
+			_data.name=DataContainer.currentScene;
+			command.sceneDispatch(SceneEvent.CHANGED,_data);
+			ViewsContainer.gameinfo.visible=true;
+		}
+		private function onUpdatedNextSwitch():void
+		{
+			updateCurrentSwitch();
+		}
+		private function clearCommandCloud():void
+		{
+			
+			var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
+			gameEvent._name="clear_comcloud";
+			gameEvent.displayHandler();
 		}
 	}
 }

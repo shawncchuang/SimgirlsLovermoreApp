@@ -46,10 +46,13 @@ package views
 		}
 		private function initCharacter():void
 		{
-			
-			var bunny:MovieClip=Assets.getDynamicAtlas("bunny");
+			var texture:Texture=Assets.getTexture("Bunny");
+			var bunny:Image=new Image(texture);
 			bunny.x=45;
 			addChild(bunny);
+			//var bunny:MovieClip=Assets.getDynamicAtlas("bunny");
+			//bunny.x=45;
+			//addChild(bunny);
 		}
 		private function initMarketList():void
 		{
@@ -60,7 +63,7 @@ package views
 			addChild(marklistformbg);
 			
 			var coin:String=String(flox.getPlayerData("coin"));
-			blance=new TextField(200,30,coin,"Neogrey Medium",20,0xFFFFFF);
+			blance=new TextField(200,30,coin,"SimNeogreyMedium",20,0xFFFFFF);
 			blance.hAlign="left";
 			blance.vAlign="center";
 			blance.x=648;

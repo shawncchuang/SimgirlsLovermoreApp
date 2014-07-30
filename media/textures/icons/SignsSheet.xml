@@ -1,31 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:7d792d1c5dd3e60aa47369af42f50a74:c637b1d76dc0824c0dad661326db048e:88b1eeed756d6e9f22ed5e6758e16e7f$ -->
-<TextureAtlas imagePath="SignsSheet.png">
-    <SubTexture name="Airport" x="2" y="303" width="60" height="48"/>
-    <SubTexture name="Bank" x="64" y="302" width="60" height="48"/>
-    <SubTexture name="Beach" x="188" y="252" width="60" height="48"/>
-    <SubTexture name="BlackMarket" x="126" y="252" width="60" height="48"/>
-    <SubTexture name="Casino" x="2" y="253" width="60" height="48"/>
-    <SubTexture name="ChangingRoom" x="2" y="2" width="62" height="49"/>
-    <SubTexture name="Cinema" x="64" y="252" width="60" height="48"/>
-    <SubTexture name="FitnessClub" x="188" y="202" width="60" height="48"/>
-    <SubTexture name="Garden" x="126" y="202" width="60" height="48"/>
-    <SubTexture name="HotSpring" x="2" y="203" width="60" height="48"/>
-    <SubTexture name="Hotel" x="64" y="202" width="60" height="48"/>
-    <SubTexture name="Lounge" x="188" y="152" width="60" height="48"/>
-    <SubTexture name="LovemoreMansion" x="192" y="2" width="61" height="48" frameX="-2" frameY="0" frameWidth="63" frameHeight="48"/>
-    <SubTexture name="Museum" x="126" y="152" width="60" height="48"/>
-    <SubTexture name="Nightclub" x="129" y="2" width="61" height="48"/>
-    <SubTexture name="Park" x="2" y="153" width="60" height="48"/>
-    <SubTexture name="Pier" x="64" y="152" width="60" height="48"/>
-    <SubTexture name="PoliceStation" x="188" y="102" width="60" height="48"/>
-    <SubTexture name="PrivateIsland" x="126" y="102" width="60" height="48"/>
-    <SubTexture name="Restaurant" x="2" y="103" width="60" height="48"/>
-    <SubTexture name="SMAAcademy" x="64" y="102" width="60" height="48"/>
-    <SubTexture name="SSCCArena" x="190" y="52" width="60" height="48"/>
-    <SubTexture name="ShoppingCentre" x="66" y="2" width="61" height="48"/>
-    <SubTexture name="SpiritTemple" x="128" y="52" width="60" height="48"/>
-    <SubTexture name="SportsBar" x="2" y="53" width="60" height="48"/>
-    <SubTexture name="ThemedPark" x="66" y="52" width="60" height="48"/>
-</TextureAtlas>
+<?xml version="1.0" encoding="UTF-8"?><!-- Created with TexturePacker http://www.codeandweb.com/texturepacker--><!-- $TexturePacker:SmartUpdate:7d792d1c5dd3e60aa47369af42f50a74:c637b1d76dc0824c0dad661326db048e:88b1eeed756d6e9f22ed5e6758e16e7f$ --><TextureAtlas imagePath="SignsSheet.png">    <SubTexture name="Airport" x="2" y="303" width="60" height="48"/>    <SubTexture name="Bank" x="64" y="302" width="60" height="48"/>    <SubTexture name="Beach" x="188" y="252" width="60" height="48"/>    <SubTexture name="BlackMarket" x="126" y="252" width="60" height="48"/>    <SubTexture name="Casino" x="2" y="253" width="60" height="48"/>    <SubTexture name="ChangingRoom" x="2" y="2" width="62" height="49"/>    <SubTexture name="Cinema" x="64" y="252" width="60" height="48"/>    <SubTexture name="FitnessClub" x="188" y="202" width="60" height="48"/>    <SubTexture name="Garden" x="126" y="202" width="60" height="48"/>    <SubTexture name="HotSpring" x="2" y="203" width="60" height="48"/>    <SubTexture name="Hotel" x="64" y="202" width="60" height="48"/>    <SubTexture name="Lounge" x="188" y="152" width="60" height="48"/>    <SubTexture name="LovemoreMansion" x="192" y="2" width="61" height="48" frameX="-2" frameY="0" frameWidth="63" frameHeight="48"/>    <SubTexture name="Museum" x="126" y="152" width="60" height="48"/>    <SubTexture name="Nightclub" x="129" y="2" width="61" height="48"/>    <SubTexture name="Park" x="2" y="153" width="60" height="48"/>    <SubTexture name="Pier" x="64" y="152" width="60" height="48"/>    <SubTexture name="PoliceStation" x="188" y="102" width="60" height="48"/>    <SubTexture name="PrivateIsland" x="126" y="102" width="60" height="48"/>    <SubTexture name="Restaurant" x="2" y="103" width="60" height="48"/>    <SubTexture name="Academy" x="64" y="102" width="60" height="48"/>    <SubTexture name="SSCCArena" x="190" y="52" width="60" height="48"/>    <SubTexture name="ShoppingCentre" x="66" y="2" width="61" height="48"/>    <SubTexture name="SpiritTemple" x="128" y="52" width="60" height="48"/>    <SubTexture name="SportsBar" x="2" y="53" width="60" height="48"/>    <SubTexture name="ThemedPark" x="66" y="52" width="60" height="48"/></TextureAtlas>

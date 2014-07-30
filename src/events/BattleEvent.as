@@ -10,16 +10,20 @@ package events
 	{
 		public static var UPDATE:String="update";
 		public static var UPDATE_ACT:String="update_act";
+		public static var PROCESS_ACT:String="process_act";
 		public static var SWITCH_INDEX:String="switch_inedx";
 		public static var COMMANDER_ITEM:String="comander_item";
 		public static var AREA_HEAL:String="area_heal";
 		public static var HEAL:String="heal";
+		public static var HIT:String="hit";
 		public static var DISABLED_HEAL:String="disabled_heal";
 		public static var REMOVE_HEAL:String="selected_heal";
 		public static var COMPLETE_ACT:String="complete_act";
 		public static var UPADATE_BONUS:String="update_bonus";
 		public static var BONUS:String="bonus";
 		public static var CPU_COMMANDER:String="cpu_commander";
+		public static var PLAYER_CONTROLER:String="player_controler";
+		public static var END:String="end";
 		public var member:MovieClip;
 		public var effect:String;
 		public var member_name:String;
@@ -29,10 +33,16 @@ package events
 		public var itemid:String;
 		public var healarea:Array;
 		public var commander:Member;
+		public var listen:Boolean;
+		public var hitframes:Array;
 		public function updateMemberAct():void
 		{
 			//character act update
 			dispatchEvent(new Event(BattleEvent.UPDATE_ACT));
+		}
+		public function processAction():void
+		{
+			dispatchEvent(new Event(BattleEvent.PROCESS_ACT));
 		}
 		public function switchMemberIndex():void
 		{
@@ -86,6 +96,18 @@ package events
 			
 			dispatchEvent(new Event(BattleEvent.CPU_COMMANDER));
 			
+		}
+		public function doDefinePlayerControler():void
+		{
+			dispatchEvent(new Event(BattleEvent.PLAYER_CONTROLER));
+		}
+		public function hitHandle():void
+		{
+			dispatchEvent(new Event(BattleEvent.HIT));
+		}
+		public function battleEndHandle():void
+		{
+			dispatchEvent(new Event(BattleEvent.END));
 		}
 	}
 }

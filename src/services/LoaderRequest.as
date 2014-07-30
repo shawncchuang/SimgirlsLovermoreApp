@@ -1,5 +1,9 @@
 ﻿package services
 {
+	import com.greensock.events.LoaderEvent;
+	import com.greensock.loading.LoaderMax;
+	import com.greensock.loading.SWFLoader;
+	import com.greensock.loading.display.ContentDisplay;
 	
 	import flash.display.Loader;
 	import flash.display.MovieClip;
@@ -16,9 +20,10 @@
 	import data.Config;
 	
 	import utils.DebugTrace;
-	
+	import utils.ViewsContainer;
 	public class LoaderRequest
 	{
+	 
 		public function LoaderHandle(target:MovieClip,url:String,callback:Function=null):void
 		{
 			var loader:Loader=new Loader();
@@ -89,6 +94,32 @@
 			
 			DebugTrace.msg("LoaderRequest.getSharedObject email:"+email);
 			return email;
+		}
+		public function setLoaderQueue(id:String,src:String,target:MovieClip,callback:Function=null):void
+		{
+			 
+			var queue:LoaderMax = new LoaderMax({name:"mainQueue", onProgress:progressHandler, onComplete:callback, onError:errorHandler});
+			queue.append( new SWFLoader(src, {name:id, container:target, autoPlay:false}) );
+			queue.load();
+			
+		   ViewsContainer.loaderQueue=queue;
+		}
+		 
+		private function progressHandler(e:LoaderEvent):void 
+		{
+			//trace("progress: " + e.target.progress);
+		}
+		/*
+		private function completeHandler(e:LoaderEvent):void
+		{
+		//	var swfloader:ContentDisplay = LoaderMax.getContent(loadername);
+			
+			trace(e.target + " is complete!");
+		}
+		*/
+		private function errorHandler(e:LoaderEvent):void 
+		{
+			trace("error occured with " + e.target + ": " + e.text);
 		}
 	}
 }

@@ -4,20 +4,27 @@ package controller
 	import com.greensock.easing.Cubic;
 	import com.greensock.easing.Expo;
 	
+	import flash.desktop.NativeApplication;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
+	import flash.media.SoundMixer;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
+	import flash.ui.Mouse;
 	
+	import data.Config;
 	import data.DataContainer;
 	
 	import events.BattleEvent;
 	import events.GameEvent;
 	import events.SceneEvent;
+	
+	import model.BattleData;
+	import model.SaveGame;
 	
 	import utils.DebugTrace;
 	import utils.ViewsContainer;
@@ -25,7 +32,7 @@ package controller
 	import views.BattleScene;
 	import views.Member;
 	import views.VictoryBonus;
-	
+
 	public class MemebersCommand implements MembersInterface
 	{
 		private var cpupos:Array=[new Point(308,784),new Point(278,918),new Point(248,1044),
@@ -123,6 +130,7 @@ package controller
 		
 		public function getTopIndex():uint
 		{
+			
 			return top_index;
 		}
 		public function getBattleTeam():Object
@@ -157,8 +165,10 @@ package controller
 					var power:Object=new Object();
 					power=formation[j];
 					var member:Member=new Member();
+					//member.mouseChildren=false;
 					member.initPlayer(j);
 					power.se=seObj[formation[j].name];
+					power.seMax=seObj[formation[j].name];
 					power.id=member.name;
 					power.speeded="false";
 					power.shielded="false";
@@ -171,9 +181,10 @@ package controller
 					battleteam[member.name]=member;
 					playerteam.push(member);
 					var battleEvt:BattleEvent=member.memberEvt;
-					battleEvt.act="stand";
+					battleEvt.act="ready";
 					battleEvt.updateMemberAct();
-					member.membermc.addEventListener(MouseEvent.CLICK,clickPlayer);
+					//member.addEventListener(MouseEvent.CLICK,clickPlayer);
+					//member.membermc.addEventListener(MouseEvent.CLICK,clickPlayer);
 					player_power.push(power);
 				}
 				//if
@@ -189,11 +200,15 @@ package controller
 		public function removePlayerMemberListener(clickPlayer:Function):void
 		{
 			
+			DebugTrace.msg("MembesCommand.removePlayerMemberListener");
 			for(var i:uint=0;i<playerteam.length;i++)
 			{
-				playerteam[i].membermc.buttonMode=false;
-				playerteam[i].membermc.removeEventListener(MouseEvent.CLICK,clickPlayer);
+				//playerteam[i].buttonMode=false;
+				//playerteam[i].removeEventListener(MouseEvent.CLICK,clickPlayer);
 				
+				//playerteam[i].membermc.buttonMode=false;
+				
+				playerteam[i].membermc.removeEventListener(MouseEvent.CLICK,clickPlayer);
 			}
 			//for	
 			
@@ -205,7 +220,11 @@ package controller
 			{
 				if(playerteam[i].power.se>0)
 				{
-					playerteam[i].membermc.buttonMode=true;
+					//playerteam[i].buttonMode=true;
+					//playerteam[i].addEventListener(MouseEvent.CLICK,clickPlayer);
+					
+					//playerteam[i].membermc.buttonMode=true;
+					playerteam[i].getMemberMC();
 					playerteam[i].membermc.addEventListener(MouseEvent.CLICK,clickPlayer);
 				}
 				//if
@@ -220,7 +239,7 @@ package controller
 			var copy_cpupos:Array=new Array();
 			for(var m:uint=0;m<cpupos.length;m++)
 			{
-				var obj:Object=new Object()
+				var obj:Object=new Object();
 				obj.x=cpupos[m].x;
 				obj.y=cpupos[m].y+40;
 				obj.index=m;
@@ -239,27 +258,41 @@ package controller
 				copy_cpupos=copy_cpupos.concat(_cpupos);
 			}
 			//for
-			//_copy_cpupos.sortOn("index",Array.NUMERIC);
+			
 			new_cpupos.sortOn("index",Array.NUMERIC);
-			//var cpu_teams:Object=flox.getSyetemData("cpu_teams");
-			//var cpu_teams_saved:Object=flox.getSaveData("cpu_teams");
+			
 			var cpu_teams_saved:Object=flox.getSaveData("cpu_teams");
-			//var cpupower:Array=cpucom.getCpuPower();
+			
 			//DebugTrace.msg("BattleScene.initCpuMember new_cpupos="+JSON.stringify(new_cpupos));
 			for(var i:uint=0;i<cpu_team.length;i++)
 			{
-				//index=uint(Math.random()*copy_cpupos.length);
 				
 				//DebugTrace.msg("BattleScene.initCpuMember new_cpupos["+i+"].index="+new_cpupos[i].index);
-				//cpu_team[i].combat=_copy_cpupos[i].index;
+				
 				cpu_team[i].combat=new_cpupos[i].index;
 				cpu_team[i].se=cpu_teams_saved[cpu_team[i].id].se;
-				
+				cpu_team[i].skillID="";
 				var member:Member=new Member();
+				member.mouseChildren=false;
 				member.initCpuPlayer(cpu_team,i);
 				member.updatePower(cpu_team[i]);
-				member.x=new_cpupos[i].x;
-				member.y=new_cpupos[i].y;
+				var boss:String=cpu_team[i].ch_name;	
+			 
+				var pos:Point=new Point();
+				switch(boss)
+				{
+					case "fat":
+						pos.x=Config.bossSkill[boss].pos.x;
+						pos.y=Config.bossSkill[boss].pos.y;
+						break
+					default:
+						pos.x=new_cpupos[i].x;
+						pos.y=new_cpupos[i].y;
+						break
+						
+				}
+				member.x=pos.x;
+				member.y=pos.y;
 				battlescene.addChild(member);
 				battleteam[member.name]=member;
 				//DebugTrace.msg("BattleScene.initCpuMember member:"+member.name);
@@ -275,7 +308,7 @@ package controller
 			CpuMembersCommand.cputeamMember=cputeam;
 			ViewsContainer.battleteam=battleteam;
 			
-			 
+			
 			cpucom.healSetUp();
 			cpucom.setupSkillCard();
 			cpucom.setupCpuTarget();
@@ -294,41 +327,15 @@ package controller
 			
 			//DebugTrace.msg("BattleScene.playerReadyPickupCard combat:"+power.combat);
 			
-			/*for(var i:uint=0;i<playerteam.length;i++)
-			{
-			//DebugTrace.msg("BattleScene.playerReadyPickupCard formation:"+JSON.stringify(formation[i]));
 			
-			
-			var battleEvt:BattleEvent=playerteam[i].memberEvt;
-			
-			battleEvt.act="stand";
-			
-			if(playerteam[i].power.target!="")
-			{
-			
-			battleEvt.act="ready";
-			
-			}
-			//if
-			DebugTrace.msg("BattleScene.playerReadyPickupCard status:"+playerteam[i].status);
-			if(playerteam[i].status=="dizzy" || playerteam[i].status=="rage")
-			{
-			//var status:String=playerteam[i].getStatus();
-			battleEvt.from="playerReadyPickupCard";
-			battleEvt.act="";
-			}
-			battleEvt.updateMemberAct();
-			}
-			//for*/
 			if(id!="all")
 			{
 				current_player=battleteam[id];
-				battlescene.setChildIndex(current_player,top_index);
-				/*battleEvt=current_player.memberEvt
-				battleEvt.act="ready_to_attack";
-				battleEvt.updateMemberAct();
-				battleEvt.actComplete();*/
-				current_player.processAction();
+				
+				//battlescene.setChildIndex(current_player,top_index);
+				var memberEvt:BattleEvent=current_player.memberEvt;
+				memberEvt.processAction();
+				
 			}
 			else
 			{
@@ -337,14 +344,9 @@ package controller
 				{
 					//DebugTrace.msg("BattleScene.playerReadyPickupCard formation:"+JSON.stringify(formation[i]));
 					
-					
-					/*var battleEvt:BattleEvent=playerteam[i].memberEvt;
-					battleEvt.from="playerReadyPickupCard";
-					battleEvt.act="";
-					battleEvt.updateMemberAct();
-					battleEvt.actComplete();*/
-					
-					playerteam[i].processAction();
+					//playerteam[i].processAction();
+					memberEvt=playerteam[i].memberEvt
+					memberEvt.processAction();
 				}
 				//for
 			}
@@ -356,7 +358,7 @@ package controller
 			for(var i:uint=0;i<cputeam.length;i++)
 			{
 				
-				cputeam[i].addEventListener(MouseEvent.CLICK,setupTarget);
+				cputeam[i].addEventListener(MouseEvent.MOUSE_DOWN,setupTarget);
 				cputeam[i].addEventListener(MouseEvent.MOUSE_OVER,overTarget);
 				cputeam[i].addEventListener(MouseEvent.MOUSE_OUT,outTraget);
 				
@@ -368,19 +370,20 @@ package controller
 			for(var i:uint=0;i<cputeam.length;i++)
 			{
 				//TweenMax.to(cputeam[i],0.2,{tint:null});
-				cputeam[i].removeEventListener(MouseEvent.CLICK,setupTarget);
+				cputeam[i].removeEventListener(MouseEvent.MOUSE_DOWN,setupTarget);
 				cputeam[i].removeEventListener(MouseEvent.MOUSE_OVER,overTarget);
 				cputeam[i].removeEventListener(MouseEvent.MOUSE_OUT,outTraget);
 			}
 			//for
 		}
 		private var battlealert:MovieClip;
+		private var seObj:Object;
 		public function checkTeamSurvive():void
 		{
 			var cpu_gameover:Boolean=true;
 			var cpu_teams_saved:Object=flox.getSaveData("cpu_teams");
 			var player_gameover:Boolean=true;
-			var seObj:Object=flox.getSaveData("se");
+			seObj=flox.getSaveData("se");
 			var member:Member;
 			
 			var current_se:Number;
@@ -401,10 +404,14 @@ package controller
 			for(var j:uint=0;j<playerteam.length;j++)
 			{
 				member=playerteam[j];
-				//setxt=membermc.getChildByName("se") as TextField;
+				
 				DebugTrace.msg("BattleScene checkTeamSurvive power:"+JSON.stringify(member.power));
 				current_se=member.power.se;
+				
+				//current SE doesn't update to Flox when this's Beta Version.-------------------------
+				//seObj[member.power.name]=member.power.seMax;
 				seObj[member.power.name]=current_se;
+				
 				player_power.push(member.power);
 				if(current_se>0)
 				{
@@ -416,44 +423,79 @@ package controller
 			//for
 			DataContainer.PlayerPower=player_power;
 			
+			
 			if(cpu_gameover ||  player_gameover)
 			{
 				//GameOver--------------------------------
-				
+				SoundMixer.stopAll();
 				
 				DebugTrace.msg("BattleScene checkTeamSurvive-------- Batttle Over seObj:"+JSON.stringify(seObj));
 				battleover=true;
 				
-				flox.save("se",seObj);
 				
 				var battlescene:Sprite=ViewsContainer.battlescene;
+				var replaybtn:MovieClip;
+				var quitbtn:MovieClip;
+				var command:MainInterface=new MainCommand();
+				
+				
+				
 				if(cpu_gameover)
 				{
 					battlealert=new VictoryAlert();	
+					flox.logEvent("BattleVictory");
+					command.playBackgroudSound("BattleVictory");
+					
+					saveRecord("victory");
 				}
 				if(player_gameover)
 				{
 					battlealert=new DefeatAlert();
+					flox.logEvent("BattleDefeat");
+					command.playBackgroudSound("BattleDefeat");
+					saveRecord("defeat");
 				}
+				battlealert.x=-1718;
+				battlealert.y=-455;
 				battlealert.alpha=0;
+				replaybtn=battlealert.animc.replaybtn;
+				quitbtn=battlealert.animc.quitbtn;
+				replaybtn.buttonMode=true;
+				quitbtn.buttonMode=true;
 				battlescene.addChild(battlealert);
 				
-				TweenMax.to(battlealert,1,{alpha:1});
-				TweenMax.delayedCall(2,onBattleAlertFadIn);
+				//ViewsContainer.BattleAlert=battlealert;
+				
+				startVictoryDace();
+				
+				//Beta Version No honur bonus----------------------
+				TweenMax.to(battlealert,1,{alpha:1,delay:6});
+				replaybtn.addEventListener(MouseEvent.MOUSE_DOWN,doReplayHandle);
+				quitbtn.addEventListener(MouseEvent.MOUSE_DOWN,doQuitHandle);
+				//-------------------------------------------------
+				
+				/*
+				//Story Battle---------------------------------------
+				replaybtn.visible=false;
+				quitbtn.visible=false;
+				TweenMax.to(battlealert,1,{alpha:1,delay:6,onComplete:onBattleAlertFadIn});
+				//-------------------------------------------------
+				*/
 				
 				function onBattleAlertFadIn():void
 				{
-					TweenMax.to(battlealert,0.5,{alpha:0,onComplete:onBattleAlertFadeout});
+					TweenMax.to(battlealert,0.5,{alpha:0,delay:2,onComplete:onBattleAlertFadeout});
 					
 				}
 				function onBattleAlertFadeout():void
 				{
+					//disabled on Beta version
 					TweenMax.killAll();
 					if(cpu_gameover)
 					{
 						
-						 var battleEvt:BattleEvent=BattleScene.battleEvt;
-						 battleEvt.onStartBonusGame();
+						var battleEvt:BattleEvent=BattleScene.battleEvt;
+						battleEvt.onStartBonusGame();
 						
 					}
 					else
@@ -463,9 +505,21 @@ package controller
 						gameEvt._name="remove_battle";
 						gameEvt.displayHandler();
 						
+						var scene:String=DataContainer.BatttleScene;
+						if(scene!="Story")
+						{
+							scene="SSCCArenaScene";
+						}
+						else
+						{
+						 
+							var battleData:BattleData=new BattleData();
+							scene=battleData.backStoryScene();
+							
+						}
 						var command:MainInterface=new MainCommand();	
 						var _data:Object=new Object();
-						_data.name= "SSCCArenaScene";
+						_data.name= scene;
 						command.sceneDispatch(SceneEvent.CHANGED,_data);
 					}
 					//if
@@ -475,7 +529,7 @@ package controller
 			else
 			{
 				
-				
+				flox.save("se",seObj);
 				/*for(var k:uint=0;k<playerteam.length;k++)
 				{
 				member=playerteam[k];
@@ -500,19 +554,60 @@ package controller
 			//if
 			//DataContainer.survivePlayer=playerteam;
 		}
+		private function startVictoryDace():void
+		{
+			
+			for(var id:String in battleteam)
+			{
+				var memberEvt:BattleEvent=battleteam[id].memberEvt;
+				memberEvt.battleEndHandle();
+				
+			}
+			//for
+			
+		}
+		private function doReplayHandle(e:MouseEvent):void
+		{
+			
+			flox.logEvent("BattleReplay");
+			TweenMax.killAll();
+			var gameEvt:GameEvent=SimgirlsLovemore.gameEvent;
+			gameEvt._name="remove_battle";
+			gameEvt.displayHandler();
+			
+			var command:MainInterface=new MainCommand();	
+			command.stopBackgroudSound();
+			var _data:Object=new Object();
+			_data.name= "BetaScene";
+			command.sceneDispatch(SceneEvent.CHANGED,_data);
+			
+		}
+		private function doQuitHandle(e:MouseEvent):void
+		{
+			flox.logEvent("BattleQuit");
+			NativeApplication.nativeApplication.exit();  
+			
+		}
 		private var equipedlist:Array=new Array();
 		private var equipedcard:MovieClip;
-		public function equipedCard(card:MovieClip):void
+		public function equipedCard(target:String,card:MovieClip):void
 		{
+			var posX:Number=-20;
+			var posY:Number=150/2;
+			
 			var equipedcard:MovieClip=new EquipedCard();
-			equipedcard.x=card.x+card.parent.x+(card.width/2);
-			equipedcard.y=battlescene.height-card.parent.y/2;
-			battlescene.addChild(equipedcard);
+			equipedcard.name=target+"_card";
+			//equipedcard.x=card.x+card.parent.x+(card.width/2);
+			//equipedcard.y=battlescene.height-card.parent.y/2;
+			//battlescene.addChild(equipedcard);
+			equipedcard.x=posX;
+			equipedcard.y=posY;
+			playerteam[player_index].addChild(equipedcard);
+			
 			equipedlist[player_index]=equipedcard;
 			//DebugTrace.msg("MemebersCommand.removeEquipedCard  equipedlist["+player_index+"]="+equipedlist[player_index]);
-			var posX:Number=playerteam[player_index].x-40;
-			var posY:Number=playerteam[player_index].y+playerteam[player_index].height/2;
-			TweenMax.to(equipedcard,1,{x:posX,y:posY,scaleX:0.5,scaleY:0.5,ease:Expo.easeOut});
+			
+			TweenMax.to(equipedcard,1,{scaleX:0.5,scaleY:0.5,ease:Expo.easeOut});
 			
 			
 		}
@@ -536,25 +631,37 @@ package controller
 		private function onEquipedFadeout():void
 		{
 			TweenMax.killTweensOf(equipedcard);
-			battlescene.removeChild(equipedcard);
+			try
+			{
+				playerteam[player_index].removeChild(equipedcard);
+			}
+			catch(e:Error)
+			{
+				
+			}
 			equipedlist[player_index]=null;
 		}
 		public function removeAllEquidedCards():void
 		{
 			
-			for(var i:uint=0;i<equipedlist.length;i++)
+			for(var i:uint=0;i<playerteam.length;i++)
 			{
-				var _equipedcard:MovieClip=equipedlist[i];
-				if(_equipedcard)
+				var plaer_memeber:Member=playerteam[i];
+				//var _equipedcard:MovieClip=equipedlist[i];
+				var eqcard:MovieClip=plaer_memeber.getChildByName(plaer_memeber.name+"_card") as MovieClip;
+				
+				if(eqcard)
 				{
-					battlescene.removeChild(_equipedcard);
-					equipedlist[i]=null;
+					plaer_memeber.removeChild(eqcard);
+					
 				}
+				
+				//if
 				
 				
 			}
 			//for
-			
+			equipedlist=new Array();
 			
 		}
 		public function clearPlayerTarget():void
@@ -569,7 +676,10 @@ package controller
 				if(player_member.status=="mind_ctrl")
 				{
 					player_member.updateStatus("");
-					player_member.processAction();
+					
+					
+					var memberEvt:BattleEvent=player_member.memberEvt;
+					memberEvt.processAction();
 				}
 				//if
 				
@@ -593,65 +703,24 @@ package controller
 			return txt
 		}
 		
-		/*public function praseMemberStatus():void
+		private function saveRecord(type:String):void
 		{
-		var memberseffect:Object=DataContainer.MembersEffect;
-		
-		play_power=BattleScene.play_power;
-		var formation:Array=flox.getSaveData("formation");
-		//if(play_power[0])
-		//{
-		
-		for(var n:String in memberseffect)
-		{
-		
-		var current_effect:String=memberseffect[n];
-		DebugTrace.msg("MembersCommand.praseMemberPart memberseffect["+n+"]:"+memberseffect[n]);
-		
-		
-		if(n.indexOf("player")!=-1)
-		{
-		//player team
-		var combat:Number=Number(n.split("player").join(""));
-		var member_model:MovieClip=battlescene.getChildByName(n) as MovieClip;
-		var member:MovieClip=member_model.getChildByName("character") as MovieClip;	
-		var player_name:String=formation[combat].name;
-		if(current_effect!="" && current_effect!=null)
-		{
-		var act:String=current_effect;
+			var record:Object=flox.getSaveData(type);
+			var members:Array=playerteam;
+			for(var i:uint=0;i<members.length;i++)
+			{		 
+				var name:String=members[i].power.name;
+				var num:Number=record[name];
+				num++;
+				record[name]=num;
+			}
+			//for
+			flox.save(type,record,onSaveComplete);
 		}
-		else
+		private function onSaveComplete(savegame:SaveGame):void
 		{
-		act="stand";
+			DebugTrace.msg("MembersCommand. onSaveComplete")
+			flox.save("se",seObj);
 		}
-		//if
-		}
-		else
-		{
-		//cpu team
-		member=battlescene.getChildByName(n) as MovieClip;
-		//fake
-		player_name="sao";
-		if(current_effect!="" && current_effect!=null)
-		{
-		act=current_effect;
-		}
-		else
-		{
-		act="ready";
-		}
-		
-		}
-		
-		//praseMemberPart(member,act,player_name);
-		}
-		//for
-		
-		//}
-		//if
-		
-		}*/
-		
-		
 	}
 }

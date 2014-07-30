@@ -1,5 +1,8 @@
 package data
 {
+	import flash.geom.Point;
+	import flash.geom.Rectangle;
+
 	public class Config
 	{
 		public static var deadline:Number=20;
@@ -7,14 +10,15 @@ package data
 		public static var payGameURL:String="http://localhost:8888/simgilrs/index.php?cate=game&authkey=";
 		private static var points:Object=new Object();
 		private static var playerInfo:Object=new Object();
+		public static var modelObj:Object={"Male":new Rectangle(0,-20,276,660),
+			"Female":new Rectangle(-25,-20,262,613)}
 		public static var btl_elements:Array=new Array("fire","air","earth","water","neutral","com");
 		public static var elements:Array=new Array("fire","air","earth","water","neutral");
 		private static var skillssheet:Array=new Array();
 		private static var acctype:String;
 		private static var authkey:String;
-		public static var ExcerptFornt:String="Futura";
-		public static const characters:Array=["lenus","sirena","dea","sao","klr","tomoru","ceil","zack"];
-		
+		public static var ExcerptFornt:String="SimFutura";
+		public static const characters:Array=["lenus","sirena","dea","sao","klr","tomoru","ceil"];
 		public static const facial_moods:Array=["angry","blush","bored","normal","pleasant","sad","scared","sick","vhappy"];
 		public static var scheduleIndex:Object={"lenus":0,"sirena":12,"dea":25,"sao":38,"klr":51,"tomoru":64,"ceil":77,"zack":90};
 		
@@ -31,8 +35,8 @@ package data
 			"Dec_6","Dec_13","Dec_20","Dec_27"
 			
 		]
-		public static var PlayerItems:Array=[{id:"com0",qty:100},
-			{id:"com1",qty:10}];
+	 
+		
 		public static function set AccType(value:String):void
 		{
 			acctype=value;
@@ -51,7 +55,7 @@ package data
 		}
 		public static function get stagepoints():Object
 		{
-			points={"Hotel":[432,202],"Airport":[988,440],"SSCCArena":[128,790],"SMAAcademy":[395,975],"SpiritTemple":[468,847],
+			points={"Hotel":[432,202],"Airport":[988,440],"SSCCArena":[128,790],"Academy":[395,975],"SpiritTemple":[468,847],
 				"Museum":[739,765],"PoliceStation":[130,330],"Casino":[690,307],"SportsBar":[550,500],"Nightclub":[480,362],
 				"LovemoreMansion":[367,718],"ShoppingCentre":[217,417],"FitnessClub":[764,466],"Beach":[1372,1076],"Park":[1222,515],
 				"Cinema":[1427,846],"Pier":[937,540],"Restaurant":[1390,565],"HotSpring":[1132,564],"ThemedPark":[1235,710],
@@ -59,12 +63,71 @@ package data
 			};
 			return points;
 		}
+		public static var bossName:Object={"t1_0":"tgr","t2_0":"mia","t3_0":"gor","t10_0":"fat"};
+		//public static var bossName:Object={"t0_0":"gor","t1_0":"tgr","t10_0":"fat"};
+		public static var bossModels:Array=["gor","tgr","fat"];
+		public static var ch_bossModels:Array=["mia"];
+		public static var bossSkill:Object={
+			"gor":{
+				"lv1":{"skillID":"gor_s_0",
+					"label":"GrabPunch",
+					"type":"hop",
+					"enemy":1,
+					"area":2},
+				"lv2":{"skillID":"gor_s_1",
+					"label":"MultiPunch",
+					"type":"m_hop",
+					"enemy":3,
+					"area":2
+				}
+				
+			},
+			"fat":{
+				"pos":new Point(140,900),
+				"lv1":{
+					"skillID":"fat_s_0",
+					"label":"Barf",
+					"type":"",
+					"enemy":null,
+					"area":null
+				}
 		
+				
+			},
+			"tgr":{
+				"lv1":{
+					"skillID":"tgr_s_0",
+					"label":"Grabpunch",
+					"type":"hop",
+					"enemy":1,
+					"area":null
+				},
+				"lv2":{
+					"skillID":"tgr_s_1",
+					"label":"Slashes",
+					"type":"m_hop",
+					"enemy":3,
+					"area":0
+				},
+				"lv3":{
+					"skillID":"tgr_s_2",
+					"label":"GroupGrab",
+					"type":"",
+					"enemy":5,
+					"area":2
+				}
+				
+			}
+			
+		}
 		public static function PlayerAttributes():Object
 		{
+			//Save Game
 			//rel(relation):"stranger","new friend","good friend","close friend","girlfriend","lover","wife"
 			//
 			playerInfo={
+				"next_switch":"s001",
+				"current_switch":"s001|on",
 				"status":"Normal",
 				"cash":100000,
 				"first_name":"",
@@ -72,7 +135,7 @@ package data
 				"date":"Tue.1.Mar.2022|12",
 				"ap":100,
 				"max_ap":100,
-				"dating":"dea",
+				"dating":null,
 				"ch_cash":{
 					lenus:500,
 					sirena:100,
@@ -239,108 +302,118 @@ package data
 					ceil: 100
 				},
 				"love":{
-					player:100,
-					lenus: 100,
-					sirena:100,
-					dea: 100,
-					sao: 100,
-					klr: 100,
-					tomoru: 100,
-					zack: 100,
-					ceil: 100
+					//love==Max se
+					player:500,
+					lenus: 500,
+					sirena:500,
+					dea: 500,
+					sao: 500,
+					klr: 500,
+					tomoru: 500,
+					zack: 500,
+					ceil: 500
 				},
 				"se":{
-					lenus: 100,
-					sirena: 100,
-					dea: 100,
-					sao: 100,
-					klr: 100,
-					tomoru: 100,
-					ceil: 100,
+					lenus: 500,
+					sirena: 500,
+					dea: 500,
+					sao: 500,
+					klr: 500,
+					tomoru: 500,
+					ceil: 500,
 					zack: 0,
-					player:100
+					player:500
 				},
 				"s_ele":"air",
 				"skills":
 				{
 					"player":
 					{
-						fire:"f0,f1,f2,f3",
-						air:"a0,a1,a2,a3",
-						earth:"e0,e1,e2,e3",
-						water:"w0,w1,w2,w3",
-						neutral:"",
+						exp:"",
+						fire:"f0,f1,f2",
+						air:"a0,a1,a2",
+						earth:"e0,e1,e2",
+						water:"w0,w1,w2",
+						neutral:"n0,n1,n2",
 						com:"com0,com1"
 					},
 					"lenus":
 					{
-						fire:"f0,f1,f2,f3",
-						air:"a0,a1,a2,a3",
-						earth:"e0,e1,e2,e3",
+						exp:"w",
+						fire:"f0,f1,f2",
+						air:"a0,a1,a2",
+						earth:"e0,e1,e2",
 						water:"w0,w1,w2,w3",
-						neutral:"",
+						neutral:"n0,n1,n2",
 						com:""
 					},
 					"sirena":
 					{
-						fire:"f0,f1,f2,f3",
-						air:"a0,a1,a2,a3",
-						earth:"e0,e1,e2,e3",
+						exp:"w",
+						fire:"f0,f1,f2",
+						air:"a0,a1,a2",
+						earth:"e0,e1,e2",
 						water:"w0,w1,w2,w3",
-						neutral:"",
+						neutral:"n0,n1,n2",
 						com:""
 					},
 					"dea":
 					{
-						fire:"f0,f1,f2,f3",
-						air:"a0,a1,a2,a3",
-						earth:"e0,e1,e2,e3",
-						water:"w0,w1,w2,w3",
+						exp:"n",
+						fire:"f0,f1,f2",
+						air:"a0,a1,a2",
+						earth:"e0,e1,e2",
+						water:"w0,w1,w2",
 						neutral:"n0,n1,n2,n3",
 						com:""
 					},
 					"sao":
 					{
-						fire:"f0,f1,f2,f3",
+						exp:"a",
+						fire:"f0,f1,f2",
 						air:"a0,a1,a2,a3",
-						earth:"e0,e1,e2,e3",
-						water:"w0,w1,w2,w3",
-						neutral:"",
+						earth:"e0,e1,e2",
+						water:"w0,w1,w2",
+						neutral:"n0,n1,n2",
 						com:""
 					},
 					"klr":
 					{
-						fire:"f0,f1,f2,f3",
+						exp:"a",
+						fire:"f0,f1,f2",
 						air:"a0,a1,a2,a3",
-						earth:"e0,e1,e2,e3",
-						water:"w0,w1,w2,w3",
-						neutral:"",
+						earth:"e0,e1,e2",
+						water:"w0,w1,w2",
+						neutral:"n0,n1,n2",
 						com:""
 					},
 					"tomoru":
 					{
+						exp:"f",
 						fire:"f0,f1,f2,f3",
-						air:"a0,a1,a2,a3",
-						earth:"e0,e1,e2,e3",
-						water:"w0,w1,w2,w3",
-						neutral:"n0,n1,n2,n3",
+						air:"a0,a1,a2",
+						earth:"e0,e1,e2",
+						water:"w0,w1,w2",
+						neutral:"n0,n1,n2",
 						com:""
 					},
 					"ceil":
 					{
-						fire:"f0,f1,f2,f3",
-						air:"a0,a1,a2,a3",
+						exp:"e",
+						fire:"f0,f1,f2",
+						air:"a0,a1,a2",
 						earth:"e0,e1,e2,e3",
-						water:"w0,w1,w2,w3",
-						neutral:"",
+						water:"w0,w1,w2",
+						neutral:"n0,n1,n2",
 						com:""
 					},
 					"zack":
 					{
-						fire:"f0,f1,f2,f3",
-						air:"a0,a1,a2,a3",
-						earth:"e0,e1,e2,e3",
-						water:"w0,w1,w2,w3",
+						exp:"",
+						fire:"",
+						air:"",
+						earth:"",
+						water:"",
 						neutral:"",
 						com:""
 					}
@@ -352,46 +425,46 @@ package data
 					skincolor:0xFFFFFF,
 					eyescolor:0xFFFFFF,
 					features:0,
-					clothes:0,
-					pants:0
+					clothes:1,
+					pants:1
 				},
 				"formation":[
 					
 				],
 				"cpu_teams":
 				{
-					t0_0 : {"seMax":100,"se":50} ,
-					t0_1 : {"seMax":100,"se":50} ,
-					t0_2 : {"seMax":100,"se":50} ,
-					t0_3 : {"seMax":100,"se":50} ,
-					t0_4 : {"seMax":100,"se":50} ,
-					t0_5 : {"seMax":100,"se":50} ,
-					t0_6 : {"seMax":100,"se":50} ,
-					t0_7 : {"seMax":100,"se":50} ,
-					t1_0 : {"seMax":"","se":100} ,
-					t1_1 : {"seMax":"","se":100} ,
-					t1_2 : {"seMax":"","se":100} ,
-					t1_3 : {"seMax":"","se":100} ,
-					t1_4 : {"seMax":"","se":100} ,
-					t1_5 : {"seMax":"","se":100} ,
-					t1_6 : {"seMax":"","se":100} ,
-					t1_7 : {"seMax":"","se":100} ,
-					t2_0 : {"seMax":"","se":100} ,
-					t2_1 : {"seMax":"","se":100} ,
-					t2_2 : {"seMax":"","se":100} ,
-					t2_3 : {"seMax":"","se":100} ,
-					t2_4 : {"seMax":"","se":100} ,
-					t2_5 : {"seMax":"","se":100} ,
-					t2_6 : {"seMax":"","se":100} ,
-					t2_7 : {"seMax":"","se":100} ,
-					t3_0 : {"seMax":"","se":100} ,
-					t3_1 : {"seMax":"","se":100} ,
-					t3_2 : {"seMax":"","se":100} ,
-					t3_3 : {"seMax":"","se":100} ,
-					t3_4 : {"seMax":"","se":100} ,
-					t3_5 : {"seMax":"","se":100} ,
-					t3_6 : {"seMax":"","se":100} ,
-					t3_7 : {"seMax":"","se":100} ,
+					t0_0 : {"seMax":1000,"se":1000} ,
+					t0_1 : {"seMax":500,"se":500} ,
+					t0_2 : {"seMax":500,"se":500} ,
+					t0_3 : {"seMax":500,"se":500} ,
+					t0_4 : {"seMax":500,"se":500} ,
+					t0_5 : {"seMax":500,"se":500} ,
+					t0_6 : {"seMax":500,"se":500} ,
+					t0_7 : {"seMax":500,"se":500} ,
+					t1_0 : {"seMax":1000,"se":1000} ,
+					t1_1 : {"seMax":500,"se":500} ,
+					t1_2 : {"seMax":500,"se":500} ,
+					t1_3 : {"seMax":500,"se":500} ,
+					t1_4 : {"seMax":500,"se":500} ,
+					t1_5 : {"seMax":500,"se":500} ,
+					t1_6 : {"seMax":500,"se":500} ,
+					t1_7 : {"seMax":500,"se":500} ,
+					t2_0 : {"seMax":1000,"se":1000} ,
+					t2_1 : {"seMax":500,"se":500} ,
+					t2_2 : {"seMax":500,"se":500} ,
+					t2_3 : {"seMax":500,"se":500} ,
+					t2_4 : {"seMax":500,"se":500} ,
+					t2_5 : {"seMax":500,"se":500} ,
+					t2_6 : {"seMax":500,"se":500} ,
+					t2_7 : {"seMax":500,"se":500} ,
+					t3_0 : {"seMax":1000,"se":1000} ,
+					t3_1 : {"seMax":500,"se":500} ,
+					t3_2 : {"seMax":500,"se":500} ,
+					t3_3 : {"seMax":500,"se":500} ,
+					t3_4 : {"seMax":500,"se":500} ,
+					t3_5 : {"seMax":500,"se":500} ,
+					t3_6 : {"seMax":500,"se":500} ,
+					t3_7 : {"seMax":500,"se":500} ,
 					t4_0 : {"seMax":"","se":100} ,
 					t4_1 : {"seMax":"","se":100} ,
 					t4_2 : {"seMax":"","se":100} ,
@@ -439,9 +512,29 @@ package data
 					t9_4 : {"seMax":"","se":100} ,
 					t9_5 : {"seMax":"","se":100} ,
 					t9_6 : {"seMax":"","se":100} ,
-					t9_7 : {"seMax":"","se":100}
+					t9_7 : {"seMax":"","se":100},
+					t10_0 :{"seMax":1500,"se":1500},
+					t10_1 : {"seMax":0,"se":0},
+					t10_2 : {"seMax":0,"se":0},
+					t10_3 : {"seMax":0,"se":0},
+					t10_4 : {"seMax":0,"se":0},
+					t10_5 : {"seMax":0,"se":0},
+					t10_6 : {"seMax":0,"se":0},
+					t10_7 : {"seMax":0,"se":0}
+				},
+				"victory":{ "player":0, "sao": 0, "sirena": 0, "tomoru": 0, "ceil": 0, "dea": 0, "lenus": 0, "klr": 0 },
+				"defeat":{"player":0, "sao": 0, "sirena": 0, "tomoru": 0, "ceil": 0, "dea": 0, "lenus": 0, "klr": 0},
+				"collapses":{"player":0, "sao": 0, "sirena": 0, "tomoru": 0, "ceil": 0, "dea": 0, "lenus": 0, "klr": 0},
+				"skillPts":{			
+					"player":500,
+					"sao": 90,
+					"sirena": 80, 
+					"tomoru":50, 
+					"ceil": 100, 
+					"dea": 40, 
+					"lenus": 20, 
+					"klr": 30
 				}
-				
 				
 			}
 			
@@ -467,7 +560,8 @@ package data
 		features:0
 		}
 		*/
-		 
+		
+		
 		
 		public function Config()
 		{

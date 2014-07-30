@@ -24,13 +24,16 @@ package views
 		public function PhotoMessage(target:String,callback:Function=null):void
 		{
 			onRemoved=callback;
-			var texture:Texture=Assets.getTexture("photoframe");
+			DebugTrace.msg("PhotoMessage  target="+target)
+			var texture:Texture=Assets.getTexture(target);
+			//var texture:Texture=Assets.getTexture("photoframe");
 			alertframe=new Image(texture);
 			alertframe.pivotX=alertframe.width/2;
 			alertframe.pivotY=alertframe.height/2;
 			alertframe.scaleX=0.2;
 			alertframe.scaleY=0.2;
-			
+			addChild(alertframe);
+		   /*
 			var btntexture:Texture=Assets.getTexture("XAlt");
 			btn=new Button(btntexture);
 			btn.name="closebtn";
@@ -38,18 +41,20 @@ package views
 			btn.y=206;
 			btn.addEventListener(Event.TRIGGERED,onTouchAlertFrame);
 			btn.visible=false;
-			addChild(alertframe);
 			addChild(btn);
-			
+			*/
+		
 			var tween:Tween=new Tween(alertframe,0.5,Transitions.EASE_OUT_ELASTIC);
 			tween.animate("scaleX",1);
 			tween.animate("scaleY",1);
 			tween.onComplete=onAlertMessageFadeIn;
 			Starling.juggler.add(tween);
+			
+			//this.addEventListener(Event.TRIGGERED,onTouchAlertFrame);
 		}
 		private function onAlertMessageFadeIn():void
 		{
-			btn.visible=true;
+			//btn.visible=true;
 			Starling.juggler.removeTweens(alertframe);
 			
 		}
@@ -60,7 +65,7 @@ package views
 			//DebugTrace.msg("PhotoMessage.onTouchAlertFrame"+target.name)
 			//var BEGAN:Touch=e.getTouch(target,TouchPhase.BEGAN);
 			removeChild(alertframe);
-			removeChild(btn);
+			//removeChild(btn);
 			onRemoved();
 		}
 	}

@@ -32,7 +32,7 @@ package views
 		private var command:MainInterface=new MainCommand();
 		private var button:Button;
 		private var scencom:SceneInterface=new SceneCommnad();
-		private var floxcom:FloxInterface=new FloxCommand();
+		private var flox:FloxInterface=new FloxCommand();
 		
 		private var getAP:Number=10;
 		
@@ -53,12 +53,18 @@ package views
 		private function init():void
 		{
 			
-			scencom.init("BeachScene",speaker_sprite,12,onCallback);
+			scencom.init("BeachScene",speaker_sprite,12,onStartStory);
 			scencom.start();
-			scencom.disableAll();
+			
 		}
-		private function onCallback():void
+		private function onStartStory():void
 		{
+			DebugTrace.msg("BeachScene.onStartStory")
+			scencom.disableAll();		
+			
+			var switch_verifies:Array=scencom.switchGateway("BeachScene");
+			if(switch_verifies[0])
+				scencom.start();
 			
 		}
 		private function onSceneTriggered(e:Event):void
@@ -90,13 +96,13 @@ package views
 					command.sceneDispatch(SceneEvent.CHANGED,_data);
 					break
 				case "Rest":
-							
+					
 					command.doRest(true);
 					break
 				case "ani_complete":		
-					 
+					
 					command.showCommandValues(this,"FreeRest");
-				 
+					
 					init();
 					break
 				case "ani_complete_clear_character":
@@ -105,7 +111,7 @@ package views
 			}
 			
 		}
-		 
+		
 		private function onClosedAlert():void
 		{
 			var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;

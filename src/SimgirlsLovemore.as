@@ -4,20 +4,18 @@ package
 	import com.greensock.loading.LoaderMax;
 	import com.greensock.loading.SWFLoader;
 	
-	//import flash.display.Bitmap;
-	//import flash.display.BitmapData;
+	import flash.desktop.NativeApplication;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
-	//import flash.display.StageScaleMode;
 	import flash.events.Event;
-	
-	//import controller.Assets;
+	 
+	 
 	import controller.FloxCommand;
 	import controller.FloxInterface;
+	import controller.FloxManagerController;
 	import controller.MainCommand;
 	import controller.MainInterface;
-	//import controller.FloxManagerController;
 	
 	import data.Config;
 	import data.DataContainer;
@@ -28,9 +26,7 @@ package
 	
 	import model.CustomPlayer;
 	
-	//import services.PayPal;
-	//import services.SocialEngine;
-	//import services.TurboSMTP;
+	import services.LoaderRequest;
 	
 	import starling.core.Starling;
 	import starling.events.Event;
@@ -42,24 +38,43 @@ package
 	import views.BattleScene;
 	import views.BlackTileList;
 	import views.CommandCloud;
-	
 	import views.GameStartPanel;
-	//import views.InputNamePannel;
 	import views.LoginPanel;
 	import views.QADisplayContainer;
 	import views.SceneVideo;
 	import views.TarotCardsDisplay;
-	import controller.FloxManagerController;
+	import views.TraceGame;
+	import views.TrainingGame;
 	
-	[SWF(width="1024",height="768",frameRate="24", backgroundColor="#222222")]
+	[SWF(width="1024",height="768",frameRate="24",backgroundAlpha="0")]
 	public class SimgirlsLovemore extends MovieClip
 	{
 		
+		[Embed(source="../assets/fonts/NeogreyMedium.otf",fontWeight='bold',
+       fontName="SimNeogreyMedium",
+       mimeType="application/x-font-truetype",
+       embedAsCFF="false")]
+		public static const NeogreyMediumOTF:String;
+		
+		
+		[Embed(source="../assets/fonts/Impact.ttf",
+       fontName="SimImpact",
+       mimeType="application/x-font-truetype",
+       embedAsCFF="false")]
+		public static const ImpactTTF:String;
+		
+		[Embed(source="../assets/fonts/Futura.ttc",
+       fontName="SimFutura",
+       mimeType="application/x-font-truetype",
+       embedAsCFF="false")]
+		public static const FuturaTTC:String;
+		
+		private var manager:Boolean=false;
 		public static var verifyKey:String;
 		private var longinUI:MovieClip;
 		
 		private var gamestartUI:MovieClip;
-		private var floxserver:FloxInterface=new FloxCommand();
+		private var flox:FloxInterface=new FloxCommand();
 		private var mStarling:Starling;
 		private var command:MainInterface=new MainCommand();
 		public static var successLogin:Function;
@@ -83,6 +98,7 @@ package
 		private var swfloader:SWFLoader;
 		private var battlescene:Sprite;
 		private var blackmarketform:Sprite;
+		private var minigamescene:Sprite;
 		public function SimgirlsLovemore():void
 		{
 			//var paypal:PayPal=new PayPal();
@@ -91,7 +107,8 @@ package
 			//var se:SocialEngine=new SocialEngine();
 			//se.init();
 			
-			
+					
+			ViewsContainer.PlayerProfile=null;
 			var dateIndex:Object={"date":0,"month":3-1};
 			DataContainer.currentDateIndex=dateIndex;
 			DataContainer.battleDemo=false;
@@ -102,7 +119,7 @@ package
 			evt.addEventListener(GameEvent.SHOWED,displayHandler);
 			gameEvent=evt;
 			
-			floxserver.init();
+			flox.init();
 			
 			gametitle=new BgGameTitle()
 			addChild(gametitle);
@@ -120,7 +137,7 @@ package
 			addChild(filters);
 			filtesContainer=filters;
 			
-			command.initSceneLibrary();
+			//command.initSceneLibrary();
 			
 			successLogin=onLoginComplete;
 			failedLogin=onLoginFailed;
@@ -131,19 +148,32 @@ package
 			if(Main.verifyKey)
 			{
 				Config.verifyKey=Main.verifyKey;
-				floxserver.loginWithKey("%*%%!@#(","%*%%!@#(");
+				flox.loginWithKey("%*%%!@#(","%*%%!@#(");
 			}
 			
-			//flox manager -----------------
-			/*
-			var floxMg:FloxManagerController=new FloxManagerController();
-			floxMg.init();
-			addChild(floxMg);
-			ViewsContainer.FloxManager=floxMg;
-			*/
-			//---------------------------
+			
+			
+			if(manager)
+			{
+				//flox manager panel-----------------
+				
+				var floxMg:FloxManagerController=new FloxManagerController();
+				floxMg.init();
+				addChild(floxMg);
+				ViewsContainer.FloxManager=floxMg;
+				
+				//---------------------------
+			}
+			//if
+			NativeApplication.nativeApplication.addEventListener(flash.events.Event.EXITING,onNavieAppExit);
+			
+			 
+			
 		}
-		 
+		private function onNavieAppExit(e:flash.events.Event):void
+		{
+			 flox.logEvent("GameQuit");
+		}
 		private function displayHandler(e:flash.events.Event):void
 		{
 			var scene:String=DataContainer.currentScene;
@@ -151,15 +181,24 @@ package
 			{
 				case "waving":
 					//new SWFLoader("main.swf", {name:"myFile", x:100, y:100, width:200, height:200, container:this, onComplete:completeHandler, onProgress:progressHandler});
-					var queue:LoaderMax = new LoaderMax({name:"mainQueue"});
-					swfloader=new SWFLoader("../swf/map_anim.swf", {name:"waving",width:1536,hieght:1195, container:filtesContainer});
-					queue.append(swfloader);
-					LoaderMax.prioritize("photo1");
-					queue.load();
+					//var queue:LoaderMax = new LoaderMax({name:"mainQueue"});
+					//swfloader=new SWFLoader("../swf/map_anim.swf", {name:"waving",width:1536,hieght:1195, container:filtesContainer});
+					//queue.append(swfloader);
+					//LoaderMax.prioritize("photo1");
+					//queue.load();
+					var loaderReq:LoaderRequest=new LoaderRequest();
+					loaderReq.setLoaderQueue("waving","../swf/map_anim.swf",filtesContainer);
+					
 					break
 				case "remove_waving":
-					if(swfloader)
-					swfloader.unload();
+					try
+					{
+						LoaderMax.getLoader("waving").unload();
+					}
+					catch(e:Error)
+					{
+						
+					}
 					break
 				case "comcloud":
 					com_btn_txt=e.target.data;
@@ -209,62 +248,23 @@ package
 					onLoginComplete();
 					break
 				case "rest_animation":
-					animation=new RestAnimation();
-					animation.addEventListener(flash.events.Event.ENTER_FRAME,onAnimationComplete);
-					topview.addChild(animation);
-					 
+				 
 					break
 				case "stay_animation":
-					animation=new RestAnimation();
-					animation.addEventListener(flash.events.Event.ENTER_FRAME,onAnimationComplete);
-					topview.addChild(animation);
+				 
 					break
 				case "train_animation":
-					animation=new TrainAnimation();
-					animation.addEventListener(flash.events.Event.ENTER_FRAME,onAnimationComplete);
-					topview.addChild(animation);
-					
+					 
 					break
 				case "learning_animation":
-					switch(scene)
-					{
-						case "MuseumScene":
-							animation=new MuseumLearnAnimation();
-						break
-						case "AcademyScene":
-							animation=new AcademyLearnAnimation();
-							break
-
-					}
-					//swotch
-					
-					animation.addEventListener(flash.events.Event.ENTER_FRAME,onAnimationComplete);
-					topview.addChild(animation);
+				 
 					break
 				case "working_animation":
 					
-					
-					DebugTrace.msg("SimgirlLovemore.displayHandler scene:"+scene)
-					switch(scene)
-					{
-					   case "NightclubScene":
-						   animation=new NightClubWorkAnimation();
-						   break
-					   case "BankScene":
-						   animation=new BankWorkAnimation();
-						   break
-					   case "ThemedParkScene":
-						   animation=new ThemedParkWorkAnimation();
-						   break
-					}
-					
-					animation.addEventListener(flash.events.Event.ENTER_FRAME,onAnimationComplete);
-					topview.addChild(animation);
+				 
 					break
 				case "meditate_animation":
-					animation=new MeditateAnimation();
-					animation.addEventListener(flash.events.Event.ENTER_FRAME,onAnimationComplete);
-					topview.addChild(animation);
+					 
 					break
 				case "assets_form":
 				case "dating_assets_form":
@@ -293,6 +293,17 @@ package
 					break
 				case "remove_blackmarket_form":
 					topview.removeChild(blackmarketform);
+					break
+				case "TraceGame":
+					minigamescene=new TraceGame();
+					topview.addChild(minigamescene);
+					break
+				case "TrainingGame":
+					minigamescene=new TrainingGame();
+					topview.addChild(minigamescene);
+					break
+				case "remove_mini_game":
+					topview.removeChild(minigamescene);
 					break
 			}
 			//siwtch
@@ -383,7 +394,7 @@ package
 		}
 		private function onSubmitComplete():void
 		{
-			//saved QA
+		 
 			DebugTrace.msg("SimgirlsLovemore.onSubmitComplete");
 			topview.removeChild(qaDisplay);
 			var _data:Object=new Object();
@@ -394,11 +405,11 @@ package
 		}
 		private function onLoginComplete():void
 		{
-			//floxserver.save();
-			//floxserver.setup();
-			//floxserver.loadEntities();
-			//floxserver.indices("nickname");
-			//floxserver.submitCoins();
+			//flox.save();
+			//flox.setup();
+			//flox.loadEntities();
+			//flox.indices("nickname");
+			//flox.submitCoins();
 			if(longinUI)
 			{
 				
@@ -411,10 +422,6 @@ package
 			//gamestartUI.x=408;
 			//gamestartUI.y=525;
 			addChild(gamestartUI);
-			
-			
-			
-			
 			
 		}
 		private function onGameStart():void
@@ -456,26 +463,29 @@ package
 		private function onLoginFailed(re:String):void
 		{
 			
+			
 			MainCommand.addAlertMsg(re);
 			
 		}
 		private function start():void
 		{
 			//stage.scaleMode = StageScaleMode.NO_SCALE;
+			 
 			stage.align = StageAlign.TOP_LEFT;	
 			
 			
 			//Starling.multitouchEnabled = true; // useful on mobile devices
-			 Starling.handleLostContext = true; // required on Windows and Android, needs more memory
+			Starling.handleLostContext = true; // required on Windows and Android, needs more memory
 			
 			
-			mStarling=new Starling(Game,stage);
-			mStarling.showStats=true;
+			mStarling=new Starling(Game,stage,null,null,"auto","auto");
+			mStarling.showStats=false;
+			 
 			//mStarling.enableErrorChecking=Capabilities.isDebugger;
 			
 			mStarling.start();
 			//mStarling.stage3D.addEventListener(Event.CONTEXT3D_CREATE,onContextCreated);
-			
+			 
 			mStarling.addEventListener(starling.events.Event.ROOT_CREATED, onContextCreated);
 		}
 		private function onAddedToStage(event:flash.events.Event):void
@@ -492,7 +502,7 @@ package
 			}
 			
 		}
-		
+		 
 		
 	}
 }
