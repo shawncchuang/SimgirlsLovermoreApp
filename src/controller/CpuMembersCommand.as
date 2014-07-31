@@ -1,7 +1,7 @@
 package controller
 {
-	
-	
+
+
 	import controller.FloxCommand;
 	import controller.FloxInterface;
 	
@@ -113,7 +113,7 @@ package controller
 				cpuIndex=Config.team_schedule.indexOf(month+"_"+date)%teamsno;
 				
 				//fake CPU index
-				cpuIndex=2;
+				//cpuIndex=0;
 			}
 			else
 			{
@@ -153,6 +153,12 @@ package controller
 			//for
 			main_team.push(team[0]);
 
+            if(main_team[0].ch_name=="xns")
+            {
+                team[1].ch_name="san";
+                main_team.push(team[1]);
+
+            }
             /*
 			if(main_team[0].id.indexOf("t"+cpuIndex)!=-1)
 			{
@@ -503,15 +509,26 @@ package controller
 				//for
 				*/
 				var boss_index:Number=Config.bossModels.indexOf(power.ch_name);
-				if(power.id=="t2_0")
+                var update_power:Boolean=false;
+                var skillLv:Number=Number(power.skillID.charAt(1));
+
+				if(power.id=="t0_0" || power.id=="t2_0")
 				{
-					//mia
-					var skillLv:Number=Number(power.skillID.charAt(1));
+					//xns:combo skill ,mia:mind control
+
 					if(skillLv==3)
 					{
-						//super skill - mind control
-						var sID:String="s1";
-						
+
+                        if(power.id=="t2_0")
+                        {
+                            var sID:String="s1";
+                        }
+                        else
+                        {
+                            sID="s0";
+                            power.type=skillsSys[sID].type;
+                        }
+
 						power.skillID=sID;
 						power.ele=skillsSys[sID].ele;
 						power.effect=skillsSys[sID].effect;
@@ -519,6 +536,7 @@ package controller
 						power.jewel=skillsSys[sID].jewel;
 						power.area=skillsSys[sID].area;
 						power.label=skillsSys[sID].label;
+
 					}
 					//if
 				}

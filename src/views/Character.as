@@ -429,10 +429,22 @@ package views
 			}
 			else
 			{
-				
-				characters=["helm"];
-				character=new Boy();
-				ch_name="badguy";
+
+                if(id.split("_")[0]=="t0" && Number(id.split("_")[1])==1)
+                {
+                    part_pack=gpart_pack;
+                    characters=["mia","san","chef","akr"];
+                    character=new Girl();
+
+                }
+                else
+                {
+                    characters=["helm"];
+                    character=new Boy();
+                    ch_name="badguy";
+                }
+
+
 			}
 			//if
 			character.name=id;
@@ -1265,12 +1277,25 @@ package views
 						"skin":null,
 						"member":[0x333333,0xff5c00]
 					},
+                    "t0":
+                    {
+                        "acc":0xFF0000,
+                        "acc_tint":0.5,
+                        "body":0xFFFFFF,
+                        "body_tint":0.9,
+                        "skin":null,
+                        "member":[0xFFFFFF,0xFF0000],
+                        "member_tint":[0.9,0.5]
+                    },
 					"t2":
 					{
 						"acc":0x539FCF,
+                        "acc_tint":0.8,
 						"body":0xDF67C5,
+                        "body_tint":0.8,
 						"skin":null,
-						"member":[0xD94886,0xDF67C5]
+						"member":[0xD94886,0xDF67C5],
+                        "member_tint":[0.8,0.8]
 					}
 				}
 				var team:String=power.id.split("_")[0];
@@ -1288,16 +1313,16 @@ package views
 					//helmBCT.color=colotPkg.member[1];
 					//actModel.body.act.helma.transform.colorTransform=helmACT;
 					//actModel.body.act.helmb.transform.colorTransform=helmBCT;
-					TweenMax.to(actModel.body.act.helma,0, {colorTransform:{tint:colotPkg.member[0], tintAmount:0.8}});
-					TweenMax.to(actModel.body.act.helmb,0, {colorTransform:{tint:colotPkg.member[1], tintAmount:0.8}});
+					TweenMax.to(actModel.body.act.helma,0, {colorTransform:{tint:colotPkg.member[0], tintAmount:colotPkg.member_tint[0]}});
+					TweenMax.to(actModel.body.act.helmb,0, {colorTransform:{tint:colotPkg.member[1], tintAmount:colotPkg.member_tint[1]}});
 				}
 				//if
 
 				//accCT.color=colotPkg.acc;
 				//actModel.body.act.acc.transform.colorTransform=accCT;
 				//actModel.body.act.body.transform.colorTransform=bodyCT;
-				TweenMax.to(actModel.body.act.acc,0, {colorTransform:{tint:colotPkg.acc, tintAmount:0.8}});
-				TweenMax.to(actModel.body.act.body,0, {colorTransform:{tint:colotPkg.body, tintAmount:0.8}});
+				TweenMax.to(actModel.body.act.acc,0, {colorTransform:{tint:colotPkg.acc, tintAmount:colotPkg.acc_tint}});
+				TweenMax.to(actModel.body.act.body,0, {colorTransform:{tint:colotPkg.body, tintAmount:colotPkg.body_tint}});
 				
 			}
 			//if

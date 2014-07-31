@@ -63,7 +63,7 @@ package data
 			};
 			return points;
 		}
-		public static var bossName:Object={"t1_0":"tgr","t2_0":"mia","t3_0":"gor","t10_0":"fat"};
+		public static var bossName:Object={"t0_0":"xns","t1_0":"tgr","t2_0":"mia","t3_0":"gor","t10_0":"fat"};
 		//public static var bossName:Object={"t0_0":"gor","t1_0":"tgr","t10_0":"fat"};
 		public static var bossModels:Array=["gor","tgr","fat"];
 		public static var ch_bossModels:Array=["mia"];

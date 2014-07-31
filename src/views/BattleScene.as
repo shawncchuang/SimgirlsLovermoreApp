@@ -1611,6 +1611,26 @@ package views
 				act="PASS"; 
 			}
 			//if
+            if(attack_member.power.skillID=="s0")
+            {
+                //combo skill
+                var cpu_team:Array=memberscom.getCpuTeam();
+
+                for(var i:uint=0;i<cpu_team.length;i++)
+                {
+                   var parnetID:String=cpu_team[i].power.id
+
+                    if(parnetID=="t0_1")
+                    {
+                        if(cpu_team[i].power.se==0)
+                        {
+                            act="PASS";
+                        }
+                        break
+                    }
+                }
+
+            }
 			if(act=="ATTACK")
 			{
 				recordSkillPts(attack_member);
@@ -1683,10 +1703,7 @@ package views
 					//if
 					var skillID:String=attack_member.power.skillID;
 					var boss:Array=Config.bossModels;
-					if(boss.indexOf(attack_member.power.ch_name)!=-1)
-					{
-						
-					}
+
 					switch(skillID)
 					{
 						case "f3":
@@ -2210,6 +2227,7 @@ package views
 			var skillID:String=member.power.skillID;
 			switch(skillID)
 			{
+                /*
 				case "s0":
 					
 					//partner
@@ -2219,7 +2237,8 @@ package views
 					partnertEvt.updateMemberAct();
 					partnertEvt.from="CombineSkill";
 					partnertEvt.actComplete();
-					break	
+					break
+					*/
  
 				default:
 					var battleEvt:BattleEvent=member.memberEvt;
