@@ -3030,10 +3030,12 @@ package views
 				area=new Array();
 			
 			//attack_member.updateStatus("");
-			
-			battleEvt=attack_member.memberEvt;
-			battleEvt.processAction();
-			var _target_member:Member
+
+
+			//battleEvt=attack_member.memberEvt;
+			//battleEvt.processAction();
+
+            var _target_member:Member
 			if(area.length<=1)
 			{
 				//Heal

@@ -111,9 +111,9 @@ package controller
 				var date:String=flox.getSaveData("date").split(".")[1];
 				var month:String=flox.getSaveData("date").split(".")[2];
 				cpuIndex=Config.team_schedule.indexOf(month+"_"+date)%teamsno;
-				
-				//fake CPU index
-				//cpuIndex=0;
+
+				//---------------------fake CPU team
+			    cpuIndex=4;
 			}
 			else
 			{

@@ -517,8 +517,8 @@ package views
 						//
 					}
 				}
-				
-				
+
+                seText.visible=false;
 				removeSkillAni();
 				status="death";
 				processMember(status);
@@ -798,6 +798,7 @@ package views
 		protected function processAction():void
 		{
 			var act:String="";
+            boss_model=checkBossModel();
 			if(status!="")
 			{ 
 				if(status=="scared" && power.speeded=="true")
@@ -845,7 +846,7 @@ package views
 			
 			
 			character.alpha=1;
-			
+            updatelColorEffect(character,avatar);
 			var actModel:MovieClip;
 			var actlabel:String="";
 			actlabel=act;
@@ -953,30 +954,7 @@ package views
 					effect.gotoAndStop(1);
 			}
 			
-			
-			/*
-			if(act=="stand")
-			{
-			
-			actModel.gotoAndStop(1);
-			effect.gotoAndStop(1);
-			
-			for(var i:uint=0;i<part_pack.length;i++)
-			{
-			//DebugTrace.msg("Character.processMember part_pack["+i+"]="+part_pack[i]);
-			_part=part_pack[i];
-			if(_part=="ceil")
-			{
-			_part="ciel";
-			}
-			//if
-			
-			actModel.body.act[_part].gotoAndStop(1);
-			
-			}
-			//for
-			
-			}*/
+
 			if(act=="ready_to_attack")
 			{
 				actModel.gotoAndStop(Character.ready);
@@ -1084,15 +1062,7 @@ package views
 						
 						//effect.gotoAndStop(actlabel);
 						
-						if(actlabel==heal)
-						{
-							TweenMax.delayedCall(1.5,onHellEffectComplete);	
-						}
-						function onHellEffectComplete():void
-						{
-							TweenMax.killDelayedCallsTo(onHellEffectComplete);
-							effect.gotoAndStop("RDY");
-						}
+
 					}
 					
 					//if
@@ -1187,10 +1157,14 @@ package views
 							}
 							catch(e:Error)
 							{
-								DebugTrace.msg("Character.processMember actModel.body.act Null");
+                                DebugTrace.msg("Character.processMember actModel.body.act Null");
 							}
-							
-							
+
+                            if(actlabel=="S_RDY")
+                            {
+                                updatelColorEffect(actModel,avatar);
+                            }
+
 						}
 						else
 						{
@@ -1213,8 +1187,12 @@ package views
 			
 			if(!boss_model)
 			{
-				if(actModel && power.skillID!="s1")
-					updatelColorEffect(actModel,avatar);
+				if(actModel && power.skillID!="s0" && power.skillID!="s1")
+                {
+                    updatelColorEffect(actModel,avatar);
+                }
+
+
 			}
 			
 			switch(actlabel)
@@ -1237,7 +1215,7 @@ package views
 		}
 		private function updatelColorEffect(actModel:MovieClip,avatar:Object):void
 		{
-			
+            DebugTrace.msg("Character.updatelColorEffect "+name);
 			
 			if(name.indexOf("player")!=-1)
 			{
@@ -1296,7 +1274,18 @@ package views
 						"skin":null,
 						"member":[0xD94886,0xDF67C5],
                         "member_tint":[0.8,0.8]
-					}
+					},
+                    "t4":
+                    {
+                        "acc":null,
+                        "acc_tint":0.5,
+                        "body":null,
+                        "body_tint":0.9,
+                        "skin":null,
+                        "member":[null,null],
+                        "member_tint":[0.9,0.5]
+                    }
+
 				}
 				var team:String=power.id.split("_")[0];
 				var colotPkg:Object=colorFrom[team];
@@ -1313,16 +1302,20 @@ package views
 					//helmBCT.color=colotPkg.member[1];
 					//actModel.body.act.helma.transform.colorTransform=helmACT;
 					//actModel.body.act.helmb.transform.colorTransform=helmBCT;
+                    if(colotPkg.member[0])
 					TweenMax.to(actModel.body.act.helma,0, {colorTransform:{tint:colotPkg.member[0], tintAmount:colotPkg.member_tint[0]}});
-					TweenMax.to(actModel.body.act.helmb,0, {colorTransform:{tint:colotPkg.member[1], tintAmount:colotPkg.member_tint[1]}});
+					if(colotPkg.member[1])
+                    TweenMax.to(actModel.body.act.helmb,0, {colorTransform:{tint:colotPkg.member[1], tintAmount:colotPkg.member_tint[1]}});
 				}
 				//if
 
 				//accCT.color=colotPkg.acc;
 				//actModel.body.act.acc.transform.colorTransform=accCT;
 				//actModel.body.act.body.transform.colorTransform=bodyCT;
+                if(colotPkg.acc)
 				TweenMax.to(actModel.body.act.acc,0, {colorTransform:{tint:colotPkg.acc, tintAmount:colotPkg.acc_tint}});
-				TweenMax.to(actModel.body.act.body,0, {colorTransform:{tint:colotPkg.body, tintAmount:colotPkg.body_tint}});
+				if(colotPkg.body)
+                TweenMax.to(actModel.body.act.body,0, {colorTransform:{tint:colotPkg.body, tintAmount:colotPkg.body_tint}});
 				
 			}
 			//if
@@ -1598,6 +1591,7 @@ package views
 					skillSWf=gender+power.skillID;
 					
 				}
+
 				DebugTrace.msg("Character.setupSkillAni skillSWf="+skillSWf+", name="+name);
 				var loaderReq:LoaderRequest=new LoaderRequest();
 				loaderReq.setLoaderQueue(name,"../swf/skills/"+skillSWf+".swf",membermc,onSkillComplete);
