@@ -46,7 +46,7 @@ package
 	import views.TraceGame;
 	import views.TrainingGame;
 	
-	[SWF(width="1024",height="768",frameRate="24",backgroundAlpha="0")]
+	[SWF(width="1024",height="768",frameRate="24")]
 	public class SimgirlsLovemore extends MovieClip
 	{
 		

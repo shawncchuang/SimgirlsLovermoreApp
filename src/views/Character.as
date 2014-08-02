@@ -1,1871 +1,1813 @@
 package views
 {
-	import com.greensock.TweenMax;
-	import com.greensock.events.LoaderEvent;
-	import com.greensock.loading.LoaderMax;
-	import com.greensock.loading.SWFLoader;
-	import com.greensock.loading.display.ContentDisplay;
-	
-	import flash.display.DisplayObject;
-	import flash.display.MovieClip;
-	import flash.events.Event;
-	import flash.events.MouseEvent;
-	import flash.events.TimerEvent;
-	import flash.geom.ColorTransform;
-	import flash.text.TextField;
-	import flash.text.TextFieldAutoSize;
-	import flash.text.TextFormat;
-	import flash.utils.Timer;
+import com.greensock.TweenMax;
+import com.greensock.events.LoaderEvent;
+import com.greensock.loading.LoaderMax;
+import com.greensock.loading.SWFLoader;
+import com.greensock.loading.display.ContentDisplay;
 
-	import controller.FloxCommand;
-	import controller.FloxInterface;
-	import controller.MainCommand;
-	import controller.MainInterface;
-	import controller.MembersInterface;
-	import controller.MemebersCommand;
-	
-	import data.Config;
-	import data.DataContainer;
-	
-	import events.BattleEvent;
-	
-	import model.BattleData;
-	import services.LoaderRequest;
-    import utils.DebugTrace;
-	import utils.ViewsContainer;
-	
-	import views.BattleScene;
+import data.Config;
 
-	
-	
-	public class Character extends MovieClip
-	{
-		
-		protected var flox:FloxInterface=new FloxCommand();
-		protected var memberscom:MembersInterface=new MemebersCommand();
-		private var command:MainInterface=new  MainCommand();
-		private var characters:Array=new Array();
-		protected var status:String="";
-		protected var ch_name:String;
-		protected var gender:String;
-		protected var id:String;
-		//private var playermc:MovieClip;
-		protected var skillAni:MovieClip;
-		protected var character:MovieClip;
-		//private var cpumc:MovieClip;
-		//power={"id":"t0_4","enemy":1,"se":100,"target":"player1","combat":4,"effect":"dizzy","area":0,"targetlist":[1],
-		//"speed":130,"ele":"air","label":"Whirlwind Punch","from":"cpu","power":35,"jewel":"2|a"}
-		protected var power:Object=new Object();
-		protected var selected:Boolean=false;
-		protected var membermc:MovieClip;
-		protected var arrow:MovieClip;
-		protected var dissytap:EffectTapView;
-		private var round:Number=0;
-		private var rage_round:Number=0;
-		private var timer:Timer;
-		private var scared_reduce_speed:Number=0.5;
-		protected var plus_speed:Number=100;
-		protected var ett:MovieClip;
-		private var _from:String;
-		protected var effShield:MovieClip=null;
-		
-		private var part_pack:Array=new Array();
-		private var bpart_pack:Array=["zack","xns","vdk","smn","shn","sao","prms","prml",
-			"playerb","playera","lenus","helmb","helma","fan","bdh"];
-		private var gpart_pack:Array=["mia","san","dea","sirena","tomoru","ciel","klr","chef","akr","playerb","playera"];
-		
-		private var allpart_pack:Object={
-			"B":bpart_pack,
-			"G":gpart_pack
-		};
-		private var otherCharacters:Array=["zack","xns","vdk","smn","prms","prml","fan","bdh","mia","san","chef","akr"];
-		private var boy_names:Array=["lenus","sao","zack","Male_player"];
-		private var girl_names:Array=["sirena","tomoru","dea","klr","ceil","Female_player"];
-		
-		
-		private  static var ready:String="RDY";
-		private  static var knockback:String="KnockBack";
-		private  static var hit:String="HIT";
-		private  static var hop:String="HOP";
-		private  static var hurt:String="HURT";
-		private  static var rage:String="RAGE";
-		private static var dizzy:String="DIZZY";
-		private static var scared:String="SCARED";
-		private  static var death:String="DEATH";
-		private static var charge:String="CHARGE";
-		private  static var BattleCry:String="BattleCry";
-		private  static var heal:String="HEAL";
-		protected var heal_tint:MovieClip;
-		
-		private var boss_model:Boolean=false;
-		
-		
-		public function Character()
-		{
-			
-			
-		}
-		public function updatePower(_data:Object):void
-		{
-			
-			if(id.indexOf("player")!=-1)
-			{
-				var loves:Object=flox.getSaveData("love");
-				var maxSE:Number=Number(loves[power.name]);
-				
-			}
-			else
-			{
-				//cpu
-				var cpuSE:Object=flox.getSaveData("cpu_teams");
-				maxSE=Number(cpuSE[id].seMax);
-				
-			}
-			//if
-			if(_data)
-			{
-				if(!_data.target)
-				{
-					var target:String="";
-				}
-				else
-				{
-					target=_data.target;
-				}
-				//if
-				for(var i:String in _data)
-				{
-					
-					if(status=="scared" && i=="speed")
-					{
-						_data[i]=Math.floor(_data[i]*scared_reduce_speed);
-					}
-					//if
-					
-					if(i=="se")
-					{
-						if(_data[i]>maxSE)
-							_data[i]=maxSE;
-					}
-					power[i]=_data[i];
-				}
-				//for
-				if(power.shielded=="true")
-				{
-					DebugTrace.msg("Character.updatePower name:"+power.name);
-					if(!effShield)
-					{
-						
-						switch(power.skillID.charAt(0))
-						{
-							case "a":
-								effShield=new A_Shield_Effect();
-								break
-							case "w":
-								effShield=new W_Shield_Effect();
-								break
-						}
-						
-						//effShield=new EffectShield();
-						effShield.name="shield_"+name;
-						if(id.indexOf("player")!=-1)
-						{
-							effShield.x=-(effShield.width);
-						}
-						//if
-						addChild(effShield);
-						effShield.visible=false;
-					}
-					//if
-				}
-				
-				
-				var seText:TextField=membermc.getChildByName("se") as TextField;
-				//seText.visible=true;
-				seText.text=String(power.se);
-			}
-			else
-			{
-				power=new Object();
-			}
-			//if
-			//DebugTrace.msg("Character.updatePower status="+status);
-			DebugTrace.msg("Character.updatePower power="+ JSON.stringify(power));
-			
-		}
-		/*public function onSelected():void
-		{
-		if(!selected)
-		{
-		
-		selected=true;
-		var arrow:MovieClip=membermc.getChildByName("arrow") as MovieClip;
-		arrow.visible=false;
-		}
-		else
-		{
-		selected=false;
-		}
-		
-		}*/
-		
-		public function initPlayer(index:Number):void
-		{
-			var membersEffect:Object=DataContainer.MembersEffect;
-			var seObj:Object=flox.getSaveData("se");
-			var formation:Array=flox.getSaveData("formation");
-			var formation_info:String=JSON.stringify(formation[index]);
-			
-			ch_name=formation[index].name;
-			membermc=new MovieClip();
-			var player_id:String="player"+formation[index].combat;
-			id=player_id;
-			membermc.name=id;
-			membersEffect[player_id]="";
-			gender=flox.getSaveData("avatar").gender;
-			if(ch_name=="player")
-			{
-				ch_name=gender+"_"+ch_name;
-			}
-			
-			if(boy_names.indexOf(ch_name)!=-1)
-			{
-				characters=["lenus","sao","player"];
-				part_pack=bpart_pack;
-				character=new Boy();
-			}
-			//if
-			if(girl_names.indexOf(ch_name)!=-1)
-			{
-				characters=["sirena","tomoru","dea","ceil","klr","player"];
-				part_pack=gpart_pack;
-				character=new Girl();
-			}
-			//if
-			var effect:MovieClip=new Effect();
-			//effect.x=-150;
-			effect.name="effect";
-			membermc.addChild(effect);
-			character.name="character";
-			character.scaleX=-1;
-			if(ch_name.indexOf("player")!=-1)
-			{
-				ch_name=ch_name.split("_")[1];
-			}
-			var se:String=String(seObj[ch_name]);
-			var seTxt:TextField=seTextfield(se);
-			seTxt.x=-(Math.floor(character.width/2+seTxt.width/2));
-			arrow=new ArrowFinger();
-			arrow.name="arrow";
-			arrow.x=-character.width;
-			arrow.y=character.height/2;
-			arrow.visible=false;
-			membermc.addChild(character);
-			membermc.addChild(seTxt);
-			membermc.addChild(arrow);
-			
-			addChild(membermc);
-			
-			membermc.addEventListener(MouseEvent.MOUSE_OVER,onOverPlayer);
-			membermc.addEventListener(MouseEvent.MOUSE_OUT,onOutPlayer);
-		}
-		private var healArea:Array;
-		private var heal_target:Array;
-		private function onOverPlayer(e:MouseEvent):void
-		{
-			
-			
-			
-			var memberscom:MembersInterface=new MemebersCommand();
-			var battleteam:Object=memberscom.getBattleTeam();
-			var top_index:uint=memberscom.getTopIndex();
-			var battleView:MovieClip=ViewsContainer.battleView;
-			//battleView.setChildIndex(battleteam[e.target.name],top_index);
-			memberscom.setPlayerIndex(top_index);
-			
-			if(!BattleScene.fighting)
-			{
-				//var arrow:MovieClip=e.target.getChildByName("arrow") as MovieClip;
-				arrow.visible=true;
-			}
-			//if
-			
-			var current_power:Object=DataContainer.currentPower;
-			if(current_power.skillID=="n2" && current_power.skillID!=undefined)
-			{
-				
-				var battledata:BattleData=new BattleData();
-				var combat:Number=Number(e.target.name.split("player").join(""));
-				
-				healArea=battledata.praseTargetList(current_power,combat);
-				
-				heal_target=new Array();
-				if(current_power.id!=name)
-				{
-					for(var i:uint=0;i<healArea.length;i++)
-					{
-						//var memberscom:MembersInterface=new MemebersCommand();
-						var player_team:Array=memberscom.getPlayerTeam();
-						for(var j:uint=0;j<player_team.length;j++)
-						{
-							if(player_team[j].power.combat==healArea[i])
-							{
-								heal_target.push(player_team[j]);
-								
-								var battleEvt:BattleEvent=player_team[j].memberEvt;
-								battleEvt.enabledAreaMemberHeal();
-								
-							}
-							//if
-						}
-						//for
-					}
-					//for
-				}
-				//if
-				DataContainer.healArea=heal_target;
-				
-			}
-			//if
-			if(current_power.skillID=="n1" || current_power.skillID=="n2")
-			{
-				//var arrow:MovieClip=e.target.getChildByName("arrow") as MovieClip;
-				if(current_power.id==name)
-				{
-					arrow.visible=false;
-					command.playSound("BattlePointer");
-				}
-			}
-			
-		}
-		private function onOutPlayer(e:MouseEvent):void
-		{
-			if(!BattleScene.fighting)
-			{
-				//var arrow:MovieClip=e.target.getChildByName("arrow") as MovieClip;
-				arrow.visible=false;
-			}
-			var current_power:Object=DataContainer.currentPower;
-			if(current_power.skillID=="n2")
-			{
-				//if(e.target.name.indexOf("Heal")!=-1)
-				//{
-				var memberscom:MembersInterface=new MemebersCommand();
-				var player_team:Array=memberscom.getPlayerTeam();
-				for(var j:uint=0;j<player_team.length;j++)
-				{
-					var battleEvt:BattleEvent=player_team[j].memberEvt;
-					battleEvt.disabledMemberHeal();
-				}
-				
-				//}
-				//if
-			}
-			//if
-		}
-		private function clickPlayer(e:MouseEvent):void
-		{
-			
-			DebugTrace.msg("Character.clickPlayer id="+ id);
-			var battelEvt:BattleEvent=MemebersCommand.battleEvt;
-			battelEvt.id=id;
-			battelEvt.switchMemberIndex();
-		}
-		public function initCpuPlayer(main_team:Array,index:Number):void
-		{
-			
-			var cpu_teams:Object=flox.getSyetemData("cpu_teams");
-			var cpu_teams_saved:Object=flox.getSaveData("cpu_teams");
-			membermc=new MovieClip();
-			id=main_team[index].id;
-			ch_name=main_team[index].ch_name;
-			membermc.name=id;
-			boss_model=checkBossModel();
-			DebugTrace.msg("Character.initCpuPlayer id="+ id+" ,ch_name="+ch_name+" ,boss_model="+boss_model);
-			part_pack=bpart_pack;
-			if(id.split("_")[1]=="0")
-			{
-				//boss
-				//characters=otherCharacters;
-				//ch_name=otherCharacters[Math.floor(Math.random()*otherCharacters.length)];
-				var boy_model:Number=bpart_pack.indexOf(ch_name);
-				var girl_model:Number=gpart_pack.indexOf(ch_name);
-				if(boy_model==-1 && girl_model==-1)
-				{
-					//boss model
-					characters=new Array();
-					var boss:Object={"gor":new GOR(),"fat":new FAT(),"tgr":new TGR()};
-					skillAni=character=boss[ch_name];
-					switch(ch_name)
-					{
-						case "gor":
-						case "tgr":
-							character.width=180;
-							character.height=180;
-							break
-					}
-					//switch
-				}
-				else
-				{
-					//character boss model
-					//ch_name="vdk";
-					if(bpart_pack.indexOf(ch_name)!=-1)
-					{
-						characters=["zack","xns","vdk","smn","shn","prms","prml","fan","bdh"];
-						character=new Boy();
-					}
-					else
-					{
-						part_pack=gpart_pack;
-						characters=["mia","san","chef","akr"];
-						character=new Girl();
-						
-					}
-					//if
-				}
-				//if
-				
-			}
-			else
-			{
+import flash.display.DisplayObject;
+import flash.display.MovieClip;
+import flash.events.Event;
+import flash.events.MouseEvent;
+import flash.events.TimerEvent;
+import flash.geom.ColorTransform;
+import flash.text.TextField;
+import flash.text.TextFieldAutoSize;
+import flash.text.TextFormat;
+import flash.utils.Timer;
 
-                if(id.split("_")[0]=="t0" && Number(id.split("_")[1])==1)
+import controller.FloxCommand;
+import controller.FloxInterface;
+import controller.MainCommand;
+import controller.MainInterface;
+import controller.MembersInterface;
+import controller.MemebersCommand;
+
+import data.Config;
+import data.DataContainer;
+
+import events.BattleEvent;
+
+import model.BattleData;
+import services.LoaderRequest;
+import utils.DebugTrace;
+import utils.ViewsContainer;
+
+import views.BattleScene;
+
+
+
+public class Character extends MovieClip
+{
+
+    protected var flox:FloxInterface=new FloxCommand();
+    protected var memberscom:MembersInterface=new MemebersCommand();
+    private var command:MainInterface=new  MainCommand();
+    private var characters:Array=new Array();
+    protected var status:String="";
+    protected var ch_name:String;
+    protected var gender:String;
+    protected var id:String;
+    //private var playermc:MovieClip;
+    protected var skillAni:MovieClip;
+    protected var character:MovieClip;
+    //private var cpumc:MovieClip;
+    //power={"id":"t0_4","enemy":1,"se":100,"target":"player1","combat":4,"effect":"dizzy","area":0,"targetlist":[1],
+    //"speed":130,"ele":"air","label":"Whirlwind Punch","from":"cpu","power":35,"jewel":"2|a"}
+    protected var power:Object=new Object();
+    protected var selected:Boolean=false;
+    protected var membermc:MovieClip;
+    protected var arrow:MovieClip;
+    protected var dissytap:EffectTapView;
+    private var round:Number=0;
+    private var rage_round:Number=0;
+    private var timer:Timer;
+    private var scared_reduce_speed:Number=0.5;
+    protected var plus_speed:Number=100;
+    protected var ett:MovieClip;
+    private var _from:String;
+    protected var effShield:MovieClip=null;
+
+    private var part_pack:Array=new Array();
+    private var bpart_pack:Array=["zack","xns","vdk","smn","shn","sao","prms","prml",
+        "playerb","playera","lenus","helmb","helma","fan","bdh"];
+    private var gpart_pack:Array=["mia","san","dea","sirena","tomoru","ciel","klr","chef","akr","playerb","playera"];
+
+    private var allpart_pack:Object={
+        "B":bpart_pack,
+        "G":gpart_pack
+    };
+    private var otherCharacters:Array=["zack","xns","vdk","smn","prms","prml","fan","bdh","mia","san","chef","akr"];
+    private var boy_names:Array=["lenus","sao","zack","Male_player"];
+    private var girl_names:Array=["sirena","tomoru","dea","klr","ceil","Female_player"];
+
+
+    private  static var ready:String="RDY";
+    private  static var knockback:String="KnockBack";
+    private  static var hit:String="HIT";
+    private  static var hop:String="HOP";
+    private  static var hurt:String="HURT";
+    private  static var rage:String="RAGE";
+    private static var dizzy:String="DIZZY";
+    private static var scared:String="SCARED";
+    private  static var death:String="DEATH";
+    private static var charge:String="CHARGE";
+    private  static var BattleCry:String="BattleCry";
+    private  static var heal:String="HEAL";
+    protected var heal_tint:MovieClip;
+
+    private var boss_model:Boolean=false;
+
+
+    public function Character()
+    {
+
+
+    }
+    public function updatePower(_data:Object):void
+    {
+
+        if(id.indexOf("player")!=-1)
+        {
+            var loves:Object=flox.getSaveData("love");
+            var maxSE:Number=Number(loves[power.name]);
+
+        }
+        else
+        {
+            //cpu
+            var cpuSE:Object=flox.getSaveData("cpu_teams");
+            maxSE=Number(cpuSE[id].seMax);
+
+        }
+        //if
+        if(_data)
+        {
+            if(!_data.target)
+            {
+                var target:String="";
+            }
+            else
+            {
+                target=_data.target;
+            }
+            //if
+            for(var i:String in _data)
+            {
+
+                if(status=="scared" && i=="speed")
+                {
+                    _data[i]=Math.floor(_data[i]*scared_reduce_speed);
+                }
+                //if
+
+                if(i=="se")
+                {
+                    if(_data[i]>maxSE)
+                        _data[i]=maxSE;
+                }
+                power[i]=_data[i];
+            }
+            //for
+            if(power.shielded=="true")
+            {
+                DebugTrace.msg("Character.updatePower name:"+power.name);
+                if(!effShield)
+                {
+
+                    switch(power.skillID.charAt(0))
+                    {
+                        case "a":
+                            effShield=new A_Shield_Effect();
+                            break
+                        case "w":
+                            effShield=new W_Shield_Effect();
+                            break
+                    }
+
+                    //effShield=new EffectShield();
+                    effShield.name="shield_"+name;
+                    if(id.indexOf("player")!=-1)
+                    {
+                        effShield.x=-(effShield.width);
+                    }
+                    //if
+                    addChild(effShield);
+                    effShield.visible=false;
+                }
+                //if
+            }
+
+
+            var seText:TextField=membermc.getChildByName("se") as TextField;
+            //seText.visible=true;
+            seText.text=String(power.se);
+        }
+        else
+        {
+            power=new Object();
+        }
+        //if
+        //DebugTrace.msg("Character.updatePower status="+status);
+        DebugTrace.msg("Character.updatePower power="+ JSON.stringify(power));
+
+    }
+    /*public function onSelected():void
+     {
+     if(!selected)
+     {
+
+     selected=true;
+     var arrow:MovieClip=membermc.getChildByName("arrow") as MovieClip;
+     arrow.visible=false;
+     }
+     else
+     {
+     selected=false;
+     }
+
+     }*/
+
+    public function initPlayer(index:Number):void
+    {
+        var membersEffect:Object=DataContainer.MembersEffect;
+        var seObj:Object=flox.getSaveData("se");
+        var formation:Array=flox.getSaveData("formation");
+        var formation_info:String=JSON.stringify(formation[index]);
+
+        ch_name=formation[index].name;
+        membermc=new MovieClip();
+        var player_id:String="player"+formation[index].combat;
+        id=player_id;
+        membermc.name=id;
+        membersEffect[player_id]="";
+        gender=flox.getSaveData("avatar").gender;
+        if(ch_name=="player")
+        {
+            ch_name=gender+"_"+ch_name;
+        }
+
+        if(boy_names.indexOf(ch_name)!=-1)
+        {
+            characters=["lenus","sao","player"];
+            part_pack=bpart_pack;
+            character=new Boy();
+        }
+        //if
+        if(girl_names.indexOf(ch_name)!=-1)
+        {
+            characters=["sirena","tomoru","dea","ceil","klr","player"];
+            part_pack=gpart_pack;
+            character=new Girl();
+        }
+        //if
+        var effect:MovieClip=new Effect();
+        //effect.x=-150;
+        effect.name="effect";
+        membermc.addChild(effect);
+        character.name="character";
+        character.scaleX=-1;
+        if(ch_name.indexOf("player")!=-1)
+        {
+            ch_name=ch_name.split("_")[1];
+        }
+        var se:String=String(seObj[ch_name]);
+        var seTxt:TextField=seTextfield(se);
+        seTxt.x=-(Math.floor(character.width/2+seTxt.width/2));
+        arrow=new ArrowFinger();
+        arrow.name="arrow";
+        arrow.x=-character.width;
+        arrow.y=character.height/2;
+        arrow.visible=false;
+        membermc.addChild(character);
+        membermc.addChild(seTxt);
+        membermc.addChild(arrow);
+
+        addChild(membermc);
+
+        membermc.addEventListener(MouseEvent.MOUSE_OVER,onOverPlayer);
+        membermc.addEventListener(MouseEvent.MOUSE_OUT,onOutPlayer);
+    }
+    private var healArea:Array;
+    private var heal_target:Array;
+    private function onOverPlayer(e:MouseEvent):void
+    {
+
+
+
+        var memberscom:MembersInterface=new MemebersCommand();
+        var battleteam:Object=memberscom.getBattleTeam();
+        var top_index:uint=memberscom.getTopIndex();
+        var battleView:MovieClip=ViewsContainer.battleView;
+        //battleView.setChildIndex(battleteam[e.target.name],top_index);
+        memberscom.setPlayerIndex(top_index);
+
+        if(!BattleScene.fighting)
+        {
+            //var arrow:MovieClip=e.target.getChildByName("arrow") as MovieClip;
+            arrow.visible=true;
+        }
+        //if
+
+        var current_power:Object=DataContainer.currentPower;
+        if(current_power.skillID=="n2" && current_power.skillID!=undefined)
+        {
+
+            var battledata:BattleData=new BattleData();
+            var combat:Number=Number(e.target.name.split("player").join(""));
+
+            healArea=battledata.praseTargetList(current_power,combat);
+
+            heal_target=new Array();
+            if(current_power.id!=name)
+            {
+                for(var i:uint=0;i<healArea.length;i++)
+                {
+                    //var memberscom:MembersInterface=new MemebersCommand();
+                    var player_team:Array=memberscom.getPlayerTeam();
+                    for(var j:uint=0;j<player_team.length;j++)
+                    {
+                        if(player_team[j].power.combat==healArea[i])
+                        {
+                            heal_target.push(player_team[j]);
+
+                            var battleEvt:BattleEvent=player_team[j].memberEvt;
+                            battleEvt.enabledAreaMemberHeal();
+
+                        }
+                        //if
+                    }
+                    //for
+                }
+                //for
+            }
+            //if
+            DataContainer.healArea=heal_target;
+
+        }
+        //if
+        if(current_power.skillID=="n1" || current_power.skillID=="n2")
+        {
+            //var arrow:MovieClip=e.target.getChildByName("arrow") as MovieClip;
+            if(current_power.id==name)
+            {
+                arrow.visible=false;
+                command.playSound("BattlePointer");
+            }
+        }
+
+    }
+    private function onOutPlayer(e:MouseEvent):void
+    {
+        if(!BattleScene.fighting)
+        {
+            //var arrow:MovieClip=e.target.getChildByName("arrow") as MovieClip;
+            arrow.visible=false;
+        }
+        var current_power:Object=DataContainer.currentPower;
+        if(current_power.skillID=="n2")
+        {
+            //if(e.target.name.indexOf("Heal")!=-1)
+            //{
+            var memberscom:MembersInterface=new MemebersCommand();
+            var player_team:Array=memberscom.getPlayerTeam();
+            for(var j:uint=0;j<player_team.length;j++)
+            {
+                var battleEvt:BattleEvent=player_team[j].memberEvt;
+                battleEvt.disabledMemberHeal();
+            }
+
+            //}
+            //if
+        }
+        //if
+    }
+    private function clickPlayer(e:MouseEvent):void
+    {
+
+        DebugTrace.msg("Character.clickPlayer id="+ id);
+        var battelEvt:BattleEvent=MemebersCommand.battleEvt;
+        battelEvt.id=id;
+        battelEvt.switchMemberIndex();
+    }
+    public function initCpuPlayer(main_team:Array,index:Number):void
+    {
+
+        var cpu_teams:Object=flox.getSyetemData("cpu_teams");
+        var cpu_teams_saved:Object=flox.getSaveData("cpu_teams");
+        membermc=new MovieClip();
+        id=main_team[index].id;
+        ch_name=main_team[index].ch_name;
+        membermc.name=id;
+        boss_model=checkBossModel();
+        DebugTrace.msg("Character.initCpuPlayer id="+ id+" ,ch_name="+ch_name+" ,boss_model="+boss_model);
+        part_pack=bpart_pack;
+        if(id.split("_")[1]=="0")
+        {
+            //boss
+            //characters=otherCharacters;
+            //ch_name=otherCharacters[Math.floor(Math.random()*otherCharacters.length)];
+            var boy_model:Number=bpart_pack.indexOf(ch_name);
+            var girl_model:Number=gpart_pack.indexOf(ch_name);
+            if(boy_model==-1 && girl_model==-1)
+            {
+                //boss model
+                characters=new Array();
+                var boss:Object={"gor":new GOR(),"fat":new FAT(),"tgr":new TGR()};
+                skillAni=character=boss[ch_name];
+                switch(ch_name)
+                {
+                    case "gor":
+                    case "tgr":
+                        character.width=180;
+                        character.height=180;
+                        break
+                }
+                //switch
+            }
+            else
+            {
+                //character boss model
+                //ch_name="vdk";
+                if(bpart_pack.indexOf(ch_name)!=-1)
+                {
+                    characters=["zack","xns","vdk","smn","shn","prms","prml","fan","bdh"];
+                    character=new Boy();
+                }
+                else
                 {
                     part_pack=gpart_pack;
                     characters=["mia","san","chef","akr"];
                     character=new Girl();
 
                 }
+                //if
+            }
+            //if
+
+        }
+        else
+        {
+
+            if(id.split("_")[0]=="t0" && Number(id.split("_")[1])==1)
+            {
+                part_pack=gpart_pack;
+                characters=["mia","san","chef","akr"];
+                character=new Girl();
+
+            }
+            else
+            {
+                characters=["helm"];
+                character=new Boy();
+                ch_name="badguy";
+            }
+
+
+        }
+        //if
+        character.name=id;
+        //-------------------------------------------------------
+
+        var effect:MovieClip=new Effect();
+        effect.name="effect";
+        membermc.addChild(effect);
+
+        var se:String=String(cpu_teams_saved[id].se)
+        var seTxt:TextField=seTextfield(se);
+        seTxt.x=Math.floor(character.width/2-seTxt.width/2);
+        seTxt.y=5;
+        var arrow:MovieClip=new ArrowFinger();
+        arrow.name="arrow";
+
+        arrow.x=character.width;
+        arrow.y=character.height/2;
+        arrow.scaleX=-1;
+        arrow.visible=false;
+        membermc.addChild(character);
+        membermc.addChild(seTxt);
+        membermc.addChild(arrow);
+        addChild(membermc);
+
+
+
+
+    }
+    /*
+     public function initBoss(info:Object,index:Number):void
+     {
+
+
+
+     }
+     */
+
+    public function updateStatus(type:String):void
+    {
+        status=type;
+    }
+    private var dizzy_round:Number=0;
+    public function updateDamage(effect:String,damage:Number):void
+    {
+        //DebugTrace.msg("Character.updateDamage id:"+name+"; effect="+ effect+"; status="+status);
+        DebugTrace.msg("Character.updateDamage power:"+JSON.stringify(power));
+        var current_se:Number=power.se;
+        var se:Number=current_se-damage;
+        var seText:TextField=membermc.getChildByName("se") as TextField;
+        var effectMC:MovieClip=membermc.getChildByName("effect") as MovieClip;
+        if(boss_model)
+        {
+            effect="";
+        }
+        if(se<=0)
+        {
+            se=0;
+
+            disabledEffect();
+
+            if(id.indexOf("player")!=-1)
+            {
+                try
+                {
+                    timer.stop();
+                }
+                catch(e:Error)
+                {
+                    //
+                }
+            }
+
+            removeSkillAni();
+            status="death";
+            processMember(status);
+
+            var collapses:Object=flox.getSaveData("collapses");
+            var num:Number=collapses[power.name];
+            num++;
+            collapses[power.name]=num;
+            flox.save("collapses",collapses);
+        }
+        else
+        {
+
+            switch(effect)
+            {
+                case "dizzy":
+                    round=1;
+                    if(id.indexOf("player")!=-1)
+                    {
+                        //effectMC.x=-150;
+                    }
+                    if(status!="dizzy")
+                    {
+
+                        status="dizzy";
+
+                        dissytap=new EffectTapView("dizzy_"+id);
+                        dissytap.name="dizzy_"+id;
+
+
+                        if(id.indexOf("player")!=-1)
+                        {
+                            dissytap.x=-dissytap.width;
+
+                        }
+                        addChild(dissytap);
+
+                    }
+                    //if
+                    if(id.indexOf("player")==-1)
+                    {
+                        //cpu
+
+                        var index:Number=0;
+                        dizzy_round=Math.floor((Math.random()*3))+4;
+                        //var time:Number=Math.floor((Math.random()*30))+20;
+                        DebugTrace.msg("Character.updateDamage dizzy_round="+dizzy_round);
+
+                        //timer=new Timer(1000,time);
+                        //timer.addEventListener(TimerEvent.TIMER_COMPLETE,onHealStatus);
+                        //timer.start();
+
+
+
+                    }
+                    else
+                    {
+                        //player
+
+
+                        var battleEvt:BattleEvent=BattleScene.battleEvt;
+                        battleEvt.listen=false;
+                        battleEvt.doDefinePlayerControler();
+                    }
+                    //if
+
+                    processMember("dizzy");
+                    break
+                case "scared":
+
+                    if(status!="scared")
+                    {
+                        round=1;
+                    }
+                    processMember("scared");
+                    power.speeded="false;"
+                    removeClickTap();
+                    break
+
+            }
+            //switch
+            if(effect!="")
+            {
+                status=effect;
+
+            }
+            else
+            {
+                //processMember("");
+            }
+            //if
+        }
+        //if
+
+        seText.text=String(se);
+        power.se=se;
+    }
+    private function onHealStatus(e:TimerEvent):void
+    {
+        //TweenMax.killTweensOf(dissytap);
+
+        removeClickTap();
+    }
+    public function removeClickTap():void
+    {
+        status="";
+
+        try
+        {
+            removeChild(dissytap);
+            timer.removeEventListener(TimerEvent.TIMER_COMPLETE,onHealStatus);
+
+        }
+        catch(e:Error)
+        {
+            DebugTrace.msg("Character.removeClickTap Error");
+        }
+        //try
+        if(id.indexOf("player")!=-1)
+        {
+            //player
+            var act:String="ready";
+            /*
+             var battleEvt:BattleEvent=BattleScene.battleEvt;
+             battleEvt.listen=true;
+             battleEvt.doDefinePlayerControler();
+             */
+        }
+        else
+        {
+            //cpu
+            act="ready";
+
+        }
+        //if
+        processMember(act);
+    }
+    public function updateRound():void
+    {
+        //DebugTrace.msg("Character.updateRound status:"+status);
+        if(id.indexOf("player")!=-1)
+        {
+            //player
+            switch(status)
+            {
+                case "dizzy":
+                    round++;
+                    if(round==4)
+                    {
+                        removeClickTap();
+                    }
+                    //if
+                    break
+                case "scared":
+                    round++;
+                    if(round==4)
+                    {
+                        status="";
+                        processMember("ready");
+                    }
+                    //if
+                    break
+
+            }
+            //switch
+        }
+        else
+        {
+            //cpu
+            switch(status)
+            {
+                case "dizzy":
+                    //timer.stop();
+                    round++;
+
+                    if(round>dizzy_round)
+                    {
+                        removeClickTap();
+                    }
+                    DebugTrace.msg("Character.updateRound round="+round+" ; dizzy_round="+dizzy_round);
+                    break
+                case "scared":
+                    round++;
+                    if(round==4)
+                    {
+                        status="";
+                        processMember("ready");
+                    }
+                    break
+
+            }
+            //switch
+
+        }
+        //if
+        if(power.speeded=="true")
+        {
+            rage_round++;
+            //DebugTrace.msg("Character.updateRound name="+power.name+" ; rage_round="+rage_round);
+            if(rage_round>2)
+            {
+                rage_round=0;
+                power.speeded="false";
+
+                var effect:MovieClip=membermc.getChildByName("effect") as MovieClip;
+                try
+                {
+                    effect.gotoAndStop(ready)
+                    effect.visible=false;
+                }
+                catch(e:Error)
+                {
+                    DebugTrace.msg("Character.updateRound effect RDY Null");
+                }
+                status="";
+                processMember("");
+            }
+            //if
+        }
+        //if
+        //if
+        //effShield=getChildByName("shield_"+name) as MovieClip;
+        try
+        {
+            //DebugTrace.msg("Character.updateRound remove effShield name="+power.name+" , effShield="+effShield.name);
+
+            removeChild(effShield);
+            effShield=null;
+        }
+        catch(e:Error)
+        {
+            DebugTrace.msg("Character.updateRound remove effShield Error");
+        }
+        //try
+
+        power.shielded="false";
+        power.target="";
+        power.targetlist=new Array();
+        power.label="";
+        power.skillID="";
+        power.jewel="";
+        power.speed=0;
+        power.power=0;
+        power.enemy=0;
+        power.area=0;
+        //DebugTrace.msg("Character.updateRound power:"+JSON.stringify(power));
+    }
+    public function startFight():void
+    {
+
+        if(status=="dizzy")
+        {
+
+            //timer.start();
+
+        }
+        //if
+
+    }
+    private function seTextfield(str:String):TextField
+    {
+        var format:TextFormat=new TextFormat();
+        format.color=0xFFFFFF;
+        format.bold=true;
+        format.size=14;
+        format.font="SimNeogreyMedium";
+        var txt:TextField=new TextField();
+        txt.embedFonts=true;
+        txt.name="se";
+        txt.defaultTextFormat=format;
+        txt.autoSize=TextFieldAutoSize.LEFT;
+        txt.y=20;
+        txt.text=str;
+
+        return txt
+    }
+    protected function processAction():void
+    {
+        var act:String="";
+        boss_model=checkBossModel();
+        if(status!="")
+        {
+            if(status=="scared" && power.speeded=="true")
+            {
+                status="";
+            }
+            //if
+            act=status;
+
+            if(boss_model)
+            {
+                status="";
+                act="ready";
+            }
+        }
+        else
+        {
+
+            act="ready";
+
+        }
+        //if
+        //DebugTrace.msg("Character.processAction  act="+ act);
+        if(power.se>0)
+            processMember(act);
+
+    }
+
+    protected function processMember(act:String=null):void
+    {
+        //play_power=BattleScene.play_power;
+        //status="scared";
+        DebugTrace.msg("Character.processMember "+name+" ,status="+status+" , act="+ act);
+
+        boss_model=checkBossModel();
+        var avatar:Object=flox.getSaveData("avatar");
+
+        var _part:String;
+        var effect:MovieClip=membermc.getChildByName("effect") as MovieClip;
+
+        var eleLabel:Array=["A","E","F","W","N","S"];
+        character.visible=false;
+        if(skillAni)
+            skillAni.visible=false;
+
+
+        character.alpha=1;
+        updatelColorEffect(character,avatar);
+        var actModel:MovieClip;
+        var actlabel:String="";
+        actlabel=act;
+        if(power.label!="")
+        {
+            //skill ready
+            var index:Number=eleLabel.indexOf(act.charAt(0));
+
+            if(index!=-1)
+            {
+                //skill ready
+                if(!boss_model)
+                {
+                    var swfloader:SWFLoader = LoaderMax.getLoader(name);
+                    skillAni=swfloader.getSWFChild(_gender) as MovieClip;
+                }
+
+                try
+                {
+
+                    skillAni.visible=true;
+                    actModel=skillAni;
+
+                }
+                catch(e:Error)
+                {
+                    DebugTrace.msg("Character.processMember None skillAni");
+                    //actModel=character;
+                }
+                //try
+                if(status=="scared")
+                {
+
+                    character.visible=true;
+                    character.alpha=1;
+
+                    try
+                    {
+                        actModel.visible=true;
+                        actModel.alpha=0;
+                    }
+                    catch(e:Error)
+                    {
+                        DebugTrace.msg("Character.processMember Scared  None skillAni");
+                    }
+                    //try
+                }
+                //if
+            }
+            else
+            {
+
+                if(boss_model)
+                {
+                    //boss
+                    character.visible=true;
+                    actModel=character;
+                    actlabel=Character[act];
+                    if(!actlabel)
+                    {
+                        //except static action
+                        actlabel=act;
+                    }
+                    //if
+                }
                 else
                 {
-                    characters=["helm"];
-                    character=new Boy();
-                    ch_name="badguy";
+                    // not boss ,normal action
+                    character.visible=true;
+                    actModel=character;
+                    actlabel=Character[act];
+
                 }
+                //if
+            }
+            //if
+
+        }
+        else
+        {
+            character.visible=true;
+            actModel=character;
+            actlabel=Character[act];
+        }
+        //if
+
+        //try
+        //{
+        //if
+        try
+        {
+            effect.x=0;
+            //effect.visible=true;
+        }
+        catch(e:Error)
+        {
+            DebugTrace.msg("Character.processMember effect Null");
+        }
+
+        if(status!=death)
+        {
+            if(actModel)
+                actModel.gotoAndStop(1);
+            if(effect)
+                effect.gotoAndStop(1);
+        }
 
 
-			}
-			//if
-			character.name=id;
-			//-------------------------------------------------------
-			
-			var effect:MovieClip=new Effect();
-			effect.name="effect";
-			membermc.addChild(effect);
-			
-			var se:String=String(cpu_teams_saved[id].se)
-			var seTxt:TextField=seTextfield(se);
-			seTxt.x=Math.floor(character.width/2-seTxt.width/2);
-			seTxt.y=5;
-			var arrow:MovieClip=new ArrowFinger();
-			arrow.name="arrow";
-			
-			arrow.x=character.width;
-			arrow.y=character.height/2;
-			arrow.scaleX=-1;
-			arrow.visible=false;
-			membermc.addChild(character);
-			membermc.addChild(seTxt);
-			membermc.addChild(arrow);
-			addChild(membermc);
-			
-			
-			
-			
-		}
-		/*
-		public function initBoss(info:Object,index:Number):void
-		{
-		
-		
-		
-		}
-		*/
-		
-		public function updateStatus(type:String):void
-		{
-			status=type;
-		}
-		private var dizzy_round:Number=0;
-		public function updateDamage(effect:String,damage:Number):void
-		{
-			//DebugTrace.msg("Character.updateDamage id:"+name+"; effect="+ effect+"; status="+status);
-			DebugTrace.msg("Character.updateDamage power:"+JSON.stringify(power));
-			var current_se:Number=power.se;
-			var se:Number=current_se-damage;
-			var seText:TextField=membermc.getChildByName("se") as TextField;
-			var effectMC:MovieClip=membermc.getChildByName("effect") as MovieClip;
-			if(boss_model)
-			{
-				effect="";
-			}
-			if(se<=0)
-			{
-				se=0;
-				
-				disabledEffect();
-				
-				if(id.indexOf("player")!=-1)
-				{
-					try
-					{
-						timer.stop();
-					}
-					catch(e:Error)
-					{
-						//
-					}
-				}
-
-                seText.visible=false;
-				removeSkillAni();
-				status="death";
-				processMember(status);
-				
-				var collapses:Object=flox.getSaveData("collapses");
-				var num:Number=collapses[power.name];
-				num++;
-				collapses[power.name]=num;
-				flox.save("collapses",collapses);
-			}
-			else
-			{
-				
-				switch(effect)
-				{
-					case "dizzy":	
-						round=1;
-						if(id.indexOf("player")!=-1)
-						{
-							//effectMC.x=-150;
-						}
-						if(status!="dizzy")
-						{
-							
-							status="dizzy";
-							
-							dissytap=new EffectTapView("dizzy_"+id);	
-							dissytap.name="dizzy_"+id;
-							
-							
-							if(id.indexOf("player")!=-1)
-							{
-								dissytap.x=-dissytap.width;
-								
-							}
-							addChild(dissytap);
-							
-						}
-						//if	
-						if(id.indexOf("player")==-1)
-						{
-							//cpu
-							
-							var index:Number=0;
-							dizzy_round=Math.floor((Math.random()*3))+4;
-							//var time:Number=Math.floor((Math.random()*30))+20;
-							DebugTrace.msg("Character.updateDamage dizzy_round="+dizzy_round);
-							
-							//timer=new Timer(1000,time);
-							//timer.addEventListener(TimerEvent.TIMER_COMPLETE,onHealStatus);
-							//timer.start();
-							
-							
-							
-						}
-						else
-						{
-							//player
-							
-							
-							var battleEvt:BattleEvent=BattleScene.battleEvt;
-							battleEvt.listen=false;
-							battleEvt.doDefinePlayerControler();
-						}
-						//if
-						
-						processMember("dizzy");
-						break
-					case "scared":
-						
-						if(status!="scared")
-						{
-							round=1;
-						}
-						processMember("scared");
-						power.speeded="false;"
-						removeClickTap();
-						break
-					
-				}
-				//switch
-				if(effect!="")
-				{
-					status=effect;
-					
-				}
-				else
-				{
-					//processMember("");
-				}
-				//if
-			}
-			//if
-			
-			seText.text=String(se);
-			power.se=se;
-		}
-		private function onHealStatus(e:TimerEvent):void
-		{
-			//TweenMax.killTweensOf(dissytap);
-			
-			removeClickTap();
-		}
-		public function removeClickTap():void
-		{
-			status="";
-			
-			try
-			{
-				removeChild(dissytap);
-				timer.removeEventListener(TimerEvent.TIMER_COMPLETE,onHealStatus);
-				
-			}
-			catch(e:Error)
-			{
-				DebugTrace.msg("Character.removeClickTap Error");
-			}
-			//try
-			if(id.indexOf("player")!=-1)
-			{
-				//player
-				var act:String="ready";
-				/*
-				var battleEvt:BattleEvent=BattleScene.battleEvt;
-				battleEvt.listen=true;
-				battleEvt.doDefinePlayerControler();
-				*/
-			}
-			else
-			{
-				//cpu
-				act="ready";
-				
-			}
-			//if
-			processMember(act);
-		}
-		public function updateRound():void
-		{
-			//DebugTrace.msg("Character.updateRound status:"+status);
-			if(id.indexOf("player")!=-1)
-			{
-				//player
-				switch(status)
-				{
-					case "dizzy":
-						round++;
-						if(round==4)
-						{
-							removeClickTap();
-						}
-						//if
-						break
-					case "scared":
-						round++;
-						if(round==4)
-						{
-							status="";
-							processMember("ready");
-						}
-						//if
-						break
-					
-				}
-				//switch
-			}
-			else
-			{
-				//cpu
-				switch(status)
-				{
-					case "dizzy":
-						//timer.stop();
-						round++;
-						
-						if(round>dizzy_round)
-						{
-							removeClickTap();
-						}
-						DebugTrace.msg("Character.updateRound round="+round+" ; dizzy_round="+dizzy_round);
-						break
-					case "scared":
-						round++;
-						if(round==4)
-						{
-							status="";
-							processMember("ready");
-						}
-						break
-					
-				}
-				//switch
-				
-			}
-			//if
-			if(power.speeded=="true")
-			{
-				rage_round++;
-				//DebugTrace.msg("Character.updateRound name="+power.name+" ; rage_round="+rage_round);
-				if(rage_round>2)
-				{	
-					rage_round=0;
-					power.speeded="false";
-					
-					var effect:MovieClip=membermc.getChildByName("effect") as MovieClip;
-					try
-					{
-						effect.gotoAndStop(ready)
-						effect.visible=false;
-					}
-					catch(e:Error)
-					{
-						DebugTrace.msg("Character.updateRound effect RDY Null");
-					}
-					status="";
-					processMember("");
-				}
-				//if			
-			}
-			//if
-			//if
-			//effShield=getChildByName("shield_"+name) as MovieClip;
-			try
-			{
-				//DebugTrace.msg("Character.updateRound remove effShield name="+power.name+" , effShield="+effShield.name);
-				
-				removeChild(effShield);
-				effShield=null;
-			}
-			catch(e:Error)
-			{
-				DebugTrace.msg("Character.updateRound remove effShield Error");
-			}
-			//try
-			
-			power.shielded="false";
-			power.target="";
-			power.targetlist=new Array();
-			power.label="";
-			power.skillID="";
-			power.jewel="";
-			power.speed=0;
-			power.power=0;
-			power.enemy=0;
-			power.area=0;
-			//DebugTrace.msg("Character.updateRound power:"+JSON.stringify(power));
-		}
-		public function startFight():void
-		{
-			
-			if(status=="dizzy")
-			{
-				
-				//timer.start();
-				
-			}
-			//if
-			
-		}
-		private function seTextfield(str:String):TextField
-		{
-			var format:TextFormat=new TextFormat();
-			format.color=0xFFFFFF;
-			format.bold=true;
-			format.size=14;
-			format.font="SimNeogreyMedium";
-			var txt:TextField=new TextField();
-			txt.embedFonts=true;
-			txt.name="se";
-			txt.defaultTextFormat=format;
-			txt.autoSize=TextFieldAutoSize.LEFT;
-			txt.y=20;
-			txt.text=str;
-			
-			return txt
-		}
-		protected function processAction():void
-		{
-			var act:String="";
-            boss_model=checkBossModel();
-			if(status!="")
-			{ 
-				if(status=="scared" && power.speeded=="true")
-				{
-					status="";
-				}
-				//if
-				act=status;
-				
-				if(boss_model)
-				{
-					status="";
-					act="ready";
-				}
-			}
-			else
-			{
-				
-				act="ready";
-				
-			}
-			//if
-			//DebugTrace.msg("Character.processAction  act="+ act);
-			if(power.se>0)
-				processMember(act);
-			
-		}
-		
-		protected function processMember(act:String=null):void
-		{
-			//play_power=BattleScene.play_power;
-			//status="scared";
-			DebugTrace.msg("Character.processMember "+name+" ,status="+status+" , act="+ act);
-			
-			boss_model=checkBossModel();
-			var avatar:Object=flox.getSaveData("avatar");
-			
-			var _part:String;
-			var effect:MovieClip=membermc.getChildByName("effect") as MovieClip;
-			
-			var eleLabel:Array=["A","E","F","W","N","S"];
-			character.visible=false;
-			if(skillAni)
-				skillAni.visible=false;
-			
-			
-			character.alpha=1;
-            updatelColorEffect(character,avatar);
-			var actModel:MovieClip;
-			var actlabel:String="";
-			actlabel=act;
-			if(power.label)
-			{
-				
-				var index:Number=eleLabel.indexOf(act.charAt(0));
-				
-				if(index!=-1)
-				{
-					//skill ready
-					if(!boss_model)
-					{
-						var swfloader:SWFLoader = LoaderMax.getLoader(name);
-						skillAni=swfloader.getSWFChild(_gender) as MovieClip;
-					}
-					
-					try
-					{
-						
-						skillAni.visible=true;
-						actModel=skillAni;
-						
-					}
-					catch(e:Error)
-					{
-						DebugTrace.msg("Character.processMember None skillAni");
-						//actModel=character;
-					}
-					//try
-					if(status=="scared")
-					{
-						
-						character.visible=true;
-						character.alpha=1;
-						
-						try
-						{
-							actModel.visible=true;
-							actModel.alpha=0;
-						}
-						catch(e:Error)
-						{
-							DebugTrace.msg("Character.processMember Scared  None skillAni");
-						}
-						//try
-					}
-					//if		
-				}
-				else
-				{
-					
-					if(boss_model)
-					{
-						//boss
-						character.visible=true;
-						actModel=character;
-						actlabel=Character[act];
-						if(!actlabel)
-						{
-							//except static action
-							actlabel=act;
-						}
-						//if
-					}
-					else
-					{
-						// not boss ,normal action 
-						character.visible=true;
-						actModel=character;
-						actlabel=Character[act];
-						
-					}
-					//if
-				}
-				//if
-				
-			}
-			else
-			{
-				character.visible=true;
-				actModel=character;
-				actlabel=Character[act];
-			}
-			//if
-			
-			//try
-			//{
-			//if
-			try
-			{
-				effect.x=0;
-				//effect.visible=true;
-			}
-			catch(e:Error)
-			{
-				DebugTrace.msg("Character.processMember effect Null");
-			}
-			
-			if(status!=death)
-			{
-				if(actModel)
-					actModel.gotoAndStop(1);
-				if(effect)
-					effect.gotoAndStop(1);
-			}
-			
-
-			if(act=="ready_to_attack")
-			{
-				actModel.gotoAndStop(Character.ready);
-				effect.gotoAndStop(Character.ready);
-				DebugTrace.msg(part_pack.toString())
-				for(var j:uint=0;j<part_pack.length;j++)
-				{
-					if(_part=="ceil")
-					{
-						_part="ciel";
-					}
-					//if
-					actModel.body.act[part_pack[j]].play();
-				}
-				//for
-				
-			}	
-			else 
-			{
-				
-				if(actlabel!=heal)
-				{
-					//heal(label:HEAL) belong effects file
-					if(!actlabel)
-					{
-						//except static action
-						actlabel=act;
-					}
-					//if
-					try
-					{
-						
-						effect.visible=false;
-					}
-					catch(e:Error)
-					{
-						DebugTrace.msg("Character.processMember effect Null");
-					}
-					try
-					{
-						
-						DebugTrace.msg("Character.processMember actModel actlabel="+actlabel);
-						
-						actModel.gotoAndStop(actlabel);
-						
-					}
-					catch(e:Error)
-					{
-						DebugTrace.msg("Character.processMember actModel Error");
-					}
-					//try
-				}
-				//if
-				/*if(actlabel.indexOf("RDY")==-1)
-				{
-				actModel.body.addEventListener(Event.ENTER_FRAME,onPlayComplete);
-				}
-				function onPlayComplete(e:Event):void
-				{
-				if(e.target.currentFrame==e.target.totalFrames)
-				{
-				actModel.body.removeEventListener(Event.ENTER_FRAME,onPlayComplete)
-				actModel.body.stop();
-				}
-				//if
-				}*/
-				if(status=="scared")
-				{
-					
-					effect.visible=true;
-					if(id.indexOf("player")!=-1)
-					{
-						effect.x=-150;
-					}
-					effect.gotoAndStop(scared);
-				}
-				else if(status=="dizzy")
-				{
-					effect.visible=true;
-					if(id.indexOf("player")!=-1)
-					{
-						effect.x=-150;
-					}
-					effect.gotoAndStop(dizzy);
-				}
-				else if(status=="rage")
-				{
-					effect.visible=true;
-					if(id.indexOf("player")!=-1)
-					{
-						effect.x=-150;
-					}
-					effect.gotoAndStop(rage);
-				}
-				else
-				{
-					
-					if(character.visible && actlabel!="BattleCry" && actlabel!=hit && actlabel!=death)
-					{
-						if(id.indexOf("player")!=-1 && actlabel==heal)
-						{
-							effect.x=-150;
-						}
-						//if
-						
-						//effect.gotoAndStop(actlabel);
-						
-
-					}
-					
-					//if
-					
-				}
-				//if
-			}
-			//if
-			DebugTrace.msg("Character.processMember part_pack="+part_pack);
-			DebugTrace.msg("Character.processMember boss_model="+boss_model);
-			if(!boss_model)
-			{
-				for(var k:uint=0;k<part_pack.length;k++)
-				{
-					
-					_part=part_pack[k];
-					
-					try
-					{
-						actModel.body.act[_part].visible=false;
-					}
-					catch(e:Error)
-					{
-						DebugTrace.msg("Character.processMember actModel.body.act Null");
-					}
-				}
-				//for	
-			}
-			
-			//if
-
-			if(ch_name=="ceil")
-			{
-				ch_name="ciel";
-			}
-			//if
-			DebugTrace.msg("Character.processMember ch_name="+ch_name);
-			DebugTrace.msg("Character.processMember actlabel="+actlabel);
-			if(id.indexOf("player")!=-1)
-			{
-				//playerb:maskb,playera:maskb
-				//var girls:String="sirena,tomoru,dea,ceil";
-				
-				
-				if(ch_name=="player")
-				{
-					
-					if(actModel)
-					{
-						actModel.body.act.playera.visible=true;
-						actModel.body.act.playerb.visible=true;
-						actModel.body.act.playera.play();
-						actModel.body.act.playerb.play();
-					}
-				}
-				else
-				{
-					if(actModel)
-					{
-						actModel.body.act[ch_name].visible=true;
-						actModel.body.act[ch_name].play();
-					}
-				}
-				//if
-				
-				
-			}
-			else
-			{
-				//cpu
-				//DebugTrace.msg("Character.processMember cpu ch_name="+ch_name);
-				if(ch_name=="badguy")
-				{
-					if(actModel)
-					{
-						actModel.body.act.helmb.visible=true;
-						actModel.body.act.helma.visible=true;
-					}
-					
-				}
-				else
-				{
-					
-					if(actModel)
-					{
-						
-						if(!boss_model)
-						{
-							try
-							{
-								actModel.body.act[ch_name].visible=true;
-							}
-							catch(e:Error)
-							{
-                                DebugTrace.msg("Character.processMember actModel.body.act Null");
-							}
-
-                            if(actlabel=="S_RDY")
-                            {
-                                updatelColorEffect(actModel,avatar);
-                            }
-
-						}
-						else
-						{
-							//boss
-							actModel.gotoAndStop(actlabel);
-							
-						}
-						//if
-						
-					}
-					//if
-					
-				}
-				//if
-			}
-			//if
-			var arrow:DisplayObject=membermc.getChildByName("arrow");
-			arrow.visible=false;
-			
-			
-			if(!boss_model)
-			{
-				if(actModel && power.skillID!="s0" && power.skillID!="s1")
+        if(act=="ready_to_attack")
+        {
+            actModel.gotoAndStop(Character.ready);
+            effect.gotoAndStop(Character.ready);
+            DebugTrace.msg(part_pack.toString())
+            for(var j:uint=0;j<part_pack.length;j++)
+            {
+                if(_part=="ceil")
                 {
-                    updatelColorEffect(actModel,avatar);
+                    _part="ciel";
+                }
+                //if
+                actModel.body.act[part_pack[j]].play();
+            }
+            //for
+
+        }
+        else
+        {
+
+            if(actlabel!=heal)
+            {
+                //heal(label:HEAL) belong effects file
+                if(!actlabel)
+                {
+                    //except static action
+                    actlabel=act;
+                }
+                //if
+                try
+                {
+
+                    effect.visible=false;
+                }
+                catch(e:Error)
+                {
+                    DebugTrace.msg("Character.processMember effect Null");
+                }
+                try
+                {
+
+                    DebugTrace.msg("Character.processMember actModel actlabel="+actlabel);
+
+                    actModel.gotoAndStop(actlabel);
+
+                }
+                catch(e:Error)
+                {
+                    DebugTrace.msg("Character.processMember actModel Error");
+                }
+                //try
+            }
+            //if
+
+            if(status=="scared")
+            {
+
+                effect.visible=true;
+                if(id.indexOf("player")!=-1)
+                {
+                    effect.x=-150;
+                }
+                effect.gotoAndStop(scared);
+            }
+            else if(status=="dizzy")
+            {
+                effect.visible=true;
+                if(id.indexOf("player")!=-1)
+                {
+                    effect.x=-150;
+                }
+                effect.gotoAndStop(dizzy);
+            }
+            else if(status=="rage")
+            {
+                effect.visible=true;
+                if(id.indexOf("player")!=-1)
+                {
+                    effect.x=-150;
+                }
+                effect.gotoAndStop(rage);
+            }
+            else
+            {
+
+                if(character.visible && actlabel!="BattleCry" && actlabel!=hit && actlabel!=death)
+                {
+                    if(id.indexOf("player")!=-1 && actlabel==heal)
+                    {
+                        effect.x=-150;
+                    }
+                    //if
+
+                    //effect.gotoAndStop(actlabel);
+
+
                 }
 
+                //if
 
-			}
-			
-			switch(actlabel)
-			{
-				case knockback:
-					actComplete("CompleteKnockback");
-					break
-				case charge:
-					//BootComplete
-					actComplete("BootComplete");
-					break
-			}
-			//switch
-			
-			/*catch(e:Error)
-			{
-			DebugTrace.msg("Character.processMember Error");
-			}
-			//try*/
-		}
-		private function updatelColorEffect(actModel:MovieClip,avatar:Object):void
-		{
-            DebugTrace.msg("Character.updatelColorEffect "+name);
-			
-			if(name.indexOf("player")!=-1)
-			{
-				
-				//var skinCT:ColorTransform = actModel.body.act.skin.transform.colorTransform;
-				//skinCT.color = avatar.skincolor;
-				//actModel.body.act.skin.transform.colorTransform = skinCT;
-				
-				//var skinColor:Color = new Color();
-				//skinColor.setTint(avatar.skincolor, 0.5);
-				//actModel.body.act.skin.transform.colorTransform = skinColor;
-				
-				TweenMax.to(actModel.body.act.skin,0.1, {colorTransform:{tint:avatar.skincolor, tintAmount:0.5}});
-				//var acc_color:Number=0x1397C0;
-				//TweenMax.to(actModel.body.act.acc,0.2, {colorTransform:{tint:acc_color, tintAmount:0.5}});
-				
-				//var accColor:Color = new Color();
-				//accColor.setTint(acc_color, 0.5);
-				//actModel.body.act.acc.transform.colorTransform = accColor;
-				
-				
-				var accCT:ColorTransform = actModel.body.act.acc.transform.colorTransform;
-				accCT.color = 0x1397C0;
-				actModel.body.act.acc.transform.colorTransform = accCT;
-				
-			}
-			else
-			{
-				
-				
-				//trace("boss_model =",boss_model)
-				var colorFrom:Object={
-					"vdk":
-					{
-						"acc":0xc51111,
-						"body":0xff5c00,
-						"skin":null,
-						"member":[0x333333,0xff5c00]
-					},
-                    "t0":
+            }
+            //if
+        }
+        //if
+        DebugTrace.msg("Character.processMember part_pack="+part_pack);
+        DebugTrace.msg("Character.processMember boss_model="+boss_model);
+        if(!boss_model)
+        {
+            for(var k:uint=0;k<part_pack.length;k++)
+            {
+
+                _part=part_pack[k];
+
+                try
+                {
+                    actModel.body.act[_part].visible=false;
+                }
+                catch(e:Error)
+                {
+                    DebugTrace.msg("Character.processMember actModel.body.act Null");
+                }
+            }
+            //for
+        }
+
+        //if
+
+        if(ch_name=="ceil")
+        {
+            ch_name="ciel";
+        }
+        //if
+        DebugTrace.msg("Character.processMember ch_name="+ch_name);
+        DebugTrace.msg("Character.processMember actlabel="+actlabel);
+        if(id.indexOf("player")!=-1)
+        {
+            //playerb:maskb,playera:maskb
+            //var girls:String="sirena,tomoru,dea,ceil";
+
+
+            if(ch_name=="player")
+            {
+
+                if(actModel)
+                {
+                    actModel.body.act.playera.visible=true;
+                    actModel.body.act.playerb.visible=true;
+                    actModel.body.act.playera.play();
+                    actModel.body.act.playerb.play();
+                }
+            }
+            else
+            {
+                if(actModel)
+                {
+                    actModel.body.act[ch_name].visible=true;
+                    actModel.body.act[ch_name].play();
+                }
+            }
+            //if
+
+
+        }
+        else
+        {
+            //cpu
+            //DebugTrace.msg("Character.processMember cpu ch_name="+ch_name);
+            if(ch_name=="badguy")
+            {
+                if(actModel)
+                {
+                    actModel.body.act.helmb.visible=true;
+                    actModel.body.act.helma.visible=true;
+                }
+
+            }
+            else
+            {
+
+                if(actModel)
+                {
+
+                    if(!boss_model)
                     {
-                        "acc":0xFF0000,
-                        "acc_tint":0.5,
-                        "body":0xFFFFFF,
-                        "body_tint":0.9,
-                        "skin":null,
-                        "member":[0xFFFFFF,0xFF0000],
-                        "member_tint":[0.9,0.5]
-                    },
-					"t2":
-					{
-						"acc":0x539FCF,
-                        "acc_tint":0.8,
-						"body":0xDF67C5,
-                        "body_tint":0.8,
-						"skin":null,
-						"member":[0xD94886,0xDF67C5],
-                        "member_tint":[0.8,0.8]
-					},
-                    "t4":
-                    {
-                        "acc":null,
-                        "acc_tint":0.5,
-                        "body":null,
-                        "body_tint":0.9,
-                        "skin":null,
-                        "member":[null,null],
-                        "member_tint":[0.9,0.5]
+                        try
+                        {
+                            actModel.body.act[ch_name].visible=true;
+                        }
+                        catch(e:Error)
+                        {
+                            DebugTrace.msg("Character.processMember actModel.body.act Null");
+                        }
                     }
+                    else
+                    {
+                        //boss
+                        actModel.gotoAndStop(actlabel);
+                    }
+                }
+            }
+        }
+        //if
+        var arrow:DisplayObject=membermc.getChildByName("arrow");
+        arrow.visible=false;
 
-				}
-				var team:String=power.id.split("_")[0];
-				var colotPkg:Object=colorFrom[team];
-				
-				accCT = actModel.body.act.acc.transform.colorTransform;
-				//var bodyCT:ColorTransform = actModel.body.act.body.transform.colorTransform;
-				//TweenMax.to(actModel.body.act.skin,0.2, {colorTransform:{tint:0xffb47f, tintAmount:0.7}});
-				if(ch_name=="badguy")
-				{
 
-					var helmACT:ColorTransform = actModel.body.act.helma.transform.colorTransform;
-					//var helmBCT:ColorTransform = actModel.body.act.helmb.transform.colorTransform;
-					//helmACT.color=colotPkg.member[0];
-					//helmBCT.color=colotPkg.member[1];
-					//actModel.body.act.helma.transform.colorTransform=helmACT;
-					//actModel.body.act.helmb.transform.colorTransform=helmBCT;
-                    if(colotPkg.member[0])
-					TweenMax.to(actModel.body.act.helma,0, {colorTransform:{tint:colotPkg.member[0], tintAmount:colotPkg.member_tint[0]}});
-					if(colotPkg.member[1])
-                    TweenMax.to(actModel.body.act.helmb,0, {colorTransform:{tint:colotPkg.member[1], tintAmount:colotPkg.member_tint[1]}});
-				}
-				//if
+        if(!boss_model)
+        {
+            if(actModel && power.skillID!="s0" && power.skillID!="s1")
+            {
+                updatelColorEffect(actModel,avatar);
+            }
+            if(actlabel=="S_RDY")
+            {
+                updatelColorEffect(actModel,avatar);
+            }
 
-				//accCT.color=colotPkg.acc;
-				//actModel.body.act.acc.transform.colorTransform=accCT;
-				//actModel.body.act.body.transform.colorTransform=bodyCT;
-                if(colotPkg.acc)
-				TweenMax.to(actModel.body.act.acc,0, {colorTransform:{tint:colotPkg.acc, tintAmount:colotPkg.acc_tint}});
-				if(colotPkg.body)
-                TweenMax.to(actModel.body.act.body,0, {colorTransform:{tint:colotPkg.body, tintAmount:colotPkg.body_tint}});
-				
-			}
-			//if
-			
-			
-		}
-		private function onRageComplete(e:Event):void
-		{
-			if(e.target.currentFrame==e.target.totalFrames)
-			{
-				DebugTrace.msg("Character.onRageComplete");
-				e.target.removeEventListener(Event.ENTER_FRAME,onRageComplete);
-				processMember("stand");
-				
-			}
-			//if
-		}
-		protected function enabledMemberHeal():void
-		{
-			DebugTrace.msg("Character.enabledMemberHeal");
-			ett=new HealTargetTap();	
-			ett.buttonMode=true;
-			ett.mouseChildren=false;
-			ett.name=id;
-			ett.alpha=0;
-			if(id.indexOf("player")!=-1)
-			{
-				ett.x=-ett.width;
-			}
-			//if
-			ett.addEventListener(MouseEvent.CLICK,doClickHealTarget);
-			ett.addEventListener(MouseEvent.MOUSE_OVER,onOverPlayer);
-			ett.addEventListener(MouseEvent.MOUSE_OUT,onOutPlayer);
-			addChild(ett);
-			
-			showHealTint();
-			
-		}
-		protected function showHealTint():void
-		{
-			
-			if(character.visible)
-			{
-				
-				heal_tint=character;
-			}
-			else
-			{
-				heal_tint=skillAni;
-			}
-			
-			TweenMax.to(this,0.25,{colorTransform:{tint:0x3FCED6, tintAmount:0.9}});
-			TweenMax.to(this,0.25,{delay:0.25,removeTint:true,onComplete:onCompleteTint});
-			function onCompleteTint():void
-			{
-				TweenMax.killTweensOf(this);
-				showHealTint();
-			}
-			
-		}
-		protected function removeMemberHeal():void
-		{
-			
-			arrow.visible=false;
-			
-			if(ett)
-			{
-				ett.removeEventListener(MouseEvent.CLICK,doClickHealTarget);
-				ett.removeEventListener(MouseEvent.MOUSE_OVER,onOverPlayer);
-				ett.removeEventListener(MouseEvent.MOUSE_OUT,onOutPlayer);
-				removeChild(ett);
-				ett=null;
-				
-			}
-			/*
-			try
-			{	
-			removeChild(ett);
-			ett=null;
-			}
-			catch(e:Error)
-			{
-			DebugTrace.msg("Character.removeMemberHeal NULL");
-			}
-			*/
-			
-		}
-		private function doClickHealTarget(e:MouseEvent):void
-		{
-			DebugTrace.msg("Character.doClickHealTarget target:"+e.target.name);
-			
-			var currentPower:Object=DataContainer.currentPower;
-			
-			DebugTrace.msg("Character.doClickHealTarget currentPower:"+JSON.stringify(currentPower));
-			
-			var battleEvt:BattleEvent=BattleScene.battleEvt;
-			if(currentPower.skillID=="n2")
-			{
-				battleEvt.id=null;
-				battleEvt.healarea=heal_target;
-			}
-			else
-			{
-				battleEvt.id=e.target.name;
-				
-			}
-			//if
-			battleEvt.usedHealHandle();
-			
-			command.playSound("BattleConfirm");
-			
-		}
-		
-		protected function enabledAreaMemberHeal():void
-		{
-			arrow.visible=true;
-		}
-		protected function disabledAreaMemberHeal():void
-		{
-			arrow.visible=false;
-		}
-		protected function actComplete(from:String):void
-		{
-			_from=from;
-			DebugTrace.msg("Character.actComplete from:"+_from);
-			
-			character.body.act.addEventListener(Event.ENTER_FRAME,onActComplete);
-			
-		}
-		protected function onActComplete(e:Event):void
-		{
-			
-			if(e.target.currentFrame==e.target.totalFrames)
-			{
-				
-				DebugTrace.msg("Character.onActComplete _from="+_from +", name="+name);
-				e.target.removeEventListener(Event.ENTER_FRAME,onActComplete);
-				var eff:String="";
-				
-				switch(_from)
-				{
-					case "Assist":
-					case "CombineSkill":
-					case "Mind Control":	 
-						processAction();
-						break
-					case "Rage":
-						status="rage";
-						//processAction();
-						processMember(status);
-						break
-					case "CompleteKnockback":
-					case "BootComplete":
-						DebugTrace.msg("Character.onActComplete status="+status);
-						if(power.se>0)
-						{
-							if(status!="" && status!="heal")
-							{
-								
-								processMember(status);
-							}
-							else
-							{
-								//normal status
-								if(power.target!="")
-								{
-									var act:String=power.label;
-									DebugTrace.msg("Character.onActComplete act="+act);
-									if(!boss_model && act!=null)
-									{
-										act=act.charAt(0)+"_RDY";	
-										//setupSkillAni();
-										reasetSkillAni();
-									}
-									else
-									{
-										if(status!="")
-										{
-											processMember(ready);
-										}
-										else
-										{
-											processMember(status);
-										}
-									}	
-									//if
-								}
-								else
-								{
-									
-									processMember(ready);
-								}
-								//if
-							}
-							//if
-						}
-						break
-				}
-				//switch
-			}
-			//if
-		}
-		private var ele:String;
-		private var skillSWf:String;
-		private var sp:String;
-		//private var gender:String="";
-		private var _gender:String="";
-		private function initGender():void
-		{
-			
-			if(ch_name=="player")
-			{
-				//player
-				var acatar:Object=flox.getSaveData("avatar");
-				if(acatar.gender=="Male")
-				{
-					part_pack=bpart_pack;
-					gender="B";
-					_gender="Boy";
-				}
-				else
-				{
-					part_pack=gpart_pack
-					gender="G";
-					_gender="Girl";
-				}
-				//if
-			}
-			else
-			{
-				//other character
-				if(bpart_pack.indexOf(ch_name)!=-1 || ch_name=="badguy")
-				{
-					part_pack=bpart_pack;
-					gender="B";
-					_gender="Boy";
-				}
-					
-				else
-				{
-					part_pack=gpart_pack
-					gender="G";
-					_gender="Girl";
-				}
-				//if
-			}
-			//if
-			
-			
-		}
-		protected function setupSkillAni():void
-		{
-			
-			if(!boss_model)
-			{
-				removeSkillAni();
-				ele=power.ele.charAt(0);
-				sp="";
-				if(power.label.indexOf("SP")!=-1)
-				{
-					sp="_SP";
-				}
-				//if
-				DebugTrace.msg("Character.setupSkillAni ch_name="+ch_name);
-				initGender();
-				if(ele!="s")
-				{
-					skillSWf=gender+ele+sp;
-				}
-				else
-				{
-					//speciale super skill
-					skillSWf=gender+power.skillID;
-					
-				}
 
-				DebugTrace.msg("Character.setupSkillAni skillSWf="+skillSWf+", name="+name);
-				var loaderReq:LoaderRequest=new LoaderRequest();
-				loaderReq.setLoaderQueue(name,"../swf/skills/"+skillSWf+".swf",membermc,onSkillComplete);
-			}
-			else
-			{
-				
-				
-				
-			}
-			
-		}
-		private function onSkillComplete(e:LoaderEvent):void
-		{
-			DebugTrace.msg("Character.onSkillComplete sp="+sp+" ; skillSWf="+skillSWf);
-			var content:ContentDisplay=LoaderMax.getContent(name);
-			
-			var swfloader:SWFLoader = LoaderMax.getLoader(name);
-			skillAni=swfloader.getSWFChild(_gender) as MovieClip;
-			
-			if(id.indexOf("player")!=-1)
-			{		
-				content.scaleX=-1;
-			}
-			
-			skillAni.gotoAndStop(ele.toUpperCase()+"_RDY");
-			
-			processMember(ele.toUpperCase()+"_RDY");
-			
-		}
-		private function reasetSkillAni():void
-		{
-			
-			
-			skillAni.gotoAndStop(ele.toUpperCase()+"_RDY");	
-			processMember(ele.toUpperCase()+"_RDY");
-			
-		}
-		public function setupVictoryDace():void
-		{
-			if(power.se>0)
-			{
-				
-				disabledEffect();
-				removeSkillAni();
-				initGender();
-				
-				DebugTrace.msg("Character.setupVictoryDace name="+name+"_dance");
-				
-				
-				skillSWf=gender+"_VicDance";
-				
-				var loaderReq:LoaderRequest=new LoaderRequest();
-				loaderReq.setLoaderQueue(name+"_dance","../swf/skills/"+skillSWf+".swf",membermc,onVicDanceComplete);
-			}
-		}
-		private function onVicDanceComplete(e:LoaderEvent):void
-		{
-			DebugTrace.msg("Character.onVicDanceComplete name="+name+"_dance"+" ; _gender="+_gender);
-			var content:ContentDisplay=LoaderMax.getContent(name+"_dance");
-			var swfloader:SWFLoader = LoaderMax.getLoader(name+"_dance");
-			skillAni=swfloader.getSWFChild(_gender) as MovieClip;
-			
-			if(id.indexOf("player")!=-1)
-			{		
-				content.scaleX=-1;
-			}
-			//character.visible=false;
-			membermc.removeChild(character);
-			var seTxt:TextField=membermc.getChildByName("se") as TextField;
-			membermc.removeChild(seTxt);
-			
-			//skillAni.gotoAndStop(ele.toUpperCase()+"_RDY");
-			//var ch_name:String=power.name;
-			DebugTrace.msg("Character.onVicDanceComplet ch_name="+ch_name);
-			for(var i:uint=0;i<part_pack.length;i++)
-			{
-				//DebugTrace.msg("Character.onVicDanceComplet part_pack["+i+"]="+part_pack[i]);
-				var _part:String=part_pack[i];
-				if(_part=="ceil")
-				{
-					_part="ciel";
-				}
-				//if
-				try
-				{
-					skillAni.body.act[_part].visible=false;
-				}
-				catch(e:Error)
-				{
-					DebugTrace.msg("Character.onVicDanceComplet slillAni Null");
-				}
-				
-			}
-			//for
-			if(ch_name=="badguy")
-			{
-				skillAni.body.act.helmb.visible=true;
-				skillAni.body.act.helma.visible=true;
-			}
-			else if(ch_name=="player")
-			{
-				skillAni.body.act.playera.visible=true;
-				skillAni.body.act.playerb.visible=true;
-				
-			}
-			else
-			{
-				
-				skillAni.body.act[ch_name].visible=true;
-				
-				
-			}
-			//if
-			var avatar:Object=flox.getSaveData("avatar");
-			updatelColorEffect(skillAni,avatar);
-			
-			
-			//skillAni.body.addEventListener(Event.ENTER_FRAME,doCheckDancing);
-			
-		}
-		private function doCheckDancing(e:Event):void
-		{
-			if(e.target.currentFrame==e.target.totalFrames)
-			{
-				e.target.removeEventListener(Event.ENTER_FRAME,doCheckDancing);
-				LoaderMax.getLoader(name+"_dance").unload();
-				
-				var battlealert:MovieClip=ViewsContainer.BattleAlert;
-				TweenMax.to(battlealert,1,{alpha:1,delay:5});
-			}
-			//if
-			
-		}
-		private function setupAllAniLayer(mc:MovieClip,layeries:Array):void
-		{
-			skillAni.body.gotoAndStop(1);
-			skillAni.body.act.gotoAndStop(1);
-			for(var i:uint=0;i<layeries.length;i++)
-			{
-				
-				
-				skillAni.body.act[layeries[i]].gotoAndStop(1);
-				
-			}
-			//for	
-			skillAni.body.act.skin.gotoAndStop(1);
-			skillAni.body.act.acc.gotoAndStop(1);
-			skillAni.body.act.body.gotoAndStop(1);
-		}
-		protected function removeSkillAni():void
-		{
-			
-			if(power.shielded=="true")
-			{
-				effShield.visible=true;
-			}
-			
-			try
-			{
-				DebugTrace.msg("Character.removeSkillAni :"+name);
-				//var queue:LoaderMax=ViewsContainer.loaderQueue;
-				//queue.unload();
-				
-				
-				//skillAni.body.gotoAndStop(1)
-				
-				LoaderMax.getLoader(name).unload();
-				
-				
-				skillAni=null;
-			}
-			catch(e:Error)
-			{
-				
-			}
-			//try
-		}
-		protected function hitHandle():void
-		{
-			DebugTrace.msg("Character.hitHandle");
-			
-			
-			//TweenMax.delayedCall(1,onHitComplete);
-			
-			//setFrame(1);
-			TweenMax.to(character.body,0.1,{frame:2,onComplete:onHitComplete});
-			
-		}
-		private function onHitComplete():void
-		{
-			//TweenMax.killDelayedCallsTo(onHitComplete);
-			
-			//DebugTrace.msg("Character.onHitComplete");
-			onSitHitFrame(2);
-			//TweenMax.killChildTweensOf(character.body);
-			TweenMax.to(character.body,0.1,{frame:1,onComplete:onSitHitFrame,onCompleteParams:[1]});
-			
-			
-		}
-		private function  onSitHitFrame(f:Number):void
-		{
-			//character.body.gotoAndStop(f);
-			TweenMax.killChildTweensOf(character.body);
-			var _act:MovieClip=character.body.act;
-			/*for(var i:uint=0;i<part_pack.length;i++)
-			{
-			_act[part_pack[i]].gotoAndStop(f);
-			}*/
-			DebugTrace.msg("Character.onHitComplete ch_name:"+ch_name);
-			var ch_part:String=ch_name;
-			if(ch_part=="badguy")
-			{
-				_act.helmb.gotoAndPlay(f);
-				_act.helma.gotoAndPlay(f);
-			}
-			else if(ch_part=="player")
-			{
-				_act.playerb.gotoAndPlay(f);
-				_act.playera.gotoAndPlay(f);
-				
-			}
-			else
-			{
-				if(!boss_model)
-				{
-					_act[ch_part].gotoAndPlay(f);
-				}
-				else
-					_act.gotoAndPlay(f);
-				
-				//if
-			}
-			//if
-			if(!boss_model)
-			{
-				_act.skin.gotoAndPlay(f);
-				_act.acc.gotoAndPlay(f);
-				_act.body.gotoAndPlay(f);
-			}
-			//if
-		}
-		private function disabledEffect():void
-		{
-			//remove dizzy shiled effect
-			var effect:MovieClip=membermc.getChildByName("effect") as MovieClip;
-			removeClickTap();
-			if(effect)
-			{
-				membermc.removeChild(effect);
-			}
-			try
-			{
-				removeChild(effShield);
-			}
-			catch(e:Error)
-			{
-				DebugTrace.msg("Character.disabledEffect effShield Nil");
-			}
-			//try
-			
-			
-		}
-		private function checkBossModel():Boolean
-		{
-			var b:Boolean=false;
-			var boss_index:Number=Config.bossModels.indexOf(ch_name)
-			if(boss_index!=-1)
-			{
-				//boss model
-				b=true
-			}
-			
-			return b
-		}
-	}
+        }
+
+        switch(actlabel)
+        {
+            case knockback:
+                actComplete("CompleteKnockback");
+                break
+            case charge:
+                //BootComplete
+                actComplete("BootComplete");
+                break
+        }
+        //switch
+
+        /*catch(e:Error)
+         {
+         DebugTrace.msg("Character.processMember Error");
+         }
+         //try*/
+    }
+    private function updatelColorEffect(actModel:MovieClip,avatar:Object):void
+    {
+        DebugTrace.msg("Character.updatelColorEffect "+name);
+
+        if(name.indexOf("player")!=-1)
+        {
+
+            //var skinCT:ColorTransform = actModel.body.act.skin.transform.colorTransform;
+            //skinCT.color = avatar.skincolor;
+            //actModel.body.act.skin.transform.colorTransform = skinCT;
+
+            //var skinColor:Color = new Color();
+            //skinColor.setTint(avatar.skincolor, 0.5);
+            //actModel.body.act.skin.transform.colorTransform = skinColor;
+
+            TweenMax.to(actModel.body.act.skin,0.1, {colorTransform:{tint:avatar.skincolor, tintAmount:0.5}});
+            //var acc_color:Number=0x1397C0;
+            //TweenMax.to(actModel.body.act.acc,0.2, {colorTransform:{tint:acc_color, tintAmount:0.5}});
+
+            //var accColor:Color = new Color();
+            //accColor.setTint(acc_color, 0.5);
+            //actModel.body.act.acc.transform.colorTransform = accColor;
+
+
+            var accCT:ColorTransform = actModel.body.act.acc.transform.colorTransform;
+            accCT.color = 0x1397C0;
+            actModel.body.act.acc.transform.colorTransform = accCT;
+
+        }
+        else
+        {
+
+
+            //trace("boss_model =",boss_model)
+
+            if(!boss_model)
+            {
+
+                var team:String=power.id.split("_")[0];
+                var colorPkg:Object=Config.teamColors[team];
+
+                if(colorPkg.skin)
+                    TweenMax.to(actModel.body.act.skin,0, {colorTransform:{tint:colorPkg.skiin, tintAmount:colorPkg.skin_tint},onComplete:onColorTFComplete,onCompleteParams:[actModel.body.act.skin]});
+                if(ch_name=="badguy")
+                {
+
+                    var helmACT:ColorTransform = actModel.body.act.helma.transform.colorTransform;
+
+                    if(colorPkg.member[0])
+                        TweenMax.to(actModel.body.act.helma,0, {colorTransform:{tint:colorPkg.member[0], tintAmount:colorPkg.member_tint[0]},onComplete:onColorTFComplete,onCompleteParams:[actModel.body.act.helma]});
+                    if(colorPkg.member[1])
+                        TweenMax.to(actModel.body.act.helmb,0, {colorTransform:{tint:colorPkg.member[1], tintAmount:colorPkg.member_tint[1]},onComplete:onColorTFComplete,onCompleteParams:[actModel.body.act.helmb]});
+                }
+
+                if(colorPkg.acc)
+                    TweenMax.to(actModel.body.act.acc,0, {colorTransform:{tint:colorPkg.acc, tintAmount:colorPkg.acc_tint},onComplete:onColorTFComplete,onCompleteParams:[actModel.body.act.acc]});
+                if(colorPkg.body)
+                    TweenMax.to(actModel.body.act.body,0, {colorTransform:{tint:colorPkg.body, tintAmount:colorPkg.body_tint},onComplete:onColorTFComplete,onCompleteParams:[actModel.body.act.body]});
+
+
+            }
+        }
+        //if
+
+    }
+    private function onColorTFComplete(target):void
+    {
+        TweenMax.killChildTweensOf(target);
+
+    }
+    private function onRageComplete(e:Event):void
+    {
+        if(e.target.currentFrame==e.target.totalFrames)
+        {
+            DebugTrace.msg("Character.onRageComplete");
+            e.target.removeEventListener(Event.ENTER_FRAME,onRageComplete);
+            processMember("stand");
+
+        }
+        //if
+    }
+    protected function enabledMemberHeal():void
+    {
+        DebugTrace.msg("Character.enabledMemberHeal");
+        ett=new HealTargetTap();
+        ett.buttonMode=true;
+        ett.mouseChildren=false;
+        ett.name=id;
+        ett.alpha=0;
+        if(id.indexOf("player")!=-1)
+        {
+            ett.x=-ett.width;
+        }
+        //if
+        ett.addEventListener(MouseEvent.CLICK,doClickHealTarget);
+        ett.addEventListener(MouseEvent.MOUSE_OVER,onOverPlayer);
+        ett.addEventListener(MouseEvent.MOUSE_OUT,onOutPlayer);
+        addChild(ett);
+
+        showHealTint();
+
+    }
+    protected function showHealTint():void
+    {
+
+        if(character.visible)
+        {
+
+            heal_tint=character;
+        }
+        else
+        {
+            heal_tint=skillAni;
+        }
+
+        TweenMax.to(this,0.25,{colorTransform:{tint:0x3FCED6, tintAmount:0.9}});
+        TweenMax.to(this,0.25,{delay:0.25,removeTint:true,onComplete:onCompleteTint});
+        function onCompleteTint():void
+        {
+            TweenMax.killTweensOf(this);
+            showHealTint();
+        }
+
+    }
+    protected function removeMemberHeal():void
+    {
+
+        arrow.visible=false;
+
+        if(ett)
+        {
+            ett.removeEventListener(MouseEvent.CLICK,doClickHealTarget);
+            ett.removeEventListener(MouseEvent.MOUSE_OVER,onOverPlayer);
+            ett.removeEventListener(MouseEvent.MOUSE_OUT,onOutPlayer);
+            removeChild(ett);
+            ett=null;
+
+        }
+        /*
+         try
+         {
+         removeChild(ett);
+         ett=null;
+         }
+         catch(e:Error)
+         {
+         DebugTrace.msg("Character.removeMemberHeal NULL");
+         }
+         */
+
+    }
+    private function doClickHealTarget(e:MouseEvent):void
+    {
+        DebugTrace.msg("Character.doClickHealTarget target:"+e.target.name);
+
+        var currentPower:Object=DataContainer.currentPower;
+
+        DebugTrace.msg("Character.doClickHealTarget currentPower:"+JSON.stringify(currentPower));
+
+        var battleEvt:BattleEvent=BattleScene.battleEvt;
+        if(currentPower.skillID=="n2")
+        {
+            battleEvt.id=null;
+            battleEvt.healarea=heal_target;
+        }
+        else
+        {
+            battleEvt.id=e.target.name;
+
+        }
+        //if
+        battleEvt.usedHealHandle();
+
+        command.playSound("BattleConfirm");
+
+    }
+
+    protected function enabledAreaMemberHeal():void
+    {
+        arrow.visible=true;
+    }
+    protected function disabledAreaMemberHeal():void
+    {
+        arrow.visible=false;
+    }
+    protected function actComplete(from:String):void
+    {
+        _from=from;
+        DebugTrace.msg("Character.actComplete from:"+_from);
+
+        character.body.act.addEventListener(Event.ENTER_FRAME,onActComplete);
+
+    }
+    protected function onActComplete(e:Event):void
+    {
+
+        if(e.target.currentFrame==e.target.totalFrames)
+        {
+
+            DebugTrace.msg("Character.onActComplete _from="+_from +", name="+name);
+            e.target.removeEventListener(Event.ENTER_FRAME,onActComplete);
+            var eff:String="";
+
+            switch(_from)
+            {
+                case "Assist":
+                case "CombineSkill":
+                case "Mind Control":
+                    processAction();
+                    break
+                case "Rage":
+                    status="rage";
+                    //processAction();
+                    processMember(status);
+                    break
+                case "CompleteKnockback":
+                case "BootComplete":
+                    DebugTrace.msg("Character.onActComplete status="+status);
+                    if(power.se>0)
+                    {
+                        if(status!="" && status!="heal")
+                        {
+
+                            processMember(status);
+                        }
+                        else
+                        {
+                            //normal status
+                            if(power.target!="")
+                            {
+                                var act:String=power.label;
+                                DebugTrace.msg("Character.onActComplete act="+act);
+                                if(!boss_model && act!=null)
+                                {
+                                    act=act.charAt(0)+"_RDY";
+                                    //setupSkillAni();
+                                    reasetSkillAni();
+                                }
+                                else
+                                {
+                                    if(status=="")
+                                    {
+                                        processMember(ready);
+                                    }
+                                    else
+                                    {
+                                        processMember(status);
+                                    }
+                                }
+                                //if
+                            }
+                            else
+                            {
+
+                                processMember(ready);
+                            }
+                            //if
+                        }
+                        //if
+                    }
+                    break
+            }
+            //switch
+        }
+        //if
+    }
+    private var ele:String;
+    private var skillSWf:String;
+    private var sp:String;
+    //private var gender:String="";
+    private var _gender:String="";
+    private function initGender():void
+    {
+
+        if(ch_name=="player")
+        {
+            //player
+            var acatar:Object=flox.getSaveData("avatar");
+            if(acatar.gender=="Male")
+            {
+                part_pack=bpart_pack;
+                gender="B";
+                _gender="Boy";
+            }
+            else
+            {
+                part_pack=gpart_pack
+                gender="G";
+                _gender="Girl";
+            }
+            //if
+        }
+        else
+        {
+            //other character
+            if(bpart_pack.indexOf(ch_name)!=-1 || ch_name=="badguy")
+            {
+                part_pack=bpart_pack;
+                gender="B";
+                _gender="Boy";
+            }
+
+            else
+            {
+                part_pack=gpart_pack
+                gender="G";
+                _gender="Girl";
+            }
+            //if
+        }
+        //if
+
+
+    }
+    protected function setupSkillAni():void
+    {
+
+        if(!boss_model)
+        {
+            removeSkillAni();
+            ele=power.ele.charAt(0);
+            sp="";
+            if(power.label.indexOf("SP")!=-1)
+            {
+                sp="_SP";
+            }
+            //if
+            DebugTrace.msg("Character.setupSkillAni ch_name="+ch_name);
+            initGender();
+            if(ele!="s")
+            {
+                skillSWf=gender+ele+sp;
+            }
+            else
+            {
+                //speciale super skill
+                skillSWf=gender+power.skillID;
+
+            }
+
+            DebugTrace.msg("Character.setupSkillAni skillSWf="+skillSWf+", name="+name);
+            var loaderReq:LoaderRequest=new LoaderRequest();
+            loaderReq.setLoaderQueue(name,"../swf/skills/"+skillSWf+".swf",membermc,onSkillComplete);
+        }
+        else
+        {
+
+
+
+        }
+
+    }
+    private function onSkillComplete(e:LoaderEvent):void
+    {
+        DebugTrace.msg("Character.onSkillComplete sp="+sp+" ; skillSWf="+skillSWf);
+        var content:ContentDisplay=LoaderMax.getContent(name);
+
+        var swfloader:SWFLoader = LoaderMax.getLoader(name);
+        skillAni=swfloader.getSWFChild(_gender) as MovieClip;
+
+        if(id.indexOf("player")!=-1)
+        {
+            content.scaleX=-1;
+        }
+
+        skillAni.gotoAndStop(ele.toUpperCase()+"_RDY");
+
+        processMember(ele.toUpperCase()+"_RDY");
+
+    }
+    private function reasetSkillAni():void
+    {
+
+
+        skillAni.gotoAndStop(ele.toUpperCase()+"_RDY");
+        processMember(ele.toUpperCase()+"_RDY");
+
+    }
+    public function setupVictoryDace():void
+    {
+        if(power.se>0)
+        {
+
+            disabledEffect();
+            removeSkillAni();
+            initGender();
+
+            DebugTrace.msg("Character.setupVictoryDace name="+name+"_dance");
+
+
+            skillSWf=gender+"_VicDance";
+
+            var loaderReq:LoaderRequest=new LoaderRequest();
+            loaderReq.setLoaderQueue(name+"_dance","../swf/skills/"+skillSWf+".swf",membermc,onVicDanceComplete);
+        }
+    }
+    private function onVicDanceComplete(e:LoaderEvent):void
+    {
+        DebugTrace.msg("Character.onVicDanceComplete name="+name+"_dance"+" ; _gender="+_gender);
+        var content:ContentDisplay=LoaderMax.getContent(name+"_dance");
+        var swfloader:SWFLoader = LoaderMax.getLoader(name+"_dance");
+        skillAni=swfloader.getSWFChild(_gender) as MovieClip;
+
+        if(id.indexOf("player")!=-1)
+        {
+            content.scaleX=-1;
+        }
+        //character.visible=false;
+        membermc.removeChild(character);
+        var seTxt:TextField=membermc.getChildByName("se") as TextField;
+        membermc.removeChild(seTxt);
+
+        //skillAni.gotoAndStop(ele.toUpperCase()+"_RDY");
+        //var ch_name:String=power.name;
+        DebugTrace.msg("Character.onVicDanceComplet ch_name="+ch_name);
+        for(var i:uint=0;i<part_pack.length;i++)
+        {
+            //DebugTrace.msg("Character.onVicDanceComplet part_pack["+i+"]="+part_pack[i]);
+            var _part:String=part_pack[i];
+            if(_part=="ceil")
+            {
+                _part="ciel";
+            }
+            //if
+            try
+            {
+                skillAni.body.act[_part].visible=false;
+            }
+            catch(e:Error)
+            {
+                DebugTrace.msg("Character.onVicDanceComplet slillAni Null");
+            }
+
+        }
+        //for
+        if(ch_name=="badguy")
+        {
+            skillAni.body.act.helmb.visible=true;
+            skillAni.body.act.helma.visible=true;
+        }
+        else if(ch_name=="player")
+        {
+            skillAni.body.act.playera.visible=true;
+            skillAni.body.act.playerb.visible=true;
+
+        }
+        else
+        {
+
+            skillAni.body.act[ch_name].visible=true;
+
+
+        }
+        //if
+        var avatar:Object=flox.getSaveData("avatar");
+        updatelColorEffect(skillAni,avatar);
+
+
+        //skillAni.body.addEventListener(Event.ENTER_FRAME,doCheckDancing);
+
+    }
+    private function doCheckDancing(e:Event):void
+    {
+        if(e.target.currentFrame==e.target.totalFrames)
+        {
+            e.target.removeEventListener(Event.ENTER_FRAME,doCheckDancing);
+            LoaderMax.getLoader(name+"_dance").unload();
+
+            var battlealert:MovieClip=ViewsContainer.BattleAlert;
+            TweenMax.to(battlealert,1,{alpha:1,delay:5});
+        }
+        //if
+
+    }
+    private function setupAllAniLayer(mc:MovieClip,layeries:Array):void
+    {
+        skillAni.body.gotoAndStop(1);
+        skillAni.body.act.gotoAndStop(1);
+        for(var i:uint=0;i<layeries.length;i++)
+        {
+
+
+            skillAni.body.act[layeries[i]].gotoAndStop(1);
+
+        }
+        //for
+        skillAni.body.act.skin.gotoAndStop(1);
+        skillAni.body.act.acc.gotoAndStop(1);
+        skillAni.body.act.body.gotoAndStop(1);
+    }
+    protected function removeSkillAni():void
+    {
+
+        if(power.shielded=="true")
+        {
+            effShield.visible=true;
+        }
+
+        try
+        {
+            DebugTrace.msg("Character.removeSkillAni :"+name);
+            //var queue:LoaderMax=ViewsContainer.loaderQueue;
+            //queue.unload();
+
+
+            //skillAni.body.gotoAndStop(1)
+
+            LoaderMax.getLoader(name).unload();
+
+
+            skillAni=null;
+        }
+        catch(e:Error)
+        {
+
+        }
+        //try
+    }
+    protected function hitHandle():void
+    {
+        DebugTrace.msg("Character.hitHandle");
+
+
+        //TweenMax.delayedCall(1,onHitComplete);
+
+        //setFrame(1);
+        TweenMax.to(character.body,0,{frame:2,onComplete:onHitComplete});
+
+    }
+    private function onHitComplete():void
+    {
+        //TweenMax.killDelayedCallsTo(onHitComplete);
+
+        //DebugTrace.msg("Character.onHitComplete");
+        onSitHitFrame(2);
+        //TweenMax.killChildTweensOf(character.body);
+        TweenMax.to(character.body,0,{frame:1,onComplete:onSitHitFrame,onCompleteParams:[1]});
+
+
+    }
+    private function  onSitHitFrame(f:Number):void
+    {
+        //character.body.gotoAndStop(f);
+        TweenMax.killChildTweensOf(character.body);
+        var _act:MovieClip=character.body.act;
+        /*for(var i:uint=0;i<part_pack.length;i++)
+         {
+         _act[part_pack[i]].gotoAndStop(f);
+         }*/
+        DebugTrace.msg("Character.onHitComplete ch_name:"+ch_name);
+        var ch_part:String=ch_name;
+        if(ch_part=="badguy")
+        {
+            _act.helmb.gotoAndPlay(f);
+            _act.helma.gotoAndPlay(f);
+        }
+        else if(ch_part=="player")
+        {
+            _act.playerb.gotoAndPlay(f);
+            _act.playera.gotoAndPlay(f);
+
+        }
+        else
+        {
+            if(!boss_model)
+            {
+                _act[ch_part].gotoAndPlay(f);
+            }
+            else
+                _act.gotoAndPlay(f);
+
+            //if
+        }
+        //if
+        if(!boss_model)
+        {
+            _act.skin.gotoAndPlay(f);
+            _act.acc.gotoAndPlay(f);
+            _act.body.gotoAndPlay(f);
+        }
+        //if
+    }
+    private function disabledEffect():void
+    {
+        //remove dizzy shiled effect
+        var effect:MovieClip=membermc.getChildByName("effect") as MovieClip;
+        removeClickTap();
+        if(effect)
+        {
+            membermc.removeChild(effect);
+        }
+        try
+        {
+            removeChild(effShield);
+        }
+        catch(e:Error)
+        {
+            DebugTrace.msg("Character.disabledEffect effShield Nil");
+        }
+        //try
+
+
+    }
+    private function checkBossModel():Boolean
+    {
+        var b:Boolean=false;
+        var boss_index:Number=Config.bossModels.indexOf(ch_name)
+        if(boss_index!=-1)
+        {
+            //boss model
+            b=true
+        }
+
+        return b
+    }
+}
 }

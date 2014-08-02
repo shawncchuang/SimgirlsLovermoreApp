@@ -2605,6 +2605,7 @@ package views
 						}
 						else
 						{
+
 							
 							displayDamage(damage);
 						}
@@ -2671,6 +2672,7 @@ package views
 			//for
 			
 		}
+
 		private function targetKnockbackHandle(member:Member):void
 		{
 			var current_label:String=member.character.currentLabel;
@@ -3066,9 +3068,9 @@ package views
 				_target_member.updatePower(_target_member.power);
 				
 				
-				battleEvt=_target_member.memberEvt;
-				battleEvt.act="heal";
-				battleEvt.updateMemberAct();
+				//battleEvt=_target_member.memberEvt;
+				//battleEvt.act="heal";
+				//battleEvt.updateMemberAct();
 				
 			}
 			else
@@ -3115,9 +3117,9 @@ package views
 						_target_member.power.se=_target_member.power.se+extrareg; 
 						_target_member.updatePower(_target_member.power);
 						
-						var _battleEvt:BattleEvent=_target_member.memberEvt;
-						_battleEvt.act="heal";
-						_battleEvt.updateMemberAct();
+						//var _battleEvt:BattleEvent=_target_member.memberEvt;
+						//_battleEvt.act="heal";
+						//_battleEvt.updateMemberAct();
 						
 					}
 					//if
@@ -3253,10 +3255,9 @@ package views
 					showSplitTextField(_target_member,predamage,damage_txt,txt_x);
 					_target_member.updateDamage(attack_power.effect,predamage);
 				}
-				//if
+
 			}
-			
-			//for
+
 			
 		}
 		private function displayReincarnation(damage:Number):void

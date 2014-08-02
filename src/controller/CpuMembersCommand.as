@@ -113,7 +113,7 @@ package controller
 				cpuIndex=Config.team_schedule.indexOf(month+"_"+date)%teamsno;
 
 				//---------------------fake CPU team
-			    cpuIndex=4;
+			    cpuIndex=0;
 			}
 			else
 			{
@@ -136,16 +136,7 @@ package controller
 					teams[id].combat=0;
 					var boss_index:Number=Config.bossModels.indexOf(bossName[id]);
 					teams[id].ch_name=bossName[id];
-					/*
-					if(boss_index!=-1)
-					{
-						teams[id].ch_name=bossName[id];
-					}
-					else
-					{
-						teams[id].ch_name=Config.bossModels[id];
-					}
-					*/
+
 					team.push(teams[id]);
 				}
 				//if
@@ -159,13 +150,7 @@ package controller
                 main_team.push(team[1]);
 
             }
-            /*
-			if(main_team[0].id.indexOf("t"+cpuIndex)!=-1)
-			{
-				main_team.push(team[1]);
-				
-			}
-			*/
+
 			var _backup_team:Array=team.splice(main_team.length);
 			backup_team=_backup_team;
 			//backup_team=team.concat(_backup_team);
@@ -194,13 +179,7 @@ package controller
 			}
 			//for
 			main_team=_main_team;
-			/*
-			for(var j:uint=0;j<backup_team.length;j++)
-			{
-			DebugTrace.msg("CpuMembersCommand.setupBattleTeam backup_team:"+JSON.stringify(backup_team[j]));
-			}
-			//for
-			*/
+
 			//main team's sel from savegame
 			DebugTrace.msg("CpuMembersCommand.setupBattleTeam main_team:"+main_team);
 			for(var k:uint=0;k<main_team.length;k++)

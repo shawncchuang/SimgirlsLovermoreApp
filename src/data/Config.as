@@ -35,8 +35,6 @@ package data
 			"Dec_6","Dec_13","Dec_20","Dec_27"
 			
 		]
-	 
-		
 		public static function set AccType(value:String):void
 		{
 			acctype=value;
@@ -53,6 +51,109 @@ package data
 		{
 			return authkey;
 		}
+        public static  var teamColors:Object=
+        {
+            "t0":
+            {
+                "acc":0xFF0000,
+                "acc_tint":0.5,
+                "body":0xFFFFFF,
+                "body_tint":0.9,
+                "skin":null,
+                "skin_tint":null,
+                "member":[0xFFFFFF,0xFF0000],
+                "member_tint":[0.9,0.5]
+            },
+            "t1":
+            {
+                "acc":0x3F5134,
+                "acc_tint":0.5,
+                "body":0x8FAB6E,
+                "body_tint":0.9,
+                "skin":null,
+                "skin_tint":null,
+                "member":[0x8FAB6E,0x3F5134],
+                "member_tint":[0.9,0.5]
+            },
+            "t2":
+            {
+                "acc":0x539FCF,
+                "acc_tint":0.8,
+                "body":0xDF67C5,
+                "body_tint":0.8,
+                "skin":null,
+                "skin_tint":null,
+                "member":[0xD94886,0xDF67C5],
+                "member_tint":[0.8,0.8]
+            },
+            "t3":
+            {
+                "acc":0x3C74B6,
+                "acc_tint":0.5,
+                "body":0x36435A,
+                "body_tint":0.9,
+                "skin":null,
+                "skin_tint":null,
+                "member":[0x36435A,0x3C74B6],
+                "member_tint":[0.9,0.5]
+            },
+            "t4":
+            {
+                "acc":null,
+                "acc_tint":0.5,
+                "body":null,
+                "body_tint":0.9,
+                "skin":null,
+                "skin_tint":null,
+                "member":[0x1E1E1E,0x595959],
+                "member_tint":[0.9,0.5]
+            },
+            "t5":
+            {
+                "acc":0xc51111,
+                "acc_tint":0.5,
+                "body":0xff5c00,
+                "body_tint":0.9,
+                "skin":null,
+                "skin_tint":null,
+                "member":[0xff5c00,0xc51111],
+                "member_tint":[0.8,0.5]
+            },
+            "t6":
+            {
+                "acc":null,
+                "acc_tint":0.5,
+                "body":null,
+                "body_tint":0.9,
+                "skin":0x333333,
+                "skin_tint":0.5,
+                "member":[null,null],
+                "member_tint":[0.9,0.5]
+            },
+            "t7":
+            {
+                "acc":null,
+                "acc_tint":0.5,
+                "body":null,
+                "body_tint":0.9,
+                "skin":null,
+                "skin_tint":null,
+                "member":[null,null],
+                "member_tint":[0.9,0.5]
+            },
+            "t8":
+            {
+                "acc":null,
+                "acc_tint":0.5,
+                "body":null,
+                "body_tint":0.9,
+                "skin":null,
+                "skin_tint":null,
+                "member":[null,null],
+                "member_tint":[0.9,0.5]
+            }
+
+        }
 		public static function get stagepoints():Object
 		{
 			points={"Hotel":[432,202],"Airport":[988,440],"SSCCArena":[128,790],"Academy":[395,975],"SpiritTemple":[468,847],
@@ -71,13 +172,12 @@ package data
             "t4_0":"bdh",
             "t5_0":"vdk",
             "t6_0":"akr",
-            "t7_0":"chf",
+            "t7_0":"chef",
             "t8_0":"shn",
             "t10_0":"fat"
         };
-		//public static var bossName:Object={"t0_0":"gor","t1_0":"tgr","t10_0":"fat"};
 		public static var bossModels:Array=["gor","tgr","fat"];
-		public static var ch_bossModels:Array=["mia","bdh","vdk","akr","chf","shn"];
+		public static var ch_bossModels:Array=["mia","bdh","vdk","akr","chef","shn"];
 		public static var bossSkill:Object={
 			"gor":{
 				"lv1":{"skillID":"gor_s_0",
