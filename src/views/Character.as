@@ -8,6 +8,8 @@ import com.greensock.loading.display.ContentDisplay;
 
 import data.Config;
 
+import feathers.controls.Label;
+
 import flash.display.DisplayObject;
 import flash.display.MovieClip;
 import flash.events.Event;
@@ -387,6 +389,7 @@ public class Character extends MovieClip
         part_pack=bpart_pack;
         if(id.split("_")[1]=="0")
         {
+            //commander
             //boss
             //characters=otherCharacters;
             //ch_name=otherCharacters[Math.floor(Math.random()*otherCharacters.length)];
@@ -431,20 +434,33 @@ public class Character extends MovieClip
         }
         else
         {
+            //other members
+            switch(id) {
+                case "t7_1":
 
-            if(id.split("_")[0]=="t0" && Number(id.split("_")[1])==1)
-            {
-                part_pack=gpart_pack;
-                characters=["mia","san","chef","akr"];
-                character=new Girl();
+                    //XS Sana & Xenos
+                    part_pack = gpart_pack;
+                    characters = ["mia", "san", "chef", "akr"];
+                    character = new Girl();
+
+                    break
+                case "t8_1":
+                    //gor and zack
+
+                    part_pack = bpart_pack;
+                    characters = ["zack", "xns", "vdk", "smn", "shn", "prms", "prml", "fan", "bdh"];
+                    character = new Boy();
+
+                    break
+                default:
+                    characters=["helm"];
+                    character=new Boy();
+                    ch_name="badguy";
+                    break
 
             }
-            else
-            {
-                characters=["helm"];
-                character=new Boy();
-                ch_name="badguy";
-            }
+
+
 
 
         }

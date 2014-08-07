@@ -188,13 +188,13 @@ package
 			//_data.name="MenuScene";
 			//_data.name="CharacterDesignScene";
 			// _data.name="ChangeFormationScene";
-			//_data.name="MainScene";
+			_data.name="MainScene";
 			//_data.name="Tarotreading";
 			//_data.name="AirplaneScene";
 			//_data.name="BlackMarketScene";
 			//_data.name="TraceGame";
 			//_data.name="TrainingGame";
-			_data.name="BetaScene";
+			//_data.name="BetaScene";
 			command.sceneDispatch(SceneEvent.CHANGED,_data)
 			
 			

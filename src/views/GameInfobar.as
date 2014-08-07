@@ -70,7 +70,6 @@ package views
 		private var imageSprite:Sprite=null;
 		private var intSprite:Sprite=null;
 		private var moodSprite:Sprite=null;
-		private var rotation:Number=360;
 		private var command:MainInterface=new MainCommand();
 		private var basemodel:Sprite;
 		private var drawcom:DrawerInterface=new DrawManager();

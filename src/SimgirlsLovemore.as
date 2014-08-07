@@ -56,7 +56,6 @@ package
        embedAsCFF="false")]
 		public static const NeogreyMediumOTF:String;
 		
-		
 		[Embed(source="../assets/fonts/Impact.ttf",
        fontName="SimImpact",
        mimeType="application/x-font-truetype",
@@ -68,6 +67,14 @@ package
        mimeType="application/x-font-truetype",
        embedAsCFF="false")]
 		public static const FuturaTTC:String;
+
+
+
+        [Embed(source="../assets/fonts/erbos_draco_1st_open_nbp.ttf",
+                fontName="SimErbosDraco",
+                mimeType="application/x-font-truetype",
+                embedAsCFF="false")]
+        public static const ErbosDracoTTF:String;
 		
 		private var manager:Boolean=false;
 		public static var verifyKey:String;

@@ -50,7 +50,7 @@ package views
 		private var index:uint=0;
 		private var iconTween:Tween;
 		private var iconslist:Array=new Array();
-		private var filter:FilterInterface=new FilterManager();
+		private var filters:FilterInterface=new FilterManager();
 		private var cancelbtn:Image;
 		private var npcID:String="";
 		private var switchID:String="";
@@ -85,8 +85,8 @@ package views
 			
 			var bgSprtie:Sprite=new Sprite();
 			bgSprtie.addChild(bgImg);
-			filter.setSource(bgSprtie);
-			filter.setBulr();
+			filters.setSource(bgSprtie);
+			filters.setBulr();
 			command.filterScene(bgSprtie);
 			addChild(bgSprtie);
 			

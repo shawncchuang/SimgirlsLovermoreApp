@@ -13,8 +13,10 @@ package views
 	import events.GameEvent;
 	import events.SceneEvent;
 	import events.TopViewEvent;
-	
-	import model.SaveGame;
+
+import flash.display.MovieClip;
+
+import model.SaveGame;
 	import model.Scenes;
 	
 	import starling.animation.Tween;
@@ -26,6 +28,7 @@ package views
 	import utils.DebugTrace;
 	import utils.ViewsContainer;
 	import data.DataContainer;
+
 	public class ArenaScene extends Scenes
 	{
 		private var speaker_sprite:Sprite;
@@ -39,6 +42,7 @@ package views
 		//image return 5-10;
 		private var getInt:Number=5;
 		private var reInt:Number;
+        private var raningScene:MovieClip;
 		public function ArenaScene()
 		{
 			/*var pointbgTexture:Texture=Assets.getTexture("PointsBg");
@@ -91,7 +95,7 @@ package views
 			var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
 			var savegame:SaveGame=FloxCommand.savegame;
 			var _data:Object=new Object();
-		
+            var gameinfo:Sprite=ViewsContainer.gameinfo;
 			switch(e.data.removed)
 			{
 				case "Leave":
@@ -103,14 +107,22 @@ package views
 				case "Join":
 					gameEvent._name="clear_comcloud";
 					gameEvent.displayHandler();
-					
 					_data.name="ChangeFormationScene";
 					command.sceneDispatch(SceneEvent.CHANGED,_data);
 					break
+                case "Rank":
+                    gameinfo.visible=false;
+                    raningScene=new RankBoard();
+                    Starling.current.nativeOverlay.addChild(raningScene);
+                    break
+                case "Remove_Ranking":
+                    gameinfo.visible=true;
+                    Starling.current.nativeOverlay.removeChild(raningScene);
+                    init();
+                    break
 				case "ani_complete":
 				 
 					var sysCommand:Object=flox.getSyetemData("command");
-					 
 					command.showCommandValues(this,"Join");
 					init();
 					break

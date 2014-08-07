@@ -57,6 +57,7 @@ package model
 		public var skillPts:Object;
 		public var current_switch:String;
 		public var next_switch:String;
+        public var ranking:Array;
 		public function SaveGame()
 		{
 	 
@@ -87,7 +88,8 @@ package model
 		{
 			return _date;
 		}
-		 
+
+
 	   
 	}
 }

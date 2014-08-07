@@ -2,7 +2,7 @@
 <module type="Flex" version="4">
   <component name="FlexBuildConfigurationManager" active="SimgirlsLovermore">
     <configurations>
-      <configuration name="SimgirlsLovermore" target-platform="Desktop" pure-as="true" main-class="Main" output-file="Main.swf" output-folder="$MODULE_DIR$/bin-debug">
+      <configuration name="SimgirlsLovermore" target-platform="Desktop" pure-as="true" main-class="Main" output-file="Main.swf" output-folder="$USER_HOME$/Simgilrs_debug">
         <dependencies>
           <entries>
             <entry library-id="e192c506-61e8-4717-86ca-9f7fc6c3182d">
