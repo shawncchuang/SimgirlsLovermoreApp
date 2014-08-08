@@ -20,7 +20,7 @@ package controller
 		function drawCharacter(model:Sprite,attr:Object):void
 		function updateBaseModel(target:String):void
 		function updateModelColor(type:String,rgb:Object):void
-		function drawPlayerProfileIcon(target:Sprite,scale:Number,p:Point):void
+		function drawPlayerProfileIcon(target:Sprite,scale:Number,p:Point,bp:Point=null):void
 		function drawCircyleImage(target:Sprite):void
 		function drawDragonBon(info:Object,callback:Function=null):void
 		function getBodyBon(target:String):Bone

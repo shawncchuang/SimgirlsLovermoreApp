@@ -412,9 +412,10 @@ package views
 			
 		 
 			player_icon=new Sprite();
-			drawcom.drawPlayerProfileIcon(player_icon,1,new Point(54,50));
-			
+			drawcom.drawPlayerProfileIcon(player_icon,1,new Point(54,50))
 			player_icon.name="Player";
+            player_icon.scaleX=0.89;
+            player_icon.scaleY=0.89;
 			addChild(player_icon);
 			player_icon.addEventListener(TouchEvent.TOUCH,displayCharacterInfo);
 			

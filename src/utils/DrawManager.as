@@ -324,9 +324,10 @@ package utils
 			
 			
 		}
-		public function drawPlayerProfileIcon(target:Sprite,scale:Number,point:Point):void
+		public function drawPlayerProfileIcon(target:Sprite,scale:Number,point:Point,bp:Point=null):void
 		{
-			
+
+            //point:icon position ; bp: basemodel position
 			var player_icon:Sprite=target;
 			player_icon.useHandCursor=true;
 			var shapObj:Object=new Object()
@@ -350,12 +351,19 @@ package utils
 			maskImg.width=rec.width;
 			maskImg.height=rec.height;
 			
-			basemodel.clipRect=new Rectangle(0,-50,150,150);
-			basemodel.x=rec.x;
-			basemodel.y=rec.y;
-			player_icon.addChild(basemodel);
-			
-			var maskedDisplayObject:PixelMaskDisplayObject = new PixelMaskDisplayObject(-1, false);
+
+            if(!bp)
+            {
+                basemodel.clipRect=new Rectangle(0,-50,150,150);
+                basemodel.x=rec.x;
+                basemodel.y=rec.y;
+            }else{
+                basemodel.x=bp.x;
+                basemodel.y=bp.y;
+            }
+
+
+			var maskedDisplayObject:PixelMaskDisplayObject = new PixelMaskDisplayObject(-1,false);
 			maskedDisplayObject.addChild(basemodel);
 			maskedDisplayObject.mask=maskImg;
 			
@@ -365,8 +373,8 @@ package utils
 			
 			
 			//trace("DrawManager player_icon width:",player_icon.width," ;player_icon height:",player_icon.height);
-			player_icon.scaleX=0.89;
-			player_icon.scaleY=0.89;
+			//player_icon.scaleX=0.89;
+			//player_icon.scaleY=0.89;
 			player_icon.x=point.x;
 			player_icon.y=point.y;
 			

@@ -143,7 +143,7 @@ package views
 		}
 		private function doCannelHandler():void
 		{
-			
+
 			player_icon.removeEventListener(TouchEvent.TOUCH,onTouchCharaterIcon);
 			var _data:Object=new Object();
 			_data.name="MenuScene";
@@ -228,7 +228,7 @@ package views
 			var last_name:String=Config.characters[ch_index];
 			
 			
-			var first_name:String="Lovermore"
+			var first_name:String="Lovermore";
 			if(ch_index==-1)
 			{
 				//player
@@ -801,13 +801,33 @@ package views
 			
 			var savedata:SaveGame=FloxCommand.savegame;
 			var gender:String=savedata.avatar.gender;
-			
-			player_icon=ViewsContainer.PlayerProfile;
-			player_icon.alpha=1;
-			player_icon.x=60;
-			player_icon.y=710; 
-			addChild(player_icon);
-			
+
+            var modelObj:Object=Config.modelObj;
+            var modelRec:Rectangle=modelObj[gender];
+
+
+            var modelAttr:Object=new Object();
+            modelAttr.gender=gender;
+            modelAttr.width=modelRec.width;
+            modelAttr.height=modelRec.height;
+
+            var _basemodel:Sprite=new Sprite();
+            drawcom.drawCharacter(_basemodel,modelAttr);
+            drawcom.updateBaseModel("Eyes");
+            drawcom.updateBaseModel("Hair");
+            drawcom.updateBaseModel("Features");
+
+            player_icon=new Sprite();
+            player_icon.name="Player";
+            var dp:Point=new Point(-85,-21);
+            if(gender=="Female")
+            {
+                dp=new Point(-82,-6);
+            }
+            drawcom.drawPlayerProfileIcon(player_icon,1,new Point(60,710),dp);
+            player_icon.scaleX=0.89;
+            player_icon.scaleY=0.89;
+            addChild(player_icon);
 			player_icon.addEventListener(TouchEvent.TOUCH,onTouchCharaterIcon);
 			
 			
