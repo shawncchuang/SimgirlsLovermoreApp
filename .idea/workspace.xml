@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e5634857-ca85-444f-9915-08f826b15827" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/model/BattleData.as" afterPath="$PROJECT_DIR$/src/model/BattleData.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/data/Config.as" afterPath="$PROJECT_DIR$/src/data/Config.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/CpuMembersCommand.as" afterPath="$PROJECT_DIR$/src/controller/CpuMembersCommand.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/CpuMembersInterface.as" afterPath="$PROJECT_DIR$/src/controller/CpuMembersInterface.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/MainCommand.as" afterPath="$PROJECT_DIR$/src/controller/MainCommand.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/ProfileScene.as" afterPath="$PROJECT_DIR$/src/views/ProfileScene.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/RankBoard.as" afterPath="$PROJECT_DIR$/src/views/RankBoard.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/model/SaveGame.as" afterPath="$PROJECT_DIR$/src/model/SaveGame.as" />
+    <list default="true" id="e5634857-ca85-444f-9915-08f826b15827" name="Default" comment="got a battle result by auto battle,included player vs cpu and Cpu vs Cpu">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="SimgirlsLovermoreApp.iws" />
@@ -556,7 +548,7 @@
       <workItem from="1406940593123" duration="5779000" />
       <workItem from="1407266408825" duration="38185000" />
       <workItem from="1407376517505" duration="10275000" />
-      <workItem from="1407448991942" duration="35194000" />
+      <workItem from="1407448991942" duration="35427000" />
     </task>
     <task id="LOCAL-00001" summary="update setting on intelliJ">
       <created>1406764639395</created>
@@ -582,11 +574,15 @@
       <created>1407460637293</created>
       <updated>1407460637293</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="got a battle result by auto battle,included player vs cpu and Cpu vs Cpu">
+      <created>1407546474454</created>
+      <updated>1407546474454</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="143885000" />
+    <option name="totallyTimeSpent" value="144118000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -610,7 +606,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1010" y="22" width="1321" height="1349" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962668" sideWeight="0.49960908" order="7" side_tool="false" content_ui="tabs" />
@@ -620,7 +616,7 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962668" sideWeight="0.691165" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24941361" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21286735" sideWeight="0.30883503" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21286735" sideWeight="0.30883503" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.16308671" sideWeight="0.50039095" order="7" side_tool="true" content_ui="combo" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22204848" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -661,7 +657,8 @@
     <MESSAGE value=" xns hit animated bug,setup cpu 10 teams color suits" />
     <MESSAGE value="add ranking popup view" />
     <MESSAGE value="fixed profile icon empty bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed profile icon empty bug" />
+    <MESSAGE value="got a battle result by auto battle,included player vs cpu and Cpu vs Cpu" />
+    <option name="LAST_COMMIT_MESSAGE" value="got a battle result by auto battle,included player vs cpu and Cpu vs Cpu" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
