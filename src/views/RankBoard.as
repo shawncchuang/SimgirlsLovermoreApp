@@ -31,6 +31,7 @@ import starling.display.Sprite;
 public class RankBoard extends MovieClip{
     private var main:MovieClip;
     private var flox:FloxInterface=new FloxCommand();
+
     public function RankBoard() {
 
         initLayout();
@@ -50,19 +51,25 @@ public class RankBoard extends MovieClip{
         main=swfloader.getSWFChild("main") as MovieClip;
         main.addEventListener(MouseEvent.MOUSE_DOWN,doCloseRanking);
         setupTeams();
-        setuppRanking();
+        setupRanking();
+
+
     }
     private function setupTeams():void{
 
+        var current_battle:Object=flox.getSaveData("current_battle");
         var date:String=flox.getSaveData("date").split(".")[1];
         var month:String=flox.getSaveData("date").split(".")[2];
         var schedule:Dictionary=Config.battleSchedule();
 
-        month="Jul";
-        date="5";
+        //month="Jul";
+        //date="5";
 
         var dayStr:String=month+"_"+date
         var games:Array=schedule[dayStr];
+        var current_result:Array=current_battle[dayStr];
+
+
         if(games)
         {
             //have game today
@@ -91,6 +98,13 @@ public class RankBoard extends MovieClip{
 
                     TweenMax.to(main.board.screen.games["g"+i+"_"+j],0.5,{frameLabel:label});
                     TweenMax.to(main.board.screen.games["f"+i+"_"+j],0.5,{frameLabel:label});
+
+                    var result:String=String(current_result[i].split("|")[j]);
+                    if(result=="0" || result=="L"){
+                        main.board.screen["g"+i+"_"+j].visible=false;
+                    }
+
+
                 }
             }
 
@@ -105,6 +119,7 @@ public class RankBoard extends MovieClip{
 
                     main.board.screen.games["g"+k+"_"+l].visible=false;
                     main.board.screen.games["f"+k+"_"+l].visible=false;
+                    main.board.screen["g"+k+"_"+l].visible=false;
 
                 }
 
@@ -113,11 +128,12 @@ public class RankBoard extends MovieClip{
         }
 
     }
-    private function setuppRanking():void{
+    private function setupRanking():void{
 
         var rankings:Array=flox.getSaveData("ranking");
         rankings=rankings.sortOn("win",Array.DESCENDING | Array.NUMERIC);
-        trace("RankBoard.setuppRanking rankings="+JSON.stringify(rankings));
+
+        //trace("RankBoard.setuppRanking rankings="+JSON.stringify(rankings));
 
         for(var i:uint=0;i<rankings.length;i++){
 
@@ -191,6 +207,9 @@ public class RankBoard extends MovieClip{
         }
         return format;
     }
+
+
+
     private function doCloseRanking(e:MouseEvent):void
     {
 

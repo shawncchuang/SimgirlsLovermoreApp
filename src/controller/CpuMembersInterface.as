@@ -18,5 +18,6 @@ package controller
 		//function set cputeamMember(members:Array):void
 		function healSetUp():void
 		function nextRound():void
+        function upgradeCpu():void
 	}
 }

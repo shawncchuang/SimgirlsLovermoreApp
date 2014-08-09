@@ -110,8 +110,8 @@ public class CpuMembersCommand implements CpuMembersInterface
         var scene:String=DataContainer.BatttleScene;
         if(scene=="Arena")
         {
-             var batteData:BattleData=new BattleData();
-            cpuIndex=batteData.checkBattleSchedule();
+            var batteData:BattleData=new BattleData();
+            cpuIndex=batteData.checkBattleSchedule("Battle","");
 
 
             trace("CpuMemberCommand.setupBattleTeam cpuIndex=",cpuIndex);
@@ -1224,6 +1224,22 @@ public class CpuMembersCommand implements CpuMembersInterface
      {
      cputeam=members;
      }*/
+    public function upgradeCpu():void
+    {
+        var cpu_teams:Object=flox.getSaveData("cpu_teams");
+        for(var team_id:String in cpu_teams){
+            var team:String=team_id.split("_")[0];
+            var index:Number=Number(team.split("").join(""));
+
+            if(index<=8) {
+                var se:Number = Number(cpu_teams[team_id].se);
+                se *= 2;
+                cpu_teams[team_id].se = se;
+            }
+        }
+        flox.save("cpu_teams",cpu_teams);
+
+    }
 
 }
 }
