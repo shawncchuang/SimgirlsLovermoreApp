@@ -61,6 +61,13 @@ import views.FloxManagerView;
 
 public class MainCommand implements MainInterface
 {
+
+    private var Days:Array=new Array("Sun","Mon","Tue","Wed","Thu","Fri","Sat");
+    private var Months:Object={"Jan":31,"Feb":28,"Mar":31,"Apr":30,"May":31,"Jun":30,
+        "Jul":31,"Aug":31,"Sep":30,"Oct":31,"Nov":30,"Dec":31}
+    private var Manthslist:Array=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+
     private var item:flash.display.MovieClip;
     private static var alertmsg:flash.display.MovieClip;
     private static var csv:CSV;
@@ -480,14 +487,13 @@ public class MainCommand implements MainInterface
         return switch_verify
 
     }
+    private var overday:Boolean;
     public  function dateManager(type:String):void
     {
         //start Tur.1.Mar.2022|12
         DebugTrace.msg("MainCommand.dateManager  type:"+type);
-        var Days:Array=new Array("Sun","Mon","Tue","Wed","Thu","Fri","Sat");
-        var Months:Object={"Jan":31,"Feb":28,"Mar":31,"Apr":30,"May":31,"Jun":30,
-            "Jul":31,"Aug":31,"Sep":30,"Oct":31,"Nov":30,"Dec":31}
-        var Manthslist:Array=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+
         var savegame:SaveGame=FloxCommand.savegame;
         var dateStr:String=savegame.date;
         var dayStr:String=dateStr.split("|")[0];
@@ -499,6 +505,7 @@ public class MainCommand implements MainInterface
         var _year:Number=Number(dayStr.split(".")[3]);
         var timeNum:Number=Number(dateStr.split("|")[1]);
         var _type:String=type;
+        overday=false;
         if(type.indexOf("Stay")!=-1)
         {
 
@@ -512,15 +519,11 @@ public class MainCommand implements MainInterface
                 if(timeNum>24)
                 {
                     // over day
+                    overday=true;
                     timeNum=12;
                     _date++;
                     _data_index++;
-                    //prase obsloete
-                    praseOwnedAssets(1);
-                    reeseatDating();
 
-                    var battledata:BattleData=new BattleData();
-                    battledata.checkBattleSchedule("BattleResult","cpu_team");
                 }
                 //if
                 new DataContainer().initChacacterLikeScene();
@@ -565,8 +568,18 @@ public class MainCommand implements MainInterface
         var _data:Object=new Object();
         _data.date=new_date;
         var flox:FloxInterface=new FloxCommand();
-        //flox.updateSavegame(_data);
-        flox.save("date",new_date);
+        flox.save("date",new_date,onUpdatedDateComplete);
+        function onUpdatedDateComplete():void
+        {
+            //prase expiration
+            if(overday)
+            praseOwnedAssets(1);
+            reeseatDating();
+
+            var battledata:BattleData=new BattleData();
+            battledata.checkBattleSchedule("BattleResult","cpu_team");
+
+        }
         var pay:Boolean=flox.getPlayerData("paid");
         if(!pay && _type!="Rest" && _type!="Stay")
         {
@@ -624,35 +637,32 @@ public class MainCommand implements MainInterface
         for(var ch:String in ownedAssets)
         {
             var assetslist:Array=ownedAssets[ch];
-            if(ch!="player")
-            {
+
                 for(var i:uint=0;i<assetslist.length;i++)
                 {
 
-                    if(assetslist[i].obsoleteIn>0)
+                    if(assetslist[i].expiration>0)
                     {
-                        var obs:Number=assetslist[i].obsoleteIn;
-                        obs-=days;
-                        assetslist[i].obsoleteIn=obs;
+                        var expr:Number=assetslist[i].expiration;
+                        expr-=days;
+                        assetslist[i].expiration=expr;
                     }
                     //if
                     ownedAssets[ch]=assetslist;
                 }
                 //for
-            }
-            //if
+
         }
         //for
 
         for(var _ch:String in ownedAssets)
         {
             assetslist=ownedAssets[_ch];
-            if(_ch!="player")
-            {
+
                 for(var j:uint=0;j<assetslist.length;j++)
                 {
-                    obs=assetslist[j].obsoleteIn;
-                    if(obs<=0)
+                    expr=assetslist[j].expiration;
+                    if(expr<=0)
                     {
                         var _assetslist:Array=assetslist.splice(j);
                         _assetslist.shift();
@@ -662,17 +672,17 @@ public class MainCommand implements MainInterface
                     //if
                 }
                 //for
-            }
-            //if
+
         }
         //for
         var assetesStr:String=JSON.stringify(ownedAssets);
         DebugTrace.msg("MainComanad.praseOwnedAssets assetesStr:"+assetesStr);
-        var savegame:SaveGame=FloxCommand.savegame;
-        savegame.owned_assets=ownedAssets;
-        FloxCommand.savegame=savegame;
+
+        flox.save("owned_assets",ownedAssets)
+
 
     }
+
     public function filterScene(target:Sprite):void
     {
         //day night filter

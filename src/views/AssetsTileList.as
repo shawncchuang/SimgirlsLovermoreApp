@@ -67,7 +67,7 @@ package views
 			chname=ProfileScene.CharacterName;
 			assetsData=flox.getSyetemData("assets");
 			var savedata:SaveGame=FloxCommand.savegame;
-			ownedAssets=savedata.owned_assets[chname];
+			ownedAssets=flox.getSaveData("owned_assets")[chname];
 			//DebugTrace.msg("AssetsTileList.init chname:"+chname);
 			
 			
@@ -106,7 +106,7 @@ package views
 				var item:Object=gridObj[id];
 				//DebugTrace.obj("AssetsTileList.init cate:"+item.cate);
 				item.id=id;
-				item.qty=ownedAssets[i].qty;
+				item.expiration=ownedAssets[i].expiration;
 				assetslist.push(item);
 				dp.addItem(item);
 			}
@@ -135,7 +135,7 @@ package views
 			c2.headerText="Brand";
 			c2.cellRenderer=CellRenderStyle;
 			c2.headerRenderer=HeaderRenderStyle;
-			c2.sortOptions = Array.NUMERIC;
+			//c2.sortOptions = Array.DESCENDING;
 			
 			var c3:DataGridColumn = new DataGridColumn("price");
 			c3.headerText="Price";
@@ -144,14 +144,14 @@ package views
 			c3.sortOptions = Array.NUMERIC;
 			
 			
-			var c4:DataGridColumn = new DataGridColumn("qty");
-			c4.headerText="Qty";
+			var c4:DataGridColumn = new DataGridColumn("expiration");
+			c4.headerText="Expiration";
 			c4.cellRenderer=CellRenderStyle;
 			c4.headerRenderer=HeaderRenderStyle;
 			c4.sortOptions = Array.NUMERIC;
-			
-			
-			datagrid= new DataGrid();
+
+
+            datagrid= new DataGrid();
 			datagrid.resizableColumns=true;
 			datagrid.selectable=selectable;
 			datagrid.addColumn(dataCol);
@@ -196,7 +196,7 @@ package views
 		private function onClickItemHandler(e:MouseEvent):void
 		{
 			
-			DebugTrace.msg("AssetsTileList.onClickItemHandler:");
+			DebugTrace.msg("AssetsTileList.onClickItemHandler _type="+_type);
 			if(_type=="dating_assets_form")
 			{
 				var assets:Object=flox.getSyetemData("assets");
@@ -249,20 +249,20 @@ package views
 				
 			}
 			var index1:Number=searchID(datingItems,item_id);
-			var obsloete:Number=Number(sysAssets[item_id].obsoleteIn);
+			var expiration:Number=Number(sysAssets[item_id].expiration);
 			if(index1==-1)
 			{
 				//dating person didn't have this item
 				var new_item:Object=new Object();
 				new_item.id=item_id;
 				new_item.qty=1;
-				new_item.obsoleteIn=obsloete;
+				new_item.expiration=expiration;
 				datingItems.push(new_item);
 				
 			}
 			else
 			{
-				datingItems[index1].obsoleteIn=obsloete;
+				datingItems[index1].obsoleteIn=expiration;
 				qty=datingItems[index1].qty;
 				qty++;
 				datingItems[index1].qty=qty;

@@ -319,53 +319,32 @@ public class Config
             },
             "owned_assets":{
                 player:[
-
+                    {id:"cons_1_1",qty:1,expiration:1}
                 ],
                 lenus:[
-                    {id:"cons_1_1",qty:1,opsleteIn:22},
-                    {id:"cons_1_2",qty:1,opsleteIn:88},
-                    {id:"cons_1_3",qty:2,opsleteIn:44},
-                    {id:"cons_1_4",qty:5,opsleteIn:77},
-                    {id:"cons_1_5",qty:1,opsleteIn:33},
-                    {id:"cons_2_1",qty:1,opsleteIn:77},
-                    {id:"cons_2_3",qty:2,opsleteIn:22},
-                    {id:"cons_2_4",qty:1,opsleteIn:68},
-                    {id:"cons_2_2",qty:1,opsleteIn:25}
+                    {id:"cons_1_1",qty:1,expiration:100},
+                    {id:"cons_1_2",qty:1,expiration:100},
+                    {id:"cons_1_3",qty:1,expiration:100},
+                    {id:"cons_1_4",qty:1,expiration:100},
+                    {id:"cons_1_5",qty:1,expiration:100},
+                    {id:"cons_2_1",qty:1,expiration:100},
+                    {id:"cons_2_3",qty:1,expiration:100},
+                    {id:"cons_2_4",qty:1,expiration:100},
+                    {id:"cons_2_2",qty:1,expiration:100},
+                    {id:"misc_4_1",qty:1,expiration:100},
+                    {id:"misc_4_2",qty:1,expiration:100},
+                    {id:"misc_4_3",qty:1,expiration:100},
+                    {id:"misc_4_4",qty:1,expiration:100},
+                    {id:"misc_4_5",qty:1,expiration:100}
                 ],
                 sirena:[
-                    {id:"cons_1_1",qty:1,opsleteIn:31},
-                    {id:"cons_1_2",qty:1,opsleteIn:9},
-                    {id:"cons_1_3",qty:2,opsleteIn:77},
-                    {id:"cons_1_5",qty:1,opsleteIn:34},
-                    {id:"cons_2_1",qty:1,opsleteIn:89},
-                    {id:"cons_2_2",qty:1,opsleteIn:323},
-                    {id:"cons_2_4",qty:1,opsleteIn:777},
-                    {id:"cons_2_5",qty:1,opsleteIn:33},
+
                 ],
                 dea:[
-                    {id:"cons_1_1",qty:1,opsleteIn:99},
-                    {id:"cons_1_2",qty:1,opsleteIn:322},
-                    {id:"cons_1_3",qty:1,opsleteIn:772},
-                    {id:"cons_1_4",qty:1,opsleteIn:390},
-                    {id:"cons_1_5",qty:1,opsleteIn:30},
-                    {id:"cons_2_1",qty:1,opsleteIn:70},
-                    {id:"cons_2_2",qty:1,opsleteIn:25},
-                    {id:"cons_2_3",qty:1,opsleteIn:87},
-                    {id:"cons_2_4",qty:1,opsleteIn:32},
-                    {id:"cons_2_5",qty:1,opsleteIn:311},
-                    {id:"misc_4_1",qty:1,opsleteIn:88},
-                    {id:"misc_4_2",qty:1,opsleteIn:356},
-                    {id:"misc_4_3",qty:1,opsleteIn:3},
-                    {id:"misc_4_4",qty:1,opsleteIn:68},
-                    {id:"misc_4_5",qty:1,opsleteIn:66}
+
                 ],
                 sao:[
-                    {id:"cons_1_1",qty:3,opsleteIn:32},
-                    {id:"cons_1_2",qty:1,opsleteIn:10},
-                    {id:"cons_1_3",qty:10,opsleteIn:55},
-                    {id:"cons_1_4",qty:1,opsleteIn:22},
-                    {id:"cons_1_5",qty:12,opsleteIn:37},
-                    {id:"cons_2_1",qty:1,opsleteIn:55}
+
                 ],
                 klr:[],
                 tomoru:[],

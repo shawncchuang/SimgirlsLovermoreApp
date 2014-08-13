@@ -75,7 +75,15 @@ package
                 mimeType="application/x-font-truetype",
                 embedAsCFF="false")]
         public static const ErbosDracoTTF:String;
-		
+
+        [Embed(source="../assets/fonts/MyriadPro-Regular.otf",
+                fontName="SimMyriadPro",
+                mimeType="application/x-font-truetype",
+                embedAsCFF="false")]
+        public static const SimMyriadPro:String;
+
+
+
 		private var manager:Boolean=false;
 		public static var verifyKey:String;
 		private var longinUI:MovieClip;

@@ -158,27 +158,32 @@ package controller
 		[Embed(source="../../media/textures/icons/substitutes.png")]
 		public static const Substitutes:Class;
 		
-		[Embed(source="../../media/textures/icons/network-64.png")]
+		[Embed(source="../../media/textures/icons/menu_network.png")]
 		public static const IconNetwork:Class;
 		
-		[Embed(source="../../media/textures/icons/sign-up.png")]
+		[Embed(source="../../media/textures/icons/menu_protfile.png")]
 		public static const IconProfileScene:Class;
 		
-		[Embed(source="../../media/textures/icons/phone-icon.png")]
+		[Embed(source="../../media/textures/icons/menu_contacts.png")]
 		public static const IconContacts:Class;
 		
-		[Embed(source="../../media/textures/icons/Icon-calendar-red_and_white.png")]
+		[Embed(source="../../media/textures/icons/menu_calendar.png")]
 		public static const IconCalendar:Class;
 		
-		[Embed(source="../../media/textures/icons/Windows_Live_Gallery.png")]
+		[Embed(source="../../media/textures/icons/menu_photos.png")]
 		public static const IconPhotos:Class;
 		
-		[Embed(source="../../media/textures/icons/Message-already-read.png")]
+		[Embed(source="../../media/textures/icons/menu_mail.png")]
 		public static const IconMail:Class;
+
+        [Embed(source="../../media/textures/icons/menu_option.png")]
+        public static const IconOption:Class;
 		
-		[Embed(source="../../media/textures/icons/Setting-icon.png")]
-		public static const IconOption:Class;
-		
+		[Embed(source="../../media/textures/icons/title_icon_menu.png")]
+		public static const IconMenuTitle:Class;
+        [Embed(source="../../media/textures/icons/title_icon_profile.png")]
+        public static const IconProfileTitle:Class;
+
 		[Embed(source="../../media/textures/icons/pro_empty.png")]
 		public static const ProEmpty:Class;
 		
@@ -336,7 +341,20 @@ package controller
 		
 		[Embed(source="../../media/textures/icons/icon_skillPts1.png")]
 		public static const SkillPtsValueIcon:Class;
-		/*------------------icons-------------------------------------------------*/
+
+        [Embed(source="../../assets/images/items/cons_1_1.png")]
+        public static const Cons1_1:Class;
+
+        [Embed(source="../../media/textures/icons/prevBtn.png")]
+        public static const IconPrevBtn:Class;
+
+
+        [Embed(source="../../media/textures/icons/menu_mini_bg.xml", mimeType="application/octet-stream")]
+        public static const MiniMenusBgXML:Class;
+        [Embed(source="../../media/textures/icons/menu_mini_bg.png")]
+        public static const MiniMenusBg:Class;
+
+        /*------------------icons-------------------------------------------------*/
 		
 		
 		/*------------------characters-------------------------------------------------*/
@@ -548,6 +566,9 @@ package controller
 		 
 		[Embed(source="../../media/textures/panels/menu_title.png")]
 		public static const MenuTitle:Class;
+
+        [Embed(source="../../media/textures/panels/menu_title_bg.png")]
+        public static const MenuTitleBG:Class;
 		
 		[Embed(source="../../media/textures/panels/profile_title.png")]
 		public static const ProfileTitle:Class;
@@ -584,7 +605,16 @@ package controller
 		
 		[Embed(source="../../media/textures/panels/mask.png")]
 		public static const SceneMask:Class;
-	
+
+        [Embed(source="../../media/textures/panels/footerBg.png")]
+        public static const FooterBg:Class;
+
+        [Embed(source="../../media/textures/panels/profile_character_bg.png")]
+        public static const ProfileChBg:Class;
+
+
+
+
 		/*-------------------panels-------------------------------------------------------------------*/
 		
 		
@@ -674,7 +704,18 @@ package controller
 		
 		[Embed(source="../../media/textures/panels/panel_skills_img.png")]
 		public static const PanelSkillsStore:Class;
-		/*-------------------panels-------------------------------------------------------------------*/
+
+
+        [Embed(source="../../media/textures/panels/menu_bg_effect.png")]
+        public static const MenuBgEffect:Class;
+
+
+        [Embed(source="../../media/textures/panels/menu_center_frame.png")]
+        public static const MenuCenterFrame:Class;
+
+
+
+        /*-------------------panels-------------------------------------------------------------------*/
 		
 		//[Embed(source="../../media/textures/photos/watch.jpg")]
 		[Embed(source="../../media/textures/photos/CEIL_cat.jpg")]

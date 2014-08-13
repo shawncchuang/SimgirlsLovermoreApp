@@ -103,9 +103,12 @@ public class ProfileScene extends Scenes
     //skills tag form arrow
     private var left_arrow:Button;
     private var right_arrow:Button;
-    private var font:String="SimNeogreyMedium";
+    private var font:String="SimMyriadPro";
     private var skillexcbox:Sprite;
     public static var SKILL_EXC:String="skill_exc";
+
+    private var templete:MenuTemplate;
+    private var chbg:Image;
     public static function set CharacterName(str:String):void
     {
         ch_name=str;
@@ -130,7 +133,7 @@ public class ProfileScene extends Scenes
         initSkillsData();
 
         initProIcons();
-        initCancelHandle();
+        //initCancelHandle();
 
 
 
@@ -155,6 +158,20 @@ public class ProfileScene extends Scenes
         scencom.start();
         scencom.disableAll();
 
+        templete=new MenuTemplate();
+        templete.font=font;
+        templete.cate="PROFILE";
+        templete.addBackground();
+        var attrs:Array=[{from:new Point(-460,110),to:new Point(-150,110)},
+            {from:new Point(1500,151),to:new Point(1170,410)}];
+        templete.backgroundEffectFadein(attrs);
+        templete.addTitlebar(new Point(0,82));
+        templete.addFooter();
+        templete.addBackStepButton(doCannelHandler);
+        templete.addTitleIcon({from:new Point(116,82),to:new Point(116,82)});
+        templete.addMiniMenu();
+        addChild(templete);
+
 
         panelbase=new Sprite();
         panelbase.x=374;
@@ -172,17 +189,17 @@ public class ProfileScene extends Scenes
         panelbase.addChild(panelAssets);
         panelbase.addChild(panelSkills);
 
-        var title_texture:Texture=Assets.getTexture("ProfileTitle");
-        var title:Image=new Image(title_texture);
-        title.y=21;
-        addChild(title);
 
-        nametile=new TextField(1024,34,"Primero Lovemore’s Profile",font,25,0xFFFFFF);
-        nametile.hAlign="left"
-        nametile.x=18;
-        nametile.y=25;
-        addChild(nametile);
-        updateTitle();
+
+
+        /*
+         nametile=new TextField(1024,34,"Primero Lovemore’s Profile",font,25,0xFFFFFF);
+         nametile.hAlign="left"
+         nametile.x=18;
+         nametile.y=25;
+         addChild(nametile);
+         updateTitle();
+         */
 
 
         //add tag hit area
@@ -221,38 +238,40 @@ public class ProfileScene extends Scenes
 
 
     }
-    private function updateTitle():void
-    {
-        var savedata:SaveGame=FloxCommand.savegame;
+    /*
+     private function updateTitle():void
+     {
+     var savedata:SaveGame=FloxCommand.savegame;
 
-        var last_name:String=Config.characters[ch_index];
-
-
-        var first_name:String="Lovermore";
-        if(ch_index==-1)
-        {
-            //player
-            last_name=savedata.last_name;
-            first_name=savedata.first_name;
-        }
-        else
-        {
-            if(last_name=="sao")
-            {
-                first_name="Black";
-            }
-            else if(last_name=="zack")
-            {
-                first_name="Krieg";
-
-            }
-        }
-        //if
-        DebugTrace.msg("ProfileScene.updateTitle name:"+last_name+" "+first_name+"’s Profile")
-        nametile.text=last_name+" "+first_name;
+     var last_name:String=Config.characters[ch_index];
 
 
-    }
+     var first_name:String="Lovermore";
+     if(ch_index==-1)
+     {
+     //player
+     last_name=savedata.last_name;
+     first_name=savedata.first_name;
+     }
+     else
+     {
+     if(last_name=="sao")
+     {
+     first_name="Black";
+     }
+     else if(last_name=="zack")
+     {
+     first_name="Krieg";
+
+     }
+     }
+     //if
+     DebugTrace.msg("ProfileScene.updateTitle name:"+last_name+" "+first_name+"’s Profile")
+     nametile.text=last_name+" "+first_name;
+
+
+     }
+     */
     private function doChageedTag(e:Event):void
     {
         var temp:Array=["person","assets","skills"];
@@ -415,6 +434,7 @@ public class ProfileScene extends Scenes
         this.swapChildren(panelbase,chmodel);
         this.swapChildren(panelbase,basemodel);
 
+
         initAssetesForm();
 
         assets.visible=false;
@@ -457,8 +477,6 @@ public class ProfileScene extends Scenes
         }
         CharacterName=chName
         casshtext.text=DataContainer.currencyFormat(cash);
-
-
 
 
     }
@@ -916,7 +934,7 @@ public class ProfileScene extends Scenes
             ch_index=Config.characters.indexOf(target.name);
             character=target.name.toLowerCase();
             CharacterName=character;
-            updateTitle();
+            // updateTitle();
             updateData();
             updateCharacter();
             updateAssets();
@@ -1051,17 +1069,19 @@ public class ProfileScene extends Scenes
 
         var modelRec:Rectangle=Config.modelObj[gender];
 
+        basemodel=new Sprite();
+        basemodel.x=54
+        basemodel.y=210;
+        addChild(basemodel);
+
+
         //other character
         chmodel=new Sprite();
-        chmodel.y=50;
+        chmodel.clipRect=new Rectangle(0,0,356,540);
+        chmodel.x=5;
+        chmodel.y=120;
         addChild(chmodel);
 
-
-        basemodel=new Sprite();
-
-        basemodel.x=54
-        basemodel.y=115;
-        addChild(basemodel);
 
 
         var modelAttr:Object=new Object();
@@ -1075,7 +1095,7 @@ public class ProfileScene extends Scenes
         drawcom.updateBaseModel("Pants");
         drawcom.updateBaseModel("Clothes");
         drawcom.updateBaseModel("Features");
-        basemodel.clipRect=new Rectangle(0,-30,276,575);
+        basemodel.clipRect=new Rectangle(0,-30,276,470);
 
 
     }
@@ -1083,6 +1103,7 @@ public class ProfileScene extends Scenes
     {
         basemodel.visible=false;
         chmodel.visible=true;
+
         if(ch_index==-1)
         {
             basemodel.visible=true;
@@ -1102,10 +1123,12 @@ public class ProfileScene extends Scenes
             chmc.name="character";
             chmc.width=356;
             chmc.height=608;
-            chmodel.addChild(chmc)
+
+            chmodel.addChild(chmc);
+
         }
 
-
+      //  this.swapChildren(chmodel,chbg);
     }
     private function checkLimit(index:Number,pages:Number,type:String):Number
     {
