@@ -26,6 +26,7 @@ import starling.textures.Texture;
 
 public class MenuTemplate extends Sprite{
 
+
     public static var EFFECT_BG_FADEOUT:String="effect_bg_fadeout";
     public  static var EFFECT_TITLEBAR_FADEOUT:String="effect_titlebar_fadeout";
     public  static var EFFECT_TITLEICON_FADEOUT:String="effect_titleicon_fadeout";
@@ -203,21 +204,76 @@ public class MenuTemplate extends Sprite{
     }
 
     public function addMiniMenu():void{
+        var pos:Object={"PROFILE":new Point(-27,-40),
+            "CONTACTS":new Point(-50,-3),
+            "CALENDER":new Point(-26,46),
+            "PHOTOS":new Point(25,46),
+            "MESSAGING":new Point(50.5,2),
+            "SETTING":new Point(24,-41)
+        }
 
-
-        var xml:XML=Assets.getAtalsXML("MiniMenusBgXML");
-        var bgTexture:Texture=getTexture("MiniMenusBg");
-        var bgTextAltas:TextureAtlas=new TextureAtlas(bgTexture,xml);
+        var xml:XML=Assets.getAtalsXML("MiniMenusXML");
+        var mmTexture:Texture=getTexture("MiniMenus");
+        var mmTextAltas:TextureAtlas=new TextureAtlas(mmTexture,xml);
 
         var mini_menu:Sprite=new Sprite();
         mini_menu.x=930.5;
         mini_menu.y=79.5;
-        var bg:Image=new Image(bgTextAltas.getTexture(cate.toLowerCase()));
+        var bg:Image=new Image(mmTextAltas.getTexture(this.cate.toLowerCase()));
         bg.pivotX=bg.width/2;
         bg.pivotY=bg.height/2;
-
+        mini_menu.scaleX=0.1;
+        mini_menu.scaleY=0.1;
+        mini_menu.alpha=0;
         mini_menu.addChild(bg);
         addChild(mini_menu);
+
+        var minibgTween:Tween=new Tween(mini_menu,0.5,Transitions.EASE_IN_OUT_BACK);
+        minibgTween.scaleTo(1);
+        minibgTween.animate("alpha",1);
+        Starling.juggler.add(minibgTween);
+
+
+        for(var _cate:String in pos){
+            if(this.cate!=_cate) {
+                var iconTexture:Texture=mmTextAltas.getTexture("icon"+_cate);
+                var mmIcon:Button = new Button(iconTexture);
+                mmIcon.name=_cate;
+                mmIcon.pivotX=mmIcon.width/2;
+                mmIcon.pivotY=mmIcon.height/2;
+                mmIcon.x = pos[_cate].x;
+                mmIcon.y = pos[_cate].y;
+                mini_menu.addChild(mmIcon);
+                mmIcon.addEventListener(TouchEvent.TOUCH,onTouchMiniMenu);
+            }
+        }
+
+
+    }
+    private function  onTouchMiniMenu(e:TouchEvent):void {
+
+        var icon:Button = e.currentTarget as Button;
+
+        var hovor:Touch = e.getTouch(icon, TouchPhase.HOVER);
+        var began:Touch = e.getTouch(icon, TouchPhase.BEGAN);
+
+
+        if (hovor){
+            var tween:Tween=new Tween(icon,0.2,Transitions.EASE_IN_OUT_BACK);
+            tween.scaleTo(1.1);
+            Starling.juggler.add(tween);
+        }
+        else{
+            tween=new Tween(icon,0.2,Transitions.EASE_IN_OUT_BACK);
+            tween.scaleTo(1);
+            Starling.juggler.add(tween);
+        }
+
+        if(began){
+
+        }
+
+
     }
 
 

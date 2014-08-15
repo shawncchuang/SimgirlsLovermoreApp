@@ -109,54 +109,43 @@ package views
 		}
 		private function initBaseModel():void
 		{
-			
-			var savedata:SaveGame=FloxCommand.savegame;
-			var gender:String=savedata.avatar.gender;
-			
-			var modelObj:Object={"Male":new Rectangle(0,-20,276,660),
-				"Female":new Rectangle(0,-20,262,613)}
-			var modelRec:Rectangle=modelObj[gender];
-			
-			chmodel=new Sprite();
-			chmodel.y=50;
-			addChild(chmodel);
-			
-			
-			basemodel=new Sprite();
-			basemodel.x=modelRec.x;
-			basemodel.y=modelRec.y;
-			addChild(basemodel);
-			
-			
-			var modelAttr:Object=new Object();
-			modelAttr.gender=gender;
-			modelAttr.width=modelRec.width;
-			modelAttr.height=modelRec.height;
-			
-			drawcom.drawCharacter(basemodel,modelAttr);
-			drawcom.updateBaseModel("Eyes");
-			drawcom.updateBaseModel("Hair");
-			drawcom.updateBaseModel("Pants");
-			drawcom.updateBaseModel("Clothes");
-			drawcom.updateBaseModel("Features");
-			
-			
-			copyModel=new Sprite();
-			addChild(copyModel);
-			
-			var posObj:Object={"Male":new Point(55,100),
-				"Female":new Point(50,140)
-			}
-			
-			drawcom.playerModelCopy(copyModel,posObj[gender]);
-			
-			if(gender=="Female")
-			{
-				basemodel.x=modelRec.x-25;
-			}
-			//if
-			 
-		}
+
+            var savedata:SaveGame=FloxCommand.savegame;
+            var gender:String=savedata.avatar.gender;
+
+
+            var modelRec:Rectangle=Config.modelObj[gender];
+
+            basemodel=new Sprite();
+            basemodel.x=54
+            basemodel.y=180;
+            addChild(basemodel);
+
+
+            //other character
+            chmodel=new Sprite();
+            chmodel.clipRect=new Rectangle(0,0,356,540);
+            chmodel.x=5;
+            chmodel.y=120;
+            addChild(chmodel);
+
+
+
+            var modelAttr:Object=new Object();
+            modelAttr.gender=gender;
+            modelAttr.width=modelRec.width;
+            modelAttr.height=modelRec.height;
+
+            drawcom.drawCharacter(basemodel,modelAttr);
+            drawcom.updateBaseModel("Hair");
+            drawcom.updateBaseModel("Eyes");
+            drawcom.updateBaseModel("Pants");
+            drawcom.updateBaseModel("Clothes");
+            drawcom.updateBaseModel("Features");
+            basemodel.clipRect=new Rectangle(0,-30,276,500);
+
+
+        }
 		private function initSkillsData():void
 		{
 			//skills tag
@@ -275,63 +264,83 @@ package views
 		}
 		private function initProIcons():void
 		{
-			
-			var savedata:SaveGame=FloxCommand.savegame;
-			var gender:String=savedata.avatar.gender;
-			
-			player_icon=new Sprite();
-			player_icon.name="Player";
-			addChild(player_icon);
-			var pos:Point=new Point(60,710);
-			drawcom.drawPlayerProfileIcon(player_icon,1,pos);
-			
-			//drawcom.drawPlayerProfileIcon(player_icon,1,new Point(54,50));
-			player_icon.addEventListener(TouchEvent.TOUCH,onTouchCharaterIcon);
-			
-			
-			
-			var characters:Array=Config.characters;
-			for(var i:uint=0;i<characters.length;i++)
-			{
-				var name:String=characters[i].toLowerCase();
-				var pts:Number=Number(savedata.pts[name]);
-				var enable_ch:String="ProEmpty";
-				var enabled:Boolean=false;
-				
-				var sprite:Sprite=new Sprite();
-				sprite.name=characters[i];
-				sprite.useHandCursor=enabled;
-				sprite.x=i*100+160;
-				sprite.y=710;
-				
-				if(pts!=-1)
-				{
-					enabled=true;
-					drawcom.drawCharacterProfileIcon(sprite,characters[i],0.45);
-				}
-				else
-				{	
-					var texture:Texture=Assets.getTexture(enable_ch);
-					var img:Image=new Image(texture);
-					img.smoothing=TextureSmoothing.TRILINEAR;
-					img.pivotX=img.width/2;
-					img.pivotY=img.height/2;
-					img.scaleX=0.45;
-					img.scaleY=0.45;
-					sprite.addChild(img);
-				}
-				//if
-				
-				
-				addChild(sprite);
-			
-				if(enabled)
-				{
-					sprite.addEventListener(TouchEvent.TOUCH,onTouchCharaterIcon);
-				}
-				//if
-			}
-			//for
+
+            var savedata:SaveGame=FloxCommand.savegame;
+            var gender:String=savedata.avatar.gender;
+
+            var modelObj:Object=Config.modelObj;
+            var modelRec:Rectangle=modelObj[gender];
+
+
+            var modelAttr:Object=new Object();
+            modelAttr.gender=gender;
+            modelAttr.width=modelRec.width;
+            modelAttr.height=modelRec.height;
+
+            var _basemodel:Sprite=new Sprite();
+            drawcom.drawCharacter(_basemodel,modelAttr);
+            drawcom.updateBaseModel("Eyes");
+            drawcom.updateBaseModel("Hair");
+            drawcom.updateBaseModel("Features");
+
+            player_icon=new Sprite();
+            player_icon.name="Player";
+
+            var dp:Point=new Point(-85,-21);
+            if(gender=="Female")
+            {
+                dp=new Point(-82,-6);
+            }
+            drawcom.drawPlayerProfileIcon(player_icon,1,new Point(60,710),dp);
+            player_icon.scaleX=0.89;
+            player_icon.scaleY=0.89;
+            player_icon.x=180;
+            addChild(player_icon);
+            player_icon.clipRect=new Rectangle(-55,-(player_icon.height/2),player_icon.width,player_icon.height);
+            player_icon.addEventListener(TouchEvent.TOUCH,onTouchCharaterIcon);
+
+
+
+            var characters:Array=Config.characters;
+            for(var i:uint=0;i<characters.length;i++)
+            {
+                var name:String=characters[i].toLowerCase();
+                var pts:Number=Number(savedata.pts[name]);
+                var enable_ch:String="ProEmpty";
+                var enabled:Boolean=false;
+
+                var sprite:Sprite=new Sprite();
+                sprite.name=characters[i];
+                sprite.useHandCursor=enabled;
+                sprite.x=i*100+280;
+                sprite.y=710;
+
+                if(pts!=-1)
+                {
+                    enabled=true;
+                    drawcom.drawCharacterProfileIcon(sprite,characters[i],0.45);
+                }
+                else
+                {
+                    var texture:Texture=Assets.getTexture(enable_ch);
+                    var img:Image=new Image(texture);
+                    img.smoothing=TextureSmoothing.TRILINEAR;
+                    img.pivotX=img.width/2;
+                    img.pivotY=img.height/2;
+                    img.scaleX=0.45;
+                    img.scaleY=0.45;
+                    sprite.addChild(img);
+                }
+                //if
+
+                addChild(sprite);
+
+                if(enabled)
+                {
+                    sprite.addEventListener(TouchEvent.TOUCH,onTouchCharaterIcon);
+                }
+                //if
+            }
 			
 			
 		}

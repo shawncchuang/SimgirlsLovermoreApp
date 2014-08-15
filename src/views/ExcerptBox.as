@@ -55,7 +55,7 @@ package views
 					var assetsLog:Object=systemdata[id];
 					var excerpt:String=assetsLog.exc;
 					
-					DebugTrace.msg("ProfileScene.onUpdateExcerpt id:"+ id);
+					//DebugTrace.msg("ProfileScene.onUpdateExcerpt id:"+ id);
 					break
 				case "skill_card":
 					var skills:Object=flox.getSyetemData("skillsys");

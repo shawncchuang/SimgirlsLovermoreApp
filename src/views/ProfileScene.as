@@ -35,6 +35,7 @@ import starling.events.Touch;
 import starling.events.TouchEvent;
 import starling.events.TouchPhase;
 import starling.text.TextField;
+import starling.text.TextFieldAutoSize;
 import starling.textures.Texture;
 import starling.textures.TextureAtlas;
 import starling.textures.TextureSmoothing;
@@ -51,15 +52,15 @@ public class ProfileScene extends Scenes
     private var command:MainInterface=new MainCommand();
     private var base_sprite:Sprite;
     private var panelbase:Sprite;
-    private var panelProfile:MovieClip;
-    private var panelAssets:MovieClip;
-    private var panelSkills:MovieClip;
+    private var panelProfile:Image;
+    private var panelAssets:Image;
+    private var panelSkills:Image;
     private var tagsname:Array=["person","assets","skills"];
     private var character:String="player";
     private var disablesObj:Object={
-        "person":"0,195,300",
-        "assets":"0,104,300",
-        "skills":"0,104,209"
+        "person":"0,205,410",
+        "assets":"0,205,410",
+        "skills":"0,205,410"
     }
     private var currentTag:String="person";
     private var tagshit:Sprite;
@@ -78,11 +79,6 @@ public class ProfileScene extends Scenes
     private var excerptbox:Sprite;
 
     private var casshtext:TextField;
-    private var textF1:TextField;
-    private var textF2:TextField;
-    private var textF3:TextField;
-    private var textF4:TextField;
-    private var textF5:TextField;
     private var assetsSymbols:Array;
     private var items:Array;
     private var gifts:Array;
@@ -126,8 +122,8 @@ public class ProfileScene extends Scenes
         base_sprite.flatten();
 
         initLayout();
-
         initBaseModel();
+        initPanels();
         initPersonalData();
         initAsssetsData();
         initSkillsData();
@@ -173,33 +169,28 @@ public class ProfileScene extends Scenes
         addChild(templete);
 
 
+
+
+
+    }
+    private function initPanels():void
+    {
+
         panelbase=new Sprite();
-        panelbase.x=374;
-        panelbase.y=96;
+        panelbase.x=360;
+        panelbase.y=159;
         addChild(panelbase);
-        panelProfile=Assets.getDynamicAtlas("PanelProfile");
+        panelProfile=new Image(Assets.getTexture("PersonalInfo"));
         panelProfile.name="person";
-        panelAssets=Assets.getDynamicAtlas("PanelAssets");
+        panelAssets=new Image(Assets.getTexture("AssetsInfo"));
         panelAssets.name="assets";
         panelAssets.visible=false;
-        panelSkills=Assets.getDynamicAtlas("PanelSkills");
+        panelSkills=new Image(Assets.getTexture("SkillsInfo"));
         panelSkills.name="skills";
         panelSkills.visible=false;
         panelbase.addChild(panelProfile);
         panelbase.addChild(panelAssets);
         panelbase.addChild(panelSkills);
-
-
-
-
-        /*
-         nametile=new TextField(1024,34,"Primero Lovemore’s Profile",font,25,0xFFFFFF);
-         nametile.hAlign="left"
-         nametile.x=18;
-         nametile.y=25;
-         addChild(nametile);
-         updateTitle();
-         */
 
 
         //add tag hit area
@@ -211,8 +202,8 @@ public class ProfileScene extends Scenes
             var tagtexure:Texture=Assets.getTexture("Empty");
             var tagbtn:Button=new Button(tagtexure);
             tagbtn.name=tagsname[i];
-            tagbtn.width=105;
-            tagbtn.height=60;
+            tagbtn.width=200;
+            tagbtn.height=35;
             tagbtn.x=disablesObj[currentTag].split(",")[i];
             tagshit.addChild(tagbtn);
             panelbase.addChild(tagshit);
@@ -278,38 +269,24 @@ public class ProfileScene extends Scenes
         var target:Button=e.currentTarget as Button;
         currentTag=target.name;
         var top_target:Button=tagshit.getChildAt(2) as Button;
-        tagshit.swapChildren(target,top_target);
+        // tagshit.swapChildren(target,top_target);
         //DebugTrace.msg("ProfileScene.doChageedTag tag target:"+target.name);
         //var top:uint=tags.sortOn("index");
         var disableX:Array=disablesObj[target.name].split(",");
         //DebugTrace.msg("ProfileScene.doChageedTag tag disableX:"+disableX);
         for(var i:uint=0;i<tags.length;i++)
         {
-            var tag:Button=tagshit.getChildByName(tagsname[i]) as Button;
-            tag.width=195;
-            var panel:MovieClip=panelbase.getChildByName(tagsname[i]) as MovieClip;
+            // var tag:Button=tagshit.getChildByName(tagsname[i]) as Button;
+            // tag.width=195;
+            var panel:Image=panelbase.getChildByName(tagsname[i]) as Image;
             panel.visible=false;
         }
-        for(var j:uint=0;j<tags.length;j++)
-        {
-            tag=tagshit.getChildByName(tagsname[j]) as Button;
-            var index:uint=tagshit.getChildIndex(tag);
-            //DebugTrace.msg("ProfileScene.doChageedTag tag index:"+index);
 
-            if(index<2)
-            {
 
-                tag.width=105;
-            }
-            //if
-            tag.x=Number(disableX[j]);
-
-        }
-        //for
         panelProfile.visible=false;
         panelAssets.visible=false;
         panelSkills.visible=false;
-        var current_panel:MovieClip=panelbase.getChildByName(target.name) as MovieClip;
+        var current_panel:Image=panelbase.getChildByName(target.name) as Image;
         current_panel.visible=true;
         personal.visible=false;
         assets.visible=false;
@@ -330,6 +307,15 @@ public class ProfileScene extends Scenes
         //switch
 
     }
+    private var statusTxt:TextField;
+    private var relTxt:TextField;
+    private var relPointTxt:TextField;
+    private var rankTxt:TextField;
+    private var honorTxt:TextField;
+    private var seTxt:TextField;
+    private var loveTxt:TextField;
+    private var intTxt:TextField;
+    private var imgTxt:TextField;
     private function initPersonalData():void
     {
 
@@ -338,77 +324,76 @@ public class ProfileScene extends Scenes
 
         var format:Object=new Object();
         format.font=font;
-        format.size=20;
-        format.color=0xFFFFFF;
+
+        format.color=0x000000;
 
 
-        //status,relation,relation pts
-        textF1=new TextField(380,115,"",format.font,format.size,format.color);
-        textF1.hAlign="left"
-        textF1.x=38;
-        textF1.y=94;
-        personal.addChild(textF1)
+        format.size=30;
+        statusTxt=addTextField(personal,new Rectangle(120,60,100,34),format);
 
 
-        //rank,honor
-        textF2=new TextField(340,56,"",format.font,format.size,format.color);
-        textF2.hAlign="left"
-        textF2.x=112;
-        textF2.y=237;
-        personal.addChild(textF2);
-
-        //spirit energy,love
-        textF3=new TextField(340,56,"",format.font,format.size,format.color);
-        textF3.hAlign="left"
-        textF3.x=112;
-        textF3.y=320;
-        personal.addChild(textF3);
+        format.size=25;
+        relTxt=addTextField(personal,new Rectangle(418,115,100,30),format);
 
 
-        //intelligence
-        textF4=new TextField(340,28,"",format.font,format.size,format.color);
-        textF4.hAlign="left"
-        textF4.x=112;
-        textF4.y=403;
-        personal.addChild(textF4);
+        relPointTxt=addTextField(personal,new Rectangle(418,140,100,30),format);
 
-        //imgae
-        textF5=new TextField(340,28,"",format.font,format.size,format.color);
-        textF5.hAlign="left"
-        textF5.x=112;
-        textF5.y=463;
-        personal.addChild(textF5);
+        rankTxt=addTextField(personal,new Rectangle(418,197,100,30),format);
+
+        honorTxt=addTextField(personal,new Rectangle(418,223,100,30),format);
+
+        seTxt=addTextField(personal,new Rectangle(418,284,100,30),format);
+
+        loveTxt=addTextField(personal,new Rectangle(418,306,100,30),format);
+
+        intTxt=addTextField(personal,new Rectangle(418,371,100,30),format);
+
+        imgTxt=addTextField(personal,new Rectangle(418,433,100,30),format);
 
         updateData();
 
+    }
+    private function addTextField(target:Sprite,rec:Rectangle,format:Object):TextField
+    {
+
+        var txt:TextField=new TextField(rec.width,rec.height,"",font,format.size,format.color);
+        txt.hAlign="left";
+        txt.vAlign="center";
+        txt.autoSize=TextFieldAutoSize.HORIZONTAL;
+        txt.x=rec.x;
+        txt.y=rec.y;
+        target.addChild(txt);
+
+        return txt
     }
     private function updateData():void
     {
 
 
         var savedata:SaveGame=flox.getSaveData();
-        var status:String="Status: "+savedata.status;
-        var rel:String="Relation: "+savedata.rel[character];
-        var rel_pts:String="Relation Pts: "+savedata.rel[character];
-        var txt1:String=status+"\n\n"+rel+"\n"+rel_pts;
-        textF1.text=txt1;
+        var status:String=savedata.status;
+        var rel:String=String(savedata.rel[character]);
+        var rel_pts:String=String(savedata.pts[character]);
+        var rank:String=savedata.rank;
+        var honor:String=savedata.honor[character];
 
+        var spt_eng:String=savedata.se[character]+"/99999";
+        var love:String=String(savedata.love[character]);
 
-        var rank:String="Blackspears Rank: "+savedata.rank;
-        var honor:String="Honor: "+savedata.honor[character];
-        var txt2:String=rank+"\n"+honor;
-        textF2.text=txt2;
+        var intStr:String=String(savedata.int[character]);
+        var imgStr:String=String(savedata.image[character]);
 
-        var spt_eng:String="Spirit Energy: "+savedata.se[character]+"/99999";
-        var love:String="Love: "+savedata.love[character];
-        var txt3:String=spt_eng+"\n"+love;
-        textF3.text=txt3;
+        statusTxt.text=status;
+        relTxt.text=rel;
+        relPointTxt.text=rel_pts;
+        rankTxt.text=rank;
+        honorTxt.text=honor;
 
-        var int:String="Intelligence: "+savedata.int[character];
-        textF4.text=int;
+        seTxt.text=spt_eng;
+        loveTxt.text=love;
+        intTxt.text=intStr;
+        imgTxt.text=imgStr;
 
-        var img:String="Image: "+savedata.image[character];
-        textF5.text=img;
     }
     private function initAsssetsData():void
     {
@@ -423,16 +408,10 @@ public class ProfileScene extends Scenes
         var format:Object=new Object();
         format.font=font;
         format.size=20;
-        format.color=0xFFFFFF;
-        format.txt=	DataContainer.currencyFormat(cash);
-        casshtext=new TextField(380,30,format.txt,format.font,format.size,format.color);
-        casshtext.hAlign="left"
-        casshtext.x=149;
-        casshtext.y=81;
-        assets.addChild(casshtext);
+        format.color=0x000000;
 
-        this.swapChildren(panelbase,chmodel);
-        this.swapChildren(panelbase,basemodel);
+        casshtext=addTextField(assets,new Rectangle(117,62,158,25),format);
+        casshtext.text=DataContainer.currencyFormat(cash);
 
 
         initAssetesForm();
@@ -441,7 +420,6 @@ public class ProfileScene extends Scenes
 
 
     }
-
 
     private function initAssetesForm():void
     {
@@ -480,337 +458,341 @@ public class ProfileScene extends Scenes
 
 
     }
-    private function initArrowCtrl():void
-    {
-        var arrctrls:Array=new Array();
-        var arrow_texture:Texture=Assets.getTexture("IconArrow");
-        var item_l_arr:Button=new Button(arrow_texture);
-        item_l_arr.name="Left_Item";
-        item_l_arr.x=11;
-        item_l_arr.y=172;
-        var item_r_arr:Button=new Button(arrow_texture);
-        item_r_arr.name="Right_Item";
-        item_r_arr.x=607;
-        item_r_arr.y=172;
-        item_r_arr.scaleX=-1;
-        arrctrls.push(item_l_arr);
-        arrctrls.push(item_r_arr);
+    /*
+     private function initArrowCtrl():void
+     {
+     var arrctrls:Array=new Array();
+     var arrow_texture:Texture=Assets.getTexture("IconArrow");
+     var item_l_arr:Button=new Button(arrow_texture);
+     item_l_arr.name="Left_Item";
+     item_l_arr.x=11;
+     item_l_arr.y=172;
+     var item_r_arr:Button=new Button(arrow_texture);
+     item_r_arr.name="Right_Item";
+     item_r_arr.x=607;
+     item_r_arr.y=172;
+     item_r_arr.scaleX=-1;
+     arrctrls.push(item_l_arr);
+     arrctrls.push(item_r_arr);
 
-        var gift_l_arr:Button=new Button(arrow_texture);
-        gift_l_arr.name="Left_Gift";
-        gift_l_arr.x=11;
-        gift_l_arr.y=280;
-        var gift_r_arr:Button=new Button(arrow_texture);
-        gift_r_arr.name="Right_Gift";
-        gift_r_arr.x=607;
-        gift_r_arr.y=280;
-        gift_r_arr.scaleX=-1;
-        arrctrls.push(gift_l_arr);
-        arrctrls.push(gift_r_arr)
+     var gift_l_arr:Button=new Button(arrow_texture);
+     gift_l_arr.name="Left_Gift";
+     gift_l_arr.x=11;
+     gift_l_arr.y=280;
+     var gift_r_arr:Button=new Button(arrow_texture);
+     gift_r_arr.name="Right_Gift";
+     gift_r_arr.x=607;
+     gift_r_arr.y=280;
+     gift_r_arr.scaleX=-1;
+     arrctrls.push(gift_l_arr);
+     arrctrls.push(gift_r_arr)
 
-        //accessories
-        var acc_l_arr:Button=new Button(arrow_texture);
-        acc_l_arr.name="Left_Accessories";
-        acc_l_arr.x=11;
-        acc_l_arr.y=388;
-        var acc_r_arr:Button=new Button(arrow_texture);
-        acc_r_arr.name="Right_Accessories";
-        acc_r_arr.x=607;
-        acc_r_arr.y=388;
-        acc_r_arr.scaleX=-1;
-        arrctrls.push(acc_l_arr);
-        arrctrls.push(acc_r_arr);
+     //accessories
+     var acc_l_arr:Button=new Button(arrow_texture);
+     acc_l_arr.name="Left_Accessories";
+     acc_l_arr.x=11;
+     acc_l_arr.y=388;
+     var acc_r_arr:Button=new Button(arrow_texture);
+     acc_r_arr.name="Right_Accessories";
+     acc_r_arr.x=607;
+     acc_r_arr.y=388;
+     acc_r_arr.scaleX=-1;
+     arrctrls.push(acc_l_arr);
+     arrctrls.push(acc_r_arr);
 
-        //real estate & vehicles
-        var estate_l_arr:Button=new Button(arrow_texture);
-        estate_l_arr.name="Left_Estate";
-        estate_l_arr.x=11;
-        estate_l_arr.y=496;
-        var estate_r_arr:Button=new Button(arrow_texture);
-        estate_r_arr.name="Right_Estate";
-        estate_r_arr.x=607;
-        estate_r_arr.y=496;
-        estate_r_arr.scaleX=-1;
-        arrctrls.push(estate_l_arr);
-        arrctrls.push(estate_r_arr);
-
-
-        for(var i:uint=0;i<arrctrls.length;i++)
-        {
-            var arrow:Button=arrctrls[i];
-
-            arrow.addEventListener(Event.TRIGGERED,doArrowTiggered);
-            assets.addChild(arrow);
-            assetsSymbols.push(arrow);
-
-        }
-        //for
-        /*for(var j:uint;j<arrctrls.length;j++)
-         {
-         arrow=arrctrls[j];
-         var type:String=arrow.name.split("_")[1];
-         checkLimit(0,1,type);
-         }*/
-    }
-
-    private function intiEquipmentItems():void
-    {
+     //real estate & vehicles
+     var estate_l_arr:Button=new Button(arrow_texture);
+     estate_l_arr.name="Left_Estate";
+     estate_l_arr.x=11;
+     estate_l_arr.y=496;
+     var estate_r_arr:Button=new Button(arrow_texture);
+     estate_r_arr.name="Right_Estate";
+     estate_r_arr.x=607;
+     estate_r_arr.y=496;
+     estate_r_arr.scaleX=-1;
+     arrctrls.push(estate_l_arr);
+     arrctrls.push(estate_r_arr);
 
 
-        renderAssetsbar("items");
-        updatebarPage("Item");
-    }
-    private function initGifts():void
-    {
-        renderAssetsbar("gifts");
-        updatebarPage("Gift");
-    }
-    private function initAccessories():void
-    {
-        renderAssetsbar("accessories");
-        updatebarPage("Accessories");
+     for(var i:uint=0;i<arrctrls.length;i++)
+     {
+     var arrow:Button=arrctrls[i];
 
-    }
-    private function initEstate():void
-    {
-        renderAssetsbar("estate");
-        updatebarPage("Estate");
+     arrow.addEventListener(Event.TRIGGERED,doArrowTiggered);
+     assets.addChild(arrow);
+     assetsSymbols.push(arrow);
+
+     }
+     //for
+
+     }
+     */
+    /*
+     private function intiEquipmentItems():void
+     {
 
 
-    }
-    private function renderAssetsbar(type:String):void
-    {
-        DebugTrace.msg("ProfileScene.renderAssetsbar type:"+type+" -----------------");
-        _type=type;
-        var savedata:SaveGame=FloxCommand.savegame;
-        var _y:Number=0;
-        var list:Array=new Array();
-        var xml:XML;
-        var texture:Texture;
-        switch(type)
-        {
-            case "items":
-                _y=144;
-                list=items=savedata.items[character].split(",");
+     renderAssetsbar("items");
+     updatebarPage("Item");
+     }
+     private function initGifts():void
+     {
+     renderAssetsbar("gifts");
+     updatebarPage("Gift");
+     }
+     private function initAccessories():void
+     {
+     renderAssetsbar("accessories");
+     updatebarPage("Accessories");
 
-                itemspage=uint(items.length/7);
-                if(items.length%7>0)
-                {
-                    itemspage++;
-                }
-                //DebugTrace.msg("ProfileScene.renderAssetsbar items:"+items)
-                xml=Assets.getAtalsXML("ItemsXML");
-                texture=Assets.getTexture("Items");
-                checkLimit(0,itemspage,"Item");
-                break
-            case "gifts":
-                _y=252;
-                list=gifts=savedata.gifts[character].split(",");
-                giftspage=uint(gifts.length/7);
-                if(gifts.length%7>0)
-                {
-                    giftspage++;
-                }
-                xml=Assets.getAtalsXML("GiftsXML");
-                texture=Assets.getTexture("Gifts");
-                checkLimit(0,giftspage,"Gift");
-                break
-            case "accessories":
-                _y=362;
-                list=acc=savedata.accessories[character].split(",");
-                accpage=uint(acc.length/7);
-                if(acc.length%7>0)
-                {
-                    accpage++;
-                }
-                xml=Assets.getAtalsXML("AccessoriesXML");
-                texture=Assets.getTexture("Accessories");
-                checkLimit(0,accpage,"Accessories");
-                break
-            case "estate":
-                _y=469;
-                list=estate=savedata.estate[character].split(",");
-                estatepage=uint(estate.length/7);
-                if(estate.length%7>0)
-                {
-                    estatepage++;
-                }
-                xml=Assets.getAtalsXML("EstateXML");
-                texture=Assets.getTexture("Estate");
-                checkLimit(0,estatepage,"Estate");
-                break
-        }
-        //switch
-
-        var data_index:Number=savedata[type][character].indexOf(",");
-        DebugTrace.msg("ProfileScene.renderAssetsbar data_index:"+data_index);
-        if(data_index!=-1)
-        {
-            var atlas:TextureAtlas=new TextureAtlas(texture, xml);
-            for(var i:uint=0;i<list.length;i++)
-            {
-
-                texture=atlas.getTexture(list[i]);
-                var img:Image=new Image(texture);
-                img.name=list[i];
-                img.x=28+i*img.width;
-                img.y=_y;
-                assets.addChild(img);
-                assetsSymbols.push(img);
-                //filtercom.setSource(itemImg);
-                //filtercom.setShadow();
-            }
-            //for
-        }
-
-    }
-    private function doArrowTiggered(e:Event):void
-    {
-        var target:Button=e.currentTarget as Button;
-        var dir:String=target.name.split("_")[0];
-        var type:String=target.name.split("_")[1];
-        DebugTrace.msg("ProfileScene.doArrowTiggered dir:"+dir+" ; type:"+type);
-
-        switch(type)
-        {
-            case "Item":
-                if(dir=="Left")
-                {
-                    itemsindex--;
-                }
-                else
-                {
-                    itemsindex++;
-                }
-                DebugTrace.msg("ProfileScene.doArrowTiggered itemsindex:"+itemsindex);
-
-                itemsindex=checkLimit(itemsindex,itemspage,type);
-
-                DebugTrace.msg("ProfileScene.doArrowTiggered itemsindex:"+itemsindex+" ; itemspage:"+itemspage);
-                break
-            case "Gift":
-                if(dir=="Left")
-                {
-                    giftsindex--;
-                }
-                else
-                {
-                    giftsindex++;
-                }
-                giftsindex=checkLimit(giftsindex,giftspage,type);
-
-                break
-            case "Accessories":
-
-                if(dir=="Left")
-                {
-                    accindex--;
-                }
-                else
-                {
-                    accindex++;
-                }
-                accindex=checkLimit(accindex,accpage,type);
-
-                break
-            case "Estate":
-                if(dir=="Left")
-                {
-                    estateindex--;
-                }
-                else
-                {
-                    estateindex++;
-                }
-                estateindex=checkLimit(estateindex,estatepage,type);
-                break
-
-        }
-        //switch
-        updatebarPage(type);
+     }
+     private function initEstate():void
+     {
+     renderAssetsbar("estate");
+     updatebarPage("Estate");
 
 
-    }
+     }
+     */
+    /*
+     private function renderAssetsbar(type:String):void
+     {
+     DebugTrace.msg("ProfileScene.renderAssetsbar type:"+type+" -----------------");
+     _type=type;
+     var savedata:SaveGame=FloxCommand.savegame;
+     var _y:Number=0;
+     var list:Array=new Array();
+     var xml:XML;
+     var texture:Texture;
+     switch(type)
+     {
+     case "items":
+     _y=144;
+     list=items=savedata.items[character].split(",");
 
-    private function updatebarPage(type:String):void
-    {
-        var start_page:Number;
-        var end_page:Number;
-        var list:Array=new Array();
-        var index:Number;
-        var savedata:SaveGame=FloxCommand.savegame;
-        var data_index:Number=flox.getSaveData(_type)[character].indexOf(",");
-        switch(type)
-        {
-            case "Item":
-                start_page=itemsindex*7;
-                end_page=items.length-itemsindex*7;
-                list=items;
-                index=itemsindex;
-                break
-            case "Gift":
-                start_page=giftsindex*7;
-                end_page=gifts.length-giftsindex*7;
-                list=gifts;
-                index=giftsindex;
-                break
-            case "Accessories":
-                start_page=accindex*7;
-                end_page=acc.length-accindex*7;
-                list=acc;
-                index=accindex;
-                break
-            case "Estate":
-                start_page=estateindex*7;
-                end_page=estate.length-estateindex*7;
-                list=estate;
-                index=estateindex;
-                break
+     itemspage=uint(items.length/7);
+     if(items.length%7>0)
+     {
+     itemspage++;
+     }
+     //DebugTrace.msg("ProfileScene.renderAssetsbar items:"+items)
+     xml=Assets.getAtalsXML("ItemsXML");
+     texture=Assets.getTexture("Items");
+     checkLimit(0,itemspage,"Item");
+     break
+     case "gifts":
+     _y=252;
+     list=gifts=savedata.gifts[character].split(",");
+     giftspage=uint(gifts.length/7);
+     if(gifts.length%7>0)
+     {
+     giftspage++;
+     }
+     xml=Assets.getAtalsXML("GiftsXML");
+     texture=Assets.getTexture("Gifts");
+     checkLimit(0,giftspage,"Gift");
+     break
+     case "accessories":
+     _y=362;
+     list=acc=savedata.accessories[character].split(",");
+     accpage=uint(acc.length/7);
+     if(acc.length%7>0)
+     {
+     accpage++;
+     }
+     xml=Assets.getAtalsXML("AccessoriesXML");
+     texture=Assets.getTexture("Accessories");
+     checkLimit(0,accpage,"Accessories");
+     break
+     case "estate":
+     _y=469;
+     list=estate=savedata.estate[character].split(",");
+     estatepage=uint(estate.length/7);
+     if(estate.length%7>0)
+     {
+     estatepage++;
+     }
+     xml=Assets.getAtalsXML("EstateXML");
+     texture=Assets.getTexture("Estate");
+     checkLimit(0,estatepage,"Estate");
+     break
+     }
+     //switch
 
-        }
-        //switch
-        if(end_page>7)
-        {
-            end_page=7;
-        }
-        if(data_index!=-1)
-        {
-            var img:Image
-            for(var j:uint=0;j<list.length;j++)
-            {
-                img=assets.getChildByName(list[j]) as Image;
-                img.x=28+j*img.width;
-                img.visible=false;
-            }
+     var data_index:Number=savedata[type][character].indexOf(",");
+     DebugTrace.msg("ProfileScene.renderAssetsbar data_index:"+data_index);
+     if(data_index!=-1)
+     {
+     var atlas:TextureAtlas=new TextureAtlas(texture, xml);
+     for(var i:uint=0;i<list.length;i++)
+     {
 
-            var end:Number=index*7+end_page;
-            DebugTrace.msg("ProfileScene.updatebarPage end_page:"+end_page);
-            DebugTrace.msg("ProfileScene.updatebarPage end:"+end);
-            var sec_index:Number=-1;
-            for(var i:uint=start_page;i<end;i++)
-            {
-                sec_index++;
-                img=assets.getChildByName(list[i]) as Image;
-                img.visible=true;
+     texture=atlas.getTexture(list[i]);
+     var img:Image=new Image(texture);
+     img.name=list[i];
+     img.x=28+i*img.width;
+     img.y=_y;
+     assets.addChild(img);
+     assetsSymbols.push(img);
+     //filtercom.setSource(itemImg);
+     //filtercom.setShadow();
+     }
+     //for
+     }
 
-                if(index>0)
-                {
-                    img.x=28+sec_index*img.width;
+     }
+     */
+    /*
+     private function doArrowTiggered(e:Event):void
+     {
+     var target:Button=e.currentTarget as Button;
+     var dir:String=target.name.split("_")[0];
+     var type:String=target.name.split("_")[1];
+     DebugTrace.msg("ProfileScene.doArrowTiggered dir:"+dir+" ; type:"+type);
 
-                }
-                //if
-            }
-            //for
-        }
+     switch(type)
+     {
+     case "Item":
+     if(dir=="Left")
+     {
+     itemsindex--;
+     }
+     else
+     {
+     itemsindex++;
+     }
+     DebugTrace.msg("ProfileScene.doArrowTiggered itemsindex:"+itemsindex);
 
-    }
+     itemsindex=checkLimit(itemsindex,itemspage,type);
+
+     DebugTrace.msg("ProfileScene.doArrowTiggered itemsindex:"+itemsindex+" ; itemspage:"+itemspage);
+     break
+     case "Gift":
+     if(dir=="Left")
+     {
+     giftsindex--;
+     }
+     else
+     {
+     giftsindex++;
+     }
+     giftsindex=checkLimit(giftsindex,giftspage,type);
+
+     break
+     case "Accessories":
+
+     if(dir=="Left")
+     {
+     accindex--;
+     }
+     else
+     {
+     accindex++;
+     }
+     accindex=checkLimit(accindex,accpage,type);
+
+     break
+     case "Estate":
+     if(dir=="Left")
+     {
+     estateindex--;
+     }
+     else
+     {
+     estateindex++;
+     }
+     estateindex=checkLimit(estateindex,estatepage,type);
+     break
+
+     }
+     //switch
+     updatebarPage(type);
+
+
+     }
+     */
+    /*
+     private function updatebarPage(type:String):void
+     {
+     var start_page:Number;
+     var end_page:Number;
+     var list:Array=new Array();
+     var index:Number;
+     var savedata:SaveGame=FloxCommand.savegame;
+     var data_index:Number=flox.getSaveData(_type)[character].indexOf(",");
+     switch(type)
+     {
+     case "Item":
+     start_page=itemsindex*7;
+     end_page=items.length-itemsindex*7;
+     list=items;
+     index=itemsindex;
+     break
+     case "Gift":
+     start_page=giftsindex*7;
+     end_page=gifts.length-giftsindex*7;
+     list=gifts;
+     index=giftsindex;
+     break
+     case "Accessories":
+     start_page=accindex*7;
+     end_page=acc.length-accindex*7;
+     list=acc;
+     index=accindex;
+     break
+     case "Estate":
+     start_page=estateindex*7;
+     end_page=estate.length-estateindex*7;
+     list=estate;
+     index=estateindex;
+     break
+
+     }
+     //switch
+     if(end_page>7)
+     {
+     end_page=7;
+     }
+     if(data_index!=-1)
+     {
+     var img:Image
+     for(var j:uint=0;j<list.length;j++)
+     {
+     img=assets.getChildByName(list[j]) as Image;
+     img.x=28+j*img.width;
+     img.visible=false;
+     }
+
+     var end:Number=index*7+end_page;
+     DebugTrace.msg("ProfileScene.updatebarPage end_page:"+end_page);
+     DebugTrace.msg("ProfileScene.updatebarPage end:"+end);
+     var sec_index:Number=-1;
+     for(var i:uint=start_page;i<end;i++)
+     {
+     sec_index++;
+     img=assets.getChildByName(list[i]) as Image;
+     img.visible=true;
+
+     if(index>0)
+     {
+     img.x=28+sec_index*img.width;
+
+     }
+     //if
+     }
+     //for
+     }
+
+     }
+     */
+
     private function updateAssets():void
     {
-        var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
-        gameEvent._name="removed_assets_form";
-        gameEvent.displayHandler();
 
-        assets.dispatchEventWith("DISPLAY");
+        var _data:Object=new Object();
+        _data.chname=ch_name;
+
+        assets.dispatchEventWith("CHANGED",false,_data);
 
         excerptbox.removeFromParent(true);
         initAssetesForm();
@@ -840,6 +822,7 @@ public class ProfileScene extends Scenes
 
         player_icon=new Sprite();
         player_icon.name="Player";
+
         var dp:Point=new Point(-85,-21);
         if(gender=="Female")
         {
@@ -848,7 +831,9 @@ public class ProfileScene extends Scenes
         drawcom.drawPlayerProfileIcon(player_icon,1,new Point(60,710),dp);
         player_icon.scaleX=0.89;
         player_icon.scaleY=0.89;
+        player_icon.x=180;
         addChild(player_icon);
+        player_icon.clipRect=new Rectangle(-55,-(player_icon.height/2),player_icon.width,player_icon.height);
         player_icon.addEventListener(TouchEvent.TOUCH,onTouchCharaterIcon);
 
 
@@ -864,7 +849,7 @@ public class ProfileScene extends Scenes
             var sprite:Sprite=new Sprite();
             sprite.name=characters[i];
             sprite.useHandCursor=enabled;
-            sprite.x=i*100+160;
+            sprite.x=i*100+280;
             sprite.y=710;
 
             if(pts!=-1)
@@ -885,10 +870,7 @@ public class ProfileScene extends Scenes
             }
             //if
 
-
-
             addChild(sprite);
-
 
             if(enabled)
             {
@@ -946,7 +928,7 @@ public class ProfileScene extends Scenes
     {
         cate="fire";
         skills.removeFromParent(true);
-        //panelbase.removeChild(skills);
+        panelbase.removeChild(skills);
         initSkillsData();
 
     }
@@ -955,6 +937,7 @@ public class ProfileScene extends Scenes
         //skills tag
 
         skills=new Sprite();
+
 
         initSkillsGate();
         initCardsList();
@@ -966,6 +949,13 @@ public class ProfileScene extends Scenes
             skills.visible=false;
         }
         //if
+
+        var skillPts:Object=flox.getSaveData("skillPts");
+        var spTxt:TextField=new TextField(70,24,String(skillPts[ch_name]),font,20)
+        spTxt.vAlign="center";
+        spTxt.x=198;
+        spTxt.y=62;
+        skills.addChild(spTxt);
 
 
         skillexcbox=new ExcerptBox();
@@ -984,8 +974,10 @@ public class ProfileScene extends Scenes
             var texture:Texture=Assets.getTexture("Cate_"+elements[i]);
             var elementsbtn:Button=new Button(texture);
             elementsbtn.name=elements[i];
-            elementsbtn.x=i*50+336;
-            elementsbtn.y=70;
+            elementsbtn.pivotX=elementsbtn.width/2;
+            elementsbtn.pivotY=elementsbtn.height/2;
+            elementsbtn.x=i*60+315;
+            elementsbtn.y=76;
             skills.addChild(elementsbtn);
             elementsbtn.addEventListener(Event.TRIGGERED,onTriggeredElements);
         }
@@ -1016,10 +1008,11 @@ public class ProfileScene extends Scenes
         _data.list="profile";
         _data.cate=cate;
         cardlist=new CardsList(_data);
-        cardlist.x=49;
-        cardlist.y=130;
+        cardlist.x=50;
+        cardlist.y=120;
 
         var texture:Texture=Assets.getTexture("IconArrow");
+
         left_arrow=new Button(texture);
         left_arrow.name="left";
         left_arrow.x=13;
@@ -1071,7 +1064,7 @@ public class ProfileScene extends Scenes
 
         basemodel=new Sprite();
         basemodel.x=54
-        basemodel.y=210;
+        basemodel.y=180;
         addChild(basemodel);
 
 
@@ -1095,7 +1088,7 @@ public class ProfileScene extends Scenes
         drawcom.updateBaseModel("Pants");
         drawcom.updateBaseModel("Clothes");
         drawcom.updateBaseModel("Features");
-        basemodel.clipRect=new Rectangle(0,-30,276,470);
+        basemodel.clipRect=new Rectangle(0,-30,276,500);
 
 
     }
@@ -1128,7 +1121,7 @@ public class ProfileScene extends Scenes
 
         }
 
-      //  this.swapChildren(chmodel,chbg);
+
     }
     private function checkLimit(index:Number,pages:Number,type:String):Number
     {

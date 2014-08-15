@@ -271,20 +271,20 @@ package controller
 		[Embed(source="../../media/textures/icons/male-fake-head.png")]
 		public static const MaleFakeHead:Class;
 		
-		[Embed(source="../../media/textures/icons/cate_fire.png")]
+		[Embed(source="../../media/textures/icons/icon_profile_skill_fire.png")]
 		public static const Cate_fire:Class;
 		
-		[Embed(source="../../media/textures/icons/cate_earth.png")]
+		[Embed(source="../../media/textures/icons/icon_profile_skill_earth.png")]
 		public static const Cate_earth:Class;
 		
-		[Embed(source="../../media/textures/icons/cate_neutral.png")]
+		[Embed(source="../../media/textures/icons/icon_profile_skill_neutral.png")]
 		public static const Cate_neutral:Class;
 		
-		[Embed(source="../../media/textures/icons/cate_water.png")]
+		[Embed(source="../../media/textures/icons/icon_profile_skill_water.png")]
 		public static const Cate_water:Class;
 		
 		
-		[Embed(source="../../media/textures/icons/cate_air.png")]
+		[Embed(source="../../media/textures/icons/icon_profile_skill_air.png")]
 		public static const Cate_air:Class;
 		
 		
@@ -314,17 +314,17 @@ package controller
 		[Embed(source="../../media/textures/icons/heartbreak64x64.png")]
 		public static const HeartLv4:Class;
 		
-		/*[Embed(source="../../media/textures/icons/assets_tag/misc.png")]
-		public static const miscTag:Class;
+		[Embed(source="../../media/textures/icons/icon_consumable.png")]
+		public static const IconConsumable:Class;
 		
-		[Embed(source="../../media/textures/icons/assets_tag/consumable.png")]
-		public static const consumableTag:Class;
+		[Embed(source="../../media/textures/icons/icon_misc.png")]
+		public static const IconMisc:Class;
 		
-		[Embed(source="../../media/textures/icons/assets_tag/apparel.png")]
-		public static const apparelTag:Class;
+		[Embed(source="../../media/textures/icons/icon_apparel.png")]
+		public static const IconApparel:Class;
 		
-		[Embed(source="../../media/textures/icons/assets_tag/estate.png")]
-		public static const estatecarTag:Class;*/
+		[Embed(source="../../media/textures/icons/icon_estatecar.png")]
+		public static const IconEstatecar:Class;
 		
 		[Embed(source="../../media/textures/icons/beta_battle.png")]
 		public static const BetaBattle:Class;
@@ -343,16 +343,27 @@ package controller
 		public static const SkillPtsValueIcon:Class;
 
         [Embed(source="../../assets/images/items/cons_1_1.png")]
-        public static const Cons1_1:Class;
+        public static const cons_1_1:Class;
 
         [Embed(source="../../media/textures/icons/prevBtn.png")]
         public static const IconPrevBtn:Class;
 
 
         [Embed(source="../../media/textures/icons/menu_mini_bg.xml", mimeType="application/octet-stream")]
-        public static const MiniMenusBgXML:Class;
+        public static const MiniMenusXML:Class;
         [Embed(source="../../media/textures/icons/menu_mini_bg.png")]
-        public static const MiniMenusBg:Class;
+        public static const MiniMenus:Class;
+
+
+        [Embed(source="../../media/textures/icons/icon_assets_sort_name.png")]
+        public static const IconSortName:Class;
+
+        [Embed(source="../../media/textures/icons/icon_assets_sort_brand.png")]
+        public static const IconSortBrand:Class;
+
+        [Embed(source="../../media/textures/icons/icon_assets_sort_expiration.png")]
+        public static const IconSortExpiration:Class;
+
 
         /*------------------icons-------------------------------------------------*/
 		
@@ -609,12 +620,14 @@ package controller
         [Embed(source="../../media/textures/panels/footerBg.png")]
         public static const FooterBg:Class;
 
-        [Embed(source="../../media/textures/panels/profile_character_bg.png")]
-        public static const ProfileChBg:Class;
+        [Embed(source="../../media/textures/panels/profile_tab_personalinfo.png")]
+        public static const PersonalInfo:Class;
 
+        [Embed(source="../../media/textures/panels/profile_tab_assets.png")]
+        public static const AssetsInfo:Class;
 
-
-
+        [Embed(source="../../media/textures/panels/profile_tab_skills.png")]
+        public static const SkillsInfo:Class;
 		/*-------------------panels-------------------------------------------------------------------*/
 		
 		
