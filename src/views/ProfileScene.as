@@ -1,6 +1,9 @@
 package views
 {
 
+import controller.ViewCommand;
+import controller.ViewInterface;
+
 import flash.geom.Point;
 import flash.geom.Rectangle;
 
@@ -17,30 +20,22 @@ import controller.SceneInterface;
 import data.Config;
 import data.DataContainer;
 
-import events.GameEvent;
 import events.SceneEvent;
 
 import model.SaveGame;
 import model.Scenes;
 
-import starling.animation.Transitions;
-import starling.animation.Tween;
-import starling.core.Starling;
+
 import starling.display.Button;
 import starling.display.Image;
 import starling.display.MovieClip;
 import starling.display.Sprite;
 import starling.events.Event;
-import starling.events.Touch;
-import starling.events.TouchEvent;
-import starling.events.TouchPhase;
+
 import starling.text.TextField;
 import starling.text.TextFieldAutoSize;
 import starling.textures.Texture;
-import starling.textures.TextureAtlas;
-import starling.textures.TextureSmoothing;
 
-import utils.DebugTrace;
 import utils.DrawManager;
 import utils.FilterManager;
 import utils.ViewsContainer;
@@ -50,6 +45,7 @@ public class ProfileScene extends Scenes
     private var flox:FloxInterface=new FloxCommand();
     private var scencom:SceneInterface=new SceneCommnad();
     private var command:MainInterface=new MainCommand();
+    private var viewcom:ViewInterface=new ViewCommand();
     private var base_sprite:Sprite;
     private var panelbase:Sprite;
     private var panelProfile:Image;
@@ -74,27 +70,21 @@ public class ProfileScene extends Scenes
     private var nametile:TextField;
     private var ch_index:Number=-1;
     private static var ch_name:String="";
+
     private var personal:Sprite;
     private var assets:AssetsForm;
     private var excerptbox:Sprite;
 
     private var casshtext:TextField;
     private var assetsSymbols:Array;
-    private var items:Array;
-    private var gifts:Array;
-    private var acc:Array;
-    private var estate:Array;
-    private var itemspage:Number=0;
-    private var giftspage:Number=0;
-    private var accpage:Number=0;
-    private var estatepage:Number=0;
+
     private var itemsindex:Number=0;
     private var giftsindex:Number=0;
     private var accindex:Number=0;
     private var estateindex:Number=0;
-    private var _type:String="";
+
     private var skills:Sprite;
-    private var cardlist:Sprite;
+    private var cardlist:CardsList;
     private var cate:String="fire";
     //skills tag form arrow
     private var left_arrow:Button;
@@ -143,7 +133,7 @@ public class ProfileScene extends Scenes
     private function doCannelHandler():void
     {
 
-        player_icon.removeEventListener(TouchEvent.TOUCH,onTouchCharaterIcon);
+
         var _data:Object=new Object();
         _data.name="MenuScene";
         command.sceneDispatch(SceneEvent.CHANGED,_data)
@@ -167,9 +157,6 @@ public class ProfileScene extends Scenes
         templete.addTitleIcon({from:new Point(116,82),to:new Point(116,82)});
         templete.addMiniMenu();
         addChild(templete);
-
-
-
 
 
     }
@@ -229,40 +216,7 @@ public class ProfileScene extends Scenes
 
 
     }
-    /*
-     private function updateTitle():void
-     {
-     var savedata:SaveGame=FloxCommand.savegame;
 
-     var last_name:String=Config.characters[ch_index];
-
-
-     var first_name:String="Lovermore";
-     if(ch_index==-1)
-     {
-     //player
-     last_name=savedata.last_name;
-     first_name=savedata.first_name;
-     }
-     else
-     {
-     if(last_name=="sao")
-     {
-     first_name="Black";
-     }
-     else if(last_name=="zack")
-     {
-     first_name="Krieg";
-
-     }
-     }
-     //if
-     DebugTrace.msg("ProfileScene.updateTitle name:"+last_name+" "+first_name+"’s Profile")
-     nametile.text=last_name+" "+first_name;
-
-
-     }
-     */
     private function doChageedTag(e:Event):void
     {
         var temp:Array=["person","assets","skills"];
@@ -458,333 +412,7 @@ public class ProfileScene extends Scenes
 
 
     }
-    /*
-     private function initArrowCtrl():void
-     {
-     var arrctrls:Array=new Array();
-     var arrow_texture:Texture=Assets.getTexture("IconArrow");
-     var item_l_arr:Button=new Button(arrow_texture);
-     item_l_arr.name="Left_Item";
-     item_l_arr.x=11;
-     item_l_arr.y=172;
-     var item_r_arr:Button=new Button(arrow_texture);
-     item_r_arr.name="Right_Item";
-     item_r_arr.x=607;
-     item_r_arr.y=172;
-     item_r_arr.scaleX=-1;
-     arrctrls.push(item_l_arr);
-     arrctrls.push(item_r_arr);
 
-     var gift_l_arr:Button=new Button(arrow_texture);
-     gift_l_arr.name="Left_Gift";
-     gift_l_arr.x=11;
-     gift_l_arr.y=280;
-     var gift_r_arr:Button=new Button(arrow_texture);
-     gift_r_arr.name="Right_Gift";
-     gift_r_arr.x=607;
-     gift_r_arr.y=280;
-     gift_r_arr.scaleX=-1;
-     arrctrls.push(gift_l_arr);
-     arrctrls.push(gift_r_arr)
-
-     //accessories
-     var acc_l_arr:Button=new Button(arrow_texture);
-     acc_l_arr.name="Left_Accessories";
-     acc_l_arr.x=11;
-     acc_l_arr.y=388;
-     var acc_r_arr:Button=new Button(arrow_texture);
-     acc_r_arr.name="Right_Accessories";
-     acc_r_arr.x=607;
-     acc_r_arr.y=388;
-     acc_r_arr.scaleX=-1;
-     arrctrls.push(acc_l_arr);
-     arrctrls.push(acc_r_arr);
-
-     //real estate & vehicles
-     var estate_l_arr:Button=new Button(arrow_texture);
-     estate_l_arr.name="Left_Estate";
-     estate_l_arr.x=11;
-     estate_l_arr.y=496;
-     var estate_r_arr:Button=new Button(arrow_texture);
-     estate_r_arr.name="Right_Estate";
-     estate_r_arr.x=607;
-     estate_r_arr.y=496;
-     estate_r_arr.scaleX=-1;
-     arrctrls.push(estate_l_arr);
-     arrctrls.push(estate_r_arr);
-
-
-     for(var i:uint=0;i<arrctrls.length;i++)
-     {
-     var arrow:Button=arrctrls[i];
-
-     arrow.addEventListener(Event.TRIGGERED,doArrowTiggered);
-     assets.addChild(arrow);
-     assetsSymbols.push(arrow);
-
-     }
-     //for
-
-     }
-     */
-    /*
-     private function intiEquipmentItems():void
-     {
-
-
-     renderAssetsbar("items");
-     updatebarPage("Item");
-     }
-     private function initGifts():void
-     {
-     renderAssetsbar("gifts");
-     updatebarPage("Gift");
-     }
-     private function initAccessories():void
-     {
-     renderAssetsbar("accessories");
-     updatebarPage("Accessories");
-
-     }
-     private function initEstate():void
-     {
-     renderAssetsbar("estate");
-     updatebarPage("Estate");
-
-
-     }
-     */
-    /*
-     private function renderAssetsbar(type:String):void
-     {
-     DebugTrace.msg("ProfileScene.renderAssetsbar type:"+type+" -----------------");
-     _type=type;
-     var savedata:SaveGame=FloxCommand.savegame;
-     var _y:Number=0;
-     var list:Array=new Array();
-     var xml:XML;
-     var texture:Texture;
-     switch(type)
-     {
-     case "items":
-     _y=144;
-     list=items=savedata.items[character].split(",");
-
-     itemspage=uint(items.length/7);
-     if(items.length%7>0)
-     {
-     itemspage++;
-     }
-     //DebugTrace.msg("ProfileScene.renderAssetsbar items:"+items)
-     xml=Assets.getAtalsXML("ItemsXML");
-     texture=Assets.getTexture("Items");
-     checkLimit(0,itemspage,"Item");
-     break
-     case "gifts":
-     _y=252;
-     list=gifts=savedata.gifts[character].split(",");
-     giftspage=uint(gifts.length/7);
-     if(gifts.length%7>0)
-     {
-     giftspage++;
-     }
-     xml=Assets.getAtalsXML("GiftsXML");
-     texture=Assets.getTexture("Gifts");
-     checkLimit(0,giftspage,"Gift");
-     break
-     case "accessories":
-     _y=362;
-     list=acc=savedata.accessories[character].split(",");
-     accpage=uint(acc.length/7);
-     if(acc.length%7>0)
-     {
-     accpage++;
-     }
-     xml=Assets.getAtalsXML("AccessoriesXML");
-     texture=Assets.getTexture("Accessories");
-     checkLimit(0,accpage,"Accessories");
-     break
-     case "estate":
-     _y=469;
-     list=estate=savedata.estate[character].split(",");
-     estatepage=uint(estate.length/7);
-     if(estate.length%7>0)
-     {
-     estatepage++;
-     }
-     xml=Assets.getAtalsXML("EstateXML");
-     texture=Assets.getTexture("Estate");
-     checkLimit(0,estatepage,"Estate");
-     break
-     }
-     //switch
-
-     var data_index:Number=savedata[type][character].indexOf(",");
-     DebugTrace.msg("ProfileScene.renderAssetsbar data_index:"+data_index);
-     if(data_index!=-1)
-     {
-     var atlas:TextureAtlas=new TextureAtlas(texture, xml);
-     for(var i:uint=0;i<list.length;i++)
-     {
-
-     texture=atlas.getTexture(list[i]);
-     var img:Image=new Image(texture);
-     img.name=list[i];
-     img.x=28+i*img.width;
-     img.y=_y;
-     assets.addChild(img);
-     assetsSymbols.push(img);
-     //filtercom.setSource(itemImg);
-     //filtercom.setShadow();
-     }
-     //for
-     }
-
-     }
-     */
-    /*
-     private function doArrowTiggered(e:Event):void
-     {
-     var target:Button=e.currentTarget as Button;
-     var dir:String=target.name.split("_")[0];
-     var type:String=target.name.split("_")[1];
-     DebugTrace.msg("ProfileScene.doArrowTiggered dir:"+dir+" ; type:"+type);
-
-     switch(type)
-     {
-     case "Item":
-     if(dir=="Left")
-     {
-     itemsindex--;
-     }
-     else
-     {
-     itemsindex++;
-     }
-     DebugTrace.msg("ProfileScene.doArrowTiggered itemsindex:"+itemsindex);
-
-     itemsindex=checkLimit(itemsindex,itemspage,type);
-
-     DebugTrace.msg("ProfileScene.doArrowTiggered itemsindex:"+itemsindex+" ; itemspage:"+itemspage);
-     break
-     case "Gift":
-     if(dir=="Left")
-     {
-     giftsindex--;
-     }
-     else
-     {
-     giftsindex++;
-     }
-     giftsindex=checkLimit(giftsindex,giftspage,type);
-
-     break
-     case "Accessories":
-
-     if(dir=="Left")
-     {
-     accindex--;
-     }
-     else
-     {
-     accindex++;
-     }
-     accindex=checkLimit(accindex,accpage,type);
-
-     break
-     case "Estate":
-     if(dir=="Left")
-     {
-     estateindex--;
-     }
-     else
-     {
-     estateindex++;
-     }
-     estateindex=checkLimit(estateindex,estatepage,type);
-     break
-
-     }
-     //switch
-     updatebarPage(type);
-
-
-     }
-     */
-    /*
-     private function updatebarPage(type:String):void
-     {
-     var start_page:Number;
-     var end_page:Number;
-     var list:Array=new Array();
-     var index:Number;
-     var savedata:SaveGame=FloxCommand.savegame;
-     var data_index:Number=flox.getSaveData(_type)[character].indexOf(",");
-     switch(type)
-     {
-     case "Item":
-     start_page=itemsindex*7;
-     end_page=items.length-itemsindex*7;
-     list=items;
-     index=itemsindex;
-     break
-     case "Gift":
-     start_page=giftsindex*7;
-     end_page=gifts.length-giftsindex*7;
-     list=gifts;
-     index=giftsindex;
-     break
-     case "Accessories":
-     start_page=accindex*7;
-     end_page=acc.length-accindex*7;
-     list=acc;
-     index=accindex;
-     break
-     case "Estate":
-     start_page=estateindex*7;
-     end_page=estate.length-estateindex*7;
-     list=estate;
-     index=estateindex;
-     break
-
-     }
-     //switch
-     if(end_page>7)
-     {
-     end_page=7;
-     }
-     if(data_index!=-1)
-     {
-     var img:Image
-     for(var j:uint=0;j<list.length;j++)
-     {
-     img=assets.getChildByName(list[j]) as Image;
-     img.x=28+j*img.width;
-     img.visible=false;
-     }
-
-     var end:Number=index*7+end_page;
-     DebugTrace.msg("ProfileScene.updatebarPage end_page:"+end_page);
-     DebugTrace.msg("ProfileScene.updatebarPage end:"+end);
-     var sec_index:Number=-1;
-     for(var i:uint=start_page;i<end;i++)
-     {
-     sec_index++;
-     img=assets.getChildByName(list[i]) as Image;
-     img.visible=true;
-
-     if(index>0)
-     {
-     img.x=28+sec_index*img.width;
-
-     }
-     //if
-     }
-     //for
-     }
-
-     }
-     */
 
     private function updateAssets():void
     {
@@ -802,127 +430,23 @@ public class ProfileScene extends Scenes
     private function initProIcons():void
     {
 
-        var savedata:SaveGame=FloxCommand.savegame;
-        var gender:String=savedata.avatar.gender;
 
-        var modelObj:Object=Config.modelObj;
-        var modelRec:Rectangle=modelObj[gender];
-
-
-        var modelAttr:Object=new Object();
-        modelAttr.gender=gender;
-        modelAttr.width=modelRec.width;
-        modelAttr.height=modelRec.height;
-
-        var _basemodel:Sprite=new Sprite();
-        drawcom.drawCharacter(_basemodel,modelAttr);
-        drawcom.updateBaseModel("Eyes");
-        drawcom.updateBaseModel("Hair");
-        drawcom.updateBaseModel("Features");
-
-        player_icon=new Sprite();
-        player_icon.name="Player";
-
-        var dp:Point=new Point(-85,-21);
-        if(gender=="Female")
-        {
-            dp=new Point(-82,-6);
-        }
-        drawcom.drawPlayerProfileIcon(player_icon,1,new Point(60,710),dp);
-        player_icon.scaleX=0.89;
-        player_icon.scaleY=0.89;
-        player_icon.x=180;
-        addChild(player_icon);
-        player_icon.clipRect=new Rectangle(-55,-(player_icon.height/2),player_icon.width,player_icon.height);
-        player_icon.addEventListener(TouchEvent.TOUCH,onTouchCharaterIcon);
-
-
-
-        var characters:Array=Config.characters;
-        for(var i:uint=0;i<characters.length;i++)
-        {
-            var name:String=characters[i].toLowerCase();
-            var pts:Number=Number(savedata.pts[name]);
-            var enable_ch:String="ProEmpty";
-            var enabled:Boolean=false;
-
-            var sprite:Sprite=new Sprite();
-            sprite.name=characters[i];
-            sprite.useHandCursor=enabled;
-            sprite.x=i*100+280;
-            sprite.y=710;
-
-            if(pts!=-1)
-            {
-                enabled=true;
-                drawcom.drawCharacterProfileIcon(sprite,characters[i],0.45);
-            }
-            else
-            {
-                var texture:Texture=Assets.getTexture(enable_ch);
-                var img:Image=new Image(texture);
-                img.smoothing=TextureSmoothing.TRILINEAR;
-                img.pivotX=img.width/2;
-                img.pivotY=img.height/2;
-                img.scaleX=0.45;
-                img.scaleY=0.45;
-                sprite.addChild(img);
-            }
-            //if
-
-            addChild(sprite);
-
-            if(enabled)
-            {
-                sprite.addEventListener(TouchEvent.TOUCH,onTouchCharaterIcon);
-            }
-            //if
-        }
-        //for
+        this.addEventListener("TouchedIcon",onTouchCharaterIcon);
+        viewcom.characterIcons(this);
 
 
     }
-    private function onTouchCharaterIcon(e:TouchEvent):void
+    private function onTouchCharaterIcon(e:Event):void
     {
-        var target:Sprite=e.currentTarget as Sprite;
-        var hover:Touch=e.getTouch(target,TouchPhase.HOVER);
-        var began:Touch=e.getTouch(target,TouchPhase.BEGAN);
-        if(hover)
-        {
 
-            var tween:Tween=new Tween(target,0.2,Transitions.LINEAR);
-            tween.scaleTo(1.1);
-            Starling.juggler.add(tween);
+        ch_index=e.data.ch_index;
+        character=e.data.character;
+        updateData();
+        updateCharacter();
+        updateAssets();
+        updateSkills();
 
 
-        }
-        else
-        {
-            var scale:Number=1;
-            if(target.name=="Player")
-            {
-                scale=0.89;
-            }
-            //if
-            tween=new Tween(target,0.2,Transitions.LINEAR);
-            tween.scaleTo(scale);
-            Starling.juggler.add(tween);
-        }
-        //if
-        if(began)
-        {
-
-
-            ch_index=Config.characters.indexOf(target.name);
-            character=target.name.toLowerCase();
-            CharacterName=character;
-            // updateTitle();
-            updateData();
-            updateCharacter();
-            updateAssets();
-            updateSkills();
-        }
-        //if
     }
     private function updateSkills():void
     {
@@ -937,12 +461,13 @@ public class ProfileScene extends Scenes
         //skills tag
 
         skills=new Sprite();
+        skills.addEventListener("ToucbedSkillIcon",onTriggeredElements);
+        panelbase.addChild(skills);
 
-
-        initSkillsGate();
+        viewcom.skillIcons(skills);
         initCardsList();
 
-        panelbase.addChild(skills);
+
 
         if(currentTag!="skills")
         {
@@ -951,7 +476,7 @@ public class ProfileScene extends Scenes
         //if
 
         var skillPts:Object=flox.getSaveData("skillPts");
-        var spTxt:TextField=new TextField(70,24,String(skillPts[ch_name]),font,20)
+        var spTxt:TextField=new TextField(70,24,String(skillPts[character]),font,20)
         spTxt.vAlign="center";
         spTxt.x=198;
         spTxt.y=62;
@@ -964,107 +489,37 @@ public class ProfileScene extends Scenes
         skills.addChild(skillexcbox)
         ViewsContainer.SkillExcerptBox=skillexcbox;
     }
-    private function initSkillsGate():void
-    {
-        var elements:Array=Config.elements;
-        for(var i:uint=0;i<elements.length;i++)
-        {
 
-
-            var texture:Texture=Assets.getTexture("Cate_"+elements[i]);
-            var elementsbtn:Button=new Button(texture);
-            elementsbtn.name=elements[i];
-            elementsbtn.pivotX=elementsbtn.width/2;
-            elementsbtn.pivotY=elementsbtn.height/2;
-            elementsbtn.x=i*60+315;
-            elementsbtn.y=76;
-            skills.addChild(elementsbtn);
-            elementsbtn.addEventListener(Event.TRIGGERED,onTriggeredElements);
-        }
-        //for
-
-
-
-    }
     private function onTriggeredElements(e:Event):void
     {
-        var target:Button=e.currentTarget as Button;
-        cate=target.name;
-        left_arrow.removeFromParent(true);
-        right_arrow.removeFromParent(true);
-        cardlist.removeFromParent(true);
-        //skills.removeChild(left_arrow);
-        //skills.removeChild(right_arrow);
-        //skills.removeChild(cardlist);
 
+        cate=e.data.cate;
+        cardlist.removeFromParent(true);
         initCardsList();
 
 
     }
     private function initCardsList():void
     {
-        var _data:Object=new Object();
-        _data.character=character;
-        _data.list="profile";
-        _data.cate=cate;
-        cardlist=new CardsList(_data);
+
+
+        cardlist=new CardsList();
+        cardlist.character=character;
+        cardlist.from="profile";
+        cardlist.cate=cate;
         cardlist.x=50;
         cardlist.y=120;
-
-        var texture:Texture=Assets.getTexture("IconArrow");
-
-        left_arrow=new Button(texture);
-        left_arrow.name="left";
-        left_arrow.x=13;
-        left_arrow.y=314;
-        right_arrow=new Button(texture);
-        right_arrow.name="right";
-        right_arrow.x=610;
-        right_arrow.y=314;
-        right_arrow.scaleX=-1;
-
-        left_arrow.addEventListener(Event.TRIGGERED,onTriggeredSkillList);
-        right_arrow.addEventListener(Event.TRIGGERED,onTriggeredSkillList);
-
-
-        var arrow_data:Object=new Object();
-        arrow_data.left_arrow=left_arrow;
-        arrow_data.right_arrow=right_arrow;
-        arrow_data.profile=this;
-        cardlist.dispatchEventWith(CardsList.INIT,false,arrow_data)
-
-        skills.addChild(left_arrow);
-        skills.addChild(right_arrow);
         skills.addChild(cardlist);
-    }
+        cardlist.dispatchEventWith(CardsList.INIT);
 
-    private function onTriggeredSkillList(e:Event):void
-    {
-        var target:Button=e.currentTarget as Button;
-
-        var _data:Object=new Object();
-        _data.dir=target.name;
-        _data.left_arrow=left_arrow;
-        _data.right_arrow=right_arrow;
-        var cardsEvent:Event=new Event(CardsList.CHANGE,true,_data);
-        cardlist.dispatchEvent(cardsEvent);
 
     }
-
-
-    //private var copyModel:Sprite
     private function initBaseModel():void
     {
 
-        var savedata:SaveGame=FloxCommand.savegame;
-        var gender:String=savedata.avatar.gender;
 
-
-        var modelRec:Rectangle=Config.modelObj[gender];
 
         basemodel=new Sprite();
-        basemodel.x=54
-        basemodel.y=180;
         addChild(basemodel);
 
 
@@ -1076,19 +531,12 @@ public class ProfileScene extends Scenes
         addChild(chmodel);
 
 
+        var params:Object=new Object();
+        params.pos=new Point(54,180);
+        params.clipRect=new Rectangle(0,-30,276,500);
+        viewcom.fullSizeCharacter(basemodel,params);
 
-        var modelAttr:Object=new Object();
-        modelAttr.gender=gender;
-        modelAttr.width=modelRec.width;
-        modelAttr.height=modelRec.height;
 
-        drawcom.drawCharacter(basemodel,modelAttr);
-        drawcom.updateBaseModel("Hair");
-        drawcom.updateBaseModel("Eyes");
-        drawcom.updateBaseModel("Pants");
-        drawcom.updateBaseModel("Clothes");
-        drawcom.updateBaseModel("Features");
-        basemodel.clipRect=new Rectangle(0,-30,276,500);
 
 
     }
@@ -1104,52 +552,13 @@ public class ProfileScene extends Scenes
         }
         else
         {
-            var old_chmc:MovieClip=chmodel.getChildByName("character") as MovieClip;
-            if(old_chmc)
-            {
-                old_chmc.removeFromParent(true);
 
-            }
-            var ch_name:String=Config.characters[ch_index];
-
-            var chmc:MovieClip=Assets.getDynamicAtlas(ch_name.toLowerCase());
-            chmc.name="character";
-            chmc.width=356;
-            chmc.height=608;
-
-            chmodel.addChild(chmc);
+            viewcom.replaceCharacter(chmodel);
 
         }
 
 
     }
-    private function checkLimit(index:Number,pages:Number,type:String):Number
-    {
-        var left_arrow:Button=assets.getChildByName("Left_"+type) as Button;
-        var right_arrow:Button=assets.getChildByName("Right_"+type) as Button;
 
-
-        var end_node:Number=index;
-
-        if(index<=0)
-        {
-
-            end_node=0;
-        }
-
-        if(index>pages-1)
-        {
-
-            end_node=pages-1;
-        }
-
-        command.listArrowEnabled(index,pages,left_arrow,right_arrow);
-
-        return end_node;
-    }
-    private function onCallback():void
-    {
-
-    }
 }
 }

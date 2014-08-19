@@ -44,7 +44,7 @@ package views
 		private var font:String="SimFutura";
 		private var base_sprite:Sprite;
 		private var character:MovieClip;
-		private var filter:FilterInterface=new FilterManager();
+		private var filters:FilterInterface=new FilterManager();
 		private var command:MainInterface=new MainCommand();
 		private var proSprtie:Sprite;
 		private var moodPie:MovieClip;
@@ -370,8 +370,8 @@ package views
 			var bgSprtie:Sprite=new Sprite();
 			bgSprtie.addChild(bgImg);
 			
-			filter.setSource(bgSprtie);
-			filter.setBulr();
+			filters.setSource(bgSprtie);
+			filters.setBulr();
 			addChild(bgSprtie);
 			initCharacter();
 			
@@ -387,13 +387,9 @@ package views
 			var dating:String=DataContainer.currentDating;
 			var savegame:SaveGame=FloxCommand.savegame;
 			
-			/*var rel:Object=savegame.rel;
-			var rel_str:String=rel[dating].toUpperCase();
-			rel_txt=new TextField(247,45,rel_str,"Neogrey Medium",25,0xFFFFFF);
-			rel_txt.hAlign="center";
-			rel_txt.x=247;
-			rel_txt.y=60;
-			datingTopic.addChild(rel_txt);*/
+
+
+
 			var loveObj:Object=flox.getSaveData("love");
 			
 			playerloveTxt=new TextField(120,55,loveObj.player,font,40,0xFFFFFF);

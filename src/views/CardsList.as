@@ -1,6 +1,7 @@
 package views
 {
 import flash.geom.Point;
+import flash.geom.Rectangle;
 
 import mx.utils.NameUtil;
 
@@ -33,9 +34,12 @@ import utils.ViewsContainer;
 
 public class CardsList extends Sprite
 {
-    private var _data:Object;
-    private var list:String;
-    private var cate:String;
+    private var cardSize:Rectangle=new Rectangle(0,0,140,160);
+    //private var _data:Object;
+    public var character:String;
+    public var cate:String;
+    //from :"profile" ,"store"
+    public var from:String;
     private var skillPts:Object;
     private var skills:Object;
     public static var CHANGE:String="_change";
@@ -52,7 +56,7 @@ public class CardsList extends Sprite
     private var pages:Number=0;
     private var now_page:Number=0;
     //per page  cards max number
-    private var pageMax:Number=6
+    private var pageMax:Number=6;
     //current page card number
     private var pageNum:Number=0;
     private var vertical:Number=0;
@@ -60,20 +64,23 @@ public class CardsList extends Sprite
     private var cardAtlas:TextureAtlas;
     private var cardinfo:Object;
     private var unlockSkill:Object=new Object();
-
-    private var cards:Array=new Array();
-    public function CardsList(data:Object)
+    private var cards:Array;
+    public function CardsList()
     {
-        _data=data;
-        cate=data.cate;
-        list=data.list;
 
-        //var savedata:SaveGame=FloxCommand.savegame;
-        //var skills:Object=savedata.skills;
-        DebugTrace.msg("CardsList.initCards _data="+_data.character+", cate="+cate);
+
+        this.addEventListener(CardsList.INIT,onCardsListInit);
+    }
+    private function onCardsListInit(e:Event):void
+    {
+
+        DebugTrace.msg("CardsList.onCardsListInit character="+character+", cate="+cate+" , from="+from);
+
+
         skillPts=flox.getSaveData("skillPts");
         skills=flox.getSaveData("skills");
-        trace("skills=",JSON.stringify(skills));
+
+
         var ele:String=cate.charAt(0);
         for(var i:uint=0;i<4;i++)
         {
@@ -81,35 +88,28 @@ public class CardsList extends Sprite
             skillscards.push(skillID);
         }
 
-        //var enabled:Number=skills[_data.character][cate].indexOf(",");
-
-        if(skillscards.length>0)
+        listTotal=skillscards.length;
+        pages=uint(listTotal/pageMax);
+        if(listTotal%pageMax>0)
         {
-            var texture:Texture=Assets.getTexture("SkillCards");
-            var xml:XML=Assets.getAtalsXML("SkillCardsXML");
-            cardAtlas = new TextureAtlas(texture, xml);
-
-            //skillscards=skills[_data.character][cate].split(",");
-
-            listTotal=skillscards.length;
-            pages=uint(listTotal/pageMax);
-            if(listTotal%pageMax>0)
-            {
-                pages++;
-            }
-            cardslist=new Sprite();
-            addChild(cardslist);
-
-
-            initCards();
-            this.addEventListener(CardsList.CHANGE,doCardsListChanged);
-
+            pages++;
         }
-        else
-        {
-            pages=0;
-        }
-        this.addEventListener(CardsList.INIT,onCardsListInit);
+
+        var texture:Texture=Assets.getTexture("SkillCards");
+        var xml:XML=Assets.getAtalsXML("SkillCardsXML");
+        cardAtlas = new TextureAtlas(texture, xml);
+
+
+        cards=new Array();
+        cardslist=new Sprite();
+        addChild(cardslist);
+
+
+        initCards();
+        this.addEventListener(CardsList.CHANGE,doCardsListChanged);
+
+
+
     }
     private function initCards():void
     {
@@ -117,6 +117,13 @@ public class CardsList extends Sprite
 
 
         DebugTrace.msg("CardsList.initCards now_page:"+now_page);
+
+        cardinfo=new Object()
+        cardinfo.cate=cate;
+        cardinfo.name="SkillsCards";
+        cardinfo.container=cardslist;
+
+
         if(listTotal%pageMax>0)
         {
             if(now_page<pages-1)
@@ -135,11 +142,6 @@ public class CardsList extends Sprite
             pageNum=pageMax;
 
         }
-        cardinfo=new Object()
-        cardinfo.cate=cate;
-        cardinfo.name="SkillsCards";
-        cardinfo.container=cardslist;
-
 
         //DebugTrace.msg("CardsList.initCards listTotal:"+listTotal+"; pageNum:"+pageNum+" ;cards_index:"+cards_index);
 
@@ -149,44 +151,38 @@ public class CardsList extends Sprite
         cardinfo[skillscards[cards_index]]=new Point(posX,posY);
 
         onCardReady();
-        //drawcom.drawDragonBon(cardinfo,onCardReady)
 
 
     }
-    private function onCardsListInit(e:Event):void
-    {
-        var left_arrow:Button=e.data.left_arrow;
-        var right_arrow:Button=e.data.right_arrow;
-        command.listArrowEnabled(0,pages,left_arrow,right_arrow);
-    }
+
     private function onCardReady():void
     {
 
         var last_index:Number=pageNum+now_page*pageMax-1;
-        var skills_enabled:Array=skills[_data.character][cate].split(",");
+        var skills_enabled:Array=skills[character][cate].split(",");
         if(cards_index<=last_index)
         {
             //DebugTrace.msg("CardsList.onCardReady BodyBone:"+cate+"face");
-            DebugTrace.msg("CardsList.onCardReady card:"+skillscards[cards_index]);
+           // DebugTrace.msg("CardsList.onCardReady card:"+skillscards[cards_index]);
             var skillID:String=skillscards[cards_index]
             var cardTexture:Texture=cardAtlas.getTexture(skillID);
             var card:Image=new Image(cardTexture);
             //var card:Button=new Button(cardTexture);
             card.name=skillID;
-            card.width=140;
-            card.height=160;
+            card.width=cardSize.width;
+            card.height=cardSize.height;
             card.x=cardinfo[skillID].x;
             card.y=cardinfo[skillID].y;
             cards.push(card);
             cardslist.addChild(card);
             card.addEventListener(TouchEvent.TOUCH,doSkillCardTiggered);
 
-            if(list=="store")
+            if(from=="store")
             {
-                DebugTrace.msg("CardsList.onCardReady skills_enabled:"+skills_enabled);
-                DebugTrace.msg("CardsList.onCardReady skillID:"+skillID);
+                //DebugTrace.msg("CardsList.onCardReady skills_enabled:"+skills_enabled);
+                //DebugTrace.msg("CardsList.onCardReady skillID:"+skillID);
                 var index:Number=skills_enabled.indexOf(skillID);
-                if(index==-1 || skills[_data.character][cate]=="")
+                if(index==-1 || skills[character][cate]=="")
                 {
 
                     lockSkillHandle(cards_index,skillID);
@@ -215,7 +211,7 @@ public class CardsList extends Sprite
 
             DebugTrace.msg("CardsList onCardReady")
 
-            if(list!="store"){
+            if(from!="store"){
                 //control disable skill card
 
                 for(var i:uint=0;i<cards.length;i++){
@@ -243,22 +239,24 @@ public class CardsList extends Sprite
 
         var lockTexture:Texture=Assets.getTexture("SkillLocked");
         var skilllocked:Image=new Image(lockTexture);
+        skilllocked.width=cardSize.width;
+        skilllocked.height=cardSize.height;
         locksprite.addChild(skilllocked);
 
 
         var icontexture:Texture=Assets.getTexture("SkillPtsIcon");
         var skillptsicon:Image=new Image(icontexture);
-        skillptsicon.x=130;
+        skillptsicon.x=110;
         skillptsicon.y=-15;
         locksprite.addChild(skillptsicon);
 
 
         var spend_spts:TextField=new TextField(50,28,"","SimNeogreyMedium",20,0x000000,true);
-        spend_spts.x=130;
+        spend_spts.x=110;
         spend_spts.y=-4;
         spend_spts.hAlign="center";
         var rate:Number=20;
-        if(_data.character=="player")
+        if(character=="player")
         {
             var s_ele:String=flox.getSaveData("s_ele");
             if(cate==s_ele)
@@ -276,7 +274,7 @@ public class CardsList extends Sprite
         else
         {
 
-            var expert:String=skills[_data.character].exp;
+            var expert:String=skills[character].exp;
             if(cate.charAt(0)==expert)
             {
                 //expert with this cate
@@ -310,7 +308,7 @@ public class CardsList extends Sprite
         if(began)
         {
 
-            var sPts:Number=skillPts[_data.character];
+            var sPts:Number=skillPts[character];
             var unlockPts:Number=unlockSkill[currentSkill.name];
 
             DebugTrace.msg("CardsList onTouchlockSkill unlockPts="+unlockPts+" , sPts="+sPts+" , skill="+currentSkill.name);
@@ -330,28 +328,28 @@ public class CardsList extends Sprite
 
 
                 sPts-=unlockPts;
-                skillPts[_data.character]=sPts;
+                skillPts[character]=sPts;
 
-                if(skills[_data.character][cate].indexOf(",")==-1)
+                if(skills[character][cate].indexOf(",")==-1)
                 {
 
                     var skilllist:Array=new Array();
-                    if(skills[_data.character][cate]!="")
+                    if(skills[character][cate]!="")
                     {
                         //only one skill
-                        skilllist.push(skills[_data.character][cate])
+                        skilllist.push(skills[character][cate])
                     }
                 }
                 else
                 {
-                    skilllist=skills[_data.character][cate].split(",");
+                    skilllist=skills[character][cate].split(",");
                 }
                 if(skilllist.indexOf(currentSkill.name)==-1)
                 {
                     skilllist.push(currentSkill.name);
                 }
                 skilllist.sort(Array.CASEINSENSITIVE);
-                skills[_data.character][cate]=skilllist.toString();
+                skills[character][cate]=skilllist.toString();
 
                 flox.save("skills",skills,onSaveSkillsComplete);
                 function onSaveSkillsComplete(saveGame:SaveGame):void

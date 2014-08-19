@@ -1,10 +1,13 @@
 package views
 {
-	import flash.geom.Point;
+import controller.ViewCommand;
+import controller.ViewInterface;
+
+import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
 	import controller.Assets;
-	import controller.DrawerInterface;
+
 	import controller.FloxCommand;
 	import controller.FloxInterface;
 	import controller.MainCommand;
@@ -14,37 +17,32 @@ package views
 	
 	import events.SceneEvent;
 	
-	import model.SaveGame;
-	
-	import starling.animation.Transitions;
-	import starling.animation.Tween;
-	import starling.core.Starling;
+
 	import starling.display.Button;
 	import starling.display.Image;
 	import starling.display.MovieClip;
 	import starling.display.Sprite;
 	import starling.events.Event;
-	import starling.events.Touch;
+
 	import starling.events.TouchEvent;
-	import starling.events.TouchPhase;
+
 	import starling.text.TextField;
 	import starling.textures.Texture;
-	import starling.textures.TextureSmoothing;
-	
-	import utils.DrawManager;
+
 	import utils.ViewsContainer;
 
 	public class SkillsStore extends Sprite
 	{
 		private var flox:FloxInterface=new FloxCommand();
 		private var command:MainInterface=new MainCommand();
+        private var viewcom:ViewInterface=new ViewCommand();
 		private var panelbase:Sprite;
 		private var panelSkills:*;
 		private var tagshit:Sprite;
-		private var drawcom:DrawerInterface=new DrawManager();
+
 		private var chmodel:Sprite;
 		private var basemodel:Sprite;
-		private var copyModel:Sprite;
+
 		private var skills:Sprite;
 		private var skillexcbox:Sprite;
 		private var cate:String="fire";
@@ -57,6 +55,7 @@ package views
 		private var sptsTxt:TextField;
 		private var skillPts:Number=0;
 		public static var UPDATE_SKILLPTS:String="";
+        private var font:String="SimMyriadPro";
 		public function SkillsStore()
 		{
 			initBaseModel();
@@ -73,8 +72,8 @@ package views
 		{
 			ViewsContainer.UIViews.visible=false;
 			panelbase=new Sprite();
-			panelbase.x=374;
-			panelbase.y=96;
+			panelbase.x=360;
+			panelbase.y=159;
 			addChild(panelbase);
 			
 			var texture:Texture=Assets.getTexture("PanelSkillsStore");
@@ -92,33 +91,26 @@ package views
 			//tagbtn.x=disablesObj[currentTag].split(",")[i];
 			
 			
-			var ptsTexture:Texture=Assets.getTexture("SkillPtsValueIcon");
-			var skillPtsIcon:Image=new Image(ptsTexture);
-			skillPtsIcon.x=34;
-			skillPtsIcon.y=65;
+			//var ptsTexture:Texture=Assets.getTexture("SkillPtsValueIcon");
+			//var skillPtsIcon:Image=new Image(ptsTexture);
+			//skillPtsIcon.x=34;
+			//skillPtsIcon.y=65;
 			
-			sptsTxt=new TextField(100,40,"","SimNeogreyMedium",30,0xFFFFFF);
-			sptsTxt.x=120;
-			sptsTxt.y=70;
+			sptsTxt=new TextField(100,40,"","SimMyriadPro",20);
+			sptsTxt.x=198;
+			sptsTxt.y=62;
 			sptsTxt.hAlign="left";
 			
 			tagshit.addChild(tagbtn);
 			panelbase.addChild(tagshit);
-			panelbase.addChild(skillPtsIcon);
+			//panelbase.addChild(skillPtsIcon);
 			panelbase.addChild(sptsTxt);
 		}
 		private function initBaseModel():void
 		{
 
-            var savedata:SaveGame=FloxCommand.savegame;
-            var gender:String=savedata.avatar.gender;
-
-
-            var modelRec:Rectangle=Config.modelObj[gender];
 
             basemodel=new Sprite();
-            basemodel.x=54
-            basemodel.y=180;
             addChild(basemodel);
 
 
@@ -131,18 +123,10 @@ package views
 
 
 
-            var modelAttr:Object=new Object();
-            modelAttr.gender=gender;
-            modelAttr.width=modelRec.width;
-            modelAttr.height=modelRec.height;
-
-            drawcom.drawCharacter(basemodel,modelAttr);
-            drawcom.updateBaseModel("Hair");
-            drawcom.updateBaseModel("Eyes");
-            drawcom.updateBaseModel("Pants");
-            drawcom.updateBaseModel("Clothes");
-            drawcom.updateBaseModel("Features");
-            basemodel.clipRect=new Rectangle(0,-30,276,500);
+            var params:Object=new Object();
+            params.pos=new Point(54,180);
+            params.clipRect=new Rectangle(0,-30,276,500);
+            viewcom.fullSizeCharacter(basemodel,params);
 
 
         }
@@ -151,27 +135,28 @@ package views
 			//skills tag
 			
 			skills=new Sprite();
-			
-			initSkillsGate();
+            skills.addEventListener("ToucbedSkillIcon",onTriggeredElements);
+            panelbase.addChild(skills);
+
+            viewcom.skillIcons(skills);
 			initCardsList();
-			
-			panelbase.addChild(skills);
-			 
+
+
+            var skillPts:Object=flox.getSaveData("skillPts");
+            var spTxt:TextField=new TextField(70,24,String(skillPts[character]),font,20)
+            spTxt.vAlign="center";
+            spTxt.x=198;
+            spTxt.y=62;
+            skills.addChild(spTxt);
+
 			
 			skillexcbox=new ExcerptBox();
 			skillexcbox.x=-345;
 			skillexcbox.y=113;
 			skills.addChild(skillexcbox)
 			ViewsContainer.SkillExcerptBox=skillexcbox;
-			
-			
-			
-			
-			
-			var skillPtsObj:Object=flox.getSaveData("skillPts");
-			skillPts=skillPtsObj[character];
-			sptsTxt.text=String(skillPts);
-			
+
+
 			
 		}
 		private function onUpdateSkillPts(e:Event):void
@@ -180,232 +165,62 @@ package views
 			sptsTxt.text=String(value);
 			
 		}
-		private function initSkillsGate():void
-		{
-			var elements:Array=Config.elements;
-			for(var i:uint=0;i<elements.length;i++)
-			{
-				
-				
-				var texture:Texture=Assets.getTexture("Cate_"+elements[i]);
-				var elementsbtn:Button=new Button(texture);
-				elementsbtn.name=elements[i];
-				elementsbtn.x=i*50+336;
-				elementsbtn.y=70;
-				skills.addChild(elementsbtn);
-				elementsbtn.addEventListener(Event.TRIGGERED,onTriggeredElements);
-			}
-			//for
-			
-			
-			
-		}
+
+
 		private function onTriggeredElements(e:Event):void
 		{
-			var target:Button=e.currentTarget as Button;
-			cate=target.name;
-			left_arrow.removeFromParent(true);
-			right_arrow.removeFromParent(true);
-			cardlist.removeFromParent(true);
-			//skills.removeChild(left_arrow);
-			//skills.removeChild(right_arrow);
-			//skills.removeChild(cardlist);
-			
+
+            cate=e.data.cate;
+
+            cardlist.removeFromParent(true);
+
 			initCardsList();
 			
 			
 		}
 		private function initCardsList():void
 		{
-			var _data:Object=new Object();
-			_data.character=character;
-			_data.list="store";
-			_data.cate=cate;
-			cardlist=new CardsList(_data);
-			cardlist.x=49;
-			cardlist.y=130;
-			
-			var texture:Texture=Assets.getTexture("IconArrow");
-			left_arrow=new Button(texture);
-			left_arrow.name="left";
-			left_arrow.x=13;
-			left_arrow.y=314;
-			right_arrow=new Button(texture);
-			right_arrow.name="right";
-			right_arrow.x=610;
-			right_arrow.y=314;
-			right_arrow.scaleX=-1;
-			
-			left_arrow.addEventListener(Event.TRIGGERED,onTriggeredSkillList);
-			right_arrow.addEventListener(Event.TRIGGERED,onTriggeredSkillList);
-			
-			
-			var arrow_data:Object=new Object();
-			arrow_data.left_arrow=left_arrow;
-			arrow_data.right_arrow=right_arrow;
-			arrow_data.profile=this;
-			cardlist.dispatchEventWith(CardsList.INIT,false,arrow_data)
-			
-			skills.addChild(left_arrow);
-			skills.addChild(right_arrow);
-			skills.addChild(cardlist);
+            cardlist=new CardsList();
+            cardlist.character=character;
+            cardlist.from="store";
+            cardlist.cate=cate;
+            cardlist.x=50;
+            cardlist.y=120;
+            skills.addChild(cardlist);
+            cardlist.dispatchEventWith(CardsList.INIT);
 		}
-		private function onTriggeredSkillList(e:Event):void
-		{
-			var target:Button=e.currentTarget as Button;
-			
-			var _data:Object=new Object();
-			_data.dir=target.name;
-			_data.left_arrow=left_arrow;
-			_data.right_arrow=right_arrow;
-			var cardsEvent:Event=new Event(CardsList.CHANGE,true,_data);
-			cardlist.dispatchEvent(cardsEvent);
-			
-		}
+
+
 		private function initProIcons():void
 		{
 
-            var savedata:SaveGame=FloxCommand.savegame;
-            var gender:String=savedata.avatar.gender;
-
-            var modelObj:Object=Config.modelObj;
-            var modelRec:Rectangle=modelObj[gender];
-
-
-            var modelAttr:Object=new Object();
-            modelAttr.gender=gender;
-            modelAttr.width=modelRec.width;
-            modelAttr.height=modelRec.height;
-
-            var _basemodel:Sprite=new Sprite();
-            drawcom.drawCharacter(_basemodel,modelAttr);
-            drawcom.updateBaseModel("Eyes");
-            drawcom.updateBaseModel("Hair");
-            drawcom.updateBaseModel("Features");
-
-            player_icon=new Sprite();
-            player_icon.name="Player";
-
-            var dp:Point=new Point(-85,-21);
-            if(gender=="Female")
-            {
-                dp=new Point(-82,-6);
-            }
-            drawcom.drawPlayerProfileIcon(player_icon,1,new Point(60,710),dp);
-            player_icon.scaleX=0.89;
-            player_icon.scaleY=0.89;
-            player_icon.x=180;
-            addChild(player_icon);
-            player_icon.clipRect=new Rectangle(-55,-(player_icon.height/2),player_icon.width,player_icon.height);
-            player_icon.addEventListener(TouchEvent.TOUCH,onTouchCharaterIcon);
-
-
-
-            var characters:Array=Config.characters;
-            for(var i:uint=0;i<characters.length;i++)
-            {
-                var name:String=characters[i].toLowerCase();
-                var pts:Number=Number(savedata.pts[name]);
-                var enable_ch:String="ProEmpty";
-                var enabled:Boolean=false;
-
-                var sprite:Sprite=new Sprite();
-                sprite.name=characters[i];
-                sprite.useHandCursor=enabled;
-                sprite.x=i*100+280;
-                sprite.y=710;
-
-                if(pts!=-1)
-                {
-                    enabled=true;
-                    drawcom.drawCharacterProfileIcon(sprite,characters[i],0.45);
-                }
-                else
-                {
-                    var texture:Texture=Assets.getTexture(enable_ch);
-                    var img:Image=new Image(texture);
-                    img.smoothing=TextureSmoothing.TRILINEAR;
-                    img.pivotX=img.width/2;
-                    img.pivotY=img.height/2;
-                    img.scaleX=0.45;
-                    img.scaleY=0.45;
-                    sprite.addChild(img);
-                }
-                //if
-
-                addChild(sprite);
-
-                if(enabled)
-                {
-                    sprite.addEventListener(TouchEvent.TOUCH,onTouchCharaterIcon);
-                }
-                //if
-            }
-			
+            this.addEventListener("TouchedIcon",onTouchCharaterIcon);
+            viewcom.characterIcons(this);
 			
 		}
-		private function onTouchCharaterIcon(e:TouchEvent):void
+		private function onTouchCharaterIcon(e:Event):void
 		{
-			var target:Sprite=e.currentTarget as Sprite;
-			var hover:Touch=e.getTouch(target,TouchPhase.HOVER);
-			var began:Touch=e.getTouch(target,TouchPhase.BEGAN);
-			if(hover)
-			{
-				
-				var tween:Tween=new Tween(target,0.2,Transitions.LINEAR);
-				tween.scaleTo(1.1);
-				Starling.juggler.add(tween);
-				
-				
-			}
-			else
-			{
-				var scale:Number=1;
-				if(target.name=="Player")
-				{
-					scale=0.89;
-				}
-				//if	
-				tween=new Tween(target,0.2,Transitions.LINEAR);
-				tween.scaleTo(scale);
-				Starling.juggler.add(tween);
-			}
-			//if
-			if(began)
-			{
-				ch_index=Config.characters.indexOf(target.name);
-				character=target.name.toLowerCase();
-				//CharacterName=character;
-				updateCharacter();
-				updateSkills();
-			
-			}
-			//if
+
+            ch_index=e.data.ch_index;
+            character=e.data.character;
+            updateCharacter();
+            updateSkills();
+
 		}
 		private function updateCharacter():void
 		{
-			copyModel.visible=false;
+            basemodel.visible=false;
 			chmodel.visible=true;
 			if(ch_index==-1)
 			{
-				copyModel.visible=true;
+                basemodel.visible=true;
 				chmodel.visible=false;
 			}
 			else
 			{
-				var old_chmc:MovieClip=chmodel.getChildByName("character") as MovieClip;
-				if(old_chmc)
-				{
-					old_chmc.removeFromParent(true);
-					
-				}
-				var ch_name:String=Config.characters[ch_index];
-			 
-				var chmc:MovieClip=Assets.getDynamicAtlas(ch_name.toLowerCase());
-				chmc.name="character";
-				chmc.width=356;
-				chmc.height=608;
-				chmodel.addChild(chmc)
+
+                viewcom.replaceCharacter(chmodel);
+
 			}
 			
 			

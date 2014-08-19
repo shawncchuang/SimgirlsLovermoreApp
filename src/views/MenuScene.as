@@ -38,11 +38,11 @@ public class MenuScene extends Scenes
     private var network:Image;
     private var tween:Tween;
     //profile,contacts,calendar,photos,mail,option
-    private var iconsname:Array=["ProfileScene","Contacts","Calendar","Photos","Mail","Option"];
+    public static var iconsname:Array=["ProfileScene","ContactsScene","CalendarScene","Photos","Mail","SettingsScene"];
     private var icons:Array=[new Point(422,278),new Point(344,426),new Point(427,572),
         new Point(596,570),new Point(682,435),new Point(595,280)];
 
-    private var labelsName:Array=["PROFILE","CONTACTS","CALENDAR","PHOTOS","MESSAGING","SETTINGS"];
+    public static var labelsName:Array=["PROFILE","CONTACTS","CALENDAR","PHOTOS","MESSAGING","SETTINGS"];
     private var iconsLabel:Array=[new Point(257,186),new Point(101,408),new Point(216,640),
         new Point(636,640),new Point(760,408),new Point(676,187)];
 
@@ -76,7 +76,7 @@ public class MenuScene extends Scenes
         templete.cate="MENU";
         templete.addBackground();
         var attrs:Array=[{from:new Point(-360,151),to:new Point(-178,151)},
-                        {from:new Point(1385,151),to:new Point(1204,151)}];
+            {from:new Point(1385,151),to:new Point(1204,151)}];
         templete.backgroundEffectFadein(attrs);
         templete.addTitlebar(new Point(0,82));
         templete.addFooter();
@@ -112,14 +112,14 @@ public class MenuScene extends Scenes
         network.alpha=0;
         addChild(network);
 
-/*
-        titleIcon=new Image(getTexture("IconMenuTitle"));
-        titleIcon.pivotX=titleIcon.width/2;
-        titleIcon.pivotY=titleIcon.height/2;
-        titleIcon.x=114
-        titleIcon.y=117;
-        addChild(titleIcon);
-        */
+        /*
+         titleIcon=new Image(getTexture("IconMenuTitle"));
+         titleIcon.pivotX=titleIcon.width/2;
+         titleIcon.pivotY=titleIcon.height/2;
+         titleIcon.x=114
+         titleIcon.y=117;
+         addChild(titleIcon);
+         */
 
         tween=new Tween(network,1,Transitions.EASE_IN_OUT_BACK);
         tween.scaleTo(1);
@@ -133,13 +133,13 @@ public class MenuScene extends Scenes
         //cancel button
         //command.addedCancelButton(this,doCannelHandler);
         /*
-        var cancel:Button=new Button(getTexture("IconPrevBtn"));
-        cancel.name="cancel";
-        cancel.x=16;
-        cancel.y=678;
-        addChild(cancel);
-        cancel.addEventListener(Event.TRIGGERED,doCannelHandler);
-        */
+         var cancel:Button=new Button(getTexture("IconPrevBtn"));
+         cancel.name="cancel";
+         cancel.x=16;
+         cancel.y=678;
+         addChild(cancel);
+         cancel.addEventListener(Event.TRIGGERED,doCannelHandler);
+         */
 
     }
 
@@ -254,7 +254,11 @@ public class MenuScene extends Scenes
         {
             click_type=target.name
 
-            doFadeoutTransatoin();
+            if(click_type.indexOf("Scene")!=-1){
+                doFadeoutTransatoin();
+            }
+
+
         }
     }
 

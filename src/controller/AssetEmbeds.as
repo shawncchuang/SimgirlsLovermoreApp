@@ -165,10 +165,10 @@ package controller
 		public static const IconProfileScene:Class;
 		
 		[Embed(source="../../media/textures/icons/menu_contacts.png")]
-		public static const IconContacts:Class;
+		public static const IconContactsScene:Class;
 		
 		[Embed(source="../../media/textures/icons/menu_calendar.png")]
-		public static const IconCalendar:Class;
+		public static const IconCalendarScene:Class;
 		
 		[Embed(source="../../media/textures/icons/menu_photos.png")]
 		public static const IconPhotos:Class;
@@ -176,13 +176,21 @@ package controller
 		[Embed(source="../../media/textures/icons/menu_mail.png")]
 		public static const IconMail:Class;
 
-        [Embed(source="../../media/textures/icons/menu_option.png")]
-        public static const IconOption:Class;
+        [Embed(source="../../media/textures/icons/menu_setting.png")]
+        public static const IconSettingsScene:Class;
 		
 		[Embed(source="../../media/textures/icons/title_icon_menu.png")]
-		public static const IconMenuTitle:Class;
+		public static const IconMENUTitle:Class;
         [Embed(source="../../media/textures/icons/title_icon_profile.png")]
-        public static const IconProfileTitle:Class;
+        public static const IconPROFILETitle:Class;
+        [Embed(source="../../media/textures/icons/title_icon_setting.png")]
+        public static const IconSETTINGSTitle:Class;
+
+        [Embed(source="../../media/textures/icons/title_icon_calendar.png")]
+        public static const IconCALENDARTitle:Class;
+
+        [Embed(source="../../media/textures/icons/title_icon_contacts.png")]
+        public static const IconCONTACTSTitle:Class;
 
 		[Embed(source="../../media/textures/icons/pro_empty.png")]
 		public static const ProEmpty:Class;
@@ -364,6 +372,11 @@ package controller
         [Embed(source="../../media/textures/icons/icon_assets_sort_expiration.png")]
         public static const IconSortExpiration:Class;
 
+        [Embed(source="../../media/textures/icons/sound_toggle_default.png")]
+        public static const IconSoundToggleDefault:Class;
+
+        [Embed(source="../../media/textures/icons/sound_toggle_down.png")]
+        public static const IconSoundToggleDown:Class;
 
         /*------------------icons-------------------------------------------------*/
 		
@@ -628,7 +641,63 @@ package controller
 
         [Embed(source="../../media/textures/panels/profile_tab_skills.png")]
         public static const SkillsInfo:Class;
-		/*-------------------panels-------------------------------------------------------------------*/
+
+        //setting_panel
+        [Embed(source="../../media/textures/panels/setting_panel.png")]
+        public static const SettingPanel:Class;
+
+        //calendar
+        [Embed(source="../../media/textures/panels/calendar_ym.xml", mimeType="application/octet-stream")]
+        public static const CalendarYMXML:Class;
+        [Embed(source="../../media/textures/panels/calendar_ym.png")]
+        public static const CalendarYM:Class;
+
+        [Embed(source="../../media/textures/panels/calendar_ym_bg.png")]
+        public static const CalendarYMBg:Class;
+
+
+        [Embed(source="../../media/textures/panels/months/calendar_months0001.png")]
+        public static const CalendarMar:Class;
+
+        [Embed(source="../../media/textures/panels/months/calendar_months0002.png")]
+        public static const CalendarApr:Class;
+
+        [Embed(source="../../media/textures/panels/months/calendar_months0003.png")]
+        public static const CalendarMay:Class;
+
+        [Embed(source="../../media/textures/panels/months/calendar_months0004.png")]
+        public static const CalendarJun:Class;
+
+        [Embed(source="../../media/textures/panels/months/calendar_months0005.png")]
+        public static const CalendarJul:Class;
+
+        [Embed(source="../../media/textures/panels/months/calendar_months0006.png")]
+        public static const CalendarAug:Class;
+
+        [Embed(source="../../media/textures/panels/months/calendar_months0007.png")]
+        public static const CalendarSep:Class;
+
+        [Embed(source="../../media/textures/panels/months/calendar_months0008.png")]
+        public static const CalendarOct:Class;
+
+        [Embed(source="../../media/textures/panels/months/calendar_months0009.png")]
+        public static const CalendarNov:Class;
+
+        [Embed(source="../../media/textures/panels/months/calendar_months0010.png")]
+        public static const CalendarDec:Class;
+
+        [Embed(source="../../media/textures/panels/months/calendar_months0011.png")]
+        public static const CalendarJan:Class;
+
+        [Embed(source="../../media/textures/panels/months/calendar_months0012.png")]
+        public static const CalendarFeb:Class;
+
+
+        [Embed(source="../../media/textures/panels/contacts_panel_bg.png")]
+        public static const ContactsPanelBg:Class;
+
+
+        /*-------------------panels-------------------------------------------------------------------*/
 		
 		
 		 
@@ -715,7 +784,7 @@ package controller
 		[Embed(source="../../media/textures/btns/btn_buynow.png")]
 		public static const BuyNowBtn:Class;
 		
-		[Embed(source="../../media/textures/panels/panel_skills_img.png")]
+		[Embed(source="../../media/textures/panels/skillstore_tab.png")]
 		public static const PanelSkillsStore:Class;
 
 

@@ -3,6 +3,10 @@
  */
 package views {
 import controller.Assets;
+import controller.MainCommand;
+import controller.MainInterface;
+
+import events.SceneEvent;
 
 import flash.geom.Point;
 
@@ -23,6 +27,8 @@ import starling.events.TouchPhase;
 import starling.text.TextField;
 import starling.textures.Texture;
 
+import utils.DebugTrace;
+
 
 public class MenuTemplate extends Sprite{
 
@@ -36,6 +42,8 @@ public class MenuTemplate extends Sprite{
     public var font:String="";
     private var titlebar:Sprite;
     private var titleIcon:Image;
+    private var command:MainInterface=new MainCommand();
+    private var mini_menu:Sprite;
     public function MenuTemplate() {
 
 
@@ -153,17 +161,22 @@ public class MenuTemplate extends Sprite{
 
     public function addTitleIcon(attr:Object):void{
 
-        var iconScr:String="";
-        switch (this.cate){
+        /*
 
-            case "MENU":
-                iconScr="IconMenuTitle";
-                break
-            case "PROFILE":
-                iconScr="IconProfileTitle";
-                break
-        }
+         switch (this.cate){
 
+         case "MENU":
+         iconScr="IconMenuTitle";
+         break
+         case "PROFILE":
+         iconScr="IconProfileTitle";
+         break
+         case "SETTING":
+         iconScr="IconSettingTitle";
+         break
+         }
+         */
+        var iconScr:String="Icon"+this.cate+"Title";
         titleIcon=new Image(getTexture(iconScr));
         titleIcon.pivotX=titleIcon.width/2;
         titleIcon.pivotY=titleIcon.height/2;
@@ -206,17 +219,17 @@ public class MenuTemplate extends Sprite{
     public function addMiniMenu():void{
         var pos:Object={"PROFILE":new Point(-27,-40),
             "CONTACTS":new Point(-50,-3),
-            "CALENDER":new Point(-26,46),
+            "CALENDAR":new Point(-26,46),
             "PHOTOS":new Point(25,46),
             "MESSAGING":new Point(50.5,2),
-            "SETTING":new Point(24,-41)
+            "SETTINGS":new Point(24,-41)
         }
 
         var xml:XML=Assets.getAtalsXML("MiniMenusXML");
         var mmTexture:Texture=getTexture("MiniMenus");
         var mmTextAltas:TextureAtlas=new TextureAtlas(mmTexture,xml);
 
-        var mini_menu:Sprite=new Sprite();
+        mini_menu=new Sprite();
         mini_menu.x=930.5;
         mini_menu.y=79.5;
         var bg:Image=new Image(mmTextAltas.getTexture(this.cate.toLowerCase()));
@@ -235,7 +248,7 @@ public class MenuTemplate extends Sprite{
 
 
         for(var _cate:String in pos){
-            if(this.cate!=_cate) {
+            if(this.cate != _cate) {
                 var iconTexture:Texture=mmTextAltas.getTexture("icon"+_cate);
                 var mmIcon:Button = new Button(iconTexture);
                 mmIcon.name=_cate;
@@ -270,14 +283,36 @@ public class MenuTemplate extends Sprite{
         }
 
         if(began){
+            DebugTrace.msg("MenuTemplate.onTouchMiniMenu icon="+icon.name);
+            var cate_index:Number=MenuScene.labelsName.indexOf(icon.name);
+            cate=MenuScene.iconsname[cate_index];
+            DebugTrace.msg("MenuTemplate.onTouchMiniMenu scene="+cate);
+            if(cate.indexOf("Scene")!=-1){
+
+
+                tween=new Tween(mini_menu,0.2,Transitions.EASE_IN_OUT);
+                tween.scaleTo(0.1);
+                tween.animate("rotation",180);
+                tween.animate("alpha",0);
+                tween.onComplete=onMiniMenuFadout;
+                Starling.juggler.add(tween);
+
+
+            }
 
         }
 
+    }
+    private function onMiniMenuFadout():void{
+
+
+        Starling.juggler.removeTweens(mini_menu);
+
+        var _data:Object=new Object();
+        _data.name=cate;
+        command.sceneDispatch(SceneEvent.CHANGED,_data);
 
     }
-
-
-
     private function getTexture(src:String):Texture
     {
         var textture:Texture=Assets.getTexture(src);
