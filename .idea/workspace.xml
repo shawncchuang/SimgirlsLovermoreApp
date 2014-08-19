@@ -2,21 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e5634857-ca85-444f-9915-08f826b15827" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/views/CalendarScene.as" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/views/ContactsScene.as" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/views/SettingsScene.as" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/controller/ViewCommand.as" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/controller/ViewInterface.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/media/textures/icons/x_alt1_over.png" afterPath="$PROJECT_DIR$/media/textures/icons/x_alt1_over.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/media/textures/icons/x_alt1_up.png" afterPath="$PROJECT_DIR$/media/textures/icons/x_alt1_up.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/AssetEmbeds.as" afterPath="$PROJECT_DIR$/src/controller/AssetEmbeds.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/CardsList.as" afterPath="$PROJECT_DIR$/src/views/CardsList.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/DatingScene.as" afterPath="$PROJECT_DIR$/src/views/DatingScene.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/MenuScene.as" afterPath="$PROJECT_DIR$/src/views/MenuScene.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/MenuTemplate.as" afterPath="$PROJECT_DIR$/src/views/MenuTemplate.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/ProfileScene.as" afterPath="$PROJECT_DIR$/src/views/ProfileScene.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/model/Scenes.as" afterPath="$PROJECT_DIR$/src/model/Scenes.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/SkillsStore.as" afterPath="$PROJECT_DIR$/src/views/SkillsStore.as" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="SimgirlsLovermoreApp.iws" />
@@ -630,7 +615,7 @@
       <workItem from="1407376517505" duration="10275000" />
       <workItem from="1407448991942" duration="40556000" />
       <workItem from="1407780856685" duration="103590000" />
-      <workItem from="1408124957455" duration="51001000" />
+      <workItem from="1408124957455" duration="51084000" />
     </task>
     <task id="LOCAL-00001" summary="update setting on intelliJ">
       <created>1406764639395</created>
@@ -668,11 +653,15 @@
       <created>1408127519514</created>
       <updated>1408127519514</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="mini menu handler,made calendar scene and contacts UI">
+      <created>1408415502770</created>
+      <updated>1408415502770</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="303838000" />
+    <option name="totallyTimeSpent" value="303921000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -750,7 +739,8 @@
     <MESSAGE value="got a battle result by auto battle,included player vs cpu and Cpu vs Cpu" />
     <MESSAGE value="menu, profile, mini menu UI, menu fadein and fadeout animation" />
     <MESSAGE value="profile assets tab that sorted by name or brand or expiration" />
-    <option name="LAST_COMMIT_MESSAGE" value="profile assets tab that sorted by name or brand or expiration" />
+    <MESSAGE value="mini menu handler,made calendar scene and contacts UI" />
+    <option name="LAST_COMMIT_MESSAGE" value="mini menu handler,made calendar scene and contacts UI" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
