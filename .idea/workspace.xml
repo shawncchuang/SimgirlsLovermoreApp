@@ -2,36 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e5634857-ca85-444f-9915-08f826b15827" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/media/textures/previews/AcademyPreview.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/media/textures/previews/AirportPreview.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/media/textures/previews/ArenaPreview.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/media/textures/previews/BeachPreview.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/media/textures/previews/BlackspearsHQPreview.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/media/textures/previews/CasinoPreview.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/media/textures/previews/CinemaPreview.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/media/textures/previews/GymPreview.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/media/textures/previews/HotSpringPreview.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/media/textures/previews/HotelPreview.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/media/textures/previews/MansionPreview.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/media/textures/previews/NightClubPreview.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/media/textures/previews/ParkPreview.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/media/textures/previews/PierPreview.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/media/textures/previews/PoliceStationPreview.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/media/textures/previews/PubPreview.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/media/textures/previews/RestaurantPreview.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/media/textures/previews/ShoppingMallPreview.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/media/textures/previews/TemplePreview.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/media/textures/previews/ThemedParkPreview.jpg" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/media/textures/icons/check_alt_over.png" afterPath="$PROJECT_DIR$/media/textures/icons/check_alt_over.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/media/textures/icons/check_alt_up.png" afterPath="$PROJECT_DIR$/media/textures/icons/check_alt_up.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/AssetEmbeds.as" afterPath="$PROJECT_DIR$/src/controller/AssetEmbeds.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/AssetsForm.as" afterPath="$PROJECT_DIR$/src/views/AssetsForm.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/AssetsTiledLayout.as" afterPath="$PROJECT_DIR$/src/views/AssetsTiledLayout.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/ChatScene.as" afterPath="$PROJECT_DIR$/src/views/ChatScene.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/DatingScene.as" afterPath="$PROJECT_DIR$/src/views/DatingScene.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Game.as" afterPath="$PROJECT_DIR$/src/Game.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/ProfileScene.as" afterPath="$PROJECT_DIR$/src/views/ProfileScene.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/model/Scenes.as" afterPath="$PROJECT_DIR$/src/model/Scenes.as" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="SimgirlsLovermoreApp.iws" />
@@ -679,7 +649,7 @@
       <workItem from="1407376517505" duration="10275000" />
       <workItem from="1407448991942" duration="40556000" />
       <workItem from="1407780856685" duration="103590000" />
-      <workItem from="1408124957455" duration="79712000" />
+      <workItem from="1408124957455" duration="79972000" />
     </task>
     <task id="LOCAL-00001" summary="update setting on intelliJ">
       <created>1406764639395</created>
@@ -725,11 +695,15 @@
       <created>1408415513343</created>
       <updated>1408415513343</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="dating scene layout, cloud command Give control AssetsTiledLayout,modified profile to display AssetsForm and used AssetsTiledLayout">
+      <created>1408501871811</created>
+      <updated>1408501871811</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="332549000" />
+    <option name="totallyTimeSpent" value="332809000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -808,7 +782,8 @@
     <MESSAGE value="menu, profile, mini menu UI, menu fadein and fadeout animation" />
     <MESSAGE value="profile assets tab that sorted by name or brand or expiration" />
     <MESSAGE value="mini menu handler,made calendar scene and contacts UI" />
-    <option name="LAST_COMMIT_MESSAGE" value="mini menu handler,made calendar scene and contacts UI" />
+    <MESSAGE value="dating scene layout, cloud command Give control AssetsTiledLayout,modified profile to display AssetsForm and used AssetsTiledLayout" />
+    <option name="LAST_COMMIT_MESSAGE" value="dating scene layout, cloud command Give control AssetsTiledLayout,modified profile to display AssetsForm and used AssetsTiledLayout" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

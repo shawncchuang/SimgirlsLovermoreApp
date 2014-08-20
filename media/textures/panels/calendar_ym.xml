@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:560931eefbc0355c07f1b01f2e92ff33:c2b3268e6ec0e561dfb5f5e94b06325c:f8d88b833ae68d6defbda34f97e8c379$ -->
+<TextureAtlas imagePath="calendar_ym.png">
+    <SubTexture name="mar" x="2" y="484" width="158" height="468" frameX="0" frameY="-2" frameWidth="158" frameHeight="484"/>
+    <SubTexture name="apr" x="162" y="2" width="158" height="466" frameX="0" frameY="-4" frameWidth="158" frameHeight="484"/>
+    <SubTexture name="may" x="162" y="470" width="158" height="466" frameX="0" frameY="-4" frameWidth="158" frameHeight="484"/>
+    <SubTexture name="jun" x="322" y="2" width="158" height="466" frameX="0" frameY="-4" frameWidth="158" frameHeight="484"/>
+    <SubTexture name="jul" x="322" y="470" width="158" height="466" frameX="0" frameY="-4" frameWidth="158" frameHeight="484"/>
+    <SubTexture name="aug" x="482" y="2" width="158" height="466" frameX="0" frameY="-4" frameWidth="158" frameHeight="484"/>
+    <SubTexture name="sep" x="482" y="470" width="158" height="466" frameX="0" frameY="-4" frameWidth="158" frameHeight="484"/>
+    <SubTexture name="oct" x="642" y="2" width="158" height="466" frameX="0" frameY="-4" frameWidth="158" frameHeight="484"/>
+    <SubTexture name="nov" x="802" y="2" width="158" height="466" frameX="0" frameY="-4" frameWidth="158" frameHeight="484"/>
+    <SubTexture name="dec" x="642" y="470" width="158" height="466" frameX="0" frameY="-4" frameWidth="158" frameHeight="484"/>
+    <SubTexture name="jan" x="802" y="470" width="158" height="466" frameX="0" frameY="-4" frameWidth="158" frameHeight="484"/>
+    <SubTexture name="feb" x="2" y="2" width="158" height="480" frameX="0" frameY="-4" frameWidth="158" frameHeight="484"/>
+</TextureAtlas>
