@@ -353,21 +353,14 @@ public class ProfileScene extends Scenes
     {
         CharacterName="player";
         assets=new AssetsForm();
-
         panelbase.addChild(assets);
 
-        //var savedata:SaveGame=FloxCommand.savegame;
-        //var cash:Number=savedata.cash;
-        var cash:Number=flox.getSaveData("cash");
-        var format:Object=new Object();
-        format.font=font;
-        format.size=20;
-        format.color=0x000000;
-
-        casshtext=addTextField(assets,new Rectangle(117,62,158,25),format);
-        casshtext.text=DataContainer.currencyFormat(cash);
+        var _data:Object=new Object();
+        _data.type="profile";
+        assets.dispatchEventWith("INITAILIZE",false,_data);
 
 
+        casshtext=assets.getChildByName("cash") as TextField;
         initAssetesForm();
 
         assets.visible=false;
@@ -407,7 +400,7 @@ public class ProfileScene extends Scenes
             //var excerpt:Array=savedata.assets[chName];
 
         }
-        CharacterName=chName
+        CharacterName=chName;
         casshtext.text=DataContainer.currencyFormat(cash);
 
 

@@ -1,11 +1,17 @@
 package views
 {
 import controller.Assets;
+import controller.FloxCommand;
+import controller.FloxInterface;
+
+import data.DataContainer;
+
 
 import events.GameEvent;
 
 import flash.geom.Point;
 import flash.geom.Rectangle;
+import flash.text.TextFieldAutoSize;
 
 import starling.animation.Transitions;
 
@@ -25,35 +31,62 @@ import utils.DebugTrace;
 
 public class AssetsForm extends Sprite
 {
+    private var flox:FloxInterface=new FloxCommand();
     private var gameEvent:GameEvent;
     private  var assetsform:AssetsTiledLayout
     private var tag_names:Array=["Consumable","Misc","Apparel","Estatecar"];
     private var catelist:Array=["cons","misc","app","est"];
     private var tad_pos:Array=[];
-    private var chname:String="player";
+    public var chname:String="player";
     private var sort:String="id";
     private var sort_index:Number=-2;
     private var cate:String="cons";
     private var sortings:Array=new Array();
+    private var font:String="SimMyriadPro";
+    private var casshtext:TextField;
+    public var type:String;
     public function AssetsForm()
     {
 
 
-
         this.addEventListener("CHANGED",onChangedAssetsForm);
+        this.addEventListener("INITAILIZE",onInitAssetsForm);
 
 
+    }
+    private function onInitAssetsForm(e:Event):void{
+
+        type=e.data.type;
+
+        initCashFormat();
         initAssetsTiledLayout();
         initTags();
         initSortingTags();
 
 
     }
+    private function initCashFormat():void{
+
+
+
+        var cash:Number=flox.getSaveData("cash");
+        var format:Object=new Object();
+        format.font=font;
+        format.size=20;
+        format.color=0x000000;
+
+        casshtext=addTextField(this,new Rectangle(117,62,158,25),format);
+        casshtext.name="cash";
+        casshtext.text=DataContainer.currencyFormat(cash);
+
+    }
+
     private function initAssetsTiledLayout():void{
 
 
         assetsform=new AssetsTiledLayout();
         assetsform.clipRect=new Rectangle(0,0,530,310);
+        assetsform.type=type;
         assetsform.chname=chname;
         assetsform.cate=cate;
         assetsform.sort=sort;
@@ -165,6 +198,20 @@ public class AssetsForm extends Sprite
         initAssetsTiledLayout();
 
 
+    }
+    private function addTextField(target:Sprite,rec:Rectangle,format:Object):TextField
+    {
+
+
+        var txt:TextField=new TextField(rec.width,rec.height,"",font,format.size,format.color);
+        txt.hAlign="left";
+        txt.vAlign="center";
+        txt.autoSize=TextFieldAutoSize.LEFT;
+        txt.x=rec.x;
+        txt.y=rec.y;
+        target.addChild(txt);
+
+        return txt
     }
 
 }

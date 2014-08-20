@@ -49,6 +49,8 @@ package views
 			initBubble();
 			initBingoMachine();
 			initCancelHandle();
+
+            this.addEventListener(Event.REMOVED_FROM_STAGE, onChatSceneRemoved)
 		}
 		private function initBingo():void
 		{
@@ -572,6 +574,13 @@ package views
 			
 			return re;
 		}
+
+        private function onChatSceneRemoved(e:Event):void{
+
+            Starling.juggler.removeTweens(bingo);
+            Starling.juggler.removeTweens(bubble);
+
+        }
 		
 	}
 }

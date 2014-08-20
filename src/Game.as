@@ -182,6 +182,7 @@ package
 			
 			
 			var _data:Object=new Object();
+
 			//_data.name="BattleScene";
 			//_data.name="HotelScene";
 			//_data.name="ProfileScene";

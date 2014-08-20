@@ -243,7 +243,7 @@ public class Scenes extends Sprite
                 current_scence=new FoundSomeScene();
                 break
             case "DatingScene":
-                //infobar=false;
+                infobar=false;
                 current_scence=new DatingScene();
                 break
             case "SSCCArenaScene":
