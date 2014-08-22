@@ -36,6 +36,8 @@ import starling.text.TextField;
 import starling.text.TextFieldAutoSize;
 import starling.textures.Texture;
 
+import utils.DebugTrace;
+
 import utils.DrawManager;
 import utils.FilterManager;
 import utils.ViewsContainer;
@@ -357,8 +359,7 @@ public class ProfileScene extends Scenes
 
         var _data:Object=new Object();
         _data.type="profile";
-        assets.dispatchEventWith("INITAILIZE",false,_data);
-
+        assets.dispatchEventWith(AssetsForm.INILAIZE,false,_data);
 
         casshtext=assets.getChildByName("cash") as TextField;
         initAssetesForm();
@@ -406,16 +407,15 @@ public class ProfileScene extends Scenes
 
     }
 
-
     private function updateAssets():void
     {
 
+
         var _data:Object=new Object();
-        _data.chname=ch_name;
-
-        assets.dispatchEventWith("CHANGED",false,_data);
-
+        _data.chname=character;
+        assets.dispatchEventWith(AssetsForm.UPDATE,false,_data);
         excerptbox.removeFromParent(true);
+
         initAssetesForm();
 
     }
@@ -432,6 +432,7 @@ public class ProfileScene extends Scenes
     private function onTouchCharaterIcon(e:Event):void
     {
 
+        DebugTrace.msg("ProfileScene onTouchCharaterIcon");
         ch_index=e.data.ch_index;
         character=e.data.character;
         updateData();

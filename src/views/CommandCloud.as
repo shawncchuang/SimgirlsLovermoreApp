@@ -1,6 +1,11 @@
 package views
 {
-	import flash.display.MovieClip;
+import com.greensock.TweenMax;
+import com.greensock.plugins.TweenPlugin;
+import com.greensock.plugins.TransformAroundCenterPlugin;
+import com.greensock.easing.Back;
+
+import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
@@ -23,7 +28,7 @@ package views
 	
 	import model.SaveGame;
 	
-	import starling.animation.Tween;
+	//import starling.animation.Tween;
 	import starling.core.Starling;
 	import starling.display.Sprite;
 	
@@ -41,6 +46,7 @@ package views
 			"R1":new Point(872,375),"R2":new Point(860,469),"R3":new Point(826,279),"R4":new Point(872,566),"R5":new Point(872,183)}
 		private var de_label:String="";
 		private var directions:MovieClip;
+        TweenPlugin.activate([TransformAroundCenterPlugin]);
 		public function CommandCloud(src:String)
 		{
 			//L1_^Departures
@@ -61,10 +67,20 @@ package views
 			cloudTxt.embedFonts=true;
 			cloudTxt.multiline=true;
 			cloudTxt.defaultTextFormat=format;
-			
+
+            if(p.indexOf("L")!=-1){
+                var posX:Number=-200;
+                var id:Number=Number(p.split("L").join(""));
+            }else{
+                posX=1000;
+                id=Number(p.split("R").join(""));
+            }
+
+
 			comcloud=new ComCloud();
 			comcloud.name=_label;
-			comcloud.x=pos[p].x;
+			//comcloud.x=pos[p].x;
+            comcloud.x=posX;
 			comcloud.y=pos[p].y;
 			comcloud.buttonMode=true;
 			comcloud.mouseChildren=false;
@@ -72,13 +88,18 @@ package views
 			comcloud.addEventListener(MouseEvent.MOUSE_OVER,doOverComCloud);
 			comcloud.addEventListener(MouseEvent.MOUSE_OUT,doOutComCloud);
 			comcloud.addEventListener(Event.ENTER_FRAME,doComCloudEnterFrame);
-			
 			comcloud.addChild(cloudTxt);
+
+            comcloud.scaleX=0.1;
+            comcloud.scaleY=0.1;
+
 			addChild(comcloud);
-			
-			
-			
+
+            TweenMax.to(comcloud,id*0.1+0.2,{x:pos[p].x,transformAroundCenter:{scale:1},easing:Back.easeInOut});
+
 		}
+
+
 		private function doClickComCloud(e:MouseEvent):void
 		{
 			
@@ -93,22 +114,31 @@ package views
 				DebugTrace.msg("CommandCloud.doClickComCloud switch_verify="+switch_verifies);
 				if(!switch_verifies[0])
 				{
-					disabledComCloud();
-					comcloud.gotoAndPlay("broke");
-					command.playSound("Break");
+
+
+                    onCloudTirrered();
 				}
 				//if
 				
 			}
 			else
 			{
-				disabledComCloud();
-				comcloud.gotoAndPlay("broke");
-				command.playSound("Break");
+                onCloudTirrered();
+
 			}
 			//if
 			visibleCommandDirecation();
 		}
+        private function onCloudTirrered():void{
+
+            disabledComCloud();
+
+            TweenMax.to(comcloud,0.5,{label:"broke"});
+            comcloud.gotoAndPlay("broke");
+            command.playSound("Break");
+
+
+        }
 		private function doOverComCloud(e:MouseEvent):void
 		{
 			
@@ -191,7 +221,7 @@ package views
 				//if
 			}
 		}
-		private var valueTween:Tween;
+		private var valueTween:TweenMax;
 		private function checkSceneCommand():void
 		{
 			var currentlable:String=DataContainer.currentLabel;
@@ -234,11 +264,16 @@ package views
 						sussess=paidAP();
 						if(sussess)
 						{
+                            var scene:Sprite=ViewsContainer.MainScene;
+                            TweenMax.delayedCall(0.5,onInitCurrentScene)
+
+                            /*
 							var scene:Sprite=ViewsContainer.MainScene;
 							valueTween=new Tween(scene,0.5);
 							valueTween.delay=0.5;
 							valueTween.onComplete=onInitCurrentScene;
 							Starling.juggler.add(valueTween);
+							*/
 						}
 						//if
 						break
@@ -309,8 +344,9 @@ package views
 		private function onInitCurrentScene():void
 		{
 			DebugTrace.msg("CommandCloud.onInitCurrentScene")
-			
-			Starling.juggler.remove(valueTween);
+
+            TweenMax.killAll();
+			//Starling.juggler.remove(valueTween);
 			
 			var _data:Object=new Object();
 			_data.com=de_label;

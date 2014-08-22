@@ -9,6 +9,8 @@ import controller.FloxInterface;
 
 import data.DataContainer;
 
+
+
 import feathers.controls.List;
 import feathers.data.ListCollection;
 import feathers.controls.PanelScreen;
@@ -23,6 +25,8 @@ import feathers.events.FeathersEventType;
 
 import flash.geom.Point;
 
+import starling.display.Button;
+
 import starling.display.Image;
 
 import starling.display.Sprite;
@@ -33,6 +37,7 @@ import starling.events.TouchPhase;
 import starling.text.TextField;
 import starling.textures.Texture;
 import starling.display.Quad;
+
 
 import utils.DebugTrace;
 
@@ -55,7 +60,6 @@ public class AssetsTiledLayout extends PanelScreen{
 
 
 
-        //this.width=530;
         this.height=300;
         this.addEventListener(FeathersEventType.INITIALIZE, initializeHandler);
 
@@ -166,18 +170,19 @@ public class AssetsTiledLayout extends PanelScreen{
             itemRender.name=item.id;
             itemRender.useHandCursor=true;
 
-            var quad:Quad = new Quad(530, 60, 0xffffff);
+            var itemTt:Texture = Assets.getTexture(assetsData[item.id].texture);
+            var itemImg:Image = new Image(itemTt);
+            var renderH:Number=itemImg.height;
+
+
+            var quad:Quad = new Quad(530, renderH, 0xffffff);
             itemRender.addChild(quad);
 
-            // var itemTt:Texture = Assets.getTexture(item.id);
-            var itemTt:Texture = Assets.getTexture("cons_1_1");
-            var img:Image = new Image(itemTt);
-
             var nameHeader:TextField=new TextField(50,16,"Name:",font,12,0x333333,true);
-            nameHeader.x=img.width+10;
+            nameHeader.x=itemImg.width+10;
             nameHeader.hAlign="left";
             itemRender.addChild(nameHeader);
-            var nametTxt:TextField=new TextField(100,60,item.name,font,20,0,false);
+            var nametTxt:TextField=new TextField(100,renderH,item.name,font,20,0,false);
             nametTxt.x=nameHeader.x;
             nametTxt.hAlign="left";
             nametTxt.vAlign="center";
@@ -187,7 +192,7 @@ public class AssetsTiledLayout extends PanelScreen{
             brandHeader.x=220;
             brandHeader.hAlign="left";
             itemRender.addChild(brandHeader);
-            var brandTxt:TextField=new TextField(100,60,item.brand,font,20,0,false);
+            var brandTxt:TextField=new TextField(100,renderH,item.brand,font,20,0,false);
             brandTxt.x=brandHeader.x;
             brandTxt.hAlign="left";
             brandTxt.vAlign="center";
@@ -197,39 +202,57 @@ public class AssetsTiledLayout extends PanelScreen{
             expirHeader.x=340;
             expirHeader.hAlign="left";
             itemRender.addChild(expirHeader);
-            var expirTxt:TextField=new TextField(80,60,item.expiration,font,20,0,false);
+            var expirTxt:TextField=new TextField(80,renderH,item.expiration,font,20,0,false);
             expirTxt.x=expirHeader.x;
             expirTxt.vAlign="center";
             expirTxt.hAlign="left";
 
 
             var qtyHeader:TextField=new TextField(50,16,"Qty:",font,12,0x333333,true);
-            qtyHeader.x=470;
+            qtyHeader.x=450;
             qtyHeader.hAlign="left";
             itemRender.addChild(qtyHeader);
-            var qtyTxt:TextField=new TextField(30,60,item.qty,font,20,0,false);
+            var qtyTxt:TextField=new TextField(30,renderH,item.qty,font,20,0,false);
             qtyTxt.x=qtyHeader.x;
             qtyTxt.vAlign="center";
             qtyTxt.hAlign="left";
 
-            itemRender.addChild(img);
+
+
+            var btnTexture:Texture=Assets.getTexture("CheckAltUp");
+
+            var sendImg:Image=new Image(btnTexture);
+            sendImg.name=item.id;
+            sendImg.width=45;
+            sendImg.height=45;
+            sendImg.x=485;
+            sendImg.y=Math.floor((renderH-sendImg.height)/2);
+
+
+            itemRender.addChild(itemImg);
             itemRender.addChild(nametTxt);
             itemRender.addChild(brandTxt);
             itemRender.addChild(expirTxt);
             itemRender.addChild(qtyTxt);
-            itemRender.addEventListener(TouchEvent.TOUCH,onTouchedItem);
+            itemRender.addChild(qtyHeader);
+            itemRender.addEventListener(TouchEvent.TOUCH,onTouchedHoverItem);
+            if(type=="give"){
+                itemRender.addChild(sendImg);
+                sendImg.addEventListener(TouchEvent.TOUCH,onTouchedItem);
+            }
+
+
             addChild(itemRender)
         }
     }
     private var gX:Number=0;
     private var gY:Number=0;
-    private function onTouchedItem(e:TouchEvent):void{
-
+    private function onTouchedHoverItem(e:TouchEvent):void{
         var excerpbox:Sprite= ViewsContainer.ExcerptBox;
         var target:Sprite=e.currentTarget as Sprite;
         var hover:Touch=e.getTouch(target,TouchPhase.HOVER);
-        var began:Touch=e.getTouch(target,TouchPhase.BEGAN);
         if(hover){
+
 
             var _data:Object=new Object();
             _data.id=target.name;
@@ -241,49 +264,57 @@ public class AssetsTiledLayout extends PanelScreen{
             excerpbox.dispatchEventWith("CLEAR");
 
         }
-        if(type=="give"){
 
-            if(began){
-                gX=began.globalX;
-                gY=began.globalY;
-                item_id=target.name;
-                sendItemHandle();
+    }
+    private function onTouchedItem(e:TouchEvent):void{
 
 
-            }
+        var target:Image=e.currentTarget as Image;
+        var began:Touch=e.getTouch(target,TouchPhase.BEGAN);
+
+        var hover:Touch=e.getTouch(target,TouchPhase.HOVER);
+        if(hover){
+            var texture:Texture=Assets.getTexture("CheckAltOver");
+
+        }else{
+
+            texture=Assets.getTexture("CheckAltUp");
         }
+        target.texture=texture;
+
+        if(began){
+            gX=began.globalX;
+            gY=began.globalY;
+            item_id=target.name;
+            sendItemHandle();
+
+
+        }
+
 
     }
     private function sendItemHandle():void{
 
 
         var dating:String=DataContainer.currentDating;
-        var assets_item:Object=assetsData[item_id];
 
         var owned_assets:Object=flox.getSaveData("owned_assets");
         var myItem:Object=searchMyOwnedAssets(owned_assets.player)
-        var datingItems:Array=owned_assets[dating];
+        var datingTargetItems:Array=owned_assets[dating];
+        var index:Number=searchID(datingTargetItems,item_id);
         var enabled:Boolean=true;
-
-        for(var i:uint=0;i<datingItems.length;i++){
-
-            if(datingItems[i].id==item_id){
-                enabled=false;
-                break
-            }
-
-        }
+        if(index!=-1)
+            enabled=false;
 
         //DebugTrace.msg("AssetsTiledLayout.sendItemHandle enabled="+enabled);
+        var basesprite:Sprite=ViewsContainer.baseSprite;
         if(enabled){
-            //send item to some one
-
+            // dating person didn't have this item, send item to some one
 
             var assetslist:Array=owned_assets.player;
-            var index:Number=searchID(assetslist,item_id);
+            index=searchID(assetslist,item_id);
 
-
-            var qty:Number=assetslist[index].qty;
+            var qty:Number=myItem.qty;
             qty--;
             if(qty==0)
             {
@@ -294,37 +325,32 @@ public class AssetsTiledLayout extends PanelScreen{
 
                 owned_assets.player=new_assetslist;
             }
-            else
-            {
-                assetslist[index].qty=qty;
-                owned_assets.player=assetslist;
 
-            }
+            var new_item:Object=new Object();
+            new_item.id=item_id;
+            new_item.qty=1;
+            new_item.expiration=myItem.expiration;
+            datingTargetItems.push(new_item);
+            owned_assets[dating]=datingTargetItems;
 
-            var datingItems:Array=owned_assets[dating];
-            var index1:Number=searchID(datingItems,item_id);
-            if(index1==-1)
-            {
-                //dating person didn't have this item
-                var new_item:Object=new Object();
-                new_item.id=item_id;
-                new_item.qty=1;
-                new_item.expiration=myItem.expiration;
-                datingItems.push(new_item);
-                owned_assets[dating]=datingItems;
+            DebugTrace.msg("AssetsTiledLayout.sendItemHandle owned_assets="+JSON.stringify(owned_assets));
+            flox.save("owned_assets",owned_assets);
 
-            }
 
-            // flox.save("owned_assets",owned_assets);
 
             var _data:Object=new Object();
             _data.com="GotGift";
             _data.item_id=item_id;
             _data.began=new Point(gX,gY);
-            var basesprite:Sprite=ViewsContainer.baseSprite;
-            basesprite.dispatchEventWith("commit",false,_data);
 
+            basesprite.dispatchEventWith(DatingScene.COMMIT,false,_data);
 
+        }
+        else{
+            //the dataing character who owned this item
+
+            DebugTrace.msg("AssetsTiledLayout.sendItemHandle DISPLAY_ALERT");
+            basesprite.dispatchEventWith(DatingScene.DISPLAY_ALERT);
         }
 
     }

@@ -55,9 +55,9 @@ package views
 		}
 		private function onUpdateMood(e:Event):void
 		{
-			var lv:Number=e.data.lv
+			var lv:Number=e.data.lv;
 			var dating:String=DataContainer.currentDating;
-			var image:Number=flox.getSaveData("image").player;
+			var image:Number=Number(flox.getSaveData("image").player);
 			var _image:Number=Math.floor(image/20);
 			if(lv==4)
 			{
@@ -104,7 +104,7 @@ package views
 			timer=new Timer(1000,playtimes);
 			timer.addEventListener(TimerEvent.TIMER_COMPLETE,onTimeOut);
 			timer.start();
-			var tween:Tween=new Tween(this,0.5);
+			var tween:Tween=new Tween(this,1);
 			tween.repeatCount=1000;
 			tween.onUpdate=doShowHearts;
 			//tween.onComplete=onTimeout;
@@ -120,7 +120,10 @@ package views
 		}
 		private function onTimeOut(e:TimerEvent):void
 		{
-			
+
+            timer.removeEventListener(TimerEvent.TIMER_COMPLETE,onTimeOut);
+            timer.stop();
+
 			DebugTrace.msg("FlirtScene.onTimeOut love:"+love);
 			clearHeartView();
 			initBubble();
@@ -132,6 +135,8 @@ package views
 		}
 		private function onReadyToUpdatLove():void
 		{
+
+
 			Starling.juggler.removeTweens(this);
 			var _data:Object=new Object();
 			_data.com="FlirtLove";
@@ -154,7 +159,7 @@ package views
 			bubble.scaleX=-1;
 			addChild(bubble);
 			var chat:String="Bye.";
-			var chatTxt:TextField=new TextField(255,190,chat,"Futura",20,0x000000)
+			var chatTxt:TextField=new TextField(255,190,chat,"SimFutura",20,0x000000)
 			chatTxt.hAlign="center";
 			chatTxt.x=634;
 			chatTxt.y=110;
@@ -171,6 +176,9 @@ package views
 		}
 		private function doCancelAssetesForm():void
 		{
+
+            timer.stop();
+            timer.removeEventListener(TimerEvent.TIMER_COMPLETE,onTimeOut);
 			clearHeartView();
 			
 			var _data:Object=new Object();
@@ -181,8 +189,7 @@ package views
 		}
 		private function clearHeartView():void
 		{
-			timer.stop();
-			timer.removeEventListener(TimerEvent.TIMER_COMPLETE,onTimeOut);
+
 			Starling.juggler.removeTweens(this);
 			heartView.removeFromParent(true);
 			

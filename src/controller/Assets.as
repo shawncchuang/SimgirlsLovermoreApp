@@ -195,45 +195,11 @@ package controller
 			var superclass:Object=new Object();
 			//DebugTrace.msg("Assets.getDynamicAtlas src:"+src);
 			var attr:String="Background";
-			/*switch(src)
-			{
-			case "GameTitle":
-			attr="Background";
-			superclass=getDefinitionByName(getQualifiedSuperclassName(new BackgroundGameTitle()));
-			break
-			case "MainScene":
-			attr="Background";
-			superclass=getDefinitionByName(getQualifiedSuperclassName(new BackgroundMainScene()));
-			break
-			case "Tarotreading":
-			attr="Background";
-			superclass=new BackgroundTarotreading();
-			break
-			case "AirplanScene":
-			attr="Background";
-			superclass=getDefinitionByName(getQualifiedSuperclassName(new BackgroundAirplaneScene()));
-			break
-			case "AirportScene":
-			attr="Background";
-			superclass=getDefinitionByName(getQualifiedSuperclassName(new BackgroundAirportScene()));
-			break
-			case "HotelScene":
-			attr="Background";
-			superclass=getDefinitionByName(getQualifiedSuperclassName(new BackgroundHotelScene()));
-			break
-			case "sirena":
-			superclass=getDefinitionByName(getQualifiedSuperclassName(new Sirena()));
-			break
-			
-			}
-			*/
+
 			var mc_ground:*
-			
-			
-			
+
 			try
-			{	
-				
+			{
 				
 				var scale:Number=1;
 				var rate:Number=1;

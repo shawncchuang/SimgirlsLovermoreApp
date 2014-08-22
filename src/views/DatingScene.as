@@ -36,6 +36,7 @@ import starling.events.Touch;
 import starling.events.TouchEvent;
 import starling.events.TouchPhase;
 import starling.text.TextField;
+import starling.text.TextFieldAutoSize;
 import starling.textures.Texture;
 import starling.textures.TextureAtlas;
 import starling.textures.TextureSmoothing;
@@ -56,7 +57,7 @@ public class DatingScene extends Scenes
     private var filters:FilterInterface=new FilterManager();
     private var command:MainInterface=new MainCommand();
     private var flox:FloxInterface=new FloxCommand();
-    private var proSprtie:Sprite;
+    //private var proSprtie:Sprite;
     private var moodPie:MovieClip;
     private var mood:Number;
     //raise or less
@@ -75,6 +76,7 @@ public class DatingScene extends Scenes
             "ComCloud_R2_^Leave,"+
             "ComCloud_R3_^Flirt";
     public static var COMMIT:String="commit";
+    public static var DISPLAY_ALERT:String="display_alert";
     private var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
     private var excerptbox:ExcerptBox;
     private var item_id:String;
@@ -90,21 +92,35 @@ public class DatingScene extends Scenes
     private var assets:AssetsForm;
     private var panelbase:Sprite;
     private var itemImg:Image;
+
     public function DatingScene()
     {
         //ViewsContainer.InfoDataView.visible=false;
 
         base_sprite=new Sprite();
         addChild(base_sprite);
+
         this.addEventListener(DatingScene.COMMIT,doCommitCommand);
+        this.addEventListener(DatingScene.DISPLAY_ALERT,doAlerMessage);
         ViewsContainer.baseSprite=this;
+
+
+
         ProfileScene.CharacterName="player";
+
+        var dating:String=DataContainer.currentDating;
+        mood=Number(flox.getSaveData("mood")[dating]);
+
+        initLayout();
+
+    }
+    private function doAlerMessage(e:Event):void{
 
 
         var dating:String=DataContainer.currentDating;
-        mood=Number( flox.getSaveData("mood")[dating]);
-
-        initLayout();
+        var msg:String=dating.toUpperCase()+" owned this !!";
+        var talkingAlert:Sprite=new AlertMessage(msg);
+        addChild(talkingAlert);
 
     }
     private function doCommitCommand(e:Event):void
@@ -113,6 +129,12 @@ public class DatingScene extends Scenes
         datingTopic.visible=true;
         com=e.data.com;
         DebugTrace.msg("DatingScene.doCommitCommand com:"+com);
+        if(com!="GotGift" || com!="FlirtLove"){
+
+
+            mainProfileTransForm();
+
+        }
         switch(com)
         {
             case "Give":
@@ -121,9 +143,10 @@ public class DatingScene extends Scenes
                 break
             case "Leave":
                 datingTopic.visible=false;
+
                 var _data:Object=new Object();
                 _data.name=DataContainer.currentScene;
-                command.sceneDispatch(SceneEvent.CHANGED,_data)
+                command.sceneDispatch(SceneEvent.CHANGED,_data);
                 break
             case "Chat":
                 var chat:ChatScene=new ChatScene();
@@ -140,6 +163,7 @@ public class DatingScene extends Scenes
             case "GotGift":
                 item_id=e.data.item_id;
 
+                updateAssetsForm();
                 itemMovingHandle(e.data.began);
 
                 break
@@ -151,33 +175,61 @@ public class DatingScene extends Scenes
             case "TakePhoto":
 
                 break
-
             case "Kiss":
+
                 break
 
         }
         //switch
     }
+    private function mainProfileTransForm():void{
+
+        mainProfile.x=130;
+        mainProfile.y=127;
+        mainProfile.scaleX=0.9;
+        mainProfile.scaleY=0.9;
+        var tween:Tween=new Tween(mainProfile,0.3,Transitions.EASE_IN_OUT);
+        tween.delay=0.2;
+        tween.animate("alpha",1);
+        Starling.juggler.add(tween);
+
+    }
+    private function updateAssetsForm():void{
+
+        var _data:Object=new Object();
+        _data.chname="player";
+        assets.dispatchEventWith(AssetsForm.UPDATE,false,_data);
+        excerptbox.removeFromParent(true);
+
+        addExcertbox();
+
+    }
     private function itemMovingHandle(began:Point):void{
 
-        var itemTexture:Texture=getTexture(item_id);
-        itemImg=new Image(itemTexture);
-        itemImg.x=began.x-itemImg.width/2;
-        itemImg.y=began.y-itemImg.height/2;
-        addChild(itemImg);
+        /*
+         var assetsData:Object=flox.getSyetemData("assets")[item_id];
+         var itemTexture:Texture=getTexture(assetsData.texture);
+         itemImg=new Image(itemTexture);
+         itemImg.x=began.x-itemImg.width/2;
+         itemImg.y=began.y-itemImg.height/2;
+         addChild(itemImg);
 
-        var tween:Tween=new Tween(itemImg,0.5,Transitions.EASE_IN_OUT_BACK);
-        tween.moveTo(130,135);
-        tween.onComplete=onItemMovingComplete;
-        Starling.juggler.add(tween)
+         var tween:Tween=new Tween(itemImg,1,Transitions.EASE_IN_OUT);
+         tween.animate("y",itemImg.y-200);
+         tween.scaleTo(1.2);
+         tween.animate("alpha",0);
+
+         tween.onComplete=onItemMovingComplete;
+         Starling.juggler.add(tween);
+         */
+        updateMood();
+        startPaticles();
 
     }
     private function onItemMovingComplete():void{
 
         Starling.juggler.removeTweens(itemImg);
         itemImg.removeFromParent(true);
-
-
         updateMood();
         var tween:Tween=new Tween(base_sprite,0.25);
         tween.delay=0.25;
@@ -208,14 +260,11 @@ public class DatingScene extends Scenes
 
         var _data:Object=new Object();
         _data.type="give";
-        assets.dispatchEventWith("INITAILIZE",false,_data);
+        assets.dispatchEventWith(AssetsForm.INILAIZE,false,_data);
 
 
-        excerptbox=new ExcerptBox();
-        excerptbox.x=56;
-        excerptbox.y=275;
-        addChild(excerptbox);
-        ViewsContainer.ExcerptBox=excerptbox;
+        addExcertbox();
+
 
         // gameEvent._name="dating_assets_form";
         //gameEvent.displayHandler();
@@ -227,6 +276,13 @@ public class DatingScene extends Scenes
 
 
 
+    }
+    private function addExcertbox():void{
+        excerptbox=new ExcerptBox();
+        excerptbox.x=56;
+        excerptbox.y=275;
+        addChild(excerptbox);
+        ViewsContainer.ExcerptBox=excerptbox;
     }
     private function doCancelAssetesForm():void
     {
@@ -251,22 +307,26 @@ public class DatingScene extends Scenes
             type="unlike"
         }
         var ps:ParticleInterface=new ParticleSystem();
-        ps.init(proSprtie,type);
+        ps.init(mainProfile,type);
         ps.showParticles();
 
-        showUpdateMood();
+
 
     }
     private function showUpdateMood():void
     {
+        DebugTrace.msg("DatingScene.showUpdateMood  Love:"+_love);
         var content:String="Love +";
         if(_love<0)
         {
             content="Love";
         }
-        content+=_love;
+        content=content+_love;
+        DebugTrace.msg("DatingScene.showUpdateMood  content:"+content);
+
         loveSprite=new Sprite();
         var moodTxt:TextField=new TextField(200,50,content,"SimNeogreyMedium",20,0xFFFFFF);
+        moodTxt.autoSize=TextFieldAutoSize.HORIZONTAL;
         moodTxt.hAlign="center";
         loveSprite.addChild(moodTxt);
 
@@ -280,14 +340,14 @@ public class DatingScene extends Scenes
         tween.animate("y",loveSprite.y-50);
         //tween.animate("alpha",0.9);
         tween.scaleTo(1.5);
-        tween.onComplete=onMoodUPdateComplete
+        tween.onComplete=onMoodUPdateComplete;
         Starling.juggler.add(tween);
 
     }
     private function onMoodUPdateComplete():void
     {
-        Starling.juggler.removeTweens(loveSprite);
-        removeChild(loveSprite);
+
+        loveSprite.removeFromParent(true);
     }
     private function updateMood():void
     {
@@ -303,12 +363,8 @@ public class DatingScene extends Scenes
 
         var moodObj:Object=flox.getSaveData("mood");
         moodObj[dating]=mood;
-        var savegame:SaveGame=FloxCommand.savegame;
-        savegame.mood=moodObj;
-        FloxCommand.savegame=savegame;
 
-
-
+        flox.save("mood",moodObj);
         drawcom.updatePieChart(mood);
         drawProfile();
         updateRelPoint();
@@ -331,10 +387,10 @@ public class DatingScene extends Scenes
         startPaticles();
 
         var dating:String=DataContainer.currentDating;
-        DebugTrace.msg("DatingScene.updateMood dating:"+dating);
+        // DebugTrace.msg("DatingScene.updateMood dating:"+dating);
 
         var loveObj:Object=flox.getSaveData("love");
-        var moodObj:Object=flox.getSaveData("love");
+        var moodObj:Object=flox.getSaveData("mood");
         player_love=loveObj.player;
         ch_love=loveObj[dating];
 
@@ -355,9 +411,10 @@ public class DatingScene extends Scenes
         FloxCommand.savegame=savegame;
 
 
-        DebugTrace.msg("DatingScene.updateLovefromFlirt _mood:"+_love);
+
         DebugTrace.msg("DatingScene.updateLovefromFlirt mood:"+mood);
         drawcom.updatePieChart(mood);
+        showUpdateMood();
         updateRelPoint();
 
     }
@@ -410,7 +467,7 @@ public class DatingScene extends Scenes
     private var playerloveTxt:TextField;
     private var datingTopic:Sprite;
     private var chloveTxt:TextField;
-    private var profile:Sprite=null;
+    //private var profile:Sprite=null;
     private var mainProfile:Sprite;
     private var bgEffectImg:Image;
     private var titleIcon:Image;
@@ -469,14 +526,24 @@ public class DatingScene extends Scenes
 
 
         mainProfile=new Sprite();
-        mainProfile.x=227;
-        mainProfile.y=47;
-        var mainMood:Image=new Image(getTexture("EnergyPieChartBg"));
-        mainMood.smoothing=TextureSmoothing.TRILINEAR;
-        mainMood.width=287;
-        mainMood.height=287;
-        mainProfile.addChild(mainMood);
-        addChild(mainProfile)
+
+        mainProfile.x=370;
+        mainProfile.y=190;
+
+        var moodCircle:Image=new Image(getTexture("EnergyPieChartBg"));
+        moodCircle.smoothing=TextureSmoothing.TRILINEAR;
+        moodCircle.pivotX=moodCircle.width/2;
+        moodCircle.pivotY=moodCircle.height/2;
+        mainProfile.addChild(moodCircle);
+
+        drawcom.drawPieChart(mainProfile,"MoodPieChart");
+        drawcom.updatePieChart(mood);
+
+        var facials:CharacterFacials=new CharacterFacials();
+        facials.chname=dating;
+        facials.initlailizeView();
+
+        mainProfile.addChild(facials);
 
 
 
@@ -485,24 +552,33 @@ public class DatingScene extends Scenes
         drawProfile();
         displayCloud();
 
-
+        addChild(mainProfile);
     }
     private function drawProfile():void
     {
 
         var dating:String=DataContainer.currentDating;
 
-        if(profile)
-        {
+        /*
+         if(profile)
+         {
+         datingTopic.removeChild(profile);
+         }
+         profile=new Sprite();
+         profile.x=130;
+         profile.y=126;
+         drawcom.drawCharacterProfileIcon(profile,dating,0.5);
+         datingTopic.addChild(profile);
+         */
+        /*
+         var facials:CharacterFacials=new CharacterFacials();
+         facials.chname=dating;
+         facials.initlailizeView();
+         facials.scaleX=0.9;
+         facials.scaleY=0.9;
+         datingTopic.addChild(facials);
+         */
 
-            datingTopic.removeChild(profile);
-        }
-
-        profile=new Sprite();
-        profile.x=130;
-        profile.y=126;
-        drawcom.drawCharacterProfileIcon(profile,dating,0.5);
-        datingTopic.addChild(profile);
     }
     private function initCharacter():void
     {
@@ -511,8 +587,8 @@ public class DatingScene extends Scenes
         character=Assets.getDynamicAtlas(dating);
         addChild(character);
 
-        var tween:Tween=new Tween(character,0.3,Transitions.EASE_OUT);
-        tween.animate("x",400);
+        var tween:Tween=new Tween(character,0.3,Transitions.EASE_IN_OUT);
+        tween.moveTo(400,character.y-80);
         tween.scaleTo(1.2);
         Starling.juggler.add(tween)
 
@@ -539,11 +615,15 @@ public class DatingScene extends Scenes
         var loveObj:Object=flox.getSaveData("love");
 
         playerloveTxt=new TextField(120,55,loveObj.player,font,40,0xFFFFFF);
+        playerloveTxt.vAlign="center";
         playerloveTxt.x=290;
         playerloveTxt.y=54;
         datingTopic.addChild(playerloveTxt);
 
         var ch_love_txt:TextField=new TextField(55,55,dating+"\nLove",font,18,0xFFFFFF);
+        ch_love_txt.vAlign="center";
+        ch_love_txt.hAlign="center";
+        ch_love_txt.autoSize=TextFieldAutoSize.HORIZONTAL;
         ch_love_txt.x=420;
         ch_love_txt.y=54;
         datingTopic.addChild(ch_love_txt);
@@ -554,22 +634,28 @@ public class DatingScene extends Scenes
         chloveTxt.y=54;
         datingTopic.addChild(chloveTxt);
 
+        /*
+         var texture:Texture=Assets.getTexture("EnergyPieChartBg");
+         var pieBg:Image=new Image(texture);
+         pieBg.x=8.5;
+         pieBg.y=5;
+         datingTopic.addChild(pieBg);
+         */
 
-        var texture:Texture=Assets.getTexture("EnergyPieChartBg");
-        var pieBg:Image=new Image(texture);
-        pieBg.x=8.5;
-        pieBg.y=5;
-        datingTopic.addChild(pieBg);
 
-        mood=Number(savegame.mood[dating]);
-        DebugTrace.msg("DatingScene.initLayout mood:"+mood)
-        proSprtie=new Sprite();
-        proSprtie.x=130;
-        proSprtie.y=127;
-        datingTopic.addChild(proSprtie);
+        //mood=Number(savegame.mood[dating]);
 
-        drawcom.drawPieChart(proSprtie,"MoodPieChart");
-        drawcom.updatePieChart(mood);
+        /*
+         proSprtie=new Sprite();
+         proSprtie.x=130;
+         proSprtie.y=127;
+
+         datingTopic.addChild(proSprtie);
+         */
+        //drawcom.drawPieChart(proSprtie,"MoodPieChart");
+        //drawcom.updatePieChart(mood);
+
+
 
 
         var first_str:String=dating.charAt(0).toUpperCase();
@@ -584,36 +670,49 @@ public class DatingScene extends Scenes
     {
         /*
 
-         var cloudlist:Array=comcloud.split(",")
-         for(var i:uint=0;i<cloudlist.length;i++)
-         {
-         scenecom.addDisplayContainer(cloudlist[i]);
-         }
-         //for
+         var cloudAttr:Object={"Kiss":new Point(29,357),
+         "Flirt":new Point(16,478),
+         "TakePhoto":new Point(42,600),
+         "Chat":new Point(833,270),
+         "Give":new Point(870,380),
+         "Dating":new Point(870,500),
+         "Leave":new Point(834,622)
+         };
          */
-        var cloudAttr:Object={"Kiss":new Point(29,357),
-            "Flirt":new Point(16,478),
-            "TakePhoto":new Point(42,600),
-            "Chat":new Point(833,270),
-            "Give":new Point(870,380),
-            "Dating":new Point(870,500),
-            "Leave":new Point(834,622)
-        };
 
-        for(var src:String in  cloudAttr){
+        var cloudAttr:Array=[{name:"Kiss",pos:new Point(103,410)},
+            {name:"Flirt",pos:new Point(90,530)},
+            {name:"TakePhoto",pos:new Point(116,652)},
+            {name:"Chat",pos:new Point(907,323)},
+            {name:"Give",pos:new Point(944,433)},
+            {name:"Dating",pos:new Point(944,553)},
+            {name:"Leave",pos:new Point(908,675)}
+        ];
+
+        for(var i:uint=0;i<cloudAttr.length;i++){
+            var src:String=cloudAttr[i].name;
+
+            if(src=="Kiss" || src=="Flirt" || src=="TakePhoto"){
+                var posX:Number=-200;
+            }else{
+                posX=1000;
+            }
 
             var cloud:Sprite=new Sprite();
             cloud.useHandCursor=true;
             cloud.name=src;
-            cloud.x=cloudAttr[src].x;
-            cloud.y=cloudAttr[src].y;
+            cloud.x=posX;
+            //cloud.x=cloudAttr[src].x;
+            cloud.y=cloudAttr[i].pos.y;
 
             var xml:XML=Assets.getAtalsXML("ComCloudXML");
             var cloudTexture:Texture=Assets.getTexture("ComCloud");
             var cloudAltas:TextureAtlas=new TextureAtlas(cloudTexture,xml);
 
-            var cloudMC:MovieClip=new MovieClip(cloudAltas.getTextures("command_cloud"),24);
+            var cloudMC:MovieClip=new MovieClip(cloudAltas.getTextures("command_cloud"),30);
             cloudMC.name="mc";
+            cloudMC.pivotX=cloudMC.width/2;
+            cloudMC.pivotY=cloudMC.height/2;
             cloudMC.stop();
             cloud.addChild(cloudMC);
             Starling.juggler.add(cloudMC);
@@ -622,16 +721,45 @@ public class DatingScene extends Scenes
                 src="Take\nPhoto";
             }
 
-            var cloudTxt:TextField=new TextField(140,80,src,font,25,0x66CCFF);
+            var cloudTxt:TextField=new TextField(cloudMC.width,cloudMC.height,src,font,25,0x66CCFF);
             cloudTxt.name="txt";
-            cloudTxt.x=23;
-            cloudTxt.y=40;
-            cloudTxt.vAlign=VAlign.CENTER;
-            cloudTxt.hAlign=HAlign.CENTER;
+            //cloudTxt.x=23;
+            //cloudTxt.y=40;
+            cloudTxt.pivotX=cloudTxt.width/2;
+            cloudTxt.pivotY=cloudTxt.height/2;
+            cloudTxt.vAlign="center";
+            cloudTxt.hAlign="center";
             cloud.addChild(cloudTxt);
+
+            cloud.scaleX=0.1;
+            cloud.scaleY=0.1;
             addChild(cloud);
             clouds.push(cloud);
             cloud.addEventListener(TouchEvent.TOUCH, onTouchedCloudHandler);
+
+
+            var tween:Tween=new Tween(cloud,i*0.1+0.2,Transitions.EASE_IN_OUT_BACK);
+            tween.animate("x",cloudAttr[i].pos.x);
+            tween.scaleTo(1);
+            Starling.juggler.add(tween);
+
+
+        }
+        delayTween=new Tween(this,0.1);
+        delayTween.delay=2;
+        delayTween.onComplete=onClodFadeInCOmplete;
+        Starling.juggler.add(delayTween);
+
+    }
+    private function onClodFadeInCOmplete():void{
+
+        Starling.juggler.remove(delayTween);
+
+        for(var i:uint=0;i<clouds.length;i++){
+
+            var cloud:Sprite=clouds[i];
+            Starling.juggler.removeTweens(cloud);
+
         }
 
 
@@ -658,60 +786,116 @@ public class DatingScene extends Scenes
         DebugTrace.msg("DatingScene.onCloudMovieComplete");
 
         var target:MovieClip=e.currentTarget as MovieClip;
-        target.stop();
+        target.pause();
         Starling.juggler.remove(target);
-
 
         layoutFadeout();
 
     }
+    private var chTween:Tween;
     private var  bgEfftween:Tween;
     private var titleIcontween:Tween;
     private var relactionInfoTween:Tween;
+    private var mainProTween:Tween;
+    private var delayTween:Tween;
     private function layoutFadeout():void{
 
 
 
-        mainProfile.removeFromParent(true);
 
-        var chTween:Tween=new Tween(character,0.3,Transitions.EASE_IN_OUT);
-        chTween.scaleTo(1);
-        chTween.animate("x",260);
-        Starling.juggler.add(chTween);
 
         for(var i:uint=0;i<clouds.length;i++){
 
-            clouds[i].removeFromParent(true)
+            var cloud:Sprite=clouds[i];
+            if(cloud.name=="Kiss" || cloud.name=="Flirt" || cloud.name=="TakePhoto"){
+                var posX:Number=-200;
+            }else{
+                posX=1000;
+            }
+            var cloudTween:Tween=new Tween(cloud,i*0.1,Transitions.EASE_IN_OUT);
+            cloudTween.animate("x",posX);
+            cloudTween.scaleTo(0.1);
+            Starling.juggler.add(cloudTween);
 
         }
-
-
         bgEfftween=new Tween(bgEffectImg,0.3,Transitions.EASE_IN_OUT);
-        bgEfftween.animate("alpha",0);
+        bgEfftween.fadeTo(0);
         bgEfftween.onComplete=onTweenComplete;
         titleIcontween=new Tween(titleIcon,0.3,Transitions.EASE_IN_OUT);
-        titleIcontween.animate("alpha",0);
+        titleIcontween.fadeTo(0);
         titleIcontween.onComplete=onTweenComplete;
         relactionInfoTween=new Tween(relactionInfo,0.3,Transitions.EASE_IN_OUT);
-        relactionInfoTween.animate("alpha",0);
+        relactionInfoTween.fadeTo(0);
         relactionInfoTween.onComplete=onTweenComplete;
+
+        if(com!="Leave"){
+
+            chTween=new Tween(character,0.2,Transitions.EASE_IN_OUT);
+            chTween.scaleTo(1);
+            chTween.moveTo(260,0);
+
+            mainProTween=new Tween(mainProfile,0.2,Transitions.EASE_IN_OUT);
+            mainProTween.animate("alpha",0);
+
+        }else{
+
+            chTween=new Tween(character,0.2,Transitions.EASE_IN_OUT);
+            chTween.fadeTo(0);
+
+            mainProTween=new Tween(mainProfile,0.2,Transitions.EASE_IN_OUT);
+            mainProTween.fadeTo(0);
+
+        }
+        chTween.onComplete=onTweenComplete;
+        mainProTween.onComplete=onTweenComplete;
+
         Starling.juggler.add(bgEfftween);
         Starling.juggler.add(titleIcontween);
         Starling.juggler.add(relactionInfoTween);
+        Starling.juggler.add(chTween);
+        Starling.juggler.add(mainProTween);
+
+        delayTween=new Tween(this,0.8);
+        delayTween.onComplete=onReadyToChagScene;
+        Starling.juggler.add(delayTween);
 
 
     }
 
+
     private function onTweenComplete():void{
+
+        Starling.juggler.removeTweens(chTween);
         Starling.juggler.removeTweens(bgEfftween);
         Starling.juggler.removeTweens(titleIcontween);
         Starling.juggler.removeTweens(relactionInfoTween);
-        Starling.juggler.remove(character);
+        Starling.juggler.removeTweens(chTween);
+        Starling.juggler.removeTweens(mainProTween);
+
+
+        for(var i:uint=0;i<clouds.length;i++) {
+
+            var cloud:Sprite = clouds[i];
+            Starling.juggler.removeTweens(cloud);
+            cloud.removeFromParent(true);
+
+        }
+
+        bgEffectImg.removeFromParent(true);
+        titleIcon.removeFromParent(true);
+        relactionInfo.removeFromParent(true);
+        if(com=="Leave"){
+            character.removeFromParent(true);
+            mainProfile.removeFromParent(true);
+        }
+    }
+    private function onReadyToChagScene():void{
+
+        Starling.juggler.remove(delayTween);
 
         var _data:Object=new Object();
         _data.com=com;
         this.dispatchEventWith(DatingScene.COMMIT,false,_data);
-
     }
 
 

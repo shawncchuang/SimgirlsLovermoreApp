@@ -320,13 +320,13 @@ public class Config
             "owned_assets":{
                 player:[
                     {id:"cons_1_1",qty:1,expiration:1},
-                    {id:"cons_2_1",qty:1,expiration:100},
-                    {id:"cons_2_3",qty:1,expiration:100},
+                    {id:"app_7_4",qty:1,expiration:100},
+                    {id:"est_1_1",qty:1,expiration:100},
                     {id:"cons_2_4",qty:1,expiration:100},
                     {id:"cons_2_2",qty:1,expiration:100},
                     {id:"misc_4_1",qty:1,expiration:100},
                     {id:"misc_4_2",qty:1,expiration:100},
-                    {id:"misc_4_3",qty:1,expiration:100}
+                    {id:"est_2_1",qty:1,expiration:100}
                 ],
                 lenus:[
                     {id:"cons_1_1",qty:1,expiration:100},
@@ -353,10 +353,18 @@ public class Config
                 sao:[
 
                 ],
-                klr:[],
-                tomoru:[],
-                ceil:[],
-                zack:[]
+                klr:[
+
+                ],
+                tomoru:[
+
+                ],
+                ceil:[
+
+                ],
+                zack:[
+
+                ]
             },
             "rel":{
                 player:"-",

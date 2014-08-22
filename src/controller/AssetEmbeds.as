@@ -247,6 +247,53 @@ public class AssetEmbeds
     [Embed(source="../../media/textures/icons/profile/NPCs.png")]
     public static const NPCs:Class;
 
+    [Embed(source="../../media/textures/icons/profile/ceil-facials.xml", mimeType="application/octet-stream")]
+    public static const ceilFacialsXML:Class;
+    [Embed(source="../../media/textures/icons/profile/ceil-facials.png")]
+    public static const ceilFacials:Class;
+
+
+    [Embed(source="../../media/textures/icons/profile/dea-facials.xml", mimeType="application/octet-stream")]
+    public static const deaFacialsXML:Class;
+    [Embed(source="../../media/textures/icons/profile/dea-facials.png")]
+    public static const deaFacials:Class;
+
+
+    [Embed(source="../../media/textures/icons/profile/klr-facials.xml", mimeType="application/octet-stream")]
+    public static const klrFacialsXML:Class;
+    [Embed(source="../../media/textures/icons/profile/klr-facials.png")]
+    public static const klrFacials:Class;
+
+    [Embed(source="../../media/textures/icons/profile/klr-facials.xml", mimeType="application/octet-stream")]
+    public static const lenusFacialsXML:Class;
+    [Embed(source="../../media/textures/icons/profile/klr-facials.png")]
+    public static const lenusFacials:Class;
+
+
+    [Embed(source="../../media/textures/icons/profile/sao-facials.xml", mimeType="application/octet-stream")]
+    public static const saoFacialsXML:Class;
+    [Embed(source="../../media/textures/icons/profile/sao-facials.png")]
+    public static const saoFacials:Class;
+
+    [Embed(source="../../media/textures/icons/profile/srn-facials.xml", mimeType="application/octet-stream")]
+    public static const sirenaFacialsXML:Class;
+    [Embed(source="../../media/textures/icons/profile/srn-facials.png")]
+    public static const sirenaFacials:Class;
+
+
+    [Embed(source="../../media/textures/icons/profile/tmr-facials.xml", mimeType="application/octet-stream")]
+    public static const tomoruFacialsXML:Class;
+    [Embed(source="../../media/textures/icons/profile/tmr-facials.png")]
+    public static const tomoruFacials:Class;
+
+
+    [Embed(source="../../media/textures/icons/profile/zack-facials.xml", mimeType="application/octet-stream")]
+    public static const zackFacialsXML:Class;
+    [Embed(source="../../media/textures/icons/profile/zack-facials.png")]
+    public static const zackFacials:Class;
+
+
+
     /*[Embed(source="../../media/textures/icons/items/items.xml", mimeType="application/octet-stream")]
      public static const ItemsXML:Class;
      [Embed(source="../../media/textures/icons/items/items.png")]
@@ -350,12 +397,67 @@ public class AssetEmbeds
     [Embed(source="../../media/textures/icons/icon_skillPts1.png")]
     public static const SkillPtsValueIcon:Class;
 
-    [Embed(source="../../assets/images/items/cons_1_1.png")]
-    public static const cons_1_1:Class;
+    [Embed(source="../../assets/images/items/art.jpg")]
+    public static const Art:Class;
+
+    [Embed(source="../../assets/images/items/watch.jpg")]
+    public static const Watch:Class;
+
+
+    [Embed(source="../../assets/images/items/flowers.jpg")]
+    public static const Flowers:Class;
+
+    [Embed(source="../../assets/images/items/chocolate.jpg")]
+    public static const Chocolate:Class;
+
+    [Embed(source="../../assets/images/items/ring.jpg")]
+    public static const Ring:Class;
+
+    [Embed(source="../../assets/images/items/necklace.jpg")]
+    public static const Necklace:Class;
+
+    [Embed(source="../../assets/images/items/controller.jpg")]
+    public static const Controller:Class;
+
+    [Embed(source="../../assets/images/items/walletb.jpg")]
+    public static const Wallet:Class;
+
+    [Embed(source="../../assets/images/items/gadget.jpg")]
+    public static const Gadget:Class;
+
+    [Embed(source="../../assets/images/items/smartband.jpg")]
+    public static const SmartBand:Class;
+
+    [Embed(source="../../assets/images/items/perfume.jpg")]
+    public static const Perfume:Class;
+
+    [Embed(source="../../assets/images/items/earring.jpg")]
+    public static const Earrings:Class;
+
+    [Embed(source="../../assets/images/items/book.jpg")]
+    public static const Book:Class;
+
+    [Embed(source="../../assets/images/items/purse.jpg")]
+    public static const Purse:Class;
+
+    [Embed(source="../../assets/images/items/dressshoes.jpg")]
+    public static const Shoes:Class;
+
+    [Embed(source="../../assets/images/items/plush.jpg")]
+    public static const Plush:Class;
+
+    [Embed(source="../../assets/images/items/boat.jpg")]
+    public static const Boat:Class;
+
+    [Embed(source="../../assets/images/items/car.jpg")]
+    public static const Car:Class;
+
+    [Embed(source="../../assets/images/items/house.jpg")]
+    public static const House:Class;
+
 
     [Embed(source="../../media/textures/icons/prevBtn.png")]
     public static const IconPrevBtn:Class;
-
 
     [Embed(source="../../media/textures/icons/menu_mini_bg.xml", mimeType="application/octet-stream")]
     public static const MiniMenusXML:Class;
@@ -386,6 +488,13 @@ public class AssetEmbeds
     public static const ComCloudXML:Class;
     [Embed(source="../../media/textures/icons/com_cloud_sprites.png")]
     public static const ComCloud:Class;
+
+
+
+
+
+
+
 
     /*------------------icons-------------------------------------------------*/
 
@@ -623,7 +732,7 @@ public class AssetEmbeds
     [Embed(source="../../media/textures/panels/gameInfobarWheel2.png")]
     public static const GameInfobarWheel:Class;
 
-    [Embed(source="../../media/textures/panels/moodpiechartXML.xml", mimeType="application/octet-stream")]
+    [Embed(source="../../media/textures/panels/moodpiechart.xml", mimeType="application/octet-stream")]
     public static const MoodPieChartXML:Class;
     [Embed(source="../../media/textures/panels/moodpiechart.png")]
     public static const MoodPieChart:Class;

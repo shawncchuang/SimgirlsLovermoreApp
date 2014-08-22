@@ -31,6 +31,8 @@ import utils.DebugTrace;
 
 public class AssetsForm extends Sprite
 {
+    public static var INILAIZE:String="inilaize";
+    public static var UPDATE:String="update";
     private var flox:FloxInterface=new FloxCommand();
     private var gameEvent:GameEvent;
     private  var assetsform:AssetsTiledLayout
@@ -49,8 +51,9 @@ public class AssetsForm extends Sprite
     {
 
 
-        this.addEventListener("CHANGED",onChangedAssetsForm);
-        this.addEventListener("INITAILIZE",onInitAssetsForm);
+       // this.addEventListener("CHANGED",onChangedAssetsForm);
+        this.addEventListener(AssetsForm.INILAIZE,onInitAssetsForm);
+        this.addEventListener(AssetsForm.UPDATE, onUpdatedAssersForm);
 
 
     }
@@ -96,6 +99,14 @@ public class AssetsForm extends Sprite
         addChild(assetsform);
 
 
+    }
+    private function onUpdatedAssersForm(e:Event):void{
+
+        DebugTrace.msg("AssetsForm.onUpdatedAssersForm");
+        if(e.data)
+            chname=e.data.chname;
+        assetsform.removeFromParent(true);
+        initAssetsTiledLayout();
 
     }
     private function initTags():void
