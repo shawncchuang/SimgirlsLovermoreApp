@@ -7,6 +7,8 @@ import controller.FloxCommand;
 import controller.FloxInterface;
 import controller.MainCommand;
 import controller.MainInterface;
+import controller.SceneCommnad;
+import controller.SceneInterface;
 
 import events.SceneEvent;
 
@@ -25,6 +27,8 @@ import starling.textures.Texture;
 
 public class CalendarScene extends Sprite {
 
+    private var base_sprite:Sprite;
+    private var scencom:SceneInterface=new SceneCommnad();
     private var templete:MenuTemplate;
     private var font:String="SimMyriadPro";
     private var command:MainInterface=new MainCommand();
@@ -37,13 +41,26 @@ public class CalendarScene extends Sprite {
     private var ymTextAltas:TextureAtlas;
     private var ymImg:Image;
     private var monthImg:Image;
+
     public function CalendarScene():void{
+
+
+        base_sprite=new Sprite();
+        addChild(base_sprite);
+        base_sprite.flatten();
 
         initializeHandler();
         initializeLayout();
         initializeMonthBtns();
     }
     private function initializeHandler():void{
+
+
+        scencom.init("CalendarScene",base_sprite,20);
+        scencom.start();
+        scencom.disableAll();
+
+
 
         var dateData:String=flox.getSaveData("date");
         var _date:String=dateData.split("|")[0];

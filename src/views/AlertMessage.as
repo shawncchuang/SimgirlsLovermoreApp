@@ -26,6 +26,7 @@ package views
 		private var btn:Button;
 		private var onClosed:Function;
 		private var command:MainInterface=new MainCommand();
+        private var font:String="SimMyriadPro";
 		public function AlertMessage(msg:String,callback:Function=null):void
 		{
 			onClosed=callback;
@@ -45,7 +46,7 @@ package views
 			
 			
 			
-			var txt:TextField=new TextField(1024,80,msg,"Eras Demi ITC",20,0xFFFFFF);
+			var txt:TextField=new TextField(1024,80,msg,font,20,0xFFFFFF);
 			txt.hAlign="center";
 			txt.x=-512;
 			txt.y=290;

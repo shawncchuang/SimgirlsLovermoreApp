@@ -329,7 +329,7 @@ public class DrawManager implements DrawerInterface
 
         //point:icon position ; bp: basemodel position
         var player_icon:Sprite=target;
-        player_icon.useHandCursor=true;
+        //player_icon.useHandCursor=true;
         var shapObj:Object=new Object()
 
         var rec:Rectangle=new Rectangle(-87,-21,100,100);

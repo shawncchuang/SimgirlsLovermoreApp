@@ -134,7 +134,7 @@ public class AssetEmbeds
     [Embed(source="../../media/textures/icons/icon_ap.png")]
     public static const ApIcon:Class;
 
-    [Embed(source="../../media/textures/icons/icon_more.png")]
+    [Embed(source="../../media/textures/icons/icon_menu.png")]
     public static const MoreIcon:Class;
 
     [Embed(source="../../media/textures/icons/icon_morebar.png")]
@@ -721,7 +721,7 @@ public class AssetEmbeds
     [Embed(source="../../media/textures/panels/dating_title_bg.png")]
     public static const DatingTitleBg:Class;
 
-    [Embed(source="../../media/textures/panels/command_direction1.png")]
+    [Embed(source="../../media/textures/panels/command_direction.png")]
     public static const ComDirections:Class;
 
 
@@ -918,6 +918,8 @@ public class AssetEmbeds
     [Embed(source="../../media/textures/panels/assets_tab.png")]
     public static const AssetsTab:Class;
 
+    [Embed(source="../../media/textures/panels/dating_scene_AP.png")]
+    public static const apPanel:Class;
     /*-------------------panels-------------------------------------------------------------------*/
 
     //[Embed(source="../../media/textures/photos/watch.jpg")]

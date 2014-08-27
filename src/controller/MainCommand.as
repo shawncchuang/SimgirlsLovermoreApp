@@ -46,6 +46,8 @@ import starling.display.Sprite;
 import starling.events.Touch;
 import starling.events.TouchEvent;
 import starling.events.TouchPhase;
+import starling.filters.BlurFilter;
+import starling.filters.ColorMatrixFilter;
 import starling.text.TextField;
 import starling.textures.Texture;
 import starling.textures.TextureSmoothing;
@@ -53,10 +55,13 @@ import starling.utils.Color;
 
 import utils.DebugTrace;
 import utils.DrawManager;
+import utils.FilterManager;
 import utils.ViewsContainer;
 
-import views.FloxManagerView;
+import views.AlertMessage;
 
+import views.FloxManagerView;
+import views.DatingScene;
 
 
 public class MainCommand implements MainInterface
@@ -78,6 +83,7 @@ public class MainCommand implements MainInterface
     private static var bgsound_channel:SoundChannel;
     private var sound_channel:SoundChannel;
     private var switch_verify:Boolean=false;
+    private var fliter:FilterInterface=new FilterManager();
     public function sceneDispatch(type:String,data:Object=null):void
     {
         var mainstage:Sprite=ViewsContainer.MainStage;
@@ -401,8 +407,6 @@ public class MainCommand implements MainInterface
         var flox:FloxInterface=new FloxCommand();
         flox.saveSystemData("schedule",schedule);
 
-
-
     }
 
     public function initMainStory():void
@@ -573,7 +577,7 @@ public class MainCommand implements MainInterface
         {
             //prase expiration
             if(overday)
-            praseOwnedAssets(1);
+                praseOwnedAssets(1);
             reeseatDating();
 
             var battledata:BattleData=new BattleData();
@@ -638,19 +642,19 @@ public class MainCommand implements MainInterface
         {
             var assetslist:Array=ownedAssets[ch];
 
-                for(var i:uint=0;i<assetslist.length;i++)
-                {
+            for(var i:uint=0;i<assetslist.length;i++)
+            {
 
-                    if(assetslist[i].expiration>0)
-                    {
-                        var expr:Number=assetslist[i].expiration;
-                        expr-=days;
-                        assetslist[i].expiration=expr;
-                    }
-                    //if
-                    ownedAssets[ch]=assetslist;
+                if(assetslist[i].expiration>0)
+                {
+                    var expr:Number=assetslist[i].expiration;
+                    expr-=days;
+                    assetslist[i].expiration=expr;
                 }
-                //for
+                //if
+                ownedAssets[ch]=assetslist;
+            }
+            //for
 
         }
         //for
@@ -659,19 +663,19 @@ public class MainCommand implements MainInterface
         {
             assetslist=ownedAssets[_ch];
 
-                for(var j:uint=0;j<assetslist.length;j++)
+            for(var j:uint=0;j<assetslist.length;j++)
+            {
+                expr=assetslist[j].expiration;
+                if(expr<=0)
                 {
-                    expr=assetslist[j].expiration;
-                    if(expr<=0)
-                    {
-                        var _assetslist:Array=assetslist.splice(j);
-                        _assetslist.shift();
-                        var new_assetslist:Array=assetslist.concat(_assetslist);
-                        ownedAssets[_ch]=new_assetslist;
-                    }
-                    //if
+                    var _assetslist:Array=assetslist.splice(j);
+                    _assetslist.shift();
+                    var new_assetslist:Array=assetslist.concat(_assetslist);
+                    ownedAssets[_ch]=new_assetslist;
                 }
-                //for
+                //if
+            }
+            //for
 
         }
         //for
@@ -842,8 +846,6 @@ public class MainCommand implements MainInterface
         DebugTrace.msg("MainCommand.updateRelationship dating:"+dating+" ; pts:"+pts);
 
 
-
-
     }
     public function moodCalculator(item_id:String,dating:String):Number
     {
@@ -898,7 +900,7 @@ public class MainCommand implements MainInterface
         {
             var attr:String=attrlist[i];
             var value:String=valuelist[i];
-            var posY:Number=i*50;
+            var posY:Number=i*80;
             switch(attr)
             {
                 case "ap":
@@ -911,7 +913,7 @@ public class MainCommand implements MainInterface
                     aptxt.hAlign="left";
                     aptxt.vAlign="center";
                     aptxt.x=apImg.width;
-                    aptxt.y=5;
+
                     apSprite.addChild(apImg);
                     apSprite.addChild(aptxt);
                     target.addChild(apSprite);
@@ -920,6 +922,9 @@ public class MainCommand implements MainInterface
                     apSprite.pivotY=apSprite.height/2;
                     apSprite.x=stageCW;
                     apSprite.y=stageCH-posY;
+
+                    fliter.setSource(apSprite);
+                    fliter.setShadow();
 
 
                     tweenHandler(i,apSprite,apSprite.y-50,onAPValueTweenComplete);
@@ -937,7 +942,7 @@ public class MainCommand implements MainInterface
                     cashtxt.hAlign="left";
                     cashtxt.vAlign="center";
                     cashtxt.x=sign.width;
-                    cashtxt.y=5;
+
                     cashSprite.addChild(sign);
                     cashSprite.addChild(cashtxt);
                     target.addChild(cashSprite);
@@ -958,7 +963,7 @@ public class MainCommand implements MainInterface
                     imagetxt.vAlign="center";
                     //imagetxt.autoSize="left";
                     imagetxt.x=app_sign.width-20;
-                    imagetxt.y=5;
+
                     imageSprite.addChild(app_sign);
                     imageSprite.addChild(imagetxt);
                     target.addChild(imageSprite);
@@ -1508,6 +1513,8 @@ public class MainCommand implements MainInterface
     }
     private function onFinishAnimated():void
     {
+
+
         try
         {
             Starling.current.nativeOverlay.removeChild(playerBitmap);
@@ -1523,25 +1530,121 @@ public class MainCommand implements MainInterface
         }
         catch(err:Error)
         {
-            DebugTrace.msg("ManCommand.onFinishAnimated character NULL !");
+            DebugTrace.msg("MainCommand.onFinishAnimated character NULL !");
         }
+
+        var current_scence:String=DataContainer.currentScene;
+
+        if(current_scence=="Tarotreading" || current_scence=="AirplaneScene"){
+
+            var _data:Object=new Object();
+            switch(SceneEvent.scene)
+            {
+                case "Tarotreading":
+
+                    _data.name="AirplaneScene";
+                    break
+                case "AirplaneScene":
+                    _data.name="MainScene";
+                    break
+                default:
+                    _data.name=DataContainer.currentScene;
+                    break
+            }
+            //switch
+            sceneDispatch(SceneEvent.CHANGED,_data);
+        }else{
+
+            var scene:Sprite=ViewsContainer.currentScene;
+            var _data:Object=new Object();
+            _data.removed="ani_complete";
+            scene.dispatchEventWith(TopViewEvent.REMOVE,false,_data)
+
+        }
+
+
+    }
+
+    public function paidAP(com:String):Boolean
+    {
+        //command
+        var success:Boolean=false;
+        var scene:Sprite=ViewsContainer.MainScene;
+        var flox:FloxInterface=new FloxCommand();
+        var ap:Number=flox.getSaveData("ap");
+        var commandData:Object=flox.getSyetemData("command");
+
+        if(com.indexOf("\n")!=-1){
+            com=com.split("\n").join("");
+        }
+
+        if(com=="Work"){
+
+            var current_scene:String=DataContainer.currentScene.split("Scene").join("");
+            com=current_scene+com;
+        }
+        var payAP:Number=commandData[com].ap;
+        if(payAP==0){
+
+            success=true;
+        }
+        else{
+
+            if(ap+payAP < 0)
+            {
+                ViewsContainer.UIViews.visible=false;
+                var msg:String="You need more AP.";
+                var alert:AlertMessage=new AlertMessage(msg,onClosedAlert);
+                scene.addChild(alert);
+
+            }
+            else
+            {
+
+                success=true;
+                ap=ap+payAP;
+                flox.save("ap",ap,onSaveComplete);
+
+                var value_data:Object=new Object();
+                value_data.attr="ap";
+                value_data.values=String(payAP);
+                var command:MainInterface=new MainCommand();
+                command.displayUpdateValue(scene,value_data);
+
+
+            }
+            //if
+        }
+
+        return success;
+
+    }
+    private function onSaveComplete():void{
+
+        var scene:String=DataContainer.currentScene;
+
+        if(scene=="DatingScene"){
+
+            //var baseSprite:Sprite=ViewsContainer.baseSprite;
+            // baseSprite.dispatchEventWith(DatingScene.UPDATE_INFO);
+
+        }
+        var gameinfo:Sprite=ViewsContainer.gameinfo;
+        gameinfo.dispatchEventWith("UPDATE_INFO");
+
+    }
+    private function onClosedAlert():void
+    {
+        var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
+        gameEvent._name="clear_comcloud";
+        gameEvent.displayHandler();
 
         var _data:Object=new Object();
-        switch(SceneEvent.scene)
-        {
-            case "Tarotreading":
-
-                _data.name="AirplaneScene";
-                break
-            case "AirplaneScene":
-                _data.name="MainScene";
-                break
-            default:
-                _data.name=DataContainer.currentScene;
-                break
-        }
-        //switch
-        sceneDispatch(SceneEvent.CHANGED,_data);
+        _data.name=DataContainer.currentScene;
+        var command:MainInterface=new MainCommand();
+        command.sceneDispatch(SceneEvent.CHANGED,_data);
     }
+
+
 }
 }

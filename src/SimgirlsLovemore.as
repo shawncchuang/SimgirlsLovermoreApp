@@ -1,7 +1,8 @@
 package
 {
 	import com.gamua.flox.Player;
-	import com.greensock.loading.LoaderMax;
+import com.greensock.TweenMax;
+import com.greensock.loading.LoaderMax;
 	import com.greensock.loading.SWFLoader;
 	
 	import flash.desktop.NativeApplication;
@@ -81,7 +82,6 @@ package
                 mimeType="application/x-font-truetype",
                 embedAsCFF="false")]
         public static const SimMyriadPro:String;
-
 
 
 		private var manager:Boolean=false;
@@ -230,10 +230,23 @@ package
 				case "clear_comcloud":
 					for(var i:uint=0;i<comcouldlist.length;i++)
 					{
+                        TweenMax.killChildTweensOf(comcouldlist[i]);
 						topview.removeChild(comcouldlist[i]);
 					}
 					comcouldlist=new Array();
 					break
+                case "hide_comcloud":
+                    for(var i:uint=0;i<comcouldlist.length;i++) {
+
+                        TweenMax.to(comcouldlist[i],0.5,{alpha:0});
+                    }
+                    break
+                case "show_comcloud":
+                    for(var i:uint=0;i<comcouldlist.length;i++) {
+
+                        TweenMax.to(comcouldlist[i],0.5,{alpha:1});
+                    }
+                    break
 				case "QA":
 					//inputUI=new InputNamePannel(onSubmitComplete);	
 					//topview.addChild(inputUI);
@@ -324,35 +337,7 @@ package
 			//siwtch
 			
 		}
-		/*private function doClickComCloud(e:MouseEvent):void
-		{
-		comcloud.removeEventListener(MouseEvent.CLICK,doClickComCloud);
-		comcloud.mc.gotoAndPlay("broke");
-		command.playSound("Break");
-		
-		}*/
-		/*private function doComCloudEnterFrame(e:Event):void
-		{
-		if(e.target.currentFrameLabel=="showed")
-		{
-		if(com_btn_txt.indexOf("^")!=-1)
-		{
-		com_btn_txt=String(com_btn_txt.split("^").join("\n"));
-		}
-		comcloud.mc.txt.text=com_btn_txt;
-		}
-		
-		if(e.target.currentFrame==e.target.totalFrames)
-		{
-		comcloud.mc.removeEventListener(Event.ENTER_FRAME,doComCloudEnterFrame);
-		topview.removeChild(comcloud);
-		
-		var _data:Object=new Object();
-		_data.removed="comcloud";
-		command.topviewDispatch(TopViewEvent.REMOVE,_data);
-		
-		}
-		}*/
+		 
 		private function onAnimationComplete(e:flash.events.Event):void
 		{
 			if(e.target.currentFrame==e.target.totalFrames)
@@ -396,7 +381,6 @@ package
 			switch(SceneEvent.scene)
 			{
 				case "Tarotreading":
-					
 					_data.name="AirplaneScene";
 					break
 				case "AirplaneScene":

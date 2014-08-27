@@ -5,6 +5,8 @@ package views {
 import controller.Assets;
 import controller.MainCommand;
 import controller.MainInterface;
+import controller.SceneCommnad;
+import controller.SceneInterface;
 
 import events.SceneEvent;
 
@@ -18,12 +20,25 @@ public class ContactsScene extends Sprite {
     private var templete:MenuTemplate;
     private var font:String="SimMyriadPro";
     private var command:MainInterface=new MainCommand();
+    private var base_sprite:Sprite;
+    private var scencom:SceneInterface=new SceneCommnad();
     public function ContactsScene() {
+
         super();
+
+        base_sprite=new Sprite();
+        addChild(base_sprite);
+        base_sprite.flatten();
+
         initailizeLayoutHandler();
 
     }
     private function initailizeLayoutHandler():void{
+
+
+        scencom.init("ContactsScene",base_sprite,20);
+        scencom.start();
+        scencom.disableAll();
 
 
         templete=new MenuTemplate();

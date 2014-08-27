@@ -137,11 +137,14 @@ public class Scenes extends Sprite
 
         //var scene:Sprite=ViewsContainer.MainScene;
         ViewsContainer.InfoDataView.visible=true;
-        if(next_scene!="MenuScene" && next_scene!="ProfileScene")
+        if(next_scene!="MenuScene" && next_scene!="ProfileScene" &&
+                next_scene!="SettingsScene" &&  next_scene!="ContactsScene" && next_scene!="CalendarScene")
         {
             DataContainer.currentLabel=next_scene;
         }
-        if(next_scene!="FoundSomeScene" && next_scene!="DatingScene" && next_scene!="MenuScene" && next_scene!="ProfileScene")
+        if(next_scene!="FoundSomeScene" && next_scene!="DatingScene" &&
+                next_scene!="MenuScene" && next_scene!="ProfileScene" &&
+                next_scene!="SettingsScene" &&  next_scene!="ContactsScene" && next_scene!="CalendarScene")
         {
             DataContainer.currentScene=next_scene;
         }
@@ -171,6 +174,7 @@ public class Scenes extends Sprite
             gameEvt.displayHandler();
         }
         var infobar:Boolean=true;
+
 
         //current_scence=getScene(next_scene);
         switch(next_scene)
@@ -318,8 +322,28 @@ public class Scenes extends Sprite
 
         }
         //switch
-        ViewsContainer.UIViews.visible=infobar;
+
         scene.addChild(current_scence);
+        var UIViews:Sprite=ViewsContainer.UIViews;
+        var  gameInfobar:Sprite=ViewsContainer.InfoDataView;
+        var tween:Tween=new Tween(gameInfobar,0.5,Transitions.EASE_IN_OUT_BACK);
+        if(infobar){
+
+            tween.animate("y",-29);
+
+        }else{
+
+            tween.animate("y",-(gameInfobar.height));
+
+        }
+        tween.onComplete=onGameIngbarFadeinComplete;
+        Starling.juggler.add(tween);
+
+        function onGameIngbarFadeinComplete():void{
+            UIViews.visible=infobar;
+            Starling.juggler.removeTweens(gameInfobar);
+        }
+
 
 
     }

@@ -329,7 +329,7 @@ public class MenuScene extends Scenes
 
         var cfTween:Tween=new Tween(centerframe,0.2);
         cfTween.animate("alpha",0);
-        cfTween.onComplete=onFadeoutComplete
+        cfTween.onComplete=onFadeoutComplete;
         Starling.juggler.add(cfTween);
 
 

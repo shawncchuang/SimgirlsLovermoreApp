@@ -5,6 +5,8 @@ package views {
 import controller.Assets;
 import controller.MainCommand;
 import controller.MainInterface;
+import controller.SceneCommnad;
+import controller.SceneInterface;
 import controller.SoundController;
 
 import events.SceneEvent;
@@ -32,6 +34,7 @@ import starling.events.TouchPhase;
 public class SettingsScene extends Sprite{
 
     private var command:MainInterface=new MainCommand();
+    private var scencom:SceneInterface=new SceneCommnad();
     private var base_sprite:Sprite;
     private var templete:MenuTemplate;
     private var font:String="SimMyriadPro";
@@ -39,14 +42,20 @@ public class SettingsScene extends Sprite{
     private var enabled:Boolean=true;
     public function SettingsScene():void{
 
-        //base_sprite=new Sprite();
-        //addChild(base_sprite);
-        //base_sprite.flatten();
+        base_sprite=new Sprite();
+        addChild(base_sprite);
+        base_sprite.flatten();
 
         initializeHandler();
 
     }
     private function initializeHandler():void{
+
+
+
+        scencom.init("SettingsScene",base_sprite,20);
+        scencom.start();
+        scencom.disableAll();
 
 
         templete=new MenuTemplate();

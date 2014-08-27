@@ -8,12 +8,14 @@ package views
 	import controller.MainCommand;
 	
 	import data.DataContainer;
-	
-	import model.SaveGame;
+
+import flash.text.TextField;
+
+import model.SaveGame;
 	public class InputNamePannel extends MovieClip
 	{
 		private var inputnameUI:MovieClip;
-		private var floxcommand:FloxInterface=new FloxCommand();
+		private var flox:FloxInterface=new FloxCommand();
 	    private var saveComplete:Function;
 		public function InputNamePannel(callback:Function)
 		{
@@ -21,6 +23,10 @@ package views
 			inputnameUI=new InputNameUI();
 			//inputnameUI.x=290;
 			//inputnameUI.y=667;
+            var firstname:TextField=inputnameUI.firstname.text;
+            firstname.maxChars=15;
+            var lastname:TextField=inputnameUI.lastname.text
+            lastname.maxChars=15;
 			inputnameUI.submit.addEventListener(MouseEvent.CLICK,doSubmit);
 			
 			addChild(inputnameUI);
@@ -41,14 +47,16 @@ package views
 				_data.first_name=inputnameUI.firstname.text;
 				_data.last_name=inputnameUI.lastname.text;
 				DataContainer.player=_data;
-				floxcommand.save(_data,onSaveComplete);
+
+                flox.save("first_name",onSaveComplete);
+                flox.save("last_name",onSaveComplete);
 				
 			}
 		//if	
 		}
 		private function onSaveComplete(savegame:SaveGame):void
 		{
-			floxcommand.refreshEntites();
+            flox.refreshEntites();
 			saveComplete();
 			var _data:Object=new Object();
 			_data.talk_index=0

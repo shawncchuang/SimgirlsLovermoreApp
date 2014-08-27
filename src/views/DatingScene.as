@@ -18,7 +18,10 @@ import data.DataContainer;
 import events.GameEvent;
 import events.SceneEvent;
 
+import flash.events.TimerEvent;
+
 import flash.geom.Point;
+import flash.utils.Timer;
 
 import model.SaveGame;
 import model.Scenes;
@@ -77,6 +80,7 @@ public class DatingScene extends Scenes
             "ComCloud_R3_^Flirt";
     public static var COMMIT:String="commit";
     public static var DISPLAY_ALERT:String="display_alert";
+    public static var UPDATE_INFO:String="update_info";
     private var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
     private var excerptbox:ExcerptBox;
     private var item_id:String;
@@ -102,8 +106,8 @@ public class DatingScene extends Scenes
 
         this.addEventListener(DatingScene.COMMIT,doCommitCommand);
         this.addEventListener(DatingScene.DISPLAY_ALERT,doAlerMessage);
+        this.addEventListener(DatingScene.UPDATE_INFO,doUpdateDatingInfo);
         ViewsContainer.baseSprite=this;
-
 
 
         ProfileScene.CharacterName="player";
@@ -112,6 +116,10 @@ public class DatingScene extends Scenes
         mood=Number(flox.getSaveData("mood")[dating]);
 
         initLayout();
+
+    }
+    private function doUpdateDatingInfo(e:Event):void{
+        updateAP();
 
     }
     private function doAlerMessage(e:Event):void{
@@ -133,7 +141,6 @@ public class DatingScene extends Scenes
 
 
             mainProfileTransForm();
-
         }
         switch(com)
         {
@@ -269,11 +276,8 @@ public class DatingScene extends Scenes
         // gameEvent._name="dating_assets_form";
         //gameEvent.displayHandler();
 
-
-
         //added cancel button
         command.addedCancelButton(this,doCancelAssetesForm);
-
 
 
     }
@@ -473,12 +477,12 @@ public class DatingScene extends Scenes
     private var titleIcon:Image;
     private var relactionInfo:Sprite;
     private var clouds:Array=new Array();
+    private var apPanel:Sprite;
+    private var apTxt:TextField;
     private function initLayout():void
     {
 
 
-        /*var bgMC:MovieClip=Assets.getDynamicAtlas(DataContainer.currentScene);
-         bgMC.stop();*/
 
         var bgImg:*=drawcom.drawBackground();
 
@@ -506,18 +510,22 @@ public class DatingScene extends Scenes
         relactionInfo.y=193;
         addChild(relactionInfo);
 
+        var quad1:Quad=new Quad(200,36,0);
+        quad1.x=5;
+        relactionInfo.addChild(quad1);
+
         var dating:String=DataContainer.currentDating;
         var rel:String=flox.getSaveData("rel")[dating];
         var  relationship:TextField=new TextField(210,34,rel.toUpperCase(),font,30,0xffffff);
         relactionInfo.addChild(relationship);
 
 
-        var quad:Quad=new Quad(200,30,0xffffff);
-        quad.x=5;
-        quad.y=36;
-        relactionInfo.addChild(quad);
+        var quad2:Quad=new Quad(200,30,0xffffff);
+        quad2.x=5;
+        quad2.y=36;
+        relactionInfo.addChild(quad2);
         var pts:String=String(flox.getSaveData("pts")[dating]);
-        var ptsTxt:TextField=new TextField(210,34,pts,font,30,0x000000);
+        var ptsTxt:TextField=new TextField(210,34,pts,font,30,0x373535);
         ptsTxt.vAlign="center";
         ptsTxt.hAlign="center";
         ptsTxt.x=5;
@@ -542,17 +550,36 @@ public class DatingScene extends Scenes
         var facials:CharacterFacials=new CharacterFacials();
         facials.chname=dating;
         facials.initlailizeView();
-
         mainProfile.addChild(facials);
 
+        apPanel=new Sprite();
+        apPanel.x=750;
+        apPanel.y=-20;
+        apTxt=new TextField(87,50,"",font,25,0x373535);
+        apTxt.vAlign="center";
+        apTxt.hAlign="left";
+        apTxt.autoSize=TextFieldAutoSize.HORIZONTAL;
+        apTxt.x=87;
+        apTxt.y=37;
 
+        var apImg:Image=new Image(Assets.getTexture("apPanel"));
+        apPanel.addChild(apImg);
+        apPanel.addChild(apTxt);
+        addChild(apPanel);
 
+        updateAP();
         initCharacter();
         initTopicBar();
         drawProfile();
         displayCloud();
 
         addChild(mainProfile);
+    }
+    private function updateAP():void{
+
+        var ap:Number=flox.getSaveData("ap");
+        var apMax:Number=flox.getSaveData("ap_max");
+        apTxt.text=ap+"/"+apMax;
     }
     private function drawProfile():void
     {
@@ -634,29 +661,6 @@ public class DatingScene extends Scenes
         chloveTxt.y=54;
         datingTopic.addChild(chloveTxt);
 
-        /*
-         var texture:Texture=Assets.getTexture("EnergyPieChartBg");
-         var pieBg:Image=new Image(texture);
-         pieBg.x=8.5;
-         pieBg.y=5;
-         datingTopic.addChild(pieBg);
-         */
-
-
-        //mood=Number(savegame.mood[dating]);
-
-        /*
-         proSprtie=new Sprite();
-         proSprtie.x=130;
-         proSprtie.y=127;
-
-         datingTopic.addChild(proSprtie);
-         */
-        //drawcom.drawPieChart(proSprtie,"MoodPieChart");
-        //drawcom.updatePieChart(mood);
-
-
-
 
         var first_str:String=dating.charAt(0).toUpperCase();
         var _dating:String=dating.slice(1);
@@ -668,25 +672,15 @@ public class DatingScene extends Scenes
 
     private function displayCloud():void
     {
-        /*
 
-         var cloudAttr:Object={"Kiss":new Point(29,357),
-         "Flirt":new Point(16,478),
-         "TakePhoto":new Point(42,600),
-         "Chat":new Point(833,270),
-         "Give":new Point(870,380),
-         "Dating":new Point(870,500),
-         "Leave":new Point(834,622)
-         };
-         */
 
-        var cloudAttr:Array=[{name:"Kiss",pos:new Point(103,410)},
-            {name:"Flirt",pos:new Point(90,530)},
-            {name:"TakePhoto",pos:new Point(116,652)},
-            {name:"Chat",pos:new Point(907,323)},
-            {name:"Give",pos:new Point(944,433)},
-            {name:"Dating",pos:new Point(944,553)},
-            {name:"Leave",pos:new Point(908,675)}
+        var cloudAttr:Array=[{name:"Kiss",pos:new Point(182,410)},
+            {name:"Flirt",pos:new Point(120,530)},
+            {name:"TakePhoto",pos:new Point(85,654)},
+            {name:"Chat",pos:new Point(945,322)},
+            {name:"Give",pos:new Point(920,439)},
+            {name:"Dating",pos:new Point(880,558)},
+            {name:"Leave",pos:new Point(825,675)}
         ];
 
         for(var i:uint=0;i<cloudAttr.length;i++){
@@ -764,27 +758,84 @@ public class DatingScene extends Scenes
 
 
     }
+    private var cloud:Sprite;
     private function onTouchedCloudHandler(e:TouchEvent):void{
 
-        var target:Sprite=e.currentTarget as Sprite;
-        var began:Touch=e.getTouch(target,TouchPhase.BEGAN);
+        cloud=e.currentTarget as Sprite;
+        var began:Touch=e.getTouch(cloud,TouchPhase.BEGAN);
+        var hover:Touch=e.getTouch(cloud,TouchPhase.HOVER);
+        com=cloud.name;
+        var gameInfo:Sprite=ViewsContainer.gameinfo;
+        if(com!="Leave"){
+
+            if(hover){
+
+                var _data:Object=new Object();
+                _data.enabled=true;
+                _data.content=com;
+                gameInfo.dispatchEventWith("UPDATE_DIRECTION",false,_data);
+            }else{
+
+                _data=new Object();
+                _data.enabled=false;
+                _data.content=com;
+                gameInfo.dispatchEventWith("UPDATE_DIRECTION",false,_data);
+            }
+
+        }
 
         if(began){
-            target.removeEventListener(TouchEvent.TOUCH, onTouchedCloudHandler);
-            com=target.name;
-            var mc:MovieClip=target.getChildByName("mc") as MovieClip;
-            mc.play();
-            mc.addEventListener(Event.COMPLETE, onCloudMovieComplete);
-            Starling.juggler.add(mc);
-            var txt:TextField=target.getChildByName("txt") as TextField;
-            txt.visible=false;
+
+            var success:Boolean=command.paidAP(com);
+            if(success){
+
+                for(var i:uint=0;i<clouds.length;i++) {
+                    clouds[i].removeEventListener(TouchEvent.TOUCH, onTouchedCloudHandler);
+                }
+                if(com=="Leave"){
+
+                    clickedCloudHandle();
+
+                }else{
+
+                    var timer:Timer=new Timer(1000,1);
+                    timer.addEventListener(TimerEvent.TIMER_COMPLETE, onTimerController);
+                    timer.start();
+                    /*
+                    var tween:Tween=new Tween(cloud,1);
+                    tween.fadeTo(0.9);
+                    tween.onComplete=onDelayComplete;
+                    Starling.juggler.add(tween);
+                    */
+
+                }
+
+            }
         }
+
+
+    }
+    private  function  onTimerController(e:TimerEvent):void{
+
+        e.target.removeEventListener(TimerEvent.TIMER_COMPLETE, onTimerController)
+        clickedCloudHandle();
+
+    }
+    private function clickedCloudHandle():void{
+
+
+        var mc:MovieClip=cloud.getChildByName("mc") as MovieClip;
+        mc.play();
+        mc.addEventListener(Event.COMPLETE, onCloudMovieComplete);
+        Starling.juggler.add(mc);
+        var txt:TextField=cloud.getChildByName("txt") as TextField;
+        txt.visible=false;
+
 
     }
     private function onCloudMovieComplete(e:Event):void{
 
         DebugTrace.msg("DatingScene.onCloudMovieComplete");
-
         var target:MovieClip=e.currentTarget as MovieClip;
         target.pause();
         Starling.juggler.remove(target);
@@ -798,10 +849,8 @@ public class DatingScene extends Scenes
     private var relactionInfoTween:Tween;
     private var mainProTween:Tween;
     private var delayTween:Tween;
+    private var apPanelTween:Tween;
     private function layoutFadeout():void{
-
-
-
 
 
         for(var i:uint=0;i<clouds.length;i++){
@@ -827,6 +876,10 @@ public class DatingScene extends Scenes
         relactionInfoTween=new Tween(relactionInfo,0.3,Transitions.EASE_IN_OUT);
         relactionInfoTween.fadeTo(0);
         relactionInfoTween.onComplete=onTweenComplete;
+
+        apPanelTween=new Tween(apPanel,0.3,Transitions.EASE_IN_OUT);
+        apPanelTween.fadeTo(0);
+        apPanelTween.onComplete=onTweenComplete;
 
         if(com!="Leave"){
 
@@ -855,11 +908,11 @@ public class DatingScene extends Scenes
         Starling.juggler.add(chTween);
         Starling.juggler.add(mainProTween);
 
-        delayTween=new Tween(this,0.8);
-        delayTween.onComplete=onReadyToChagScene;
-        Starling.juggler.add(delayTween);
+        //delayTween=new Tween(this,0.5);
+        //delayTween.onComplete=onReadyToChangeScene;
+        // Starling.juggler.add(delayTween);
 
-
+        onReadyToChangeScene();
     }
 
 
@@ -884,14 +937,17 @@ public class DatingScene extends Scenes
         bgEffectImg.removeFromParent(true);
         titleIcon.removeFromParent(true);
         relactionInfo.removeFromParent(true);
+        apPanel.removeFromParent(true);
+
         if(com=="Leave"){
             character.removeFromParent(true);
             mainProfile.removeFromParent(true);
         }
     }
-    private function onReadyToChagScene():void{
+    private function onReadyToChangeScene():void{
 
         Starling.juggler.remove(delayTween);
+        DebugTrace.msg("DatingScene.onReadyToChangeScene com="+com);
 
         var _data:Object=new Object();
         _data.com=com;
@@ -996,13 +1052,6 @@ public class DatingScene extends Scenes
 
 
         command.addedCancelButton(this,doCancelDating);
-        /*
-         cancel=new Button(Assets.getTexture("XAlt"));
-         cancel.name="cancel";
-         cancel.x=964;
-         cancel.y=720;
-         addChild(cancel);
-         cancel.addEventListener(Event.TRIGGERED,doCancelDating);*/
 
     }
     private function  initBubble():void
@@ -1039,9 +1088,7 @@ public class DatingScene extends Scenes
 
         Starling.juggler.removeTweens(bubble);
 
-
-
-        chatTxt=new TextField(255,190,chat,font,20,0x000000)
+        chatTxt=new TextField(255,190,chat,font,20,0x000000);
         chatTxt.hAlign="left";
         chatTxt.x=634;
         chatTxt.y=110;
@@ -1053,7 +1100,6 @@ public class DatingScene extends Scenes
     private function doCancelDating():void
     {
         character.removeFromParent();
-        //cancel.removeFromParent();
 
 
         var _data:Object=new Object();

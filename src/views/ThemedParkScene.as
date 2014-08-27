@@ -75,7 +75,7 @@ package views
 			
 		}
 		private var attr:String
-		private function doTopViewDispatch(e:TopViewEvent):void
+		private function doTopViewDispatch(e:Event):void
 		{
 			DebugTrace.msg("ThemedParkScene.doTopViewDispatch removed:"+e.data.removed);
 			var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;

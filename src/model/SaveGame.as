@@ -18,7 +18,7 @@ package model
 	    public var ch_cash:Object;
 		public var int:Object;
 		public var image:Object;
-		public var max_ap:Number;
+		public var ap_max:Number;
 		public var assets:Array;
 		public var owned_assets:Object;
 		public var items:Object;

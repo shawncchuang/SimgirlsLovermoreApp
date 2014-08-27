@@ -272,7 +272,7 @@ public class Config
             "last_name":"",
             "date":"Tue.1.Mar.2022|12",
             "ap":100,
-            "max_ap":100,
+            "ap_max":100,
             "dating":null,
             "ch_cash":{
                 lenus:500,

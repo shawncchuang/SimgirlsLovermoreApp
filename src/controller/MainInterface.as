@@ -45,5 +45,6 @@ package controller
 		function stopSound():void
 		function initMainStory():void
 		function verifySwitch():Boolean
+        function paidAP(com:String):Boolean
 	}
 }
