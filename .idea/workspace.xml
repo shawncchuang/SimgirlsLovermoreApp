@@ -2,39 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e5634857-ca85-444f-9915-08f826b15827" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/media/textures/icons/icon_more.png" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/ComCloud.swc" afterPath="$PROJECT_DIR$/lib/ComCloud.swc" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/csv/scenelibrary.numbers/Index.zip" afterPath="$PROJECT_DIR$/assets/csv/scenelibrary.numbers/Index.zip" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/csv/scenelibrary.numbers/Metadata/Properties.plist" afterPath="$PROJECT_DIR$/assets/csv/scenelibrary.numbers/Metadata/Properties.plist" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/media/textures/panels/command_direction.png" afterPath="$PROJECT_DIR$/media/textures/panels/command_direction.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/media/textures/panels/gameInfobarbg.png" afterPath="$PROJECT_DIR$/media/textures/panels/gameInfobarbg.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/media/textures/icons/icon_ap.png" afterPath="$PROJECT_DIR$/media/textures/icons/icon_ap.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/media/textures/icons/icon_day.png" afterPath="$PROJECT_DIR$/media/textures/icons/icon_day.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/media/textures/icons/icon_morebar.png" afterPath="$PROJECT_DIR$/media/textures/icons/icon_morebar.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/media/textures/icons/icon_night.png" afterPath="$PROJECT_DIR$/media/textures/icons/icon_night.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/csv/scenelibrary.numbers/preview-micro.jpg" afterPath="$PROJECT_DIR$/assets/csv/scenelibrary.numbers/preview-micro.jpg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/csv/scenelibrary.numbers/preview-web.jpg" afterPath="$PROJECT_DIR$/assets/csv/scenelibrary.numbers/preview-web.jpg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/csv/scenelibrary.numbers/preview.jpg" afterPath="$PROJECT_DIR$/assets/csv/scenelibrary.numbers/preview.jpg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/AlertMessage.as" afterPath="$PROJECT_DIR$/src/views/AlertMessage.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/AssetEmbeds.as" afterPath="$PROJECT_DIR$/src/controller/AssetEmbeds.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/CalendarScene.as" afterPath="$PROJECT_DIR$/src/views/CalendarScene.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/CommandCloud.as" afterPath="$PROJECT_DIR$/src/views/CommandCloud.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/data/Config.as" afterPath="$PROJECT_DIR$/src/data/Config.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/ContactsScene.as" afterPath="$PROJECT_DIR$/src/views/ContactsScene.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/DatingScene.as" afterPath="$PROJECT_DIR$/src/views/DatingScene.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/utils/DrawManager.as" afterPath="$PROJECT_DIR$/src/utils/DrawManager.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/GameInfobar.as" afterPath="$PROJECT_DIR$/src/views/GameInfobar.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/InputNamePannel.as" afterPath="$PROJECT_DIR$/src/views/InputNamePannel.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/MainCommand.as" afterPath="$PROJECT_DIR$/src/controller/MainCommand.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/MainInterface.as" afterPath="$PROJECT_DIR$/src/controller/MainInterface.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/MainScene.as" afterPath="$PROJECT_DIR$/src/views/MainScene.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/MenuScene.as" afterPath="$PROJECT_DIR$/src/views/MenuScene.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/model/SaveGame.as" afterPath="$PROJECT_DIR$/src/model/SaveGame.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/model/Scenes.as" afterPath="$PROJECT_DIR$/src/model/Scenes.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/SettingsScene.as" afterPath="$PROJECT_DIR$/src/views/SettingsScene.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/SimgirlsLovemore.as" afterPath="$PROJECT_DIR$/src/SimgirlsLovemore.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/ThemedParkScene.as" afterPath="$PROJECT_DIR$/src/views/ThemedParkScene.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/csv/scenelibrary.csv" afterPath="$PROJECT_DIR$/assets/csv/scenelibrary.csv" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="SimgirlsLovermoreApp.iws" />
@@ -685,7 +652,7 @@
       <workItem from="1407780856685" duration="103590000" />
       <workItem from="1408124957455" duration="136239000" />
       <workItem from="1408742495838" duration="1918000" />
-      <workItem from="1408744431885" duration="62186000" />
+      <workItem from="1408744431885" duration="62336000" />
     </task>
     <task id="LOCAL-00001" summary="update setting on intelliJ">
       <created>1406764639395</created>
@@ -739,11 +706,15 @@
       <created>1408747336637</created>
       <updated>1408747336637</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="uppate dating UI,modified get values that display animate">
+      <created>1409099198433</created>
+      <updated>1409099198433</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="453180000" />
+    <option name="totallyTimeSpent" value="453330000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -824,7 +795,8 @@
     <MESSAGE value="mini menu handler,made calendar scene and contacts UI" />
     <MESSAGE value="dating scene layout, cloud command Give control AssetsTiledLayout,modified profile to display AssetsForm and used AssetsTiledLayout" />
     <MESSAGE value="command cloud fadein and fadeout animted,fixed give assets item in dating scene to reflash assets form." />
-    <option name="LAST_COMMIT_MESSAGE" value="command cloud fadein and fadeout animted,fixed give assets item in dating scene to reflash assets form." />
+    <MESSAGE value="uppate dating UI,modified get values that display animate" />
+    <option name="LAST_COMMIT_MESSAGE" value="uppate dating UI,modified get values that display animate" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

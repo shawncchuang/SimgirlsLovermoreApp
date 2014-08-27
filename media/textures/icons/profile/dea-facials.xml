@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:a0d31eb55a6abc2062bcb8987ed69b49:a9a3decceae0aebef781e9fd84d69804:f87a6d3d960f34338d92327d63260a15$ -->
+<TextureAtlas imagePath="dea-facials.png">
+    <SubTexture name="dea-angry1" x="2" y="2" width="198" height="198"/>
+    <SubTexture name="dea-angry2" x="2" y="202" width="198" height="198"/>
+    <SubTexture name="dea-blush1" x="2" y="402" width="198" height="198"/>
+    <SubTexture name="dea-blush2" x="2" y="602" width="198" height="198"/>
+    <SubTexture name="dea-bored1" x="2" y="802" width="198" height="198"/>
+    <SubTexture name="dea-bored2" x="202" y="2" width="198" height="198"/>
+    <SubTexture name="dea-normal1" x="402" y="2" width="198" height="198"/>
+    <SubTexture name="dea-normal2" x="602" y="2" width="198" height="198"/>
+    <SubTexture name="dea-pleasant1" x="802" y="2" width="198" height="198"/>
+    <SubTexture name="dea-pleasant2" x="202" y="202" width="198" height="198"/>
+    <SubTexture name="dea-sad1" x="202" y="402" width="198" height="198"/>
+    <SubTexture name="dea-sad2" x="202" y="602" width="198" height="198"/>
+    <SubTexture name="dea-scared1" x="202" y="802" width="198" height="198"/>
+    <SubTexture name="dea-scared2" x="402" y="202" width="198" height="198"/>
+    <SubTexture name="dea-sick1" x="602" y="202" width="198" height="198"/>
+    <SubTexture name="dea-sick2" x="802" y="202" width="198" height="198"/>
+    <SubTexture name="dea-vhappy1" x="402" y="402" width="198" height="198"/>
+    <SubTexture name="dea-vhappy2" x="402" y="602" width="198" height="198"/>
+</TextureAtlas>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:b639aa44f0f9f8a61fa95edd7577de50:855a3a0130a244eeadc94590ca6e3e5b:cf38771f5bb2a4b89fb78a19cdc59d9d$ -->
+<TextureAtlas imagePath="ceil_facials.png">
+    <SubTexture name="ceil-angry1" x="2" y="2" width="198" height="198"/>
+    <SubTexture name="ceil-angry2" x="2" y="202" width="198" height="198"/>
+    <SubTexture name="ceil-blush1" x="2" y="402" width="198" height="198"/>
+    <SubTexture name="ceil-blush2" x="2" y="602" width="198" height="198"/>
+    <SubTexture name="ceil-bored1" x="2" y="802" width="198" height="198"/>
+    <SubTexture name="ceil-bored2" x="202" y="2" width="198" height="198"/>
+    <SubTexture name="ceil-normal1" x="402" y="2" width="198" height="198"/>
+    <SubTexture name="ceil-normal2" x="602" y="2" width="198" height="198"/>
+    <SubTexture name="ceil-pleasant1" x="802" y="2" width="198" height="198"/>
+    <SubTexture name="ceil-pleasant2" x="202" y="202" width="198" height="198"/>
+    <SubTexture name="ceil-sad1" x="202" y="402" width="198" height="198"/>
+    <SubTexture name="ceil-sad2" x="202" y="602" width="198" height="198"/>
+    <SubTexture name="ceil-scared1" x="202" y="802" width="198" height="198"/>
+    <SubTexture name="ceil-scared2" x="402" y="202" width="198" height="198"/>
+    <SubTexture name="ceil-sick1" x="602" y="202" width="198" height="198"/>
+    <SubTexture name="ceil-sick2" x="802" y="202" width="198" height="198"/>
+    <SubTexture name="ceil-vhappy1" x="402" y="402" width="198" height="198"/>
+    <SubTexture name="ceil-vhappy2" x="402" y="602" width="198" height="198"/>
+</TextureAtlas>

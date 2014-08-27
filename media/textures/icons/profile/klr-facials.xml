@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:9fdcec86ad27e5e7f1d98feccc551276:2897551d4bdfff346300d06b7a0b8cb0:690294d49f113768d163caa09be1fca7$ -->
+<TextureAtlas imagePath="klr-facials.png">
+    <SubTexture name="klr-angry1" x="2" y="2" width="198" height="198"/>
+    <SubTexture name="klr-angry2" x="2" y="202" width="198" height="198"/>
+    <SubTexture name="klr-blush1" x="202" y="2" width="198" height="198"/>
+    <SubTexture name="klr-blush2" x="202" y="202" width="198" height="198"/>
+    <SubTexture name="klr-bored1" x="402" y="2" width="198" height="198"/>
+    <SubTexture name="klr-bored2" x="402" y="202" width="198" height="198"/>
+    <SubTexture name="klr-normal1" x="602" y="2" width="198" height="198"/>
+    <SubTexture name="klr-normal2" x="602" y="202" width="198" height="198"/>
+    <SubTexture name="klr-pleasant1" x="802" y="2" width="198" height="198"/>
+    <SubTexture name="klr-pleasant2" x="802" y="202" width="198" height="198"/>
+    <SubTexture name="klr-sad1" x="1002" y="2" width="198" height="198"/>
+    <SubTexture name="klr-sad2" x="1002" y="202" width="198" height="198"/>
+    <SubTexture name="klr-scared1" x="1202" y="2" width="198" height="198"/>
+    <SubTexture name="klr-scared2" x="1202" y="202" width="198" height="198"/>
+    <SubTexture name="klr-sick1" x="1402" y="2" width="198" height="198"/>
+    <SubTexture name="klr-sick2" x="1402" y="202" width="198" height="198"/>
+    <SubTexture name="klr-vhappy1" x="1602" y="2" width="198" height="198"/>
+    <SubTexture name="klr-vhappy2" x="1602" y="202" width="198" height="198"/>
+</TextureAtlas>
