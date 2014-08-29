@@ -67,7 +67,7 @@ package views
 			base_sprite=new Sprite();
 			addChild(base_sprite);
 			
-			command.setNowMood();
+			//command.setNowMood();
 			schedule=flox.getSyetemData("schedule");
 			initLayout();
 			
@@ -360,8 +360,8 @@ package views
 					
 					index++;
 					iconslist.push(sprite);
-					
-					
+
+
 					iconTween=new Tween(sprite,0.5,Transitions.EASE_IN);
 					iconTween.delay=0.1*index;
 					iconTween.scaleTo(1);
@@ -444,6 +444,9 @@ package views
 				{
 					
 					DataContainer.currentDating=target.name;
+
+                    command.setNowMood();
+
 					var _data:Object=new Object();
 					_data.name="DatingScene";
 					command.sceneDispatch(SceneEvent.CHANGED,_data)

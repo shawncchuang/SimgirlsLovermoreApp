@@ -20,14 +20,17 @@ import starling.textures.TextureAtlas;
 
 public class CharacterFacials extends Sprite {
 
+    public static var UPDATE:String="update";
     public var chname:String;
     private var facial:MovieClip;
     private var openTimer:Timer;
     private var closeTimer:Timer;
     private var sec:uint=3;
+    private var textreAtlas:TextureAtlas;
     public function CharacterFacials() {
         super();
         this.addEventListener(Event.REMOVED, onFacialsRemoved);
+        this.addEventListener(CharacterFacials.UPDATE,doUpdateFacials);
     }
 
     public function initlailizeView():void{
@@ -35,9 +38,9 @@ public class CharacterFacials extends Sprite {
         var mood:String=DataContainer.getFacialMood(chname);
         var xml:XML=Assets.getAtalsXML(chname+"FacialsXML");
         var texture:Texture=Assets.getTexture(chname+"Facials");
-        var textreAtlas:TextureAtlas=new TextureAtlas(texture,xml);
+        textreAtlas=new TextureAtlas(texture,xml);
         var mood_type:String=chname+"-"+mood;
-        trace(mood_type);
+
         facial=new MovieClip(textreAtlas.getTextures(mood_type),24);
         //facial.x=Math.floor((287-facial.width)/2);
         //facial.y=Math.floor((287-facial.height)/2);
@@ -48,6 +51,14 @@ public class CharacterFacials extends Sprite {
 
         Starling.juggler.add(facial);
         startToCloseCounting();
+
+
+
+    }
+    private function doUpdateFacials(e:Event):void{
+
+        facialsRemovedHandle();
+        initlailizeView();
 
 
     }
@@ -79,12 +90,19 @@ public class CharacterFacials extends Sprite {
 
         startToCloseCounting();
     }
-    private function onFacialsRemoved():void{
+    private function onFacialsRemoved(e:Event):void{
+
+        facialsRemovedHandle()
+
+    }
+    private function facialsRemovedHandle():void{
 
         openTimer.removeEventListener(TimerEvent.TIMER_COMPLETE, onTimoutToCloseHandle);
         closeTimer.removeEventListener(TimerEvent.TIMER_COMPLETE, onTimoutToOpenHandle);
-        Starling.juggler.remove(facial);
+
+        Starling.juggler.removeTweens(facial);
         facial.removeFromParent(true);
+
 
     }
 

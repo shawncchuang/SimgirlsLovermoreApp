@@ -26,6 +26,8 @@ import events.GameEvent;
 import events.SceneEvent;
 import events.TopViewEvent;
 
+import model.BattleData;
+
 import model.SaveGame;
 
 
@@ -134,7 +136,6 @@ public class CommandCloud extends MovieClip
             if(!switch_verifies[0])
             {
 
-
                 onCloudClicked();
             }
             //if
@@ -142,10 +143,22 @@ public class CommandCloud extends MovieClip
         }
         else
         {
+            var battle_target:Number=0;
+            if(com=="Join"){
+                var battledata:BattleData=new BattleData();
+                battle_target= battledata.checkBattleSchedule("Battle","");
+                if(battle_target==-1){
+                    var _data:Object=new Object();
+                    _data.removed="Cannot Join";
+                    var current_scene:Sprite=ViewsContainer.currentScene;
+                    current_scene.dispatchEventWith(TopViewEvent.REMOVE,false,_data);
+                }
+            }
             var command:MainInterface=new MainCommand();
-            var success:Boolean=command.paidAP(com);
+            if(battle_target!=-1){
+                var success:Boolean=command.consumeHandle(com);
+            }
             if(success){
-
                 onCloudClicked();
             }
 
@@ -195,13 +208,14 @@ public class CommandCloud extends MovieClip
         {
             var over_target:String=String(_label.split("\n").join(" "));
         }
+
         DebugTrace.msg("CommandCloud.doOverComCloud _label:"+over_target);
 
         var _data:Object=new Object();
         _data.enabled=true;
         _data.content=over_target;
         var gameinfo:Sprite=ViewsContainer.gameinfo;
-        if(over_target!="Leave" && over_target)
+        if(over_target!=" Leave")
         {
             gameinfo.dispatchEventWith("UPDATE_DIRECTION",false,_data);
         }

@@ -122,7 +122,7 @@ public class AssetsForm extends Sprite
             tagbtn.x=334+i*(tagbtn.width+10);
             tagbtn.y=76;
             addChild(tagbtn);
-            tagbtn.addEventListener(TouchEvent.TOUCH,onCateTagTouched)
+            tagbtn.addEventListener(TouchEvent.TOUCH,onCateTagTouched);
         }
         //for
 

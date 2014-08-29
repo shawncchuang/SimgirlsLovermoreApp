@@ -23,7 +23,7 @@ package controller
 		function filterScene(target:Sprite):void
 		function listArrowEnabled(index:Number,pages:Number,left:*,right:*):void
 		function setNowMood():void
-		function  moodCalculator(item_id:String,dating:String):Number
+		function moodCalculator(item_id:String,dating:String):Number
 		function updateRelationship(mood:Number):void
 		function searchAssetRating(item_id:String):Number
 		function displayUpdateValue(target:Sprite,_data:Object):void
@@ -34,8 +34,8 @@ package controller
 		function showCommandValues(target:Sprite,attr:String,value:Object=null):void
 		function doStay(days:Number):void
 		function doTrain():void
-		function doWork(income:Number):void
-		function doLearn(increaseINT:Number):void
+		function doWork():void
+		function doLearn():void
 		function doMeditate():void
 		function copyPlayerAndCharacter():void
 		function clearCopyPixel():void
@@ -45,6 +45,6 @@ package controller
 		function stopSound():void
 		function initMainStory():void
 		function verifySwitch():Boolean
-        function paidAP(com:String):Boolean
+        function consumeHandle(com:String):Boolean
 	}
 }

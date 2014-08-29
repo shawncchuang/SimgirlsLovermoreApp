@@ -37,7 +37,7 @@ package views
 		private var target_hover:String;
 		private var _target:Sprite;
 		private var loveTxt:TextField;
-		
+		private var loveSprite:Sprite;
 		public function HeartParticle()
 		{
 			var lv:uint=uint(Math.random()*4)+1;
@@ -149,17 +149,27 @@ package views
 				moodStr="Love -1";
 			 
 			}
-			loveTxt=new TextField(200,40,moodStr,"Futura",30,0xFFFFFF);
+            loveSprite=new Sprite();
+			loveTxt=new TextField(200,40,moodStr,"SimNeogreyMedium",30,0xFAF182);
 			loveTxt.pivotX=loveTxt.width/2;
 			loveTxt.pivotY=loveTxt.height/2;
-			loveTxt.x=_target.x;
-			loveTxt.y=_target.y;
-			addChild(loveTxt);
-			var tween:Tween=new Tween(loveTxt,0.5);
+			//loveTxt.x=_target.x;
+			//loveTxt.y=_target.y;
+            loveSprite.addChild(loveTxt);
+            loveSprite.x=_target.x;
+            loveSprite.y=_target.y;
+            addChild(loveSprite);
+
+            var filter:FilterManager=new FilterManager();
+            filter.setSource(loveSprite);
+            filter.setShadow();
+
+			var tween:Tween=new Tween(loveSprite,1);
 			tween.animate("scaleX",1.2);
 			tween.animate("scaleY",1.2);
 			tween.animate("y",_target.y-50);
-			tween.onComplete=onCanceledLovePoint
+			tween.onComplete=onCanceledLovePoint;
+
 			Starling.juggler.add(tween);
 			
 			var _data:Object=new Object();
@@ -169,8 +179,8 @@ package views
 		}
 		private function onCanceledLovePoint():void
 		{
-			Starling.juggler.removeTweens(loveTxt);
-			loveTxt.removeFromParent(true);
+			Starling.juggler.removeTweens(loveSprite);
+            loveSprite.removeFromParent(true);
 			
 		}
 	}

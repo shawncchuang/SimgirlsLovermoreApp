@@ -34,6 +34,7 @@ import starling.events.TouchEvent;
 import starling.events.TouchPhase;
 import starling.extensions.pixelmask.PixelMaskDisplayObject;
 import starling.text.TextField;
+import starling.text.TextFieldAutoSize;
 import starling.textures.Texture;
 import starling.textures.TextureSmoothing;
 import starling.utils.HAlign;
@@ -120,6 +121,7 @@ public class GameInfobar extends Sprite
         this.addEventListener("UPDATE_DATING",onUpdateDating);
         this.addEventListener("CANCEL_DATING",onCancelDating);
         this.addEventListener("DRAW_PROFILE",onDrawProfile);
+        this.addEventListener("DISPLAY",onDisplayHandle);
         this.dispatchEventWith("UPDATE_INFO");
         this.dispatchEventWith("UPDATE_DATING");
     }
@@ -130,25 +132,36 @@ public class GameInfobar extends Sprite
         diplaymc=new Image(barbgTexture);
         infoDataView.addChild(diplaymc);
 
+    }
+    private function onDisplayHandle(e:Event):void{
 
+        player_icon.visible=true;
+        proTxt.visible=true;
     }
 
     private function onUpdateInformation(e:Event):void
     {
         DebugTrace.msg("GameInfobar.onUpdateInformation");
 
-        dateTxt.removeFromParent();
+        dateTxt.removeFromParent(true);
         showDate();
-        var savedata:SaveGame=flox.getSaveData();
 
-        var time:String=String(savedata.date.split("|")[1]);
-        cashTxt.text=DataContainer.currencyFormat(savedata.cash);
-        //cashTxt.text=String(savedata.cash);
-        apTxt.text=String(savedata.ap+" / "+savedata.ap_max);
-        imageTxt.text=String(savedata.image.player);
-        intTxt.text=String(savedata.int.player);
-        honorTxt.text=String(savedata.honor.player);
-        loveTxt.text=String(savedata.love.player);
+        var intObj:Object=flox.getSaveData("int");
+        var imageObj:Object=flox.getSaveData("image");
+        trace("GameInfo.showAppearance imageObj="+JSON.stringify(imageObj));
+        var ap:Number=flox.getSaveData("ap");
+        var honor:Object=flox.getSaveData("honor");
+        var ap_max:Number=flox.getSaveData("ap_max");
+        var cash:Number=flox.getSaveData("cash");
+        var love:Object=flox.getSaveData("love");
+        var time:String=String(flox.getSaveData("date").split("|")[1]);
+        cashTxt.text=DataContainer.currencyFormat(cash);
+
+        apTxt.text=String(ap+"/"+ap_max);
+        imageTxt.text=String(imageObj.player);
+        intTxt.text=String(intObj.player);
+        honorTxt.text=String(honor.player);
+        loveTxt.text=String(love.player);
         dayImg.visible=true;
         nightImg.visible=true;
         if(time=="12")
@@ -195,10 +208,11 @@ public class GameInfobar extends Sprite
 
         var savedata:SaveGame=FloxCommand.savegame;
         var cashStr:String=String(savedata.ap);
-        var value:String=cashStr+" / "+savedata.ap_max;
+        var value:String=cashStr+"/"+savedata.ap_max;
         apTxt=new TextField(200,40,value,font,22,fonColor);
         apTxt.hAlign="left";
         apTxt.vAlign="center";
+        apTxt.autoSize=TextFieldAutoSize.HORIZONTAL;
         apTxt.x=800;
         apTxt.y=ypos;
         infoDataView.addChild(apTxt);
@@ -206,8 +220,8 @@ public class GameInfobar extends Sprite
 
     private function showHonor():void
     {
-        var savedata:SaveGame=FloxCommand.savegame;
-        var honorStr:String=String(savedata.honor);
+        var honor:Object=flox.getSaveData("honor")
+        var honorStr:String=String(honor.play);
 
 
         honorTxt=new TextField(morebar.width,40,honorStr,font,20,0xFFFFFF);
@@ -218,8 +232,8 @@ public class GameInfobar extends Sprite
     }
     private function showLove():void
     {
-        var savedata:SaveGame=FloxCommand.savegame;
-        var loveStr:String=String(savedata.love);
+        var love:Object=flox.getSaveData("love");
+        var loveStr:String=String(love.player);
 
         loveTxt=new TextField(morebar.width,40,loveStr,font,20,0xFFFFFF);
         loveTxt.vAlign="center";
@@ -229,8 +243,9 @@ public class GameInfobar extends Sprite
     }
     private function showIntelligence():void
     {
-        var savedata:SaveGame=FloxCommand.savegame;
-        var intStr:String=String(savedata.int);
+        var intObj:Object=flox.getSaveData("int");
+
+        var intStr:String=String(intObj.player);
 
 
         intTxt=new TextField(morebar.width,40,intStr,font,20,0xFFFFFF);
@@ -242,8 +257,9 @@ public class GameInfobar extends Sprite
 
     private function showAppearance():void
     {
-        var savedata:SaveGame=FloxCommand.savegame;
-        var imageStr:String=String(savedata.image);
+
+        var image:Object=flox.getSaveData("image");
+        var imageStr:String=String(image.player);
 
         imageTxt=new TextField(morebar.width,40,imageStr,font,20,0xFFFFFF);
         imageTxt.vAlign="center";
@@ -484,7 +500,7 @@ public class GameInfobar extends Sprite
 
         var attr:String=e.data.content.split(" ").join("");
 
-       //DebugTrace.msg("GameInfobar.onUpdateDirections attr:"+attr);
+        //DebugTrace.msg("GameInfobar.onUpdateDirections attr:"+attr);
         var commandData:Object=flox.getSyetemData("command");
         comDirView.visible=e.data.enabled;
         var currentscene:String=DataContainer.currentLabel;

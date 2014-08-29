@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:1928ad9f8ac3966fef3d39ff2817d89f:c2e6e61d8c6de1e9dfe0fdd1b0854a51:9a3f8184aa9c76543de60ddef066fcac$ -->
+<!-- $TexturePacker:SmartUpdate:10035668fde1e52fbb2f8f2dc19f6ca5:f15b1e7f330e7d4edcaa3b84d39e79f3:9a3f8184aa9c76543de60ddef066fcac$ -->
 <TextureAtlas imagePath="tmr-facials.png">
     <SubTexture name="tomoru-angry1" x="2" y="2" width="198" height="198"/>
     <SubTexture name="tomoru-angry2" x="2" y="202" width="198" height="198"/>

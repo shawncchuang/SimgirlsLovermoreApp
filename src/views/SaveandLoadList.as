@@ -44,6 +44,7 @@ package views
 		private var playerData:Object;
 		private var msg:String="";
 		private var save_new:Boolean=false;
+        private var font:String="SimMyriadPro";
 		public function SaveandLoadList(type:String)
 		{
 			
@@ -119,7 +120,7 @@ package views
 			{
 				title="Save Game";
 			}
-			var title_txt:TextField=new TextField(panel.width,35,"< "+title+" >","Eras Demi ITC",20,0xFFFFFF);
+			var title_txt:TextField=new TextField(panel.width,35,"< "+title+" >",font,20,0xFFFFFF);
 			title_txt.x=-(panel.width/2);
 			title_txt.y=-(panel.height/2)+title_txt.height;
 			title_txt.vAlign="center";
@@ -140,11 +141,11 @@ package views
 				var emptyImg:Image=new Image(empty_texture);
 				emptybar.addChild(emptyImg);
 				
-				var name_txt:TextField=new TextField(70,emptyImg.height,saverecord[i].first_name+"\n"+saverecord[i].last_name,"Eras Demi ITC",20,0xFFFFFF);
+				var name_txt:TextField=new TextField(70,emptyImg.height,saverecord[i].first_name+"\n"+saverecord[i].last_name,font,20,0xFFFFFF);
 				emptybar.addChild(name_txt);
 				var _date:String=saverecord[i].date.split("|")[0];
-				var info_data:String=_date+"\n"+saverecord[i].cash+"\nAP "+saverecord[i].ap+"/"+saverecord[i].max_ap;
-				var info_txt:TextField=new TextField(emptyImg.width-50,emptyImg.height,info_data,"Eras Demi ITC",20,0xFFFFFF);
+				var info_data:String=_date+"\n"+saverecord[i].cash+"\nAP "+saverecord[i].ap+"/"+saverecord[i].ap_max;
+				var info_txt:TextField=new TextField(emptyImg.width-50,emptyImg.height,info_data,font,20,0xFFFFFF);
 				info_txt.hAlign="right";
 				info_txt.vAlign="center";
 				emptybar.addChild(info_txt);
@@ -177,7 +178,7 @@ package views
 				progressbar.push(emptybar);
 				
 				var emptyImg:Image=new Image(empty_texture);
-				var txt:TextField=new TextField(emptyImg.width,emptyImg.height,"Empty","Eras Demi ITC",20,0xFFFFFF);
+				var txt:TextField=new TextField(emptyImg.width,emptyImg.height,"Empty",font,20,0xFFFFFF);
 				txt.hAlign="center";
 				emptybar.x=emptypos[i+recods].x;
 				emptybar.y=emptypos[i+recods].y;
@@ -377,7 +378,7 @@ package views
 			//comfirm.pivotY=bgImg.height/2;
 			comfirm.addChild(bgImg);
 			msg="Are you sure?";
-			var txt:TextField=new TextField(bgImg.width,70,msg,"Eras Demi ITC",20,0xFFFFFF);
+			var txt:TextField=new TextField(bgImg.width,70,msg,font,20,0xFFFFFF);
 			txt.hAlign="center";
 			txt.pivotX=bgImg.width/2;
 			txt.y=-50
@@ -419,7 +420,7 @@ package views
 			//comfirm.pivotY=bgImg.height/2;
 			comfirm.addChild(bgImg);
 			
-			var txt:TextField=new TextField(bgImg.width,70,msg,"Eras Demi ITC",20,0xFFFFFF);
+			var txt:TextField=new TextField(bgImg.width,70,msg,font,20,0xFFFFFF);
 			txt.hAlign="center";
 			txt.pivotX=bgImg.width/2;
 			txt.y=-50

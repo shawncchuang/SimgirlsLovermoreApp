@@ -73,7 +73,7 @@ package views
 			
 		}
 		private var attr:String;
-		private function doTopViewDispatch(e:TopViewEvent):void
+		private function doTopViewDispatch(e:Event):void
 		{
 			DebugTrace.msg("TempleScene.doTopViewDispatch removed:"+e.data.removed);
 			var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
@@ -89,16 +89,15 @@ package views
 					command.sceneDispatch(SceneEvent.CHANGED,_data);
 					break
 				case "Meditate":
-					attr=e.data.removed;
-					checkMeditatePermit();
+
+                    command.doMeditate();
+
 					break
 				case "ani_complete":
 				 
-					
-					/*var value_data:Object=new Object();
-					value_data.attr="honor";
-					value_data.values="+10";
-					command.displayUpdateValue(this,value_data);*/
+
+                    command.showCommandValues(this,"Meditate");
+
 					init();
 					break
 				case "ani_complete_clear_character":
@@ -107,38 +106,7 @@ package views
 			}
 			
 		}
-		private function checkMeditatePermit():void
-		{
-			var sysCommand:Object=flox.getSyetemData("command");
-			payAP=sysCommand[attr].values.ap;
-			var cash:Number=flox.getSaveData("cash");
-			var ap:Number=flox.getSaveData("ap");
-			var image:Number=flox.getSaveData("image");
-			var success:Boolean=false;
-			
-			//DebugTrace.msg("NightClub.checkWorkPermit cash:"+cash+" ; ap:"+ap);
-			if(ap>=Math.abs(payAP))
-			{
-				success=true;
-			}
-			else
-			{
-				
-				var msg:String="Sorry,you don't have enough ap."; 
-				var alert:AlertMessage=new AlertMessage(msg,onClosedAlert);
-				addChild(alert)
-			}
-			//if
-			if(success)
-			{
-						 
-				command.doMeditate();
-				
-			}
-			
-		
-			
-		}
+
 		private function onClosedAlert():void
 		{
 			var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;

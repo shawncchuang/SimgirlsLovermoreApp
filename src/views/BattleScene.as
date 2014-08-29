@@ -686,6 +686,7 @@ package views
 			function onCardNoteComplete():void
 			{
 				var swfloader:SWFLoader = LoaderMax.getLoader("cardnote");
+
 				cardnote=swfloader.getSWFChild("card") as MovieClip;
 				
 				TweenMax.to(cardnote,0.2,{frameLabel:"over"});

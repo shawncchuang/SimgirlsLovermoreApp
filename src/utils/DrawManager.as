@@ -530,14 +530,14 @@ public class DrawManager implements DrawerInterface
     }
     public function updatePieChart(value:Number):void
     {
-        //value -1000~1000
+        //value -2500~2500
         result=value;
-        if(result>1000)
+        if(result>2500)
         {
-            result=1000
-        }else if(result<-1000)
+            result=2500;
+        }else if(result<-2500)
         {
-            result=-1000
+            result=-2500;
         }
         //var dating:String=DataContainer.currentDating;
         //var savegame:SaveGame=FloxCommand.savegame;
@@ -575,7 +575,7 @@ public class DrawManager implements DrawerInterface
          fIndex--;
          }*/
         //var index:Number=Math.floor(fIndex/10);
-        var index:Number=Math.floor(result/10);
+        var index:Number=Math.floor(Number((result/2500).toFixed(2))*100);
         if(index==100 || index==-100)
         {
             index=99;
@@ -585,9 +585,7 @@ public class DrawManager implements DrawerInterface
         if(fIndex==result)
         {
 
-
             //piechart.removeEventListener(Event.ENTER_FRAME,doRenderPieEnterFrame);
-
 
         }
         //if

@@ -91,26 +91,13 @@ package views
 					command.sceneDispatch(SceneEvent.CHANGED,_data);
 					break
 				case "Work":
-					var scene:String=DataContainer.currentScene;
-					
-					attr=scene.split("Scene").join("Work");
-					checkWorkPermit();
+
+                    command.doWork();
 			 
 					break
 				case "ani_complete":
-				 
-					
-					/*var value_data:Object=new Object();
-					value_data.attr="honor";
-					value_data.values="+10";
-					command.displayUpdateValue(this,value_data);*/
-					
-					
-					var sysCommand:Object=flox.getSyetemData("command");
-					var values:Object=sysCommand[attr].values;
-					values.cash=income;
-					command.showCommandValues(this,"BankWork",values);
-					
+
+					command.showCommandValues(this,"BankWork");
 					
 					init();
 					break
@@ -121,39 +108,7 @@ package views
 			
 		}
 		
-		private function checkWorkPermit():void
-		{
-			
-			var sysCommand:Object=flox.getSyetemData("command");
-			payAP=sysCommand[attr].values.ap;
-			var cash:Number=flox.getSaveData("cash");
-			var ap:Number=flox.getSaveData("ap");
-			var image:Number=flox.getSaveData("image");
-			var success:Boolean=false;
-			
-			//DebugTrace.msg("NightClub.checkWorkPermit cash:"+cash+" ; ap:"+ap);
-			if(ap>=Math.abs(payAP))
-			{
-				success=true;
-			}
-			else
-			{
-				
-				var msg:String="Sorry,you don't have enough ap."; 
-				var alert:AlertMessage=new AlertMessage(msg,onClosedAlert);
-				addChild(alert)
-			}
-			//if
-			if(success)
-			{
-				
-				var vIncome:Number=Number(uint(Math.random()*4)+3);
-				income=image*vIncome;
-				command.doWork(income);
-				
-			}
-			
-		}
+
 		private function onClosedAlert():void
 		{
 			var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;

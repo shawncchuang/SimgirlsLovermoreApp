@@ -97,9 +97,12 @@
 		}
 		public function setLoaderQueue(id:String,src:String,target:MovieClip,callback:Function=null):void
 		{
-			 
+			var autoplay:Boolean=false;
+            if(id=="transform"){
+                autoplay=true;
+            }
 			var queue:LoaderMax = new LoaderMax({name:"mainQueue", onProgress:progressHandler, onComplete:callback, onError:errorHandler});
-			queue.append( new SWFLoader(src, {name:id, container:target, autoPlay:false}) );
+			queue.append( new SWFLoader(src, {name:id, container:target, autoPlay:autoplay}) );
 			queue.load();
 			
 		   ViewsContainer.loaderQueue=queue;

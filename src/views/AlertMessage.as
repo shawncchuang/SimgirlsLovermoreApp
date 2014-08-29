@@ -84,7 +84,7 @@ package views
 			//var target:Sprite=e.currentTarget as Sprite;
 			//var BEGAN:Touch=e.getTouch(target,TouchPhase.BEGAN);
 			//removeChild(comfirm);
-			removeChild(comfirm);
+            comfirm.removeFromParent(true);
 			 if(onClosed)
 			onClosed();
 			 

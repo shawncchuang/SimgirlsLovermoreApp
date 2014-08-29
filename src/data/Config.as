@@ -317,6 +317,64 @@ public class Config
                 ceil:"gift0,gift1",
                 zack:"gift0"
             },
+            "command_dating":{
+                lenus:{
+                    "Kiss":2,
+                    "Flirt":2,
+                    "TakePhoto":2,
+                    "Chat":6,
+                    "Dating":1,
+                    "Give":2
+                },
+                sirena:{
+                    "Kiss":2,
+                    "Flirt":2,
+                    "TakePhoto":2,
+                    "Chat":6,
+                    "Dating":1,
+                    "Give":2
+                },
+                dea:{
+                    "Kiss":2,
+                    "Flirt":2,
+                    "TakePhoto":2,
+                    "Chat":6,
+                    "Dating":1,
+                    "Give":2
+                },
+                sao:{
+                    "Kiss":2,
+                    "Flirt":2,
+                    "TakePhoto":2,
+                    "Chat":6,
+                    "Dating":1,
+                    "Give":2
+                },
+                klr:{
+                    "Kiss":2,
+                    "Flirt":2,
+                    "TakePhoto":2,
+                    "Chat":6,
+                    "Dating":1,
+                    "Give":2
+                },
+                tomoru:{
+                    "Kiss":2,
+                    "Flirt":2,
+                    "TakePhoto":2,
+                    "Chat":6,
+                    "Dating":1,
+                    "Give":2
+                },
+                ceil:{
+                    "Kiss":2,
+                    "Flirt":2,
+                    "TakePhoto":2,
+                    "Chat":6,
+                    "Dating":1,
+                    "Give":2
+                }
+            },
             "owned_assets":{
                 player:[
                     {id:"cons_1_1",qty:1,expiration:1},

@@ -89,7 +89,7 @@ import model.SaveGame;
 			
 			
 		}
-		private function doTopViewDispatch(e:TopViewEvent):void
+		private function doTopViewDispatch(e:Event):void
 		{
 			DebugTrace.msg("ArenaScene.doTopViewDispatch removed:"+e.data.removed);
 			var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
@@ -121,11 +121,15 @@ import model.SaveGame;
                     init();
                     break
 				case "ani_complete":
-				 
 					var sysCommand:Object=flox.getSyetemData("command");
 					command.showCommandValues(this,"Join");
 					init();
 					break
+                case "Cannot Join":
+                        var msg:String="There's no game today."
+                        var alert:AlertMessage=new AlertMessage(msg);
+                        addChild(alert);
+                    break
 				
 			}
 			

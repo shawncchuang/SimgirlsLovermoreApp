@@ -359,34 +359,40 @@ package data
 			var moodObj:Object=flox.getSaveData("mood");
 			var mood:Number=moodObj[ch];
 			DebugTrace.msg("DataContainer.getFacialMood mood:"+mood);
-			if(mood<=-500)
-			{
-				facial="angry";
-			}
-			else if(mood>-500 && mood<=-250)
+			if(mood<=-1666)
 			{
 				facial="sad";
 			}
-			else if(mood>-250 && mood<=-50)
+			else if(mood>-1666 && mood<=-777)
+			{
+				facial="angry";
+			}
+			else if(mood>-777 && mood<=-333)
+			{
+				facial="sick";
+			}
+			else if(mood>-333 && mood<=-111)
 			{
 				facial="bored";
 			}
-			else if(mood>-50 && mood<=50)
+			else if(mood>-111 && mood<=110)
 			{
 				facial="normal";
 			}
-			else if(mood>50 && mood<=250)
+			else if(mood>110 && mood<=332)
 			{
 				facial="pleasant";
 			}
-			else if(mood>250 && mood<=500)
-			{
-				facial="vhappy";
-			}
-			else if(mood>500)
-			{
-				facial="blush";
-			}
+            else if(mood>332 && mood<=776)
+            {
+                facial="vhappy";
+            }
+            else if(mood>776 && mood<=1665)
+            {
+                facial="scared";
+            }else{
+                facial="blush";
+            }
 			return  facial;
 		}
 		

@@ -36,7 +36,7 @@ package views
 		private var scencom:SceneInterface=new SceneCommnad();
 		private var flox:FloxInterface=new FloxCommand();
 		private var payAP:Number;
-	    private var income:Number;
+	   // private var income:Number;
 		public function ThemedParkScene()
 		{
 			/*var pointbgTexture:Texture=Assets.getTexture("PointsBg");
@@ -92,19 +92,12 @@ package views
 					break
 				case "Work":
 					
-					var scene:String=DataContainer.currentScene;
-					
-					attr=scene.split("Scene").join("Work");
-					checkWorkPermit();
-			 
+
+                    command.doWork();
 					break
 				case "ani_complete":
-				 
-					
-					var sysCommand:Object=flox.getSyetemData("command");
-					var values:Object=sysCommand[attr].values;
-					values.cash=income;
-					command.showCommandValues(this,"ThemedParkWork",values);
+
+					command.showCommandValues(this,"ThemedParkWork");
 					init();
 					break
 				case "ani_complete_clear_character":
@@ -113,48 +106,8 @@ package views
 			}
 			
 		}
-		private function checkWorkPermit():void
-		{
-			
-			var sysCommand:Object=flox.getSyetemData("command");
-			payAP=sysCommand[attr].values.ap;
-			var cash:Number=flox.getSaveData("cash");
-			var ap:Number=flox.getSaveData("ap");
-			var image:Number=flox.getSaveData("image").player;
-			var success:Boolean=false;
-			
-			//DebugTrace.msg("NightClub.checkWorkPermit cash:"+cash+" ; ap:"+ap);
-			if(ap>=Math.abs(payAP))
-			{
-				success=true;
-			}
-			else
-			{
-				
-				var msg:String="Sorry,you don't have enough ap."; 
-				var alert:AlertMessage=new AlertMessage(msg,onClosedAlert);
-				addChild(alert)
-			}
-			//if
-			if(success)
-			{
-				
-				var vIncome:Number=Number(uint(Math.random()*4)+3);
-				income=image*vIncome;
-				command.doWork(income);
-				
-			}
-			
-		}
-		private function onClosedAlert():void
-		{
-			var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
-			gameEvent._name="clear_comcloud";
-			gameEvent.displayHandler();
-			 
-			init();
-			
-		}
+
+
 		private function onClearComplete():void
 		{
 			Starling.juggler.removeTweens(this);

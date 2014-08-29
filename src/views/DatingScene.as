@@ -9,6 +9,8 @@ import controller.FloxCommand;
 import controller.FloxInterface;
 import controller.MainCommand;
 import controller.MainInterface;
+import controller.MediaCommand;
+import controller.MediaInterface;
 import controller.ParticleInterface;
 import controller.SceneCommnad;
 import controller.SceneInterface;
@@ -113,7 +115,10 @@ public class DatingScene extends Scenes
         ProfileScene.CharacterName="player";
 
         var dating:String=DataContainer.currentDating;
-        mood=Number(flox.getSaveData("mood")[dating]);
+        var moodObj:Object=flox.getSaveData("mood");
+
+        trace("DatingScene moodObj="+JSON.stringify(moodObj));
+        mood=moodObj[dating];
 
         initLayout();
 
@@ -139,9 +144,10 @@ public class DatingScene extends Scenes
         DebugTrace.msg("DatingScene.doCommitCommand com:"+com);
         if(com!="GotGift" || com!="FlirtLove"){
 
-
             mainProfileTransForm();
         }
+
+
         switch(com)
         {
             case "Give":
@@ -187,7 +193,11 @@ public class DatingScene extends Scenes
                 break
 
         }
-        //switch
+
+
+
+
+
     }
     private function mainProfileTransForm():void{
 
@@ -203,11 +213,15 @@ public class DatingScene extends Scenes
     }
     private function updateAssetsForm():void{
 
-        var _data:Object=new Object();
-        _data.chname="player";
-        assets.dispatchEventWith(AssetsForm.UPDATE,false,_data);
-        excerptbox.removeFromParent(true);
+        panelbase.removeFromParent(true);
 
+        //var _data:Object=new Object();
+        //_data.chname="player";
+       // assets.dispatchEventWith(AssetsForm.UPDATE,false,_data);
+
+
+
+        excerptbox.removeFromParent(true);
         addExcertbox();
 
     }
@@ -317,19 +331,21 @@ public class DatingScene extends Scenes
 
 
     }
-    private function showUpdateMood():void
+    private function showIncreaseValue(type:String,value:Number):void
     {
-        DebugTrace.msg("DatingScene.showUpdateMood  Love:"+_love);
-        var content:String="Love +";
-        if(_love<0)
-        {
-            content="Love";
+        DebugTrace.msg("DatingScene.showIncreaseValue  value:"+value);
+        //var type:String="Love +";
+        if(value>0){
+            var _value:String="+"+value;
+        }else{
+            _value=String(value);
         }
-        content=content+_love;
-        DebugTrace.msg("DatingScene.showUpdateMood  content:"+content);
+
+        var content:String=type+_value;
+        DebugTrace.msg("DatingScene.showIncreaseValue  content:"+content);
 
         loveSprite=new Sprite();
-        var moodTxt:TextField=new TextField(200,50,content,"SimNeogreyMedium",20,0xFFFFFF);
+        var moodTxt:TextField=new TextField(200,50,content,"SimNeogreyMedium",20,0xFAF182);
         moodTxt.autoSize=TextFieldAutoSize.HORIZONTAL;
         moodTxt.hAlign="center";
         loveSprite.addChild(moodTxt);
@@ -340,7 +356,11 @@ public class DatingScene extends Scenes
         loveSprite.y=77;
         addChild(loveSprite);
 
-        var tween:Tween=new Tween(loveSprite,0.5,Transitions.EASE_OUT_BACK);
+        var filter:FilterManager=new FilterManager();
+        filter.setSource(loveSprite);
+        filter.setShadow();
+
+        var tween:Tween=new Tween(loveSprite,1,Transitions.EASE_OUT_BACK);
         tween.animate("y",loveSprite.y-50);
         //tween.animate("alpha",0.9);
         tween.scaleTo(1.5);
@@ -362,17 +382,23 @@ public class DatingScene extends Scenes
         _mood=Number(command.moodCalculator(item_id,dating));
         mood+=_mood;
 
-        DebugTrace.msg("DatingScene.updateMood mood:"+mood);
-
+        DebugTrace.msg("DatingScene.updateMood mood:"+mood+" , dating="+dating);
 
         var moodObj:Object=flox.getSaveData("mood");
+        DebugTrace.msg("DatingScene.updateMood mood data:"+JSON.stringify(moodObj));
+
         moodObj[dating]=mood;
 
         flox.save("mood",moodObj);
         drawcom.updatePieChart(mood);
-        drawProfile();
+
+        showIncreaseValue("Mood",_mood);
         updateRelPoint();
+
+        actTransform();
+
     }
+
     private var pts_index:Number;
     private  var old_pts:Number;
     private function updateRelPoint():void
@@ -418,7 +444,7 @@ public class DatingScene extends Scenes
 
         DebugTrace.msg("DatingScene.updateLovefromFlirt mood:"+mood);
         drawcom.updatePieChart(mood);
-        showUpdateMood();
+        showIncreaseValue("Love",_love);
         updateRelPoint();
 
     }
@@ -479,6 +505,7 @@ public class DatingScene extends Scenes
     private var clouds:Array=new Array();
     private var apPanel:Sprite;
     private var apTxt:TextField;
+    private var chFacials:CharacterFacials;
     private function initLayout():void
     {
 
@@ -517,6 +544,8 @@ public class DatingScene extends Scenes
         var dating:String=DataContainer.currentDating;
         var rel:String=flox.getSaveData("rel")[dating];
         var  relationship:TextField=new TextField(210,34,rel.toUpperCase(),font,30,0xffffff);
+        relationship.hAlign="center";
+        relationship.hAlign="center";
         relactionInfo.addChild(relationship);
 
 
@@ -547,10 +576,10 @@ public class DatingScene extends Scenes
         drawcom.drawPieChart(mainProfile,"MoodPieChart");
         drawcom.updatePieChart(mood);
 
-        var facials:CharacterFacials=new CharacterFacials();
-        facials.chname=dating;
-        facials.initlailizeView();
-        mainProfile.addChild(facials);
+        chFacials=new CharacterFacials();
+        chFacials.chname=dating;
+        chFacials.initlailizeView();
+        mainProfile.addChild(chFacials);
 
         apPanel=new Sprite();
         apPanel.x=750;
@@ -570,7 +599,6 @@ public class DatingScene extends Scenes
         updateAP();
         initCharacter();
         initTopicBar();
-        drawProfile();
         displayCloud();
 
         addChild(mainProfile);
@@ -581,10 +609,12 @@ public class DatingScene extends Scenes
         var apMax:Number=flox.getSaveData("ap_max");
         apTxt.text=ap+"/"+apMax;
     }
-    private function drawProfile():void
+
+    private function updateProfile():void
     {
 
-        var dating:String=DataContainer.currentDating;
+        chFacials.dispatchEventWith(CharacterFacials.UPDATE);
+        //var dating:String=DataContainer.currentDating;
 
         /*
          if(profile)
@@ -674,6 +704,8 @@ public class DatingScene extends Scenes
     {
 
 
+        var command_dating:Object=flox.getSaveData("command_dating");
+
         var cloudAttr:Array=[{name:"Kiss",pos:new Point(182,410)},
             {name:"Flirt",pos:new Point(120,530)},
             {name:"TakePhoto",pos:new Point(85,654)},
@@ -717,8 +749,7 @@ public class DatingScene extends Scenes
 
             var cloudTxt:TextField=new TextField(cloudMC.width,cloudMC.height,src,font,25,0x66CCFF);
             cloudTxt.name="txt";
-            //cloudTxt.x=23;
-            //cloudTxt.y=40;
+
             cloudTxt.pivotX=cloudTxt.width/2;
             cloudTxt.pivotY=cloudTxt.height/2;
             cloudTxt.vAlign="center";
@@ -730,6 +761,23 @@ public class DatingScene extends Scenes
             addChild(cloud);
             clouds.push(cloud);
             cloud.addEventListener(TouchEvent.TOUCH, onTouchedCloudHandler);
+
+            if(src!="Leave"){
+                if(src.indexOf("\n")!=-1){
+                    src=src.split("\n").join("");
+                }
+                var dating:String=DataContainer.currentDating;
+                var comTimes:Number=command_dating[dating][src];
+
+                var comTimesTxt:TextField=new TextField(40,24,"x"+comTimes,font,18,0xffffff);
+                comTimesTxt.name="times";
+                comTimesTxt.vAlign="center";
+                comTimesTxt.hAlign="center";
+                comTimesTxt.autoSize=TextFieldAutoSize.HORIZONTAL;
+                comTimesTxt.pivotX=comTimesTxt.width/2;
+                comTimesTxt.y=20;
+                cloud.addChild(comTimesTxt);
+            }
 
 
             var tween:Tween=new Tween(cloud,i*0.1+0.2,Transitions.EASE_IN_OUT_BACK);
@@ -745,6 +793,8 @@ public class DatingScene extends Scenes
         Starling.juggler.add(delayTween);
 
     }
+
+
     private function onClodFadeInCOmplete():void{
 
         Starling.juggler.remove(delayTween);
@@ -786,38 +836,65 @@ public class DatingScene extends Scenes
 
         if(began){
 
-            var success:Boolean=command.paidAP(com);
-            if(success){
 
-                for(var i:uint=0;i<clouds.length;i++) {
-                    clouds[i].removeEventListener(TouchEvent.TOUCH, onTouchedCloudHandler);
+            var enabled:Boolean=checkCommandEnabled();
+
+            if(enabled){
+                var success:Boolean=command.consumeHandle(com);
+
+                if(success){
+
+                    for(var i:uint=0;i<clouds.length;i++) {
+                        clouds[i].removeEventListener(TouchEvent.TOUCH, onTouchedCloudHandler);
+                    }
+                    if(com=="Leave"){
+
+                        clickedCloudHandle();
+
+                    }else{
+
+                        var timer:Timer=new Timer(1000,1);
+                        timer.addEventListener(TimerEvent.TIMER_COMPLETE, onTimerController);
+                        timer.start();
+                    }
+
                 }
-                if(com=="Leave"){
-
-                    clickedCloudHandle();
-
-                }else{
-
-                    var timer:Timer=new Timer(1000,1);
-                    timer.addEventListener(TimerEvent.TIMER_COMPLETE, onTimerController);
-                    timer.start();
-                    /*
-                    var tween:Tween=new Tween(cloud,1);
-                    tween.fadeTo(0.9);
-                    tween.onComplete=onDelayComplete;
-                    Starling.juggler.add(tween);
-                    */
-
-                }
-
             }
+
         }
 
 
     }
+    private function checkCommandEnabled():Boolean{
+
+        var enabled:Boolean=true;
+        if(com!="Leave"){
+
+            var command_dating:Object=flox.getSaveData("command_dating");
+            var dating:String=DataContainer.currentDating;
+            var comTimes:Number=command_dating[dating][com];
+            if(comTimes>0){
+
+                enabled=true;
+                comTimes--;
+                command_dating[dating][com]=comTimes;
+                flox.save("command_dating",command_dating);
+
+            }else{
+
+                enabled=false;
+                var msg:String="You can not do this today."
+                var alert:AlertMessage=new AlertMessage(msg);
+                addChild(alert);
+            }
+
+        }
+        return enabled
+
+    }
     private  function  onTimerController(e:TimerEvent):void{
 
-        e.target.removeEventListener(TimerEvent.TIMER_COMPLETE, onTimerController)
+        e.target.removeEventListener(TimerEvent.TIMER_COMPLETE, onTimerController);
         clickedCloudHandle();
 
     }
@@ -830,6 +907,12 @@ public class DatingScene extends Scenes
         Starling.juggler.add(mc);
         var txt:TextField=cloud.getChildByName("txt") as TextField;
         txt.visible=false;
+
+        if(com!="Leave"){
+            var timesTxt:TextField=cloud.getChildByName("times") as TextField;
+            timesTxt.visible=false;
+        }
+
 
 
     }
@@ -844,7 +927,7 @@ public class DatingScene extends Scenes
 
     }
     private var chTween:Tween;
-    private var  bgEfftween:Tween;
+    private var bgEfftween:Tween;
     private var titleIcontween:Tween;
     private var relactionInfoTween:Tween;
     private var mainProTween:Tween;
@@ -949,9 +1032,12 @@ public class DatingScene extends Scenes
         Starling.juggler.remove(delayTween);
         DebugTrace.msg("DatingScene.onReadyToChangeScene com="+com);
 
+        //enabled=true can commmit command
         var _data:Object=new Object();
         _data.com=com;
         this.dispatchEventWith(DatingScene.COMMIT,false,_data);
+
+
     }
 
 
@@ -1112,6 +1198,30 @@ public class DatingScene extends Scenes
     {
         var textture:Texture=Assets.getTexture(src);
         return textture;
+    }
+
+    private function actTransform():void{
+
+        var timer:Timer=new Timer(1500,1);
+        timer.addEventListener(TimerEvent.TIMER_COMPLETE, onDelayTimeOut);
+        timer.start();
+    }
+    private function onDelayTimeOut(e:TimerEvent):void{
+        e.target.stop();
+        e.target.removeEventListener(TimerEvent.TIMER_COMPLETE, onDelayTimeOut);
+
+        var mediaReq:MediaInterface=new MediaCommand();
+        mediaReq.SWFPlayer("transform","../swf/ACT_gift.swf",onActComplete);
+
+
+    }
+    private function onActComplete():void{
+
+        var _data:Object=new Object();
+        _data.name=DataContainer.currentLabel;
+        command.sceneDispatch(SceneEvent.CHANGED,_data);
+
+
     }
 
 }

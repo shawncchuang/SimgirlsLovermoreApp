@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:20776bd6afbc9d492dcee5047ba2813f:32ae71f9e277e3683d60ecebccd11deb:0b372a9a81107f01933363a5764aed7d$ -->
+<!-- $TexturePacker:SmartUpdate:1118fb0abac3800453cc37a69c6fb4b1:f1357c7ef87965b227b41c4e3012896d:0b372a9a81107f01933363a5764aed7d$ -->
 <TextureAtlas imagePath="zack-facials.png">
     <SubTexture name="zack-angry1" x="2" y="2" width="198" height="198"/>
     <SubTexture name="zack-angry2" x="2" y="202" width="198" height="198"/>

@@ -592,7 +592,7 @@ public class BattleData
 
         //fake date
         month="Jul";
-        date="5";
+        date="2";
 
         var dayStr:String=month+"_"+date;
         var player_index:Number=-1;

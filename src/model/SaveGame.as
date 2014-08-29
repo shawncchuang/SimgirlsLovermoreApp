@@ -59,6 +59,7 @@ package model
 		public var next_switch:String;
         public var ranking:Array;
         public var current_battle:Object;
+        public var command_dating:Object;
 		public function SaveGame()
 		{
 	 

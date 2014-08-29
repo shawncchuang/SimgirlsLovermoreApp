@@ -19,6 +19,7 @@ import starling.display.BlendMode;
 import starling.display.Image;
 import starling.display.MovieClip;
 import starling.display.Sprite;
+import starling.display.Sprite;
 import starling.textures.Texture;
 
 import utils.DebugTrace;
@@ -340,6 +341,10 @@ public class Scenes extends Sprite
         Starling.juggler.add(tween);
 
         function onGameIngbarFadeinComplete():void{
+
+            var  gameinfo:Sprite=ViewsContainer.gameinfo;
+            gameinfo.dispatchEventWith("DISPLAY");
+
             UIViews.visible=infobar;
             Starling.juggler.removeTweens(gameInfobar);
         }

@@ -56,6 +56,8 @@ public class AssetsTiledLayout extends PanelScreen{
     private var ownedAssets:Array;
     public var type:String;
     private var item_id:String;
+    private var sendIcons:Array;
+    private var submited:Boolean=false;
     public function AssetsTiledLayout() {
 
 
@@ -100,8 +102,8 @@ public class AssetsTiledLayout extends PanelScreen{
          this._list.autoHideBackground = true;
          addChild(this._list);
          */
-        DebugTrace.msg("AssetsTiledLayout.sendItemHandle chname="+chname);
-        DebugTrace.msg("AssetsTiledLayout.sendItemHandle type="+type);
+        DebugTrace.msg("AssetsTiledLayout.initializeHandler chname="+chname);
+        DebugTrace.msg("AssetsTiledLayout.initializeHandler type="+type);
 
         assetsData=flox.getSyetemData("assets");
         ownedAssets=flox.getSaveData("owned_assets")[chname];
@@ -161,7 +163,7 @@ public class AssetsTiledLayout extends PanelScreen{
         this.snapScrollPositionsToPixels = true;
 
         var font:String="SimMyriadPro";
-
+        sendIcons=new Array();
         for(var j:uint=0;j<assetslist.length;j++) {
 
             var item:Object=assetslist[j];
@@ -238,6 +240,7 @@ public class AssetsTiledLayout extends PanelScreen{
             itemRender.addEventListener(TouchEvent.TOUCH,onTouchedHoverItem);
             if(type=="give"){
                 itemRender.addChild(sendImg);
+                sendIcons.push(sendImg);
                 sendImg.addEventListener(TouchEvent.TOUCH,onTouchedItem);
             }
 
@@ -252,8 +255,6 @@ public class AssetsTiledLayout extends PanelScreen{
         var target:Sprite=e.currentTarget as Sprite;
         var hover:Touch=e.getTouch(target,TouchPhase.HOVER);
         if(hover){
-
-
             var _data:Object=new Object();
             _data.id=target.name;
             _data.type="assets";
@@ -283,6 +284,9 @@ public class AssetsTiledLayout extends PanelScreen{
         target.texture=texture;
 
         if(began){
+
+            //target.removeEventListener(TouchEvent.TOUCH,onTouchedItem);
+
             gX=began.globalX;
             gY=began.globalY;
             item_id=target.name;
@@ -308,52 +312,59 @@ public class AssetsTiledLayout extends PanelScreen{
 
         //DebugTrace.msg("AssetsTiledLayout.sendItemHandle enabled="+enabled);
         var basesprite:Sprite=ViewsContainer.baseSprite;
-        if(enabled){
-            // dating person didn't have this item, send item to some one
+        DebugTrace.msg("AssetsTiledLayout.sendItemHandle submited="+submited);
+        if(!submited){
 
-            var assetslist:Array=owned_assets.player;
-            index=searchID(assetslist,item_id);
+            if(enabled){
+                // dating person didn't have this item, send item to some one
+                //disableSubmit();
+                submited=true;
 
-            var qty:Number=myItem.qty;
-            qty--;
-            if(qty==0)
-            {
+                var assetslist:Array=owned_assets.player;
+                index=searchID(assetslist,item_id);
 
-                var _assetslist:Array=assetslist.splice(index);
-                _assetslist.shift();
-                var new_assetslist:Array=assetslist.concat(_assetslist);
+                var qty:Number=myItem.qty;
+                qty--;
+                if(qty==0)
+                {
 
-                owned_assets.player=new_assetslist;
+                    var _assetslist:Array=assetslist.splice(index);
+                    _assetslist.shift();
+                    var new_assetslist:Array=assetslist.concat(_assetslist);
+
+                    owned_assets.player=new_assetslist;
+                }
+
+                var new_item:Object=new Object();
+                new_item.id=item_id;
+                new_item.qty=1;
+                new_item.expiration=myItem.expiration;
+                datingTargetItems.push(new_item);
+                owned_assets[dating]=datingTargetItems;
+
+                DebugTrace.msg("AssetsTiledLayout.sendItemHandle owned_assets="+JSON.stringify(owned_assets));
+                flox.save("owned_assets",owned_assets);
+
+
+
+                var _data:Object=new Object();
+                _data.com="GotGift";
+                _data.item_id=item_id;
+                _data.began=new Point(gX,gY);
+
+                basesprite.dispatchEventWith(DatingScene.COMMIT,false,_data);
+
+            }
+            else{
+                //the dataing character who owned this item
+
+                DebugTrace.msg("AssetsTiledLayout.sendItemHandle DISPLAY_ALERT");
+                basesprite.dispatchEventWith(DatingScene.DISPLAY_ALERT);
             }
 
-            var new_item:Object=new Object();
-            new_item.id=item_id;
-            new_item.qty=1;
-            new_item.expiration=myItem.expiration;
-            datingTargetItems.push(new_item);
-            owned_assets[dating]=datingTargetItems;
-
-            DebugTrace.msg("AssetsTiledLayout.sendItemHandle owned_assets="+JSON.stringify(owned_assets));
-            flox.save("owned_assets",owned_assets);
-
-
-
-            var _data:Object=new Object();
-            _data.com="GotGift";
-            _data.item_id=item_id;
-            _data.began=new Point(gX,gY);
-
-            basesprite.dispatchEventWith(DatingScene.COMMIT,false,_data);
-
         }
-        else{
-            //the dataing character who owned this item
-
-            DebugTrace.msg("AssetsTiledLayout.sendItemHandle DISPLAY_ALERT");
-            basesprite.dispatchEventWith(DatingScene.DISPLAY_ALERT);
-        }
-
     }
+
     private function searchMyOwnedAssets(ownedlist:Array):Object{
 
 
