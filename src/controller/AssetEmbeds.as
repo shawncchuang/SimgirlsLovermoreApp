@@ -376,10 +376,10 @@ public class AssetEmbeds
     public static const IconMisc:Class;
 
     [Embed(source="../../media/textures/icons/icon_apparel.png")]
-    public static const IconApparel:Class;
+    public static const IconFashion:Class;
 
     [Embed(source="../../media/textures/icons/icon_estatecar.png")]
-    public static const IconEstatecar:Class;
+    public static const IconLuxury:Class;
 
     [Embed(source="../../media/textures/icons/beta_battle.png")]
     public static const BetaBattle:Class;

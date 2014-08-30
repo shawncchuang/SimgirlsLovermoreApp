@@ -793,66 +793,70 @@ public class MainCommand implements MainInterface
 
 
     }
-    public function updateRelationship(mood:Number):void
-    {
-        //stranger,new frined,good firned, close firned, girlfriend,lover, wiife
+    public function updateRelationship(mood:Number):void{
+
         var dating:String=DataContainer.currentDating;
-        var savegame:SaveGame=FloxCommand.savegame;
-        var relObj:Object=savegame.rel;
+        var flox:FloxInterface=new FloxCommand();
+       // var savegame:SaveGame=FloxCommand.savegame;
+        var relObj:Object=flox.getSaveData("rel");
         var rel:String=relObj[dating];
-        var ptsObj:Object=savegame.pts;
+        var ptsObj:Object=flox.getSaveData("pts");
         var pts:Number=Number(ptsObj[dating]);
-        pts+=mood;
+        pts=pts+Math.floor(mood/5);
+
+        DebugTrace.msg("MainCommand.updateRelationship mood="+mood+" ,pts="+pts);
 
         if(pts>9999)
         {
             pts=9999;
         }
         //if
+        var reStep:Object=Config.relationshipStep;
         ptsObj[dating]=pts;
-        if(pts<0)
+        if(pts<=reStep["foe-Max"])
         {
-            rel="enemy";
+            rel="foe";
         }
-        else if(pts>=0 && pts<=99)
+        else if(pts>=reStep["acquaintance-Min"] && pts<=reStep["acquaintance-Max"])
         {
-            rel="stranger";
+            rel="acquaintance";
         }
-        else if(pts>=100 && pts<=249)
+        else if(pts>=reStep["friend-Min"] && pts<=reStep["friend-Max"])
         {
-            rel="new frined";
+            rel="friend";
 
         }
-        else if(pts>=250 && pts<=499)
+        else if(pts>=reStep["closefriend-Min"] && pts<=reStep["closefriend-Max"])
         {
-            rel="good frined";
+            rel="close friend";
 
         }
-        else if(pts>=500 && pts<=999)
+        else if(pts>=reStep["datingpartner-Min"] && pts<=reStep["datingpartner-Max"])
         {
-            rel="close firned";
+            rel="dating partner";
 
         }
-        else if(pts>=1000 && pts<=2499)
-        {
-            rel="girlfirned";
-
-        }
-        else if(pts>=2500 && pts<=4999)
+        else if(pts>=reStep["lover-Min"] && pts<=reStep["lover-Max"])
         {
             rel="lover";
 
         }
-        else if(pts>=5000)
+        else if(pts>=reStep["spouse-Min"])
         {
-            rel="wife";
+            rel="spouse";
+
         }
 
+
         relObj[dating]=rel;
-        savegame.rel=relObj;
-        savegame.pts=ptsObj;
-        FloxCommand.savegame=savegame;
-        DebugTrace.msg("MainCommand.updateRelationship dating:"+dating+" ; pts:"+pts);
+        //savegame.rel=relObj;
+        //savegame.pts=ptsObj;
+        var _data:Object=new Object();
+        _data.rel=relObj;
+        _data.pts=ptsObj;
+       // FloxCommand.savegame=savegame;
+        flox.updateSavegame(_data);
+        DebugTrace.msg("MainCommand.updateRelationship _data="+JSON.stringify(_data));
 
 
     }
@@ -862,8 +866,6 @@ public class MainCommand implements MainInterface
         var sysAssets:Object=systemdata.assets;
         var savedata:SaveGame=FloxCommand.savegame;
         var pst:Number=Number(savedata.pts[dating]);
-        //var assetes:Object=savedata.assets;
-        //var item:Object=assetes[item_id];
         var price:Number=sysAssets[item_id].price;
         var rating:Number=searchAssetRating(item_id);
         var time_rating:Number=100;

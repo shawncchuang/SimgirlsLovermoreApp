@@ -36,13 +36,13 @@ public class AssetsForm extends Sprite
     private var flox:FloxInterface=new FloxCommand();
     private var gameEvent:GameEvent;
     private  var assetsform:AssetsTiledLayout
-    private var tag_names:Array=["Consumable","Misc","Apparel","Estatecar"];
-    private var catelist:Array=["cons","misc","app","est"];
+    private var tag_names:Array=["Consumable","Misc","Fashion","Luxury"];
+    private var catelist:Array=["consumable","misc","fashion","luxury"];
     private var tad_pos:Array=[];
     public var chname:String="player";
     private var sort:String="id";
     private var sort_index:Number=-2;
-    private var cate:String="cons";
+    private var cate:String=catelist[0];
     private var sortings:Array=new Array();
     private var font:String="SimMyriadPro";
     private var casshtext:TextField;

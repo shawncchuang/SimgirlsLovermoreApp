@@ -245,40 +245,35 @@ public class CommandCloud extends MovieClip
     private function doCloudCommandHandler():void
     {
 
-
-        /*
-         if(comcloud.currentFrameLabel=="showed")
-         {
-         if(_label.indexOf("^")!=-1)
-         {
-         if(_label.split("^")[0]!="")
-         cloudTxt.y=35;
-
-         _label=String(_label.split("^").join("\n"));
-
-         }
-         //if
-
-         cloudTxt.text=_label;
-         }
-         */
-        // if(comcloud.currentFrame==comcloud.totalFrames)
-        //{
         comcloud.visible=false;
 
         var _data:Object=new Object();
         de_label=_label.split("\n").join("");
         DebugTrace.msg("CommandCloud.doComCloudEnterFrame de_label:"+de_label);
-        _data.removed=de_label;
-        command.topviewDispatch(TopViewEvent.REMOVE,_data);
-        var currentScene:String=DataContainer.currentScene;
-        var scene_index:Number=currentScene.indexOf("Scene");
-        if(scene_index!=-1)
-        {
-            checkSceneCommand();
+
+        if(de_label=="StartDating"){
+
+
+            var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
+            gameEvent._name="clear_comcloud";
+            gameEvent.displayHandler();
+
+            _data.name="DatingScene";
+            command.sceneDispatch(SceneEvent.CHANGED,_data);
+
+        }else{
+
+            _data.removed=de_label;
+            command.topviewDispatch(TopViewEvent.REMOVE,_data);
+            var currentScene:String=DataContainer.currentScene;
+            var scene_index:Number=currentScene.indexOf("Scene");
+            if(scene_index!=-1)
+            {
+                checkSceneCommand();
+            }
+
         }
-        //if
-        // }
+
     }
 
     private function checkSceneCommand():void

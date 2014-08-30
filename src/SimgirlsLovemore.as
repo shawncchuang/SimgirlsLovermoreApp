@@ -136,10 +136,10 @@ import com.greensock.loading.LoaderMax;
 			
 			flox.init();
 			
-			gametitle=new BgGameTitle()
+			gametitle=new BgGameTitle();
 			addChild(gametitle);
 			
-			longinUI=new LoginPanel()
+			longinUI=new LoginPanel();
 			addChild(longinUI);
 			
 			
@@ -148,11 +148,11 @@ import com.greensock.loading.LoaderMax;
 			topview=mc;
 			
 			
-			var filters:MovieClip=new MovieClip();
-			addChild(filters);
-			filtesContainer=filters;
+			//var filters:MovieClip=new MovieClip();
+			//addChild(filters);
+			//filtesContainer=filters;
 			
-			//command.initSceneLibrary();
+
 			
 			successLogin=onLoginComplete;
 			failedLogin=onLoginFailed;
@@ -195,14 +195,9 @@ import com.greensock.loading.LoaderMax;
 			switch(e.target._name)
 			{
 				case "waving":
-					//new SWFLoader("main.swf", {name:"myFile", x:100, y:100, width:200, height:200, container:this, onComplete:completeHandler, onProgress:progressHandler});
-					//var queue:LoaderMax = new LoaderMax({name:"mainQueue"});
-					//swfloader=new SWFLoader("../swf/map_anim.swf", {name:"waving",width:1536,hieght:1195, container:filtesContainer});
-					//queue.append(swfloader);
-					//LoaderMax.prioritize("photo1");
-					//queue.load();
+
 					var loaderReq:LoaderRequest=new LoaderRequest();
-					loaderReq.setLoaderQueue("waving","../swf/map_anim.swf",filtesContainer);
+					loaderReq.setLoaderQueue("waving","../swf/map_anim.swf",e.target.container);
 					
 					break
 				case "remove_waving":

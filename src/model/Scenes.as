@@ -12,6 +12,8 @@ import data.DataContainer;
 import events.GameEvent;
 import events.SceneEvent;
 
+import flash.display.MovieClip;
+
 import starling.animation.Transitions;
 import starling.animation.Tween;
 import starling.core.Starling;
@@ -132,6 +134,7 @@ public class Scenes extends Sprite
         Starling.juggler.add(scentTween);
 
     }
+    private  var filtersMC:flash.display.MovieClip;
     private function changeSceneHandle():void
     {
 
@@ -162,7 +165,13 @@ public class Scenes extends Sprite
             scenebg=new Image(bgTexture);
             scene_container.addChild(scenebg);
 
+            filtersMC=new flash.display.MovieClip();
+            filtersMC.name="waving"
+            Starling.current.nativeOverlay.addChild(filtersMC);
+
+
             var gameEvt:GameEvent=SimgirlsLovemore.gameEvent;
+            gameEvt.container=filtersMC;
             gameEvt._name="waving";
             gameEvt.displayHandler();
 
@@ -170,10 +179,20 @@ public class Scenes extends Sprite
         else
         {
 
+            try{
+                Starling.current.nativeOverlay.removeChild(filtersMC);
+            }catch(e:Error){
+
+                DebugTrace.msg("Scene.changeSceneHandle filtersMC=NULL");
+            }
+
             gameEvt=SimgirlsLovemore.gameEvent;
             gameEvt._name="remove_waving";
             gameEvt.displayHandler();
+
+
         }
+
         var infobar:Boolean=true;
 
 
@@ -248,6 +267,7 @@ public class Scenes extends Sprite
                 current_scence=new FoundSomeScene();
                 break
             case "DatingScene":
+
                 infobar=false;
                 current_scence=new DatingScene();
                 break

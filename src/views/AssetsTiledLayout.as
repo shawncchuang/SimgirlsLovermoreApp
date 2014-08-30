@@ -290,7 +290,19 @@ public class AssetsTiledLayout extends PanelScreen{
             gX=began.globalX;
             gY=began.globalY;
             item_id=target.name;
-            sendItemHandle();
+
+            var enabled:Boolean=DataContainer.acceptGift(item_id);
+            if(enabled){
+
+                sendItemHandle();
+
+            }else{
+
+                var basesprite:Sprite=ViewsContainer.baseSprite;
+                basesprite.dispatchEventWith(DatingScene.REJECT_GIFT);
+
+            }
+
 
 
         }
@@ -346,9 +358,8 @@ public class AssetsTiledLayout extends PanelScreen{
                 flox.save("owned_assets",owned_assets);
 
 
-
                 var _data:Object=new Object();
-                _data.com="GotGift";
+                _data.com="SendGift";
                 _data.item_id=item_id;
                 _data.began=new Point(gX,gY);
 

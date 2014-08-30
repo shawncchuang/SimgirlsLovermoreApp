@@ -1,7 +1,8 @@
 
 package events
 {
-	import flash.events.Event;
+import flash.display.MovieClip;
+import flash.events.Event;
 	import flash.events.EventDispatcher;
 
 	public class GameEvent extends EventDispatcher
@@ -11,6 +12,7 @@ package events
 		public var video:String;
 		public var data:String;
 		public var qa_label:String;
+        public var container:MovieClip;
 		public function displayHandler():void
 		{
 			

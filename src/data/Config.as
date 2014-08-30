@@ -273,7 +273,7 @@ public class Config
             "date":"Tue.1.Mar.2022|12",
             "ap":100,
             "ap_max":100,
-            "dating":null,
+            "dating":"dea",
             "ch_cash":{
                 lenus:500,
                 sirena:100,
@@ -378,13 +378,13 @@ public class Config
             "owned_assets":{
                 player:[
                     {id:"cons_1_1",qty:1,expiration:1},
-                    {id:"app_7_4",qty:1,expiration:100},
-                    {id:"est_1_1",qty:1,expiration:100},
+                    {id:"fs_7_4",qty:1,expiration:100},
+                    {id:"lx_1_1",qty:1,expiration:100},
                     {id:"cons_2_4",qty:1,expiration:100},
                     {id:"cons_2_2",qty:1,expiration:100},
                     {id:"misc_4_1",qty:1,expiration:100},
                     {id:"misc_4_2",qty:1,expiration:100},
-                    {id:"est_2_1",qty:1,expiration:100}
+                    {id:"lx_2_1",qty:1,expiration:100}
                 ],
                 lenus:[
                     {id:"cons_1_1",qty:1,expiration:100},
@@ -426,14 +426,14 @@ public class Config
             },
             "rel":{
                 player:"-",
-                lenus:"stranger",
-                sirena:"stranger",
-                dea:"stranger",
-                sao:"stranger",
-                klr:"stranger",
-                tomoru:"stranger",
-                ceil:"stranger",
-                zack:"stranger"
+                lenus:"acquaintance",
+                sirena:"acquaintance",
+                dea:"acquaintance",
+                sao:"close friend",
+                klr:"acquaintance",
+                tomoru:"acquaintance",
+                ceil:"acquaintance",
+                zack:"foe"
             },
             "pts":{
                 player: "-",
@@ -824,6 +824,42 @@ public class Config
      }
      */
 
+    public static var relationshipStep:Object={
+
+        "foe-Max":-1,
+        "acquaintance-Min":0,
+        "acquaintance-Max":110,
+        "friend-Min":111,
+        "friend-Max":332,
+        "closefriend-Min":333,
+        "closefriend-Max":776,
+        "datingpartner-Min":777,
+        "datingpartner-Max":1665,
+        "lover-Min":1666,
+        "lover-Max":3332,
+        "spouse-Min":3333
+
+    }
+    public static var moodStep:Object={
+
+        "sad-Max":-1666,
+        "angry-Min":-1667,
+        "angry-Max":-777,
+        "sick-Min":-778,
+        "sick-Max":-333,
+        "bored-Min":-334,
+        "bored-Max":-111,
+        "normal-Min":-112,
+        "normal-Max":110,
+        "pleasant-Min":111,
+        "pleasant-Max":332,
+        "vhappy-Min":333,
+        "vhappy-Max":776,
+        "scared-Min":777,
+        "scared-Max":1665,
+        "blush-Min":1666
+
+   }
 
 
     public function Config()

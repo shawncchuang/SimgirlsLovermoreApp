@@ -83,6 +83,7 @@ public class DatingScene extends Scenes
     public static var COMMIT:String="commit";
     public static var DISPLAY_ALERT:String="display_alert";
     public static var UPDATE_INFO:String="update_info";
+    public static var REJECT_GIFT:String="reject_gift";
     private var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
     private var excerptbox:ExcerptBox;
     private var item_id:String;
@@ -109,6 +110,7 @@ public class DatingScene extends Scenes
         this.addEventListener(DatingScene.COMMIT,doCommitCommand);
         this.addEventListener(DatingScene.DISPLAY_ALERT,doAlerMessage);
         this.addEventListener(DatingScene.UPDATE_INFO,doUpdateDatingInfo);
+        this.addEventListener(DatingScene.REJECT_GIFT,doRejectGiftHandle);
         ViewsContainer.baseSprite=this;
 
 
@@ -127,6 +129,18 @@ public class DatingScene extends Scenes
         updateAP();
 
     }
+    private function doRejectGiftHandle(e:Event):void{
+
+
+        panelbase.removeFromParent(true);
+        excerptbox.removeFromParent(true);
+
+        chat="Sorry, I can't accept it.We are not that close...";
+        initBubble();
+
+
+    }
+
     private function doAlerMessage(e:Event):void{
 
 
@@ -136,6 +150,7 @@ public class DatingScene extends Scenes
         addChild(talkingAlert);
 
     }
+    private var globalPos:Point;
     private function doCommitCommand(e:Event):void
     {
         ViewsContainer.UIViews.visible=false;
@@ -173,11 +188,13 @@ public class DatingScene extends Scenes
 
                 confirmDating();
                 break
-            case "GotGift":
+            case "SendGift":
                 item_id=e.data.item_id;
+                globalPos=e.data.began;
 
                 updateAssetsForm();
-                itemMovingHandle(e.data.began);
+                actTransform();
+
 
                 break
             case "FlirtLove":
@@ -194,11 +211,8 @@ public class DatingScene extends Scenes
 
         }
 
-
-
-
-
     }
+
     private function mainProfileTransForm():void{
 
         mainProfile.x=130;
@@ -215,34 +229,13 @@ public class DatingScene extends Scenes
 
         panelbase.removeFromParent(true);
 
-        //var _data:Object=new Object();
-        //_data.chname="player";
-       // assets.dispatchEventWith(AssetsForm.UPDATE,false,_data);
-
-
-
         excerptbox.removeFromParent(true);
         addExcertbox();
 
     }
-    private function itemMovingHandle(began:Point):void{
+    private function itemMovingHandle():void{
 
-        /*
-         var assetsData:Object=flox.getSyetemData("assets")[item_id];
-         var itemTexture:Texture=getTexture(assetsData.texture);
-         itemImg=new Image(itemTexture);
-         itemImg.x=began.x-itemImg.width/2;
-         itemImg.y=began.y-itemImg.height/2;
-         addChild(itemImg);
 
-         var tween:Tween=new Tween(itemImg,1,Transitions.EASE_IN_OUT);
-         tween.animate("y",itemImg.y-200);
-         tween.scaleTo(1.2);
-         tween.animate("alpha",0);
-
-         tween.onComplete=onItemMovingComplete;
-         Starling.juggler.add(tween);
-         */
         updateMood();
         startPaticles();
 
@@ -335,7 +328,7 @@ public class DatingScene extends Scenes
     {
         DebugTrace.msg("DatingScene.showIncreaseValue  value:"+value);
         //var type:String="Love +";
-        if(value>0){
+        if(value>=0){
             var _value:String="+"+value;
         }else{
             _value=String(value);
@@ -395,7 +388,7 @@ public class DatingScene extends Scenes
         showIncreaseValue("Mood",_mood);
         updateRelPoint();
 
-        actTransform();
+
 
     }
 
@@ -462,21 +455,8 @@ public class DatingScene extends Scenes
 
         }
         //if
-        if(_mood>1000)
-        {
-            pts_index=_mood;
-        }
-        var re_pts:Number=old_pts+pts_index;
-        if(re_pts<0)
-        {
-            re_pts=0;
-        }
-        else if(re_pts>9999)
-        {
-            re_pts=9999;
-        }
-        //pts_txt.text=String(re_pts);
-        //DebugTrace.msg("DatingScene.doUpdatePts pts_index:"+pts_index);
+
+
         if(pts_index==_mood)
         {
             command.updateRelationship(_mood);
@@ -1044,39 +1024,36 @@ public class DatingScene extends Scenes
     private function confirmDating():void
     {
         /*
-         starnger      X
+         acquaintance      X
          new friend    1600
-         good firend   1200
+         friend   1200
          clsoe firned  800
-         girlfriend    400
+         dating partner    400
          lover         200
-         couples          100
+         spouse          100
          mood/rel=x/100
          */
         var relExp:Object=
         {
-            "new friend":1600,
-            "good firend":1200,
+            "acquaintance":1600,
+            "friend":1200,
             "close friend":800,
-            "girlfriend":400,
+            "dating partner":400,
             "lover":200,
-            "couples":100
+            "spouse":100
         }
         var dating:String=DataContainer.currentDating;
         var relObj:Object=flox.getSaveData("rel");
         var moodObj:Object=flox.getSaveData("mood")
+        var pts:Number=flox.getSaveData("pts")
         var mood:Number=Number(moodObj[dating]);
         var rel:String=relObj[dating];
-        if(rel=="wife" || rel=="husband")
-        {
-            rel="couples";
-        }
+
         DebugTrace.msg("DatingScene.confirmDating dating:"+dating);
         DebugTrace.msg("DatingScene.confirmDating mood:"+mood+" ;rel:"+rel);
         goDating=0;
-        //fake
-        //rel="couples";
-        if(rel=="stranger")
+
+        if(rel=="foe")
         {
             //can't dating
             goDating=0;
@@ -1091,7 +1068,7 @@ public class DatingScene extends Scenes
             }
             else
             {
-                DebugTrace.msg("DatingScene.confirmDating relExp:"+relExp[rel]);
+               // DebugTrace.msg("DatingScene.confirmDating relExp:"+relExp[rel]);
                 goDating=Math.floor((mood*100/relExp[rel]));
 
 
@@ -1135,8 +1112,6 @@ public class DatingScene extends Scenes
         chat=chatlist[index];
 
         initBubble();
-
-
         command.addedCancelButton(this,doCancelDating);
 
     }
@@ -1202,11 +1177,12 @@ public class DatingScene extends Scenes
 
     private function actTransform():void{
 
-        var timer:Timer=new Timer(1500,1);
+        var timer:Timer=new Timer(500,1);
         timer.addEventListener(TimerEvent.TIMER_COMPLETE, onDelayTimeOut);
         timer.start();
     }
     private function onDelayTimeOut(e:TimerEvent):void{
+
         e.target.stop();
         e.target.removeEventListener(TimerEvent.TIMER_COMPLETE, onDelayTimeOut);
 
@@ -1217,9 +1193,8 @@ public class DatingScene extends Scenes
     }
     private function onActComplete():void{
 
-        var _data:Object=new Object();
-        _data.name=DataContainer.currentLabel;
-        command.sceneDispatch(SceneEvent.CHANGED,_data);
+        itemMovingHandle();
+
 
 
     }

@@ -105,7 +105,7 @@ public class MainScene extends Scenes
         container=scene.getChildByName("scene_container") as Sprite;
         command.filterScene(container);
 
-        DebugTrace.msg("initScene: "+container.width+" ; "+container.height)
+        DebugTrace.msg("MainScene.initScene: "+container.width+" ; "+container.height)
 
         bgX=container.x;
         bgY=container.y;
@@ -210,7 +210,8 @@ public class MainScene extends Scenes
         }
 
 
-        var waving:MovieClip=SimgirlsLovemore.filtesContainer;
+        //var waving:MovieClip=SimgirlsLovemore.filtesContainer;
+        var waving:MovieClip=Starling.current.nativeOverlay.getChildByName("waving") as MovieClip;
         waving.x=container.x;
         waving.y=container.y;
 
@@ -326,17 +327,19 @@ public class MainScene extends Scenes
         else
         {
             //DebugTrace.msg("MainScene.doTouchSign !touch: "+currentImg.name);
-            sign_name=""
+            sign_name="";
             Starling.juggler.remove(signTween);
             currentImg.y=posY;
         }
         //if
 
     }
+    private var waving:MovieClip;
     private function changeScene(target:String,openDay:Boolean,openNight:Boolean,time:String,msg:String=null):void
     {
         var _data:Object=new Object();
         var mainStage:Sprite=ViewsContainer.MainStage;
+        waving=Starling.current.nativeOverlay.getChildByName("waving") as MovieClip;
         if(!openDay && openNight)
         {
             //day close ,night open
@@ -352,7 +355,9 @@ public class MainScene extends Scenes
             {
 
 
-                var alert:AlertMessage=new AlertMessage(msg);
+
+                waving.visible=false;
+                var alert:AlertMessage=new AlertMessage(msg,onAlertClosedCallback);
                 mainStage.addChild(alert);
             }
             //if
@@ -365,7 +370,8 @@ public class MainScene extends Scenes
             if(time=="24")
             {
                 //night
-                alert=new AlertMessage(msg);
+                waving.visible=false;
+                alert=new AlertMessage(msg,onAlertClosedCallback);
                 mainStage.addChild(alert);
 
             }
@@ -401,48 +407,7 @@ public class MainScene extends Scenes
         Starling.juggler.remove(signTween);
 
     }
-    /*private function initPoints():void
-     {
-     points=new Sprite();
-     addChild(points);
 
-     var stagepoints:Object=Config.stagepoints;
-
-     for(var p:String in stagepoints)
-     {
-     //DebugTrace.msg(p+"; "+stagepoints[p]);
-
-
-     //point name textfield
-     var textfied:TextField=new TextField(150,24,p,"Verdana",14,0xFFFFFF);
-     textfied.x=stagepoints[p][0]+25;
-     textfied.y=stagepoints[p][1];
-     textfied.hAlign="left";
-
-
-     points.addChild(textfied);
-
-
-     }
-     //for
-     for(var _p:String in  stagepoints)
-     {
-
-     //points background
-     var button:Button=new Button(Assets.getTexture("PointsBg"));
-     button.name=_p;
-     button.x = stagepoints[_p][0];
-     button.y = stagepoints[_p][1];
-     button.addEventListener(Event.TRIGGERED, onPointsTriggered);
-     button.addEventListener(TouchEvent.TOUCH,doTouchPoints);
-
-     points.addChild(button);
-     }
-     //for
-
-
-
-     }*/
     private function addPreview(p:String):void
     {
         //show preview
@@ -456,45 +421,7 @@ public class MainScene extends Scenes
         addTween(preview,1);
     }
 
-    private function doTouchPoints(e:TouchEvent):void
-    {
 
-        var target:Button=e.currentTarget as Button;
-
-
-        var touch:Touch = e.getTouch(target, TouchPhase.HOVER);
-
-        //DebugTrace.obj(touch);
-
-        if(!touch)
-        {
-            fadeoutTween(preview,1);
-        }
-        else
-        {
-
-            if(!preview)
-            {
-                //DebugTrace.msg(target.name);
-                addPreview(target.name);
-            }
-            //if
-        }
-        //if
-    }
-
-    private function onPointsTriggered(e:Event):void
-    {
-        points.visible=false;
-        var button:Button = e.target as Button;
-        target=button.name+"Scene";
-        DebugTrace.msg(button.name);
-
-        var _data:Object=new Object();
-        _data.name=target;
-        command.sceneDispatch(SceneEvent.CHANGED,_data)
-
-    }
 
     private function addTween(target:Object,value:uint):void
     {
@@ -517,6 +444,11 @@ public class MainScene extends Scenes
         //points.removeChild(_preview);
         points.removeFromParent();
         preview=null
+    }
+    private function onAlertClosedCallback():void{
+
+        waving.visible=true;
+
     }
 
 

@@ -82,10 +82,12 @@ public class GameInfobar extends Sprite
     private var comDirTxt:TextField;
     private var payApTxt:TextField;
     private var apIcon:Image;
+    private var current_dating:String;
     public function GameInfobar()
     {
 
 
+        current_dating=flox.getSaveData("dating");
 
         ViewsContainer.gameinfo=this;
 
@@ -137,6 +139,10 @@ public class GameInfobar extends Sprite
 
         player_icon.visible=true;
         proTxt.visible=true;
+
+        if(current_dating){
+            dating_icon.visible=true;
+        }
     }
 
     private function onUpdateInformation(e:Event):void
@@ -448,6 +454,10 @@ public class GameInfobar extends Sprite
     }
     private function profileFadeout():void
     {
+
+        if(current_dating){
+            dating_icon.removeFromParent(true);
+        }
         var tween:Tween=new Tween(player_icon,0.3,Transitions.EASE_IN_OUT);
         tween.fadeTo(0);
         tween.onComplete=onProfileIconFadeout;
@@ -459,6 +469,8 @@ public class GameInfobar extends Sprite
         Starling.juggler.removeTweens(player_icon);
 
         player_icon.removeFromParent(true);
+
+
     }
     private function showCommandDirections():void
     {
@@ -518,6 +530,9 @@ public class GameInfobar extends Sprite
                 UIViews.visible=true;
                 player_icon.visible=false;
                 proTxt.visible=false;
+                if(current_dating){
+                    dating_icon.visible=false;
+                }
                 break
         }
 
@@ -540,7 +555,6 @@ public class GameInfobar extends Sprite
             }
         }
         //if
-
 
 
         if(e.data.enabled && attr!="Leave")
@@ -597,7 +611,7 @@ public class GameInfobar extends Sprite
         {
             DataContainer.currentDating=dating;
             dating_icon=new Sprite();
-            dating_icon.x=138;
+            dating_icon.x=158;
             dating_icon.y=50;
             addChild(dating_icon);
             var drawcom:DrawerInterface=new DrawManager();
