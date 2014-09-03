@@ -530,25 +530,25 @@ public class DrawManager implements DrawerInterface
     }
     public function updatePieChart(value:Number):void
     {
-        //value -2500~2500
+        //value -1666~1666
         result=value;
-        if(result>2500)
+        if(result>1666)
         {
-            result=2500;
-        }else if(result<-2500)
+            result=1666;
+        }else if(result<-1666)
         {
-            result=-2500;
+            result=-1666;
         }
         //var dating:String=DataContainer.currentDating;
         //var savegame:SaveGame=FloxCommand.savegame;
         //fIndex=0;
         DebugTrace.msg("DrawManager.updatePieChart  result:"+result);
         var color:uint=0xFF66FF;
-        picchartImg.scaleX=1;
+        //picchartImg.scaleX=1;
         if(result<0)
         {
             color=0x00FFFF;
-            picchartImg.scaleX=-1;
+            //picchartImg.scaleX=-1;
             result*=-1;
         }
         filter.setSource(picchartImg);
@@ -575,7 +575,7 @@ public class DrawManager implements DrawerInterface
          fIndex--;
          }*/
         //var index:Number=Math.floor(fIndex/10);
-        var index:Number=Math.floor(Number((result/2500).toFixed(2))*100);
+        var index:Number=Math.floor(Number((result/16666).toFixed(2))*100);
         if(index==100 || index==-100)
         {
             index=99;
@@ -598,25 +598,29 @@ public class DrawManager implements DrawerInterface
         var time:String=date.split("|")[1];
         if(time=="12")
         {
-            var currentScene:String=DataContainer.currentScene+"Day";
+            var _time:String="Day";
         }
         else
         {
-            currentScene=DataContainer.currentScene+"Night";
+            _time="Night";
         }
         var scene:String=DataContainer.currentScene;
-        if(scene=="BeachScene" || scene=="ParkScene" || scene=="PierScene" || scene=="LovemoreMansionScene" || scene=="HotelScene")
-        {
-            var bgTexture:Texture=Assets.getTexture(currentScene);
-            var bgImg:*=new Image(bgTexture);
+
+        var bgSrc:String=DataContainer.currentScene.split("Scene").join("Bg");
+        switch(scene){
+            case "BeachScene":
+            case "ParkScene":
+            case "PierScene":
+            case "LovemoreMansionScene":
+            case "HotelScene":
+            case "GardenScene":
+                bgSrc+=_time;
+                break
 
         }
-        else
-        {
 
-            bgImg=Assets.getDynamicAtlas(DataContainer.currentScene);
-            bgImg.stop();
-        }
+        var bgTexture:Texture=Assets.getTexture(bgSrc);
+        var bgImg:Image=new Image(bgTexture);
 
         DebugTrace.msg("DrawManager.drawBackground  currentScene:"+DataContainer.currentScene);
         return bgImg

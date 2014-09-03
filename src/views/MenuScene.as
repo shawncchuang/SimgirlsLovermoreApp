@@ -341,6 +341,10 @@ public class MenuScene extends Scenes
 
         Starling.juggler.removeTweens(centerframe);
 
+        var  gameinfo:Sprite=ViewsContainer.gameinfo;
+        gameinfo.dispatchEventWith("DISPLAY");
+        gameinfo.dispatchEventWith("UPDATE_DATING");
+
 
         var _data:Object=new Object();
         _data.name=click_type;

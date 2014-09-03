@@ -362,17 +362,17 @@ public class DataContainer
         var moodObj:Object=flox.getSaveData("mood");
         var mood:Number=moodObj[ch];
         DebugTrace.msg("DataContainer.getFacialMood mood:"+mood);
-        if(mood<=moodStep["sad-Max"])
+        if(mood<=moodStep["sick-Max"])
+        {
+            facial="sick";
+        }
+        else if(mood>moodStep["sad-Min"] && mood<=moodStep["sad-Max"])
         {
             facial="sad";
         }
-        else if(mood>moodStep["angry-Min"] && mood<=moodStep["angry-Max"])
+        else if(mood>=moodStep["angry-Min"]  && mood<=moodStep["angry-Max"])
         {
             facial="angry";
-        }
-        else if(mood>=moodStep["sick-Min"]  && mood<=moodStep["sick-Max"])
-        {
-            facial="sick";
         }
         else if(mood>=moodStep["bored-Min"] && mood<=moodStep["bored-Max"])
         {

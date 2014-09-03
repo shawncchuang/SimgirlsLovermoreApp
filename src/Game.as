@@ -32,7 +32,8 @@ package
 	
 	import views.GameInfobar;
 	import views.SaveandLoadList;
-	
+
+
 	
 	public class Game extends Sprite
 	{
@@ -179,7 +180,8 @@ package
 			scene=new Sprite();
 			ViewsContainer.MainScene=scene;
 			addChild(scene);
-			
+
+            command.setNowMood();
 			
 			var _data:Object=new Object();
 

@@ -3,68 +3,109 @@ package controller
 public class AssetEmbeds
 {
     /*------------------scenes------------------------------------------------- */
-    //[Embed(source = "../../media/textures/scenes/tarot_room.jpg")]
-    //public static const Tarotreading:Class;
-
 
     [Embed(source = "../../media/textures/scenes/map_day.jpg")]
-    public static const MainSceneDay:Class;
+    public static const MainBgDay:Class;
     [Embed(source = "../../media/textures/scenes/map_night.jpg")]
-    public static const MainSceneNight:Class;
+    public static const MainBgNight:Class;
 
-    //[Embed(source = "../../media/textures/scenes/airplane_int.jpg")]
-    //public static const AirplaneScene:Class;
+    [Embed(source = "../../media/textures/scenes/academy.jpg")]
+    public var AcademyBg:Class;
 
-    //[Embed(source = "../../media/textures/scenes/bluesky.jpg")]
-    //public static const bluesky:Class;
+    [Embed(source = "../../media/textures/scenes/airplane.jpg")]
+    public var AirplaneBg:Class;
 
-    //[Embed(source = "../../media/textures/scenes/scene1.jpg")]
-    //public static const HotelScene:Class;
+    [Embed(source = "../../media/textures/scenes/airport.jpg")]
+    public var AirportBg:Class;
 
-    //[Embed(source = "../../media/textures/scenes/airport.jpg")]
-    //public static const AirportScene:Class;
+    [Embed(source = "../../media/textures/scenes/bank.jpg")]
+    public var BankBg:Class;
+
+    [Embed(source = "../../media/textures/scenes/blackmarket.jpg")]
+    public var BlackMarketBg:Class;
+
+    [Embed(source = "../../media/textures/scenes/changingroom.jpg")]
+    public var ChangingRoomBg:Class;
+
+    [Embed(source = "../../media/textures/scenes/cinema.jpg")]
+    public var CinemaBg:Class;
+
+    [Embed(source = "../../media/textures/scenes/gym.jpg")]
+    public var FitnessClubBg:Class;
+
+    [Embed(source = "../../media/textures/scenes/hotspring.jpg")]
+    public var HotSpringBg:Class;
+
+    [Embed(source = "../../media/textures/scenes/lounge.jpg")]
+    public var LoungeBg:Class;
+
+    [Embed(source = "../../media/textures/scenes/museum.jpg")]
+    public var MuseumBg:Class;
+
+    [Embed(source = "../../media/textures/scenes/nightclub.jpg")]
+    public var NightClubBg:Class;
+
+    [Embed(source = "../../media/textures/scenes/policestation.jpg")]
+    public var PoliceStationBg:Class;
+
+    [Embed(source = "../../media/textures/scenes/privateisland.jpg")]
+    public var PrivateIslandBg:Class;
+
+    [Embed(source = "../../media/textures/scenes/restaurant.jpg")]
+    public var RestaurantBg:Class;
+
+    [Embed(source = "../../media/textures/scenes/shoppingcentre.jpg")]
+    public var ShoppingCentreBg:Class;
+
+    [Embed(source = "../../media/textures/scenes/sportbar.jpg")]
+    public var SportsBarBg:Class;
+
+    [Embed(source = "../../media/textures/scenes/tarotreading.jpg")]
+    public var TarotreadingBg:Class;
+
+    [Embed(source = "../../media/textures/scenes/temple.jpg")]
+    public var TempleBg:Class;
+
+    [Embed(source = "../../media/textures/scenes/themedpark.jpg")]
+    public var ThemedParkBg:Class;
+
     [Embed(source = "../../media/textures/scenes/beach_day.jpg")]
-    public static const BeachSceneDay:Class;
+    public static const BeachBgDay:Class;
     [Embed(source = "../../media/textures/scenes/beach_night.jpg")]
-    public static const BeachSceneNight:Class;
+    public static const BeachBgNight:Class;
 
 
     [Embed(source = "../../media/textures/scenes/hotel_day.jpg")]
-    public static const HotelSceneDay:Class;
+    public static const HotelBgDay:Class;
     [Embed(source = "../../media/textures/scenes/hotel_night.jpg")]
-    public static const HotelSceneNight:Class;
+    public static const HotelBgNight:Class;
 
 
     [Embed(source = "../../media/textures/scenes/park_day.jpg")]
-    public static const ParkSceneDay:Class;
+    public static const ParkBgDay:Class;
     [Embed(source = "../../media/textures/scenes/park_night.jpg")]
-    public static const ParkSceneNight:Class;
+    public static const ParkBgNight:Class;
 
 
     [Embed(source = "../../media/textures/scenes/pier_day.jpg")]
-    public static const PierSceneDay:Class;
+    public static const PierBgDay:Class;
     [Embed(source = "../../media/textures/scenes/pier_night.jpg")]
-    public static const PierSceneNight:Class;
+    public static const PierBgNight:Class;
+
+    [Embed(source = "../../media/textures/scenes/garden_day.jpg")]
+    public static const GardenBgDay:Class;
+    [Embed(source = "../../media/textures/scenes/garden_night.jpg")]
+    public static const GardenBgNight:Class;
 
 
-
-    [Embed(source = "../../media/textures/scenes/mansion_day.jpg")]
-    public static const LovemoreMansionSceneDay:Class;
+    [Embed(source = "../../media/textures/scenes/garden_day.jpg")]
+    public static const LovemoreMansionBgDay:Class;
     [Embed(source = "../../media/textures/scenes/mansion_night.jpg")]
-    public static const LovemoreMansionSceneNight:Class;
+    public static const LovemoreMansionBgNight:Class;
 
     [Embed(source = "../../media/textures/scenes/normalbackground.jpg")]
-    public static const NormalBackground:Class;
+    public static const NormalBg:Class;
 
-    [Embed(source = "../../media/textures/scenes/ChangingRoomScene.jpg")]
-    public static const ChangingRoomScene:Class;
-
-
-    //[Embed(source = "../../media/textures/scenes/gametitle.jpg")]
-    //public static const GameTitle:Class;
-
-    //[Embed(source = "../../fla/SceneBackground.swf", symbol="MainSceneBg")]
-    //public static const MainSceneBg:Class;
 
     [Embed(source = "../../media/textures/scenes/beta-testing.jpg")]
     public static const BetaBackground:Class;

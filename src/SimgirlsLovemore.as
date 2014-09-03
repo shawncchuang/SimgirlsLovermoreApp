@@ -231,15 +231,15 @@ import com.greensock.loading.LoaderMax;
 					comcouldlist=new Array();
 					break
                 case "hide_comcloud":
-                    for(var i:uint=0;i<comcouldlist.length;i++) {
+                    for(var j:uint=0;j<comcouldlist.length;j++) {
 
-                        TweenMax.to(comcouldlist[i],0.5,{alpha:0});
+                        TweenMax.to(comcouldlist[j],0.5,{alpha:0});
                     }
                     break
                 case "show_comcloud":
-                    for(var i:uint=0;i<comcouldlist.length;i++) {
+                    for(var k:uint=0;k<comcouldlist.length;k++) {
 
-                        TweenMax.to(comcouldlist[i],0.5,{alpha:1});
+                        TweenMax.to(comcouldlist[k],0.5,{alpha:1});
                     }
                     break
 				case "QA":

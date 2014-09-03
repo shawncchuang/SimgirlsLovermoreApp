@@ -273,7 +273,7 @@ public class Config
             "date":"Tue.1.Mar.2022|12",
             "ap":100,
             "ap_max":100,
-            "dating":"dea",
+            "dating":null,
             "ch_cash":{
                 lenus:500,
                 sirena:100,
@@ -842,11 +842,11 @@ public class Config
     }
     public static var moodStep:Object={
 
-        "sad-Max":-1666,
-        "angry-Min":-1667,
-        "angry-Max":-777,
-        "sick-Min":-778,
-        "sick-Max":-333,
+        "sick-Max":-1666,
+        "sad-Min":-1667,
+        "sad-Max":-777,
+        "angry-Min":-778,
+        "angry-Max":-333,
         "bored-Min":-334,
         "bored-Max":-111,
         "normal-Min":-112,

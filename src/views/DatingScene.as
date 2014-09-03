@@ -195,7 +195,6 @@ public class DatingScene extends Scenes
                 updateAssetsForm();
                 actTransform();
 
-
                 break
             case "FlirtLove":
                 _love=e.data.love;
@@ -590,33 +589,7 @@ public class DatingScene extends Scenes
         apTxt.text=ap+"/"+apMax;
     }
 
-    private function updateProfile():void
-    {
 
-        chFacials.dispatchEventWith(CharacterFacials.UPDATE);
-        //var dating:String=DataContainer.currentDating;
-
-        /*
-         if(profile)
-         {
-         datingTopic.removeChild(profile);
-         }
-         profile=new Sprite();
-         profile.x=130;
-         profile.y=126;
-         drawcom.drawCharacterProfileIcon(profile,dating,0.5);
-         datingTopic.addChild(profile);
-         */
-        /*
-         var facials:CharacterFacials=new CharacterFacials();
-         facials.chname=dating;
-         facials.initlailizeView();
-         facials.scaleX=0.9;
-         facials.scaleY=0.9;
-         datingTopic.addChild(facials);
-         */
-
-    }
     private function initCharacter():void
     {
         var dating:String=DataContainer.currentDating;
@@ -646,8 +619,6 @@ public class DatingScene extends Scenes
 
 
         var dating:String=DataContainer.currentDating;
-        var savegame:SaveGame=FloxCommand.savegame;
-
 
         var loveObj:Object=flox.getSaveData("love");
 
@@ -679,10 +650,8 @@ public class DatingScene extends Scenes
 
     }
 
-
     private function displayCloud():void
     {
-
 
         var command_dating:Object=flox.getSaveData("command_dating");
 

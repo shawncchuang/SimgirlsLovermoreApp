@@ -83,6 +83,7 @@ public class GameInfobar extends Sprite
     private var payApTxt:TextField;
     private var apIcon:Image;
     private var current_dating:String;
+    private var dating_icon:Sprite;
     public function GameInfobar()
     {
 
@@ -120,7 +121,7 @@ public class GameInfobar extends Sprite
         this.addEventListener("UPDATE_INFO",onUpdateInformation);
         //this.addEventListener("DISPLAY_VALUE",onShowDisplayValue);
         this.addEventListener("UPDATE_DIRECTION",onUpdateDirections);
-        this.addEventListener("UPDATE_DATING",onUpdateDating);
+       this.addEventListener("UPDATE_DATING",onUpdateDating);
         this.addEventListener("CANCEL_DATING",onCancelDating);
         this.addEventListener("DRAW_PROFILE",onDrawProfile);
         this.addEventListener("DISPLAY",onDisplayHandle);
@@ -137,6 +138,8 @@ public class GameInfobar extends Sprite
     }
     private function onDisplayHandle(e:Event):void{
 
+        DebugTrace.msg("GameInfobar.onDisplayHandle current_dating="+current_dating);
+        morebar.visible=true;
         player_icon.visible=true;
         proTxt.visible=true;
 
@@ -147,7 +150,7 @@ public class GameInfobar extends Sprite
 
     private function onUpdateInformation(e:Event):void
     {
-        DebugTrace.msg("GameInfobar.onUpdateInformation");
+        //DebugTrace.msg("GameInfobar.onUpdateInformation");
 
         dateTxt.removeFromParent(true);
         showDate();
@@ -352,10 +355,12 @@ public class GameInfobar extends Sprite
         {
 
             Starling.juggler.removeTweens(morebar);
+
             tween=new Tween(morebar,0.2,Transitions.EASE_OUT)
             tween.animate("y",-217);
             tween.fadeTo(0);
             Starling.juggler.add(tween);
+          
 
             gameEvent._name="show_comcloud";
             gameEvent.displayHandler();
@@ -365,10 +370,13 @@ public class GameInfobar extends Sprite
         if(began){
 
             Starling.juggler.removeTweens(morebar);
-
-            morebar.y=-217;
-            gameInfobarFadeout();
+            //morebar.y=-217;
+            morebar.visible=false;
             profileFadeout();
+            datingProfileFadeout();
+            gameInfobarFadeout();
+
+
             removeChild(proTxt);
 
             var currentScene:String=DataContainer.currentScene;
@@ -380,9 +388,9 @@ public class GameInfobar extends Sprite
                 gameEvent.displayHandler();
             }
 
-            var _data:Object=new Object();
-            _data.name="MenuScene";
-            command.sceneDispatch(SceneEvent.CHANGED,_data);
+            //var _data:Object=new Object();
+            //_data.name="MenuScene";
+            //command.sceneDispatch(SceneEvent.CHANGED,_data);
         }
 
     }
@@ -454,22 +462,35 @@ public class GameInfobar extends Sprite
     }
     private function profileFadeout():void
     {
+        trace("GameInfobar.profileFadeout");
 
-        if(current_dating){
-            dating_icon.removeFromParent(true);
-        }
         var tween:Tween=new Tween(player_icon,0.3,Transitions.EASE_IN_OUT);
         tween.fadeTo(0);
-        tween.onComplete=onProfileIconFadeout;
+        tween.onComplete=function(){
+            Starling.juggler.removeTweens(player_icon);
+            player_icon.removeFromParent(true);
+        };
         Starling.juggler.add(tween);
 
     }
-    private function onProfileIconFadeout():void
-    {
-        Starling.juggler.removeTweens(player_icon);
 
-        player_icon.removeFromParent(true);
+    private function datingProfileFadeout():void{
 
+        trace("GameInfobar.datingProfileFadeout");
+
+        if(current_dating) {
+
+
+
+            var tween:Tween = new Tween(dating_icon, 0.3, Transitions.EASE_IN_OUT);
+            tween.fadeTo(0);
+            tween.onComplete = function () {
+                Starling.juggler.removeTweens(dating_icon);
+                dating_icon.removeFromParent(true);
+            };
+            Starling.juggler.add(tween);
+
+        }
 
     }
     private function showCommandDirections():void
@@ -603,9 +624,10 @@ public class GameInfobar extends Sprite
         Starling.juggler.removeTweens(comDirView);
 
     }
-    private var dating_icon:Sprite;
+
     private function onUpdateDating(e:Event):void
     {
+        trace("GameInfobar.onUpdateDating")
         var dating:String=flox.getSaveData("dating");
         if(dating)
         {
@@ -622,14 +644,19 @@ public class GameInfobar extends Sprite
     private function onCancelDating(e:Event):void
     {
         DataContainer.currentDating=null;
-        removeChild(dating_icon);
+
+        var dating:String=flox.getSaveData("dating");
+        if(dating){
+            dating_icon.removeFromParent(true);
+        }
+
 
     }
 
     private function gameInfobarFadeout():void{
 
 
-        var tween:Tween=new Tween(infoDataView,0.5,Transitions.EASE_IN_OUT_BACK);
+        var tween:Tween=new Tween(infoDataView,1,Transitions.EASE_IN_OUT_BACK);
         tween.animate("y",-(infoDataView.height));
         tween.onComplete=onGameInfoFadoutComplete;
         Starling.juggler.add(tween);
@@ -639,6 +666,11 @@ public class GameInfobar extends Sprite
     private function onGameInfoFadoutComplete():void{
 
         Starling.juggler.removeTweens(this);
+
+
+        var _data:Object=new Object();
+        _data.name="MenuScene";
+        command.sceneDispatch(SceneEvent.CHANGED,_data);
 
     }
 }

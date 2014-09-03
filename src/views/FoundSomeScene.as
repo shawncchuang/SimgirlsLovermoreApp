@@ -445,7 +445,7 @@ package views
 					
 					DataContainer.currentDating=target.name;
 
-                    command.setNowMood();
+                    //command.setNowMood();
 
 					var _data:Object=new Object();
 					_data.name="DatingScene";

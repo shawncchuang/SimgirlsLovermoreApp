@@ -339,6 +339,18 @@ public class ProfileScene extends Scenes
         var intStr:String=String(savedata.int[character]);
         var imgStr:String=String(savedata.image[character]);
 
+
+        if(character!="player"){
+
+            status=DataContainer.getFacialMood(character);
+
+            if(status=="vhappy"){
+                status="very happy";
+            }
+
+            status=status.toUpperCase();
+        }
+
         statusTxt.text=status;
         relTxt.text=rel;
         relPointTxt.text=rel_pts;

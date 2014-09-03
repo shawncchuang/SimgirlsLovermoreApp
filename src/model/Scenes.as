@@ -161,7 +161,8 @@ public class Scenes extends Sprite
         DebugTrace.msg("Scenes.changeSceneHandle next_scene:"+next_scene);
         if(next_scene=="MainScene")
         {
-            var bgTexture:Texture=Assets.getTexture(next_scene+"Day");
+            var scene_texture:String=next_scene.split("Scene").join("Bg");
+            var bgTexture:Texture=Assets.getTexture(scene_texture+"Day");
             scenebg=new Image(bgTexture);
             scene_container.addChild(scenebg);
 
@@ -362,8 +363,11 @@ public class Scenes extends Sprite
 
         function onGameIngbarFadeinComplete():void{
 
-            var  gameinfo:Sprite=ViewsContainer.gameinfo;
-            gameinfo.dispatchEventWith("DISPLAY");
+            if(infobar){
+                var gameInfobar:Sprite=ViewsContainer.gameinfo;
+                gameInfobar.dispatchEventWith("DISPLAY");
+            }
+
 
             UIViews.visible=infobar;
             Starling.juggler.removeTweens(gameInfobar);

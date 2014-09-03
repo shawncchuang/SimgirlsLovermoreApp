@@ -577,8 +577,10 @@ public class MainCommand implements MainInterface
         {
             //prase expiration
             if(overday){
+                setNowMood();
                 praseOwnedAssets(1);
                 reseatDatingCommandTimes();
+
             }
             reeseatDating();
 
@@ -762,32 +764,19 @@ public class MainCommand implements MainInterface
     }
     public function setNowMood():void
     {
-        /*      -1000
-         angry
-         -500
-         sad
-         -250
-         bored
-         -150
-         nromal   0
-         150
-         happy
-         250
-         excited
-         500
-         blush
-         1000
+        //-1666 ~ 1666
 
-         */
 
-        var dating:String=DataContainer.currentDating;
-        var savegame:SaveGame=FloxCommand.savegame;
-        var mood:Number=Number(savegame.mood[dating]);
-        //-150~150
-        var ran:Number=150;
-        var nowMood:Number=uint(Math.random()*(ran*2))+1-ran;
-        savegame.mood[dating]=nowMood;
-        FloxCommand.savegame=savegame;
+        var flox:FloxInterface=new FloxCommand();
+        var moods:Object=flox.getSaveData("mood");
+        var ran:Number=1666;
+        for(var m:String in moods){
+
+            var today_Mood:Number=uint(Math.random()*(ran*2))+1-ran;
+            moods[m]=today_Mood;
+
+        }
+        flox.save("mood",moods);
 
 
 
@@ -797,7 +786,7 @@ public class MainCommand implements MainInterface
 
         var dating:String=DataContainer.currentDating;
         var flox:FloxInterface=new FloxCommand();
-       // var savegame:SaveGame=FloxCommand.savegame;
+        // var savegame:SaveGame=FloxCommand.savegame;
         var relObj:Object=flox.getSaveData("rel");
         var rel:String=relObj[dating];
         var ptsObj:Object=flox.getSaveData("pts");
@@ -854,7 +843,7 @@ public class MainCommand implements MainInterface
         var _data:Object=new Object();
         _data.rel=relObj;
         _data.pts=ptsObj;
-       // FloxCommand.savegame=savegame;
+        // FloxCommand.savegame=savegame;
         flox.updateSavegame(_data);
         DebugTrace.msg("MainCommand.updateRelationship _data="+JSON.stringify(_data));
 
@@ -1279,7 +1268,7 @@ public class MainCommand implements MainInterface
 
         var _data:Object=new Object();
         //_data.ap=ap+ap_pay;
-       // _data.cash=cash+cash_pay;
+        // _data.cash=cash+cash_pay;
         var new_image:Number=Number(uint(Math.random()*6));
         //DebugTrace.msg("MainCommand.doTrain new_image:"+new_image);
         if(savegame.dating)
