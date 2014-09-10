@@ -122,7 +122,7 @@ public class ViewCommand  implements ViewInterface{
             else
             {
 
-                var texture=Assets.getTexture(enable_ch);
+                var texture:Texture=Assets.getTexture(enable_ch);
                 var img:Image=new Image(texture);
                 img.smoothing=TextureSmoothing.TRILINEAR;
                 img.pivotX=img.width/2;

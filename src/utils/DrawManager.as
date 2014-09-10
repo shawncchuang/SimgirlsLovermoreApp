@@ -384,26 +384,24 @@ public class DrawManager implements DrawerInterface
     }
     public function drawCharacterProfileIcon(target:Sprite,ch:String,scale:Number):void
     {
-        //var fisrtword:String=ch.charAt(0).toUpperCase();
-        //var _ch:String=ch.slice(1,ch.length);
-        //ch=fisrtword+_ch;
+
         //DebugTrace.msg("DrawManager.drwaCharacterProfileIcon ch:"+ch);
-        var texture:Texture=Assets.getTexture("Pro"+ch);
-        var xml:XML=Assets.getAtalsXML("Pro"+ch+"XML");
+        var texture:Texture=Assets.getTexture(ch+"Facials");
+        var xml:XML=Assets.getAtalsXML(ch+"FacialsXML");
         var atlas:TextureAtlas=new TextureAtlas(texture,xml);
         var mood:String=DataContainer.getFacialMood(ch);
         //DebugTrace.msg("DrawManager.drwaCharacterProfileIcon mood:"+mood);
-        var facail_texture:Texture=atlas.getTexture(mood);
-        //var texture:Texture=Assets.getTexture("Pro"+ch);
-        var img:Image=new Image(facail_texture);
-        img.useHandCursor=true;
-        img.name=ch.toLowerCase();
-        img.smoothing=TextureSmoothing.TRILINEAR;
-        img.pivotX=img.width/2;
-        img.pivotY=img.height/2;
-        img.scaleX=scale;
-        img.scaleY=scale;
-        target.addChild(img);
+
+        var mc:MovieClip=new MovieClip(atlas.getTextures(ch+"-"+mood),12);
+        mc.stop();
+        mc.useHandCursor=true;
+        mc.name=ch.toLowerCase();
+        mc.smoothing=TextureSmoothing.TRILINEAR;
+        mc.pivotX=mc.width/2;
+        mc.pivotY=mc.height/2;
+        mc.scaleX=scale;
+        mc.scaleY=scale;
+        target.addChild(mc);
 
 
     }
@@ -532,12 +530,12 @@ public class DrawManager implements DrawerInterface
     {
         //value -1666~1666
         result=value;
-        if(result>1666)
+        if(result>2500)
         {
-            result=1666;
-        }else if(result<-1666)
+            result=2500;
+        }else if(result<-2500)
         {
-            result=-1666;
+            result=-2500;
         }
         //var dating:String=DataContainer.currentDating;
         //var savegame:SaveGame=FloxCommand.savegame;
@@ -575,7 +573,7 @@ public class DrawManager implements DrawerInterface
          fIndex--;
          }*/
         //var index:Number=Math.floor(fIndex/10);
-        var index:Number=Math.floor(Number((result/16666).toFixed(2))*100);
+        var index:Number=Math.floor(Number((result/2500).toFixed(2))*100);
         if(index==100 || index==-100)
         {
             index=99;

@@ -2,22 +2,22 @@
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
 <!-- $TexturePacker:SmartUpdate:e9b9da1bdff29dc9548fd29e3c5f19b8:bccc2f102dcf3bb2d3286b219d39b951:813891894751523e1e16f32686aa4f2b$ -->
 <TextureAtlas imagePath="lns-facials.png">
-    <SubTexture name="lenus-angry1" x="2" y="2" width="198" height="198"/>
-    <SubTexture name="lenus-angry2" x="2" y="202" width="198" height="198"/>
-    <SubTexture name="lenus-blush1" x="202" y="2" width="198" height="198"/>
-    <SubTexture name="lenus-blush2" x="202" y="202" width="198" height="198"/>
+    <SubTexture name="lenus-annoyed1" x="2" y="2" width="198" height="198"/>
+    <SubTexture name="lenus-annoyed2" x="2" y="202" width="198" height="198"/>
+    <SubTexture name="lenus-loved1" x="202" y="2" width="198" height="198"/>
+    <SubTexture name="lenus-loved2" x="202" y="202" width="198" height="198"/>
     <SubTexture name="lenus-bored1" x="402" y="2" width="198" height="198"/>
     <SubTexture name="lenus-bored2" x="402" y="202" width="198" height="198"/>
-    <SubTexture name="lenus-normal1" x="602" y="2" width="198" height="198"/>
-    <SubTexture name="lenus-normal2" x="602" y="202" width="198" height="198"/>
-    <SubTexture name="lenus-pleasant1" x="802" y="2" width="198" height="198"/>
-    <SubTexture name="lenus-pleasant2" x="802" y="202" width="198" height="198"/>
-    <SubTexture name="lenus-sad1" x="1002" y="2" width="198" height="198"/>
-    <SubTexture name="lenus-sad2" x="1002" y="202" width="198" height="198"/>
-    <SubTexture name="lenus-scared1" x="1202" y="2" width="198" height="198"/>
-    <SubTexture name="lenus-scared2" x="1202" y="202" width="198" height="198"/>
-    <SubTexture name="lenus-sick1" x="1402" y="2" width="198" height="198"/>
-    <SubTexture name="lenus-sick2" x="1402" y="202" width="198" height="198"/>
-    <SubTexture name="lenus-vhappy1" x="1602" y="2" width="198" height="198"/>
-    <SubTexture name="lenus-vhappy2" x="1602" y="202" width="198" height="198"/>
+    <SubTexture name="lenus-calm1" x="602" y="2" width="198" height="198"/>
+    <SubTexture name="lenus-calm2" x="602" y="202" width="198" height="198"/>
+    <SubTexture name="lenus-pleased1" x="802" y="2" width="198" height="198"/>
+    <SubTexture name="lenus-pleased2" x="802" y="202" width="198" height="198"/>
+    <SubTexture name="lenus-depressed1" x="1002" y="2" width="198" height="198"/>
+    <SubTexture name="lenus-depressed2" x="1002" y="202" width="198" height="198"/>
+    <SubTexture name="lenus-smifler1" x="1202" y="2" width="198" height="198"/>
+    <SubTexture name="lenus-smifler2" x="1202" y="202" width="198" height="198"/>
+    <SubTexture name="lenus-sickened1" x="1402" y="2" width="198" height="198"/>
+    <SubTexture name="lenus-sickened2" x="1402" y="202" width="198" height="198"/>
+    <SubTexture name="lenus-delighted1" x="1602" y="2" width="198" height="198"/>
+    <SubTexture name="lenus-delighted2" x="1602" y="202" width="198" height="198"/>
 </TextureAtlas>

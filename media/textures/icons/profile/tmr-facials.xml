@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:10035668fde1e52fbb2f8f2dc19f6ca5:f15b1e7f330e7d4edcaa3b84d39e79f3:9a3f8184aa9c76543de60ddef066fcac$ -->
+ <!-- $TexturePacker:SmartUpdate:e9b9da1bdff29dc9548fd29e3c5f19b8:bccc2f102dcf3bb2d3286b219d39b951:813891894751523e1e16f32686aa4f2b$ -->
 <TextureAtlas imagePath="tmr-facials.png">
-    <SubTexture name="tomoru-angry1" x="2" y="2" width="198" height="198"/>
-    <SubTexture name="tomoru-angry2" x="2" y="202" width="198" height="198"/>
-    <SubTexture name="tomoru-blush1" x="202" y="2" width="198" height="198"/>
-    <SubTexture name="tomoru-blush2" x="202" y="202" width="198" height="198"/>
+    <SubTexture name="tomoru-annoyed1" x="2" y="2" width="198" height="198"/>
+    <SubTexture name="tomoru-annoyed2" x="2" y="202" width="198" height="198"/>
+    <SubTexture name="tomoru-loved1" x="202" y="2" width="198" height="198"/>
+    <SubTexture name="tomoru-loved2" x="202" y="202" width="198" height="198"/>
     <SubTexture name="tomoru-bored1" x="402" y="2" width="198" height="198"/>
     <SubTexture name="tomoru-bored2" x="402" y="202" width="198" height="198"/>
-    <SubTexture name="tomoru-normal1" x="602" y="2" width="198" height="198"/>
-    <SubTexture name="tomoru-normal2" x="602" y="202" width="198" height="198"/>
-    <SubTexture name="tomoru-pleasant1" x="802" y="2" width="198" height="198"/>
-    <SubTexture name="tomoru-pleasant2" x="802" y="202" width="198" height="198"/>
-    <SubTexture name="tomoru-sad1" x="1002" y="2" width="198" height="198"/>
-    <SubTexture name="tomoru-sad2" x="1002" y="202" width="198" height="198"/>
-    <SubTexture name="tomoru-scared1" x="1202" y="2" width="198" height="198"/>
-    <SubTexture name="tomoru-scared2" x="1202" y="202" width="198" height="198"/>
-    <SubTexture name="tomoru-sick1" x="1402" y="2" width="198" height="198"/>
-    <SubTexture name="tomoru-sick2" x="1402" y="202" width="198" height="198"/>
-    <SubTexture name="tomoru-vhappy1" x="1602" y="2" width="198" height="198"/>
-    <SubTexture name="tomoru-vhappy2" x="1602" y="202" width="198" height="198"/>
+    <SubTexture name="tomoru-calm1" x="602" y="2" width="198" height="198"/>
+    <SubTexture name="tomoru-calm2" x="602" y="202" width="198" height="198"/>
+    <SubTexture name="tomoru-pleased1" x="802" y="2" width="198" height="198"/>
+    <SubTexture name="tomoru-pleased2" x="802" y="202" width="198" height="198"/>
+    <SubTexture name="tomoru-depressed1" x="1002" y="2" width="198" height="198"/>
+    <SubTexture name="tomoru-depressed2" x="1002" y="202" width="198" height="198"/>
+    <SubTexture name="tomoru-smifler1" x="1202" y="2" width="198" height="198"/>
+    <SubTexture name="tomoru-smifler2" x="1202" y="202" width="198" height="198"/>
+    <SubTexture name="tomoru-sickened1" x="1402" y="2" width="198" height="198"/>
+    <SubTexture name="tomoru-sickened2" x="1402" y="202" width="198" height="198"/>
+    <SubTexture name="tomoru-delighted1" x="1602" y="2" width="198" height="198"/>
+    <SubTexture name="tomoru-delighted2" x="1602" y="202" width="198" height="198"/>
 </TextureAtlas>

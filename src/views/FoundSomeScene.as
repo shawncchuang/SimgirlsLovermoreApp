@@ -151,7 +151,7 @@ package views
 			var sceneliksStr:String=JSON.stringify(scenelikes);
 			DebugTrace.msg("FoundSomeScene.setCharacterInside sceneliksStr:"+sceneliksStr);
 			var allChacters:Array=Config.characters;
-			
+			var dating:String=flox.getSaveData("dating");
 			
 			var chlist:Array=new Array();
 			//check schedule
@@ -164,41 +164,39 @@ package views
 				
 				if(liksObj)
 				{
-					var liksObjStr:String=JSON.stringify(liksObj);
-					
+
 					arrivedCh.push(liksObj);
 					chlist.push(liksObj.name);
 				}
 				else
 				{
 					//people likes
-					DebugTrace.msg("FoundSomeScene.setCharacterInside liksObjStr:"+liksObjStr);
-					
-					if(chlist.indexOf(character)==-1)
-					{
-						//popele don't have schedule 
-						//but likes this scene with character;
-						for(var k:uint=0;k<scenelikes[character].length;k++)
-						{
-							var likes:Number=scenelikes[character][k].likes;
-							var scene:String=scenelikes[character][k].name;
-							//DebugTrace.obj(likes);
-							//DebugTrace.obj(scene);
-							if(scene==current_scene && likes>0 && k==0)
-							{
-								// most like
-								var chlikes:Object=new Object();
-								chlikes.name=character;
-								chlikes.value=likes;
-								//trace("FoundSomeScene.setCharacterInside scene: ",scene,"; character:",character," : ",likes);
-								arrivedCh.push(chlikes);
-								
-							}
-							//if
-						}
-						//for
-					}
-					//if
+					//DebugTrace.msg("FoundSomeScene.setCharacterInside scenelikes:"+JSON.stringify(scenelikes));
+                    //DebugTrace.msg("FoundSomeScene.setCharacterInside character="+character);
+					if(dating!=character) {
+                        //not incloud dating character
+                        if (chlist.indexOf(character) == -1) {
+                            //popele don't have schedule
+                            //but likes this scene with character;
+                            for (var k:uint = 0; k < scenelikes[character].length; k++) {
+                                var likes:Number = scenelikes[character][k].likes;
+                                var scene:String = scenelikes[character][k].name;
+                                //DebugTrace.obj(likes);
+                                //DebugTrace.obj(scene);
+                                if (scene == current_scene && likes > 0 && k == 0) {
+                                    // most like
+                                    var chlikes:Object = new Object();
+                                    chlikes.name = character;
+                                    chlikes.value = likes;
+                                    //trace("FoundSomeScene.setCharacterInside scene: ",scene,"; character:",character," : ",likes);
+                                    arrivedCh.push(chlikes);
+
+                                }
+                                //if
+                            }
+                            //for
+                        }
+                    }
 					
 				}
 				//if
@@ -257,8 +255,8 @@ package views
 			var schIndex:Object=Config.scheduleIndex;
 			var index:Number=schIndex[name];
 			var schedule_scene:String=schedule[index+dateIndx.month][dateIndx.date];
-			var scene:String=DataContainer.currentScene;
-			scene=scene.split("Scene").join("");
+			var current_scene:String=DataContainer.currentScene;
+			var scene:String=current_scene.split("Scene").join("");
 			//DebugTrace.msg("FoundSomeScene.checkSchedule date:"+dateIndx.date);
 			//DebugTrace.msg("FoundSomeScene.checkSchedule schedule:"+schedule[index+dateIndx.month][dateIndx.date]);
 			//DebugTrace.msg("FoundSomeScene.checkSchedule dateIndx:"+JSON.stringify(dateIndx));

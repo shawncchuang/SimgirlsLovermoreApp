@@ -174,8 +174,8 @@ package views
 			
 			var _data:Object=new Object();
 			_data.lv=lv;
-			var flirtscene:Sprite=FlirtScene.flirtscene;
-			flirtscene.dispatchEventWith(FlirtScene.UPDATE_LOVE,false,_data);
+			var flirtscene:Sprite=KissScene.kissScene;
+			flirtscene.dispatchEventWith(KissScene.UPDATE_LOVE,false,_data);
 		}
 		private function onCanceledLovePoint():void
 		{

@@ -135,12 +135,9 @@ package
 		private function initLoadScene():void
 		{
 			
-			//var gameEvt:GameEvent=SimgirlsLovemore.gameEvent;
-			//gameEvt._name="game_progress";
-			//gameEvt.displayHandler();
-			//var bgtexture:Texture=Assets.getTexture("GameTitle");
-			//bgImg=new Image(bgtexture);
-			bgImg=Assets.getDynamicAtlas("GameTitle");
+
+			var bgtexture:Texture=Assets.getTexture("HomePage");
+			bgImg=new Image(bgtexture);
 			addChild(bgImg);
 			
 			saveloadlist=new SaveandLoadList("Arrived");

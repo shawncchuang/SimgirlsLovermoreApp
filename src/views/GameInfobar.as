@@ -360,7 +360,7 @@ public class GameInfobar extends Sprite
             tween.animate("y",-217);
             tween.fadeTo(0);
             Starling.juggler.add(tween);
-          
+
 
             gameEvent._name="show_comcloud";
             gameEvent.displayHandler();
@@ -462,13 +462,20 @@ public class GameInfobar extends Sprite
     }
     private function profileFadeout():void
     {
-        trace("GameInfobar.profileFadeout");
+
 
         var tween:Tween=new Tween(player_icon,0.3,Transitions.EASE_IN_OUT);
         tween.fadeTo(0);
-        tween.onComplete=function(){
+        tween.onComplete=function():void{
             Starling.juggler.removeTweens(player_icon);
             player_icon.removeFromParent(true);
+
+            var dating:String=flox.getSaveData("dating");
+            if(dating!=""){
+                dating_icon.removeFromParent(true);
+
+            }
+
         };
         Starling.juggler.add(tween);
 
@@ -476,7 +483,7 @@ public class GameInfobar extends Sprite
 
     private function datingProfileFadeout():void{
 
-        trace("GameInfobar.datingProfileFadeout");
+
 
         if(current_dating) {
 
@@ -484,7 +491,7 @@ public class GameInfobar extends Sprite
 
             var tween:Tween = new Tween(dating_icon, 0.3, Transitions.EASE_IN_OUT);
             tween.fadeTo(0);
-            tween.onComplete = function () {
+            tween.onComplete = function ():void{
                 Starling.juggler.removeTweens(dating_icon);
                 dating_icon.removeFromParent(true);
             };
@@ -539,6 +546,7 @@ public class GameInfobar extends Sprite
         var currentscene:String=DataContainer.currentLabel;
         apIcon.visible=true;
         payApTxt.visible=true;
+
 
         switch(attr){
             case "Kiss":
@@ -627,28 +635,31 @@ public class GameInfobar extends Sprite
 
     private function onUpdateDating(e:Event):void
     {
-        trace("GameInfobar.onUpdateDating")
-        var dating:String=flox.getSaveData("dating");
-        if(dating)
+
+        current_dating=flox.getSaveData("dating");
+        if(current_dating)
         {
-            DataContainer.currentDating=dating;
+            DataContainer.currentDating=current_dating;
             dating_icon=new Sprite();
             dating_icon.x=158;
             dating_icon.y=50;
             addChild(dating_icon);
             var drawcom:DrawerInterface=new DrawManager();
-            drawcom.drawCharacterProfileIcon(dating_icon,dating,0.45);
+            drawcom.drawCharacterProfileIcon(dating_icon,current_dating,0.45);
         }
 
     }
-    private function onCancelDating(e:Event):void
-    {
-        DataContainer.currentDating=null;
+    private function onCancelDating(e:Event):void{
 
-        var dating:String=flox.getSaveData("dating");
-        if(dating){
+
+        try{
             dating_icon.removeFromParent(true);
+        }catch(e:Error){
+
+            DebugTrace.msg("GamseIfnobar.onCancelDating dating_icon=Null");
+
         }
+
 
 
     }

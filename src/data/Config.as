@@ -20,8 +20,8 @@ public class Config
     private static var authkey:String;
     public static var ExcerptFornt:String="SimFutura";
     public static const characters:Array=["lenus","sirena","dea","sao","klr","tomoru","ceil"];
-    public static const facial_moods:Array=["angry","blush","bored","normal","pleasant","sad","scared","sick","vhappy"];
-    public static var scheduleIndex:Object={"lenus":0,"sirena":12,"dea":25,"sao":38,"klr":51,"tomoru":64,"ceil":77,"zack":90};
+    //schedule [index+ current month]
+    public static var scheduleIndex:Object={"lenus":88,"sirena":12,"dea":25,"sao":38,"klr":51,"tomoru":64,"ceil":77,"zack":90};
 
     //battle schedule 2022 Tuesday
 
@@ -273,7 +273,7 @@ public class Config
             "date":"Tue.1.Mar.2022|12",
             "ap":100,
             "ap_max":100,
-            "dating":null,
+            "dating":"",
             "ch_cash":{
                 lenus:500,
                 sirena:100,
@@ -323,7 +323,7 @@ public class Config
                     "Flirt":2,
                     "TakePhoto":2,
                     "Chat":6,
-                    "Dating":1,
+                    "Date":1,
                     "Give":2
                 },
                 sirena:{
@@ -331,7 +331,7 @@ public class Config
                     "Flirt":2,
                     "TakePhoto":2,
                     "Chat":6,
-                    "Dating":1,
+                    "Date":1,
                     "Give":2
                 },
                 dea:{
@@ -339,7 +339,7 @@ public class Config
                     "Flirt":2,
                     "TakePhoto":2,
                     "Chat":6,
-                    "Dating":1,
+                    "Date":1,
                     "Give":2
                 },
                 sao:{
@@ -347,7 +347,7 @@ public class Config
                     "Flirt":2,
                     "TakePhoto":2,
                     "Chat":6,
-                    "Dating":1,
+                    "Date":1,
                     "Give":2
                 },
                 klr:{
@@ -355,7 +355,7 @@ public class Config
                     "Flirt":2,
                     "TakePhoto":2,
                     "Chat":6,
-                    "Dating":1,
+                    "Date":1,
                     "Give":2
                 },
                 tomoru:{
@@ -363,7 +363,7 @@ public class Config
                     "Flirt":2,
                     "TakePhoto":2,
                     "Chat":6,
-                    "Dating":1,
+                    "Date":1,
                     "Give":2
                 },
                 ceil:{
@@ -371,7 +371,7 @@ public class Config
                     "Flirt":2,
                     "TakePhoto":2,
                     "Chat":6,
-                    "Dating":1,
+                    "Date":1,
                     "Give":2
                 }
             },
@@ -440,11 +440,11 @@ public class Config
                 lenus: 0,
                 sirena: 0,
                 dea: 0,
-                sao: 0,
+                sao: 333,
                 klr: 0,
                 tomoru: 0,
                 ceil: 0,
-                zack: 0
+                zack: -1
             },
             "mood":{
                 lenus: 0,
@@ -842,26 +842,40 @@ public class Config
     }
     public static var moodStep:Object={
 
-        "sick-Max":-1666,
-        "sad-Min":-1667,
-        "sad-Max":-777,
-        "angry-Min":-778,
-        "angry-Max":-333,
-        "bored-Min":-334,
+        "sickened-Max":-1666,
+        "depressed-Min":-1665,
+        "depressed-Max":-777,
+        "annoyed-Min":-776,
+        "annoyed-Max":-333,
+        "bored-Min":-332,
         "bored-Max":-111,
-        "normal-Min":-112,
-        "normal-Max":110,
-        "pleasant-Min":111,
-        "pleasant-Max":332,
-        "vhappy-Min":333,
-        "vhappy-Max":776,
-        "scared-Min":777,
-        "scared-Max":1665,
-        "blush-Min":1666
+        "calm-Min":-110,
+        "calm-Max":110,
+        "pleased-Min":111,
+        "pleased-Max":332,
+        "delighted-Min":333,
+        "delighted-Max":776,
+        "smifler-Min":777,
+        "smifler-Max":1665,
+        "loved-Min":1666
 
-   }
+    }
+    public  static var ratingStep:Object={
 
 
+        "hate-Min":-100,
+        "hate-Max":-39,
+        "dislike-Min":-40,
+        "dislike-Max":-19,
+        "normal-Min":-20,
+        "normal-Max":19,
+        "like-Min":20,
+        "like-Max":59,
+        "love-Min":60,
+        "love-Max":100
+
+
+    }
     public function Config()
     {
 

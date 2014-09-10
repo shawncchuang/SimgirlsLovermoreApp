@@ -3,8 +3,12 @@ package utils
 	
 	 
 	import controller.FilterInterface;
-	
-	import starling.animation.DelayedCall;
+
+import flash.events.TimerEvent;
+
+import flash.utils.Timer;
+
+import starling.animation.DelayedCall;
 	import starling.animation.Transitions;
 	import starling.animation.Tween;
 	import starling.core.Starling;
@@ -44,16 +48,24 @@ package utils
 		{
 		 
 			setColorMatrixFilter(bright);
-			
+
 			/*tween=new Tween(target,0.5,Transitions.EASE_OUT);
 			tween.animate("alpha",0.5);
 			tween.onComplete=onFlashFilters
 			Starling.juggler.add(tween);*/
 			//call=new DelayedCall(onFlashFilters,delpay);
 			//Starling.juggler.add(call);
-			
+			var timer:Timer=new Timer(300,1);
+            timer.addEventListener(TimerEvent.TIMER_COMPLETE, onBrightComplete);
+            timer.start();
 		}
-	
+        private function onBrightComplete(e:TimerEvent):void{
+
+            e.target.stop();
+            e.target.removeEventListener(TimerEvent.TIMER_COMPLETE, onBrightComplete);
+            setColorMatrixFilter(0);
+
+        }
 		private function onFlashFilters():void
 		{
 			DebugTrace.msg("FilterManager.onFlashFilters");

@@ -168,9 +168,9 @@ public class CommandCloud extends MovieClip
     }
     private function onCloudClicked():void{
 
+        cloudTxt.visible=false;
 
         disabledComCloud();
-        cloudTxt.visible=false;
         TweenMax.to(comcloud,0.3,{frameLabel:"broke",onComplete:onCloudComplete});
         //comcloud.gotoAndPlay("broke");
         command.playSound("Break");
@@ -181,6 +181,8 @@ public class CommandCloud extends MovieClip
 
         comcloud.visible=false;
         TweenMax.killChildTweensOf(comcloud);
+
+
 
         DebugTrace.msg("CommandCloud.onCloudComplete com="+com);
 
@@ -251,6 +253,9 @@ public class CommandCloud extends MovieClip
         de_label=_label.split("\n").join("");
         DebugTrace.msg("CommandCloud.doComCloudEnterFrame de_label:"+de_label);
 
+
+
+
         if(de_label=="StartDating"){
 
 
@@ -265,6 +270,7 @@ public class CommandCloud extends MovieClip
 
             _data.removed=de_label;
             command.topviewDispatch(TopViewEvent.REMOVE,_data);
+
             var currentScene:String=DataContainer.currentScene;
             var scene_index:Number=currentScene.indexOf("Scene");
             if(scene_index!=-1)
@@ -289,6 +295,7 @@ public class CommandCloud extends MovieClip
         var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
         gameEvent._name="clear_comcloud";
         gameEvent.displayHandler();
+
         var sussess:Boolean=false;
         var _data:Object=new Object();
         if(looking_index!=-1)

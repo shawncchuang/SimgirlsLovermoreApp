@@ -19,8 +19,9 @@ package model
 		public var int:Object;
 		public var image:Object;
 		public var ap_max:Number;
-		public var assets:Array;
+		public var assets:Object;
 		public var owned_assets:Object;
+        public var unreleased_assets:Object;
 		public var items:Object;
 		public var gifts:Object;
 		public var accessories:Object;
@@ -35,17 +36,9 @@ package model
 		//sprite engine
 		public var se:Object;
 		public var s_ele:String;
-        public var dating:String;
+        public var dating:*;
 		public var skills:Object;
-		/*public var skills_player:Object;
-		public var skills_lenus:Object;
-		public var skills_sirena:Object;
-		public var skills_sao:Object;
-		public var skills_dea:Object;
-		public var skills_klaire:Object;
-		public var skills_tomoru:Object;
-		public var skills_ceil:Object;
-		public var skills_zack:Object;*/
+
 		public var avatar:Object;
 		public var formation:Array;
 		public var scenelikes:Object;

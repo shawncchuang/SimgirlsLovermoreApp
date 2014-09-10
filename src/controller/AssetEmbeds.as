@@ -4,70 +4,77 @@ public class AssetEmbeds
 {
     /*------------------scenes------------------------------------------------- */
 
+    [Embed(source = "../../media/textures/scenes/homepage.jpg")]
+    public static const HomePage:Class;
+
+
     [Embed(source = "../../media/textures/scenes/map_day.jpg")]
     public static const MainBgDay:Class;
     [Embed(source = "../../media/textures/scenes/map_night.jpg")]
     public static const MainBgNight:Class;
 
     [Embed(source = "../../media/textures/scenes/academy.jpg")]
-    public var AcademyBg:Class;
+    public static const  AcademyBg:Class;
 
     [Embed(source = "../../media/textures/scenes/airplane.jpg")]
-    public var AirplaneBg:Class;
+    public static const  AirplaneBg:Class;
 
     [Embed(source = "../../media/textures/scenes/airport.jpg")]
-    public var AirportBg:Class;
+    public static const  AirportBg:Class;
 
     [Embed(source = "../../media/textures/scenes/bank.jpg")]
-    public var BankBg:Class;
+    public static const  BankBg:Class;
 
     [Embed(source = "../../media/textures/scenes/blackmarket.jpg")]
-    public var BlackMarketBg:Class;
+    public static const  BlackMarketBg:Class;
+
+    [Embed(source = "../../media/textures/scenes/casino.jpg")]
+    public static const  CasinoBg:Class;
 
     [Embed(source = "../../media/textures/scenes/changingroom.jpg")]
-    public var ChangingRoomBg:Class;
+    public static const  ChangingRoomBg:Class;
 
     [Embed(source = "../../media/textures/scenes/cinema.jpg")]
-    public var CinemaBg:Class;
+    public static const  CinemaBg:Class;
 
     [Embed(source = "../../media/textures/scenes/gym.jpg")]
-    public var FitnessClubBg:Class;
+    public static const  FitnessClubBg:Class;
 
     [Embed(source = "../../media/textures/scenes/hotspring.jpg")]
-    public var HotSpringBg:Class;
+    public static const  HotSpringBg:Class;
 
     [Embed(source = "../../media/textures/scenes/lounge.jpg")]
-    public var LoungeBg:Class;
+    public static const  LoungeBg:Class;
 
     [Embed(source = "../../media/textures/scenes/museum.jpg")]
-    public var MuseumBg:Class;
+    public static const  MuseumBg:Class;
 
     [Embed(source = "../../media/textures/scenes/nightclub.jpg")]
-    public var NightClubBg:Class;
+    public static const  NightClubBg:Class;
 
     [Embed(source = "../../media/textures/scenes/policestation.jpg")]
-    public var PoliceStationBg:Class;
+    public static const  PoliceStationBg:Class;
 
     [Embed(source = "../../media/textures/scenes/privateisland.jpg")]
-    public var PrivateIslandBg:Class;
+    public static const  PrivateIslandBg:Class;
 
     [Embed(source = "../../media/textures/scenes/restaurant.jpg")]
-    public var RestaurantBg:Class;
+    public static const  RestaurantBg:Class;
 
     [Embed(source = "../../media/textures/scenes/shoppingcentre.jpg")]
-    public var ShoppingCentreBg:Class;
+    public static const  ShoppingCentreBg:Class;
 
     [Embed(source = "../../media/textures/scenes/sportbar.jpg")]
-    public var SportsBarBg:Class;
+    public static const  SportsBarBg:Class;
 
     [Embed(source = "../../media/textures/scenes/tarotreading.jpg")]
-    public var TarotreadingBg:Class;
+    public static const  TarotreadingBg:Class;
 
     [Embed(source = "../../media/textures/scenes/temple.jpg")]
-    public var TempleBg:Class;
+    public static const  SpiritTempleBg:Class;
 
     [Embed(source = "../../media/textures/scenes/themedpark.jpg")]
-    public var ThemedParkBg:Class;
+    public static const  ThemedParkBg:Class;
 
     [Embed(source = "../../media/textures/scenes/beach_day.jpg")]
     public static const BeachBgDay:Class;
@@ -98,7 +105,7 @@ public class AssetEmbeds
     public static const GardenBgNight:Class;
 
 
-    [Embed(source = "../../media/textures/scenes/garden_day.jpg")]
+    [Embed(source = "../../media/textures/scenes/mansion_day.jpg")]
     public static const LovemoreMansionBgDay:Class;
     [Embed(source = "../../media/textures/scenes/mansion_night.jpg")]
     public static const LovemoreMansionBgNight:Class;
@@ -242,47 +249,6 @@ public class AssetEmbeds
     public static const IconMouse:Class;
 
 
-    [Embed(source="../../media/textures/icons/profile/sao.xml", mimeType="application/octet-stream")]
-    public static const ProsaoXML:Class;
-    [Embed(source="../../media/textures/icons/profile/sao.png")]
-    public static const Prosao:Class;
-
-    [Embed(source="../../media/textures/icons/profile/ceil.xml", mimeType="application/octet-stream")]
-    public static const ProceilXML:Class;
-    [Embed(source="../../media/textures/icons/profile/ceil.png")]
-    public static const Proceil:Class;
-
-    [Embed(source="../../media/textures/icons/profile/dea.xml", mimeType="application/octet-stream")]
-    public static const ProdeaXML:Class;
-    [Embed(source="../../media/textures/icons/profile/dea.png")]
-    public static const Prodea:Class;
-
-
-    [Embed(source="../../media/textures/icons/profile/klaire.xml", mimeType="application/octet-stream")]
-    public static const ProklrXML:Class;
-    [Embed(source="../../media/textures/icons/profile/klaire.png")]
-    public static const Proklr:Class;
-
-    [Embed(source="../../media/textures/icons/profile/tomoru.xml", mimeType="application/octet-stream")]
-    public static const ProtomoruXML:Class;
-    [Embed(source="../../media/textures/icons/profile/tomoru.png")]
-    public static const Protomoru:Class;
-
-    [Embed(source="../../media/textures/icons/profile/zack.xml", mimeType="application/octet-stream")]
-    public static const ProzackXML:Class;
-    [Embed(source="../../media/textures/icons/profile/zack.png")]
-    public static const Prozack:Class;
-
-    [Embed(source="../../media/textures/icons/profile/lenus.xml", mimeType="application/octet-stream")]
-    public static const ProlenusXML:Class;
-    [Embed(source="../../media/textures/icons/profile/lenus.png")]
-    public static const Prolenus:Class;
-
-    [Embed(source="../../media/textures/icons/profile/sirena.xml", mimeType="application/octet-stream")]
-    public static const ProsirenaXML:Class;
-    [Embed(source="../../media/textures/icons/profile/sirena.png")]
-    public static const Prosirena:Class;
-
     [Embed(source="../../media/textures/icons/profile/NPCs.xml", mimeType="application/octet-stream")]
     public static const NPCsXML:Class;
     [Embed(source="../../media/textures/icons/profile/NPCs.png")]
@@ -305,9 +271,9 @@ public class AssetEmbeds
     [Embed(source="../../media/textures/icons/profile/klr-facials.png")]
     public static const klrFacials:Class;
 
-    [Embed(source="../../media/textures/icons/profile/klr-facials.xml", mimeType="application/octet-stream")]
+    [Embed(source="../../media/textures/icons/profile/lns-facials.xml", mimeType="application/octet-stream")]
     public static const lenusFacialsXML:Class;
-    [Embed(source="../../media/textures/icons/profile/klr-facials.png")]
+    [Embed(source="../../media/textures/icons/profile/lns-facials.png")]
     public static const lenusFacials:Class;
 
 
@@ -332,7 +298,6 @@ public class AssetEmbeds
     public static const zackFacialsXML:Class;
     [Embed(source="../../media/textures/icons/profile/zack-facials.png")]
     public static const zackFacials:Class;
-
 
 
     /*[Embed(source="../../media/textures/icons/items/items.xml", mimeType="application/octet-stream")]
@@ -531,12 +496,6 @@ public class AssetEmbeds
     public static const ComCloud:Class;
 
 
-
-
-
-
-
-
     /*------------------icons-------------------------------------------------*/
 
 
@@ -598,7 +557,6 @@ public class AssetEmbeds
     public static const FemaleFeatures:Class;
 
     //change formation
-
     [Embed(source="../../media/textures/characters/rdy_akr.png")]
     public static const akrRdy:Class;
 
@@ -663,6 +621,30 @@ public class AssetEmbeds
     [Embed(source="../../media/textures/characters/bunny.png")]
     public static const Bunny:Class;
 
+
+    [Embed(source="../../media/textures/characters/kissCeil.png")]
+    public static const ceilKiss:Class;
+
+    [Embed(source="../../media/textures/characters/kissDea.png")]
+    public static const deaKiss:Class;
+
+    [Embed(source="../../media/textures/characters/kissKlr.png")]
+    public static const klrKiss:Class;
+
+    [Embed(source="../../media/textures/characters/kissLenus.png")]
+    public static const lenusKiss:Class;
+
+    [Embed(source="../../media/textures/characters/kissSao.png")]
+    public static const saoKiss:Class;
+
+    [Embed(source="../../media/textures/characters/kissSirena.png")]
+    public static const sirenaKiss:Class;
+
+    [Embed(source="../../media/textures/characters/kissTomoru.png")]
+    public static const tomoruKiss:Class;
+
+    [Embed(source="../../media/textures/characters/kissZack.png")]
+    public static const zackKiss:Class;
 
     //change formation
     //[Embed(source = "../../assets/swf/ani_sao.dbswf", mimeType = "application/octet-stream")]
@@ -860,9 +842,6 @@ public class AssetEmbeds
 
 
     /*-------------------panels-------------------------------------------------------------------*/
-
-
-
     [Embed(source = "../../media/textures/scenes/battle_scene.jpg")]
     public static const BattleScene:Class;
 

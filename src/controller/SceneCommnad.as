@@ -45,7 +45,7 @@ public class SceneCommnad implements SceneInterface
     private var scene:String;
     private var scene_sprite:Sprite;
     private var display_container:Object=new Object();
-    private var talks:Array=new Array();
+    private var talks:Array;
     private var end_index:Number;
     private var player_library:Array=new Array();
     private var _target:Sprite=null;
@@ -77,6 +77,7 @@ public class SceneCommnad implements SceneInterface
     private var switchID:String="";
     private var location:String="";
     private var part:Number=0;
+
     public function init(current:String,target:Sprite,lbr_part:Number,finshed:Function=null):void
     {
 
@@ -92,64 +93,72 @@ public class SceneCommnad implements SceneInterface
         part_index=lbr_part;
 
 
-        var library:Array=flox.getSyetemData("scenelibrary");
-        talks=library[part_index];
-        DebugTrace.msg("SceneCommand.init talks:"+talks);
+
+        talks=new Array();
+
+        // DebugTrace.msg("SceneCommand.init talks:"+talks);
+
 
         datingComCloudHandle();
     }
     private function datingComCloudHandle():void
     {
 
-        //var dating:String=DataContainer.currentDating;
+
+        var library:Array=flox.getSyetemData("scenelibrary");
+        talks=library[part_index];
+        DebugTrace.msg("SceneCommand.datingComCloudHandle library["+part_index+"]:"+talks);
+
         var dating:String=flox.getSaveData("dating");
         DebugTrace.msg("SceneCommand.datingComCloudHandle dating="+dating);
-        if(dating)
+        if(dating!="")
         {
-            if(scene.indexOf("Scene")!=-1  && talks.indexOf("choice|ComCloud_R1_Start^Dating")==-1)
+            if(scene.indexOf("Scene")!=-1 && talks.indexOf("choice|ComCloud_R1_Start^Dating")==-1)
             {
-
                 //at any scene
-                var bk_talk:Array= talks.slice(1);
 
-                for(var j:uint=0;j<bk_talk.length;j++)
-                {
-                    var _talk:String=bk_talk[j];
-                    DebugTrace.msg("SceneCommand.datingHandle _talk:"+_talk);
-                    if(_talk.indexOf("R1")!=-1)
-                    {
-                        _talk=_talk.split("R1").join("R2");
-                    }
-                    else if(_talk.indexOf("R2")!=-1)
-                    {
-                        _talk=_talk.split("R2").join("R3");
-                    }
-                    else if(_talk.indexOf("R3")!=-1)
-                    {
-                        _talk=_talk.split("R3").join("R4");
-                    }
-                    else if(_talk.indexOf("R4")!=-1)
-                    {
-                        _talk=_talk.split("R4").join("R5");
-                    }
-                    //if
+                talks.unshift("choice|ComCloud_R1_Start^Dating");
+                var rIndex:Number=0;
 
-                    bk_talk[j]=_talk;
+                for(var j:uint=0;j<talks.length;j++){
+
+                    if(talks[j]!="END"){
+
+                        var dir:String=talks[j].split("_")[1];
+
+                        if(dir.charAt(0)=="R"){
+                            rIndex++;
+                            talks[j]=talks[j].split(dir).join("R"+rIndex);
+                        }
+
+                    }
                 }
-                //for
-                DebugTrace.msg("SceneCommand.datingHandle bk_talk:"+bk_talk);
-                talks.splice(1);
-                talks.push("choice|ComCloud_R1_Start^Dating");
-                for(var k:uint=0;k<bk_talk.length;k++)
-                {
-                    talks.push(bk_talk[k]);
-                }
-                //for
-                DebugTrace.msg("SceneCommand.datingHandle talks:"+talks);
             }
-            //if
+        }else{
+
+            if(talks.indexOf("choice|ComCloud_R1_Start^Dating")!=-1){
+                rIndex=0;
+                talks.shift();
+
+                for(var k:uint=0;k<talks.length;k++){
+
+                    if(talks[k]!="END"){
+
+                        dir=talks[k].split("_")[1];
+
+                        if(dir.charAt(0)=="R"){
+                            rIndex++;
+                            talks[k]=talks[k].split(dir).join("R"+rIndex);
+                        }
+
+                    }
+                }
+
+            }
         }
-        //if
+        DebugTrace.msg("SceneCommand.datingHandle talks:"+talks);
+
+
     }
     public function start():void
     {
@@ -578,6 +587,7 @@ public class SceneCommnad implements SceneInterface
     private var bgSrc:String="";
     public function createBackground(src:String):void
     {
+        location=src;
         var scene:Sprite=ViewsContainer.MainScene;
         scene_container=scene.getChildByName("scene_container") as Sprite;
 
@@ -592,13 +602,13 @@ public class SceneCommnad implements SceneInterface
         bgSrc=src;
 
         /*
-        if(background)
-        {
-            background.removeFromParent(true);
-            background=null;
-            //scene_container.removeChild(background);
-        }
-        */
+         if(background)
+         {
+         background.removeFromParent(true);
+         background=null;
+         //scene_container.removeChild(background);
+         }
+         */
         try
         {
             bgSprtie.removeFromParent(true);
@@ -631,43 +641,66 @@ public class SceneCommnad implements SceneInterface
         else{
             bgSrc="Bg";
         }
-        switch(scene){
-            case "HotelScene":
-            case "ParkScene":
-            case "BeachScene":
-            case "PierScene":
-            case "LovemoreMansionScene":
-            case "GardenScene":
-                bgSrc=(bgSrc+day);
-                break
-        }
+
         DebugTrace.msg("SceneCommand.createBackground bgSrc="+bgSrc);
+
+
+        if(scene=="Story")
+        {
+            /*
+             if(location=="hotel" || location=="park" || location=="beach" || location=="pier" || location=="lovemoremansion")
+             {
+             var bg_scene:String=bgSrc.split("Scene").join("").toLowerCase();
+             trace("SceneCommand.onBackgroundComplete bgSrc="+bgSrc)
+             if(bg_scene!=location)
+             {
+             bgTexture=Assets.getTexture(bgSrc);
+             }
+             else
+             {
+             bgTexture=Assets.getTexture(bgSrc+day);
+             }
+             //if
+             bgSprtie=new Image(bgTexture);
+             scene_container.addChild(bgSprtie);
+             }
+             //if
+             */
+            praseSceneDayNight();
+        }
+        else{
+            praseSceneDayNight()
+
+        }
+
+        if(bgSrc=="ChangeFormationBg"){
+
+            bgSrc="NormalBg";
+        }
 
         var bgTexture:Texture=Assets.getTexture(bgSrc);
         bgSprtie=new Image(bgTexture);
         scene_container.addChild(bgSprtie);
 
-        if(scene=="Story")
-        {
-            if(location=="hotel" || location=="park" || location=="beach" || location=="pier" || location=="lovemoremansion")
-            {
-                var bg_scene:String=bgSrc.split("Scene").join("").toLowerCase();
-                trace("SceneCommand.onBackgroundComplete bgSrc="+bgSrc)
-                if(bg_scene!=location)
-                {
-                    bgTexture=Assets.getTexture(bgSrc);
-                }
-                else
-                {
-                    bgTexture=Assets.getTexture(bgSrc+day);
-                }
-                //if
-                bgSprtie=new Image(bgTexture);
-                scene_container.addChild(bgSprtie);
+        function praseSceneDayNight():void{
+
+            switch(location){
+                case "HotelScene":
+                case "ParkScene":
+                case "BeachScene":
+                case "PierScene":
+                case "LovemoreMansionScene":
+                case "GardenScene":
+                    bgSrc=(bgSrc+day);
+                    break
             }
-            //if
+
         }
-        //if
+
+
+
+
+
     }
     public function doClearAll():void
     {

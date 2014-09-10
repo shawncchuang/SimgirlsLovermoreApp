@@ -49,6 +49,7 @@ import starling.events.TouchPhase;
 import starling.filters.BlurFilter;
 import starling.filters.ColorMatrixFilter;
 import starling.text.TextField;
+import starling.text.TextFieldAutoSize;
 import starling.textures.Texture;
 import starling.textures.TextureSmoothing;
 import starling.utils.Color;
@@ -62,6 +63,7 @@ import views.AlertMessage;
 
 import views.FloxManagerView;
 import views.DatingScene;
+import views.Reward;
 
 
 public class MainCommand implements MainInterface
@@ -83,7 +85,7 @@ public class MainCommand implements MainInterface
     private static var bgsound_channel:SoundChannel;
     private var sound_channel:SoundChannel;
     private var switch_verify:Boolean=false;
-    private var fliter:FilterInterface=new FilterManager();
+    //private var fliter:FilterInterface=new FilterManager();
     public function sceneDispatch(type:String,data:Object=null):void
     {
         var mainstage:Sprite=ViewsContainer.MainStage;
@@ -572,18 +574,40 @@ public class MainCommand implements MainInterface
         var _data:Object=new Object();
         _data.date=new_date;
         var flox:FloxInterface=new FloxCommand();
-        flox.save("date",new_date,onUpdatedDateComplete);
+        flox.save("date",new_date);
+        if(overday){
+
+            reeseatDating();
+            setNowMood();
+            praseOwnedAssets(1);
+            reseatDatingCommandTimes();
+
+        }
+
+        if(comType=="Rest"){
+
+            var _data:Object=new Object();
+            var scene:Sprite=ViewsContainer.currentScene;
+            _data.removed="ani_complete";
+            scene.dispatchEventWith(TopViewEvent.REMOVE,false,_data);
+            comType="";
+
+        }
         function onUpdatedDateComplete():void
         {
             //prase expiration
+           /*
             if(overday){
+
+
+                flox.save("dating","");
+                reeseatDating();
                 setNowMood();
                 praseOwnedAssets(1);
                 reseatDatingCommandTimes();
 
             }
-            reeseatDating();
-
+*/
             var battledata:BattleData=new BattleData();
             battledata.checkBattleSchedule("BattleResult","cpu_team");
 
@@ -784,9 +808,9 @@ public class MainCommand implements MainInterface
     }
     public function updateRelationship(mood:Number):void{
 
-        var dating:String=DataContainer.currentDating;
+
         var flox:FloxInterface=new FloxCommand();
-        // var savegame:SaveGame=FloxCommand.savegame;
+        var dating:*=flox.getSaveData("dating");
         var relObj:Object=flox.getSaveData("rel");
         var rel:String=relObj[dating];
         var ptsObj:Object=flox.getSaveData("pts");
@@ -795,51 +819,18 @@ public class MainCommand implements MainInterface
 
         DebugTrace.msg("MainCommand.updateRelationship mood="+mood+" ,pts="+pts);
 
-        if(pts>9999)
+        if(pts>10000)
         {
             pts=9999;
+        }else if (pts<-10000){
+            pts=-9999;
         }
-        //if
-        var reStep:Object=Config.relationshipStep;
+
         ptsObj[dating]=pts;
-        if(pts<=reStep["foe-Max"])
-        {
-            rel="foe";
-        }
-        else if(pts>=reStep["acquaintance-Min"] && pts<=reStep["acquaintance-Max"])
-        {
-            rel="acquaintance";
-        }
-        else if(pts>=reStep["friend-Min"] && pts<=reStep["friend-Max"])
-        {
-            rel="friend";
 
-        }
-        else if(pts>=reStep["closefriend-Min"] && pts<=reStep["closefriend-Max"])
-        {
-            rel="close friend";
-
-        }
-        else if(pts>=reStep["datingpartner-Min"] && pts<=reStep["datingpartner-Max"])
-        {
-            rel="dating partner";
-
-        }
-        else if(pts>=reStep["lover-Min"] && pts<=reStep["lover-Max"])
-        {
-            rel="lover";
-
-        }
-        else if(pts>=reStep["spouse-Min"])
-        {
-            rel="spouse";
-
-        }
-
-
+        rel=DataContainer.getRelationship(pts,dating);
         relObj[dating]=rel;
-        //savegame.rel=relObj;
-        //savegame.pts=ptsObj;
+
         var _data:Object=new Object();
         _data.rel=relObj;
         _data.pts=ptsObj;
@@ -851,23 +842,27 @@ public class MainCommand implements MainInterface
     }
     public function moodCalculator(item_id:String,dating:String):Number
     {
-        var systemdata:SystemData=FloxCommand.systemdata;
-        var sysAssets:Object=systemdata.assets;
+        var flox:FloxInterface=new FloxCommand();
+        var sysAssets:Object=flox.getSyetemData("assets");
         var savedata:SaveGame=FloxCommand.savegame;
-        var pst:Number=Number(savedata.pts[dating]);
+        var pst:Number=flox.getSaveData("pts")[dating];
         var price:Number=sysAssets[item_id].price;
         var rating:Number=searchAssetRating(item_id);
         var time_rating:Number=100;
-        var mood:Number=price*(Math.floor(rating/100*5+time_rating/100*2))+Math.floor(pst/500);
+        //var mood:Number=price*(Math.floor(rating/100*5+time_rating/100*2))+Math.floor(pst/500);
+        var mood:Number=Math.floor(price*Number((rating/100).toFixed(2)));
         DebugTrace.msg("MainCommand.moodCalculator mood:"+mood);
 
         return mood
     }
     public function searchAssetRating(item_id:String):Number
     {
+
         var flox:FloxInterface=new FloxCommand();
+        var dating:String=DataContainer.currentDating;
         var rating:Number;
-        var assets:Array=flox.getSaveData("assets");
+        var assets_rating:Object=flox.getSaveData("assets");
+        var assets:Array=assets_rating[dating];
         for(var i:uint=0;i<assets.length;i++)
         {
             if(assets[i].id==item_id)
@@ -887,6 +882,9 @@ public class MainCommand implements MainInterface
     private var cashSprite:Sprite;
     private var imageSprite:Sprite;
     private var intSprite:Sprite;
+    private var moodSprite:Sprite;
+    private var loveSprite:Sprite;
+    private var rewardNode:Reward;
     public function displayUpdateValue(target:Sprite,_data:Object):void
     {
         //valueSprite=target;
@@ -901,9 +899,26 @@ public class MainCommand implements MainInterface
             var attr:String=attrlist[i];
             var value:String=valuelist[i];
             var posY:Number=i*80;
+
+            rewardNode=new Reward();
+            rewardNode.index=i;
+            rewardNode.type=attr;
+            rewardNode.value=value;
+            rewardNode.x=stageCW;
+            rewardNode.y=stageCH-posY;
+            rewardNode.addNode();
+            target.addChild(rewardNode);
+
+           // tweenHandler(i,rewardNode,rewardNode.y-50,onRewardTweenComplete);
+
+
+
+
+            /*
             switch(attr)
             {
                 case "ap":
+
                     apSprite=new Sprite();
                     var apTexture:Texture=Assets.getTexture("ApIcon");
                     var apImg:Image=new Image(apTexture);
@@ -930,7 +945,7 @@ public class MainCommand implements MainInterface
                     tweenHandler(i,apSprite,apSprite.y-50,onAPValueTweenComplete);
                     break
                 case  "cash":
-                    var cf:CurrencyFormatter = new CurrencyFormatter("en_US");
+                   // var cf:CurrencyFormatter = new CurrencyFormatter("en_US");
 
                     cashSprite=new Sprite();
                     var signTexure:Texture=Assets.getTexture("Cashsign");
@@ -952,6 +967,8 @@ public class MainCommand implements MainInterface
                     cashSprite.x=stageCW;
                     cashSprite.y=stageCH-posY;
 
+                    fliter.setSource(cashSprite);
+                    fliter.setShadow();
 
                     tweenHandler(i,cashSprite,cashSprite.y-50,onCashValueTweenComplete);
                     break
@@ -973,6 +990,8 @@ public class MainCommand implements MainInterface
                     imageSprite.x=stageCW;
                     imageSprite.y=stageCH-posY;
 
+                    fliter.setSource(imageSprite);
+                    fliter.setShadow();
 
                     tweenHandler(i,imageSprite,imageSprite.y-50,onImgValueTweenComplete);
 
@@ -995,11 +1014,79 @@ public class MainCommand implements MainInterface
                     intSprite.x=stageCW;
                     intSprite.y=stageCH-posY;
 
+                    fliter.setSource(intSprite);
+                    fliter.setShadow();
+
                     tweenHandler(i,intSprite,intSprite.y-50,onIntValueTweenComplete);
+                    break
+                case "love":
+
+                    if(value>=0){
+                        var _value:String="+"+value;
+                    }else{
+                        _value=String(value);
+                    }
+                    loveSprite=new Sprite();
+                    var loveTexure:Texture=Assets.getTexture("HeartLv1");
+                    var love_sign:Image=new Image(loveTexure);
+                    love_sign.pivotX=love_sign.width/2;
+                    love_sign.pivotY=love_sign.height/2;
+
+                    var loveTxt:TextField=new TextField(100,love_sign.height,_value,font,30,0xFFFFFF);
+                    loveTxt.autoSize=TextFieldAutoSize.HORIZONTAL;
+                    loveTxt.vAlign="center";
+                    loveTxt.x=love_sign.width/2;
+                    loveTxt.pivotY=loveTxt.height/2;
+
+                    loveSprite.addChild(loveTxt);
+                    loveSprite.addChild(love_sign);
+                    target.addChild(loveSprite);
+
+
+                    loveSprite.x=stageCW;
+                    loveSprite.y=stageCH-posY;
+
+                    fliter.setSource(loveSprite);
+                    fliter.setShadow();
+
+                    tweenHandler(i,loveSprite,loveSprite.y-50,onLoveValueTweenComplete);
+
+                    break
+                case "mood":
+
+                    if(value>=0){
+                        var _value:String="+"+value;
+                    }else{
+                        _value=String(value);
+                    }
+                    var content:String="MOOD"+_value;
+
+
+                    moodSprite=new Sprite();
+                    //var loveTexure:Texture=Assets.getTexture("Intelligence");
+                    //var love_sign:Image=new Image(loveTexure);
+
+
+                    var moodTxt:TextField=new TextField(100,50,content,font,30,0xFFFFFF);
+                    moodTxt.autoSize=TextFieldAutoSize.HORIZONTAL;
+                    moodTxt.vAlign="center";
+                    moodSprite.addChild(moodTxt);
+                    //moodSprite.addChild(love_sign);
+                    target.addChild(moodSprite);
+
+                    moodSprite.pivotX=moodSprite.width/2;
+                    moodSprite.pivotY=moodSprite.height/2;
+                    moodSprite.x=stageCW;
+                    moodSprite.y=stageCH-posY;
+
+                    fliter.setSource(moodSprite);
+                    fliter.setShadow();
+
+                    tweenHandler(i,moodSprite,moodSprite.y-50,onMoodValueTweenComplete);
                     break
 
             }
-            //switch
+           */
 
 
         }
@@ -1014,28 +1101,36 @@ public class MainCommand implements MainInterface
         tween.animate("y",value);
         //tween.animate("alpha",0.8);
         tween.scaleTo(1.5);
-        tween.onComplete=complete
+        tween.onComplete=complete;
         Starling.juggler.add(tween);
+    }
+    private function onRewardTweenComplete():void{
+
+        Starling.juggler.removeTweens(rewardNode);
+
+        rewardNode.removeFromParent(true);
+        rewardNode=null
+
     }
     private function onAPValueTweenComplete():void
     {
         Starling.juggler.removeTweens(apSprite);
         //valueSprite.removeChild(apSprite);
-        apSprite.removeFromParent();
+        apSprite.removeFromParent(true);
         apSprite=null
     }
     private function onCashValueTweenComplete():void
     {
         Starling.juggler.removeTweens(cashSprite);
         //valueSprite.removeChild(cashSprite);
-        cashSprite.removeFromParent();
+        cashSprite.removeFromParent(true);
         cashSprite=null
     }
     private function onImgValueTweenComplete():void
     {
         Starling.juggler.removeTweens(imageSprite);
         //valueSprite.removeChild(imageSprite);
-        imageSprite.removeFromParent();
+        imageSprite.removeFromParent(true);
         imageSprite=null
 
     }
@@ -1043,8 +1138,22 @@ public class MainCommand implements MainInterface
     {
         Starling.juggler.removeTweens(intSprite);
         //valueSprite.removeChild(intSprite);
-        intSprite.removeFromParent();
+        intSprite.removeFromParent(true);
         intSprite=null
+    }
+    private function onLoveValueTweenComplete():void
+    {
+        Starling.juggler.removeTweens(loveSprite);
+        //valueSprite.removeChild(intSprite);
+        loveSprite.removeFromParent(true);
+        loveSprite=null
+    }
+    private function onMoodValueTweenComplete():void{
+        Starling.juggler.removeTweens(moodSprite);
+        //valueSprite.removeChild(intSprite);
+        moodSprite.removeFromParent(true);
+        moodSprite=null
+
     }
     private var cancelbtn:Image;
     private var cancelOverTex:Texture;
@@ -1167,8 +1276,10 @@ public class MainCommand implements MainInterface
         }
         //if
     }
+    private var comType:String="";
     public function doRest(free:Boolean):void
     {
+        comType="Rest";
         var flox:FloxInterface=new FloxCommand();
         var command:MainInterface=new MainCommand();
         var ap:Number=flox.getSaveData("ap");
@@ -1180,9 +1291,7 @@ public class MainCommand implements MainInterface
         gameEvent._name="clear_comcloud";
         gameEvent.displayHandler();
 
-        var mediacom:MediaInterface=new MediaCommand();
-        mediacom.VideoPlayer(new Point(1024,250),new Point(0,260))
-        mediacom.play("video/rest-animated.flv",false,onFinishAnimated);
+
 
         if(free)
         {
@@ -1195,21 +1304,23 @@ public class MainCommand implements MainInterface
             _data.cash=cash+restObj.values.cash;
         }
         //if
-        copyPlayerAndCharacter();
+
 
         var getAP:Number=restObj.ap;
         _data.ap=ap+getAP;
         DebugTrace.msg("MainCpmmand.doRest getAP:"+getAP);
         flox.updateSavegame(_data);
-        command.dateManager("Rest");
-        var gameinfo:Sprite=ViewsContainer.gameinfo;
-        gameinfo.dispatchEventWith("UPDATE_INFO",false);
 
+
+        var mediacom:MediaInterface=new MediaCommand();
+        mediacom.VideoPlayer(new Point(1024,250),new Point(0,260))
+        mediacom.play("video/rest-animated.flv",false,onFinishAnimated);
+        copyPlayerAndCharacter();
 
     }
     public function doStay(days:Number):void
     {
-
+        comType="Stay";
         var flox:FloxInterface=new FloxCommand();
         var command:MainInterface=new MainCommand();
         var ap:Number=flox.getSaveData("ap");
@@ -1244,7 +1355,7 @@ public class MainCommand implements MainInterface
     }
     public function doTrain():void
     {
-
+        comType="Trin";
 
         var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
         gameEvent._name="clear_comcloud";
@@ -1295,7 +1406,7 @@ public class MainCommand implements MainInterface
     public function doWork():void
     {
         //nightclub,themed part,bank
-
+        comType="Work";
         var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
         gameEvent._name="clear_comcloud";
         gameEvent.displayHandler();
@@ -1342,6 +1453,7 @@ public class MainCommand implements MainInterface
     }
     public function doLearn():void
     {
+        comType="Learn";
         var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
         gameEvent._name="clear_comcloud";
         gameEvent.displayHandler();
@@ -1390,7 +1502,7 @@ public class MainCommand implements MainInterface
     }
     public function doMeditate():void
     {
-
+        comType="Meditate";
         var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
         gameEvent._name="clear_comcloud";
         gameEvent.displayHandler();
@@ -1423,9 +1535,9 @@ public class MainCommand implements MainInterface
 
     public function showCommandValues(target:Sprite,attr:String, values:Object=null):void
     {
-        //var flox:FloxInterface=new FloxCommand();
-        //var sysCommad:Object=flox.getSyetemData("command");
-        //var sysValues:Object=sysCommad[attr].values;
+        var flox:FloxInterface=new FloxCommand();
+        var sysCommad:Object=flox.getSyetemData("command");
+        var sysValues:Object=sysCommad[attr].values;
         DebugTrace.msg("MainCommnad sysValues="+JSON.stringify(sysValues));
 
         var command:MainInterface=new MainCommand();
@@ -1460,13 +1572,22 @@ public class MainCommand implements MainInterface
     }
     private function reeseatDating():void
     {
-        var savegame:SaveGame=FloxCommand.savegame;
-        savegame.dating=null;
-        FloxCommand.savegame=savegame;
+
+        DebugTrace.msg("MainCommand.reeseatDating");
+        DataContainer.currentDating=null;
+
+        var flox:FloxInterface=new FloxCommand();
+        flox.save("dating","");
+
 
         var gameinfo:Sprite=ViewsContainer.gameinfo;
         gameinfo.dispatchEventWith("CANCEL_DATING");
+
+
+
+
     }
+
     private var playerBitmap:Bitmap;
     private var playerTween:TweenMax;
 
@@ -1575,10 +1696,10 @@ public class MainCommand implements MainInterface
         }
 
         var current_scence:String=DataContainer.currentScene;
-
+        var _data:Object=new Object();
         if(current_scence=="Tarotreading" || current_scence=="AirplaneScene"){
 
-            var _data:Object=new Object();
+
             switch(SceneEvent.scene)
             {
                 case "Tarotreading":
@@ -1596,10 +1717,20 @@ public class MainCommand implements MainInterface
             sceneDispatch(SceneEvent.CHANGED,_data);
         }else{
 
-            var scene:Sprite=ViewsContainer.currentScene;
-            var _data:Object=new Object();
-            _data.removed="ani_complete";
-            scene.dispatchEventWith(TopViewEvent.REMOVE,false,_data)
+            if(comType!="Rest"){
+                var scene:Sprite=ViewsContainer.currentScene;
+                _data.removed="ani_complete";
+                scene.dispatchEventWith(TopViewEvent.REMOVE,false,_data);
+
+            }
+            else{
+                //Do Rest
+
+                dateManager("Rest");
+                var gameinfo:Sprite=ViewsContainer.gameinfo;
+                gameinfo.dispatchEventWith("UPDATE_INFO");
+            }
+
 
         }
 

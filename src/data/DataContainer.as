@@ -28,7 +28,7 @@ public class DataContainer
     private static var record:Array;
     private static var flox:FloxInterface=new FloxCommand();
     private static var sortedlikes:Array;
-    private static var dating:String;
+    private static var dating:*;
     private static var schedulelist:Array;
     private static var dateIndex:Object;
     private static var stones:Array;
@@ -169,6 +169,9 @@ public class DataContainer
         var chls:Object=new Object();
         var characters:Array=Config.characters;
         var scenes:Object=Config.stagepoints;
+        var dating:String=DataContainer.dating;
+
+
 
 
 
@@ -198,8 +201,20 @@ public class DataContainer
                 }
                 //scene_like[scene_name]=reLikes;
                 //DebugTrace.msg("DataContainer.initChacacterLikeScene scene_name:"+scene_name);
+
+
                 scene_rating.name=scene_name;
                 scene_rating.likes=reLikes;
+
+
+                //----------------fake------------------------------------------------------------------
+
+                if(scene_name=="Park"){
+
+                    scene_rating.likes=100;
+
+                }
+                //*-----------------------------------------------------------------------
 
                 likes-=reLikes;
                 var gress:Number=Math.floor(ran_sceneslist.length*0.4);
@@ -219,6 +234,7 @@ public class DataContainer
                     //if
                 }
                 //if
+
                 chlikesScene.push(scene_rating);
 
             }
@@ -244,7 +260,7 @@ public class DataContainer
 
         //flox.saveSystemData("scenelikes",chls);
 
-        flox.save("scenelikes",chls)
+        flox.save("scenelikes",chls);
 
     }
     private function setupRandomSencenLikes():Array
@@ -353,6 +369,49 @@ public class DataContainer
 
         return ran_anslist;
     }
+    public static function getRelationship(pts:Number,dating:String):String{
+
+        var reStep:Object=Config.relationshipStep;
+
+        var rel:String=""
+        if(pts<=reStep["foe-Max"])
+        {
+            rel="foe";
+        }
+        else if(pts>=reStep["acquaintance-Min"] && pts<=reStep["acquaintance-Max"])
+        {
+            rel="acquaintance";
+        }
+        else if(pts>=reStep["friend-Min"] && pts<=reStep["friend-Max"])
+        {
+            rel="friend";
+
+        }
+        else if(pts>=reStep["closefriend-Min"] && pts<=reStep["closefriend-Max"])
+        {
+            rel="close friend";
+
+        }
+        else if(pts>=reStep["datingpartner-Min"] && pts<=reStep["datingpartner-Max"])
+        {
+            rel="dating partner";
+
+        }
+        else if(pts>=reStep["lover-Min"] && pts<=reStep["lover-Max"])
+        {
+            rel="lover";
+
+        }
+        else if(pts>=reStep["spouse-Min"])
+        {
+            rel="spouse";
+
+        }
+
+        return rel
+
+    }
+
     public static function getFacialMood(name:String):String
     {
         var moodStep:Object=Config.moodStep;
@@ -362,39 +421,40 @@ public class DataContainer
         var moodObj:Object=flox.getSaveData("mood");
         var mood:Number=moodObj[ch];
         DebugTrace.msg("DataContainer.getFacialMood mood:"+mood);
-        if(mood<=moodStep["sick-Max"])
+        if(mood<=moodStep["sickened-Max"])
         {
-            facial="sick";
+            facial="sickened";
         }
-        else if(mood>moodStep["sad-Min"] && mood<=moodStep["sad-Max"])
+        else if(mood>moodStep["depressed-Min"] && mood<=moodStep["depressed-Max"])
         {
-            facial="sad";
+            facial="depressed";
         }
-        else if(mood>=moodStep["angry-Min"]  && mood<=moodStep["angry-Max"])
+        else if(mood>=moodStep["annoyed-Min"]  && mood<=moodStep["annoyed-Max"])
         {
-            facial="angry";
+            facial="annoyed";
         }
         else if(mood>=moodStep["bored-Min"] && mood<=moodStep["bored-Max"])
         {
             facial="bored";
         }
-        else if(mood>=moodStep["normal-Min"] && mood<=moodStep["normal-Max"])
+        else if(mood>=moodStep["calm-Min"] && mood<=moodStep["calm-Max"])
         {
-            facial="normal";
+            facial="calm";
         }
-        else if(mood>=moodStep["pleasant-Min"] && mood<=moodStep["pleasant-Max"])
+        else if(mood>=moodStep["pleased-Min"] && mood<=moodStep["pleased-Max"])
         {
-            facial="pleasant";
+            facial="pleased";
         }
-        else if(mood>=moodStep["vhappy-Min"] && mood<=moodStep["vhappy-Max"])
+        else if(mood>=moodStep["delighted-Min"] && mood<=moodStep["delighted-Max"])
         {
-            facial="vhappy";
+            facial="delighted";
         }
-        else if(mood>=moodStep["scared-Min"] && mood<=moodStep["scared-Max"])
+        else if(mood>=moodStep["smifler-Min"] && mood<=moodStep["smifler-Max"])
         {
-            facial="scared";
-        }else if(mood>=moodStep["blush-Min"]){
-            facial="blush";
+            facial="smifler";
+
+        }else if(mood>=moodStep["loved-Min"]){
+            facial="loved";
         }
         return  facial;
     }
@@ -404,6 +464,7 @@ public class DataContainer
         var success:Boolean=false;
         var dating:String=DataContainer.currentDating;
         var flox:FloxInterface=new FloxCommand();
+
         var pts:Number=flox.getSaveData("pts")[dating];
         var assets:Object=flox.getSyetemData("assets");
         var cate:String=assets[item_id].cate;
@@ -411,15 +472,15 @@ public class DataContainer
 
         switch(cate){
             case "consumable":
-                    if(pts>=relStep["acquaintance-Min"]){
+                if(pts>=relStep["acquaintance-Min"]){
 
-                        success=true;
-                    }
+                    success=true;
+                }
                 break
             case "misc":
-                    if(pts>=relStep["friend-Min"]){
-                        success=true;
-                    }
+                if(pts>=relStep["friend-Min"]){
+                    success=true;
+                }
                 break
             case "fashion":
                 if(pts>=relStep["closefriend-Min"]){
@@ -445,16 +506,20 @@ public class DataContainer
         return sortedlikes;
 
     }
-    public static function set currentDating(name:String):void
+
+    public static function set currentDating(name:*):void
     {
+
 
         dating=name;
+
     }
-    public static function get currentDating():String
+    public static function get currentDating():*
     {
 
-        return dating;
+        return dating
     }
+
     public static function set currentDateIndex(obj:Object):void
     {
         dateIndex=obj;
@@ -591,5 +656,72 @@ public class DataContainer
     {
         return battlecode;
     }
+
+    public static function getGiftResponse(rating:Number):String{
+
+
+        var comments:String="";
+        var ratingStep:Object=Config.ratingStep;
+
+        if(rating>=ratingStep["love-Min"] && rating<=ratingStep["love-Max"]){
+
+
+            comments="OMG this is amazing I love it!!";
+
+        }else if(rating>=ratingStep["like-Min"] && rating<=ratingStep["like-Max"]){
+
+
+            comments="Awww... I like it very much!";
+
+        }else if(rating>=ratingStep["normal-Min"] && rating<=ratingStep["normal-Max"]){
+
+
+            comments="Oh thanks!";
+
+        }else if(rating>=ratingStep["dislike-Min"] && rating<=ratingStep["dislike-Max"]){
+
+
+            comments="Meh, it's not what I really want but thanks anyway.";
+
+        }else if(rating>=ratingStep["hate-Min"] && rating<=ratingStep["hate-Max"]){
+
+
+            comments="Ewww... ";
+        }
+
+        return comments
+
+    }
+    public static function assetsRatingLevel(rating:Number):uint{
+
+        var lv=0;
+        var ratingStep:Object=Config.ratingStep;
+
+        if(rating>=ratingStep["love-Min"] && rating<=ratingStep["love-Max"]){
+
+
+            lv=0;
+
+        }else if(rating>=ratingStep["like-Min"] && rating<=ratingStep["like-Max"]){
+
+            lv=1;
+
+        }else if(rating>=ratingStep["normal-Min"] && rating<=ratingStep["normal-Max"]){
+
+            lv=2;
+
+        }else if(rating>=ratingStep["dislike-Min"] && rating<=ratingStep["dislike-Max"]){
+
+            lv=3;
+
+        }else if(rating>=ratingStep["hate-Min"] && rating<=ratingStep["hate-Max"]){
+
+            lv=4;
+        }
+
+        return lv
+
+    }
+
 }
 }
