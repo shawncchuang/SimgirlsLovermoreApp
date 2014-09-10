@@ -1,57 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e5634857-ca85-444f-9915-08f826b15827" name="Default" comment="added new kiss animated,swap flirt and kiss scene,fixed bug when player finish date command cloud &quot;start dating&quot; should disabled.">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/media/textures/scenes/casino.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/media/textures/scenes/homepage.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/views/Reward.as" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/media/textures/icons/profile/ceil.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/media/textures/icons/profile/ceil.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/media/textures/icons/profile/dea.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/media/textures/icons/profile/dea.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/media/textures/icons/profile/klaire.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/media/textures/icons/profile/klaire.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/media/textures/icons/profile/lenus.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/media/textures/icons/profile/lenus.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/media/textures/icons/profile/sao.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/media/textures/icons/profile/sao.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/media/textures/icons/profile/sirena.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/media/textures/icons/profile/sirena.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/media/textures/icons/profile/tomoru.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/media/textures/icons/profile/tomoru.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/media/textures/icons/profile/zack.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/media/textures/icons/profile/zack.xml" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/views/FlirtScene.as" afterPath="$PROJECT_DIR$/src/views/KissScene.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/media/textures/icons/bingo_items.png" afterPath="$PROJECT_DIR$/media/textures/icons/bingo_items.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/media/textures/icons/bingo_items_moving.png" afterPath="$PROJECT_DIR$/media/textures/icons/bingo_items_moving.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/AssetEmbeds.as" afterPath="$PROJECT_DIR$/src/controller/AssetEmbeds.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Bonus.as" afterPath="$PROJECT_DIR$/src/views/Bonus.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/ChatScene.as" afterPath="$PROJECT_DIR$/src/views/ChatScene.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/CommandCloud.as" afterPath="$PROJECT_DIR$/src/views/CommandCloud.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/data/Config.as" afterPath="$PROJECT_DIR$/src/data/Config.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/model/CusomAssets.as" afterPath="$PROJECT_DIR$/src/model/CusomAssets.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/data/DataContainer.as" afterPath="$PROJECT_DIR$/src/data/DataContainer.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/DatingScene.as" afterPath="$PROJECT_DIR$/src/views/DatingScene.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/utils/DrawManager.as" afterPath="$PROJECT_DIR$/src/utils/DrawManager.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/utils/FilterManager.as" afterPath="$PROJECT_DIR$/src/utils/FilterManager.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/FloxInterface.as" afterPath="$PROJECT_DIR$/src/controller/FloxInterface.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/FoundSomeScene.as" afterPath="$PROJECT_DIR$/src/views/FoundSomeScene.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Game.as" afterPath="$PROJECT_DIR$/src/Game.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/GameInfobar.as" afterPath="$PROJECT_DIR$/src/views/GameInfobar.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/HeartParticle.as" afterPath="$PROJECT_DIR$/src/views/HeartParticle.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/MainCommand.as" afterPath="$PROJECT_DIR$/src/controller/MainCommand.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/model/SaveGame.as" afterPath="$PROJECT_DIR$/src/model/SaveGame.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/SceneCommnad.as" afterPath="$PROJECT_DIR$/src/controller/SceneCommnad.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/ViewCommand.as" afterPath="$PROJECT_DIR$/src/controller/ViewCommand.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/media/textures/icons/profile/ceil-facials.xml" afterPath="$PROJECT_DIR$/media/textures/icons/profile/ceil-facials.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/media/textures/icons/profile/dea-facials.xml" afterPath="$PROJECT_DIR$/media/textures/icons/profile/dea-facials.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/media/textures/icons/profile/klr-facials.xml" afterPath="$PROJECT_DIR$/media/textures/icons/profile/klr-facials.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/media/textures/icons/profile/lns-facials.xml" afterPath="$PROJECT_DIR$/media/textures/icons/profile/lns-facials.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/media/textures/icons/profile/sao-facials.xml" afterPath="$PROJECT_DIR$/media/textures/icons/profile/sao-facials.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/media/textures/icons/profile/srn-facials.xml" afterPath="$PROJECT_DIR$/media/textures/icons/profile/srn-facials.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/media/textures/icons/profile/tmr-facials.xml" afterPath="$PROJECT_DIR$/media/textures/icons/profile/tmr-facials.xml" />
+    <list default="true" id="e5634857-ca85-444f-9915-08f826b15827" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/media/textures/icons/profile/zack-facials.xml" afterPath="$PROJECT_DIR$/media/textures/icons/profile/zack-facials.xml" />
     </list>
     <ignored path="SimgirlsLovermoreApp.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -106,7 +57,7 @@
       <file leaf-file-name="GameInfobar.as" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/views/GameInfobar.as">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5966634" vertical-offset="6202" max-vertical-offset="9795">
+            <state vertical-scroll-proportion="0.6572973" vertical-offset="6202" max-vertical-offset="9795">
               <caret line="494" column="59" selection-start-line="494" selection-start-column="59" selection-end-line="494" selection-end-column="59" />
               <folding />
             </state>
@@ -706,7 +657,7 @@
       <workItem from="1409692513750" duration="93541000" />
       <workItem from="1410202275554" duration="45210000" />
       <workItem from="1410309137474" duration="14000" />
-      <workItem from="1410309175447" duration="6600000" />
+      <workItem from="1410309175447" duration="6691000" />
     </task>
     <task id="LOCAL-00001" summary="update setting on intelliJ">
       <created>1406764639395</created>
@@ -776,11 +727,15 @@
       <created>1409711073922</created>
       <updated>1409711073922</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="added new kiss animated,swap flirt and kiss scene,fixed bug when player finish date command cloud &quot;start dating&quot; should disabled.">
+      <created>1410316100338</created>
+      <updated>1410316100338</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="696864000" />
+    <option name="totallyTimeSpent" value="696955000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -813,13 +768,13 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962668" sideWeight="0.49924698" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24941361" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24305004" sideWeight="0.31045005" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24305004" sideWeight="0.31045005" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.16282764" sideWeight="0.50039095" order="8" side_tool="true" content_ui="combo" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22204848" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20180723" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31930104" sideWeight="0.49885583" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1683876" sideWeight="0.31045005" order="12" side_tool="true" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1683876" sideWeight="0.31045005" order="12" side_tool="true" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21763304" sideWeight="0.49960908" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24981897" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1268,7 +1223,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/GameInfobar.as">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5966634" vertical-offset="6202" max-vertical-offset="9795">
+        <state vertical-scroll-proportion="0.6572973" vertical-offset="6202" max-vertical-offset="9795">
           <caret line="494" column="59" selection-start-line="494" selection-start-column="59" selection-end-line="494" selection-end-column="59" />
           <folding />
         </state>
