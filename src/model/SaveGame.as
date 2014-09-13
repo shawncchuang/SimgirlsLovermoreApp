@@ -53,6 +53,7 @@ package model
         public var ranking:Array;
         public var current_battle:Object;
         public var command_dating:Object;
+        public var photos:Array;
 		public function SaveGame()
 		{
 	 

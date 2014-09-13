@@ -60,7 +60,7 @@ public class DatingScene extends Scenes
 {
     private var font:String="SimImpact";
     private var base_sprite:Sprite;
-    private var character:MovieClip;
+    private var character:Image;
     private var filters:FilterInterface=new FilterManager();
     private var command:MainInterface=new MainCommand();
     private var flox:FloxInterface=new FloxCommand();
@@ -203,6 +203,8 @@ public class DatingScene extends Scenes
                 break
             case "TakePhoto":
 
+                character.removeFromParent(true);
+                actTransform("../swf/photos.swf",onPhotosActComplete);
                 break
             case "Kiss":
 
@@ -574,7 +576,11 @@ public class DatingScene extends Scenes
     {
         var dating:String=DataContainer.currentDating;
 
-        character=Assets.getDynamicAtlas(dating);
+        var style:String=DataContainer.styleSechedule[dating];
+        var clothTexture:Texture=Assets.getTexture(style);
+
+        character=new Image(clothTexture);
+
         addChild(character);
 
         var tween:Tween=new Tween(character,0.3,Transitions.EASE_IN_OUT);
@@ -1029,7 +1035,7 @@ public class DatingScene extends Scenes
 
 
         //fake
-        result=-1000;
+        //result=-1000;
         if(result<=goDating)
         {
             //success dating
@@ -1227,20 +1233,22 @@ public class DatingScene extends Scenes
                 limitMood=Config.moodStep["smifler-Min"];
                 break
             case "TakePhoto":
-                limitRel=Config.relationshipStep["friend-Min"];
-                limitMood=Config.moodStep["pleased-Min"];
+                //limitRel=Config.relationshipStep["friend-Min"];
+                //limitMood=Config.moodStep["pleased-Min"];
+                relPass=true;
+                moodPass=true;
                 break
             case "Date":
-                //limitRel=Config.relationshipStep["closefriend-Min"];
-                //limitMood=Config.moodStep["delighted-Min"];
-                relPass=true;
-                moodPass=true;
+                limitRel=Config.relationshipStep["closefriend-Min"];
+                limitMood=Config.moodStep["delighted-Min"];
+                //relPass=true;
+                //moodPass=true;
                 break
             case "Kiss":
-                //limitRel=Config.relationshipStep["lover-Min"];
-                //limitMood=Config.moodStep["loved-Min"];
-                relPass=true;
-                moodPass=true;
+                limitRel=Config.relationshipStep["lover-Min"];
+                limitMood=Config.moodStep["loved-Min"];
+                //relPass=true;
+                //moodPass=true;
                 break
             case "Leave":
                 relPass=true;
@@ -1249,9 +1257,11 @@ public class DatingScene extends Scenes
 
         }
         if(!relPass){
+
             if(pts>=limitRel){
                 relPass=true;
             }
+
         }else{
 
             if(mood>=limitMood){
@@ -1308,5 +1318,13 @@ public class DatingScene extends Scenes
         bubble=null;
     }
 
+    private function onPhotosActComplete():void{
+
+        var takephoto:TakePhotos=new TakePhotos();
+        addChild(takephoto);
+
+
+
+    }
 }
 }

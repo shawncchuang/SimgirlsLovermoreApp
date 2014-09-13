@@ -2,6 +2,8 @@ package controller
 {
 
 
+import data.Config;
+
 import flash.desktop.NativeApplication;
 import flash.events.MouseEvent;
 import flash.geom.Point;
@@ -423,9 +425,24 @@ public class SceneCommnad implements SceneInterface
     {
 
         DebugTrace.msg("SceneCommand.createCharacter :"+name);
-        character=Assets.getDynamicAtlas(name)
-        //var texture:Texture=Assets.getTexture(name);
-        //character=new Image(texture);
+
+
+        var npc:String="";
+        if(Config.characters.indexOf(name)!=-1){
+
+            //character
+            var style:String=DataContainer.styleSechedule[name];
+            var texture:Texture=Assets.getTexture(style);
+
+        }else{
+
+            //NPC
+            style=Config.NPC[name];
+            var texture:Texture=Assets.getTexture(style);
+
+        }
+
+        character=new Image(texture);
         character.name=name;
         character.alpha=0;
         character.x=ch_pos[p].x;

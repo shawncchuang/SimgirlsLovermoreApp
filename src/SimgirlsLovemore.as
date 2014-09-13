@@ -151,8 +151,8 @@ import com.greensock.loading.LoaderMax;
 			//var filters:MovieClip=new MovieClip();
 			//addChild(filters);
 			//filtesContainer=filters;
-			
 
+            flox.loadSystemData();
 			
 			successLogin=onLoginComplete;
 			failedLogin=onLoginFailed;

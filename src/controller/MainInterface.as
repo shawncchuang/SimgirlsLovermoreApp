@@ -16,6 +16,7 @@ package controller
 		function sceneDispatch(type:String,data:Object=null):void
 		 
 		function initSceneLibrary():void
+        function initStyleSechedule():void
 		function playBackgroudSound(src:String,st:SoundTransform=null):void
 		function playSound(src:String,repeat:Number=0,st:SoundTransform=null):SoundChannel
 		function stopBackgroudSound():void
@@ -37,6 +38,8 @@ package controller
 		function doWork():void
 		function doLearn():void
 		function doMeditate():void
+        function drawPlayer(target:Sprite):Sprite
+        function drawCharacter(target:Sprite,style:String):Image
 		function copyPlayerAndCharacter():void
 		function clearCopyPixel():void
 		function addLoadind(msg:String):void

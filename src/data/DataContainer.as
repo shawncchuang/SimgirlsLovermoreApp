@@ -159,7 +159,7 @@ public class DataContainer
     }
 
     private var chlikesScene:Array;
-    public function initChacacterLikeScene():void
+    public function initChacacterLikeScene():Object
     {
         /*
          every character has rating with all scenes
@@ -211,7 +211,7 @@ public class DataContainer
 
                 if(scene_name=="Park"){
 
-                    scene_rating.likes=100;
+                    //scene_rating.likes=100;
 
                 }
                 //*-----------------------------------------------------------------------
@@ -255,14 +255,16 @@ public class DataContainer
 
         }
         //for
-        var chLikes:String=JSON.stringify(chls);
+       //var chLikes:String=JSON.stringify(chls);
         //DebugTrace.msg("DataContainer.initChacacterLikeScene chLikes:"+chLikes);
 
         //flox.saveSystemData("scenelikes",chls);
 
-        flox.save("scenelikes",chls);
+        //flox.save("scenelikes",chls,onSetupSceneliksComplete);
+        return chls
 
     }
+
     private function setupRandomSencenLikes():Array
     {
         var sceneslist:Array=new Array();
@@ -308,15 +310,10 @@ public class DataContainer
             sortedlikes.push(likes);
         }
         sortedlikes.sortOn(["value"],Array.NUMERIC|Array.DESCENDING);
-        /*for(var i:uint=0;i<sortedlikes.length;i++)
-         {
-         var sortedStr:String=JSON.stringify(sortedlikes[i]);
-         DebugTrace.msg("DataContainer.seceneLikseSorted sortedStr:"+sortedStr);
-         }*/
-        //DebugTrace.msg("DataContainer.seceneLikseSorted _sortedlikes:"+_sortedlikes);
+
 
     }
-    public function setupCharacterSecrets():void
+    public function setupCharacterSecrets():Object
     {
         var flox:FloxInterface=new FloxCommand();
         var secretsData:Object=flox.getSyetemData("secrets");
@@ -341,9 +338,10 @@ public class DataContainer
             secrets[chname]=allAns;
         }
 
-        var savegame:SaveGame=FloxCommand.savegame;
-        savegame.secrets=secrets;
-        FloxCommand.savegame=savegame;
+        //var savegame:SaveGame=FloxCommand.savegame;
+        //savegame.secrets=secrets;
+        //FloxCommand.savegame=savegame;
+        return secrets
     }
     private function praseSecretAnswer(secrets:Object):Array
     {
@@ -720,6 +718,18 @@ public class DataContainer
         }
 
         return lv
+
+    }
+
+    private static var styles_sechedule:Object;
+
+
+    public static function set styleSechedule(sechedule:Object):void{
+        styles_sechedule=sechedule;
+    }
+
+    public static function get styleSechedule():Object{
+        return styles_sechedule;
 
     }
 

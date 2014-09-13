@@ -182,8 +182,6 @@ public class CommandCloud extends MovieClip
         comcloud.visible=false;
         TweenMax.killChildTweensOf(comcloud);
 
-
-
         DebugTrace.msg("CommandCloud.onCloudComplete com="+com);
 
 
@@ -252,8 +250,6 @@ public class CommandCloud extends MovieClip
         var _data:Object=new Object();
         de_label=_label.split("\n").join("");
         DebugTrace.msg("CommandCloud.doComCloudEnterFrame de_label:"+de_label);
-
-
 
 
         if(de_label=="StartDating"){

@@ -148,8 +148,7 @@ package views
 			//var savegame:SaveGame=FloxCommand.savegame;
 			//var scenelikes:Object=savegame.scenelikes;
 			var scenelikes:Object=flox.getSaveData("scenelikes");
-			var sceneliksStr:String=JSON.stringify(scenelikes);
-			DebugTrace.msg("FoundSomeScene.setCharacterInside sceneliksStr:"+sceneliksStr);
+
 			var allChacters:Array=Config.characters;
 			var dating:String=flox.getSaveData("dating");
 			

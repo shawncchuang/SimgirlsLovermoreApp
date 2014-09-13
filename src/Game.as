@@ -173,12 +173,14 @@ package
 		private function initMainScene():void
 		{
 			var battle:Boolean=DataContainer.battleDemo;
-			DebugTrace.obj("initMainScene: "+battle)
+			//DebugTrace.obj("initMainScene: "+battle)
 			scene=new Sprite();
 			ViewsContainer.MainScene=scene;
 			addChild(scene);
 
             command.setNowMood();
+            command.initStyleSechedule();
+
 			
 			var _data:Object=new Object();
 

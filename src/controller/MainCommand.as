@@ -578,6 +578,7 @@ public class MainCommand implements MainInterface
         if(overday){
 
             reeseatDating();
+            initStyleSechedule();
             setNowMood();
             praseOwnedAssets(1);
             reseatDatingCommandTimes();
@@ -596,18 +597,18 @@ public class MainCommand implements MainInterface
         function onUpdatedDateComplete():void
         {
             //prase expiration
-           /*
-            if(overday){
+            /*
+             if(overday){
 
 
-                flox.save("dating","");
-                reeseatDating();
-                setNowMood();
-                praseOwnedAssets(1);
-                reseatDatingCommandTimes();
+             flox.save("dating","");
+             reeseatDating();
+             setNowMood();
+             praseOwnedAssets(1);
+             reseatDatingCommandTimes();
 
-            }
-*/
+             }
+             */
             var battledata:BattleData=new BattleData();
             battledata.checkBattleSchedule("BattleResult","cpu_team");
 
@@ -735,10 +736,14 @@ public class MainCommand implements MainInterface
         if(currentScene=="MainScene" && dateStr=="24")
         {
             var bg:starling.display.MovieClip=scene_container.getChildByName("bg") as starling.display.MovieClip;
-            if(bg)
-                bg.removeFromParent();
+            try{
+                bg.removeFromParent(true);
+            }catch(e:Error){
+                DebugTrace.msg("MainCommand.filterScene bg=NUll");
+
+            }
             //var night_bg:starling.display.MovieClip=Assets.getDynamicAtlas("MainSceneNight");
-            var mapTextute:Texture=Assets.getTexture("MainSceneNight");
+            var mapTextute:Texture=Assets.getTexture("MainBgNight");
             var night_bg:Image=new Image(mapTextute);
             scene_container.addChild(night_bg);
         }
@@ -802,9 +807,38 @@ public class MainCommand implements MainInterface
         }
         flox.save("mood",moods);
 
+    }
+    public  function  initStyleSechedule():void{
 
+        var suitup:Object=new Object();
+        var characters:Array=Config.characters;
 
+        var flox:FloxInterface=new FloxCommand();
+        var date:String=flox.getSaveData("date").split("|")[0];
+        var styles:Object=flox.getSyetemData("style_schedule");
+        for(var j:uint=0;j<characters.length;j++) {
 
+            var _name:String=characters[j];
+            var schedules:Array = styles[_name];
+            var style:String = "";
+
+            for (var i:uint = 0; i < schedules.length; i++) {
+
+                if (schedules[i].date == date) {
+
+                    style = schedules[i].src;
+                    break
+                }
+
+            }
+            if (style == "") {
+                var index:Number = Math.floor(Math.random() * schedules.length);
+                style = schedules[index].src;
+
+            }
+            suitup[_name]=style;
+        }
+        DataContainer.styleSechedule=suitup;
     }
     public function updateRelationship(mood:Number):void{
 
@@ -909,184 +943,184 @@ public class MainCommand implements MainInterface
             rewardNode.addNode();
             target.addChild(rewardNode);
 
-           // tweenHandler(i,rewardNode,rewardNode.y-50,onRewardTweenComplete);
+            // tweenHandler(i,rewardNode,rewardNode.y-50,onRewardTweenComplete);
 
 
 
 
             /*
-            switch(attr)
-            {
-                case "ap":
+             switch(attr)
+             {
+             case "ap":
 
-                    apSprite=new Sprite();
-                    var apTexture:Texture=Assets.getTexture("ApIcon");
-                    var apImg:Image=new Image(apTexture);
-                    apImg.smoothing=TextureSmoothing.TRILINEAR;
+             apSprite=new Sprite();
+             var apTexture:Texture=Assets.getTexture("ApIcon");
+             var apImg:Image=new Image(apTexture);
+             apImg.smoothing=TextureSmoothing.TRILINEAR;
 
-                    var aptxt:TextField=new TextField(100,apImg.height,value,font,30,0xFFFFFF);
-                    aptxt.hAlign="left";
-                    aptxt.vAlign="center";
-                    aptxt.x=apImg.width;
+             var aptxt:TextField=new TextField(100,apImg.height,value,font,30,0xFFFFFF);
+             aptxt.hAlign="left";
+             aptxt.vAlign="center";
+             aptxt.x=apImg.width;
 
-                    apSprite.addChild(apImg);
-                    apSprite.addChild(aptxt);
-                    target.addChild(apSprite);
+             apSprite.addChild(apImg);
+             apSprite.addChild(aptxt);
+             target.addChild(apSprite);
 
-                    apSprite.pivotX=apSprite.width/2;
-                    apSprite.pivotY=apSprite.height/2;
-                    apSprite.x=stageCW;
-                    apSprite.y=stageCH-posY;
+             apSprite.pivotX=apSprite.width/2;
+             apSprite.pivotY=apSprite.height/2;
+             apSprite.x=stageCW;
+             apSprite.y=stageCH-posY;
 
-                    fliter.setSource(apSprite);
-                    fliter.setShadow();
-
-
-                    tweenHandler(i,apSprite,apSprite.y-50,onAPValueTweenComplete);
-                    break
-                case  "cash":
-                   // var cf:CurrencyFormatter = new CurrencyFormatter("en_US");
-
-                    cashSprite=new Sprite();
-                    var signTexure:Texture=Assets.getTexture("Cashsign");
-                    var sign:Image=new Image(signTexure);
-                    sign.smoothing=TextureSmoothing.TRILINEAR;
-                    var cashtxt:TextField=new TextField(100,signTexure.height,value,font,30,0xFFFFFF);
-                    cashtxt.autoSize="left";
-                    cashtxt.autoScale=true;
-                    cashtxt.hAlign="left";
-                    cashtxt.vAlign="center";
-                    cashtxt.x=sign.width;
-
-                    cashSprite.addChild(sign);
-                    cashSprite.addChild(cashtxt);
-                    target.addChild(cashSprite);
-
-                    cashSprite.pivotX=cashSprite.width/2;
-                    cashSprite.pivotY=cashSprite.height/2;
-                    cashSprite.x=stageCW;
-                    cashSprite.y=stageCH-posY;
-
-                    fliter.setSource(cashSprite);
-                    fliter.setShadow();
-
-                    tweenHandler(i,cashSprite,cashSprite.y-50,onCashValueTweenComplete);
-                    break
-                case "image":
-                    imageSprite=new Sprite();
-                    var appTexure:Texture=Assets.getTexture("Appearance");
-                    var app_sign:Image=new Image(appTexure);
-                    var imagetxt:TextField=new TextField(100,40,value,font,30,0xFFFFFF);
-                    imagetxt.vAlign="center";
-                    //imagetxt.autoSize="left";
-                    imagetxt.x=app_sign.width-20;
-
-                    imageSprite.addChild(app_sign);
-                    imageSprite.addChild(imagetxt);
-                    target.addChild(imageSprite);
-
-                    imageSprite.pivotX=imageSprite.width/2;
-                    imageSprite.pivotY=imageSprite.height/2;
-                    imageSprite.x=stageCW;
-                    imageSprite.y=stageCH-posY;
-
-                    fliter.setSource(imageSprite);
-                    fliter.setShadow();
-
-                    tweenHandler(i,imageSprite,imageSprite.y-50,onImgValueTweenComplete);
-
-                    break
-                case "int":
-                    //Intelligence
-                    intSprite=new Sprite();
-                    var intTexure:Texture=Assets.getTexture("Intelligence");
-                    var int_sign:Image=new Image(intTexure);
-                    var inttxt:TextField=new TextField(100,40,value,font,30,0xFFFFFF);
-                    inttxt.vAlign="center";
-                    //inttxt.autoSize="left";
-                    inttxt.x=int_sign.width-20;
-                    intSprite.addChild(int_sign);
-                    intSprite.addChild(inttxt);
-                    target.addChild(intSprite);
-
-                    intSprite.pivotX=intSprite.width/2;
-                    intSprite.pivotY=intSprite.height/2;
-                    intSprite.x=stageCW;
-                    intSprite.y=stageCH-posY;
-
-                    fliter.setSource(intSprite);
-                    fliter.setShadow();
-
-                    tweenHandler(i,intSprite,intSprite.y-50,onIntValueTweenComplete);
-                    break
-                case "love":
-
-                    if(value>=0){
-                        var _value:String="+"+value;
-                    }else{
-                        _value=String(value);
-                    }
-                    loveSprite=new Sprite();
-                    var loveTexure:Texture=Assets.getTexture("HeartLv1");
-                    var love_sign:Image=new Image(loveTexure);
-                    love_sign.pivotX=love_sign.width/2;
-                    love_sign.pivotY=love_sign.height/2;
-
-                    var loveTxt:TextField=new TextField(100,love_sign.height,_value,font,30,0xFFFFFF);
-                    loveTxt.autoSize=TextFieldAutoSize.HORIZONTAL;
-                    loveTxt.vAlign="center";
-                    loveTxt.x=love_sign.width/2;
-                    loveTxt.pivotY=loveTxt.height/2;
-
-                    loveSprite.addChild(loveTxt);
-                    loveSprite.addChild(love_sign);
-                    target.addChild(loveSprite);
+             fliter.setSource(apSprite);
+             fliter.setShadow();
 
 
-                    loveSprite.x=stageCW;
-                    loveSprite.y=stageCH-posY;
+             tweenHandler(i,apSprite,apSprite.y-50,onAPValueTweenComplete);
+             break
+             case  "cash":
+             // var cf:CurrencyFormatter = new CurrencyFormatter("en_US");
 
-                    fliter.setSource(loveSprite);
-                    fliter.setShadow();
+             cashSprite=new Sprite();
+             var signTexure:Texture=Assets.getTexture("Cashsign");
+             var sign:Image=new Image(signTexure);
+             sign.smoothing=TextureSmoothing.TRILINEAR;
+             var cashtxt:TextField=new TextField(100,signTexure.height,value,font,30,0xFFFFFF);
+             cashtxt.autoSize="left";
+             cashtxt.autoScale=true;
+             cashtxt.hAlign="left";
+             cashtxt.vAlign="center";
+             cashtxt.x=sign.width;
 
-                    tweenHandler(i,loveSprite,loveSprite.y-50,onLoveValueTweenComplete);
+             cashSprite.addChild(sign);
+             cashSprite.addChild(cashtxt);
+             target.addChild(cashSprite);
 
-                    break
-                case "mood":
+             cashSprite.pivotX=cashSprite.width/2;
+             cashSprite.pivotY=cashSprite.height/2;
+             cashSprite.x=stageCW;
+             cashSprite.y=stageCH-posY;
 
-                    if(value>=0){
-                        var _value:String="+"+value;
-                    }else{
-                        _value=String(value);
-                    }
-                    var content:String="MOOD"+_value;
+             fliter.setSource(cashSprite);
+             fliter.setShadow();
+
+             tweenHandler(i,cashSprite,cashSprite.y-50,onCashValueTweenComplete);
+             break
+             case "image":
+             imageSprite=new Sprite();
+             var appTexure:Texture=Assets.getTexture("Appearance");
+             var app_sign:Image=new Image(appTexure);
+             var imagetxt:TextField=new TextField(100,40,value,font,30,0xFFFFFF);
+             imagetxt.vAlign="center";
+             //imagetxt.autoSize="left";
+             imagetxt.x=app_sign.width-20;
+
+             imageSprite.addChild(app_sign);
+             imageSprite.addChild(imagetxt);
+             target.addChild(imageSprite);
+
+             imageSprite.pivotX=imageSprite.width/2;
+             imageSprite.pivotY=imageSprite.height/2;
+             imageSprite.x=stageCW;
+             imageSprite.y=stageCH-posY;
+
+             fliter.setSource(imageSprite);
+             fliter.setShadow();
+
+             tweenHandler(i,imageSprite,imageSprite.y-50,onImgValueTweenComplete);
+
+             break
+             case "int":
+             //Intelligence
+             intSprite=new Sprite();
+             var intTexure:Texture=Assets.getTexture("Intelligence");
+             var int_sign:Image=new Image(intTexure);
+             var inttxt:TextField=new TextField(100,40,value,font,30,0xFFFFFF);
+             inttxt.vAlign="center";
+             //inttxt.autoSize="left";
+             inttxt.x=int_sign.width-20;
+             intSprite.addChild(int_sign);
+             intSprite.addChild(inttxt);
+             target.addChild(intSprite);
+
+             intSprite.pivotX=intSprite.width/2;
+             intSprite.pivotY=intSprite.height/2;
+             intSprite.x=stageCW;
+             intSprite.y=stageCH-posY;
+
+             fliter.setSource(intSprite);
+             fliter.setShadow();
+
+             tweenHandler(i,intSprite,intSprite.y-50,onIntValueTweenComplete);
+             break
+             case "love":
+
+             if(value>=0){
+             var _value:String="+"+value;
+             }else{
+             _value=String(value);
+             }
+             loveSprite=new Sprite();
+             var loveTexure:Texture=Assets.getTexture("HeartLv1");
+             var love_sign:Image=new Image(loveTexure);
+             love_sign.pivotX=love_sign.width/2;
+             love_sign.pivotY=love_sign.height/2;
+
+             var loveTxt:TextField=new TextField(100,love_sign.height,_value,font,30,0xFFFFFF);
+             loveTxt.autoSize=TextFieldAutoSize.HORIZONTAL;
+             loveTxt.vAlign="center";
+             loveTxt.x=love_sign.width/2;
+             loveTxt.pivotY=loveTxt.height/2;
+
+             loveSprite.addChild(loveTxt);
+             loveSprite.addChild(love_sign);
+             target.addChild(loveSprite);
 
 
-                    moodSprite=new Sprite();
-                    //var loveTexure:Texture=Assets.getTexture("Intelligence");
-                    //var love_sign:Image=new Image(loveTexure);
+             loveSprite.x=stageCW;
+             loveSprite.y=stageCH-posY;
+
+             fliter.setSource(loveSprite);
+             fliter.setShadow();
+
+             tweenHandler(i,loveSprite,loveSprite.y-50,onLoveValueTweenComplete);
+
+             break
+             case "mood":
+
+             if(value>=0){
+             var _value:String="+"+value;
+             }else{
+             _value=String(value);
+             }
+             var content:String="MOOD"+_value;
 
 
-                    var moodTxt:TextField=new TextField(100,50,content,font,30,0xFFFFFF);
-                    moodTxt.autoSize=TextFieldAutoSize.HORIZONTAL;
-                    moodTxt.vAlign="center";
-                    moodSprite.addChild(moodTxt);
-                    //moodSprite.addChild(love_sign);
-                    target.addChild(moodSprite);
+             moodSprite=new Sprite();
+             //var loveTexure:Texture=Assets.getTexture("Intelligence");
+             //var love_sign:Image=new Image(loveTexure);
 
-                    moodSprite.pivotX=moodSprite.width/2;
-                    moodSprite.pivotY=moodSprite.height/2;
-                    moodSprite.x=stageCW;
-                    moodSprite.y=stageCH-posY;
 
-                    fliter.setSource(moodSprite);
-                    fliter.setShadow();
+             var moodTxt:TextField=new TextField(100,50,content,font,30,0xFFFFFF);
+             moodTxt.autoSize=TextFieldAutoSize.HORIZONTAL;
+             moodTxt.vAlign="center";
+             moodSprite.addChild(moodTxt);
+             //moodSprite.addChild(love_sign);
+             target.addChild(moodSprite);
 
-                    tweenHandler(i,moodSprite,moodSprite.y-50,onMoodValueTweenComplete);
-                    break
+             moodSprite.pivotX=moodSprite.width/2;
+             moodSprite.pivotY=moodSprite.height/2;
+             moodSprite.x=stageCW;
+             moodSprite.y=stageCH-posY;
 
-            }
-           */
+             fliter.setSource(moodSprite);
+             fliter.setShadow();
+
+             tweenHandler(i,moodSprite,moodSprite.y-50,onMoodValueTweenComplete);
+             break
+
+             }
+             */
 
 
         }
@@ -1311,11 +1345,10 @@ public class MainCommand implements MainInterface
         DebugTrace.msg("MainCpmmand.doRest getAP:"+getAP);
         flox.updateSavegame(_data);
 
-
         var mediacom:MediaInterface=new MediaCommand();
-        mediacom.VideoPlayer(new Point(1024,250),new Point(0,260))
+        mediacom.VideoPlayer(new Point(1024,250),new Point(0,260));
         mediacom.play("video/rest-animated.flv",false,onFinishAnimated);
-        copyPlayerAndCharacter();
+        //copyPlayerAndCharacter();
 
     }
     public function doStay(days:Number):void
@@ -1589,19 +1622,19 @@ public class MainCommand implements MainInterface
     }
 
     private var playerBitmap:Bitmap;
-    private var playerTween:TweenMax;
+    //private var playerTween:TweenMax;
+    private var playerTween:Tween;
 
-    private var character:flash.display.MovieClip;
-    private var chTween:TweenMax;
-    public function copyPlayerAndCharacter():void
-    {
+    private var character:Image;
+    private var basemodel:Sprite;
 
-        var savedata:SaveGame=FloxCommand.savegame;
-        var gender:String=savedata.avatar.gender;
-        var dating:String=savedata.dating;
+
+    public function drawPlayer(target:Sprite):Sprite{
+
+        var flox:FloxInterface=new FloxCommand();
+        var gender:String=flox.getSaveData("avatar").gender;
 
         var modelObj:Object=Config.modelObj;
-
         var pos:Point=new Point(44,120);
         if(gender=="Female")
         {
@@ -1609,7 +1642,75 @@ public class MainCommand implements MainInterface
         }
         var modelRec:Rectangle=modelObj[gender];
 
-        var basemodel:Sprite=new Sprite();
+        var player:Sprite=new Sprite();
+        player.name="player";
+
+        var modelAttr:Object=new Object();
+        modelAttr.gender=gender;
+        modelAttr.width=modelRec.width;
+        modelAttr.height=modelRec.height;
+
+        var drawcom:DrawerInterface=new DrawManager();
+        drawcom.drawCharacter(player,modelAttr);
+        drawcom.updateBaseModel("Hair");
+        drawcom.updateBaseModel("Eyes");
+        drawcom.updateBaseModel("Pants");
+        drawcom.updateBaseModel("Clothes");
+        drawcom.updateBaseModel("Features");
+
+        player.x=pos.x+Math.floor(player.width/2);
+        player.y=pos.y;
+
+
+        target.addChild(player);
+
+        return player
+
+    }
+    public function drawCharacter(target:Sprite,style:String):Image{
+
+        //var dating:String=DataContainer.currentDating;
+        //var style:String=DataContainer.styleSechedule[dating];
+
+        var clothTexture:Texture=Assets.getTexture(style);
+        character=new Image(clothTexture);
+        character.x=400;
+        //character.alpha=0;
+        target.addChild(character);
+
+        var tween:Tween=new Tween(character,0.5,Transitions.EASE_IN_OUT);
+        tween.fadeTo(1);
+        tween.onComplete=onCharacterFadein;
+        //Starling.juggler.add(tween);
+
+        function onCharacterFadein():void{
+            Starling.juggler.removeTweens(character);
+        }
+        return character
+
+    }
+
+    public function copyPlayerAndCharacter():void
+    {
+
+        //var scene:Sprite=ViewsContainer.baseSprite;
+        var scene:Sprite=ViewsContainer.currentScene;
+
+        var savedata:SaveGame=FloxCommand.savegame;
+
+        var gender:String=savedata.avatar.gender;
+        var dating:String=savedata.dating;
+
+        var modelObj:Object=Config.modelObj;
+        var pos:Point=new Point(44,120);
+        if(gender=="Female")
+        {
+            pos=new Point(80,150);
+        }
+        var modelRec:Rectangle=modelObj[gender];
+
+        basemodel=new Sprite();
+        basemodel.name="player";
         basemodel.x=modelRec.x;
         basemodel.y=modelRec.y;
 
@@ -1627,28 +1728,52 @@ public class MainCommand implements MainInterface
         drawcom.updateBaseModel("Clothes");
         drawcom.updateBaseModel("Features");
 
+        scene.addChild(basemodel);
 
-        var bitmapdata:BitmapData=drawcom.copyAsBitmapData(basemodel,new Rectangle(0,0,basemodel.width,basemodel.height),new Point(0,-50));
+        basemodel.x=-100;
+        basemodel.y=pos.y;
+        basemodel.alpha=0;
+
+        var playerTween:Tween=new Tween(basemodel,0.5,Transitions.EASE_IN_OUT);
+        playerTween.fadeTo(1);
+        playerTween.animate("x",pos.x);
+        Starling.juggler.add(playerTween);
 
 
-        playerBitmap=new Bitmap(bitmapdata);
-        playerBitmap.name="player"
-        playerBitmap.x=-100;
-        playerBitmap.y=pos.y;
-        playerBitmap.alpha=0;
-        playerTween=new TweenMax(playerBitmap,0.5,{"alpha":1,"x":pos.x,onComplete:onShowed});
-        Starling.current.nativeOverlay.addChild(playerBitmap);
+        /*
+         var bitmapdata:BitmapData=drawcom.copyAsBitmapData(basemodel,new Rectangle(0,0,basemodel.width,basemodel.height),new Point(0,-50));
+         playerBitmap=new Bitmap(bitmapdata);
+         playerBitmap.name="player"
+         playerBitmap.x=-100;
+         playerBitmap.y=pos.y;
+         playerBitmap.alpha=0;
+         playerTween=new TweenMax(playerBitmap,0.5,{"alpha":1,"x":pos.x,onComplete:onShowed});
+         Starling.current.nativeOverlay.addChild(playerBitmap);
+         */
 
 
         if(dating)
         {
-            var container:Object={"lenus":new Lenus(),"sirena":new Sirena(),"dea":new Dea(),"sao":new Sao()
-                ,"klaire":new Klaire(),"tomoru":new Tomoru(),"ceil":new Ceil(),"zack":new Zack()};
-            character=container[dating];
+
+
+
+
+            var style:String=DataContainer.styleSechedule[dating];
+            var clothTexture:Texture=Assets.getTexture(style);
+
+            character=new Image(clothTexture);
             character.x=1300;
             character.alpha=0;
-            chTween=new TweenMax(character,0.5,{"alpha":1,"x":550,onComplete:onShowed});
-            Starling.current.nativeOverlay.addChild(character);
+            //chTween=new TweenMax(character,0.5,{"alpha":1,"x":550,onComplete:onShowed});
+            var characterTween:Tween=new Tween(character,0.5, Transitions.EASE_IN_OUT);
+            characterTween.fadeTo(1);
+            characterTween.animate("x",550);
+            characterTween.onComplete=onShowed;
+            Starling.juggler.add(characterTween);
+
+            scene.addChild(character);
+
+            //Starling.current.nativeOverlay.addChild(character);
         }
 
 
@@ -1656,7 +1781,9 @@ public class MainCommand implements MainInterface
     }
     private function onShowed():void
     {
-        playerTween.kill();
+        // playerTween.kill();
+        Starling.juggler.removeTweens(character);
+        Starling.juggler.removeTweens(basemodel);
 
     }
     public function clearCopyPixel():void
@@ -1665,7 +1792,8 @@ public class MainCommand implements MainInterface
         SimgirlsLovemore.topview.removeChild(playerBitmap);
         try
         {
-            SimgirlsLovemore.topview.removeChild(character);
+            //SimgirlsLovemore.topview.removeChild(character);
+            character.removeFromParent(true);
         }
         catch(err:Error)
         {
@@ -1688,7 +1816,8 @@ public class MainCommand implements MainInterface
         try
         {
 
-            Starling.current.nativeOverlay.removeChild(character);
+            character.removeFromParent(true);
+            // Starling.current.nativeOverlay.removeChild(character);
         }
         catch(err:Error)
         {

@@ -87,8 +87,7 @@ package views
 				var _data:Object=new Object();
 				_data.first_name=templete.firstname.text;
 				_data.last_name=templete.lastname.text;
-				//DataContainer.player=_data;
-				//floxcommand.save(_data,onSaveComplete);
+
 				floxcom.updateSavegame(_data);
 				onComplete();
 				
@@ -113,11 +112,7 @@ package views
 			onComplete();
 			
 		}
-		private function onSaveComplete(savegame:SaveGame):void
-		{
-			floxcom.refreshEntites();
-			onComplete();
-		}
+
 		
 		private function doBattleHandle(e:MouseEvent):void
 		{

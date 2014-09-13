@@ -219,7 +219,7 @@ public class AssetEmbeds
     public static const IconCalendarScene:Class;
 
     [Embed(source="../../media/textures/icons/menu_photos.png")]
-    public static const IconPhotos:Class;
+    public static const IconPhotosScene:Class;
 
     [Embed(source="../../media/textures/icons/menu_mail.png")]
     public static const IconMail:Class;
@@ -239,6 +239,9 @@ public class AssetEmbeds
 
     [Embed(source="../../media/textures/icons/title_icon_contacts.png")]
     public static const IconCONTACTSTitle:Class;
+
+    [Embed(source="../../media/textures/icons/title_icon_photos.png")]
+    public static const IconPHOTOSTitle:Class;
 
     [Embed(source="../../media/textures/icons/pro_empty.png")]
     public static const ProEmpty:Class;
@@ -495,6 +498,14 @@ public class AssetEmbeds
     [Embed(source="../../media/textures/icons/com_cloud_sprites.png")]
     public static const ComCloud:Class;
 
+    [Embed(source="../../media/textures/icons/icon_arrow_photos.png")]
+    public static const IconArrowPhotos:Class;
+
+    [Embed(source="../../media/textures/icons/icon_trash_empty.png")]
+    public static const IconTrashEmpty:Class;
+
+    [Embed(source="../../media/textures/icons/icon_trash_full.png")]
+    public static const IconTrashFull:Class;
 
     /*------------------icons-------------------------------------------------*/
 
@@ -707,6 +718,178 @@ public class AssetEmbeds
     public static const npc023:Class;
     [Embed(source="../../media/textures/npc/npc024.png")]
     public static const npc024:Class;
+
+    [Embed(source="../../media/textures/characters/styles/ceil/style0001.png")]
+    public static const ceil_s0001:Class;
+    [Embed(source="../../media/textures/characters/styles/ceil/style0002.png")]
+    public static const ceil_s0002:Class;
+    [Embed(source="../../media/textures/characters/styles/ceil/style0003.png")]
+    public static const ceil_s0003:Class;
+    [Embed(source="../../media/textures/characters/styles/ceil/style0004.png")]
+    public static const ceil_s0004:Class;
+    [Embed(source="../../media/textures/characters/styles/ceil/style0005.png")]
+    public static const ceil_s0005:Class;
+    [Embed(source="../../media/textures/characters/styles/ceil/style0006.png")]
+    public static const ceil_s0006:Class;
+    [Embed(source="../../media/textures/characters/styles/ceil/style0007.png")]
+    public static const ceil_s0007:Class;
+    [Embed(source="../../media/textures/characters/styles/ceil/style0008.png")]
+    public static const ceil_s0008:Class;
+    [Embed(source="../../media/textures/characters/styles/ceil/style0009.png")]
+    public static const ceil_s0009:Class;
+    [Embed(source="../../media/textures/characters/styles/ceil/style0010.png")]
+    public static const ceil_s0010:Class;
+    [Embed(source="../../media/textures/characters/styles/ceil/style0011.png")]
+    public static const ceil_s0011:Class;
+    [Embed(source="../../media/textures/characters/styles/ceil/style0012.png")]
+    public static const ceil_s0012:Class;
+
+    [Embed(source="../../media/textures/characters/styles/dea/style0001.png")]
+    public static const dea_s0001:Class;
+    [Embed(source="../../media/textures/characters/styles/dea/style0002.png")]
+    public static const dea_s0002:Class;
+    [Embed(source="../../media/textures/characters/styles/dea/style0003.png")]
+    public static const dea_s0003:Class;
+    [Embed(source="../../media/textures/characters/styles/dea/style0004.png")]
+    public static const dea_s0004:Class;
+    [Embed(source="../../media/textures/characters/styles/dea/style0005.png")]
+    public static const dea_s0005:Class;
+    [Embed(source="../../media/textures/characters/styles/dea/style0006.png")]
+    public static const dea_s0006:Class;
+    [Embed(source="../../media/textures/characters/styles/dea/style0007.png")]
+    public static const dea_s0007:Class;
+    [Embed(source="../../media/textures/characters/styles/dea/style0008.png")]
+    public static const dea_s0008:Class;
+    [Embed(source="../../media/textures/characters/styles/dea/style0009.png")]
+    public static const dea_s0009:Class;
+    [Embed(source="../../media/textures/characters/styles/dea/style0010.png")]
+    public static const dea_s0010:Class;
+    [Embed(source="../../media/textures/characters/styles/dea/style0011.png")]
+    public static const dea_s0011:Class;
+    [Embed(source="../../media/textures/characters/styles/dea/style0012.png")]
+    public static const dea_s0012:Class;
+    [Embed(source="../../media/textures/characters/styles/dea/style0013.png")]
+    public static const dea_s0013:Class;
+
+    [Embed(source="../../media/textures/characters/styles/klr/style0001.png")]
+    public static const klr_s0001:Class;
+    [Embed(source="../../media/textures/characters/styles/klr/style0002.png")]
+    public static const klr_s0002:Class;
+    [Embed(source="../../media/textures/characters/styles/klr/style0003.png")]
+    public static const klr_s0003:Class;
+    [Embed(source="../../media/textures/characters/styles/klr/style0004.png")]
+    public static const klr_s0004:Class;
+    [Embed(source="../../media/textures/characters/styles/klr/style0005.png")]
+    public static const klr_s0005:Class;
+    [Embed(source="../../media/textures/characters/styles/klr/style0006.png")]
+    public static const klr_s0006:Class;
+    [Embed(source="../../media/textures/characters/styles/klr/style0007.png")]
+    public static const klr_s0007:Class;
+    [Embed(source="../../media/textures/characters/styles/klr/style0008.png")]
+    public static const klr_s0008:Class;
+    [Embed(source="../../media/textures/characters/styles/klr/style0009.png")]
+    public static const klr_s0009:Class;
+    [Embed(source="../../media/textures/characters/styles/klr/style0010.png")]
+    public static const klr_s0010:Class;
+    [Embed(source="../../media/textures/characters/styles/klr/style0011.png")]
+    public static const klr_s0011:Class;
+    [Embed(source="../../media/textures/characters/styles/klr/style0012.png")]
+    public static const klr_s0012:Class;
+    [Embed(source="../../media/textures/characters/styles/klr/style0013.png")]
+    public static const klr_s0013:Class;
+
+    [Embed(source="../../media/textures/characters/styles/lenus/style0001.png")]
+    public static const lenus_s0001:Class;
+    [Embed(source="../../media/textures/characters/styles/lenus/style0002.png")]
+    public static const lenus_s0002:Class;
+    [Embed(source="../../media/textures/characters/styles/lenus/style0003.png")]
+    public static const lenus_s0003:Class;
+    [Embed(source="../../media/textures/characters/styles/lenus/style0004.png")]
+    public static const lenus_s0004:Class;
+    [Embed(source="../../media/textures/characters/styles/lenus/style0005.png")]
+    public static const lenus_s0005:Class;
+    [Embed(source="../../media/textures/characters/styles/lenus/style0006.png")]
+    public static const lenus_s0006:Class;
+
+    [Embed(source="../../media/textures/characters/styles/sao/style0001.png")]
+    public static const sao_s0001:Class;
+    [Embed(source="../../media/textures/characters/styles/sao/style0002.png")]
+    public static const sao_s0002:Class;
+    [Embed(source="../../media/textures/characters/styles/sao/style0003.png")]
+    public static const sao_s0003:Class;
+
+
+    [Embed(source="../../media/textures/characters/styles/sirena/style0001.png")]
+    public static const sirena_s0001:Class;
+    [Embed(source="../../media/textures/characters/styles/sirena/style0002.png")]
+    public static const sirena_s0002:Class;
+    [Embed(source="../../media/textures/characters/styles/sirena/style0003.png")]
+    public static const sirena_s0003:Class;
+    [Embed(source="../../media/textures/characters/styles/sirena/style0004.png")]
+    public static const sirena_s0004:Class;
+    [Embed(source="../../media/textures/characters/styles/sirena/style0005.png")]
+    public static const sirena_s0005:Class;
+    [Embed(source="../../media/textures/characters/styles/sirena/style0006.png")]
+    public static const sirena_s0006:Class;
+    [Embed(source="../../media/textures/characters/styles/sirena/style0007.png")]
+    public static const sirena_s0007:Class;
+    [Embed(source="../../media/textures/characters/styles/sirena/style0008.png")]
+    public static const sirena_s0008:Class;
+    [Embed(source="../../media/textures/characters/styles/sirena/style0009.png")]
+    public static const sirena_s0009:Class;
+    [Embed(source="../../media/textures/characters/styles/sirena/style0010.png")]
+    public static const sirena_s0010:Class;
+    [Embed(source="../../media/textures/characters/styles/sirena/style0011.png")]
+    public static const sirena_s0011:Class;
+    [Embed(source="../../media/textures/characters/styles/sirena/style0012.png")]
+    public static const sirena_s0012:Class;
+    [Embed(source="../../media/textures/characters/styles/sirena/style0013.png")]
+    public static const sirena_s0013:Class;
+
+    [Embed(source="../../media/textures/characters/styles/tomoru/style0001.png")]
+    public static const tomoru_s0001:Class;
+    [Embed(source="../../media/textures/characters/styles/tomoru/style0002.png")]
+    public static const tomoru_s0002:Class;
+    [Embed(source="../../media/textures/characters/styles/tomoru/style0003.png")]
+    public static const tomoru_s0003:Class;
+    [Embed(source="../../media/textures/characters/styles/tomoru/style0004.png")]
+    public static const tomoru_s0004:Class;
+    [Embed(source="../../media/textures/characters/styles/tomoru/style0005.png")]
+    public static const tomoru_s0005:Class;
+    [Embed(source="../../media/textures/characters/styles/tomoru/style0006.png")]
+    public static const tomoru_s0006:Class;
+    [Embed(source="../../media/textures/characters/styles/tomoru/style0007.png")]
+    public static const tomoru_s0007:Class;
+    [Embed(source="../../media/textures/characters/styles/tomoru/style0008.png")]
+    public static const tomoru_s0008:Class;
+    [Embed(source="../../media/textures/characters/styles/tomoru/style0009.png")]
+    public static const tomoru_s0009:Class;
+    [Embed(source="../../media/textures/characters/styles/tomoru/style0010.png")]
+    public static const tomoru_s0010:Class;
+    [Embed(source="../../media/textures/characters/styles/tomoru/style0011.png")]
+    public static const tomoru_s0011:Class;
+    [Embed(source="../../media/textures/characters/styles/tomoru/style0012.png")]
+    public static const tomoru_s0012:Class;
+    [Embed(source="../../media/textures/characters/styles/tomoru/style0013.png")]
+    public static const tomoru_s0013:Class;
+
+
+    [Embed(source="../../media/textures/characters/styles/zack/style0001.png")]
+    public static const zack_s0001:Class;
+    [Embed(source="../../media/textures/characters/styles/zack/style0002.png")]
+    public static const zack_s0002:Class;
+    [Embed(source="../../media/textures/characters/styles/zack/style0003.png")]
+    public static const zack_s0003:Class;
+    [Embed(source="../../media/textures/characters/styles/zack/style0004.png")]
+    public static const zack_s0004:Class;
+    [Embed(source="../../media/textures/characters/styles/zack/style0005.png")]
+    public static const zack_s0005:Class;
+    [Embed(source="../../media/textures/characters/styles/zack/style0006.png")]
+    public static const zack_s0006:Class;
+    [Embed(source="../../media/textures/characters/styles/zack/style0007.png")]
+    public static const zack_s0007:Class;
+
+
     /*------------------characters-------------------------------------------------*/
 
 
@@ -783,7 +966,7 @@ public class AssetEmbeds
     [Embed(source="../../media/textures/panels/profile_tab_skills.png")]
     public static const SkillsInfo:Class;
 
-    //setting_panel
+
     [Embed(source="../../media/textures/panels/setting_panel.png")]
     public static const SettingPanel:Class;
 
@@ -840,6 +1023,9 @@ public class AssetEmbeds
     [Embed(source="../../media/textures/panels/datingscene_bg_effect.png")]
     public static const DatingSceneBgEffect:Class;
 
+
+    [Embed(source="../../media/textures/panels/photofield.png")]
+    public static const PhotoField:Class;
 
     /*-------------------panels-------------------------------------------------------------------*/
     [Embed(source = "../../media/textures/scenes/battle_scene.jpg")]

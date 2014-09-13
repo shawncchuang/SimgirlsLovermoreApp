@@ -38,7 +38,7 @@ public class MenuScene extends Scenes
     private var network:Image;
     private var tween:Tween;
     //profile,contacts,calendar,photos,mail,option
-    public static var iconsname:Array=["ProfileScene","ContactsScene","CalendarScene","Photos","Mail","SettingsScene"];
+    public static var iconsname:Array=["ProfileScene","ContactsScene","CalendarScene","PhotosScene","Mail","SettingsScene"];
     private var icons:Array=[new Point(422,278),new Point(344,426),new Point(427,572),
         new Point(596,570),new Point(682,435),new Point(595,280)];
 
@@ -146,7 +146,7 @@ public class MenuScene extends Scenes
     private function doCannelHandler(e:Event):void
     {
 
-        click_type=DataContainer.currentLabel;
+        click_type="Cancel";
         DebugTrace.msg("MenuScene.doCencaleHandler click_type:"+click_type);
 
         var infobar:Sprite=ViewsContainer.gameinfo;
@@ -207,7 +207,7 @@ public class MenuScene extends Scenes
             tween.moveTo(icons[j].x,icons[j].y);
             tween.animate("alpha",1);
             tween.scaleTo(1);
-            Starling.juggler.add(tween)
+            Starling.juggler.add(tween);
 
             var labelTween:Tween=new Tween(iconsLabelList[j],0.5);
             labelTween.animate("alpha",1);
@@ -252,7 +252,7 @@ public class MenuScene extends Scenes
         }
         if(began)
         {
-            click_type=target.name
+            click_type=target.name;
 
             if(click_type.indexOf("Scene")!=-1){
                 doFadeoutTransatoin();
@@ -345,7 +345,12 @@ public class MenuScene extends Scenes
         gameinfo.dispatchEventWith("DISPLAY");
         gameinfo.dispatchEventWith("UPDATE_DATING");
 
+        trace(click_type)
 
+        if(click_type=="Cancel")
+        {
+            click_type=DataContainer.currentScene;
+        }
         var _data:Object=new Object();
         _data.name=click_type;
         command.sceneDispatch(SceneEvent.CHANGED,_data);

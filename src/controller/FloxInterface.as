@@ -13,8 +13,10 @@ package controller
 		function savePlayer(data:Object=null,callback:Function=null):void
 		function savePlayerData(attr:String,data:*,callback:Function=null):void
 		function save(attr:String,data:*,callback:Function=null):void
-		function refreshEntites():void
+		//function refreshEntites():void
+        function refreshSaveData(callback:Function=null):void
 		function loadEntities():void
+        function loadSystemData():void
 	    function loadSavedEntities():void
 		function saveSystemDataEntities():void
 		function saveSystemData(attr:String,value:*):void

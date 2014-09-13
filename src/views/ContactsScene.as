@@ -74,7 +74,8 @@ public class ContactsScene extends Sprite {
 
         var _data:Object=new Object();
         _data.name="MenuScene";
-        command.sceneDispatch(SceneEvent.CHANGED,_data)
+        command.sceneDispatch(SceneEvent.CHANGED,_data);
+
     }
 
 }

@@ -2,6 +2,8 @@ package model
 {
 
 import controller.Assets;
+import controller.FloxCommand;
+import controller.FloxInterface;
 import controller.MainCommand;
 import controller.MainInterface;
 import controller.SceneCommnad;
@@ -56,6 +58,7 @@ import views.MiniGameScene;
 import views.MuseumScene;
 import views.NightClubScene;
 import views.ParkScene;
+import views.PhotosScene;
 import views.PierScene;
 import views.PoliceStationScene;
 import views.PrivateIslandScene;
@@ -79,6 +82,7 @@ public class Scenes extends Sprite
     private var current_scence:Sprite;
     private var mainstage:Sprite
     private var command:MainInterface=new MainCommand();
+    private var flox:FloxInterface=new FloxCommand();
 
     private var scene_container:Sprite;
     private var next_scene:String;
@@ -122,14 +126,24 @@ public class Scenes extends Sprite
     private function clearSceneHandle():void
     {
 
-        /*var mainUI:Sprite=ViewsContainer.UIViews;
-         if(mainUI)
-         {
-         mainstage.removeChild(mainUI);
-         }*/
+        try{
 
-        var scentTween:Tween=new Tween(scene,.5,Transitions.EASE_OUT);
-        scentTween.animate("alpha",0.5);
+            Starling.current.nativeOverlay.removeChild(filtersMC);
+
+            var gameEvt:GameEvent=SimgirlsLovemore.gameEvent;
+            gameEvt=SimgirlsLovemore.gameEvent;
+            gameEvt._name="remove_waving";
+            gameEvt.displayHandler();
+
+        }catch(e:Error){
+
+            DebugTrace.msg("Scene.changeSceneHandle filtersMC=NULL");
+        }
+
+
+
+        var scentTween:Tween=new Tween(scene,0.5,Transitions.EASE_OUT);
+        scentTween.fadeTo(0);
         scentTween.onComplete=onFadeoutComplete;
         Starling.juggler.add(scentTween);
 
@@ -142,13 +156,14 @@ public class Scenes extends Sprite
         //var scene:Sprite=ViewsContainer.MainScene;
         ViewsContainer.InfoDataView.visible=true;
         if(next_scene!="MenuScene" && next_scene!="ProfileScene" &&
-                next_scene!="SettingsScene" &&  next_scene!="ContactsScene" && next_scene!="CalendarScene")
+                next_scene!="SettingsScene" &&  next_scene!="ContactsScene" && next_scene!="CalendarScene" && next_scene!="PhotosScene")
         {
             DataContainer.currentLabel=next_scene;
         }
         if(next_scene!="FoundSomeScene" && next_scene!="DatingScene" &&
                 next_scene!="MenuScene" && next_scene!="ProfileScene" &&
-                next_scene!="SettingsScene" &&  next_scene!="ContactsScene" && next_scene!="CalendarScene")
+                next_scene!="SettingsScene" &&  next_scene!="ContactsScene" &&
+                next_scene!="CalendarScene" && next_scene!="PhotosScene")
         {
             DataContainer.currentScene=next_scene;
         }
@@ -180,8 +195,10 @@ public class Scenes extends Sprite
         else
         {
 
+            /*
             try{
                 Starling.current.nativeOverlay.removeChild(filtersMC);
+
             }catch(e:Error){
 
                 DebugTrace.msg("Scene.changeSceneHandle filtersMC=NULL");
@@ -191,6 +208,7 @@ public class Scenes extends Sprite
             gameEvt._name="remove_waving";
             gameEvt.displayHandler();
 
+            */
 
         }
 
@@ -262,6 +280,10 @@ public class Scenes extends Sprite
             case "ContactsScene":
                 infobar=false;
                 current_scence=new ContactsScene();
+                break
+            case "PhotosScene":
+                infobar=false;
+                current_scence=new PhotosScene();
                 break
             case "FoundSomeScene":
                 infobar=false;
@@ -410,14 +432,12 @@ public class Scenes extends Sprite
     private function onFadeoutComplete():void
     {
         Starling.juggler.removeTweens(scene);
+
         var mainstage:Sprite=ViewsContainer.MainStage;
-        //var scene:Sprite=ViewsContainer.MainScene;
-
-
         scene.alpha=1;
         if(scene_container)
         {
-            DebugTrace.msg("Scenes.onFadeoutComplete:"+scene_container.numChildren);
+            //DebugTrace.msg("Scenes.onFadeoutComplete:"+scene_container.numChildren);
             if(scenebg)
             {
                 scenebg.removeFromParent(true);
@@ -426,7 +446,7 @@ public class Scenes extends Sprite
             current_scence.removeFromParent(true);
             scene_container.removeFromParent(true);
             scene.removeFromParent(true);
-            //mainstage.removeChild(scene);
+
             scene_container=null;
             //new scene
             scene=new Sprite();
@@ -437,7 +457,13 @@ public class Scenes extends Sprite
             mainstage.swapChildren(scene,uiViews);
         }
         changeSceneHandle();
+        //flox.refreshSaveData(onRefreshComplete);
 
+
+    }
+    private function onRefreshComplete():void{
+
+        changeSceneHandle();
 
     }
 }

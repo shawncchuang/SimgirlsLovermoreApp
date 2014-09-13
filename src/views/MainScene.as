@@ -212,9 +212,12 @@ public class MainScene extends Scenes
 
         //var waving:MovieClip=SimgirlsLovemore.filtesContainer;
         var waving:MovieClip=Starling.current.nativeOverlay.getChildByName("waving") as MovieClip;
-        waving.x=container.x;
-        waving.y=container.y;
+        if(waving){
 
+            waving.x=container.x;
+            waving.y=container.y;
+
+        }
 
 
 

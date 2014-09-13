@@ -488,7 +488,6 @@ public class GameInfobar extends Sprite
         if(current_dating) {
 
 
-
             var tween:Tween = new Tween(dating_icon, 0.3, Transitions.EASE_IN_OUT);
             tween.fadeTo(0);
             tween.onComplete = function ():void{
