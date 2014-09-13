@@ -211,7 +211,7 @@ public class DataContainer
 
                 if(scene_name=="Park"){
 
-                    //scene_rating.likes=100;
+                    scene_rating.likes=100;
 
                 }
                 //*-----------------------------------------------------------------------

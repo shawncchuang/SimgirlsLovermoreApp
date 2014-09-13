@@ -188,6 +188,7 @@ public class DatingScene extends Scenes
             case "Date":
 
                 confirmDating();
+
                 break
             case "SendGift":
                 item_id=e.data.item_id;
@@ -205,6 +206,14 @@ public class DatingScene extends Scenes
 
                 character.removeFromParent(true);
                 actTransform("../swf/photos.swf",onPhotosActComplete);
+
+                break
+            case "TakePhotosReward":
+
+                startPaticles();
+                drawcom.updatePieChart(e.data.mood);
+                updateRelPoint();
+
                 break
             case "Kiss":
 
@@ -396,7 +405,7 @@ public class DatingScene extends Scenes
         chloveTxt.text=String(ch_love);
 
         var reward_mood:Number=Math.floor(ch_love/2);
-        mood=loveObj[dating];
+        mood=moodObj[dating];
         mood+=reward_mood;
         moodObj[dating]=mood;
         var savegame:SaveGame=FloxCommand.savegame;
@@ -422,6 +431,7 @@ public class DatingScene extends Scenes
         updateRelPoint();
 
     }
+
     private function doUpdatePts(e:Event):void
     {
 

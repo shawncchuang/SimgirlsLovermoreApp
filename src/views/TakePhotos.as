@@ -29,6 +29,7 @@ import starling.display.Sprite;
 import starling.textures.Texture;
 
 import utils.DrawManager;
+import utils.ViewsContainer;
 
 public class TakePhotos extends Sprite{
 
@@ -48,6 +49,8 @@ public class TakePhotos extends Sprite{
         initCancelHandle();
 
         addPhotos();
+
+        updateReward();
 
     }
     private function  initCharacter():void{
@@ -79,13 +82,12 @@ public class TakePhotos extends Sprite{
     }
     private function addPhotos():void{
 
-
         var photos:Array=flox.getSaveData("photos");
-       if(photos.length<1){
+        if(photos.length<1){
 
-           photos=new Array();
+            photos=new Array();
 
-       }
+        }
         if(photos.length<100) {
             var pic:Object = new Object();
             pic.scene = DataContainer.currentScene;
@@ -94,12 +96,52 @@ public class TakePhotos extends Sprite{
             photos.push(pic);
 
             flox.save("photos", photos);
+
         }else{
 
             var msg:String="Yours photos space was full !!"
             new AlertMessage(msg);
 
         }
+
+
+    }
+
+    private function updateReward():void{
+
+
+
+        var dating:String=DataContainer.currentDating;
+        var moodObj:Object=flox.getSaveData("mood");
+        var intObj:Object=flox.getSaveData("int");
+        var imgObj:Object=flox.getSaveData("image");
+        var playerImg:Number=imgObj.player;
+        var playerInt:Number=intObj.player;
+        var reward_mood:Number=Math.floor((playerImg+playerInt)/24);
+
+        var mood:Number=moodObj[dating];
+        mood+=reward_mood;
+        moodObj[dating]=mood;
+
+        flox.save("mood",moodObj);
+
+        var _mood:String=String(reward_mood);
+        if(reward_mood>=0){
+            _mood="+"+reward_mood;
+        }
+        var value_data:Object=new Object();
+        value_data.attr="mood";
+        value_data.values= "MOOD "+_mood;
+        command.displayUpdateValue(this,value_data);
+
+        var _data:Object=new Object();
+        _data.com="TakePhotosReward";
+        _data.mood=mood;
+        var base_sprite:Sprite=ViewsContainer.baseSprite;
+        base_sprite.dispatchEventWith(DatingScene.COMMIT,false,_data);
+
+
+
 
 
     }
