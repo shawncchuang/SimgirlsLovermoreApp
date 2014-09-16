@@ -183,6 +183,8 @@ public class DatingScene extends Scenes
                 addChild(chat);
                 break
             case "Flirt":
+                   var flirt:FlirtScene=new FlirtScene();
+                addChild(flirt);
 
                 break
             case "Date":
@@ -209,6 +211,12 @@ public class DatingScene extends Scenes
 
                 break
             case "TakePhotosReward":
+            case "TakeFlirtReward":
+
+                    if(e.data.love) {
+                        playerloveTxt.text = String(e.data.love.player);
+                        chloveTxt.text = String(e.data.love.dating);
+                    }
 
                 startPaticles();
                 drawcom.updatePieChart(e.data.mood);
@@ -225,6 +233,7 @@ public class DatingScene extends Scenes
                 reward_mood=e.data.mood;
                 updateMood();
                 break
+
 
         }
 
@@ -1240,13 +1249,14 @@ public class DatingScene extends Scenes
                 break
             case "Flirt":
                 relPass=true;
-                limitMood=Config.moodStep["smifler-Min"];
+                //limitMood=Config.moodStep["smifler-Min"];
+                moodPass=true;
                 break
             case "TakePhoto":
-                //limitRel=Config.relationshipStep["friend-Min"];
-                //limitMood=Config.moodStep["pleased-Min"];
-                relPass=true;
-                moodPass=true;
+                limitRel=Config.relationshipStep["friend-Min"];
+                limitMood=Config.moodStep["pleased-Min"];
+                //relPass=true;
+                //moodPass=true;
                 break
             case "Date":
                 limitRel=Config.relationshipStep["closefriend-Min"];

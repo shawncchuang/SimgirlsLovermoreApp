@@ -22,6 +22,9 @@ public class AssetEmbeds
     [Embed(source = "../../media/textures/scenes/airport.jpg")]
     public static const  AirportBg:Class;
 
+    [Embed(source = "../../media/textures/scenes/arena.jpg")]
+    public static const  ArenaBg:Class;
+
     [Embed(source = "../../media/textures/scenes/bank.jpg")]
     public static const  BankBg:Class;
 
@@ -113,9 +116,10 @@ public class AssetEmbeds
     [Embed(source = "../../media/textures/scenes/normalbackground.jpg")]
     public static const NormalBg:Class;
 
-
     [Embed(source = "../../media/textures/scenes/beta-testing.jpg")]
     public static const BetaBackground:Class;
+
+
 
     //-----------------scenes-------------------------------------------------*/
 
@@ -669,6 +673,10 @@ public class AssetEmbeds
     [Embed(source="../../media/textures/cards/skillcards.png")]
     public static const SkillCards:Class;
 
+    [Embed(source = "../../media/textures/cards/flirtcards.xml", mimeType="application/octet-stream")]
+    public static const FlirtCardsXML:Class;
+    [Embed(source="../../media/textures/cards/flisrtcards.png")]
+    public static const FlirtCards:Class;
 
     [Embed(source="../../media/textures/npc/npc001.png")]
     public static const npc001:Class;

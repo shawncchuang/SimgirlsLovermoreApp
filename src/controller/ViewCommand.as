@@ -3,6 +3,8 @@
  */
 package controller {
 
+import data.DataContainer;
+
 import flash.geom.Rectangle;
 import flash.geom.Point;
 
@@ -248,7 +250,7 @@ public class ViewCommand  implements ViewInterface{
     public function replaceCharacter(model:Sprite):void{
 
 
-        var old_chmc:MovieClip=model.getChildByName("character") as MovieClip;
+        var old_chmc:Image=model.getChildByName("character") as Image;
         if(old_chmc)
         {
 
@@ -256,12 +258,16 @@ public class ViewCommand  implements ViewInterface{
 
         }
 
-        var chmc:MovieClip=Assets.getDynamicAtlas(character);
-        chmc.name="character";
-        chmc.width=356;
-        chmc.height=608;
+        var style:String=DataContainer.styleSechedule[character];
+        var clothTexture:Texture=Assets.getTexture(style);
 
-        model.addChild(chmc);
+        var characterImg:Image=new Image(clothTexture);
+
+        characterImg.name="character";
+        characterImg.width=356;
+        characterImg.height=608;
+
+        model.addChild(characterImg);
 
     }
 }

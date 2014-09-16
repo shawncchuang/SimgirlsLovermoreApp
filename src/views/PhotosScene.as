@@ -127,6 +127,8 @@ public class PhotosScene extends Sprite {
         var photos:Array=flox.getSaveData("photos");
         if(photos.length<=1)
         {
+            if(photos.length==0)
+                photo_index=-1;
             leftArrow.visible=false;
             rightArrow.visible=false;
 
@@ -185,7 +187,6 @@ public class PhotosScene extends Sprite {
         leftArrow.visible=true;
         rightArrow.visible=true;
         if(photo_index<=0){
-            photo_index=0;
             leftArrow.visible=false;
         }
         if(photo_index>=photos.length-1){
