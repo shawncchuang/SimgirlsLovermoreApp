@@ -873,6 +873,10 @@ public class SceneCommnad implements SceneInterface
             }
 
         }
+        verify=false;
+        date_verify=false;
+        time_verify=false;
+        local_verify=false;
         return [verify,date_verify,time_verify,local_verify]
     }
     private function updateCurrentSwitch():void

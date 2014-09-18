@@ -5,9 +5,6 @@ import flash.globalization.CurrencyFormatter;
 import controller.FloxCommand;
 import controller.FloxInterface;
 
-import model.SaveGame;
-import model.SystemData;
-
 import utils.DebugTrace;
 
 public class DataContainer

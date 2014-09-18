@@ -88,7 +88,7 @@ public class Scenes extends Sprite
     private var next_scene:String;
     private var sceneObj:Object;
     private var scenebg:Image;
-
+    public var type:String;
     private function scenesPool():Object
     {
 
@@ -116,8 +116,10 @@ public class Scenes extends Sprite
 
     private function onChengedScene(e:SceneEvent):void
     {
+
         scene=ViewsContainer.MainScene;
-        DebugTrace.msg("Scenes.onChengedScene:"+e.data.name);
+        DebugTrace.msg("Scenes.onChengedScene="+e.data.name+" ,type="+e.data.type);
+        type=e.data.type;
         next_scene=e.data.name;
         clearSceneHandle();
 
@@ -245,7 +247,7 @@ public class Scenes extends Sprite
                 current_scence=new AirportScene();
                 break
             case "FitnessClubScene":
-                current_scence=new FitnessClubScene()
+                current_scence=new FitnessClubScene();
                 break
             case "MuseumScene":
                 current_scence=new MuseumScene();

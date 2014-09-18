@@ -1,6 +1,5 @@
 package controller
 {
-
 import com.greensock.TweenMax;
 import com.greensock.events.LoaderEvent;
 import com.greensock.loading.LoaderMax;
@@ -68,6 +67,7 @@ import views.Reward;
 
 public class MainCommand implements MainInterface
 {
+
 
     private var Days:Array=new Array("Sun","Mon","Tue","Wed","Thu","Fri","Sat");
     private var Months:Object={"Jan":31,"Feb":28,"Mar":31,"Apr":30,"May":31,"Jun":30,
@@ -209,6 +209,7 @@ public class MainCommand implements MainInterface
 
     private function onAttentionComplete(e:LoaderEvent):void
     {
+
         DebugTrace.msg("MainCommand.onAttentionComplete att_msg="+att_msg);
         //var content:ContentDisplay=LoaderMax.getContent("attention");
         var swfloader:SWFLoader = LoaderMax.getLoader("attention");
@@ -385,7 +386,6 @@ public class MainCommand implements MainInterface
     }
     public function initSchedule():void
     {
-
         schedule_csv=new CSV();
         schedule_csv.addEventListener(Event.COMPLETE,onScheduleComplete);
         schedule_csv.load(new URLRequest('csv/schedule.csv'));

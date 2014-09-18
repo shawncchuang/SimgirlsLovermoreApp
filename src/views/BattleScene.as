@@ -64,9 +64,7 @@ package views
 	
 	public class BattleScene extends Sprite
 	{
-		
-		
-		
+
 		private var flox:FloxInterface=new FloxCommand();
 		//private var cpucom:CpuMembersInterface=new CpuMembersCommand();
 		//private var swfloader:SWFLoader;

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:378ba26ec57405d8fce648b78820e4eb:9fd582c8d066143b551ffe5310be6d82:7cd1c6ef07cbb116a071387b221e1a3f$ -->
+<TextureAtlas imagePath="flisrtcards.png">
+    <SubTexture name="eyecontact" x="2" y="2" width="197" height="225"/>
+    <SubTexture name="back" x="201" y="2" width="196" height="225"/>
+    <SubTexture name="love" x="399" y="2" width="197" height="224"/>
+    <SubTexture name="smile" x="598" y="2" width="197" height="224"/>
+    <SubTexture name="touch" x="797" y="2" width="197" height="224"/>
+</TextureAtlas>

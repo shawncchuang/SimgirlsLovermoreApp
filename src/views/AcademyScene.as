@@ -87,6 +87,12 @@ package views
 					_data.name="MainScene";
 					command.sceneDispatch(SceneEvent.CHANGED,_data);
 					break
+                case "Practice":
+                    gameEvent._name="clear_comcloud";
+                    gameEvent.displayHandler();
+                    _data.name="ChangeFormationScene";
+                    command.sceneDispatch(SceneEvent.CHANGED,_data);
+                    break
 				case "LearnSkills":
 					
 					store=new SkillsStore();
