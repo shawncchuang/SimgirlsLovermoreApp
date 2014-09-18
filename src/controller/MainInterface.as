@@ -25,7 +25,7 @@ package controller
 		function listArrowEnabled(index:Number,pages:Number,left:*,right:*):void
 		function setNowMood():void
 		function moodCalculator(item_id:String,dating:String):Number
-		function updateRelationship(mood:Number):void
+		function updateRelationship():void
 		function searchAssetRating(item_id:String):Number
 		function displayUpdateValue(target:Sprite,_data:Object):void
 		function addedConfirmButton(target:Sprite,callback:Function,pos:Point=null):void
@@ -49,5 +49,6 @@ package controller
 		function initMainStory():void
 		function verifySwitch():Boolean
         function consumeHandle(com:String):Boolean
+        function syncSpiritEnergy():void
 	}
 }

@@ -220,8 +220,7 @@ public class DatingScene extends Scenes
 
                 startPaticles();
                 drawcom.updatePieChart(e.data.mood);
-                updateRelPoint();
-
+                command.updateRelationship();
                 break
             case "Kiss":
 
@@ -259,13 +258,7 @@ public class DatingScene extends Scenes
         addExcertbox();
 
     }
-    private function itemMovingHandle():void{
 
-
-        sendGiftGetReward();
-        startPaticles();
-
-    }
 
 
     private function initAssetsForm():void
@@ -338,15 +331,7 @@ public class DatingScene extends Scenes
     }
 
 
-    private function sendGiftGetReward():void{
 
-        var dating:String=DataContainer.currentDating;
-
-        reward_mood=Number(command.moodCalculator(item_id,dating));
-
-
-        updateMood();
-    }
     private function updateMood():void
     {
 
@@ -372,8 +357,8 @@ public class DatingScene extends Scenes
         value_data.values= "MOOD "+mood_value;
         command.displayUpdateValue(this,value_data);
 
-        updateRelPoint();
-
+        //updateRelPoint();
+        command.updateRelationship();
 
 
 
@@ -389,7 +374,9 @@ public class DatingScene extends Scenes
         var ptsObj:Object=savegame.pts;
         old_pts=Number(ptsObj[dating]);
         DebugTrace.msg("DatingScene.updateRelPoint old_pts:"+old_pts);
-        this.addEventListener(Event.ENTER_FRAME,doUpdatePts);
+        //this.addEventListener(Event.ENTER_FRAME,doUpdatePts);
+
+
 
     }
     private function updateLovefromKiss():void
@@ -437,43 +424,13 @@ public class DatingScene extends Scenes
         command.displayUpdateValue(this,value_data);
 
 
-        updateRelPoint();
+        command.updateRelationship();
+
 
     }
 
-    private function doUpdatePts(e:Event):void
-    {
 
 
-        if(reward_mood<0)
-        {
-            pts_index--;
-        }
-        else if(reward_mood>0)
-        {
-            pts_index++;
-
-        }
-        //if
-
-
-        if(pts_index==reward_mood)
-        {
-            command.updateRelationship(reward_mood);
-            updateRelationShip();
-            this.removeEventListener(Event.ENTER_FRAME,doUpdatePts);
-
-        }
-
-    }
-    private function updateRelationShip():void
-    {
-        var dating:String=DataContainer.currentDating;
-        var savegame:SaveGame=FloxCommand.savegame;
-        var rel:Object=savegame.rel;
-        var rel_str:String=rel[dating].toUpperCase();
-        //rel_txt.text=rel_str;
-    }
     private var playerloveTxt:TextField;
     private var datingTopic:Sprite;
     private var chloveTxt:TextField;
@@ -1139,7 +1096,7 @@ public class DatingScene extends Scenes
 
         chatTxt=new TextField(245,145,chat,font,20,0x000000);
         chatTxt.hAlign="left";
-        chatTxt.vAlign="center"
+        chatTxt.vAlign="center";
         //chatTxt.x=634;
         //chatTxt.y=110;
         chatTxt.x=-120;
@@ -1189,26 +1146,19 @@ public class DatingScene extends Scenes
     private function onGiftActComplete():void{
 
 
-        initGiftRespons();
-        itemMovingHandle();
-
-    }
-    private function initGiftRespons():void{
-
-        //var assetsSys:Object=flox.getSyetemData("assets");
-        // var assets:Array=flox.getSaveData("assets");
-
-
         var rating:Number=command.searchAssetRating(item_id);
-
         chat=DataContainer.getGiftResponse(rating);
-
-        DebugTrace.msg("DatingScene.initGiftRespons  rating="+rating);
-        DebugTrace.msg("DatingScene.initGiftRespons  chat="+chat);
-
         initBubble();
 
+        var dating:String=DataContainer.currentDating;
+        reward_mood=Number(command.moodCalculator(item_id,dating));
+
+        updateMood();
+        startPaticles();
+
     }
+
+
     private function onDateActComplete():void{
 
 
@@ -1225,7 +1175,6 @@ public class DatingScene extends Scenes
 
     }
 
-
     private function specificChecking(com:String):Boolean{
 
         var success:Boolean=false;
@@ -1237,7 +1186,7 @@ public class DatingScene extends Scenes
         // mood
         //  var mood:Number=flox.getSaveData("mood")[dating];
         var pts:Number=flox.getSaveData("pts")[dating];
-        DebugTrace.msg("DatingScene.specificChecking mood="+mood+" , pts="+pts);
+        DebugTrace.msg("DatingScene.specificChecking com="+com+" , mood="+mood+" , pts="+pts);
         switch(com){
             case "Chat":
                 relPass=true;
@@ -1249,8 +1198,7 @@ public class DatingScene extends Scenes
                 break
             case "Flirt":
                 relPass=true;
-                //limitMood=Config.moodStep["smifler-Min"];
-                moodPass=true;
+                limitMood=Config.moodStep["smitten-Min"];
                 break
             case "TakePhoto":
                 limitRel=Config.relationshipStep["friend-Min"];
@@ -1267,8 +1215,8 @@ public class DatingScene extends Scenes
             case "Kiss":
                 limitRel=Config.relationshipStep["lover-Min"];
                 limitMood=Config.moodStep["loved-Min"];
-                //relPass=true;
-                //moodPass=true;
+                relPass=true;
+                moodPass=true;
                 break
             case "Leave":
                 relPass=true;
@@ -1282,7 +1230,8 @@ public class DatingScene extends Scenes
                 relPass=true;
             }
 
-        }else{
+        }
+        if(relPass){
 
             if(mood>=limitMood){
                 moodPass=true;

@@ -26,7 +26,7 @@ public class Reward extends Sprite{
     public var index:Number;
 
     private var reward:Sprite;
-    private var font:String="SimNeogreyMedium";
+    private var font:String="SimImpact";
     private var stageCW:Number;
     private var stageCH:Number;
     private var fliter:FilterManager=new FilterManager();
@@ -60,6 +60,7 @@ public class Reward extends Sprite{
            // icon.smoothing=TextureSmoothing.TRILINEAR;
             reward.addChild(icon);
 
+            rewardTxt.height=icon.height;
             rewardTxt.x=icon.width;
 
         }

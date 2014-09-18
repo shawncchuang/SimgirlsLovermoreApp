@@ -75,7 +75,7 @@ package views
 			
 		}
 		private var attr:String
-		private function doTopViewDispatch(e:TopViewEvent):void
+		private function doTopViewDispatch(e:Event):void
 		{
 			DebugTrace.msg("BankScene.doTopViewDispatch removed:"+e.data.removed);
 			var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
@@ -97,7 +97,7 @@ package views
 					break
 				case "ani_complete":
 
-					command.showCommandValues(this,"BankWork");
+					command.showCommandValues(this,"BankWork",e.data.rewards);
 					
 					init();
 					break

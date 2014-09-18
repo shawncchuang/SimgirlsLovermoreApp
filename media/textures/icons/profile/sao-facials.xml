@@ -14,8 +14,8 @@
     <SubTexture name="sao-pleased2" x="802" y="202" width="198" height="198"/>
     <SubTexture name="sao-depressed1" x="1002" y="2" width="198" height="198"/>
     <SubTexture name="sao-depressed2" x="1002" y="202" width="198" height="198"/>
-    <SubTexture name="sao-smifler1" x="1202" y="2" width="198" height="198"/>
-    <SubTexture name="sao-smifler2" x="1202" y="202" width="198" height="198"/>
+    <SubTexture name="sao-smitten1" x="1202" y="2" width="198" height="198"/>
+    <SubTexture name="sao-smitten2" x="1202" y="202" width="198" height="198"/>
     <SubTexture name="sao-sickened1" x="1402" y="2" width="198" height="198"/>
     <SubTexture name="sao-sickened2" x="1402" y="202" width="198" height="198"/>
     <SubTexture name="sao-delighted1" x="1602" y="2" width="198" height="198"/>

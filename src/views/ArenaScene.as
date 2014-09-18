@@ -55,6 +55,8 @@ import model.SaveGame;
 			speaker_sprite=new Sprite();
 			addChild(speaker_sprite);
 			speaker_sprite.flatten();
+
+
 			init();
 		}
 		private function init():void

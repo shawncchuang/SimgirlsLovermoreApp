@@ -332,9 +332,8 @@ public class ProfileScene extends Scenes
         var rel_pts:String=String(savedata.pts[character]);
         var rank:String=savedata.rank;
         var honor:String=savedata.honor[character];
-
-        var spt_eng:String=savedata.se[character]+"/99999";
         var love:String=String(savedata.love[character]);
+        var spt_eng:String=savedata.se[character]+"/"+love;
 
         var intStr:String=String(savedata.int[character]);
         var imgStr:String=String(savedata.image[character]);

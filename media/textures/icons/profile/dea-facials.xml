@@ -14,8 +14,8 @@
     <SubTexture name="dea-pleased2" x="202" y="202" width="198" height="198"/>
     <SubTexture name="dea-depressed1" x="202" y="402" width="198" height="198"/>
     <SubTexture name="dea-depressed2" x="202" y="602" width="198" height="198"/>
-    <SubTexture name="dea-smifler1" x="202" y="802" width="198" height="198"/>
-    <SubTexture name="dea-smifler2" x="402" y="202" width="198" height="198"/>
+    <SubTexture name="dea-smitten1" x="202" y="802" width="198" height="198"/>
+    <SubTexture name="dea-smitten2" x="402" y="202" width="198" height="198"/>
     <SubTexture name="dea-sickened1" x="602" y="202" width="198" height="198"/>
     <SubTexture name="dea-sickened2" x="802" y="202" width="198" height="198"/>
     <SubTexture name="dea-delighted1" x="402" y="402" width="198" height="198"/>

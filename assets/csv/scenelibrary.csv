@@ -12,7 +12,7 @@ com|bg_HotelScene,choice|ComCloud_L1_^Rest ,choice|ComCloud_R1_Look^Around,choic
 Fitness Club,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 com|bg_FitnessClubScene,choice|ComCloud_L1_^Train,choice|ComCloud_R1_Look^Around,choice|ComCloud_R2_^Leave,END,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Museum,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-com|bg_MuseumScene,choice|ComCloud_L1_^Learn,choice|ComCloud_R1_Look^Around,choice|ComCloud_R2_^Leave,END,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+com|bg_MuseumScene,choice|ComCloud_L1_^Research,choice|ComCloud_R1_Look^Around,choice|ComCloud_R2_^Leave,END,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Beach,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 com|bg_BeachScene,choice|ComCloud_L1_^Rest,choice|ComCloud_R1_Look^Around,choice|ComCloud_R2_^Leave,END,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 NightClub,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

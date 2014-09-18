@@ -526,16 +526,17 @@ public class DrawManager implements DrawerInterface
         //DebugTrace.msg("DrawManager.drawPieChart  picchartImg");
         //DebugTrace.obj(picchartImg);
     }
+    private var pieMax:Number=2500;
     public function updatePieChart(value:Number):void
     {
-        //value -1666~1666
+
         result=value;
-        if(result>2500)
+        if(result>pieMax)
         {
-            result=2500;
-        }else if(result<-2500)
+            result=pieMax;
+        }else if(result<-(pieMax))
         {
-            result=-2500;
+            result=-(pieMax);
         }
         //var dating:String=DataContainer.currentDating;
         //var savegame:SaveGame=FloxCommand.savegame;
@@ -558,22 +559,8 @@ public class DrawManager implements DrawerInterface
     }
     private function doRenderPieEnterFrame():void
     {
-        //var target:MovieClip=e.currentTarget as MovieClip;
-        //DebugTrace.msg("DrawManager.doMoodPieEnterFrame fIndex:"+fIndex+" ; result:"+result);
-        /*if(result>fIndex)
-         {
-         fIndex++;
-         if(fIndex==1000)
-         {
-         fIndex-=1;
-         }
-         }
-         else if(result<fIndex)
-         {
-         fIndex--;
-         }*/
-        //var index:Number=Math.floor(fIndex/10);
-        var index:Number=Math.floor(Number((result/2500).toFixed(2))*100);
+
+        var index:Number=Math.floor(Number((result/pieMax).toFixed(2))*100);
         if(index==100 || index==-100)
         {
             index=99;

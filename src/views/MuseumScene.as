@@ -9,8 +9,10 @@ package views
 	import controller.MainInterface;
 	import controller.SceneCommnad;
 	import controller.SceneInterface;
-	
-	import events.GameEvent;
+
+import data.DataContainer;
+
+import events.GameEvent;
 	import events.SceneEvent;
 	import events.TopViewEvent;
 	
@@ -96,16 +98,20 @@ package views
 					_data.name="MainScene";
 					command.sceneDispatch(SceneEvent.CHANGED,_data);
 					break
-				case "Learn":
+				case "Research":
 
                     command.doLearn();
 					
 					break
 				case "ani_complete":
 
-					command.showCommandValues(this,"Learn");
-					
-					init();
+
+					command.showCommandValues(this,"Research",e.data.rewards);
+
+                      init();
+                    //_data.name=DataContainer.currentScene;
+                    //command.sceneDispatch(SceneEvent.CHANGED,_data);
+
 					break
 				case "ani_complete_clear_character":
 					command.clearCopyPixel();

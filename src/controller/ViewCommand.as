@@ -260,7 +260,6 @@ public class ViewCommand  implements ViewInterface{
 
         var style:String=DataContainer.styleSechedule[character];
         var clothTexture:Texture=Assets.getTexture(style);
-
         var characterImg:Image=new Image(clothTexture);
 
         characterImg.name="character";

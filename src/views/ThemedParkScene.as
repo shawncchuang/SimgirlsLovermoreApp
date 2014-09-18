@@ -97,7 +97,7 @@ package views
 					break
 				case "ani_complete":
 
-					command.showCommandValues(this,"ThemedParkWork");
+					command.showCommandValues(this,"ThemedParkWork",e.data.rewards);
 					init();
 					break
 				case "ani_complete_clear_character":

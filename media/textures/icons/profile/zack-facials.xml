@@ -14,8 +14,8 @@
     <SubTexture name="zack-pleased2" x="802" y="202" width="198" height="198"/>
     <SubTexture name="zack-depressed1" x="1002" y="2" width="198" height="198"/>
     <SubTexture name="zack-depressed2" x="1002" y="202" width="198" height="198"/>
-    <SubTexture name="zack-smifler1" x="1202" y="2" width="198" height="198"/>
-    <SubTexture name="zack-smifler2" x="1202" y="202" width="198" height="198"/>
+    <SubTexture name="zack-smitten1" x="1202" y="2" width="198" height="198"/>
+    <SubTexture name="zack-smitten2" x="1202" y="202" width="198" height="198"/>
     <SubTexture name="zack-sickened1" x="1402" y="2" width="198" height="198"/>
     <SubTexture name="zack-sickened2" x="1402" y="202" width="198" height="198"/>
     <SubTexture name="zack-delighted1" x="1602" y="2" width="198" height="198"/>

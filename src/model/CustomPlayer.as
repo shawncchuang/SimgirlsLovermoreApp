@@ -27,7 +27,7 @@ package model
 		com2 :boot skills
 		com3 :boot honors
 		*/
-		public var items:Array=[  { "id": "com1", "qty": 3 },{ "id": "com2", "qty": 9999 }, { "id": "com3", "qty": 9999 } ];
+		public var items:Array=[  { "id": "com1", "qty": 3 },{ "id": "com2", "qty": 3 }, { "id": "com3", "qty": 3 } ];
 	
 		public function CustomPlayer()
 		{

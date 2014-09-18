@@ -139,11 +139,12 @@ public class PhotosScene extends Sprite {
     }
     private function onTriggeredTrash(e:Event):void{
 
-        var fullTexture:Texture=Assets.getTexture("IconTrashFull");
-        trash.upState=fullTexture;
-
         var photos:Array=flox.getSaveData("photos");
         if(photos.length>0){
+
+
+            var fullTexture:Texture=Assets.getTexture("IconTrashFull");
+            trash.upState=fullTexture;
 
             var _photos:Array=photos.splice(photo_index);
             _photos.shift();

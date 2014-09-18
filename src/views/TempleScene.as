@@ -90,11 +90,11 @@ package views
 					break
 				case "Meditate":
 
-                    command.doMeditate();
+                        command.doMeditate();
+
 
 					break
 				case "ani_complete":
-				 
 
                     command.showCommandValues(this,"Meditate");
 

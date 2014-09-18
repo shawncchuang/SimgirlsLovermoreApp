@@ -353,27 +353,28 @@ package views
 			this.removeEventListener((EnterFrameEvent.ENTER_FRAME), gameBgLoop);
 			gameTimer.stop();
 			
-			var se:Object=flox.getSaveData("se");
-			se.player=current_se;
-			//DebugTrace.msg("MiniGameScene.gameComplete current_se="+current_se);
-			//DebugTrace.msg("MiniGameScene.gameComplete se="+JSON.stringify(se));
-			flox.save("se",se);
+			var seObj:Object=flox.getSaveData("se");
+            var seMax:Number=flox.getSaveData("love").player;
+
+            if(current_se>seMax){
+                current_se=seMax
+            }
+            seObj.player=current_se;
+			flox.save("se",seObj);
 		
 			
 		}
 		private function onUpdateSE(e:Event):void
 		{
-			var max_se:Number=flox.getSaveData("love").player;
-			var se:Object=flox.getSaveData("se");
+
+			var seObj:Object=flox.getSaveData("se");
 			
 			var score:Number=e.data.score;
-			current_se+=score;
-		
-			if(current_se>max_se)
-			{
-				current_se=max_se;
-			}
-			seTxt.text="SE : "+current_se;
+            seObj.player+=score;
+            current_se= seObj.player;
+			seTxt.text="SE : "+ seObj.player;
+
+
 		}
 	}
 }

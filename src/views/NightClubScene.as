@@ -75,7 +75,7 @@ package views
 			
 		}
 		private var attr:String;
-		private function doTopViewDispatch(e:TopViewEvent):void
+		private function doTopViewDispatch(e:Event):void
 		{
 			DebugTrace.msg("NightclubScene.doTopViewDispatch removed:"+e.data.removed);
 			var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
@@ -96,7 +96,7 @@ package views
 					break
 				case "ani_complete":
 
-					command.showCommandValues(this,attr);
+					command.showCommandValues(this,attr,e.data.rewards);
 					init();
 					break
 				case "ani_complete_clear_character":

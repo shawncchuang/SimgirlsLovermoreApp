@@ -255,6 +255,14 @@ public class CommandCloud extends MovieClip
         if(de_label=="StartDating"){
 
 
+           var flox:FloxInterface=new FloxCommand();
+           var dating:String=flox.getSaveData("dating");
+            if(dating!=""){
+
+                DataContainer.currentDating=dating;
+            }
+
+
             var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
             gameEvent._name="clear_comcloud";
             gameEvent.displayHandler();

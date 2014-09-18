@@ -49,7 +49,7 @@ public class ChatScene extends Sprite
     public function ChatScene()
     {
         initBingo();
-        initCharacter();
+       //initCharacter();
         initBubble();
         initBingoMachine();
         initCancelHandle();
@@ -126,10 +126,14 @@ public class ChatScene extends Sprite
     private function initCharacter():void
     {
 
-        var dating:*=flox.getSyetemData("dating");
+        var dating:String=DataContainer.currentDating;
         if(dating)
         {
-            var character:MovieClip=Assets.getDynamicAtlas(dating);
+
+            var style:String=DataContainer.styleSechedule[dating];
+            var clothTexture:Texture=Assets.getTexture(style);
+            var character:Image=new Image(clothTexture);
+
             character.x=260;
 
             addChild(character);
@@ -332,7 +336,7 @@ public class ChatScene extends Sprite
 
         var ratingLv:Number;
         var likes:String;
-        var dating:*=flox.getSyetemData("dating");
+        var dating:String=DataContainer.currentDating;
         var assets:Object
         var chat:Object=flox.getSyetemData("chat_"+dating);
         var item:Object;
@@ -349,7 +353,7 @@ public class ChatScene extends Sprite
                 var result:Object=praseRelAndMood({mood:mood,pts:pts,dating:dating});
                 DebugTrace.msg("SimgirlsLovemore.onChatWithPlayer result:"+JSON.stringify(result));
                 var sentences:Array=chat[result.rel][result.mood];
-                index=uint(Math.random()*sentences.length);
+                index=Math.floor(Math.random()*sentences.length);
                 sentence=sentences[index];
 
                 var _int:Number=flox.getSaveData("int").player;
@@ -464,7 +468,7 @@ public class ChatScene extends Sprite
         var item:Object;
         var unreleased_assets:Object=flox.getSaveData("unreleased_assets");
         var assets_rating:Object=flox.getSaveData("assets");
-        var dating:*=flox.getSyetemData("dating");
+        var dating:String=DataContainer.currentDating;
         var assets:Array=unreleased_assets[dating];
 
         if(assets.length<1){

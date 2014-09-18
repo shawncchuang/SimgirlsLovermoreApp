@@ -863,7 +863,7 @@ public class SceneCommnad implements SceneInterface
 
         }
         // verify: math switch  ;  !verify:no match switch
-        if(type=="Rest||Stay")
+        if(type=="Rest")
         {
             if(date_verify && time_verify)
             {

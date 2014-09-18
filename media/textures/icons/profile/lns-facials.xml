@@ -14,8 +14,8 @@
     <SubTexture name="lenus-pleased2" x="802" y="202" width="198" height="198"/>
     <SubTexture name="lenus-depressed1" x="1002" y="2" width="198" height="198"/>
     <SubTexture name="lenus-depressed2" x="1002" y="202" width="198" height="198"/>
-    <SubTexture name="lenus-smifler1" x="1202" y="2" width="198" height="198"/>
-    <SubTexture name="lenus-smifler2" x="1202" y="202" width="198" height="198"/>
+    <SubTexture name="lenus-smitten1" x="1202" y="2" width="198" height="198"/>
+    <SubTexture name="lenus-smitten2" x="1202" y="202" width="198" height="198"/>
     <SubTexture name="lenus-sickened1" x="1402" y="2" width="198" height="198"/>
     <SubTexture name="lenus-sickened2" x="1402" y="202" width="198" height="198"/>
     <SubTexture name="lenus-delighted1" x="1602" y="2" width="198" height="198"/>

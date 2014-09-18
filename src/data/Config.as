@@ -513,7 +513,7 @@ public class Config
                 tomoru: 500,
                 ceil: 500,
                 zack: 0,
-                player:500
+                player:400
             },
             "s_ele":"air",
             "skills":
@@ -857,8 +857,8 @@ public class Config
         "pleased-Max":332,
         "delighted-Min":333,
         "delighted-Max":776,
-        "smifler-Min":777,
-        "smifler-Max":1665,
+        "smitten-Min":777,
+        "smitten-Max":1665,
         "loved-Min":1666
 
     }

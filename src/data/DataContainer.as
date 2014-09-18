@@ -447,9 +447,9 @@ public class DataContainer
         {
             facial="delighted";
         }
-        else if(mood>=moodStep["smifler-Min"] && mood<=moodStep["smifler-Max"])
+        else if(mood>=moodStep["smitten-Min"] && mood<=moodStep["smitten-Max"])
         {
-            facial="smifler";
+            facial="smitten";
 
         }else if(mood>=moodStep["loved-Min"]){
             facial="loved";

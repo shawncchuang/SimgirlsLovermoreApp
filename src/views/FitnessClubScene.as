@@ -96,7 +96,7 @@ public class FitnessClubScene extends Scenes
                 break
             case "ani_complete":
 
-                command.showCommandValues(this,"Train");
+                command.showCommandValues(this,"Research",e.data.rewards);
                 init();
                 break
             case "ani_complete_clear_character":

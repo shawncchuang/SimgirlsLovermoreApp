@@ -205,8 +205,9 @@ public class FlirtScene extends Sprite{
             switch (dating_card){
                 case "love":
 
-                    loveObj.player+=reward;
-                    loveObj[dating]+=reward;
+                    var reward_love:Number=Math.floor(reward/5);
+                    loveObj.player+=reward_love;
+                    loveObj[dating]+=reward_love;
                     flox.save("love",loveObj);
 
                     love.player= loveObj.player;
@@ -215,7 +216,7 @@ public class FlirtScene extends Sprite{
                     moodObj[dating]+=reward;
                     flox.save("mood",moodObj);
 
-                    var rewardStr:String="+"+reward;
+                    var rewardStr:String="+"+reward_love;
                     value_data.attr="love,mood";
                     value_data.values= rewardStr+",MOOD +"+reward;
                     command.displayUpdateValue(this,value_data);

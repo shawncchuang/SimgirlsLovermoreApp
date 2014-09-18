@@ -14,8 +14,8 @@
     <SubTexture name="ceil-pleased2" x="202" y="202" width="198" height="198"/>
     <SubTexture name="ceil-depressed1" x="202" y="402" width="198" height="198"/>
     <SubTexture name="ceil-depressed2" x="202" y="602" width="198" height="198"/>
-    <SubTexture name="ceil-smifler1" x="202" y="802" width="198" height="198"/>
-    <SubTexture name="ceil-smifler2" x="402" y="202" width="198" height="198"/>
+    <SubTexture name="ceil-smitten1" x="202" y="802" width="198" height="198"/>
+    <SubTexture name="ceil-smitten2" x="402" y="202" width="198" height="198"/>
     <SubTexture name="ceil-sickened1" x="602" y="202" width="198" height="198"/>
     <SubTexture name="ceil-sickened2" x="802" y="202" width="198" height="198"/>
     <SubTexture name="ceil-delighted1" x="402" y="402" width="198" height="198"/>

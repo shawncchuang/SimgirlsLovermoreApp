@@ -14,8 +14,8 @@
     <SubTexture name="klr-pleased2" x="802" y="202" width="198" height="198"/>
     <SubTexture name="klr-depressed1" x="1002" y="2" width="198" height="198"/>
     <SubTexture name="klr-depressed2" x="1002" y="202" width="198" height="198"/>
-    <SubTexture name="klr-smifler1" x="1202" y="2" width="198" height="198"/>
-    <SubTexture name="klr-smifler2" x="1202" y="202" width="198" height="198"/>
+    <SubTexture name="klr-smitten1" x="1202" y="2" width="198" height="198"/>
+    <SubTexture name="klr-smitten2" x="1202" y="202" width="198" height="198"/>
     <SubTexture name="klr-sickened1" x="1402" y="2" width="198" height="198"/>
     <SubTexture name="klr-sickened2" x="1402" y="202" width="198" height="198"/>
     <SubTexture name="klr-delighted1" x="1602" y="2" width="198" height="198"/>

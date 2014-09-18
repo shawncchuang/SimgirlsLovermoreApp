@@ -84,12 +84,12 @@ public class KissScene extends Sprite
         if(lv==4)
         {
 
-            love--;
+            love-=10;
 
         }
         else
         {
-            love++;
+            love+=(lv*10);
 
             characterFilter();
         }

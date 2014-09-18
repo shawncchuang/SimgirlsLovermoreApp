@@ -143,14 +143,14 @@ package views
 			var hoverlv:String=target_hover.split("_")[1];
 			var lv:Number=Number(hoverlv.split("lv").join(""));
 			
-			var moodStr:String="Love +"+lv;
+			var loveStr:String="Love +"+(lv*10);
 			if(lv==4)
 			{
-				moodStr="Love -1";
+                loveStr="Love -10";
 			 
 			}
             loveSprite=new Sprite();
-			loveTxt=new TextField(200,40,moodStr,"SimNeogreyMedium",30,0xFAF182);
+			loveTxt=new TextField(200,40,loveStr,"SimNeogreyMedium",30,0xFAF182);
 			loveTxt.pivotX=loveTxt.width/2;
 			loveTxt.pivotY=loveTxt.height/2;
 			//loveTxt.x=_target.x;

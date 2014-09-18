@@ -4,8 +4,10 @@ package controller
 	import com.greensock.events.LoaderEvent;
 	import com.greensock.loading.LoaderMax;
 	import com.greensock.loading.SWFLoader;
-	
-	import flash.desktop.NativeApplication;
+
+import data.DataContainer;
+
+import flash.desktop.NativeApplication;
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.events.Event;
@@ -231,7 +233,7 @@ package controller
 			player.gotoAndStop("str");
 			player.addEventListener(Event.ENTER_FRAME,onPlayerMoving);
 			
-			
+
 			var scene:Sprite=ViewsContainer.currentScene; 
 			scene.dispatchEventWith(MiniGameScene.GAME_READY);	
 			
@@ -697,6 +699,8 @@ package controller
 			gameAlert.x=-1718;
 			gameAlert.y=-455;
 			gameStage.addChild(gameAlert);
+
+
 			setupCompleteAlertCtrl();
 			
 			
@@ -731,6 +735,8 @@ package controller
 			gameStage.addChild(gameAlert);
 			gameAlert.x=-1718;
 			gameAlert.y=-455;
+
+
 			setupCompleteAlertCtrl();
 			
 			var evtObj:Object=new Object();
@@ -756,8 +762,9 @@ package controller
 			var quitbtn:MovieClip=gameAlert.animc.quitbtn;
 			replaybtn.buttonMode=true;
 			quitbtn.buttonMode=true;
-			replaybtn.addEventListener(MouseEvent.MOUSE_DOWN,doReplayHandle);
-			quitbtn.addEventListener(MouseEvent.MOUSE_DOWN,doQuitHandle);
+            replaybtn.visible=false;
+			//replaybtn.addEventListener(MouseEvent.MOUSE_DOWN,doReplayHandle);
+            quitbtn.addEventListener(MouseEvent.MOUSE_DOWN,doQuitHandle);
 			
 		}
 		
@@ -787,19 +794,31 @@ package controller
 		}
 		private function doQuitHandle(e:MouseEvent):void
 		{
-			
+
+            /*
 			var evtObj:Object=new Object();
 			evtObj[goScene]="quit";
 			submitEvent(evtObj);
 			
 			NativeApplication.nativeApplication.exit();  
-			
+			*/
+            TweenMax.killAll();
+            var gameEvt:GameEvent=SimgirlsLovemore.gameEvent;
+            gameEvt._name="remove_mini_game";
+            gameEvt.displayHandler();
+
+            var _data:Object=new Object();
+            _data.name="SpiritTempleScene";
+            command.sceneDispatch(SceneEvent.CHANGED,_data);
 		}
 		private function onGetScore(e:Event):void
 		{
 			DebugTrace.msg("MiniGameCommnad.onGetScore score="+e.target.score);
 			
-			
+
+            var seMax:Number=flox.getSaveData("love").player;
+            var result:Number=Math.floor(e.target.score*0.03*seMax);
+
 			var posX:Number=player.x+50;
 			var posY:Number=player.y;	
 			var format:TextFormat=new TextFormat();
@@ -811,16 +830,16 @@ package controller
 			scoreTxt.defaultTextFormat=format;
 			scoreTxt.embedFonts=true;
 			scoreTxt.autoSize=TextFieldAutoSize.CENTER;
-			scoreTxt.text="+"+e.target.score;
+			scoreTxt.text="+"+result;
 			scoreTxt.x=posX;
 			scoreTxt.y=posY;
 			gameStage.addChild(scoreTxt);
 			
 			TweenMax.to(scoreTxt,0.5,{y:scoreTxt.y-50,alpha:0,onComplete:onScoreTextFadeout});
 			
-			var scene:Sprite=ViewsContainer.currentScene; 
+			var scene:Sprite=ViewsContainer.currentScene;
 			var _data:Object=new Object();
-			_data.score=e.target.score;
+			_data.score=result;
 			scene.dispatchEventWith(MiniGameScene.UPDATE_SE,false,_data);	
 		}
 		private function onScoreTextFadeout():void

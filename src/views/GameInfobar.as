@@ -553,7 +553,7 @@ public class GameInfobar extends Sprite
             case "TakePhoto":
             case "Chat":
             case "Give":
-            case "Dating":
+            case "Date":
                 var UIViews:Sprite=ViewsContainer.UIViews;
                 UIViews.visible=true;
                 player_icon.visible=false;
@@ -561,6 +561,12 @@ public class GameInfobar extends Sprite
                 if(current_dating){
                     dating_icon.visible=false;
                 }
+                comDirView.x=228;
+                comDirView.y=270;
+                break
+            default:
+                comDirView.x=260;
+                comDirView.y=85;
                 break
         }
 
@@ -618,7 +624,7 @@ public class GameInfobar extends Sprite
 
             comDirView.alpha=0;
             var tween:Tween=new Tween(comDirView,0.5,Transitions.EASE_OUT);
-            tween.animate("alpha",1);
+            tween.fadeTo(1);
             tween.onComplete=onDirViewComplete;
             Starling.juggler.add(tween);
         }

@@ -577,11 +577,13 @@ public class MainCommand implements MainInterface
         flox.save("date",new_date);
         if(overday){
 
+            //syncSpiritEnergy();
             reeseatDating();
             initStyleSechedule();
             setNowMood();
             praseOwnedAssets(1);
             reseatDatingCommandTimes();
+
 
         }
 
@@ -793,12 +795,12 @@ public class MainCommand implements MainInterface
     }
     public function setNowMood():void
     {
-        //-1666 ~ 1666
+        //mood -1666 ~ 1666 ,daily -222 ~ 222
 
 
         var flox:FloxInterface=new FloxCommand();
         var moods:Object=flox.getSaveData("mood");
-        var ran:Number=1666;
+        var ran:Number=222;
         for(var m:String in moods){
 
             var today_Mood:Number=uint(Math.random()*(ran*2))+1-ran;
@@ -840,24 +842,26 @@ public class MainCommand implements MainInterface
         }
         DataContainer.styleSechedule=suitup;
     }
-    public function updateRelationship(mood:Number):void{
+    public function updateRelationship():void{
 
+        var relMax:Number=9999;
 
         var flox:FloxInterface=new FloxCommand();
-        var dating:*=flox.getSaveData("dating");
+        var dating:String=DataContainer.currentDating;
         var relObj:Object=flox.getSaveData("rel");
         var rel:String=relObj[dating];
         var ptsObj:Object=flox.getSaveData("pts");
+        var mood:Number=flox.getSaveData("mood")[dating];
         var pts:Number=Number(ptsObj[dating]);
         pts=pts+Math.floor(mood/5);
 
         DebugTrace.msg("MainCommand.updateRelationship mood="+mood+" ,pts="+pts);
 
-        if(pts>10000)
+        if(pts>relMax)
         {
-            pts=9999;
-        }else if (pts<-10000){
-            pts=-9999;
+            pts=relMax;
+        }else if (pts<-(relMax)){
+            pts=-(relMax);
         }
 
         ptsObj[dating]=pts;
@@ -870,7 +874,7 @@ public class MainCommand implements MainInterface
         _data.pts=ptsObj;
         // FloxCommand.savegame=savegame;
         flox.updateSavegame(_data);
-        DebugTrace.msg("MainCommand.updateRelationship _data="+JSON.stringify(_data));
+        // DebugTrace.msg("MainCommand.updateRelationship _data="+JSON.stringify(_data));
 
 
     }
@@ -882,10 +886,8 @@ public class MainCommand implements MainInterface
         var pst:Number=flox.getSaveData("pts")[dating];
         var price:Number=sysAssets[item_id].price;
         var rating:Number=searchAssetRating(item_id);
-        var time_rating:Number=100;
-        //var mood:Number=price*(Math.floor(rating/100*5+time_rating/100*2))+Math.floor(pst/500);
-        var mood:Number=Math.floor(price*Number((rating/100).toFixed(2)));
-        DebugTrace.msg("MainCommand.moodCalculator mood:"+mood);
+        var mood:Number=Math.floor(price*Number((rating/100).toFixed(2)))*4;
+        DebugTrace.msg("MainCommand.moodCalculator mood="+mood+", price="+ price+", rating="+rating);
 
         return mood
     }
@@ -1077,13 +1079,13 @@ public class MainCommand implements MainInterface
         var command:MainInterface=new MainCommand();
         var ap:Number=flox.getSaveData("ap");
         var cash:Number=flox.getSaveData("cash");
+        var time:Number=Number(flox.getSaveData("date").split("|")[1]);
         var sysCommad:Object=flox.getSyetemData("command");
         var _data:Object=new Object();
 
         var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
         gameEvent._name="clear_comcloud";
         gameEvent.displayHandler();
-
 
 
         if(free)
@@ -1099,19 +1101,26 @@ public class MainCommand implements MainInterface
         //if
 
 
-        var getAP:Number=restObj.ap;
-        _data.ap=ap+getAP;
-        DebugTrace.msg("MainCpmmand.doRest getAP:"+getAP);
-        flox.updateSavegame(_data);
+        var rewardAP:Number=restObj.ap;
+        ap+=rewardAP;
+        flox.save("ap",ap);
 
-        //var mediacom:MediaInterface=new MediaCommand();
-        //mediacom.VideoPlayer(new Point(1024,250),new Point(0,260));
-       // mediacom.play("video/rest-animated.flv",false,onFinishAnimated);
-        //copyPlayerAndCharacter();
 
-        var mediacom:MediaInterface=new MediaCommand();
-        mediacom.SWFPlayer("transform","../swf/sleep.swf",onFinishAnimated);
+        if(time==12){
 
+            onFinishAnimated();
+
+        }else{
+
+            var mediacom:MediaInterface=new MediaCommand();
+            mediacom.SWFPlayer("transform","../swf/sleep.swf",onFinishAnimated);
+
+        }
+
+        var evtObj:Object=new Object();
+        evtObj.scene=DataContainer.currentScene;
+        evtObj.command="Rest";
+        flox.logEvent("CloudCommand",evtObj);
     }
     public function doStay(days:Number):void
     {
@@ -1157,45 +1166,47 @@ public class MainCommand implements MainInterface
         gameEvent.displayHandler();
 
 
+        //var mediacom:MediaInterface=new MediaCommand();
+        ///mediacom.VideoPlayer(new Point(1024,250),new Point(0,260))
+        //mediacom.play("video/training-animated.flv",false,onFinishAnimated);
         var mediacom:MediaInterface=new MediaCommand();
-        mediacom.VideoPlayer(new Point(1024,250),new Point(0,260))
-        mediacom.play("video/training-animated.flv",false,onFinishAnimated);
+        mediacom.SWFPlayer("transform","../swf/workout.swf",onFinishAnimated);
+
 
         var savegame:SaveGame=new SaveGame();
         var flox:FloxInterface=new FloxCommand();
         var sysCommand:Object=flox.getSyetemData("command");
 
         var cash_pay:Number=sysCommand.Train.values.cash;
-        var ap_pay:Number=sysCommand.Train.values.ap;
+        var valuesImg:String=sysCommand.Train.values.image;
         var cash:Number=flox.getSaveData("cash");
         var ap:Number=flox.getSaveData("ap");
         var imageObj:Object=flox.getSaveData("image");
         var image:Number=imageObj.player;
 
         var _data:Object=new Object();
-        //_data.ap=ap+ap_pay;
-        // _data.cash=cash+cash_pay;
-        var new_image:Number=Number(uint(Math.random()*6));
-        //DebugTrace.msg("MainCommand.doTrain new_image:"+new_image);
-        if(savegame.dating)
-        {
-            new_image+=Math.floor(new_image*0.5);
-        }
-        imageObj.player=image+new_image;
+
+        var minImg:Number=Number(valuesImg.split("~")[0])-1;
+        var maxImg:Number=Number(valuesImg.split("~")[1]);
+        //DebugTrace.msg("MainCommand.doLearn sysCommand="+JSON.stringify(sysCommand));
+
+        var reward_img:Number=minImg+Math.floor(Math.random()*(maxImg-minImg))+1;
+
+        imageObj.player+=reward_img;
         _data.image=imageObj;
-        flox.updateSavegame(_data);
 
-
-        var values:Object=new Object();
-        values.cash=cash_pay;
-        values.image=new_image;
-        initCommnadValues("Train",values);
+        rewards=new Object();
+        rewards.image=reward_img;
+        rewards.cash=cash_pay;
 
 
         var gameinfo:Sprite=ViewsContainer.gameinfo;
         gameinfo.dispatchEventWith("UPDATE_INFO",false);
 
-
+        var evtObj:Object=new Object();
+        evtObj.scene=DataContainer.currentScene;
+        evtObj.command="Research";
+        flox.logEvent("CloudCommand",evtObj);
 
     }
     public function doWork():void
@@ -1208,46 +1219,51 @@ public class MainCommand implements MainInterface
 
         var scene:String=DataContainer.currentScene;
         var mediacom:MediaInterface=new MediaCommand();
-        mediacom.VideoPlayer(new Point(1024,250),new Point(0,260))
-        mediacom.play("video/"+scene+"-work-animated.flv",false,onFinishAnimated);
-
-        copyPlayerAndCharacter();
-
+        //mediacom.VideoPlayer(new Point(1024,250),new Point(0,260))
+        //mediacom.play("video/"+scene+"-work-animated.flv",false,onFinishAnimated);
+        mediacom.SWFPlayer("transform","../swf/"+scene+"Work.swf",onFinishAnimated);
 
         var attr:String=scene.split("Scene").join("Work");
-        //var savegame:SaveGame=FloxCommand.savegame;
+
         var flox:FloxInterface=new FloxCommand();
-        var current_dating:String=flox.getSaveData("dating");
-        var sysCommand:Object=flox.getSyetemData("command");
-        //var ap_pay:Number=sysCommand[attr].ap;
         var cash:Number=flox.getSaveData("cash");
         var ap:Number=flox.getSaveData("ap");
         var image:Number=flox.getSaveData("image").player;
+        var playerInt:Number=flox.getSaveData("int").player;
 
-        var vIncome:Number=Number(uint(Math.random()*4)+3);
-        var income:Number=image*vIncome;
-
-        if(current_dating)
-        {
-            income+=Math.floor(income*0.5);
+        var income:Number=0;
+        var rate:Number=Number((Math.floor(Math.random()*101)/100).toFixed(2));
+        switch(scene){
+            case "NightclubScene":
+                income=Math.floor(image/4*rate);
+                break
+            case "BankScene":
+                income=Math.floor(playerInt/3*rate);
+                break
+            case "ThemedParkScene":
+                income=100;
+                break
         }
 
-        var _data:Object=new Object();
-        _data.cash=cash+income;
-        //DebugTrace.msg("MainCommand.doWork income:"+income+" ; image:"+image);
-        flox.updateSavegame(_data);
+        cash+=income;
+        flox.save("cash",cash);
 
-        var values:Object=new Object();
-        values.cash=income;
-        initCommnadValues(attr,values);
+        rewards=new Object();
+        rewards.cash=income;
 
         var gameinfo:Sprite=ViewsContainer.gameinfo;
         gameinfo.dispatchEventWith("UPDATE_INFO");
 
+        var evtObj:Object=new Object();
+        evtObj.scene=scene;
+        evtObj.command="Work";
+        flox.logEvent("CloudCommand",evtObj);
 
     }
+    private var rewards:Object
     public function doLearn():void
     {
+        //research
         comType="Learn";
         var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
         gameEvent._name="clear_comcloud";
@@ -1255,44 +1271,43 @@ public class MainCommand implements MainInterface
 
         var scene:String=DataContainer.currentScene;
 
+
         var mediacom:MediaInterface=new MediaCommand();
-        mediacom.VideoPlayer(new Point(1024,250),new Point(0,260))
-        mediacom.play("video/"+scene+"-learn-animated.flv",false,onFinishAnimated);
+        mediacom.SWFPlayer("transform","../swf/research.swf",onFinishAnimated);
 
-        copyPlayerAndCharacter();
 
-        var savegame:SaveGame=FloxCommand.savegame;
         var flox:FloxInterface=new FloxCommand();
         var sysCommand:Object=flox.getSyetemData("command");
-        var ap_pay:Number=sysCommand.Learn.values.ap;
-        var cash_pay:Number=sysCommand.Learn.values.cash;
+        var valuesInt:String=sysCommand.Research.values.int;
+        var cash_pay:Number=sysCommand.Research.values.cash;
         var cash:Number=flox.getSaveData("cash");
         var ap:Number=flox.getSaveData("ap");
         var intObj:Object=flox.getSaveData("int");
-        var int:Number=intObj.player;
-        var increaseINT:Number=Math.floor(Math.random()*5)+1;
-        if(savegame.dating)
-        {
-            increaseINT+=Math.floor(increaseINT*0.5);
-        }
 
-        var _data:Object=new Object();
-        _data.cash=cash+cash_pay;
+        var minInt:Number=Number(valuesInt.split("~")[0])-1;
+        var maxInt:Number=Number(valuesInt.split("~")[1]);
+        //DebugTrace.msg("MainCommand.doLearn sysCommand="+JSON.stringify(sysCommand));
 
-        //DebugTrace.msg("MuseumScene.doTopViewDispatch reInt:"+reInt);
-        intObj.player=int+increaseINT;
-        _data.int=intObj;
-        flox.updateSavegame(_data);
+        var reward_int:Number=minInt+Math.floor(Math.random()*(maxInt-minInt))+1;
 
-        var values:Object=new Object();
-        values.int=increaseINT;
-        values.cash=cash_pay;
-        initCommnadValues("Learn",values);
+        cash+=cash_pay;
+        intObj.player+=reward_int;
 
+        flox.save("int",intObj);
+        flox.save("cash",cash);
+
+        rewards=new Object();
+        rewards.int=reward_int;
+        rewards.cash=cash_pay;
 
         var gameinfo:Sprite=ViewsContainer.gameinfo;
         gameinfo.dispatchEventWith("UPDATE_INFO");
 
+
+        var evtObj:Object=new Object();
+        evtObj.scene=scene;
+        evtObj.command="Research";
+        flox.logEvent("CloudCommand",evtObj);
 
     }
     public function doMeditate():void
@@ -1302,29 +1317,37 @@ public class MainCommand implements MainInterface
         gameEvent._name="clear_comcloud";
         gameEvent.displayHandler();
 
-        var mediacom:MediaInterface=new MediaCommand();
-        mediacom.VideoPlayer(new Point(1024,250),new Point(0,260))
-        mediacom.play("video/meditate-animated.flv",false,onFinishAnimated);
-
-        copyPlayerAndCharacter();
-
-
         var gameinfo:Sprite=ViewsContainer.gameinfo;
         gameinfo.dispatchEventWith("UPDATE_INFO");
 
+
+        var scene:String=DataContainer.currentScene;
+        var flox:FloxInterface=new FloxCommand();
+        var evtObj:Object=new Object();
+        evtObj.scene=scene;
+        evtObj.command="Meditate";
+        flox.logEvent("CloudCommand",evtObj);
+
+
+        var _data:Object=new Object();
+        _data.name="TrainingGame";
+        sceneDispatch(SceneEvent.CHANGED,_data);
+
+
+
     }
-    private var sysValues:Object;
+
+    // private var sysValues:Object;
     private function initCommnadValues(attr:String,values:Object):void{
 
-        var flox:FloxInterface=new FloxCommand();
-        var sysCommad:Object=flox.getSyetemData("command");
-        sysValues=sysCommad[attr].values;
-
+        //var flox:FloxInterface=new FloxCommand();
+        //var sysCommad:Object=flox.getSyetemData("command");
+        //sysValues=sysCommad[attr].values;
+        rewards=new Object();
         for(var type:String in values){
 
-            sysValues[type]=values[type];
+            rewards[type]=values[type];
         }
-
 
     }
 
@@ -1332,28 +1355,31 @@ public class MainCommand implements MainInterface
     {
         var flox:FloxInterface=new FloxCommand();
         var sysCommad:Object=flox.getSyetemData("command");
-        var sysValues:Object=sysCommad[attr].values;
-        DebugTrace.msg("MainCommnad sysValues="+JSON.stringify(sysValues));
+        var rewards:Object=new Object();
 
         var command:MainInterface=new MainCommand();
         var attrlist:Array=new Array();
         var valueslist:Array=new Array();
-        /*
-         if(values)
-         {
-         sysValues=values;
-         }
-         */
-        for(var i:String in sysValues)
+
+        if(values)
+        {
+            rewards=values;
+
+        }else{
+
+            rewards=sysCommad[attr].values;
+        }
+
+        for(var i:String in rewards)
         {
             attrlist.push(i);
-            if(sysValues[i]>0)
+            if(rewards[i]>0)
             {
-                var valueStr:String="+"+sysValues[i];
+                var valueStr:String="+"+rewards[i];
             }
             else
             {
-                valueStr=String(sysValues[i]);
+                valueStr=String(rewards[i]);
             }
             valueslist.push(valueStr);
 
@@ -1377,7 +1403,6 @@ public class MainCommand implements MainInterface
 
         var gameinfo:Sprite=ViewsContainer.gameinfo;
         gameinfo.dispatchEventWith("CANCEL_DATING");
-
 
 
 
@@ -1609,7 +1634,9 @@ public class MainCommand implements MainInterface
         }else{
 
             if(comType!="Rest"){
+
                 var scene:Sprite=ViewsContainer.currentScene;
+                _data.rewards=rewards;
                 _data.removed="ani_complete";
                 scene.dispatchEventWith(TopViewEvent.REMOVE,false,_data);
 
@@ -1634,25 +1661,41 @@ public class MainCommand implements MainInterface
 
         var pass_ap:Boolean=false;
         var pass_cash:Boolean=false;
+        var pass_se:Boolean=true;
         var success:Boolean=false;
         var scene:Sprite=ViewsContainer.MainScene;
         var flox:FloxInterface=new FloxCommand();
         var ap:Number=flox.getSaveData("ap");
         var sysCommand:Object=flox.getSyetemData("command");
         var payCash:Number=0;
-        if(sysCommand[com].values){
-            payCash=sysCommand[com].values.cash;
-        }
-        var payAP:Number=sysCommand[com].ap;
-
+        var alert:AlertMessage;
+        var msg:String="";
         if(com.indexOf("\n")!=-1){
             com=com.split("\n").join("");
         }
-
         if(com=="Work"){
 
             var current_scene:String=DataContainer.currentScene.split("Scene").join("");
             com=current_scene+com;
+        }
+        var payAP:Number=sysCommand[com].ap;
+        if(sysCommand[com].values){
+            payCash=sysCommand[com].values.cash;
+        }
+
+        if(com=="Meditate"){
+
+            var seMax:Number=flox.getSaveData("love").player;
+            var se:Number=flox.getSaveData("se").player;
+            if(se>=seMax){
+
+                pass_se=false;
+                payAP=0;
+                msg="You do not need more Spirit Energy !!";
+                alert=new AlertMessage(msg,onClosedAlert);
+                scene.addChild(alert);
+
+            }
         }
 
         if(payAP<0){
@@ -1660,8 +1703,8 @@ public class MainCommand implements MainInterface
             if(ap+payAP < 0)
             {
                 ViewsContainer.UIViews.visible=false;
-                var msg:String="You need more AP.";
-                var alert:AlertMessage=new AlertMessage(msg,onClosedAlert);
+                msg="You need more AP.";
+                alert=new AlertMessage(msg,onClosedAlert);
                 scene.addChild(alert);
 
             }
@@ -1716,8 +1759,15 @@ public class MainCommand implements MainInterface
         }
 
 
-        if(pass_ap && pass_cash){
+        if(pass_ap && pass_cash && pass_se){
             success=true;
+        }
+
+        if(!success){
+
+            var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
+            gameEvent._name="clear_comcloud";
+            gameEvent.displayHandler();
         }
 
         return success;
@@ -1743,6 +1793,19 @@ public class MainCommand implements MainInterface
         command.sceneDispatch(SceneEvent.CHANGED,_data);
     }
 
+    public function syncSpiritEnergy():void{
+
+        var flox:FloxInterface=new FloxCommand();
+        var seObj:Object=flox.getSaveData("se");
+        var loveObj:Object=flox.getSaveData("love");
+        for(var name:String in loveObj){
+
+            seObj[name]=loveObj[name];
+        }
+        flox.save("se",seObj);
+
+
+    }
 
 }
 }
