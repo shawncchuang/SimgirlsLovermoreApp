@@ -24,6 +24,7 @@ import starling.display.Image;
 import starling.display.MovieClip;
 import starling.display.Sprite;
 import starling.display.Sprite;
+import starling.events.Event;
 import starling.textures.Texture;
 
 import utils.DebugTrace;
@@ -88,7 +89,7 @@ public class Scenes extends Sprite
     private var next_scene:String;
     private var sceneObj:Object;
     private var scenebg:Image;
-    public var type:String;
+    public var battle_type:String;
     private function scenesPool():Object
     {
 
@@ -114,12 +115,10 @@ public class Scenes extends Sprite
         mainstage.addEventListener(SceneEvent.CLEARED,onClearedScene);
     }
 
-    private function onChengedScene(e:SceneEvent):void
+    private function onChengedScene(e:Event):void
     {
 
         scene=ViewsContainer.MainScene;
-        DebugTrace.msg("Scenes.onChengedScene="+e.data.name+" ,type="+e.data.type);
-        type=e.data.type;
         next_scene=e.data.name;
         clearSceneHandle();
 
@@ -241,7 +240,6 @@ public class Scenes extends Sprite
             case "BattleScene":
                 infobar=false;
                 current_scence=new StarlingBattleScene();
-
                 break
             case "AirportScene":
                 current_scence=new AirportScene();
@@ -458,6 +456,7 @@ public class Scenes extends Sprite
             var uiViews:Sprite=ViewsContainer.UIViews;
             mainstage.swapChildren(scene,uiViews);
         }
+
         changeSceneHandle();
         //flox.refreshSaveData(onRefreshComplete);
 

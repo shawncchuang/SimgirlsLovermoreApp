@@ -107,6 +107,8 @@ import model.SaveGame;
 					command.sceneDispatch(SceneEvent.CHANGED,_data);
 					break
 				case "Join":
+                    DataContainer.battleType="schedule";
+
 					gameEvent._name="clear_comcloud";
 					gameEvent.displayHandler();
 					_data.name="ChangeFormationScene";

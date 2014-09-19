@@ -51,6 +51,7 @@ package views
 		private var score:Number=0;
 		public static var bonusEvt:BattleEvent;
 		private var bunosAlert:MovieClip;
+        private var honors:Object;
 		public function VictoryBonus()
 		{
 			init();
@@ -154,23 +155,24 @@ package views
 			else
 			{
 				DebugTrace.msg("VictoryBonus.createNewStar Stop Bonus");
-				var honors:Object=flox.getSaveData("honor");
-				var player_power:Array=DataContainer.PlayerPower;
-				//var per_honor:Number=Math.floor(score/player_power.length);
+                honors=flox.getSaveData("honor");
+
+				//var player_power:Array=DataContainer.PlayerPower;
+                var player_power:Array=memberscom.getPlayerTeam();
 				for(var i:uint=0;i<player_power.length;i++)
 				{
-					DebugTrace.msg("VictoryBonus.createNewStar power="+JSON.stringify(player_power[i]));
-					var _name:String=player_power[i].name;
+					//DebugTrace.msg("VictoryBonus.createNewStar power="+JSON.stringify(player_power[i]));
+
+					var _name:String=player_power[i].chname;
 					honors[_name]+=score;
 					
 				}
 				//for
-				
-				flox.save("honor",honors);
+                flox.save("honor",honors);
 				
 				var format:TextFormat=new TextFormat();
 				format.color=0xFFFFFF;
-				format.font="SimNeogreyMedium";
+				format.font="SimImpact";
 				bunosAlert=new BonusAlert();
 				bunosAlert.honor.embedFonts=true;
 				bunosAlert.honor.defaultTextFormat=format;
@@ -209,23 +211,35 @@ package views
 		}
 		private function onBonusFadeout():void
 		{
+
+
+
 			TweenMax.killDelayedCallsTo(onBonusFadeout);
 			var gameEvt:GameEvent=SimgirlsLovemore.gameEvent;
 			gameEvt._name="remove_battle";
 			gameEvt.displayHandler();
 			
-			var scene:String=DataContainer.BatttleScene;
-			if(scene!="Story")
-			{
-				scene="SSCCArenaScene";
-			}
-			else
-			{
-				var battleData:BattleData=new BattleData();
-				scene=battleData.backStoryScene();
-				
-			}
-			
+		    var battleType=DataContainer.battleType;
+            var scene:String=DataContainer.BatttleScene;
+            if(battleType=="sechedule"){
+
+                scene="SSCCArenaScene";
+
+            }else if(battleType=="practice"){
+
+                scene="AcademyScene";
+
+            }else{
+
+                if(scene=="Story"){
+
+                    var battleData:BattleData=new BattleData();
+                    scene=battleData.backStoryScene();
+                }
+
+
+            }
+
 			var command:MainInterface=new MainCommand();	
 			var _data:Object=new Object();
 			_data.name= scene;

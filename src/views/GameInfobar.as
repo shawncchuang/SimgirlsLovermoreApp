@@ -600,9 +600,9 @@ public class GameInfobar extends Sprite
 
             if(attr.indexOf("Rest")!=-1)
             {
-                var switch_verifies:Array=scenecom.switchGateway("Rest||Stay");
-                if(switch_verifies[0])
-                {
+                var switch_verifies:Array=scenecom.switchGateway("Rest");
+
+                if(switch_verifies[0]){
                     apIcon.visible=false;
                     payApTxt.visible=false;
                     value=0;

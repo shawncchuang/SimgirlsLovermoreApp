@@ -28,7 +28,8 @@ import utils.ViewsContainer;
 public class StarlingBattleScene extends Scenes
 {
 
-    public var type:String;
+
+
     private var base_sprite:Sprite;
     private var command:MainInterface=new MainCommand();
     private var button:Button;
@@ -39,9 +40,6 @@ public class StarlingBattleScene extends Scenes
          button=new Button(pointbgTexture);
          addChild(button);
          button.addEventListener(Event.TRIGGERED, onSceneTriggered);*/
-        super();
-        type=super.type;
-        DebugTrace.msg("StarlingBattleScen  type="+type);
 
         ViewsContainer.currentScene=this;
         base_sprite=new Sprite();

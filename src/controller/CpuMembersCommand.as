@@ -22,8 +22,8 @@ import views.BattleScene;
 import views.Member;
 public class CpuMembersCommand implements CpuMembersInterface
 {
-    // teams
-    private var teamsno:uint=11;
+    // teams 0-11 ;11(practice team)
+    private var teamsno:uint=12;
     // maxsium members in a team
     private var mem_perteam:uint=8;
     private var flox:FloxInterface=new FloxCommand();
@@ -105,21 +105,44 @@ public class CpuMembersCommand implements CpuMembersInterface
     public  function setupBattleTeam():void
     {
         var membersEffect:Object=DataContainer.MembersEffect;
-
+        var love:Number=flox.getSaveData("love").player;
         //DebugTrace.msg("CpuMembersCommand. setupBattleTeam month:"+month+", date:"+date);
-        var scene:String=DataContainer.BatttleScene;
-        if(scene=="Arena")
-        {
+        //var scene:String=DataContainer.BatttleScene;(scene==Arena)
+        var teams:Object=flox.getSaveData("cpu_teams");
+        bossName=Config.bossName;
+        var battleType=DataContainer.battleType;
+
+        if(battleType=="sechedule"){
+
             var batteData:BattleData=new BattleData();
             cpuIndex=batteData.checkBattleSchedule("Battle","");
-
-
-            trace("CpuMemberCommand.setupBattleTeam cpuIndex=",cpuIndex);
 
             //---------------------fake CPU team
             cpuIndex=Math.floor(Math.random()*10);
             if(cpuIndex==9)
                 cpuIndex=10;
+
+        }else if(battleType=="practice"){
+
+            cpuIndex=11;
+            var se:Number=0;
+           for(var j:uint=0;j<mem_perteam;j++){
+
+               var id:String="t"+cpuIndex+"_"+j;
+
+               if(id=="t11_0"){
+
+                   se=Math.floor(love*0.9);
+               }else{
+                   se=Math.floor(love*0.6);
+               }
+
+               teams[id].se=se;
+               teams[id].seMax=se;
+
+           }
+            DebugTrace.msg("CpuMembersCommand. setupBattleTeam teams:"+JSON.stringify(teams));
+           flox.save("cpu_teams",teams);
 
         }
         else
@@ -131,9 +154,9 @@ public class CpuMembersCommand implements CpuMembersInterface
         }
         DebugTrace.msg("CpuMembersCommand. setupBattleTeam cpuIndex:"+cpuIndex);
         DataContainer.setCputID=cpuIndex;
-        var teams:Object=flox.getSaveData("cpu_teams");
+
         team=new Array();
-        bossName=Config.bossName;
+
         for(var t:uint=0;t<mem_perteam;t++)
         {
             var id:String="t"+cpuIndex+"_"+t;

@@ -270,25 +270,6 @@ import com.greensock.loading.LoaderMax;
 					
 					onLoginComplete();
 					break
-				case "rest_animation":
-				 
-					break
-				case "stay_animation":
-				 
-					break
-				case "train_animation":
-					 
-					break
-				case "learning_animation":
-				 
-					break
-				case "working_animation":
-					
-				 
-					break
-				case "meditate_animation":
-					 
-					break
 				case "assets_form":
 				case "dating_assets_form":
 					assetsform=new AssetsTileList(e.target._name);

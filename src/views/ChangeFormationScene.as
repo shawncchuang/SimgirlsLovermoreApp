@@ -621,16 +621,8 @@ public class ChangeFormationScene extends Scenes
                 flox.save("formation",combat_zone);
 
 
-                var scene:String=DataContainer.currentScene;
-                if(scene=="ArenaScene"){
-
-                    var type:String="schedule";
-                }else{
-                    type="practice";
-                }
-
                 _data.name= "BattleScene";
-                _data.type=type;
+
                 command.sceneDispatch(SceneEvent.CHANGED,_data);
 
             }

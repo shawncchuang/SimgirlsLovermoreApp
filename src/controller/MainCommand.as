@@ -1,10 +1,11 @@
-package controller
-{
+package controller{
+
 import com.greensock.TweenMax;
 import com.greensock.events.LoaderEvent;
 import com.greensock.loading.LoaderMax;
 import com.greensock.loading.SWFLoader;
 import com.shortybmc.data.parser.CSV;
+
 
 import flash.display.Bitmap;
 import flash.display.BitmapData;
@@ -65,8 +66,7 @@ import views.DatingScene;
 import views.Reward;
 
 
-public class MainCommand implements MainInterface
-{
+public class MainCommand implements MainInterface{
 
 
     private var Days:Array=new Array("Sun","Mon","Tue","Wed","Thu","Fri","Sat");
@@ -89,7 +89,8 @@ public class MainCommand implements MainInterface
     public function sceneDispatch(type:String,data:Object=null):void
     {
         var mainstage:Sprite=ViewsContainer.MainStage;
-        mainstage.dispatchEvent(new SceneEvent(type,true,false,data));
+        // mainstage.dispatchEvent(new SceneEvent(type,true,false,data));
+        mainstage.dispatchEventWith(type,false,data);
     }
     public function topviewDispatch(type:String,data:Object=null):void
     {
@@ -1077,6 +1078,7 @@ public class MainCommand implements MainInterface
         comType="Rest";
         var flox:FloxInterface=new FloxCommand();
         var command:MainInterface=new MainCommand();
+        var apMax:Number=flox.getSaveData("ap_max");
         var ap:Number=flox.getSaveData("ap");
         var cash:Number=flox.getSaveData("cash");
         var time:Number=Number(flox.getSaveData("date").split("|")[1]);
@@ -1096,13 +1098,20 @@ public class MainCommand implements MainInterface
         {
 
             restObj=sysCommad.PayRest;
-            _data.cash=cash+restObj.values.cash;
+
+            cash+=restObj.values.cash;
+
+            flox.save("cash",cash);
         }
         //if
 
-
         var rewardAP:Number=restObj.ap;
+
         ap+=rewardAP;
+        if(ap>apMax){
+            ap=apMax;
+        }
+
         flox.save("ap",ap);
 
 

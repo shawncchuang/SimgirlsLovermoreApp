@@ -14,6 +14,7 @@ package views
 	import com.greensock.plugins.FramePlugin;
 	import com.greensock.plugins.TweenPlugin;
 	import com.greensock.text.SplitTextField;
+
 	
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
@@ -131,11 +132,16 @@ package views
 		private var playersX:Object=new Object();
 		private var cpusX:Object=new Object();
 		private var current_skillPts:Object=new Object();
+        private var battle_type:String;
 		public function BattleScene()
 		{
-			
-			
-			flox.logEvent("BattleStarted");
+
+            battle_type=DataContainer.battleType;
+
+            var evtObj:Object=new Object();
+            evtObj.event="Start";
+            evtObj.type=battle_type;
+			flox.logEvent("Battle",evtObj);
 			
 			var evt:BattleEvent=new BattleEvent();
 			evt.addEventListener(BattleEvent.COMMANDER_ITEM,usedItemHandle);

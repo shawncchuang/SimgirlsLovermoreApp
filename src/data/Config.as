@@ -181,6 +181,18 @@ public class Config
             "skin_tint":null,
             "member":[null,null],
             "member_tint":[0.9,0.5]
+        },
+        "t11":
+        {
+            "acc":null,
+            "acc_tint":0.5,
+            "body":null,
+            "body_tint":0.9,
+            "skin":null,
+            "skin_tint":null,
+            "member":[0x999999,null],
+            "member_tint":[0.9,0.5]
+
         }
 
     }
@@ -204,7 +216,8 @@ public class Config
         "t6_0":"akr",
         "t7_0":"bdh",
         "t8_0":"gor",
-        "t10_0":"fat"
+        "t10_0":"fat",
+        "t11_0":"fan"
     };
     public static var bossModels:Array=["gor","tgr","fat"];
     public static var ch_bossModels:Array=["mia","bdh","vdk","akr","chef","shn"];
@@ -721,7 +734,16 @@ public class Config
                 t10_4 : {"seMax":0,"se":0},
                 t10_5 : {"seMax":0,"se":0},
                 t10_6 : {"seMax":0,"se":0},
-                t10_7 : {"seMax":0,"se":0}
+                t10_7 : {"seMax":0,"se":0},
+
+                t11_0 : {"seMax":500,"se":500} ,
+                t11_1 : {"seMax":500,"se":500} ,
+                t11_2 : {"seMax":500,"se":500} ,
+                t11_3 : {"seMax":500,"se":500} ,
+                t11_4 : {"seMax":500,"se":500} ,
+                t11_5 : {"seMax":500,"se":500} ,
+                t11_6 : {"seMax":500,"se":500} ,
+                t11_7 : {"seMax":500,"se":500}
             },
             "victory":{ "player":0, "sao": 0, "sirena": 0, "tomoru": 0, "ceil": 0, "dea": 0, "lenus": 0, "klr": 0 },
             "defeat":{"player":0, "sao": 0, "sirena": 0, "tomoru": 0, "ceil": 0, "dea": 0, "lenus": 0, "klr": 0},
@@ -878,6 +900,7 @@ public class Config
 
 
     }
+
     public function Config()
     {
 

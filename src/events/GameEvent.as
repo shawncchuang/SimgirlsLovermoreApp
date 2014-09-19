@@ -13,6 +13,7 @@ import flash.events.Event;
 		public var data:String;
 		public var qa_label:String;
         public var container:MovieClip;
+        public var battle_type:String;
 		public function displayHandler():void
 		{
 			

@@ -730,5 +730,15 @@ public class DataContainer
 
     }
 
+    private static var battle_type:String;
+    public static function set battleType(type:String):void{
+
+        battle_type=type;
+    }
+    public static function get battleType():String{
+
+        return battle_type;
+    }
+
 }
 }

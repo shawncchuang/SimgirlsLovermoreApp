@@ -9,8 +9,10 @@ package views
 	import controller.MainInterface;
 	import controller.SceneCommnad;
 	import controller.SceneInterface;
-	
-	import events.GameEvent;
+
+import data.DataContainer;
+
+import events.GameEvent;
 	import events.SceneEvent;
 	import events.TopViewEvent;
 	
@@ -88,6 +90,9 @@ package views
 					command.sceneDispatch(SceneEvent.CHANGED,_data);
 					break
                 case "Practice":
+
+                    DataContainer.battleType="practice";
+
                     gameEvent._name="clear_comcloud";
                     gameEvent.displayHandler();
                     _data.name="ChangeFormationScene";

@@ -13,7 +13,7 @@ package
 	import events.SceneEvent;
 	import events.TopViewEvent;
 	
-	import model.Avatar;
+	//import model.Avatar;
 	import model.Scenes;
 	
 	import services.LoaderRequest;
@@ -63,6 +63,7 @@ package
 			Starling.current.stage.stageHeight=768;
 			
 			DataContainer.deadline=false;
+            DataContainer.battleType="";
 			mainstage=this;
 			ViewsContainer.MainStage=mainstage;
 			var scenes:Scenes=new Scenes();

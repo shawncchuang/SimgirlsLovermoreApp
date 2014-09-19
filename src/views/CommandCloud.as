@@ -28,8 +28,6 @@ import events.TopViewEvent;
 
 import model.BattleData;
 
-import model.SaveGame;
-
 
 //import starling.animation.Tween;
 import starling.core.Starling;
@@ -171,6 +169,7 @@ public class CommandCloud extends MovieClip
         cloudTxt.visible=false;
 
         disabledComCloud();
+
         TweenMax.to(comcloud,0.3,{frameLabel:"broke",onComplete:onCloudComplete});
         //comcloud.gotoAndPlay("broke");
         command.playSound("Break");

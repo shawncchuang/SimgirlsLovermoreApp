@@ -851,6 +851,17 @@ public class SceneCommnad implements SceneInterface
         DebugTrace.msg("SceneCommand.switchGateway date_verify="+date_verify+",time_verify="+time_verify+
                 ",local_verify="+local_verify);
 
+
+        //disable story-------------------------------
+        verify=false;
+        date_verify=false;
+        time_verify=false;
+        local_verify=false;
+        type="";
+        //----------------------------------------------
+
+
+
         if(date_verify && time_verify && local_verify)
         {
             verify=true;
@@ -863,6 +874,7 @@ public class SceneCommnad implements SceneInterface
 
         }
         // verify: math switch  ;  !verify:no match switch
+
         if(type=="Rest")
         {
             if(date_verify && time_verify)
@@ -873,11 +885,9 @@ public class SceneCommnad implements SceneInterface
             }
 
         }
-        verify=false;
-        date_verify=false;
-        time_verify=false;
-        local_verify=false;
-        return [verify,date_verify,time_verify,local_verify]
+
+        DebugTrace.msg("SceneCommand.switchGateway return ->"+[verify,date_verify,time_verify,local_verify]);
+        return new Array(verify,date_verify,time_verify,local_verify)
     }
     private function updateCurrentSwitch():void
     {
