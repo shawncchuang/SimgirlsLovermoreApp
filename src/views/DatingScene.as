@@ -572,7 +572,7 @@ public class DatingScene extends Scenes
 
         datingTopic=new Sprite();
         datingTopic.visible=false;
-        this.addChild(datingTopic);
+        //this.addChild(datingTopic);
 
         var title:Image=new Image(getTexture("DatingTitleBg"));
         title.y=35;
@@ -609,6 +609,8 @@ public class DatingScene extends Scenes
         var _dating:String=dating.slice(1);
         var pro_dating:String="Pro"+first_str.concat(_dating);
         DebugTrace.msg("DatingScene.initLayout pro_dataing:"+pro_dating);
+
+
 
     }
 
@@ -1215,8 +1217,6 @@ public class DatingScene extends Scenes
             case "Kiss":
                 limitRel=Config.relationshipStep["lover-Min"];
                 limitMood=Config.moodStep["loved-Min"];
-                relPass=true;
-                moodPass=true;
                 break
             case "Leave":
                 relPass=true;

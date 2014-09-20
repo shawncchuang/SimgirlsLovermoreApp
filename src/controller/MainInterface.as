@@ -50,5 +50,6 @@ package controller
 		function verifySwitch():Boolean
         function consumeHandle(com:String):Boolean
         function syncSpiritEnergy():void
+        function checkSystemStatus():void
 	}
 }

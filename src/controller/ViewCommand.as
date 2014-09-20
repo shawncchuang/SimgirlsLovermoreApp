@@ -263,9 +263,10 @@ public class ViewCommand  implements ViewInterface{
         var characterImg:Image=new Image(clothTexture);
 
         characterImg.name="character";
-        characterImg.width=356;
-        characterImg.height=608;
-
+        //characterImg.width=356;
+        //characterImg.height=608;
+        characterImg.scaleX=0.8;
+        characterImg.scaleY=0.8;
         model.addChild(characterImg);
 
     }

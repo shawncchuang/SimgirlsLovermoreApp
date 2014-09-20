@@ -51,7 +51,7 @@ import views.FoundSomeScene;
 import views.GardenScene;
 import views.HotSpringScene;
 import views.HotelScene;
-import views.LoungeScene;
+import views.CoffeeShopScene;
 import views.LovemoreMansionScene;
 import views.MainScene;
 import views.MenuScene;
@@ -321,8 +321,8 @@ public class Scenes extends Sprite
             case "PierScene":
                 current_scence=new PierScene();
                 break
-            case "LoungeScene":
-                current_scence=new LoungeScene();
+            case "CoffeeShopScene":
+                current_scence=new CoffeeShopScene();
                 break
             case "ParkScene":
                 current_scence=new ParkScene();

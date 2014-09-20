@@ -208,7 +208,7 @@ public class DataContainer
 
                 if(scene_name=="Park"){
 
-                    scene_rating.likes=100;
+                   // scene_rating.likes=100;
 
                 }
                 //*-----------------------------------------------------------------------
@@ -345,7 +345,7 @@ public class DataContainer
         var ran_anslist:Array=new Array();
         var ans:String=secrets.ans;
         var anslist:Array=ans.split(",");
-        var maxTimes:Number=anslist.length
+        var maxTimes:Number=anslist.length;
         for(var i:uint=0;i<maxTimes;i++)
         {
             var index:uint=uint(Math.random()*anslist.length)

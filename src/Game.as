@@ -77,7 +77,8 @@ package
 			var assets:Assets=new Assets();
 			assets.initMusicAssetsManager();
 			assets.initSoundAssetsManager();
-			
+
+
 			if(loadgame)
 			{
 				

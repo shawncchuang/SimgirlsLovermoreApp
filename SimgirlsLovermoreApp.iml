@@ -60,16 +60,8 @@
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/swf/skillsCardsNote.swf" path-in-package="swf/skillsCardsNote.swf" />
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/fonts" path-in-package="fonts" />
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/video/video_test.swf" path-in-package="video/video_test.swf" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/video/rest-animated.flv" path-in-package="video/rest-animated.flv" />
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/video/plane-departing.flv" path-in-package="video/plane-departing.flv" />
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/video/arriving-shambala.flv" path-in-package="video/arriving-shambala.flv" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/video/meditate-animated.flv" path-in-package="video/meditate-animated.flv" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/video/training-animated.flv" path-in-package="video/training-animated.flv" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/video/BankScene-work-animated.flv" path-in-package="video/BankScene-work-animated.flv" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/video/MuseumScene-learn-animated.flv" path-in-package="video/MuseumScene-learn-animated.flv" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/video/AcademyScene-learn-animated.flv" path-in-package="video/AcademyScene-learn-animated.flv" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/video/NightclubScene-work-animated.flv" path-in-package="video/NightclubScene-work-animated.flv" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/video/ThemedParkScene-work-animated.flv" path-in-package="video/ThemedParkScene-work-animated.flv" />
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/images/bm" path-in-package="images/bm" />
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/images/icons" path-in-package="images/icons" />
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/images/items" path-in-package="images/items" />

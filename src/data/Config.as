@@ -186,11 +186,11 @@ public class Config
         {
             "acc":null,
             "acc_tint":0.5,
-            "body":null,
-            "body_tint":0.9,
+            "body":0xCCCCCC,
+            "body_tint":0.8,
             "skin":null,
             "skin_tint":null,
-            "member":[0x999999,null],
+            "member":[0xCCCCCC,null],
             "member_tint":[0.9,0.5]
 
         }
@@ -199,10 +199,10 @@ public class Config
     public static function get stagepoints():Object
     {
         points={"Hotel":[432,202],"Airport":[988,440],"SSCCArena":[128,790],"Academy":[395,975],"SpiritTemple":[468,847],
-            "Museum":[739,765],"PoliceStation":[130,330],"Casino":[690,307],"SportsBar":[550,500],"Nightclub":[480,362],
+            "Museum":[739,765],"PoliceStation":[130,330],"Casino":[690,307],"SportsBar":[245,240],"Nightclub":[480,362],
             "LovemoreMansion":[367,718],"ShoppingCentre":[217,417],"FitnessClub":[764,466],"Beach":[1372,1076],"Park":[1222,515],
             "Cinema":[1427,846],"Pier":[937,540],"Restaurant":[1390,565],"HotSpring":[1132,564],"ThemedPark":[1235,710],
-            "Bank":[540,203],"PrivateIsland":[1262,215],"Garden":[548,765],"BlackMarket":[522,589],"ChangingRoom":[1262,984],"Lounge":[640,470]
+            "Bank":[540,203],"PrivateIsland":[1262,215],"Garden":[548,765],"BlackMarket":[522,589],"ChangingRoom":[1262,984],"CoffeeShop":[600,507]
         };
         return points;
     }
@@ -281,7 +281,7 @@ public class Config
             "next_switch":"s001",
             "current_switch":"s001|on",
             "status":"Normal",
-            "cash":100000,
+            "cash":1000,
             "first_name":"",
             "last_name":"",
             "date":"Tue.1.Mar.2022|12",
@@ -289,13 +289,13 @@ public class Config
             "ap_max":100,
             "dating":"",
             "ch_cash":{
-                lenus:500,
+                lenus:100,
                 sirena:100,
-                dea:200,
-                sao:200,
-                klr:0,
-                tomoru:300,
-                ceil:200,
+                dea:100,
+                sao:100,
+                klr:100,
+                tomoru:100,
+                ceil:100,
                 zack:1000000
             },
             "estate":{
@@ -534,81 +534,81 @@ public class Config
                 "player":
                 {
                     exp:"",
-                    fire:"f0,f1,f2",
-                    air:"a0,a1,a2",
-                    earth:"e0,e1,e2",
-                    water:"w0,w1,w2",
-                    neutral:"n0,n1,n2",
+                    fire:"f0",
+                    air:"a0",
+                    earth:"e0",
+                    water:"w0",
+                    neutral:"n0",
                     com:"com0,com1"
                 },
                 "lenus":
                 {
                     exp:"w",
-                    fire:"f0,f1,f2",
-                    air:"a0,a1,a2",
-                    earth:"e0,e1,e2",
-                    water:"w0,w1,w2,w3",
-                    neutral:"n0,n1,n2",
+                    fire:"f0",
+                    air:"a0",
+                    earth:"e0",
+                    water:"w0,w1",
+                    neutral:"n0",
                     com:""
                 },
                 "sirena":
                 {
                     exp:"w",
-                    fire:"f0,f1,f2",
-                    air:"a0,a1,a2",
-                    earth:"e0,e1,e2",
-                    water:"w0,w1,w2,w3",
-                    neutral:"n0,n1,n2",
+                    fire:"f0",
+                    air:"a0",
+                    earth:"e0",
+                    water:"w0,w1",
+                    neutral:"n0",
                     com:""
                 },
                 "dea":
                 {
                     exp:"n",
-                    fire:"f0,f1,f2",
-                    air:"a0,a1,a2",
-                    earth:"e0,e1,e2",
-                    water:"w0,w1,w2",
-                    neutral:"n0,n1,n2,n3",
+                    fire:"f0",
+                    air:"a0",
+                    earth:"e0",
+                    water:"w0",
+                    neutral:"n0,n1",
                     com:""
                 },
                 "sao":
                 {
                     exp:"a",
-                    fire:"f0,f1,f2",
-                    air:"a0,a1,a2,a3",
-                    earth:"e0,e1,e2",
-                    water:"w0,w1,w2",
-                    neutral:"n0,n1,n2",
+                    fire:"f0",
+                    air:"a0,a1",
+                    earth:"e0",
+                    water:"w0",
+                    neutral:"n0",
                     com:""
                 },
                 "klr":
                 {
                     exp:"a",
-                    fire:"f0,f1,f2",
-                    air:"a0,a1,a2,a3",
-                    earth:"e0,e1,e2",
-                    water:"w0,w1,w2",
-                    neutral:"n0,n1,n2",
+                    fire:"f0",
+                    air:"a0,a1",
+                    earth:"e0",
+                    water:"w0",
+                    neutral:"n0",
                     com:""
                 },
                 "tomoru":
                 {
                     exp:"f",
-                    fire:"f0,f1,f2,f3",
-                    air:"a0,a1,a2",
-                    earth:"e0,e1,e2",
-                    water:"w0,w1,w2",
-                    neutral:"n0,n1,n2",
+                    fire:"f0,f1",
+                    air:"a0",
+                    earth:"e0",
+                    water:"w0",
+                    neutral:"n0",
                     com:""
                 },
                 "ceil":
                 {
                     exp:"e",
-                    fire:"f0,f1,f2",
-                    air:"a0,a1,a2",
-                    earth:"e0,e1,e2,e3",
-                    water:"w0,w1,w2",
-                    neutral:"n0,n1,n2",
+                    fire:"f0",
+                    air:"a0",
+                    earth:"e0,e1",
+                    water:"w0",
+                    neutral:"n0",
                     com:""
                 },
                 "zack":
@@ -749,14 +749,14 @@ public class Config
             "defeat":{"player":0, "sao": 0, "sirena": 0, "tomoru": 0, "ceil": 0, "dea": 0, "lenus": 0, "klr": 0},
             "collapses":{"player":0, "sao": 0, "sirena": 0, "tomoru": 0, "ceil": 0, "dea": 0, "lenus": 0, "klr": 0},
             "skillPts":{
-                "player":500,
-                "sao": 90,
-                "sirena": 80,
-                "tomoru":50,
-                "ceil": 100,
-                "dea": 40,
-                "lenus": 20,
-                "klr": 30
+                "player":0,
+                "sao": 0,
+                "sirena": 0,
+                "tomoru":0,
+                "ceil": 0,
+                "dea": 0,
+                "lenus": 0,
+                "klr": 00
             },
             "ranking":[
                 {"team_id":"player",

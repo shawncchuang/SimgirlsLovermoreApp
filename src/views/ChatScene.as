@@ -60,28 +60,28 @@ public class ChatScene extends Sprite
     {
         //60% bingo,40% trash talking
         var bingo:uint=60;
-        var moodBingo:uint=30;
+        var moodBingo:uint=40;
         var chat_bingo:Number=uint(Math.random()*100)+1;
 
         if(chat_bingo<=bingo)
         {
-            //chate bingo; item bingo
-            var item_bingo:Number=uint(Math.random()*140)+1;
+            //chate bingo, item bingo
+            var item_bingo:Number=uint(Math.random()*100)+1;
 
             if(item_bingo>=1 && item_bingo<=moodBingo)
             {
-                // location match
+                // location match 40%
                 setResult(0);
             }
-            else if(item_bingo>moodBingo && item_bingo<=bingo)
+            else if(item_bingo>moodBingo && item_bingo<=moodBingo+30)
             {
-                //secrets match
+                //secrets match 30%
                 setResult(2);
 
             }
             else
             {
-                //gift match
+                //gift match 30%
                 setResult(1);
 
             }

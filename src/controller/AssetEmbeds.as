@@ -46,8 +46,8 @@ public class AssetEmbeds
     [Embed(source = "../../media/textures/scenes/hotspring.jpg")]
     public static const  HotSpringBg:Class;
 
-    [Embed(source = "../../media/textures/scenes/lounge.jpg")]
-    public static const  LoungeBg:Class;
+    [Embed(source = "../../media/textures/scenes/coffeeshop.jpg")]
+    public static const  CoffeeShopBg:Class;
 
     [Embed(source = "../../media/textures/scenes/museum.jpg")]
     public static const  MuseumBg:Class;

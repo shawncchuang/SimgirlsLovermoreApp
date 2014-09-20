@@ -272,33 +272,33 @@ public class MainScene extends Scenes
             var openDay:Boolean;
             var openNight:Boolean;
             switch(target){
-                case "LoungeScene":
-                    msg="Sorry,The Lounge'll  open at night.";
-                    openDay=false;
-                    openNight=true;
-                    break
                 case "NightclubScene":
-                    msg="Sorry,The NightClub'll  open at night.";
+                    msg="The Night Club'll open at night.";
                     openDay=false;
                     openNight=true;
                     break
                 case "BlackMarketScene":
-                    msg="Sorry,The NightClub'll  open at night.";
+                    msg="The Black Market'll open at night.";
                     openDay=false;
                     openNight=true;
                     break
                 case "SportBarScene":
-                    msg="Sorry,The SportBar'll  open at night.";
+                    msg="The Sport Bar'll open at night.";
                     openDay=false;
                     openNight=true;
                     break
                 case "BankScene":
-                    msg="Sorry,The Bank'll  open in the morring.";
+                    msg="The Bank'll open in the morning.";
                     openDay=true;
                     openNight=false;
                     break
+                case "RestaurantScene":
+                    msg="The Restaurant'll open at night.";
+                    openDay=false;
+                    openNight=true;
+                    break
                 case "FitnessClubScene":
-                    msg="Sorry,The FitnessClub'll  open in the morring.";
+                    msg="The Fitness Club'll open in the morning.";
                     openDay=true;
                     openNight=false;
                     break

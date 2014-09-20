@@ -6,6 +6,10 @@ import com.greensock.loading.LoaderMax;
 import com.greensock.loading.SWFLoader;
 import com.shortybmc.data.parser.CSV;
 
+import flash.desktop.NativeApplication;
+
+import flash.desktop.NativeDragActions;
+
 
 import flash.display.Bitmap;
 import flash.display.BitmapData;
@@ -19,6 +23,7 @@ import flash.media.Sound;
 import flash.media.SoundChannel;
 import flash.media.SoundTransform;
 import flash.net.URLRequest;
+import flash.text.TextField;
 import flash.text.TextFormat;
 
 import controller.Assets;
@@ -262,8 +267,11 @@ public class MainCommand implements MainInterface{
         var format:TextFormat=new TextFormat();
         format.size=20;
         format.align="center";
+        format.font="SimFutura";
         var topview:flash.display.MovieClip=SimgirlsLovemore.topview;
         alertmsg=new AlertMsgUI();
+        alertmsg.name="alert";
+        alertmsg.msg.embedFonts=true;
         alertmsg.msg.defaultTextFormat=format;
         alertmsg.confirm.buttonMode=true;
         alertmsg.cancelbtn.buttonMode=true;
@@ -279,6 +287,44 @@ public class MainCommand implements MainInterface{
         //command.playSound("ErrorSound");
 
     }
+    public static function sysAlert(type,msg:String):void{
+
+        var format:TextFormat=new TextFormat();
+        format.size=20;
+        format.align="center";
+        format.font="SimFutura";
+        var topview:flash.display.MovieClip=SimgirlsLovemore.topview;
+        alertmsg=new AlertMsgUI();
+        alertmsg.name="alert";
+        alertmsg.msg.embedFonts=true;
+        alertmsg.msg.defaultTextFormat=format;
+        alertmsg.confirm.buttonMode=true;
+        alertmsg.confirm.visible=true
+        alertmsg.cancelbtn.visible=false;
+        switch(type){
+            case "warning":
+                alertmsg.confirm.addEventListener(MouseEvent.MOUSE_DOWN,doColseAlertmsg);
+                break
+            case "maintaining":
+                alertmsg.confirm.addEventListener(MouseEvent.MOUSE_DOWN,doQuictGame);
+            function doQuictGame(e:MouseEvent):void{
+                NativeApplication.nativeApplication.exit();
+
+            }
+                break
+        }
+
+        alertmsg.x=1024/2;
+        alertmsg.y=768/2;
+        alertmsg.msg.text=msg;
+        alertmsg.alpha=0;
+        topview.addChild(alertmsg);
+
+        TweenMax.to(alertmsg,0.5,{alpha:1});
+
+        //
+    }
+
 
     public static function addTalkingMsg(msg:String):void
     {
@@ -287,6 +333,7 @@ public class MainCommand implements MainInterface{
         format.align="left";
         var topview:flash.display.MovieClip=SimgirlsLovemore.topview;
         alertmsg=new AlertTalkingUI();
+        alertmsg.name="alert";
         alertmsg.msg.defaultTextFormat=format;
 
         alertmsg.cancelbtn.addEventListener(MouseEvent.CLICK,doColseAlertmsg);
@@ -299,7 +346,8 @@ public class MainCommand implements MainInterface{
     private static function doColseAlertmsg(e:MouseEvent):void
     {
         var topview:flash.display.MovieClip=SimgirlsLovemore.topview;
-        var _alert:flash.display.MovieClip=e.target as flash.display.MovieClip;
+        // var _alert:flash.display.MovieClip=e.target as flash.display.MovieClip;
+        var _alert:flash.display.MovieClip=topview.getChildByName("alert") as flash.display.MovieClip;
         topview.removeChild(_alert);
     }
     public static function initPreOrderAccount():void
@@ -1114,7 +1162,6 @@ public class MainCommand implements MainInterface{
 
         flox.save("ap",ap);
 
-
         if(time==12){
 
             onFinishAnimated();
@@ -1813,6 +1860,19 @@ public class MainCommand implements MainInterface{
         }
         flox.save("se",seObj);
 
+
+    }
+    public function checkSystemStatus():void{
+
+        var flox:FloxInterface=new FloxCommand();
+        var status:Object=flox.getSyetemData("status");
+        DebugTrace.msg("MainCommand.checkSystemStatus status="+status.type);
+        if(status.type!="normal"){
+
+            //type---> normal,maintaining,warning
+            MainCommand.sysAlert(status.type,status.log);
+
+        }
 
     }
 

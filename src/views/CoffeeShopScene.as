@@ -26,7 +26,7 @@ package views
 	import utils.DebugTrace;
 	import utils.ViewsContainer;
 	
-	public class LoungeScene extends Scenes
+	public class CoffeeShopScene extends Scenes
 	{
 		private var speaker_sprite:Sprite;
 		private var command:MainInterface=new MainCommand();
@@ -35,8 +35,11 @@ package views
 		private var floxcom:FloxInterface=new FloxCommand();
 		
 	 
-		public function LoungeScene()
+		public function CoffeeShopScene()
 		{
+
+            //CoffeeShop
+
 			/*var pointbgTexture:Texture=Assets.getTexture("PointsBg");
 			button=new Button(pointbgTexture);
 			addChild(button);
@@ -51,7 +54,7 @@ package views
 		private function init():void
 		{
 			
-			scencom.init("LoungeScene",speaker_sprite,42,onCallback);
+			scencom.init("CoffeeShopScene",speaker_sprite,42,onCallback);
 			scencom.start();
 			scencom.disableAll();
 		}

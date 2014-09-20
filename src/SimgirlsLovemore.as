@@ -34,7 +34,7 @@ import com.greensock.loading.LoaderMax;
 	
 	import utils.DebugTrace;
 	import utils.ViewsContainer;
-	
+
 	import views.AssetsTileList;
 	import views.BattleScene;
 	import views.BlackTileList;
@@ -181,7 +181,10 @@ import com.greensock.loading.LoaderMax;
 			}
 			//if
 			NativeApplication.nativeApplication.addEventListener(flash.events.Event.EXITING,onNavieAppExit);
-			
+
+
+
+
 			 
 			
 		}
