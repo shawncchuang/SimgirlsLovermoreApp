@@ -2,32 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e5634857-ca85-444f-9915-08f826b15827" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/media/textures/scenes/lounge.jpg" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/views/LoungeScene.as" afterPath="$PROJECT_DIR$/src/views/CoffeeShopScene.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/AlertMsgUI.swc" afterPath="$PROJECT_DIR$/lib/AlertMsgUI.swc" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/csv/scenelibrary.numbers/Index.zip" afterPath="$PROJECT_DIR$/assets/csv/scenelibrary.numbers/Index.zip" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/csv/scenelibrary.numbers/Metadata/Properties.plist" afterPath="$PROJECT_DIR$/assets/csv/scenelibrary.numbers/Metadata/Properties.plist" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/media/textures/icons/SignsSheet.png" afterPath="$PROJECT_DIR$/media/textures/icons/SignsSheet.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/csv/scenelibrary.numbers/preview-micro.jpg" afterPath="$PROJECT_DIR$/assets/csv/scenelibrary.numbers/preview-micro.jpg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/csv/scenelibrary.numbers/preview-web.jpg" afterPath="$PROJECT_DIR$/assets/csv/scenelibrary.numbers/preview-web.jpg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/csv/scenelibrary.numbers/preview.jpg" afterPath="$PROJECT_DIR$/assets/csv/scenelibrary.numbers/preview.jpg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/AssetEmbeds.as" afterPath="$PROJECT_DIR$/src/controller/AssetEmbeds.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/ChatScene.as" afterPath="$PROJECT_DIR$/src/views/ChatScene.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/data/Config.as" afterPath="$PROJECT_DIR$/src/data/Config.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/data/DataContainer.as" afterPath="$PROJECT_DIR$/src/data/DataContainer.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/DatingScene.as" afterPath="$PROJECT_DIR$/src/views/DatingScene.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Game.as" afterPath="$PROJECT_DIR$/src/Game.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Main-app.xml" afterPath="$PROJECT_DIR$/src/Main-app.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/MainCommand.as" afterPath="$PROJECT_DIR$/src/controller/MainCommand.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/MainInterface.as" afterPath="$PROJECT_DIR$/src/controller/MainInterface.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/MainScene.as" afterPath="$PROJECT_DIR$/src/views/MainScene.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/model/Scenes.as" afterPath="$PROJECT_DIR$/src/model/Scenes.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/media/textures/icons/SignsSheet.xml" afterPath="$PROJECT_DIR$/media/textures/icons/SignsSheet.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/SimgirlsLovemore.as" afterPath="$PROJECT_DIR$/src/SimgirlsLovemore.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SimgirlsLovermoreApp.iml" afterPath="$PROJECT_DIR$/SimgirlsLovermoreApp.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/model/SystemData.as" afterPath="$PROJECT_DIR$/src/model/SystemData.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/ViewCommand.as" afterPath="$PROJECT_DIR$/src/controller/ViewCommand.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/csv/scenelibrary.csv" afterPath="$PROJECT_DIR$/assets/csv/scenelibrary.csv" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="SimgirlsLovermoreApp.iws" />
@@ -715,7 +689,7 @@
       <workItem from="1411075882449" duration="140000" />
       <workItem from="1411076022828" duration="10703000" />
       <workItem from="1411086968546" duration="9960000" />
-      <workItem from="1411154170222" duration="19857000" />
+      <workItem from="1411154170222" duration="19931000" />
     </task>
     <task id="LOCAL-00001" summary="update setting on intelliJ">
       <created>1406764639395</created>
@@ -813,11 +787,15 @@
       <created>1411156304439</created>
       <updated>1411156304439</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="changed lounge to coffee shop , modified dating scene top bar">
+      <created>1411180551914</created>
+      <updated>1411180551914</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="895864000" />
+    <option name="totallyTimeSpent" value="895938000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -908,7 +886,8 @@
     <MESSAGE value="flirt system" />
     <MESSAGE value="working at ThemePark,NightClub,Bank, Meditate to play TraningGame at Temple" />
     <MESSAGE value="disable story, Rest in Hotel fixed bugs" />
-    <option name="LAST_COMMIT_MESSAGE" value="disable story, Rest in Hotel fixed bugs" />
+    <MESSAGE value="changed lounge to coffee shop , modified dating scene top bar" />
+    <option name="LAST_COMMIT_MESSAGE" value="changed lounge to coffee shop , modified dating scene top bar" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
