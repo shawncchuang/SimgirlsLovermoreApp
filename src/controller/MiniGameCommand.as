@@ -275,7 +275,7 @@ import flash.desktop.NativeApplication;
 			//376-(player.width/2)
 			if(game=="tracing")
 			{
-				var xLeft:Number=-player.width/4
+				var xLeft:Number=-player.width/4;
 				var yTop:Number=120;
 				var y_Bottom:Number=550;
 			}
@@ -354,6 +354,9 @@ import flash.desktop.NativeApplication;
 		}
 		private function onCompleteHandle(e:Event):void
 		{
+
+
+
 			gameComplete();
 		}
 		private function doKeyDownHandle(e:Event):void
@@ -662,6 +665,16 @@ import flash.desktop.NativeApplication;
 				 
 				
 			}
+			else
+			{
+
+				if(scoreTxt)
+				{
+					gameStage.removeChild(scoreTxt);
+				}
+
+
+			}
 			 
 		   command.stopBackgroudSound();
 		 
@@ -768,30 +781,30 @@ import flash.desktop.NativeApplication;
 			
 		}
 		
-		private function doReplayHandle(e:MouseEvent):void
-		{
-			
-			//trace("MiniGameCommand.doReplayHandle goScene=",goScene);
-			TweenMax.killAll();
-			var gameEvt:GameEvent=SimgirlsLovemore.gameEvent;
-			gameEvt._name="remove_mini_game";
-			gameEvt.displayHandler();
-			
-			
-			command.stopBackgroudSound();
-			
-			//for beta version
-			goScene="BetaScene";
-			var _data:Object=new Object();
-			_data.name=goScene;
-			command.sceneDispatch(SceneEvent.CHANGED,_data);
-			
-			
-			var evtObj:Object=new Object();
-			evtObj[goScene]="replay";
-			submitEvent(evtObj);
-			
-		}
+//		private function doReplayHandle(e:MouseEvent):void
+//		{
+//
+//			//trace("MiniGameCommand.doReplayHandle goScene=",goScene);
+//			TweenMax.killAll();
+//			var gameEvt:GameEvent=SimgirlsLovemore.gameEvent;
+//			gameEvt._name="remove_mini_game";
+//			gameEvt.displayHandler();
+//
+//
+//			command.stopBackgroudSound();
+//
+//			//for beta version
+//			goScene="BetaScene";
+//			var _data:Object=new Object();
+//			_data.name=goScene;
+//			command.sceneDispatch(SceneEvent.CHANGED,_data);
+//
+//
+//			var evtObj:Object=new Object();
+//			evtObj[goScene]="replay";
+//			submitEvent(evtObj);
+//
+//		}
 		private function doQuitHandle(e:MouseEvent):void
 		{
 
@@ -814,10 +827,12 @@ import flash.desktop.NativeApplication;
 		private function onGetScore(e:Event):void
 		{
 			DebugTrace.msg("MiniGameCommnad.onGetScore score="+e.target.score);
-			
+
+			var scorePerList:Array=["",0.03,0.05,0.07];
 
             var seMax:Number=flox.getSaveData("love").player;
-            var result:Number=Math.floor(e.target.score*0.03*seMax);
+            //var result:Number=Math.floor(e.target.score*0.03*seMax);
+			var result:Number=Math.floor(scorePerList[e.target.score]*seMax);
 
 			var posX:Number=player.x+50;
 			var posY:Number=player.y;	
@@ -849,6 +864,7 @@ import flash.desktop.NativeApplication;
 			try
 			{
 				gameStage.removeChild(scoreTxt);
+                scoreTxt=null;
 			}
 			catch(e:Error){}
 			

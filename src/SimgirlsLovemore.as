@@ -202,7 +202,7 @@ import com.greensock.loading.LoaderMax;
 					var loaderReq:LoaderRequest=new LoaderRequest();
 					loaderReq.setLoaderQueue("waving","../swf/map_anim.swf",e.target.container);
 					
-					break
+					break;
 				case "remove_waving":
 					try
 					{
@@ -212,7 +212,7 @@ import com.greensock.loading.LoaderMax;
 					{
 						
 					}
-					break
+					break;
 				case "comcloud":
 					com_btn_txt=e.target.data;
 					comcloud=new CommandCloud(com_btn_txt)
@@ -223,7 +223,7 @@ import com.greensock.loading.LoaderMax;
 					comcloud.addEventListener(MouseEvent.CLICK,doClickComCloud);
 					comcloud.mc.addEventListener(Event.ENTER_FRAME,doComCloudEnterFrame)
 					topview.addChild(comcloud);*/
-					break
+					break;
 				
 				case "clear_comcloud":
 					for(var i:uint=0;i<comcouldlist.length;i++)
@@ -232,38 +232,38 @@ import com.greensock.loading.LoaderMax;
 						topview.removeChild(comcouldlist[i]);
 					}
 					comcouldlist=new Array();
-					break
+					break;
                 case "hide_comcloud":
                     for(var j:uint=0;j<comcouldlist.length;j++) {
 
                         TweenMax.to(comcouldlist[j],0.5,{alpha:0});
                     }
-                    break
+                    break;
                 case "show_comcloud":
                     for(var k:uint=0;k<comcouldlist.length;k++) {
 
                         TweenMax.to(comcouldlist[k],0.5,{alpha:1});
                     }
-                    break
+                    break;
 				case "QA":
 					//inputUI=new InputNamePannel(onSubmitComplete);	
 					//topview.addChild(inputUI);
 					qa_label=e.target.qa_label
 					qaDisplay=new QADisplayContainer(qa_label,onSubmitComplete);
 					topview.addChild(qaDisplay);
-					break
+					break;
 				case "tarot_cards":
 					tarotcards=new TarotCardsDisplay();
 					topview.addChild(tarotcards);
-					break
+					break;
 				case "remove_tarot_card":
 					topview.removeChild(tarotcards);
-					break
+					break;
 				case "show_video":
 					//command.playSound("plane");
 					videoframe=new SceneVideo(e.target.video,onVideoComplete);
 					topview.addChild(videoframe);
-					break
+					break;
 				
 				case "display_new_load_game":
 					Game.LoadGame=false;
@@ -277,30 +277,30 @@ import com.greensock.loading.LoaderMax;
 				case "dating_assets_form":
 					assetsform=new AssetsTileList(e.target._name);
 					topview.addChild(assetsform);
-					break
+					break;
 				case "enable_assets_form":
 					assetsform.visible=true;
-					break
+					break;
 				case "disable_assets_form":
 					assetsform.visible=false;
-					break
+					break;
 				case "removed_assets_form":
 					topview.removeChild(assetsform);
-					break
+					break;
 				case "battle":
 					battlescene=new BattleScene();
 					topview.addChild(battlescene);
-					break
+					break;
 				case "remove_battle":
 					topview.removeChild(battlescene);
-					break
+					break;
 				case  "blackmarket_form":
 					blackmarketform=new BlackTileList();
 					topview.addChild(blackmarketform);
-					break
+					break;
 				case "remove_blackmarket_form":
 					topview.removeChild(blackmarketform);
-					break
+					break;
 				case "TraceGame":
 					minigamescene=new TraceGame();
 					topview.addChild(minigamescene);
@@ -308,7 +308,7 @@ import com.greensock.loading.LoaderMax;
 				case "TrainingGame":
 					minigamescene=new TrainingGame();
 					topview.addChild(minigamescene);
-					break
+					break;
 				case "remove_mini_game":
 					topview.removeChild(minigamescene);
 					break

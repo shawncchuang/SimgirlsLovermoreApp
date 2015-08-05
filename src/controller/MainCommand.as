@@ -1215,7 +1215,7 @@ public class MainCommand implements MainInterface{
     }
     public function doTrain():void
     {
-        comType="Trin";
+        comType="Train";
 
         var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
         gameEvent._name="clear_comcloud";
@@ -1336,6 +1336,7 @@ public class MainCommand implements MainInterface{
         var sysCommand:Object=flox.getSyetemData("command");
         var valuesInt:String=sysCommand.Research.values.int;
         var cash_pay:Number=sysCommand.Research.values.cash;
+        DebugTrace.msg("MainCommand.doLearn cash_pay="+cash_pay);
         var cash:Number=flox.getSaveData("cash");
         var ap:Number=flox.getSaveData("ap");
         var intObj:Object=flox.getSaveData("int");
@@ -1388,8 +1389,6 @@ public class MainCommand implements MainInterface{
         var _data:Object=new Object();
         _data.name="TrainingGame";
         sceneDispatch(SceneEvent.CHANGED,_data);
-
-
 
     }
 
@@ -1766,16 +1765,10 @@ public class MainCommand implements MainInterface{
             }
             else
             {
+
                 DebugTrace.msg("MainCommand.paidAP ap="+ap);
                 pass_ap=true;
-                ap=ap+payAP;
-                flox.save("ap",ap);
 
-                var value_data:Object=new Object();
-                value_data.attr="ap";
-                value_data.values=String(payAP);
-                var command:MainInterface=new MainCommand();
-                command.displayUpdateValue(scene,value_data);
 
             }
             //if
@@ -1791,17 +1784,17 @@ public class MainCommand implements MainInterface{
         if(payCash<0){
 
             var cash:Number=flox.getSaveData("cash");
-            var cash_pay:Number=sysCommand.Train.values.cash;
-
-            if(cash>=cash_pay){
+            var cash_pay:Number=sysCommand[com].values.cash;
+            cash+=cash_pay;
+            if(cash>=0){
 
                 pass_cash=true;
-                cash+=cash_pay;
-                flox.save("cash",cash);
+
+                //flox.save("cash",cash);
 
             }else{
 
-                msg="You need more Cash.";
+                msg="Not enough money.";
                 alert=new AlertMessage(msg,onClosedAlert);
                 scene.addChild(alert);
             }
@@ -1816,6 +1809,20 @@ public class MainCommand implements MainInterface{
 
 
         if(pass_ap && pass_cash && pass_se){
+
+            if(payAP<0){
+                //have to spend AP
+                ap=ap+payAP;
+                flox.save("ap",ap);
+
+                var value_data:Object=new Object();
+                value_data.attr="ap";
+                value_data.values=String(payAP);
+                var command:MainInterface=new MainCommand();
+                command.displayUpdateValue(scene,value_data);
+
+            }
+
             success=true;
         }
 

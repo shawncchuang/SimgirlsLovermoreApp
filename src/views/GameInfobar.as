@@ -561,9 +561,9 @@ public class GameInfobar extends Sprite
                 if(current_dating){
                     dating_icon.visible=false;
                 }
-                comDirView.x=228;
-                comDirView.y=270;
-                break
+                comDirView.x=132;
+                comDirView.y=665;
+                break;
             default:
                 comDirView.x=260;
                 comDirView.y=85;

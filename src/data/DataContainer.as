@@ -733,6 +733,7 @@ public class DataContainer
     private static var battle_type:String;
     public static function set battleType(type:String):void{
 
+//        battleType=="sechedule" or "practice" or ""
         battle_type=type;
     }
     public static function get battleType():String{

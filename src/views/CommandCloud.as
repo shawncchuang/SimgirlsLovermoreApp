@@ -325,7 +325,7 @@ public class CommandCloud extends MovieClip
 
     private function onInitCurrentScene():void
     {
-        DebugTrace.msg("CommandCloud.onInitCurrentScene")
+        DebugTrace.msg("CommandCloud.onInitCurrentScene");
 
         TweenMax.killAll();
         //Starling.juggler.remove(valueTween);

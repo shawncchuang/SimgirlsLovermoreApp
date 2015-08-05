@@ -97,11 +97,11 @@ import events.GameEvent;
 					gameEvent.displayHandler();
 					_data.name="MainScene";
 					command.sceneDispatch(SceneEvent.CHANGED,_data);
-					break
+					break;
 				case "Research":
 
                     command.doLearn();
-					
+
 					break
 				case "ani_complete":
 

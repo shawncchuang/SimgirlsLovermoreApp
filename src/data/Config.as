@@ -281,7 +281,7 @@ public class Config
             "next_switch":"s001",
             "current_switch":"s001|on",
             "status":"Normal",
-            "cash":1000,
+            "cash":10,
             "first_name":"",
             "last_name":"",
             "date":"Tue.1.Mar.2022|12",

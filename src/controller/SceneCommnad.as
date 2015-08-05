@@ -71,7 +71,7 @@ public class SceneCommnad implements SceneInterface
     private var moving_tween:Tween;
     private var fishedcallback:Function;
     private var photoframe:PhotoMessage=null;
-    //private var background:MovieClip=null;
+    //private var background:MovieClip=null;d
     private var background:Sprite;
     private var bgSprtie:Image;
     private var scene_container:Sprite

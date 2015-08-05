@@ -230,17 +230,17 @@ package views
 				case Keyboard.W:
 					//w;up
 					miniGameEvt.keyDown="up";
-					break
+					break;
 				case Keyboard.LEFT:
 				case Keyboard.A:
 					//a;left
 					miniGameEvt.keyDown="left";
-					break
+					break;
 				case Keyboard.RIGHT:
 				case Keyboard.D:
 					//d;right
 					miniGameEvt.keyDown="right";
-					break
+					break;
 				case Keyboard.DOWN:
 				case Keyboard.S:
 					//s;down
@@ -262,17 +262,17 @@ package views
 				case 38:
 					//w;up
 					miniGameEvt.keyUp="up";
-					break
+					break;
 				case 65:
 				case 37:
 					//a;left
 					miniGameEvt.keyUp="left";
-					break
+					break;
 				case 68:
 				case 39:
 					//d;right
 					miniGameEvt.keyUp="right";
-					break
+					break;
 				case 83:
 				case 40:
 					//s;down
@@ -357,7 +357,7 @@ package views
             var seMax:Number=flox.getSaveData("love").player;
 
             if(current_se>seMax){
-                current_se=seMax
+                current_se=seMax;
             }
             seObj.player=current_se;
 			flox.save("se",seObj);
@@ -368,11 +368,26 @@ package views
 		{
 
 			var seObj:Object=flox.getSaveData("se");
-			
+			var seMax:Number=flox.getSaveData("love").player;
+
 			var score:Number=e.data.score;
             seObj.player+=score;
             current_se= seObj.player;
-			seTxt.text="SE : "+ seObj.player;
+            seTxt.text="SE : "+ seObj.player;
+
+
+
+			if(seObj.player>seMax){
+
+				seObj.player=seMax;
+				seTxt.text="SE : "+ seObj.player;
+
+				gameComplete();
+				miniGameEvt.onCompleteHandle();
+				miniGameEvt.onVictory();
+			}
+
+
 
 
 		}
