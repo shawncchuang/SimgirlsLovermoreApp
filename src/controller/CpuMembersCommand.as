@@ -110,7 +110,7 @@ public class CpuMembersCommand implements CpuMembersInterface
         //var scene:String=DataContainer.BatttleScene;(scene==Arena)
         var teams:Object=flox.getSaveData("cpu_teams");
         bossName=Config.bossName;
-        var battleType=DataContainer.battleType;
+        var battleType:String=DataContainer.battleType;
         //DebugTrace.msg("CpuMembersCommand. battleType :"+battleType);
         if(battleType=="sechedule"){
 

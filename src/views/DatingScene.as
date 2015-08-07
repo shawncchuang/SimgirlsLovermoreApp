@@ -1149,8 +1149,8 @@ public class DatingScene extends Scenes
         return textture;
     }
 
-    var actSrc:String;
-    var actCallBack:Function;
+    private var actSrc:String;
+    private var actCallBack:Function;
     private function actTransform(src:String,callback:Function):void{
 
         actSrc=src;
@@ -1216,31 +1216,31 @@ public class DatingScene extends Scenes
             case "Chat":
                 relPass=true;
                 limitMood=Config.moodStep["bored-Min"];
-                break
+                break;
             case "Give":
                 relPass=true;
                 limitMood=Config.moodStep["depressed-Min"];
-                break
+                break;
             case "Flirt":
                 relPass=true;
                 limitMood=Config.moodStep["smitten-Min"];
-                break
+                break;
             case "TakePhoto":
                 limitRel=Config.relationshipStep["friend-Min"];
                 limitMood=Config.moodStep["pleased-Min"];
                 //relPass=true;
                 //moodPass=true;
-                break
+                break;
             case "Date":
                 limitRel=Config.relationshipStep["closefriend-Min"];
                 limitMood=Config.moodStep["delighted-Min"];
                 //relPass=true;
                 //moodPass=true;
-                break
+                break;
             case "Kiss":
                 limitRel=Config.relationshipStep["lover-Min"];
                 limitMood=Config.moodStep["loved-Min"];
-                break
+                break;
             case "Leave":
                 relPass=true;
                 moodPass=true;

@@ -24,47 +24,11 @@
         <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/src/Main-app.xml" package-file-name="SimgirlsLovermore">
           <files-to-package>
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/src/update_config.xml" path-in-package="update_config.xml" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/swf/skills/Ba.swf" path-in-package="swf/skills/Ba.swf" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/swf/skills/Be.swf" path-in-package="swf/skills/Be.swf" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/swf/skills/Bf.swf" path-in-package="swf/skills/Bf.swf" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/swf/skills/Bn.swf" path-in-package="swf/skills/Bn.swf" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/swf/skills/Bw.swf" path-in-package="swf/skills/Bw.swf" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/swf/skills/Ga.swf" path-in-package="swf/skills/Ga.swf" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/swf/skills/Ge.swf" path-in-package="swf/skills/Ge.swf" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/swf/skills/Gf.swf" path-in-package="swf/skills/Gf.swf" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/swf/skills/Gn.swf" path-in-package="swf/skills/Gn.swf" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/swf/skills/Gw.swf" path-in-package="swf/skills/Gw.swf" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/swf/skills/GOR.swf" path-in-package="swf/skills/GOR.swf" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/swf/skills/Gs1.swf" path-in-package="swf/skills/Gs1.swf" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/swf/skills/Ba_SP.swf" path-in-package="swf/skills/Ba_SP.swf" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/swf/skills/Be_SP.swf" path-in-package="swf/skills/Be_SP.swf" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/swf/skills/Bf_SP.swf" path-in-package="swf/skills/Bf_SP.swf" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/swf/skills/Bw_SP.swf" path-in-package="swf/skills/Bw_SP.swf" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/swf/skills/Ga_SP.swf" path-in-package="swf/skills/Ga_SP.swf" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/swf/skills/Ge_SP.swf" path-in-package="swf/skills/Ge_SP.swf" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/swf/skills/Gf_SP.swf" path-in-package="swf/skills/Gf_SP.swf" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/swf/skills/Gw_SP.swf" path-in-package="swf/skills/Gw_SP.swf" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/swf/skills/SP_BG.swf" path-in-package="swf/skills/SP_BG.swf" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/swf/skills/attention.swf" path-in-package="swf/skills/attention.swf" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/swf/skills/B_VicDance.swf" path-in-package="swf/skills/B_VicDance.swf" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/swf/skills/G_VicDance.swf" path-in-package="swf/skills/G_VicDance.swf" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/swf/ROBO.swf" path-in-package="swf/ROBO.swf" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/swf/B_mini.swf" path-in-package="swf/B_mini.swf" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/swf/G_mini.swf" path-in-package="swf/G_mini.swf" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/swf/map_anim.swf" path-in-package="swf/map_anim.swf" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/swf/attention.swf" path-in-package="swf/attention.swf" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/swf/BattleStage.swf" path-in-package="swf/BattleStage.swf" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/swf/MINI_b_bike.swf" path-in-package="swf/MINI_b_bike.swf" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/swf/MINI_n_bike.swf" path-in-package="swf/MINI_n_bike.swf" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/swf/skillsCards.dbswf" path-in-package="swf/skillsCards.dbswf" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/swf/skillsCardsNote.swf" path-in-package="swf/skillsCardsNote.swf" />
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/fonts" path-in-package="fonts" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/video/video_test.swf" path-in-package="video/video_test.swf" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/video/plane-departing.flv" path-in-package="video/plane-departing.flv" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/video/arriving-shambala.flv" path-in-package="video/arriving-shambala.flv" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/images/bm" path-in-package="images/bm" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/images/icons" path-in-package="images/icons" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/images/items" path-in-package="images/items" />
+            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/swf" path-in-package="swf" />
+            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/swf/skills" path-in-package="swf/skills" />
+            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/video" path-in-package="video" />
+            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/images" path-in-package="images" />
           </files-to-package>
           <AirSigningOptions keystore-path="$MODULE_DIR$/release/simgirl_cer.p12" use-temp-certificate="false" />
         </packaging-air-desktop>
