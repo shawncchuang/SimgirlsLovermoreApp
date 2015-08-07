@@ -114,8 +114,8 @@ public class MainScene extends Scenes
         scrollX=stageW;
         scrollY=stageH;
 
-        movieX=(container.width-stageW)/scrollX;
-        movieY=(container.height-stageH)/scrollY;
+        movieX=(1536-stageW)/scrollX;
+        movieY=(1195-stageH)/scrollY;
 
 
         var gameInfo:Sprite=ViewsContainer.gameinfo;

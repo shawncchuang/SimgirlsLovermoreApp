@@ -385,12 +385,11 @@ public class DrawManager implements DrawerInterface
     public function drawCharacterProfileIcon(target:Sprite,ch:String,scale:Number):void
     {
 
-        //DebugTrace.msg("DrawManager.drwaCharacterProfileIcon ch:"+ch);
         var texture:Texture=Assets.getTexture(ch+"Facials");
         var xml:XML=Assets.getAtalsXML(ch+"FacialsXML");
         var atlas:TextureAtlas=new TextureAtlas(texture,xml);
         var mood:String=DataContainer.getFacialMood(ch);
-        //DebugTrace.msg("DrawManager.drwaCharacterProfileIcon mood:"+mood);
+        DebugTrace.msg("DrawManager.drwaCharacterProfileIcon ch:"+ch+" ,mood:"+mood+" ,scale:"+scale);
 
         var mc:MovieClip=new MovieClip(atlas.getTextures(ch+"-"+mood),12);
         mc.stop();

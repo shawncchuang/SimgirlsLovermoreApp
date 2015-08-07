@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
 <!-- $TexturePacker:SmartUpdate:b639aa44f0f9f8a61fa95edd7577de50:855a3a0130a244eeadc94590ca6e3e5b:cf38771f5bb2a4b89fb78a19cdc59d9d$ -->
-<TextureAtlas imagePath="ceil_facials.png">
+<TextureAtlas imagePath="ceil-facials.atf">
     <SubTexture name="ceil-annoyed1" x="2" y="2" width="198" height="198"/>
     <SubTexture name="ceil-annoyed2" x="2" y="202" width="198" height="198"/>
     <SubTexture name="ceil-loved1" x="2" y="402" width="198" height="198"/>

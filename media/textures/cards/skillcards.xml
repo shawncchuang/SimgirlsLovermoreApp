@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
 <!-- $TexturePacker:SmartUpdate:ef122e936a655b28c30da9d03f3f8988:716182d0f46211917e5ccccdccb7e021:705989fe7cabedf15675e6389f53d590$ -->
-<TextureAtlas imagePath="skillcards.png">
+<TextureAtlas imagePath="skillcards.atf">
     <SubTexture name="a0" x="798" y="683" width="197" height="225"/>
     <SubTexture name="a1" x="599" y="683" width="197" height="225"/>
     <SubTexture name="a2" x="798" y="456" width="197" height="225"/>

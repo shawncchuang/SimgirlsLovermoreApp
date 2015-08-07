@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
 <!-- $TexturePacker:SmartUpdate:a0d31eb55a6abc2062bcb8987ed69b49:a9a3decceae0aebef781e9fd84d69804:f87a6d3d960f34338d92327d63260a15$ -->
-<TextureAtlas imagePath="dea-facials.png">
+<TextureAtlas imagePath="dea-facials.atf">
     <SubTexture name="dea-annoyed1" x="2" y="2" width="198" height="198"/>
     <SubTexture name="dea-annoyed2" x="2" y="202" width="198" height="198"/>
     <SubTexture name="dea-loved1" x="2" y="402" width="198" height="198"/>

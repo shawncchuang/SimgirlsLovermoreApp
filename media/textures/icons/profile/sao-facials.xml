@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
- <!-- $TexturePacker:SmartUpdate:e9b9da1bdff29dc9548fd29e3c5f19b8:bccc2f102dcf3bb2d3286b219d39b951:813891894751523e1e16f32686aa4f2b$ -->
-<TextureAtlas imagePath="sao-facials.png">
-    <SubTexture name="sao-annoyed1" x="2" y="2" width="198" height="198"/>
-    <SubTexture name="sao-annoyed2" x="2" y="202" width="198" height="198"/>
-    <SubTexture name="sao-loved1" x="202" y="2" width="198" height="198"/>
-    <SubTexture name="sao-loved2" x="202" y="202" width="198" height="198"/>
-    <SubTexture name="sao-bored1" x="402" y="2" width="198" height="198"/>
-    <SubTexture name="sao-bored2" x="402" y="202" width="198" height="198"/>
-    <SubTexture name="sao-calm1" x="602" y="2" width="198" height="198"/>
-    <SubTexture name="sao-calm2" x="602" y="202" width="198" height="198"/>
+<!-- $TexturePacker:SmartUpdate:59546d2b7098ed0f1fd6fcb9f2d25690:bed3b6541c7c52b6eefef1e7b42404ec:21d57f3f865947e34d4cb62f3ba11f5e$ -->
+<TextureAtlas imagePath="sao-facials.atf">
+    <SubTexture name="sao-angry1" x="2" y="2" width="198" height="198"/>
+    <SubTexture name="sao-angry2" x="2" y="202" width="198" height="198"/>
+    <SubTexture name="sao-blush1" x="2" y="402" width="198" height="198"/>
+    <SubTexture name="sao-blush2" x="2" y="602" width="198" height="198"/>
+    <SubTexture name="sao-bored1" x="2" y="802" width="198" height="198"/>
+    <SubTexture name="sao-bored2" x="202" y="2" width="198" height="198"/>
+    <SubTexture name="sao-calm1" x="402" y="2" width="198" height="198"/>
+    <SubTexture name="sao-calm2" x="602" y="2" width="198" height="198"/>
     <SubTexture name="sao-pleased1" x="802" y="2" width="198" height="198"/>
-    <SubTexture name="sao-pleased2" x="802" y="202" width="198" height="198"/>
-    <SubTexture name="sao-depressed1" x="1002" y="2" width="198" height="198"/>
-    <SubTexture name="sao-depressed2" x="1002" y="202" width="198" height="198"/>
-    <SubTexture name="sao-smitten1" x="1202" y="2" width="198" height="198"/>
-    <SubTexture name="sao-smitten2" x="1202" y="202" width="198" height="198"/>
-    <SubTexture name="sao-sickened1" x="1402" y="2" width="198" height="198"/>
-    <SubTexture name="sao-sickened2" x="1402" y="202" width="198" height="198"/>
-    <SubTexture name="sao-delighted1" x="1602" y="2" width="198" height="198"/>
-    <SubTexture name="sao-delighted2" x="1602" y="202" width="198" height="198"/>
+    <SubTexture name="sao-pleased2" x="202" y="202" width="198" height="198"/>
+    <SubTexture name="sao-sad1" x="202" y="402" width="198" height="198"/>
+    <SubTexture name="sao-sad2" x="202" y="602" width="198" height="198"/>
+    <SubTexture name="sao-scared1" x="202" y="802" width="198" height="198"/>
+    <SubTexture name="sao-scared2" x="402" y="202" width="198" height="198"/>
+    <SubTexture name="sao-sick1" x="602" y="202" width="198" height="198"/>
+    <SubTexture name="sao-sick2" x="802" y="202" width="198" height="198"/>
+    <SubTexture name="sao-vhappy1" x="402" y="402" width="198" height="198"/>
+    <SubTexture name="sao-vhappy2" x="402" y="602" width="198" height="198"/>
 </TextureAtlas>

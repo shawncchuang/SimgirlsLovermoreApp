@@ -39,13 +39,13 @@ package views
 		private var bgImg:Image;
 		private var keys:Array=[87,38,65,37,68,39,83,40];
 		
-		[Embed(source="../../media/textures/scenes/road_stage.png")]
+		[Embed(source="../../media/textures/scenes/road_stage.atf" ,mimeType="application/octet-stream")]
 		public static const TraceGameRoad:Class;
 		
-		[Embed(source="../../media/textures/scenes/road_stage_BG.png")]
+		[Embed(source="../../media/textures/scenes/road_stage_BG.atf" ,mimeType="application/octet-stream")]
 		public static const TraceGameBG:Class;
 		
-		[Embed(source="../../media/textures/scenes/schoo_stage.jpg")]
+		[Embed(source="../../media/textures/scenes/schoo_stage.atf" ,mimeType="application/octet-stream")]
 		public static const TrainingGameBG:Class;
 		
 		
@@ -93,13 +93,14 @@ package views
 		private function initTraceBackGround():void
 		{
 			
-			var bgTedture:Texture=Texture.fromBitmap(new TraceGameBG());
+			//var bgTedture:Texture=Texture.fromBitmap(new TraceGameBG());
+            var bgTedture:Texture=Texture.fromAtfData(new TraceGameBG());
 			var skyBg:Image=new Image(bgTedture);
 			addChild(skyBg);
 			
 			
-			bgTexture=Texture.fromBitmap(new TraceGameRoad(),true,false,1,"bgra",true);
-			
+			//bgTexture=Texture.fromBitmap(new TraceGameRoad(),true,false,1,"bgra",true);
+            bgTexture=Texture.fromAtfData(new TraceGameRoad(),1,true,null,true);
 			bgImg=new Image(bgTexture);
 			bgImg.width <<=1;
 			bgImg.setTexCoords(1, new Point(2, 0));
@@ -111,8 +112,9 @@ package views
 		private function initTrainingBackGround():void
 		{
 			
-			bgTexture=Texture.fromBitmap(new TrainingGameBG(),true,false,1,"bgra",true);
-			
+			//bgTexture=Texture.fromBitmap(new TrainingGameBG(),true,false,1,"bgra",true);
+            bgTexture=Texture.fromAtfData(new TrainingGameBG(),1,true,null,true);
+
 			bgImg=new Image(bgTexture);
 			bgImg.width <<=1;
 			bgImg.setTexCoords(1, new Point(2, 0));

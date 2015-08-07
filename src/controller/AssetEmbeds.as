@@ -4,119 +4,119 @@ public class AssetEmbeds
 {
     /*------------------scenes------------------------------------------------- */
 
-    [Embed(source = "../../media/textures/scenes/homepage.jpg")]
+    [Embed(source = "../../media/textures/scenes/homepage.atf" ,mimeType="application/octet-stream")]
     public static const HomePage:Class;
 
 
-    [Embed(source = "../../media/textures/scenes/map_day.jpg")]
+    [Embed(source = "../../media/textures/scenes/map_day.atf",mimeType="application/octet-stream")]
     public static const MainBgDay:Class;
-    [Embed(source = "../../media/textures/scenes/map_night.jpg")]
+    [Embed(source = "../../media/textures/scenes/map_night.atf" ,mimeType="application/octet-stream")]
     public static const MainBgNight:Class;
 
-    [Embed(source = "../../media/textures/scenes/academy.jpg")]
+    [Embed(source = "../../media/textures/scenes/academy.atf" ,mimeType="application/octet-stream")]
     public static const  AcademyBg:Class;
 
-    [Embed(source = "../../media/textures/scenes/airplane.jpg")]
+    [Embed(source = "../../media/textures/scenes/airplane.atf" ,mimeType="application/octet-stream")]
     public static const  AirplaneBg:Class;
 
-    [Embed(source = "../../media/textures/scenes/airport.jpg")]
+    [Embed(source = "../../media/textures/scenes/airport.atf" ,mimeType="application/octet-stream")]
     public static const  AirportBg:Class;
 
-    [Embed(source = "../../media/textures/scenes/arena.jpg")]
+    [Embed(source = "../../media/textures/scenes/arena.atf" ,mimeType="application/octet-stream")]
     public static const  ArenaBg:Class;
 
-    [Embed(source = "../../media/textures/scenes/bank.jpg")]
+    [Embed(source = "../../media/textures/scenes/bank.atf" ,mimeType="application/octet-stream")]
     public static const  BankBg:Class;
 
-    [Embed(source = "../../media/textures/scenes/blackmarket.jpg")]
+    [Embed(source = "../../media/textures/scenes/blackmarket.atf" ,mimeType="application/octet-stream")]
     public static const  BlackMarketBg:Class;
 
-    [Embed(source = "../../media/textures/scenes/casino.jpg")]
+    [Embed(source = "../../media/textures/scenes/casino.atf" ,mimeType="application/octet-stream")]
     public static const  CasinoBg:Class;
 
-    [Embed(source = "../../media/textures/scenes/changingroom.jpg")]
+    [Embed(source = "../../media/textures/scenes/changingroom.atf" ,mimeType="application/octet-stream")]
     public static const  ChangingRoomBg:Class;
 
-    [Embed(source = "../../media/textures/scenes/cinema.jpg")]
+    [Embed(source = "../../media/textures/scenes/cinema.atf" ,mimeType="application/octet-stream")]
     public static const  CinemaBg:Class;
 
-    [Embed(source = "../../media/textures/scenes/gym.jpg")]
+    [Embed(source = "../../media/textures/scenes/gym.atf" ,mimeType="application/octet-stream")]
     public static const  FitnessClubBg:Class;
 
-    [Embed(source = "../../media/textures/scenes/hotspring.jpg")]
+    [Embed(source = "../../media/textures/scenes/hotspring.atf" ,mimeType="application/octet-stream")]
     public static const  HotSpringBg:Class;
 
-    [Embed(source = "../../media/textures/scenes/coffeeshop.jpg")]
+    [Embed(source = "../../media/textures/scenes/coffeeshop.atf" ,mimeType="application/octet-stream")]
     public static const  CoffeeShopBg:Class;
 
-    [Embed(source = "../../media/textures/scenes/museum.jpg")]
+    [Embed(source = "../../media/textures/scenes/museum.atf" ,mimeType="application/octet-stream")]
     public static const  MuseumBg:Class;
 
-    [Embed(source = "../../media/textures/scenes/nightclub.jpg")]
+    [Embed(source = "../../media/textures/scenes/nightclub.atf" ,mimeType="application/octet-stream")]
     public static const  NightClubBg:Class;
 
-    [Embed(source = "../../media/textures/scenes/policestation.jpg")]
+    [Embed(source = "../../media/textures/scenes/policestation.atf" ,mimeType="application/octet-stream")]
     public static const  PoliceStationBg:Class;
 
-    [Embed(source = "../../media/textures/scenes/privateisland.jpg")]
+    [Embed(source = "../../media/textures/scenes/privateisland.atf" ,mimeType="application/octet-stream")]
     public static const  PrivateIslandBg:Class;
 
-    [Embed(source = "../../media/textures/scenes/restaurant.jpg")]
+    [Embed(source = "../../media/textures/scenes/restaurant.atf" ,mimeType="application/octet-stream")]
     public static const  RestaurantBg:Class;
 
-    [Embed(source = "../../media/textures/scenes/shoppingcentre.jpg")]
+    [Embed(source = "../../media/textures/scenes/shoppingcentre.atf",mimeType="application/octet-stream")]
     public static const  ShoppingCentreBg:Class;
 
-    [Embed(source = "../../media/textures/scenes/sportbar.jpg")]
+    [Embed(source = "../../media/textures/scenes/sportbar.atf" ,mimeType="application/octet-stream")]
     public static const  SportsBarBg:Class;
 
-    [Embed(source = "../../media/textures/scenes/tarotreading.jpg")]
+    [Embed(source = "../../media/textures/scenes/tarotreading.atf" ,mimeType="application/octet-stream")]
     public static const  TarotreadingBg:Class;
 
-    [Embed(source = "../../media/textures/scenes/temple.jpg")]
+    [Embed(source = "../../media/textures/scenes/temple.atf" ,mimeType="application/octet-stream")]
     public static const  SpiritTempleBg:Class;
 
-    [Embed(source = "../../media/textures/scenes/themedpark.jpg")]
+    [Embed(source = "../../media/textures/scenes/themedpark.atf" ,mimeType="application/octet-stream")]
     public static const  ThemedParkBg:Class;
 
-    [Embed(source = "../../media/textures/scenes/beach_day.jpg")]
+    [Embed(source = "../../media/textures/scenes/beach_day.atf" ,mimeType="application/octet-stream")]
     public static const BeachBgDay:Class;
-    [Embed(source = "../../media/textures/scenes/beach_night.jpg")]
+    [Embed(source = "../../media/textures/scenes/beach_night.atf" ,mimeType="application/octet-stream")]
     public static const BeachBgNight:Class;
 
 
-    [Embed(source = "../../media/textures/scenes/hotel_day.jpg")]
+    [Embed(source = "../../media/textures/scenes/hotel_day.atf",mimeType="application/octet-stream")]
     public static const HotelBgDay:Class;
-    [Embed(source = "../../media/textures/scenes/hotel_night.jpg")]
+    [Embed(source = "../../media/textures/scenes/hotel_night.atf" ,mimeType="application/octet-stream")]
     public static const HotelBgNight:Class;
 
 
-    [Embed(source = "../../media/textures/scenes/park_day.jpg")]
+    [Embed(source = "../../media/textures/scenes/park_day.atf" ,mimeType="application/octet-stream")]
     public static const ParkBgDay:Class;
-    [Embed(source = "../../media/textures/scenes/park_night.jpg")]
+    [Embed(source = "../../media/textures/scenes/park_night.atf" ,mimeType="application/octet-stream")]
     public static const ParkBgNight:Class;
 
 
-    [Embed(source = "../../media/textures/scenes/pier_day.jpg")]
+    [Embed(source = "../../media/textures/scenes/pier_day.atf",mimeType="application/octet-stream")]
     public static const PierBgDay:Class;
-    [Embed(source = "../../media/textures/scenes/pier_night.jpg")]
+    [Embed(source = "../../media/textures/scenes/pier_night.atf" ,mimeType="application/octet-stream")]
     public static const PierBgNight:Class;
 
-    [Embed(source = "../../media/textures/scenes/garden_day.jpg")]
+    [Embed(source = "../../media/textures/scenes/garden_day.atf" ,mimeType="application/octet-stream")]
     public static const GardenBgDay:Class;
-    [Embed(source = "../../media/textures/scenes/garden_night.jpg")]
+    [Embed(source = "../../media/textures/scenes/garden_night.atf" ,mimeType="application/octet-stream")]
     public static const GardenBgNight:Class;
 
 
-    [Embed(source = "../../media/textures/scenes/mansion_day.jpg")]
+    [Embed(source = "../../media/textures/scenes/mansion_day.atf" ,mimeType="application/octet-stream")]
     public static const LovemoreMansionBgDay:Class;
-    [Embed(source = "../../media/textures/scenes/mansion_night.jpg")]
+    [Embed(source = "../../media/textures/scenes/mansion_night.atf" ,mimeType="application/octet-stream")]
     public static const LovemoreMansionBgNight:Class;
 
-    [Embed(source = "../../media/textures/scenes/normalbackground.jpg")]
+    [Embed(source = "../../media/textures/scenes/normalbackground.atf" ,mimeType="application/octet-stream")]
     public static const NormalBg:Class;
 
-    [Embed(source = "../../media/textures/scenes/beta-testing.jpg")]
+    [Embed(source = "../../media/textures/scenes/beta-testing.atf" ,mimeType="application/octet-stream")]
     public static const BetaBackground:Class;
 
 
@@ -258,52 +258,52 @@ public class AssetEmbeds
 
     [Embed(source="../../media/textures/icons/profile/NPCs.xml", mimeType="application/octet-stream")]
     public static const NPCsXML:Class;
-    [Embed(source="../../media/textures/icons/profile/NPCs.png")]
+    [Embed(source="../../media/textures/icons/profile/NPCs.atf", mimeType="application/octet-stream")]
     public static const NPCs:Class;
 
     [Embed(source="../../media/textures/icons/profile/ceil-facials.xml", mimeType="application/octet-stream")]
     public static const ceilFacialsXML:Class;
-    [Embed(source="../../media/textures/icons/profile/ceil-facials.png")]
+    [Embed(source="../../media/textures/icons/profile/ceil-facials.atf", mimeType="application/octet-stream")]
     public static const ceilFacials:Class;
 
 
     [Embed(source="../../media/textures/icons/profile/dea-facials.xml", mimeType="application/octet-stream")]
     public static const deaFacialsXML:Class;
-    [Embed(source="../../media/textures/icons/profile/dea-facials.png")]
+    [Embed(source="../../media/textures/icons/profile/dea-facials.atf", mimeType="application/octet-stream")]
     public static const deaFacials:Class;
 
 
     [Embed(source="../../media/textures/icons/profile/klr-facials.xml", mimeType="application/octet-stream")]
     public static const klrFacialsXML:Class;
-    [Embed(source="../../media/textures/icons/profile/klr-facials.png")]
+    [Embed(source="../../media/textures/icons/profile/klr-facials.atf", mimeType="application/octet-stream")]
     public static const klrFacials:Class;
 
     [Embed(source="../../media/textures/icons/profile/lns-facials.xml", mimeType="application/octet-stream")]
     public static const lenusFacialsXML:Class;
-    [Embed(source="../../media/textures/icons/profile/lns-facials.png")]
+    [Embed(source="../../media/textures/icons/profile/lns-facials.atf", mimeType="application/octet-stream")]
     public static const lenusFacials:Class;
 
 
     [Embed(source="../../media/textures/icons/profile/sao-facials.xml", mimeType="application/octet-stream")]
     public static const saoFacialsXML:Class;
-    [Embed(source="../../media/textures/icons/profile/sao-facials.png")]
+    [Embed(source="../../media/textures/icons/profile/sao-facials.atf", mimeType="application/octet-stream")]
     public static const saoFacials:Class;
 
     [Embed(source="../../media/textures/icons/profile/srn-facials.xml", mimeType="application/octet-stream")]
     public static const sirenaFacialsXML:Class;
-    [Embed(source="../../media/textures/icons/profile/srn-facials.png")]
+    [Embed(source="../../media/textures/icons/profile/srn-facials.atf", mimeType="application/octet-stream")]
     public static const sirenaFacials:Class;
 
 
     [Embed(source="../../media/textures/icons/profile/tmr-facials.xml", mimeType="application/octet-stream")]
     public static const tomoruFacialsXML:Class;
-    [Embed(source="../../media/textures/icons/profile/tmr-facials.png")]
+    [Embed(source="../../media/textures/icons/profile/tmr-facials.atf", mimeType="application/octet-stream")]
     public static const tomoruFacials:Class;
 
 
     [Embed(source="../../media/textures/icons/profile/zack-facials.xml", mimeType="application/octet-stream")]
     public static const zackFacialsXML:Class;
-    [Embed(source="../../media/textures/icons/profile/zack-facials.png")]
+    [Embed(source="../../media/textures/icons/profile/zack-facials.atf" , mimeType="application/octet-stream")]
     public static const zackFacials:Class;
 
 
@@ -670,7 +670,8 @@ public class AssetEmbeds
 
     [Embed(source = "../../media/textures/cards/skillcards.xml", mimeType="application/octet-stream")]
     public static const SkillCardsXML:Class;
-    [Embed(source="../../media/textures/cards/skillcards.png")]
+
+    [Embed(source="../../media/textures/cards/skillcards.atf", mimeType="application/octet-stream")]
     public static const SkillCards:Class;
 
     [Embed(source = "../../media/textures/cards/flirtcards.xml", mimeType="application/octet-stream")]
@@ -1106,15 +1107,15 @@ public class AssetEmbeds
      [Embed(source="../../media/textures/previews/ParkPreview.jpg")]
      public static const ParkPreview:Class;
      [Embed(source="../../media/textures/previews/CinemaPreview.jpg")]
-     public static const CinemaPreview:Class;
-     [Embed(source="../../media/textures/previews/PierPreview.jpg")]
-     public static const PierPreview:Class;
-     [Embed(source="../../media/textures/previews/RestaurantPreview.jpg")]
-     public static const RestaurantPreview:Class;
+     rantPreview:Class;
      [Embed(source="../../media/textures/previews/HotSpringPreview.jpg")]
      public static const HotSpringPreview:Class;
      [Embed(source="../../media/textures/previews/ThemedParkPreview.jpg")]
-     public static const ThemedParkPreview:Class;
+     public static const ThemedParkPreview:Class; public static const CinemaPreview:Class;
+     [Embed(source="../../media/textures/previews/PierPreview.jpg")]
+     public static const PierPreview:Class;
+     [Embed(source="../../media/textures/previews/RestaurantPreview.jpg")]
+     public static const Restau
      */
     [Embed(source="../../media/textures/btns/btn_buynow.png")]
     public static const BuyNowBtn:Class;

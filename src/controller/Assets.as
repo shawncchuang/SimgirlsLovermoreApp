@@ -120,11 +120,11 @@ package controller
 		}
 		public static function getTexture(name:String):Texture
 		{
-			
+			DebugTrace.msg("Assets.getTexture name:"+name);
 			if (sTextures[name] == undefined)
 			{
 				var data:Object = create(name);
-				
+
 				if (data is Bitmap)
 				{
 					sTextures[name] = Texture.fromBitmap(data as Bitmap, true, false, sContentScaleFactor);
@@ -133,6 +133,11 @@ package controller
 				{
 					
 					sTextures[name] = Texture.fromAtfData(data as ByteArray, sContentScaleFactor);
+				}else
+				{
+					//ATF format
+					//sTextures[name] = Texture.fromEmbeddedAsset(data);
+					sTextures[name] = Texture.fromAtfData(data as ByteArray,sContentScaleFactor);
 				}
 			}
 			return sTextures[name];
