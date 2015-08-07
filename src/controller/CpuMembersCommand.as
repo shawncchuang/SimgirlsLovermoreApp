@@ -159,7 +159,7 @@ public class CpuMembersCommand implements CpuMembersInterface
 
         for(var t:uint=0;t<mem_perteam;t++)
         {
-            var id:String="t"+cpuIndex+"_"+t;
+            id="t"+cpuIndex+"_"+t;
             if(teams[id].se>0)
             {
                 teams[id].id=id;

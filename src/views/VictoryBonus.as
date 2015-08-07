@@ -219,7 +219,7 @@ package views
 			gameEvt._name="remove_battle";
 			gameEvt.displayHandler();
 			
-		    var battleType=DataContainer.battleType;
+		    var battleType:String=DataContainer.battleType;
             var scene:String=DataContainer.BatttleScene;
             if(battleType=="sechedule"){
 

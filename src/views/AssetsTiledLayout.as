@@ -109,11 +109,12 @@ public class AssetsTiledLayout extends PanelScreen{
         ownedAssets=flox.getSaveData("owned_assets")[chname];
 
         assetslist=new Array();
+        var item:Object
         for(var i:uint=0;i<ownedAssets.length;i++)
         {
             var id:String=ownedAssets[i].id;
             if(assetsData[id].cate==cate) {
-                var item:Object = new Object();
+                item = new Object();
                 item.id = id;
                 item.name = assetsData[item.id].name;
                 item.brand = assetsData[item.id].brand;
@@ -166,7 +167,7 @@ public class AssetsTiledLayout extends PanelScreen{
         sendIcons=new Array();
         for(var j:uint=0;j<assetslist.length;j++) {
 
-            var item:Object=assetslist[j];
+            item=assetslist[j];
 
             var itemRender:Sprite=new Sprite();
             itemRender.name=item.id;

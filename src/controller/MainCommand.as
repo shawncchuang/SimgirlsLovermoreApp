@@ -638,7 +638,7 @@ public class MainCommand implements MainInterface{
 
         if(comType=="Rest"){
 
-            var _data:Object=new Object();
+            _data=new Object();
             var scene:Sprite=ViewsContainer.currentScene;
             _data.removed="ani_complete";
             scene.dispatchEventWith(TopViewEvent.REMOVE,false,_data);

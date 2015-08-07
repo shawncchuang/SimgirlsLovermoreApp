@@ -689,7 +689,7 @@ public class DataContainer
     }
     public static function assetsRatingLevel(rating:Number):uint{
 
-        var lv=0;
+        var lv:uint=0;
         var ratingStep:Object=Config.ratingStep;
 
         if(rating>=ratingStep["love-Min"] && rating<=ratingStep["love-Max"]){

@@ -762,8 +762,7 @@ public class DatingScene extends Scenes
                         }
                         if (com == "Leave") {
 
-
-                           var gameInfo:Sprite=ViewsContainer.gameinfo;
+                            gameInfo=ViewsContainer.gameinfo;
                            gameInfo.dispatchEventWith("UPDATE_INFO");
 
                             clickedCloudHandle();
@@ -1083,7 +1082,7 @@ public class DatingScene extends Scenes
         var texture:Texture=Assets.getTexture("Bubble");
 
         bubble=new Sprite();
-        var bubbleImg=new Image(texture);
+        var bubbleImg:Image=new Image(texture);
         bubbleImg.smoothing=TextureSmoothing.TRILINEAR;
         bubbleImg.pivotX=bubbleImg.width/2;
         bubbleImg.pivotY=bubbleImg.height/2;

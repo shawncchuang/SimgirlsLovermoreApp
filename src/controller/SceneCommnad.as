@@ -428,17 +428,18 @@ public class SceneCommnad implements SceneInterface
 
 
         var npc:String="";
+        var texture:Texture;
         if(Config.characters.indexOf(name)!=-1){
 
             //character
             var style:String=DataContainer.styleSechedule[name];
-            var texture:Texture=Assets.getTexture(style);
+            texture=Assets.getTexture(style);
 
         }else{
 
             //NPC
             style=Config.NPC[name];
-            var texture:Texture=Assets.getTexture(style);
+            texture=Assets.getTexture(style);
 
         }
 
