@@ -70,38 +70,7 @@ public class AssetsTiledLayout extends PanelScreen{
     private function initializeHandler(e:Event):void{
 
 
-        /*
-         this.layout=new AnchorLayout();
 
-         this._list=new List();
-
-         var item:Object=new Object();
-         item.text="Test";
-         this._list.itemRendererProperties.labelField = "text";
-
-         item.iconTexture = Assets.getTexture("Cons1_1");
-         this._list.itemRendererProperties.iconSourceField = "iconTexture";
-
-
-         item.accessoryText = "Accessory Text";
-         this._list.itemRendererProperties.accessoryLabelField = "accessoryText";
-         this._list.itemRendererProperties.accessoryPosition=BaseDefaultItemRenderer.ACCESSORY_POSITION_RIGHT;
-
-         this._list.itemRendererProperties.horizontalAlign = BaseDefaultItemRenderer.HORIZONTAL_ALIGN_LEFT;
-         this._list.itemRendererProperties.verticalAlign = BaseDefaultItemRenderer.VERTICAL_ALIGN_MIDDLE;
-         this._list.itemRendererProperties.layoutOrder = BaseDefaultItemRenderer.LAYOUT_ORDER_LABEL_ICON_ACCESSORY;
-
-         this._list.itemRendererProperties.gap = Number.POSITIVE_INFINITY;
-         this._list.itemRendererProperties.accessoryGap = Number.POSITIVE_INFINITY;
-
-
-         this._list.dataProvider = new ListCollection([item]);
-         this._list.layoutData = new AnchorLayoutData(0, 0, 0, 0);
-         this._list.isSelectable = true;
-         this._list.clipContent = false;
-         this._list.autoHideBackground = true;
-         addChild(this._list);
-         */
         DebugTrace.msg("AssetsTiledLayout.initializeHandler chname="+chname);
         DebugTrace.msg("AssetsTiledLayout.initializeHandler type="+type);
 
@@ -129,13 +98,15 @@ public class AssetsTiledLayout extends PanelScreen{
 
             switch(sort){
                 case "expiration":
+                        //expiration (Number)
                     if(sort_index==-1){
                         assetslist=assetslist.sortOn(sort,Array.NUMERIC | Array.DESCENDING);
                     }else if (sort_index==0){
                         assetslist=assetslist.sortOn(sort,Array.NUMERIC);
                     }
-                    break
+                    break;
                 default:
+                        //others (String)
                     if(sort_index==-1){
                         assetslist=assetslist.sortOn(sort,Array.CASEINSENSITIVE | Array.DESCENDING);
                     }else if (sort_index==0){
@@ -149,7 +120,6 @@ public class AssetsTiledLayout extends PanelScreen{
 
 
         var layout:VerticalLayout=new VerticalLayout();
-
         layout.gap=2;
         layout.horizontalAlign=TiledRowsLayout.HORIZONTAL_ALIGN_LEFT;
         layout.verticalAlign=TiledRowsLayout.VERTICAL_ALIGN_TOP;
@@ -158,10 +128,10 @@ public class AssetsTiledLayout extends PanelScreen{
         layout.paddingBottom = 0;
         layout.paddingLeft =0;
         layout.manageVisibility = true;
-
         this.layout = layout;
         this.verticalScrollPolicy = ScrollContainer.SCROLL_POLICY_ON;
         this.snapScrollPositionsToPixels = true;
+
 
         var font:String="SimMyriadPro";
         sendIcons=new Array();
@@ -223,7 +193,6 @@ public class AssetsTiledLayout extends PanelScreen{
 
 
             var btnTexture:Texture=Assets.getTexture("CheckAltUp");
-
             var sendImg:Image=new Image(btnTexture);
             sendImg.name=item.id;
             sendImg.width=45;
@@ -246,7 +215,7 @@ public class AssetsTiledLayout extends PanelScreen{
             }
 
 
-            addChild(itemRender)
+            addChild(itemRender);
         }
     }
     private var gX:Number=0;

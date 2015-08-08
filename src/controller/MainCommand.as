@@ -299,7 +299,7 @@ public class MainCommand implements MainInterface{
         alertmsg.msg.embedFonts=true;
         alertmsg.msg.defaultTextFormat=format;
         alertmsg.confirm.buttonMode=true;
-        alertmsg.confirm.visible=true
+        alertmsg.confirm.visible=true;
         alertmsg.cancelbtn.visible=false;
         switch(type){
             case "warning":

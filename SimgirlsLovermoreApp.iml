@@ -26,7 +26,6 @@
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/src/update_config.xml" path-in-package="update_config.xml" />
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/fonts" path-in-package="fonts" />
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/swf" path-in-package="swf" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/swf/skills" path-in-package="swf/skills" />
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/video" path-in-package="video" />
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/images" path-in-package="images" />
           </files-to-package>
