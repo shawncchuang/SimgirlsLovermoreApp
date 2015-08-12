@@ -20,7 +20,7 @@ public class Config
     private static var authkey:String;
     public static var ExcerptFornt:String="SimFutura";
     public static const characters:Array=["lenus","sirena","dea","sao","klr","tomoru","ceil"];
-    public static const NPC:Object={"daz":"npc001"}
+    public static const NPC:Object={"daz":"npc001"};
     //schedule [index+ current month]
     public static var scheduleIndex:Object={"lenus":88,"sirena":12,"dea":25,"sao":38,"klr":51,"tomoru":64,"ceil":77,"zack":90};
 

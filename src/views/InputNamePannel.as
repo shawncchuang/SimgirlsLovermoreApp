@@ -56,7 +56,7 @@ import model.SaveGame;
 		}
 		private function onSaveComplete(savegame:SaveGame):void
 		{
-            flox.refreshEntites();
+
 			saveComplete();
 			var _data:Object=new Object();
 			_data.talk_index=0

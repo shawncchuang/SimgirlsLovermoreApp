@@ -354,10 +354,10 @@ import com.greensock.loading.LoaderMax;
 		private function onVideoComplete():void
 		{
 			topview.removeChild(videoframe);
-			DebugTrace.msg("SimgirlsLovemore.onVideoComplete : "+SceneEvent.scene);
-			
+			//DebugTrace.msg("SimgirlsLovemore.onVideoComplete : "+SceneEvent.scene);
+			DebugTrace.msg("SimgirlsLovemore.onVideoComplete : "+DataContainer.currentScene);
 			var _data:Object=new Object();
-			switch(SceneEvent.scene)
+			switch(DataContainer.currentScene)
 			{
 				case "Tarotreading":
 					_data.name="AirplaneScene";

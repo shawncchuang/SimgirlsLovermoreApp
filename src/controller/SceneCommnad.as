@@ -231,7 +231,7 @@ public class SceneCommnad implements SceneInterface
     }
     private function showChat():void
     {
-        trace("SceneCommand.showChat talk_index=",talk_index)
+        DebugTrace.msg("SceneCommand.showChat talk_index="+talk_index);
         com_content=talks[talk_index];
         DebugTrace.msg("SceneCommand.showChat com_content:"+com_content);
         var comlists:Array=com_content.split("|");
@@ -304,7 +304,7 @@ public class SceneCommnad implements SceneInterface
 
 
 
-        var sentence:String=com_content.split("player|").join("")
+        var sentence:String=com_content.split("player|").join("");
         talks[talk_index]=sentence;
         talking=command.filterTalking(talks);
         //DebugTrace.msg("TarotreadingScene.creartePlayerChat talking:"+talking);
@@ -319,7 +319,7 @@ public class SceneCommnad implements SceneInterface
 
             try
             {
-                _target.swapChildren(talkmask,photoframe)
+                _target.swapChildren(talkmask,photoframe);
             }
             catch(e:Error){
 
@@ -335,7 +335,7 @@ public class SceneCommnad implements SceneInterface
     private function createTalkField():void
     {
         talkfield=new MyTalkingDisplay();
-        talkfield.addTextField(talking[talk_index])
+        talkfield.addTextField(talking[talk_index]);
         _target.addChild(talkfield);
         display_container.player=talkfield;
     }
@@ -367,10 +367,10 @@ public class SceneCommnad implements SceneInterface
                     display_container[target]=null;
                     break
                 case "display":
-                    createCharacter(target,pos)
+                    createCharacter(target,pos);
                     break
                 case "move":
-                    movingCharacter(target,pos)
+                    movingCharacter(target,pos);
                     break
                 case "photo-on":
                     createPhotoMessage(target);
@@ -429,10 +429,11 @@ public class SceneCommnad implements SceneInterface
 
         var npc:String="";
         var texture:Texture;
-        if(Config.characters.indexOf(name)!=-1){
+        if(Config.characters.indexOf(name)!=-1 || name=="zack"){
 
             //character
             var style:String=DataContainer.styleSechedule[name];
+            DebugTrace.msg("SceneCommand.createCharacter, style="+style);
             texture=Assets.getTexture(style);
 
         }else{
@@ -508,7 +509,7 @@ public class SceneCommnad implements SceneInterface
     }
     private function createPhotoMessage(target:String):void
     {
-        DebugTrace.msg("ChatCommand.createPhotoMessage")
+        DebugTrace.msg("ChatCommand.createPhotoMessage");
         photoframe=new PhotoMessage(target,onPhotoRemoved);
         photoframe.name="photoframe"
         photoframe.x=Starling.current.stage.stageWidth/2;
@@ -581,13 +582,26 @@ public class SceneCommnad implements SceneInterface
             {
                 if(src_index==-1 || scene.indexOf("Scene")!=-1)
                 {
-                    onTouchedScene();
+                    //no command cloud , incloud xxxxScene
+                    switch(src)
+                    {
+                        case "QA_nickname":
+                        case "QA_airplane-phonenumber":
+                            disableAll();
+                            break;
+                        default:
+                            onTouchedScene();
+                            break
+                    }
+
+                }else{
+
+                    disableAll()
                 }
             }
             else
             {
                 disableAll();
-                //onTouchedScene();
             }
             //if
         }
@@ -597,7 +611,9 @@ public class SceneCommnad implements SceneInterface
     {
         DebugTrace.msg("SceneCommand.enableTouch ");
         //_target.addEventListener(TouchEvent.TOUCH,onChatSceneTouched);
-        NativeApplication.nativeApplication.addEventListener(MouseEvent.MOUSE_DOWN,onChatSceneTouched);
+        //NativeApplication.nativeApplication.addEventListener(MouseEvent.MOUSE_DOWN,onChatSceneTouched);
+
+        addTouchArea();
         onTouchedScene();
 
     }

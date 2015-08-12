@@ -152,7 +152,7 @@ public class MainCommand implements MainInterface{
                 gameEvent._name="QA";
                 gameEvent.qa_label=txt;
                 gameEvent.displayHandler();
-                break
+                break;
             case "TarotReading_TarotCards":
                 gameEvent._name="tarot_cards";
                 gameEvent.displayHandler();
@@ -863,7 +863,7 @@ public class MainCommand implements MainInterface{
 
         var suitup:Object=new Object();
         var characters:Array=Config.characters;
-
+        characters.push("zack");
         var flox:FloxInterface=new FloxCommand();
         var date:String=flox.getSaveData("date").split("|")[0];
         var styles:Object=flox.getSyetemData("style_schedule");

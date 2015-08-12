@@ -119,7 +119,8 @@ public class AssetEmbeds
     [Embed(source = "../../media/textures/scenes/beta-testing.atf" ,mimeType="application/octet-stream")]
     public static const BetaBackground:Class;
 
-
+    [Embed(source = "../../media/textures/scenes/sky.atf" ,mimeType="application/octet-stream")]
+    public static const Bg:Class;
 
     //-----------------scenes-------------------------------------------------*/
 

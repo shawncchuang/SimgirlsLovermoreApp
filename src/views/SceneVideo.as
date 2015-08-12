@@ -11,7 +11,7 @@ package views
 		private var completeCallback:Function;
 		public function SceneVideo(target:String,callback:Function=null)
 		{
-			DebugTrace.msg("SceneVideo.onVideoComplete target:"+target);
+			DebugTrace.msg("SceneVideo, target:"+target);
 			completeCallback=callback;
 			var flvplayer:FLVPlayback=new FLVPlayback();
 			flvplayer.width=1024;
@@ -29,7 +29,7 @@ package views
 		}
 		private function onVideoComplete(e:Event):void
 		{
-			DebugTrace.msg("onVideoComplete");
+			DebugTrace.msg("SceneVideo.onVideoComplete");
 			if(completeCallback)
 			{
 				completeCallback();

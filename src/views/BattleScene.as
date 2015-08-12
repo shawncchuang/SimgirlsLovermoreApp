@@ -262,7 +262,7 @@ public class BattleScene extends Sprite
 		sebar.y=367;
 		menuscene.addChild(sebar);
 
-		hptsbar=new HPtsBar()
+		hptsbar=new HPtsBar();
 		hptsbar.y=376;
 		menuscene.addChild(hptsbar);
 
@@ -316,7 +316,6 @@ public class BattleScene extends Sprite
 
 		background.mc.gotoAndStop(stageID);
 
-
 		DataContainer.stageID=stageID;
 
 		setupBattleStage();
@@ -357,7 +356,7 @@ public class BattleScene extends Sprite
 	{
 		profile.alpha=0;
 		profile.gotoAndStop(name);
-		TweenMax.to(profile,0.5,{alpha:1,easing:Expo.easeOut,onComplete:onUpdateProfile})
+		TweenMax.to(profile,0.5,{alpha:1,easing:Expo.easeOut,onComplete:onUpdateProfile});
 
 		function onUpdateProfile():void
 		{
@@ -523,7 +522,7 @@ public class BattleScene extends Sprite
 		TweenMax.to(sebar,0.4,{y:325,onComplete:onSEbarFadein,easing:Elastic.easeOut});
 		TweenMax.to(hptsbar,0.3,{y:367,onComplete:onHSPtsbarFadein,easing:Elastic.easeOut});
 		DebugTrace.msg("BattleScene.doSelectPlayer id:"+e.target.name);
-		var id:String=e.target.name
+		var id:String=e.target.name;
 		var battleteam:Object=memberscom.getBattleTeam();
 		current_player=battleteam[id];
 		var power:Object=current_player.power;
@@ -863,19 +862,19 @@ public class BattleScene extends Sprite
 						command.playSound("BattleConfirm");
 						act="SHIELD";
 						power.target=current_player.name;
-						break
+						break;
 					case "n0":
 						//Regenerate
 						command.playSound("BattleConfirm");
 						act="REGENERATE";
 						power.target=current_player.name;
-						break
+						break;
 					case "n1":
 					case "n2":
 						//Heal
 						act="HEAL";
 						//memberscom.removePlayerMemberListener(doSelectPlayer)
-						break
+						break;
 					case "n3":
 						//Reincarnation
 						command.playSound("BattleConfirm");
@@ -895,7 +894,7 @@ public class BattleScene extends Sprite
 						focusHandle("target");
 
 						memberscom.choiceTarget(doSetupTarget,doMouseOverTarget,doMouseOutTarget);
-						break
+						break;
 					case "SHIELD":
 					case "REGENERATE":
 					case "REINCARNATION":
@@ -908,7 +907,7 @@ public class BattleScene extends Sprite
 						//focusHandle("default");
 						//focusHandle("solider");
 
-						break
+						break;
 					case "HEAL":
 						memberscom.removePlayerMemberListener(doSelectPlayer);
 						updateStepLayout("heal target");
@@ -1623,7 +1622,7 @@ public class BattleScene extends Sprite
 
 			for(var i:uint=0;i<cpu_team.length;i++)
 			{
-				var parnetID:String=cpu_team[i].power.id
+				var parnetID:String=cpu_team[i].power.id;
 
 				if(parnetID=="t0_1")
 				{
@@ -2136,7 +2135,7 @@ public class BattleScene extends Sprite
 		DebugTrace.msg("BattleScene.despearBatttleTeam id="+id+" ; alpha="+alpha);
 		var battleteam:Object=memberscom.getBattleTeam();
 		var _member:String="";
-		var index:Number
+		var index:Number;
 		if(id.indexOf("player")!=-1)
 		{
 			//player no combine skill 
@@ -2314,7 +2313,7 @@ public class BattleScene extends Sprite
 			case "e1":
 				var endF:Number=attack_member.skillAni.body.act.totalFrames;
 				TweenMax.to(battlescene,endF,{y:-100,useFrame:true});
-				break
+				break;
 			case "e3":
 				if(	attack_member.skillAni.body.act.currentFrame==290)
 				{
@@ -2322,7 +2321,7 @@ public class BattleScene extends Sprite
 					var tweenf:Number=endF-291;
 					TweenMax.to(battlescene,tweenf,{y:-100,useFrame:true});
 				}
-				break
+				break;
 			case "f3":
 
 				if(attack_member.skillAni.body.act.currentFrame==74)
@@ -2344,7 +2343,7 @@ public class BattleScene extends Sprite
 					}
 				}
 				//if
-				break
+				break;
 
 			case "w1":
 				//case "w2":
@@ -2404,25 +2403,25 @@ public class BattleScene extends Sprite
 		{
 			case "a1":
 				hitframes=[24];
-				break
+				break;
 			case "a2":
 				hitframes=[21, 24, 27, 30, 34, 37, 40, 43, 51, 54, 57, 60, 66, 72, 76, 81];
-				break
+				break;
 			case "f0":
 				hitframes=[27];
-				break
+				break;
 			case "f1":
 				hitframes=[44];
-				break
+				break;
 			case "f2":
 				hitframes=[67, 78, 98];
-				break
+				break;
 			case "w2":
 				hitframes=[38,51];
-				break
+				break;
 			case "e1":
 				hitframes=[9, 32, 38, 44, 50, 56, 82];
-				break
+				break;
 			case "e2":
 				hitframes=[58,63,78];
 				break
@@ -2530,7 +2529,7 @@ public class BattleScene extends Sprite
 					case "shield":
 						//battleEvt.act=allpowers[attack_index].label;
 						//battleEvt.updateMemberAct();
-						break
+						break;
 					case "regenerate":
 					case "heal":
 						if(member.power.targetlist.length<=1)
@@ -2646,12 +2645,12 @@ public class BattleScene extends Sprite
 	private function updateMemberReincarnation():void
 	{
 
-
+		var members:Array= new Array()
 		if(attack_member.name.indexOf("player")!=-1)
 		{
 			//player
 			var groundeff:MovieClip=ViewsContainer.groundEffectPlayer;
-			var members:Array=memberscom.getPlayerTeam();
+			members=memberscom.getPlayerTeam();
 
 		}
 		else
@@ -3008,13 +3007,13 @@ public class BattleScene extends Sprite
 		{
 			case "damage":
 				format.color=0xFF3300;
-				break
+				break;
 			case "skillPts":
 				format.color=0xD31044;
-				break
+				break;
 			case "honor":
 				format.color=0xFFCC33;
-				break
+				break;
 			default:
 				format.color=0xFFFFFF;
 				break
@@ -3922,7 +3921,7 @@ public class BattleScene extends Sprite
 				showPlayerHighlight();
 
 
-				break
+				break;
 			case "skill":
 				TweenMax.to(stonebar,0.8,{alpha:1,onComplete:onTweenComplete,ease:Expo.easeOut});
 				TweenMax.to(elementsbar,0.5,{x:350,onComplete:onTweenComplete,ease:Expo.easeOut});
@@ -3932,20 +3931,20 @@ public class BattleScene extends Sprite
 				 TweenMax.to(cardsSprtie,0.5,{y:800,onComplete:onCardFadeout,ease:Elastic.easeInOut});
 				 }*/
 				//if
-				break
+				break;
 			case "startbattle":
 				TweenMax.to(starttab.btn,0.5,{y:800,onComplete:onTweenComplete,ease:Expo.easeOut});
 				//battletitle.x=-500;
 				TweenMax.to(battletitle,0.5,{x:-500,onComplete:onTweenComplete,ease:Expo.easeOut});
 				TweenMax.to(battlescene,1,{y:-578,onComplete:onTweenComplete,ease:Expo.easeOut});
 				TweenMax.to(menuscene,1,{y:700,onComplete:onBattleSceneComplete});
-				break
+				break;
 			case "target":
 				starttab.wall.x=650;
 				starttab.wall.visible=true;
 				displayAttackArea();
 
-				break
+				break;
 			case "heal target":
 				TweenMax.to(menuscene,0.5,{y:700});
 
@@ -3956,7 +3955,7 @@ public class BattleScene extends Sprite
 				TweenMax.to(elementsbar,0.5,{x:1024,onComplete:onTweenComplete,ease:Expo.easeOut});
 				//TweenMax.to(menuscene,1,{y:700,onComplete:onTweenComplete});
 
-				break
+				break;
 			case "disabled itempanel":
 				TweenMax.to(menuscene,1,{y:354,onComplete:onTweenComplete,ease:Expo.easeOut});
 				TweenMax.to(starttab,0.8,{y:0,onComplete:onTweenComplete,ease:Expo.easeOut});

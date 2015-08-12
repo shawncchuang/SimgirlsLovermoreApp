@@ -44,7 +44,7 @@ package
 		{
 			 
 			var parameters:Object=this.loaderInfo.parameters;
-			DebugTrace.msg("Preloader.authKey:"+parameters.authkey);
+			DebugTrace.msg("Preloader.auth\\Key:"+parameters.authkey);
 			verifyKey=parameters.authkey;
 			Config.verifyKey=verifyKey;
 			

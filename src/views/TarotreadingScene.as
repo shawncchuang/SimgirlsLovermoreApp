@@ -91,10 +91,10 @@ package views
 			 {
 				case "LookAround":
 					chater.enableTouch();
-					break
+					break;
 				case "QA":
 					chater.enableTouch();
-					break
+					break;
 				case "tarot_cards":
 					var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
 					gameEvent._name="remove_tarot_card";
