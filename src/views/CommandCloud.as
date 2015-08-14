@@ -150,9 +150,10 @@ public class CommandCloud extends MovieClip
                     _data.removed="Cannot Join";
                     var current_scene:Sprite=ViewsContainer.currentScene;
                     current_scene.dispatchEventWith(TopViewEvent.REMOVE,false,_data);
+
                 }
             }
-            var command:MainInterface=new MainCommand();
+
             if(battle_target!=-1){
                 var success:Boolean=command.consumeHandle(com);
             }
@@ -307,6 +308,8 @@ public class CommandCloud extends MovieClip
 
             _data.name="FoundSomeScene";
             command.sceneDispatch(SceneEvent.CHANGED,_data);
+
+
 
         }
         //if

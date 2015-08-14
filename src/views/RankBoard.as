@@ -65,7 +65,7 @@ public class RankBoard extends MovieClip{
         //month="Jul";
         //date="5";
 
-        var dayStr:String=month+"_"+date
+        var dayStr:String=month+"_"+date;
         var games:Array=schedule[dayStr];
         var current_result:Array=current_battle[dayStr];
 

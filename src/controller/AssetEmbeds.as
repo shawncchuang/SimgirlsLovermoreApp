@@ -23,7 +23,7 @@ public class AssetEmbeds
     public static const  AirportBg:Class;
 
     [Embed(source = "../../media/textures/scenes/arena.atf" ,mimeType="application/octet-stream")]
-    public static const  ArenaBg:Class;
+    public static const  SSCCArenaBg:Class;
 
     [Embed(source = "../../media/textures/scenes/bank.atf" ,mimeType="application/octet-stream")]
     public static const  BankBg:Class;
@@ -53,7 +53,7 @@ public class AssetEmbeds
     public static const  MuseumBg:Class;
 
     [Embed(source = "../../media/textures/scenes/nightclub.atf" ,mimeType="application/octet-stream")]
-    public static const  NightClubBg:Class;
+    public static const  NightclubBg:Class;
 
     [Embed(source = "../../media/textures/scenes/policestation.atf" ,mimeType="application/octet-stream")]
     public static const  PoliceStationBg:Class;

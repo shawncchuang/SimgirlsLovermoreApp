@@ -311,8 +311,13 @@ public class MenuScene extends Scenes
         for(var i:uint=0;i<iconsname.length;i++)
         {
             var iconimg:Image=iconsimg[i];
-            Starling.juggler.removeTweens(iconimg);
-            iconimg.removeFromParent(true);
+
+            try{
+                iconimg.removeFromParent(true);
+                Starling.juggler.removeTweens(iconimg);
+            }catch(error:Error){
+                DebugTrace.msg("MenuScene.onNetworkFadeout remove iconimg catch Error");
+            }
 
             var iconlabels:TextField=iconsLabelList[i];
             iconlabels.removeFromParent(true);
@@ -345,7 +350,7 @@ public class MenuScene extends Scenes
         gameinfo.dispatchEventWith("DISPLAY");
         gameinfo.dispatchEventWith("UPDATE_DATING");
 
-        trace(click_type)
+        DebugTrace.msg("MenuScene.onFadeoutComplete click_type="+click_type);
 
         if(click_type=="Cancel")
         {

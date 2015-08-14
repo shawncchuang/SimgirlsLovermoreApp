@@ -383,6 +383,17 @@ public class Scenes extends Sprite
         tween.onComplete=onGameIngbarFadeinComplete;
         Starling.juggler.add(tween);
 
+        if(next_scene.indexOf("Game")==-1)
+        {
+            var currentScene:String = DataContainer.currentScene;
+            var evtObj:Object = new Object();
+            var scene_name:String=currentScene.split("Scene").join("");
+            evtObj.name = scene_name;
+            flox.logEvent("SceneVisited", evtObj);
+        }
+
+
+
         function onGameIngbarFadeinComplete():void{
 
             if(infobar){

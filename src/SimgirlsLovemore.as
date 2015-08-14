@@ -275,8 +275,8 @@ import com.greensock.loading.LoaderMax;
 					break
 				case "assets_form":
 				case "dating_assets_form":
-					assetsform=new AssetsTileList(e.target._name);
-					topview.addChild(assetsform);
+					//assetsform=new AssetsTileList(e.target._name);
+					//topview.addChild(assetsform);
 					break;
 				case "enable_assets_form":
 					assetsform.visible=true;

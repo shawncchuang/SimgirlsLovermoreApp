@@ -39,9 +39,9 @@
 		}
 		public function paymentWeb(type:String):void
 		{
-			
+
 			var flox:FloxInterface=new FloxCommand();
-			var  authKey:String=flox.getPlayerData("authId");
+			var  authKey:String=flox.getPlayerData("id");
 			if(type=="coin")
 			{
 				var url:String=Config.payCoinURL+authKey;
@@ -51,7 +51,7 @@
 				url=Config.payGameURL+authKey;
 				
 			}
-			DebugTrace.msg("BlackTileList onClickItemHandler url:"+url);
+			DebugTrace.msg("LoaderReuest.paymentWeb url:"+url);
 			var req:URLRequest=new URLRequest(url);
 			navigateToURL(req,"_blank");
 			

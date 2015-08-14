@@ -62,7 +62,7 @@ import model.SaveGame;
 		private function init():void
 		{
 			
-			scencom.init("ArensScene",speaker_sprite,24,onCallback);
+			scencom.init("ArenaScene",speaker_sprite,24,onCallback);
 			scencom.start();
 			scencom.disableAll();
 		}
@@ -98,6 +98,8 @@ import model.SaveGame;
 			var savegame:SaveGame=FloxCommand.savegame;
 			var _data:Object=new Object();
             var gameinfo:Sprite=ViewsContainer.gameinfo;
+			var evtObj:Object = new Object();
+            var scene:String = DataContainer.currentScene;
 			switch(e.data.removed)
 			{
 				case "Leave":
@@ -113,11 +115,20 @@ import model.SaveGame;
 					gameEvent.displayHandler();
 					_data.name="ChangeFormationScene";
 					command.sceneDispatch(SceneEvent.CHANGED,_data);
+
+
+					evtObj.command = "Join@"+scene;
+					flox.logEvent("CloudCommand", evtObj);
+
 					break
                 case "Rank":
                     gameinfo.visible=false;
                     raningScene=new RankBoard();
                     Starling.current.nativeOverlay.addChild(raningScene);
+
+					evtObj.command = "Rank@"+scene;
+					flox.logEvent("CloudCommand", evtObj);
+
                     break
                 case "Remove_Ranking":
                     gameinfo.visible=true;
@@ -130,7 +141,7 @@ import model.SaveGame;
 					init();
 					break
                 case "Cannot Join":
-                        var msg:String="There's no game today."
+                        var msg:String="There's no game today.";
                         var alert:AlertMessage=new AlertMessage(msg);
                         addChild(alert);
                     break

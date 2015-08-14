@@ -75,6 +75,11 @@ package views
 			setCharacterInside();
 			initCancelHandle();
 			checkEmpty();
+
+			var scene:String = DataContainer.currentScene;
+			var evtObj:Object=new Object();
+			evtObj.command = "LookAround@"+scene;
+			flox.logEvent("CloudCommand", evtObj);
 		}
 		private function initLayout():void
 		{

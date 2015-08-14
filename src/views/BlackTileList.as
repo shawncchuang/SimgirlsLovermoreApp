@@ -1,6 +1,8 @@
 package views
 {
-	import flash.display.Sprite;
+import data.DataContainer;
+
+import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	//import flash.net.URLRequest;
@@ -37,7 +39,7 @@ package views
 		private var dp:DataProvider;
 		private var itemlist:Array;
 		private var marketlist:Object;
-		private var selectable:Boolean=false;
+		private var selectable:Boolean=true;
 		private var datagrid:DataGrid;
 		private var item_id:String;
 		public function BlackTileList()
@@ -54,6 +56,7 @@ package views
 			{
 				itemdata[id]=marketlist[id];
 				var item:Object=itemdata[id];
+                DebugTrace.msg("BlackMarketScene.initListData id="+id);
 				item.id=id;
 				dp.addItem(item);
 				itemlist.push(item);
@@ -80,10 +83,7 @@ package views
 			c2.cellRenderer=CellRenderStyle;
 			c2.headerRenderer=HeaderRenderStyle;
 			c2.sortOptions = Array.NUMERIC;
-			
-			
-			
-			
+
 			datagrid= new DataGrid();
 			datagrid.resizableColumns=true;
 			datagrid.selectable=selectable;
@@ -96,12 +96,12 @@ package views
 			datagrid.setSize(460,430);
 			datagrid.headerHeight=30;
 			datagrid.rowHeight =60;
-			
+
 			if(itemlist.length>0)
 			{
 				
 				datagrid.addEventListener(Event.CHANGE, onChangeItemHandler);
-				datagrid.addEventListener(MouseEvent.CLICK, onClickItemHandler);
+				//datagrid.addEventListener(MouseEvent.CLICK, onClickItemHandler);
 				datagrid.addEventListener(MouseEvent.MOUSE_OVER, onMouseOverItemHandler);
 			}
 			//if
@@ -113,69 +113,110 @@ package views
 		private function onChangeItemHandler(e:Event):void
 		{
 			
-			item_id=e.target.selectedItem.id
-			
-			
+			item_id=e.target.selectedItem.id;
+
+            DebugTrace.msg("BlackTileList onChangeItemHandler item_id:"+item_id);
+            onPurchaseItem();
 		}
 		private function onClickItemHandler(e:MouseEvent):void
 		{
-			item_id=e.target.data.id;
-			
-			flox.refreshPlayer(onRefreshComplete);
-			
+
+
+
 			
 		}
-		private function onRefreshComplete():void
+		private function onPurchaseItem():void
 		{
-			try
-			{
-				var coin:Number=flox.getPlayerData("coin");
-				
-				DebugTrace.msg("BlackTileList onClickItemHandler item_id:"+item_id);
-				var price:Number=Number(marketlist[item_id].price);
-				DebugTrace.msg("BlackTileList onClickItemHandler coin:"+coin+" ; price:"+price);
-				var _data:Object=new Object();
-				if(coin>=price)
-				{
-					//enough pay this item
-					
-					_data.price=price;
-					var blackmarkerform:starling.display.Sprite=ViewsContainer.blackmarketform
-					blackmarkerform.dispatchEventWith("UPDAT_BLANCE",false,_data);
-					
-				}
-				else
-				{
-					var loaderreq:LoaderRequest=new LoaderRequest();
-					loaderreq.paymentWeb("coin");
-					
-					/*var  authKey:String=flox.getPlayerData("authId");
-					var url:String=Config.payCoinURL+authKey;
-					DebugTrace.msg("BlackTileList onClickItemHandler url:"+url);
-					var req:URLRequest=new URLRequest(url);
-					navigateToURL(req,"_blank");*/
-					
-					var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
-					gameEvent._name="remove_blackmarket_form";
-					gameEvent.displayHandler();
-					
-					var command:MainInterface=new MainCommand();
-					_data.name="BlackMarketScene";
-					command.sceneDispatch(SceneEvent.CHANGED,_data);
-					
-					
-				}
-				//if
-			}
-			catch(e:Error)
-			{
-				
-				
-				DebugTrace.msg("BlackTileList onClickItemHandler ERROR:"+item_id);
-				
-				
-			}
-			
+            var coin:Number=flox.getPlayerData("coin");
+
+            DebugTrace.msg("BlackTileList.onPurchaseItem item_id:"+item_id);
+            var price:Number=Number(marketlist[item_id].price);
+            DebugTrace.msg("BlackTileList.onPurchaseItem coin:"+coin+" ; price:"+price);
+            var _data:Object=new Object();
+            if(coin>=price)
+            {
+                //enough pay this item
+
+                _data.price=price;
+                var blackmarkerform:starling.display.Sprite=ViewsContainer.blackmarketform
+                blackmarkerform.dispatchEventWith("UPDAT_BLANCE",false,_data);
+
+            }
+            else
+            {
+                DebugTrace.msg("BlackTileList.onPurchaseItem NO Coin");
+
+                var loaderreq:LoaderRequest=new LoaderRequest();
+                loaderreq.paymentWeb("coin");
+
+                /*var  authKey:String=flox.getPlayerData("authId");
+                 var url:String=Config.payCoinURL+authKey;
+                 DebugTrace.msg("BlackTileList onClickItemHandler url:"+url);
+                 var req:URLRequest=new URLRequest(url);
+                 navigateToURL(req,"_blank");*/
+
+                var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
+                gameEvent._name="remove_blackmarket_form";
+                gameEvent.displayHandler();
+
+                var command:MainInterface=new MainCommand();
+                _data.name="BlackMarketScene";
+                command.sceneDispatch(SceneEvent.CHANGED,_data);
+
+
+            }
+
+
+//			try
+//			{
+//				var coin:Number=flox.getPlayerData("coin");
+//
+//				DebugTrace.msg("BlackTileList.onPurchaseItem item_id:"+item_id);
+//				var price:Number=Number(marketlist[item_id].price);
+//				DebugTrace.msg("BlackTileList.onPurchaseItem coin:"+coin+" ; price:"+price);
+//				var _data:Object=new Object();
+//				if(coin>=price)
+//				{
+//					//enough pay this item
+//
+//					_data.price=price;
+//					var blackmarkerform:starling.display.Sprite=ViewsContainer.blackmarketform
+//					blackmarkerform.dispatchEventWith("UPDAT_BLANCE",false,_data);
+//
+//				}
+//				else
+//				{
+//                    DebugTrace.msg("BlackTileList.onPurchaseItem NO Coin");
+//
+//                    var loaderreq:LoaderRequest=new LoaderRequest();
+//					loaderreq.paymentWeb("coin");
+//
+//					/*var  authKey:String=flox.getPlayerData("authId");
+//					var url:String=Config.payCoinURL+authKey;
+//					DebugTrace.msg("BlackTileList onClickItemHandler url:"+url);
+//					var req:URLRequest=new URLRequest(url);
+//					navigateToURL(req,"_blank");*/
+//
+//					var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
+//					gameEvent._name="remove_blackmarket_form";
+//					gameEvent.displayHandler();
+//
+//					var command:MainInterface=new MainCommand();
+//					_data.name="BlackMarketScene";
+//					command.sceneDispatch(SceneEvent.CHANGED,_data);
+//
+//
+//				}
+//				//if
+//			}catch(e:Error)
+//			{
+//
+//
+//				DebugTrace.msg("BlackTileList.onPurchaseItem ERROR:"+item_id);
+//
+//
+//			}
+
 		}
 		private function onMouseOverItemHandler(e:MouseEvent):void
 		{
@@ -191,8 +232,10 @@ package views
 			}
 			catch(e:Error)
 			{
-				
-				profileScene.dispatchEventWith("CLEAR");
+				if(profileScene){
+					profileScene.dispatchEventWith("CLEAR");
+				}
+
 			}
 		}
 	}

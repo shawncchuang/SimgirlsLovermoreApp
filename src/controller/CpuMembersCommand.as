@@ -112,7 +112,7 @@ public class CpuMembersCommand implements CpuMembersInterface
         bossName=Config.bossName;
         var battleType:String=DataContainer.battleType;
         //DebugTrace.msg("CpuMembersCommand. battleType :"+battleType);
-        if(battleType=="sechedule"){
+        if(battleType=="schedule"){
 
             var batteData:BattleData=new BattleData();
             cpuIndex=batteData.checkBattleSchedule("Battle","");

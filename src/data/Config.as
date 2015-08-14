@@ -19,6 +19,8 @@ public class Config
     private static var acctype:String;
     private static var authkey:String;
     public static var ExcerptFornt:String="SimFutura";
+    public static const allCharacters:Array=["lenus","sirena","dea","sao","klr","tomoru","ceil","zack"];
+    //zack don't show up in somewhere
     public static const characters:Array=["lenus","sirena","dea","sao","klr","tomoru","ceil"];
     public static const NPC:Object={"daz":"npc001"};
     //schedule [index+ current month]
@@ -276,12 +278,12 @@ public class Config
     {
         //Save Game
         //rel(relation):"stranger","new friend","good friend","close friend","girlfriend","lover","wife"
-        //
+        //Tue.1.Mar.2022|12
         playerInfo={
             "next_switch":"s001",
             "current_switch":"s001|on",
             "status":"Normal",
-            "cash":100,
+            "cash":10000,
             "first_name":"",
             "last_name":"",
             "date":"Tue.1.Mar.2022|12",

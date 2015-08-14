@@ -590,10 +590,6 @@ public class BattleData
         var month:String=flox.getSaveData("date").split(".")[2];
         var schedule:Dictionary=Config.battleSchedule();
 
-        //fake date
-        month="Jul";
-        date="2";
-
         var dayStr:String=month+"_"+date;
         var player_index:Number=-1;
 
