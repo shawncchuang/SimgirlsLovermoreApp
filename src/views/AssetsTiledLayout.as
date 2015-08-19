@@ -127,7 +127,7 @@ public class AssetsTiledLayout extends PanelScreen{
         layout.paddingRight = 0;
         layout.paddingBottom = 0;
         layout.paddingLeft =0;
-        layout.manageVisibility = true;
+
         this.layout = layout;
         this.verticalScrollPolicy = ScrollContainer.SCROLL_POLICY_ON;
         this.snapScrollPositionsToPixels = true;
@@ -155,6 +155,7 @@ public class AssetsTiledLayout extends PanelScreen{
             nameHeader.x=itemImg.width+10;
             nameHeader.hAlign="left";
             itemRender.addChild(nameHeader);
+
             var nametTxt:TextField=new TextField(100,renderH,item.name,font,20,0,false);
             nametTxt.x=nameHeader.x;
             nametTxt.hAlign="left";

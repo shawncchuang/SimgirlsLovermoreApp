@@ -45,6 +45,7 @@ package utils
 		private static var skillexcerptbox:Sprite;
 		private static var skill_store:Sprite;
 		private static var player_profile:Sprite;
+
 		public static function set GameStage(st:Stage):void
 		{
 			game_st=st;	

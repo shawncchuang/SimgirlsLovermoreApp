@@ -13,8 +13,10 @@ package views
 	import events.GameEvent;
 	import events.SceneEvent;
 	import events.TopViewEvent;
-	
-	import model.SaveGame;
+
+import flash.geom.Point;
+
+import model.SaveGame;
 	import model.Scenes;
 	
 	import starling.animation.Tween;
@@ -33,7 +35,8 @@ package views
 		private var button:Button;
 		private var scencom:SceneInterface=new SceneCommnad();
 		private var floxcom:FloxInterface=new FloxCommand();
-		
+
+		private var shoppingform:ShoppingForm=null;
 	 
 		public function ShoppingCentreScene()
 		{
@@ -54,7 +57,11 @@ package views
 			scencom.init("ShoppingCentreScene",speaker_sprite,36,onCallback);
 			scencom.start();
 			scencom.disableAll();
-		}
+
+
+
+
+        }
 		private function onCallback():void
 		{
 			
@@ -88,8 +95,11 @@ package views
 					command.sceneDispatch(SceneEvent.CHANGED,_data);
 					break
 				case "Buy":
-					
-					
+					gameEvent._name="clear_comcloud";
+					gameEvent.displayHandler();
+
+					shoppingform=new ShoppingForm();
+					addChild(shoppingform);
 			 
 					break
 				case "ani_complete":

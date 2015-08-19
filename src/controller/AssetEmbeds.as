@@ -333,9 +333,11 @@ public class AssetEmbeds
     public static const IconArrow:Class;
 
 
-    [Embed(source="../../media/textures/icons/icon_cir_bg.png")]
-    public static const IconCircle:Class;
+    [Embed(source="../../media/textures/icons/incrementButton.png")]
+    public static const IncrementButton:Class;
 
+    [Embed(source="../../media/textures/icons/decrementButton.png")]
+    public static const DecrementButton:Class;
 
     [Embed(source="../../media/textures/icons/male-fake-head.png")]
     public static const MaleFakeHead:Class;
@@ -509,8 +511,14 @@ public class AssetEmbeds
     [Embed(source="../../media/textures/icons/icon_trash_empty.png")]
     public static const IconTrashEmpty:Class;
 
-    [Embed(source="../../media/textures/icons/icon_trash_full.png")]
+    [Embed(source="../../media/textures/icons/buy_button_de_skin.png")]
     public static const IconTrashFull:Class;
+
+    [Embed(source="../../media/textures/icons/buy_button_de_skin.png")]
+    public static const BuyButtonDe_Skin:Class;
+
+    [Embed(source="../../media/textures/icons/buy_button_down_skin.png")]
+    public static const BuyButtonDown_Skin:Class;
 
     /*------------------icons-------------------------------------------------*/
 
@@ -969,6 +977,9 @@ public class AssetEmbeds
 
     [Embed(source="../../media/textures/panels/profile_tab_personalinfo.png")]
     public static const PersonalInfo:Class;
+
+    [Embed(source="../../media/textures/panels/shopping_tab_assets.png")]
+    public static const ShoppingAssets:Class;
 
     [Embed(source="../../media/textures/panels/profile_tab_assets.png")]
     public static const AssetsInfo:Class;
