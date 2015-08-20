@@ -51,17 +51,14 @@ import starling.display.Sprite;
 import starling.events.Touch;
 import starling.events.TouchEvent;
 import starling.events.TouchPhase;
-import starling.filters.BlurFilter;
-import starling.filters.ColorMatrixFilter;
-import starling.text.TextField;
-import starling.text.TextFieldAutoSize;
+
 import starling.textures.Texture;
-import starling.textures.TextureSmoothing;
+
 import starling.utils.Color;
 
 import utils.DebugTrace;
 import utils.DrawManager;
-import utils.FilterManager;
+
 import utils.ViewsContainer;
 
 import views.AlertMessage;
@@ -1031,6 +1028,9 @@ public class MainCommand implements MainInterface {
         target.addChild(cancelbtn);
         return cancelbtn
     }
+
+
+
 
     private function onTouchCancel(e:TouchEvent):void {
         var target:Image = e.currentTarget as Image;

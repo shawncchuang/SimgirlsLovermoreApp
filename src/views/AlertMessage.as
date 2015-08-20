@@ -16,7 +16,7 @@ package views
 	import starling.events.Event;
 	import starling.text.TextField;
 	import starling.textures.Texture;
-	
+
 	import utils.DebugTrace;
 	
 	public class AlertMessage extends Sprite
@@ -31,10 +31,10 @@ package views
 		{
 			onClosed=callback;
 			comfirm=new Sprite();
-			
-			
+
+
 			alertframe=Assets.getDynamicAtlas("AlertTalking");
-			alertframe.loop=false;
+			//alertframe.loop=false;
 			alertframe.stop();
 			alertframe.pivotX=alertframe.width/2;
 			alertframe.pivotY=alertframe.height/2;
@@ -75,20 +75,33 @@ package views
 		private function onAlertMessageFadeIn():void
 		{
 			//btn.visible=true;
-			Starling.juggler.removeTweens(alertframe);
+            Starling.juggler.removeTweens(alertframe);
+
+
+
 			
 		}
 		private function onTouchAlertFrame():void
 		{
-			DebugTrace.msg("AlertMessage.onTouchAlertFrame")
+			DebugTrace.msg("AlertMessage.onTouchAlertFrame");
 			//var target:Sprite=e.currentTarget as Sprite;
 			//var BEGAN:Touch=e.getTouch(target,TouchPhase.BEGAN);
 			//removeChild(comfirm);
-            comfirm.removeFromParent(true);
-			 if(onClosed)
-			onClosed();
-			 
-			
+
+
+            try{
+
+                comfirm.removeFromParent(true);
+                alertframe.removeFromParent(true);
+                if(onClosed)
+                    onClosed();
+
+
+            }catch(error:Error)
+            {
+                DebugTrace.msg("AlertMessage.onTouchAlertFrame Error");
+            }
+
 		}
 	}
 }

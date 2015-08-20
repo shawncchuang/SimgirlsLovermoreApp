@@ -725,6 +725,7 @@ public class SceneCommnad implements SceneInterface
                 case "PierScene":
                 case "LovemoreMansionScene":
                 case "GardenScene":
+                case "PrivateIslandScene":
                     bgSrc=(bgSrc+day);
                     break
             }

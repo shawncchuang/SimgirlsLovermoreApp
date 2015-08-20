@@ -8,9 +8,9 @@ package utils
 		//private var flox:FloxInterface=new FloxCommand();
 		public static function msg(value:String=null):void
 		{
-			//trace(value);
-			var flox:FloxInterface=new FloxCommand();
-			flox.showlog(value);
+			trace(value);
+			//var flox:FloxInterface=new FloxCommand();
+			//flox.showlog(value);
 		}
 		public static function obj(o:*=null):void
 		{

@@ -303,7 +303,7 @@ public class CardsList extends Sprite
     private function onTouchlockSkill(e:TouchEvent):void
     {
         currentSkill=e.currentTarget as Sprite;
-        var began:Touch=e.getTouch(currentSkill,TouchPhase.BEGAN)
+        var began:Touch=e.getTouch(currentSkill,TouchPhase.BEGAN);
         var skillStore:Sprite=ViewsContainer.SkillStore;
         if(began)
         {

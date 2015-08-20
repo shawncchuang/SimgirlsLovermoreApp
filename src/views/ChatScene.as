@@ -19,13 +19,18 @@ import starling.core.Starling;
 import starling.display.Button;
 import starling.display.Image;
 import starling.display.MovieClip;
+import starling.display.Quad;
 import starling.display.ScrollImage;
 import starling.display.Sprite;
 import starling.display.Sprite;
 import starling.events.Event;
+import starling.events.Touch;
+import starling.events.TouchEvent;
+import starling.events.TouchPhase;
 import starling.text.TextField;
 import starling.textures.Texture;
 import starling.textures.TextureSmoothing;
+import starling.utils.Color;
 
 import utils.DebugTrace;
 import utils.ViewsContainer;
@@ -39,13 +44,15 @@ public class ChatScene extends Sprite
     private var top:Number=0;
     private var bottom:Number=100;
 
-    private var speed:Number=10;
+    private var speed:Number=20;
     private var cancelbtn:Button;
     private var command:MainInterface=new MainCommand();
     private var relist:Array=new Array();
     private var flox:FloxInterface=new FloxCommand();
     private var chatbubbleTex:Texture;
     private var result:Number;
+    private var clickmouse:Sprite;
+    private var quad:Quad;
     public function ChatScene()
     {
         initBingo();
@@ -207,7 +214,7 @@ public class ChatScene extends Sprite
 
 
         //start bingo moving
-        addTweenCall(0.5,0.5,onBigoMoving);
+        addTweenCall(0.1,0.1,onBigoMoving);
 
     }
     private var repeat:Number=-1;
@@ -250,14 +257,14 @@ public class ChatScene extends Sprite
         displayBingo(false,true);
         Starling.juggler.removeTweens(bingo);
         repeat=1;
-        addTweenCall(0.25,0.25,onBigoSlowMoving);
+        addTweenCall(0.1,0.1,onBigoSlowMoving);
     }
     private function onBigoSlowMoving():void
     {
         repeat=-1;
         Starling.juggler.removeTweens(bingo);
 
-        addTweenCall(0.5,0.5,onBigoResult);
+        addTweenCall(0.1,0.1,onBigoResult);
     }
     private function onBigoResult():void
     {
@@ -313,10 +320,8 @@ public class ChatScene extends Sprite
                 _bingomotion.removeEventListener(Event.ENTER_FRAME,doBingoStart);
 
 
-
-
-                var tween:Tween=new Tween(bingo,0.5);
-                tween.delay=0.5;
+                var tween:Tween=new Tween(bingo,0.25);
+                tween.delay=0.25;
                 tween.onComplete=onChatWithPlayer;
                 Starling.juggler.add(tween);
             }
@@ -503,25 +508,39 @@ public class ChatScene extends Sprite
 
 
         //added cancel button
-        command.addedCancelButton(this,doCancelHandler);
+        //command.addedCancelButton(this,doCancelHandler);
+        var width:Number=Starling.current.stage.stageWidth;
+        var height:Number=Starling.current.stage.stageHeight;
+        quad= new Quad(width,height,Color.AQUA);
+        quad.alpha=0;
+        addChild(quad);
 
-        /*cancelbtn=new Button(Assets.getTexture("XAlt"));
-         cancelbtn.name="cancel";
-         cancelbtn.x=964;
-         cancelbtn.y=720;
-         addChild(cancelbtn);
-         cancelbtn.addEventListener(Event.TRIGGERED,doCencaleHandler);*/
+        clickmouse=new ClickMouseIcon();
+        clickmouse.x=973;
+        clickmouse.y=704;
+        addChild(clickmouse);
+        this.addEventListener(TouchEvent.TOUCH,doCancelHandler);
+
 
     }
-    private function doCancelHandler():void
+    private function doCancelHandler(e:TouchEvent):void
     {
-        displayBingo(false,false,false);
-        Starling.juggler.removeTweens(bingo);
 
-        var _data:Object=new Object();
-        _data.name=DataContainer.currentLabel;
-        command.sceneDispatch(SceneEvent.CHANGED,_data);
+        var began:Touch=e.getTouch(this,TouchPhase.BEGAN);
+        if(began)
+        {
+            quad.removeFromParent(true);
+            clickmouse.removeFromParent(true);
+            this.removeEventListener(Event.TRIGGERED,doCancelHandler);
 
+            displayBingo(false,false,false);
+            Starling.juggler.removeTweens(bingo);
+
+            var _data:Object=new Object();
+            _data.name=DataContainer.currentLabel;
+            command.sceneDispatch(SceneEvent.CHANGED,_data);
+
+        }
 
     }
     private function praseRelAndMood(attr:Object):Object

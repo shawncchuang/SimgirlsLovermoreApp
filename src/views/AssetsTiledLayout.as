@@ -274,8 +274,6 @@ public class AssetsTiledLayout extends PanelScreen{
 
             }
 
-
-
         }
 
 
@@ -286,7 +284,7 @@ public class AssetsTiledLayout extends PanelScreen{
         var dating:String=DataContainer.currentDating;
 
         var owned_assets:Object=flox.getSaveData("owned_assets");
-        var myItem:Object=searchMyOwnedAssets(owned_assets.player)
+        var myItem:Object=searchMyOwnedAssets(owned_assets.player);
         var datingTargetItems:Array=owned_assets[dating];
         var index:Number=searchID(datingTargetItems,item_id);
         var enabled:Boolean=true;
@@ -299,7 +297,7 @@ public class AssetsTiledLayout extends PanelScreen{
         if(!submited){
 
             if(enabled){
-                // dating person didn't have this item, send item to some one
+                // witch dating person who didn't have this item, send item to some him/her
                 //disableSubmit();
                 submited=true;
 
@@ -316,6 +314,11 @@ public class AssetsTiledLayout extends PanelScreen{
                     var new_assetslist:Array=assetslist.concat(_assetslist);
 
                     owned_assets.player=new_assetslist;
+                }else
+                {
+                    assetslist[index].qty=qty;
+                    owned_assets.player=assetslist;
+
                 }
 
                 var new_item:Object=new Object();

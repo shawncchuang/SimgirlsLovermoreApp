@@ -98,9 +98,7 @@ package views
 			var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
 			gameEvent._name="clear_comcloud";
 			gameEvent.displayHandler();
-			
-			
-			
+
 		}
 		private function onCallback():void
 		{

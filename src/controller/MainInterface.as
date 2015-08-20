@@ -5,7 +5,8 @@ package controller
 	import flash.media.SoundTransform;
 	
 	import starling.display.Image;
-	import starling.display.Sprite;
+import starling.display.MovieClip;
+import starling.display.Sprite;
 	
 	public interface MainInterface
 	{
@@ -30,6 +31,7 @@ package controller
 		function displayUpdateValue(target:Sprite,_data:Object):void
 		function addedConfirmButton(target:Sprite,callback:Function,pos:Point=null):void
 		function addedCancelButton(target:Sprite,callback:Function,pos:Point=null):Image
+
 	    function initSchedule():void
 		function doRest(free:Boolean):void
 		function showCommandValues(target:Sprite,attr:String,value:Object=null):void

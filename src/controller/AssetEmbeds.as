@@ -58,8 +58,10 @@ public class AssetEmbeds
     [Embed(source = "../../media/textures/scenes/policestation.atf" ,mimeType="application/octet-stream")]
     public static const  PoliceStationBg:Class;
 
-    [Embed(source = "../../media/textures/scenes/privateisland.atf" ,mimeType="application/octet-stream")]
-    public static const  PrivateIslandBg:Class;
+    [Embed(source = "../../media/textures/scenes/privateisland_day.atf" ,mimeType="application/octet-stream")]
+    public static const  PrivateIslandBgDay:Class;
+    [Embed(source = "../../media/textures/scenes/privateisland_night.atf" ,mimeType="application/octet-stream")]
+    public static const  PrivateIslandBgNight:Class;
 
     [Embed(source = "../../media/textures/scenes/restaurant.atf" ,mimeType="application/octet-stream")]
     public static const  RestaurantBg:Class;
