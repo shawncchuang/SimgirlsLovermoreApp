@@ -347,7 +347,7 @@ public class MemebersCommand implements MembersInterface
                 //DebugTrace.msg("BattleScene.playerReadyPickupCard formation:"+JSON.stringify(formation[i]));
 
                 //playerteam[i].processAction();
-                memberEvt=playerteam[i].memberEvt
+                memberEvt=playerteam[i].memberEvt;
                 memberEvt.processAction();
             }
             //for
@@ -441,19 +441,23 @@ public class MemebersCommand implements MembersInterface
             var command:MainInterface=new MainCommand();
 
 
+            var evtObj:Object = new Object();
 
             if(cpu_gameover)
             {
-                battlealert=new VictoryAlert();
-                flox.logEvent("BattleVictory");
-                command.playBackgroudSound("BattleVictory");
+                evtObj.command = "Victory@"+battlescene;
+                flox.logEvent("Battle", evtObj);
 
+                battlealert=new VictoryAlert();
+                command.playBackgroudSound("BattleVictory");
                 saveRecord("victory");
             }
             if(player_gameover)
             {
+                evtObj.command = "Defeat@"+battlescene;
+                flox.logEvent("Battle", evtObj);
+
                 battlealert=new DefeatAlert();
-                flox.logEvent("BattleDefeat");
                 command.playBackgroudSound("BattleDefeat");
                 saveRecord("defeat");
             }

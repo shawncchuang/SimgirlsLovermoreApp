@@ -53,5 +53,6 @@ import starling.display.Sprite;
         function consumeHandle(com:String):Boolean
         function syncSpiritEnergy():void
         function checkSystemStatus():void
+		function initCharacterLocation(type:String,arrived:Array=null):void
 	}
 }

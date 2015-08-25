@@ -1796,5 +1796,149 @@ public class MainCommand implements MainInterface {
 
     }
 
+    public function initCharacterLocation(type:String,arrived:Array=null):void{
+
+        var flox:FloxInterface = new FloxCommand();
+        var scenelikes:Object=flox.getSaveData("scenelikes");
+        var schedule:Array=flox.getSyetemData("schedule");
+        var current_scene:String=DataContainer.currentScene.split("Scene").join("");
+        var allChacters:Array=Config.characters;
+        var dating:String=flox.getSaveData("dating");
+
+        var chlist:Array=new Array();
+        if(!arrived){
+            arrived=new Array();
+        }
+        //check schedule
+        for(var j:uint=0;j<allChacters.length;j++)
+        {
+
+            var character:String=allChacters[j];
+            characterInSchedule(character);
+            var liksObj:Object=checkSchedule(character,schedule);
+
+            if(liksObj)
+            {
+
+                arrived.push(liksObj);
+                chlist.push(liksObj.name);
+            }
+            else
+            {
+                //people likes
+                //DebugTrace.msg("FoundSomeScene.setCharacterInside scenelikes:"+JSON.stringify(scenelikes));
+                //DebugTrace.msg("FoundSomeScene.setCharacterInside character="+character);
+                if(dating!=character) {
+                    //not incloud dating character
+                    if (chlist.indexOf(character) == -1) {
+                        //popele don't have schedule
+                        //but likes this scene with character;
+                        var _scenelikes:Object=scenelikes[character][0];
+
+                            var likes:Number = Number(_scenelikes.likes);
+                            var scene:String = String(_scenelikes.name);
+                        var chlikes:Object;
+                        switch(type){
+                            case "all_scene":
+                                if (likes > 0) {
+                                    // most like
+                                    chlikes = new Object();
+                                    chlikes.name = character;
+                                    chlikes.value = likes;
+                                    chlikes.location=scene;
+                                    arrived.push(chlikes);
+                                }
+                                break;
+                            default :
+                                if (scene == current_scene && likes > 0) {
+                                    // most like
+                                    chlikes = new Object();
+                                    chlikes.name = character;
+                                    chlikes.value = likes;
+                                    chlikes.location=scene;
+                                    //trace("FoundSomeScene.setCharacterInside scene: ",scene,"; character:",character," : ",likes);
+                                    arrived.push(chlikes);
+
+                                }
+                                //if
+                                break
+
+                        }
+                         //switch
+
+                    }
+                }
+
+            }
+            //if
+
+        }
+        //for
+
+        //fake
+        //chlikeslist.push({"value":80,"name":"lenus"});
+        arrived.sortOn("value",Array.NUMERIC|Array.DESCENDING);
+        DataContainer.CharacherLocation=arrived;
+
+
+    }
+    private function checkSchedule(character:String,schedule:Array):Object
+    {
+        //DebugTrace.msg("FoundSomeScene.checkSchedule likesObj:"+JSON.stringify(likesObj));
+
+        var _likesObj:Object=new Object();
+        var dateIndx:Object=DataContainer.currentDateIndex;
+
+        var flox:FloxInterface = new FloxCommand();
+        //var schedule:Array=flox.getSyetemData("schedule");
+        var schIndex:Object=Config.scheduleIndex as Object;
+        var index:Number=schIndex[character];
+        var schedule_scene:String=String(schedule[index+dateIndx.month][dateIndx.date]);
+        var current_scene:String=DataContainer.currentScene;
+        var scene:String=String(current_scene.split("Scene").join());
+        //DebugTrace.msg("FoundSomeScene.checkSchedule date:"+dateIndx.date);
+        //DebugTrace.msg("FoundSomeScene.checkSchedule schedule:"+schedule[index+dateIndx.month][dateIndx.date]);
+        //DebugTrace.msg("FoundSomeScene.checkSchedule dateIndx:"+JSON.stringify(dateIndx));
+        DebugTrace.msg("FoundSomeScene.checkSchedule schedule_scene:"+schedule_scene+" ;scene:"+scene);
+        if(schedule_scene==scene)
+        {
+            _likesObj.value=100;
+            _likesObj.name=character;
+        }
+        else
+        {
+
+            _likesObj=null;
+        }
+        return _likesObj;
+    }
+    private function characterInSchedule(name:String):void
+    {
+
+        var flox:FloxInterface = new FloxCommand();
+        var scenelikes:Object=flox.getSaveData("scenelikes");
+        var schedule:Array=flox.getSyetemData("schedule");
+        var dateIndx:Object=DataContainer.currentDateIndex;
+
+        var schIndex:Object=Config.scheduleIndex;
+        var index:Number=schIndex[name];
+        var schedule_scene:String=schedule[index+dateIndx.month][dateIndx.date];
+        DebugTrace.msg("MainCommand.characterInSchedule  date:"+dateIndx.date);
+        DebugTrace.msg("MainCommand.characterInSchedule  schedule_scene:"+schedule_scene);
+        if(schedule_scene!="")
+        {
+            //character has schedule
+            for(var i:uint=0;i<scenelikes[name].length;i++)
+            {
+
+                scenelikes[name][i].likes=0;
+            }
+            //savegame.scenelikes=scenelikes;
+            //FloxCommand.savegame=savegame;
+            flox.save("scenelikes",scenelikes);
+        }
+        //if
+    }
+
 }
 }

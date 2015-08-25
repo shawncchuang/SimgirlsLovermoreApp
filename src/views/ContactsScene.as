@@ -59,11 +59,17 @@ public class ContactsScene extends Sprite {
         var contacts:Sprite=new Sprite();
         contacts.x=253;
         contacts.y=179;
-        addChild(contacts);
 
-
+        //516x542
         var panelBg:Image=new Image(Assets.getTexture("ContactsPanelBg"));
         contacts.addChild(panelBg);
+        addChild(contacts);
+
+        var sheet:ContactsSheet=new ContactsSheet();
+        sheet.x=contacts.x-80;
+        sheet.y=contacts.y+5;
+        addChild(sheet);
+
 
 
 

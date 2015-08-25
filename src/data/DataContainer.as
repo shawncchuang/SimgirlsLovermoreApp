@@ -42,6 +42,7 @@ public class DataContainer
     private static var skills:Array;
     private static var _battleScene:String;
     private static var battlecode:String;
+    private static var characterLocalcation:Array;
 
 
     public static function set currentVersion(ver:String):void
@@ -741,5 +742,14 @@ public class DataContainer
         return battle_type;
     }
 
+    public static function set CharacherLocation(arr:Array):void{
+
+        characterLocalcation=arr;
+    }
+    public static function get CharacherLocation():Array {
+
+        return characterLocalcation;
+
+    }
 }
 }
