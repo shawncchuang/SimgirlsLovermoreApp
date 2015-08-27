@@ -439,13 +439,15 @@ public class MemebersCommand implements MembersInterface
             var replaybtn:MovieClip;
             var quitbtn:MovieClip;
             var command:MainInterface=new MainCommand();
-
+            var scene:String=DataContainer.currentScene;
+            var type:String=DataContainer.battleType;
 
             var evtObj:Object = new Object();
 
             if(cpu_gameover)
             {
-                evtObj.command = "Victory@"+battlescene;
+                evtObj.event = "Victory@"+scene;
+                evtObj.type=type;
                 flox.logEvent("Battle", evtObj);
 
                 battlealert=new VictoryAlert();
@@ -454,7 +456,8 @@ public class MemebersCommand implements MembersInterface
             }
             if(player_gameover)
             {
-                evtObj.command = "Defeat@"+battlescene;
+                evtObj.event = "Defeat@"+scene;
+                evtObj.type=type;
                 flox.logEvent("Battle", evtObj);
 
                 battlealert=new DefeatAlert();

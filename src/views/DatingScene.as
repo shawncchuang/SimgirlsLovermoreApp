@@ -1020,6 +1020,7 @@ public class DatingScene extends Scenes {
             "lover": 200,
             "spouse": 100
         }
+
         var talking:Object = flox.getSyetemData("date_response");
         var dating:String = DataContainer.currentDating;
         var relObj:Object = flox.getSaveData("rel");
@@ -1207,7 +1208,7 @@ public class DatingScene extends Scenes {
         var _data:Object = new Object();
         _data.attr = "mood";
         _data.values = "MOOD +" + reward_mood;
-        command.displayUpdateValue(this, _data);
+        //command.displayUpdateValue(this, _data);
 
 
     }
@@ -1220,38 +1221,38 @@ public class DatingScene extends Scenes {
         var limitMood:Number = 0;
         var limitRel:Number = 0;
         var dating:String = DataContainer.currentDating;
-        // mood
-        //  var mood:Number=flox.getSaveData("mood")[dating];
+        var relationship_level:Object=flox.getSyetemData("relationship_level");
+        var mood_level:Object=flox.getSyetemData("mood_level");
         var pts:Number = flox.getSaveData("pts")[dating];
         DebugTrace.msg("DatingScene.specificChecking com=" + com + " , mood=" + mood + " , pts=" + pts);
         switch (com) {
             case "Chat":
                 relPass = true;
-                limitMood = Config.moodStep["bored-Min"];
+                limitMood = mood_level["bored-Min"];
                 break;
             case "Give":
                 relPass = true;
-                limitMood = Config.moodStep["depressed-Min"];
+                limitMood = mood_level["depressed-Min"];
                 break;
             case "Flirt":
                 relPass = true;
-                limitMood = Config.moodStep["smitten-Min"];
+                limitMood = mood_level["smitten-Min"];
                 break;
             case "TakePhoto":
-                limitRel = Config.relationshipStep["friend-Min"];
-                limitMood = Config.moodStep["pleased-Min"];
+                limitRel = relationship_level["friend-Min"];
+                limitMood = mood_level["pleased-Min"];
                 //relPass=true;
                 //moodPass=true;
                 break;
             case "Date":
-                limitRel = Config.relationshipStep["closefriend-Min"];
-                limitMood = Config.moodStep["delighted-Min"];
+                limitRel = relationship_level["closefriend-Min"];
+                limitMood = mood_level["delighted-Min"];
                 //relPass=true;
                 //moodPass=true;
                 break;
             case "Kiss":
-                limitRel = Config.relationshipStep["lover-Min"];
-                limitMood = Config.moodStep["loved-Min"];
+                limitRel = relationship_level["lover-Min"];
+                limitMood = mood_level["loved-Min"];
                 break;
             case "Leave":
                 relPass = true;

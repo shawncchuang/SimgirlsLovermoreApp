@@ -164,6 +164,7 @@ public class DataContainer
          every scene has random rating(all scenes's rating totle is 100)
 
          */
+
         var chls:Object=new Object();
         var characters:Array=Config.characters;
         var scenes:Object=Config.stagepoints;
@@ -209,7 +210,7 @@ public class DataContainer
 
                 if(scene_name=="Park"){
 
-                   // scene_rating.likes=100;
+                    // scene_rating.likes=100;
 
                 }
                 //*-----------------------------------------------------------------------
@@ -253,7 +254,7 @@ public class DataContainer
 
         }
         //for
-       //var chLikes:String=JSON.stringify(chls);
+        //var chLikes:String=JSON.stringify(chls);
         //DebugTrace.msg("DataContainer.initChacacterLikeScene chLikes:"+chLikes);
 
         //flox.saveSystemData("scenelikes",chls);
@@ -367,9 +368,11 @@ public class DataContainer
     }
     public static function getRelationship(pts:Number,dating:String):String{
 
-        var reStep:Object=Config.relationshipStep;
+        var flox:FloxInterface=new FloxCommand();
+        var reStep:Object=flox.getSyetemData("relationship_level");
+        //var reStep:Object=Config.relationshipStep;
 
-        var rel:String=""
+        var rel:String="";
         if(pts<=reStep["foe-Max"])
         {
             rel="foe";
@@ -410,46 +413,47 @@ public class DataContainer
 
     public static function getFacialMood(name:String):String
     {
-        var moodStep:Object=Config.moodStep;
+
         var ch:String=name.toLowerCase();
         var facial:String="";
         var flox:FloxInterface=new FloxCommand();
+        var mood_level:Object=flox.getSyetemData("mood_level");
         var moodObj:Object=flox.getSaveData("mood");
         var mood:Number=moodObj[ch];
         DebugTrace.msg("DataContainer.getFacialMood mood:"+mood);
-        if(mood<=moodStep["sickened-Max"])
+        if(mood<=mood_level["sickened-Max"])
         {
             facial="sickened";
         }
-        else if(mood>moodStep["depressed-Min"] && mood<=moodStep["depressed-Max"])
+        else if(mood>mood_level["depressed-Min"] && mood<=mood_level["depressed-Max"])
         {
             facial="depressed";
         }
-        else if(mood>=moodStep["annoyed-Min"]  && mood<=moodStep["annoyed-Max"])
+        else if(mood>=mood_level["annoyed-Min"]  && mood<=mood_level["annoyed-Max"])
         {
             facial="annoyed";
         }
-        else if(mood>=moodStep["bored-Min"] && mood<=moodStep["bored-Max"])
+        else if(mood>=mood_level["bored-Min"] && mood<=mood_level["bored-Max"])
         {
             facial="bored";
         }
-        else if(mood>=moodStep["calm-Min"] && mood<=moodStep["calm-Max"])
+        else if(mood>=mood_level["calm-Min"] && mood<=mood_level["calm-Max"])
         {
             facial="calm";
         }
-        else if(mood>=moodStep["pleased-Min"] && mood<=moodStep["pleased-Max"])
+        else if(mood>=mood_level["pleased-Min"] && mood<=mood_level["pleased-Max"])
         {
             facial="pleased";
         }
-        else if(mood>=moodStep["delighted-Min"] && mood<=moodStep["delighted-Max"])
+        else if(mood>=mood_level["delighted-Min"] && mood<=mood_level["delighted-Max"])
         {
             facial="delighted";
         }
-        else if(mood>=moodStep["smitten-Min"] && mood<=moodStep["smitten-Max"])
+        else if(mood>=mood_level["smitten-Min"] && mood<=mood_level["smitten-Max"])
         {
             facial="smitten";
 
-        }else if(mood>=moodStep["loved-Min"]){
+        }else if(mood>=mood_level["loved-Min"]){
             facial="loved";
         }
         return  facial;
@@ -464,7 +468,8 @@ public class DataContainer
         var pts:Number=flox.getSaveData("pts")[dating];
         var assets:Object=flox.getSyetemData("assets");
         var cate:String=assets[item_id].cate;
-        var relStep:Object=Config.relationshipStep;
+        var relStep:Object=flox.getSyetemData("relationship_level");
+        //var relStep:Object=Config.relationshipStep;
 
         switch(cate){
             case "consumable":
@@ -655,31 +660,32 @@ public class DataContainer
 
     public static function getGiftResponse(rating:Number):String{
 
-
+        var flox:FloxInterface=new FloxCommand();
+        var rating_level:Object=flox.getSyetemData("rating_level");
         var comments:String="";
-        var ratingStep:Object=Config.ratingStep;
 
-        if(rating>=ratingStep["love-Min"] && rating<=ratingStep["love-Max"]){
+
+        if(rating>=rating_level["love-Min"] && rating<=rating_level["love-Max"]){
 
 
             comments="OMG this is amazing I love it!!";
 
-        }else if(rating>=ratingStep["like-Min"] && rating<=ratingStep["like-Max"]){
+        }else if(rating>=rating_level["like-Min"] && rating<=rating_level["like-Max"]){
 
 
             comments="Awww... I like it very much!";
 
-        }else if(rating>=ratingStep["normal-Min"] && rating<=ratingStep["normal-Max"]){
+        }else if(rating>=rating_level["normal-Min"] && rating<=rating_level["normal-Max"]){
 
 
             comments="Oh thanks!";
 
-        }else if(rating>=ratingStep["dislike-Min"] && rating<=ratingStep["dislike-Max"]){
+        }else if(rating>=rating_level["dislike-Min"] && rating<=rating_level["dislike-Max"]){
 
 
             comments="Meh, it's not what I really want but thanks anyway.";
 
-        }else if(rating>=ratingStep["hate-Min"] && rating<=ratingStep["hate-Max"]){
+        }else if(rating>=rating_level["hate-Min"] && rating<=rating_level["hate-Max"]){
 
 
             comments="Ewww... ";
@@ -690,27 +696,29 @@ public class DataContainer
     }
     public static function assetsRatingLevel(rating:Number):uint{
 
+        var flox:FloxInterface=new FloxCommand();
+        var rating_level:Object=flox.getSyetemData("rating_level");
         var lv:uint=0;
-        var ratingStep:Object=Config.ratingStep;
 
-        if(rating>=ratingStep["love-Min"] && rating<=ratingStep["love-Max"]){
+
+        if(rating>=rating_level["love-Min"] && rating<=rating_level["love-Max"]){
 
 
             lv=0;
 
-        }else if(rating>=ratingStep["like-Min"] && rating<=ratingStep["like-Max"]){
+        }else if(rating>=rating_level["like-Min"] && rating<=rating_level["like-Max"]){
 
             lv=1;
 
-        }else if(rating>=ratingStep["normal-Min"] && rating<=ratingStep["normal-Max"]){
+        }else if(rating>=rating_level["normal-Min"] && rating<=rating_level["normal-Max"]){
 
             lv=2;
 
-        }else if(rating>=ratingStep["dislike-Min"] && rating<=ratingStep["dislike-Max"]){
+        }else if(rating>=rating_level["dislike-Min"] && rating<=rating_level["dislike-Max"]){
 
             lv=3;
 
-        }else if(rating>=ratingStep["hate-Min"] && rating<=ratingStep["hate-Max"]){
+        }else if(rating>=rating_level["hate-Min"] && rating<=rating_level["hate-Max"]){
 
             lv=4;
         }

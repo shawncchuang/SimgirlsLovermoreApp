@@ -2,22 +2,22 @@
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
 <!-- $TexturePacker:SmartUpdate:4eb7a7c2bafadc9c3c9c8f6b80eddf4e:f1357c7ef87965b227b41c4e3012896d:0b372a9a81107f01933363a5764aed7d$ -->
 <TextureAtlas imagePath="zack-facials.atf">
-    <SubTexture name="zack-angry1" x="2" y="2" width="198" height="198"/>
-    <SubTexture name="zack-angry2" x="2" y="202" width="198" height="198"/>
-    <SubTexture name="zack-blush1" x="2" y="402" width="198" height="198"/>
-    <SubTexture name="zack-blush2" x="2" y="602" width="198" height="198"/>
+    <SubTexture name="zack-annoyed1" x="2" y="2" width="198" height="198"/>
+    <SubTexture name="zack-annoyed2" x="2" y="202" width="198" height="198"/>
+    <SubTexture name="zack-loved1" x="2" y="402" width="198" height="198"/>
+    <SubTexture name="zack-loved2" x="2" y="602" width="198" height="198"/>
     <SubTexture name="zack-bored1" x="2" y="802" width="198" height="198"/>
     <SubTexture name="zack-bored2" x="202" y="2" width="198" height="198"/>
     <SubTexture name="zack-calm1" x="402" y="2" width="198" height="198"/>
     <SubTexture name="zack-calm2" x="602" y="2" width="198" height="198"/>
     <SubTexture name="zack-pleased1" x="802" y="2" width="198" height="198"/>
     <SubTexture name="zack-pleased2" x="202" y="202" width="198" height="198"/>
-    <SubTexture name="zack-sad1" x="202" y="402" width="198" height="198"/>
-    <SubTexture name="zack-sad2" x="202" y="602" width="198" height="198"/>
-    <SubTexture name="zack-scared1" x="202" y="802" width="198" height="198"/>
-    <SubTexture name="zack-scared2" x="402" y="202" width="198" height="198"/>
-    <SubTexture name="zack-sick1" x="602" y="202" width="198" height="198"/>
-    <SubTexture name="zack-sick2" x="802" y="202" width="198" height="198"/>
-    <SubTexture name="zack-vhappy1" x="402" y="402" width="198" height="198"/>
-    <SubTexture name="zack-vhappy2" x="402" y="602" width="198" height="198"/>
+    <SubTexture name="zack-depressed1" x="202" y="402" width="198" height="198"/>
+    <SubTexture name="zack-depressed2" x="202" y="602" width="198" height="198"/>
+    <SubTexture name="zack-smitten1" x="202" y="802" width="198" height="198"/>
+    <SubTexture name="zack-smitten2" x="402" y="202" width="198" height="198"/>
+    <SubTexture name="zack-sickened1" x="602" y="202" width="198" height="198"/>
+    <SubTexture name="zack-sickened2" x="802" y="202" width="198" height="198"/>
+    <SubTexture name="zack-delighted1" x="402" y="402" width="198" height="198"/>
+    <SubTexture name="zack-delighted2" x="402" y="602" width="198" height="198"/>
 </TextureAtlas>

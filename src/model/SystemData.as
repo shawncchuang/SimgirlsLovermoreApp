@@ -35,6 +35,9 @@ public class SystemData extends Entity
     //story_battle={switch id}+"-"+{number}:{boss id}(ex:format: t10_1)
     public var story_battle:Object;
     public var status:Object;
+    public var relationship_level:Object;
+    public var mood_level:Object;
+    public var rating_level:Object;
     public var switchs:Object=
     {
         "s001":{

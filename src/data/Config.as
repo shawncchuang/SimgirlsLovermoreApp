@@ -443,9 +443,9 @@ public class Config
             "rel":{
                 player:"-",
                 lenus:"acquaintance",
-                sirena:"acquaintance",
+                sirena:"close friend",
                 dea:"acquaintance",
-                sao:"close friend",
+                sao:"acquaintance",
                 klr:"acquaintance",
                 tomoru:"acquaintance",
                 ceil:"acquaintance",
@@ -454,9 +454,9 @@ public class Config
             "pts":{
                 player: "-",
                 lenus: 0,
-                sirena: 0,
+                sirena: 333,
                 dea: 0,
-                sao: 333,
+                sao: 0,
                 klr: 0,
                 tomoru: 0,
                 ceil: 0,

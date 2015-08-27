@@ -2,22 +2,22 @@
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
 <!-- $TexturePacker:SmartUpdate:2b2d12cfb941fb574355874bdc0dc077:7bda0b3be423d1c5f1adf4baaa41c830:7456291b3aa8e2c3a482d174103f5b47$ -->
 <TextureAtlas imagePath="srn-facials.atf">
-    <SubTexture name="sirena-angry1" x="2" y="2" width="198" height="198"/>
-    <SubTexture name="sirena-angry2" x="2" y="202" width="198" height="198"/>
-    <SubTexture name="sirena-blush1" x="2" y="402" width="198" height="198"/>
-    <SubTexture name="sirena-blush2" x="2" y="602" width="198" height="198"/>
+    <SubTexture name="sirena-annoyed1" x="2" y="2" width="198" height="198"/>
+    <SubTexture name="sirena-annoyed2" x="2" y="202" width="198" height="198"/>
+    <SubTexture name="sirena-loved1" x="2" y="402" width="198" height="198"/>
+    <SubTexture name="sirena-loved2" x="2" y="602" width="198" height="198"/>
     <SubTexture name="sirena-bored1" x="2" y="802" width="198" height="198"/>
     <SubTexture name="sirena-bored2" x="202" y="2" width="198" height="198"/>
     <SubTexture name="sirena-calm1" x="402" y="2" width="198" height="198"/>
     <SubTexture name="sirena-calm2" x="602" y="2" width="198" height="198"/>
     <SubTexture name="sirena-pleased1" x="802" y="2" width="198" height="198"/>
     <SubTexture name="sirena-pleased2" x="202" y="202" width="198" height="198"/>
-    <SubTexture name="sirena-sad1" x="202" y="402" width="198" height="198"/>
-    <SubTexture name="sirena-sad2" x="202" y="602" width="198" height="198"/>
-    <SubTexture name="sirena-scared1" x="202" y="802" width="198" height="198"/>
-    <SubTexture name="sirena-scared2" x="402" y="202" width="198" height="198"/>
-    <SubTexture name="sirena-sick1" x="602" y="202" width="198" height="198"/>
-    <SubTexture name="sirena-sick2" x="802" y="202" width="198" height="198"/>
-    <SubTexture name="sirena-vhappy1" x="402" y="402" width="198" height="198"/>
-    <SubTexture name="sirena-vhappy2" x="402" y="602" width="198" height="198"/>
+    <SubTexture name="sirena-depressed1" x="202" y="402" width="198" height="198"/>
+    <SubTexture name="sirena-depressed2" x="202" y="602" width="198" height="198"/>
+    <SubTexture name="sirena-smitten1" x="202" y="802" width="198" height="198"/>
+    <SubTexture name="sirena-smitten2" x="402" y="202" width="198" height="198"/>
+    <SubTexture name="sirena-sickened1" x="602" y="202" width="198" height="198"/>
+    <SubTexture name="sirena-sickened2" x="802" y="202" width="198" height="198"/>
+    <SubTexture name="sirena-delighted1" x="402" y="402" width="198" height="198"/>
+    <SubTexture name="sirena-delighted2" x="402" y="602" width="198" height="198"/>
 </TextureAtlas>

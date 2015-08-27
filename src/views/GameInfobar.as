@@ -138,7 +138,10 @@ public class GameInfobar extends Sprite
     }
     private function onDisplayHandle(e:Event):void{
 
+
+        var current_dating:String=DataContainer.currentDating;
         DebugTrace.msg("GameInfobar.onDisplayHandle current_dating="+current_dating);
+
         morebar.visible=true;
         player_icon.visible=true;
         proTxt.visible=true;

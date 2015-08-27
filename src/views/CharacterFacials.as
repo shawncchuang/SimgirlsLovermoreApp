@@ -41,7 +41,7 @@ public class CharacterFacials extends Sprite {
         textreAtlas=new TextureAtlas(texture,xml);
         var mood_type:String=chname+"-"+mood;
 
-        facial=new MovieClip(textreAtlas.getTextures(mood_type),24);
+        facial=new MovieClip(textreAtlas.getTextures(mood_type));
         //facial.x=Math.floor((287-facial.width)/2);
         //facial.y=Math.floor((287-facial.height)/2);
         facial.pivotX=facial.width/2;

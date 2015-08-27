@@ -137,9 +137,9 @@ public class BattleScene extends Sprite
 	{
 
 		battle_type=DataContainer.battleType;
-
+		var scene:String=DataContainer.currentScene;
 		var evtObj:Object=new Object();
-		evtObj.event="Start";
+		evtObj.event="Start@"+scene;
 		evtObj.type=battle_type;
 		flox.logEvent("Battle",evtObj);
 

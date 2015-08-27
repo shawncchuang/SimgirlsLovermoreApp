@@ -351,7 +351,7 @@ public class ChatScene extends Sprite
             case "0,0,0":
                 //mood reward
 
-                var moodObj:Object=flox.getSaveData("mood")
+                var moodObj:Object=flox.getSaveData("mood");
                 var ptsObj:Object=flox.getSaveData("pts");
                 var pts:Number=ptsObj[dating];
                 var mood:Number=moodObj[dating];

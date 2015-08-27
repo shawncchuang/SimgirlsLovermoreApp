@@ -22,7 +22,8 @@ package views
 	public class AlertMessage extends Sprite
 	{
 		private var comfirm:Sprite=new Sprite();
-		private var alertframe:MovieClip;
+		//private var alertframe:MovieClip;
+		private var alertframe:Image;
 		private var btn:Button;
 		private var onClosed:Function;
 		private var command:MainInterface=new MainCommand();
@@ -33,14 +34,15 @@ package views
 			comfirm=new Sprite();
 
 
-			alertframe=Assets.getDynamicAtlas("AlertTalking");
+			//alertframe=Assets.getDynamicAtlas("AlertTalking");
+
 			//alertframe.loop=false;
-			alertframe.stop();
-			alertframe.pivotX=alertframe.width/2;
-			alertframe.pivotY=alertframe.height/2;
+			//alertframe.stop();
+			//alertframe.pivotX=alertframe.width/2;
+			//alertframe.pivotY=alertframe.height/2;
 			
-			//var texture:Texture=Assets.getTexture("Alerframe");
-			//alertframe=new Image(texture);
+			var texture:Texture=Assets.getTexture("SceneMask");
+			alertframe=new Image(texture);
 			alertframe.pivotX=alertframe.width/2;
 			alertframe.pivotY=alertframe.height/2;
 			

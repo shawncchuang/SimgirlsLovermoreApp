@@ -320,6 +320,7 @@ public class MenuScene extends Scenes
             }
 
             var iconlabels:TextField=iconsLabelList[i];
+            if(iconlabels)
             iconlabels.removeFromParent(true);
         }
         Starling.juggler.removeTweens(network);

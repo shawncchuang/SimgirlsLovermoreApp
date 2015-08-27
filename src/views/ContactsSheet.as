@@ -4,8 +4,12 @@
 package views {
 
 import controller.FloxCommand;
+import controller.FloxInterface;
 import controller.MainCommand;
 import controller.Assets;
+import controller.MainInterface;
+
+import data.Config;
 
 import data.DataContainer;
 
@@ -31,15 +35,14 @@ import flash.text.TextFormat;
 import starling.events.Event;
 import starling.textures.Texture;
 import starling.textures.TextureAtlas;
-import starling.utils.AssetManager;
 
 import utils.DebugTrace;
 
 
 public class ContactsSheet extends PanelScreen {
     private var assetsData:Object;
-    private var flox:FloxCommand=new FloxCommand();
-    private var command:MainCommand=new MainCommand();
+    private var flox:FloxInterface=new FloxCommand();
+    private var command:MainInterface=new MainCommand();
 
     public function ContactsSheet() {
 
@@ -51,21 +54,24 @@ public class ContactsSheet extends PanelScreen {
     {
         assetsData=flox.getSaveData("rel");
         command.initCharacterLocation("all_scene");
+        var relationlevel:Object=flox.getSyetemData("relationship_level");
         var locations:Array=DataContainer.CharacherLocation;
         var arrivedChStr:String=JSON.stringify(locations);
         //DebugTrace.msg("ContactsSheet.initializeHandler arrivedChStr:"+arrivedChStr);
-       var contacts:Array=new Array();
+        var contacts:Array=new Array();
         for(var name:String in assetsData)
         {
             var rel:String=assetsData[name];
-            if(rel=="acquaintance")
+            var pts:Number=flox.getSaveData("pts")[name];
+            var request_pts_min:Number=relationlevel["closefriend-Min"];
+            if(pts>=request_pts_min)
             {
-              for(var i:uint=0;i<locations.length;i++){
-                  var chloc:Object=locations[i];
-                  if(chloc.name==name){
-                      contacts.push(chloc);
-                  }
-              }
+                for(var i:uint=0;i<locations.length;i++){
+                    var chloc:Object=locations[i];
+                    if(chloc.name==name){
+                        contacts.push(chloc);
+                    }
+                }
 
             }
         }
@@ -117,7 +123,7 @@ public class ContactsSheet extends PanelScreen {
             var xml:XML=Assets.getAtalsXML(contacts[i].name+"FacialsXML");
             var textrue:Texture=Assets.getTexture(contacts[i].name+"Facials");
             var textureAtlas:TextureAtlas=new TextureAtlas(textrue,xml);
-             var _texture:Texture=textureAtlas.getTexture(contacts[i].name+"-pleased1");
+            var _texture:Texture=textureAtlas.getTexture(contacts[i].name+"-pleased1");
             renderObj.thumbnail=_texture;
             _data.push(renderObj);
         }

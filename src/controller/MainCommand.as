@@ -551,10 +551,17 @@ public class MainCommand implements MainInterface {
                     _date++;
                     _data_index++;
 
+                    var dataCon:DataContainer=new DataContainer();
+                    var scenelikes:Object=dataCon.initChacacterLikeScene();
+                    var secrets:Object=dataCon.setupCharacterSecrets();
+                    savegame.scenelikes=scenelikes;
+                    savegame.secrets=secrets;
+
                 }
                 //if
-                new DataContainer().initChacacterLikeScene();
-                break
+
+
+                break;
             case "Stay":
                 var stay_days:Number = Number(type.split("Stay").join(""));
                 _date += stay_days;
@@ -883,7 +890,6 @@ public class MainCommand implements MainInterface {
     public function moodCalculator(item_id:String, dating:String):Number {
         var flox:FloxInterface = new FloxCommand();
         var sysAssets:Object = flox.getSyetemData("assets");
-        var savedata:SaveGame = FloxCommand.savegame;
         var pst:Number = flox.getSaveData("pts")[dating];
         var price:Number = sysAssets[item_id].price;
         var rating:Number = searchAssetRating(item_id);
@@ -897,20 +903,21 @@ public class MainCommand implements MainInterface {
 
         var flox:FloxInterface = new FloxCommand();
         var dating:String = DataContainer.currentDating;
-        var rating:Number;
+        var rating:Number=0;
         var assets_rating:Object = flox.getSaveData("assets");
         var assets:Array = assets_rating[dating];
+
         for (var i:uint = 0; i < assets.length; i++) {
             if (assets[i].id == item_id) {
                 var assets_item:Object = assets[i];
                 rating = Number(assets_item.rating);
-                break;
+                break
             }
             //if
         }
         //for
+         return rating;
 
-        return rating;
     }
 
     //private var valueSprite:Sprite;
@@ -1167,10 +1174,10 @@ public class MainCommand implements MainInterface {
 
         var savegame:SaveGame = new SaveGame();
         var flox:FloxInterface = new FloxCommand();
-        var sysCommand:Object = flox.getSyetemData("command");
+        var comObj:Object = flox.getSyetemData("command");
 
-        var cash_pay:Number = sysCommand.Train.values.cash;
-        var valuesImg:String = sysCommand.Train.values.image;
+        var cash_pay:Number = comObj.Train.values.cash;
+        var valuesImg:String = comObj.Train.values.image;
         var cash:Number = flox.getSaveData("cash");
         var ap:Number = flox.getSaveData("ap");
         var imageObj:Object = flox.getSaveData("image");
@@ -1197,7 +1204,7 @@ public class MainCommand implements MainInterface {
 
         var evtObj:Object = new Object();
         var scene:String = DataContainer.currentScene;
-        evtObj.command = "Research@"+scene;
+        evtObj.command = "Train@"+scene;
         flox.logEvent("CloudCommand", evtObj);
 
     }
@@ -1224,7 +1231,7 @@ public class MainCommand implements MainInterface {
         var playerInt:Number = flox.getSaveData("int").player;
 
         var income:Number = 0;
-        var rate:Number = Number((Math.floor(Math.random() * 101) / 100).toFixed(2));
+        var rate:Number = 1+Number(((Math.floor(Math.random() * 100)+1) / 100).toFixed(2));
         switch (scene) {
             case "NightclubScene":
                 income = Math.floor(image / 4 * rate);
@@ -1236,7 +1243,7 @@ public class MainCommand implements MainInterface {
                 income = 100;
                 break
         }
-
+        income*=2;
         cash += income;
         flox.save("cash", cash);
 
@@ -1280,7 +1287,6 @@ public class MainCommand implements MainInterface {
         //DebugTrace.msg("MainCommand.doLearn sysCommand="+JSON.stringify(sysCommand));
 
         var reward_int:Number = minInt + Math.floor(Math.random() * (maxInt - minInt)) + 1;
-
         cash += cash_pay;
         intObj.player += reward_int;
 
