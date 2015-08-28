@@ -352,14 +352,14 @@ public class CardsList extends Sprite
                 skills[character][cate]=skilllist.toString();
 
                 flox.save("skills",skills,onSaveSkillsComplete);
-                function onSaveSkillsComplete(saveGame:SaveGame):void
+                function onSaveSkillsComplete(result:SaveGame):void
                 {
                     DebugTrace.msg("CardsList.onTouchlockSkill  onSaveSkillsComplete");
 
                     flox.save("skillPts",skillPts,onSavedSkillPts);
 
                 }
-                function onSavedSkillPts(saveGame:SaveGame):void
+                function onSavedSkillPts(result:SaveGame):void
                 {
                     DebugTrace.msg("CardsList.onTouchlockSkill  onSavedSkillPts");
                     var re:Object=new Object();
@@ -372,7 +372,7 @@ public class CardsList extends Sprite
             else
             {
                 var msg:String="You need more Skill Points.";
-                var alertmsg:Sprite=new AlertMessage(msg)
+                var alertmsg:Sprite=new AlertMessage(msg);
 
                 skillStore.addChild(alertmsg);
 
@@ -391,9 +391,11 @@ public class CardsList extends Sprite
         var target:Image=e.currentTarget as Image;
         var hover:Touch=e.getTouch(target,TouchPhase.HOVER);
         var excbox:Sprite=ViewsContainer.SkillExcerptBox;
-        var _data:Object=new Object();
+
+       // DebugTrace.msg("CardsList.doSkillCardTiggered hover="+hover+" ,skill="+target.name);
         if(hover)
         {
+            var _data:Object=new Object();
             _data.type="skill_card";
             _data.skill=target.name;
             excbox.dispatchEventWith("UPDATE",false,_data);

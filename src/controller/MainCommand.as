@@ -90,6 +90,12 @@ public class MainCommand implements MainInterface {
     private var sound_channel:SoundChannel;
     private var switch_verify:Boolean = false;
     //private var fliter:FilterInterface=new FilterManager();
+
+    public function updateInfo():void{
+        var gameinfo:Sprite = ViewsContainer.gameinfo;
+        gameinfo.dispatchEventWith("UPDATE_INFO");
+    }
+
     public function sceneDispatch(type:String, data:Object = null):void {
         var mainstage:Sprite = ViewsContainer.MainStage;
         // mainstage.dispatchEvent(new SceneEvent(type,true,false,data));

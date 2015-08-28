@@ -12,7 +12,6 @@ package views
 	import com.greensock.plugins.TweenPlugin;
 	
 	import flash.display.MovieClip;
-	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
@@ -34,8 +33,9 @@ package views
 	import model.BattleData;
 	
 	import services.LoaderRequest;
-	
-	import utils.DebugTrace;
+
+
+import utils.DebugTrace;
 	import utils.ViewsContainer;
 	
 	TweenPlugin.activate([MotionBlurPlugin, TransformAroundPointPlugin, TransformAroundCenterPlugin, ShortRotationPlugin]);
@@ -43,6 +43,7 @@ package views
 	{
 		private var memberscom:MembersInterface=new MemebersCommand();
 		private var flox:FloxInterface=new FloxCommand();
+		private var command:MainInterface=new MainCommand();
 		private var bonusMax:Number=0;
 		private var bonus:Bonus;
 		private var num:Number=0;
@@ -61,7 +62,7 @@ package views
 		{
 			
 			var cpu_team:Object=flox.getSaveData("cpu_teams");
-			var cpuID:Number=DataContainer.setCputID
+			var cpuID:Number=DataContainer.setCputID;
 			for(var i:uint=0;i<8;i++)
 			{
 				var seMax:Number=cpu_team["t"+cpuID+"_"+i].seMax;
@@ -70,7 +71,7 @@ package views
 			//for	
 			bonusMax=50;
 			DebugTrace.msg("VictoryBonus.init bonusMax="+bonusMax);
-			var battlescene:Sprite=ViewsContainer.battlescene;
+
 			
 			
 			/*
@@ -169,6 +170,7 @@ package views
 				}
 				//for
                 flox.save("honor",honors);
+
 				
 				var format:TextFormat=new TextFormat();
 				format.color=0xFFFFFF;
@@ -205,7 +207,8 @@ package views
 		}
 		private function doConfirmHandle(e:MouseEvent):void
 		{
-			
+
+
 			onBonusFadeout();
 			
 		}
@@ -244,7 +247,7 @@ package views
 			var _data:Object=new Object();
 			_data.name= scene;
 			command.sceneDispatch(SceneEvent.CHANGED,_data);
-			
+			command.updateInfo();
 		}
 		private function onStarFadeout(bonus:Bonus):void
 		{

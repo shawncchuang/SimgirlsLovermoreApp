@@ -96,15 +96,15 @@ import flash.geom.Point;
 			//skillPtsIcon.x=34;
 			//skillPtsIcon.y=65;
 			
-			sptsTxt=new TextField(100,40,"","SimMyriadPro",20);
-			sptsTxt.x=198;
-			sptsTxt.y=62;
-			sptsTxt.hAlign="left";
+//			sptsTxt=new TextField(100,40,"","SimMyriadPro",20);
+//			sptsTxt.x=198;
+//			sptsTxt.y=62;
+//			sptsTxt.hAlign="left";
 			
 			tagshit.addChild(tagbtn);
 			panelbase.addChild(tagshit);
 			//panelbase.addChild(skillPtsIcon);
-			panelbase.addChild(sptsTxt);
+			//panelbase.addChild(sptsTxt);
 		}
 		private function initBaseModel():void
 		{
@@ -143,17 +143,17 @@ import flash.geom.Point;
 
 
             var skillPts:Object=flox.getSaveData("skillPts");
-            var spTxt:TextField=new TextField(70,24,String(skillPts[character]),font,20)
-            spTxt.vAlign="center";
-            spTxt.x=198;
-            spTxt.y=62;
-            skills.addChild(spTxt);
+			sptsTxt=new TextField(70,24,String(skillPts[character]),font,20);
+			sptsTxt.vAlign="center";
+			sptsTxt.x=198;
+			sptsTxt.y=62;
+            skills.addChild(sptsTxt);
 
 			
 			skillexcbox=new ExcerptBox();
 			skillexcbox.x=-345;
 			skillexcbox.y=113;
-			skills.addChild(skillexcbox)
+			skills.addChild(skillexcbox);
 			ViewsContainer.SkillExcerptBox=skillexcbox;
 
 

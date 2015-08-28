@@ -12,6 +12,7 @@ import starling.display.Sprite;
 	{
 		 
 		function topviewDispatch(type:String,data:Object=null):void
+		function updateInfo():void
 		function addDisplayObj(current:String,target:String):void
 		function filterTalking(source:Array):Array
 		function sceneDispatch(type:String,data:Object=null):void

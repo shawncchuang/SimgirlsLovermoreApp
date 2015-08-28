@@ -160,7 +160,6 @@ public class GameInfobar extends Sprite
 
         var intObj:Object=flox.getSaveData("int");
         var imageObj:Object=flox.getSaveData("image");
-        trace("GameInfo.showAppearance imageObj="+JSON.stringify(imageObj));
         var ap:Number=flox.getSaveData("ap");
         var honor:Object=flox.getSaveData("honor");
         var ap_max:Number=flox.getSaveData("ap_max");
@@ -232,7 +231,7 @@ public class GameInfobar extends Sprite
 
     private function showHonor():void
     {
-        var honor:Object=flox.getSaveData("honor")
+        var honor:Object=flox.getSaveData("honor");
         var honorStr:String=String(honor.play);
 
 

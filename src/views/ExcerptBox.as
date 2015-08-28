@@ -21,10 +21,12 @@ package views
 		private var excerptbox:Image;
 		private var excerptTxt:TextField;
 		private var flox:FloxInterface=new FloxCommand();
+		private var excerpt:String="";
+		private var skills:Object;
 		public function ExcerptBox()
 		{
-		
-			
+
+			skills=flox.getSyetemData("skillsys");
 			var texture:Texture=Assets.getTexture("ExcerptBox");
 			excerptbox=new Image(texture);
 			
@@ -41,7 +43,7 @@ package views
 		}
 		private function onUpdateExcerpt(e:Event):void
 		{
-			//DebugTrace.msg("ExcerptBox.onUpdateExcerpt type="+e.data.type+" ,id="+e.data.id+" ,skill="+e.data.skill);
+			DebugTrace.msg("ExcerptBox.onUpdateExcerpt type="+e.data.type+" ,id="+e.data.id+" ,skill="+e.data.skill);
 			switch(e.data.type)
 			{
 				case "assets":
@@ -53,12 +55,12 @@ package views
 					}
 					var systemdata:Object=flox.getSyetemData(attr);
 					var assetsLog:Object=systemdata[id];
-					var excerpt:String=assetsLog.exc;
+					excerpt=assetsLog.exc;
 					
 					//DebugTrace.msg("ProfileScene.onUpdateExcerpt id:"+ id);
 					break
 				case "skill_card":
-					var skills:Object=flox.getSyetemData("skillsys");
+
 					var skillObj:Object=skills[e.data.skill];
 					excerpt=skillObj.note;
 					break;
@@ -72,7 +74,7 @@ package views
 		}
 		private function onClearExcerpt(e:Event):void
 		{
-			
+			excerpt="";
 			this.visible=false;
 			
 		}
