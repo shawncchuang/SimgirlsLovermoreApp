@@ -45,7 +45,7 @@ public class CusomAssets
         flox.save("assets",assets_rating,onAssetsSaved);
 
     }
-    private function onAssetsSaved():void{
+    private function onAssetsSaved(result:SaveGame):void{
 
 
         flox.save("unreleased_assets",assets_rating);

@@ -117,8 +117,6 @@ public class DatingScene extends Scenes {
 
         var dating:String = DataContainer.currentDating;
         var moodObj:Object = flox.getSaveData("mood");
-
-        trace("DatingScene moodObj=" + JSON.stringify(moodObj));
         mood = moodObj[dating];
 
         initLayout();
@@ -176,6 +174,10 @@ public class DatingScene extends Scenes {
                 var _data:Object = new Object();
                 _data.name = DataContainer.currentScene;
                 command.sceneDispatch(SceneEvent.CHANGED, _data);
+
+
+
+
                 break;
             case "Chat":
                 var chat:ChatScene = new ChatScene();
@@ -324,7 +326,7 @@ public class DatingScene extends Scenes {
         //	var assets:Object=flox.getSaveData("assets");
 
         var rating:Number = command.searchAssetRating(item_id)
-        var type:String = "like"
+        var type:String = "like";
         if (rating < 0) {
             type = "unlike"
         }
@@ -802,28 +804,6 @@ public class DatingScene extends Scenes {
                 enabled = false;
                 var msg:String = "";
 
-//                if (com == "Chat") {
-//
-//                    for (var i:uint = 0; i < clouds.length; i++) {
-//                        clouds[i].removeEventListener(TouchEvent.TOUCH, onTouchedCloudHandler);
-//                        clouds[i].visible = false;
-//                    }
-//
-//
-//                    chat = "Can we do something else?";
-//                    initBubble();
-//                    var attr:Object=new Object();
-//                    attr.x=868;
-//                    attr.y=260;
-//                    attr.scale=0.8;
-//                    initBubble(attr);
-//                    command.addedCancelButton(this,doCancelDating);
-//                } else {
-//
-//                    msg = "You can not do this today.";
-//                    var alert:AlertMessage = new AlertMessage(msg);
-//                    addChild(alert);
-//                }
                 chat = "Can we do something else?";
                 var attr:Object = new Object();
                 attr.x = 640;
@@ -1257,6 +1237,11 @@ public class DatingScene extends Scenes {
             case "Leave":
                 relPass = true;
                 moodPass = true;
+                var datingnow:String=flox.getSaveData("dating");
+                if(datingnow==""){
+                    DataContainer.currentDating=null;
+                }
+
                 break
 
         }

@@ -37,8 +37,8 @@ public class ContactsScene extends Sprite {
 
 
         scencom.init("ContactsScene",base_sprite,20);
-        scencom.start();
-        scencom.disableAll();
+//        scencom.start();
+//        scencom.disableAll();
 
 
         templete=new MenuTemplate();

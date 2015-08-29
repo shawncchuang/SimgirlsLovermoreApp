@@ -38,6 +38,7 @@ import utils.ViewsContainer;
 
 import views.CharacterBubble;
 import views.ClickMouseIcon;
+import views.MenuScene;
 import views.MyTalkingDisplay;
 import views.PhotoMessage;
 
@@ -69,7 +70,7 @@ public class SceneCommnad implements SceneInterface
     private var thbubble_pos:Object={"thC":new Point(278,235),"thL":new Point(480,440),"thR":new Point(580,235)};
     private var shbubble_pos:Object={"shC":new Point(278,235),"shL":new Point(480,440),"shR":new Point(580,235)};
     private var moving_tween:Tween;
-    private var fishedcallback:Function;
+    private var finishedcallback:Function;
     private var photoframe:PhotoMessage=null;
     //private var background:MovieClip=null;d
     private var background:Sprite;
@@ -89,7 +90,7 @@ public class SceneCommnad implements SceneInterface
         talk_index=0;
         scene=current;
         display_container=new Object();
-        fishedcallback=finshed;
+        finishedcallback=finshed;
 
         _target=target;
         part_index=lbr_part;
@@ -100,8 +101,10 @@ public class SceneCommnad implements SceneInterface
 
         // DebugTrace.msg("SceneCommand.init talks:"+talks);
 
+        if(MenuScene.iconsname.indexOf(current)==-1 && current!="MenuScene"){
+           datingComCloudHandle();
+        }
 
-        datingComCloudHandle();
     }
     private function datingComCloudHandle():void
     {
@@ -224,7 +227,8 @@ public class SceneCommnad implements SceneInterface
             DebugTrace.msg("SceneCommand finished");
             //_target.removeEventListener(TouchEvent.TOUCH,onChatSceneTouched);
             disableAll();
-            fishedcallback();
+            if(finishedcallback)
+            finishedcallback();
         }
         //if
 
@@ -936,7 +940,7 @@ public class SceneCommnad implements SceneInterface
         talk_index=0;
         scene="Story";
         display_container=new Object();
-        fishedcallback=onStoryFinished;
+        finishedcallback=onStoryFinished;
 
         part_index=part;
         var library:Array=flox.getSyetemData("main_story");

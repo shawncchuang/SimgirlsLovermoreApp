@@ -68,8 +68,8 @@ public class MenuScene extends Scenes
     {
 
         scencom.init("MenuScene",base_sprite,20,onCallback);
-        scencom.start();
-        scencom.disableAll();
+        //scencom.start();
+        //scencom.disableAll();
 
         templete=new MenuTemplate();
         templete.font=font;

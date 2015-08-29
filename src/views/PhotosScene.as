@@ -63,8 +63,8 @@ public class PhotosScene extends Sprite {
         base_sprite=new Sprite();
         addChild(base_sprite);
         scencom.init("PhotosScene",base_sprite,20);
-        scencom.start();
-        scencom.disableAll();
+//        scencom.start();
+//        scencom.disableAll();
 
 
         templete=new MenuTemplate();

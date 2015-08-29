@@ -147,66 +147,7 @@ package views
 		private function setCharacterInside():void
 		{
 
-//			var scenelikes:Object=flox.getSaveData("scenelikes");
-//			var allChacters:Array=Config.characters;
-//			var dating:String=flox.getSaveData("dating");
-//
-//			var chlist:Array=new Array();
-//			//check schedule
-//			for(var j:uint=0;j<allChacters.length;j++)
-//			{
-//
-//				var character:String=allChacters[j];
-//				characterInSchedule(character);
-//				var liksObj:Object=checkSchedule(character);
-//
-//				if(liksObj)
-//				{
-//
-//					arrivedCh.push(liksObj);
-//					chlist.push(liksObj.name);
-//				}
-//				else
-//				{
-//					//people likes
-//					//DebugTrace.msg("FoundSomeScene.setCharacterInside scenelikes:"+JSON.stringify(scenelikes));
-//                    //DebugTrace.msg("FoundSomeScene.setCharacterInside character="+character);
-//					if(dating!=character) {
-//                        //not incloud dating character
-//                        if (chlist.indexOf(character) == -1) {
-//                            //popele don't have schedule
-//                            //but likes this scene with character;
-//                            for (var k:uint = 0; k < scenelikes[character].length; k++) {
-//                                var likes:Number = scenelikes[character][k].likes;
-//                                var scene:String = scenelikes[character][k].name;
-//                                //DebugTrace.obj(likes);
-//                                //DebugTrace.obj(scene);
-//                                if (scene == current_scene && likes > 0 && k == 0) {
-//                                    // most like
-//                                    var chlikes:Object = new Object();
-//                                    chlikes.name = character;
-//                                    chlikes.value = likes;
-//									chlikes.location=scene;
-//                                    //trace("FoundSomeScene.setCharacterInside scene: ",scene,"; character:",character," : ",likes);
-//                                    arrivedCh.push(chlikes);
-//
-//                                }
-//                                //if
-//                            }
-//                            //for
-//                        }
-//                    }
-//
-//				}
-//				//if
-//
-//			}
-//			//for
-//
-//			//fake
-//			//chlikeslist.push({"value":80,"name":"lenus"});
-//			arrivedCh.sortOn("value",Array.NUMERIC|Array.DESCENDING);
-//			DataContainer.CharacherLocation=arrivedCh;
+
 
 			command.initCharacterLocation("current_scene",arrivedCh);
 

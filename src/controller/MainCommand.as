@@ -896,11 +896,11 @@ public class MainCommand implements MainInterface {
     public function moodCalculator(item_id:String, dating:String):Number {
         var flox:FloxInterface = new FloxCommand();
         var sysAssets:Object = flox.getSyetemData("assets");
-        var pst:Number = flox.getSaveData("pts")[dating];
+       // var pst:Number = flox.getSaveData("pts")[dating];
         var price:Number = sysAssets[item_id].price;
         var rating:Number = searchAssetRating(item_id);
         var mood:Number = Math.floor(price * Number((rating / 100).toFixed(2))) * 4;
-        DebugTrace.msg("MainCommand.moodCalculator mood=" + mood + ", price=" + price + ", rating=" + rating);
+        DebugTrace.msg("MainCommand.moodCalculator item_id="+item_id+", mood=" + mood + ", price=" + price + ", rating=" + rating);
 
         return mood
     }
@@ -910,13 +910,12 @@ public class MainCommand implements MainInterface {
         var flox:FloxInterface = new FloxCommand();
         var dating:String = DataContainer.currentDating;
         var rating:Number=0;
-        var assets_rating:Object = flox.getSaveData("assets");
-        var assets:Array = assets_rating[dating];
+        var assets_ratingData:Object = flox.getSaveData("assets");
+        var assets_rating:Array = assets_ratingData[dating];
 
-        for (var i:uint = 0; i < assets.length; i++) {
-            if (assets[i].id == item_id) {
-                var assets_item:Object = assets[i];
-                rating = Number(assets_item.rating);
+        for (var i:uint = 0; i < assets_rating.length; i++) {
+            if (assets_rating[i].id == item_id) {
+                rating = Number(assets_rating[i].rating);
                 break
             }
             //if

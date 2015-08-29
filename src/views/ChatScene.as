@@ -474,7 +474,7 @@ public class ChatScene extends Sprite
         var unreleased_assets:Object=flox.getSaveData("unreleased_assets");
         var assets_rating:Object=flox.getSaveData("assets");
         var dating:String=DataContainer.currentDating;
-        var assets:Array=unreleased_assets[dating];
+        var assets:Array=assets_rating[dating];
 
         if(assets.length<1){
             unreleased_assets=assets_rating;
@@ -496,7 +496,12 @@ public class ChatScene extends Sprite
         var _assets:Array=assets.splice(rating_index);
         _assets.shift();
         assets=assets.concat(_assets);
+        if(!unreleased_assets){
+            unreleased_assets=new Object();
+        }
         unreleased_assets[dating]=assets;
+
+
         flox.save("unreleased_assets",unreleased_assets);
 
 

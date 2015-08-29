@@ -57,8 +57,8 @@ public class CalendarScene extends Sprite {
 
 
         scencom.init("CalendarScene",base_sprite,20);
-        scencom.start();
-        scencom.disableAll();
+//        scencom.start();
+//        scencom.disableAll();
 
 
 

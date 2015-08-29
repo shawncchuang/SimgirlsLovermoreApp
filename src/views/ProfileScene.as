@@ -143,8 +143,8 @@ public class ProfileScene extends Scenes
     private function initLayout():void
     {
         scencom.init("ProfileScene",base_sprite,22,onSceneReady);
-        scencom.start();
-        scencom.disableAll();
+        //scencom.start();
+        //scencom.disableAll();
 
         templete=new MenuTemplate();
         templete.font=font;

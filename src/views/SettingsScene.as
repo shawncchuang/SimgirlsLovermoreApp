@@ -1,5 +1,5 @@
 /**
- * Created by raymondwu on 2014-08-15.
+ * Created by shawnhuang on 2014-08-15.
  */
 package views {
 import controller.Assets;
@@ -54,8 +54,8 @@ public class SettingsScene extends Sprite{
 
 
         scencom.init("SettingsScene",base_sprite,20);
-        scencom.start();
-        scencom.disableAll();
+//        scencom.start();
+//        scencom.disableAll();
 
 
         templete=new MenuTemplate();
