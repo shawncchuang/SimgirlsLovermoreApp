@@ -349,13 +349,15 @@ public class MenuScene extends Scenes
 
         var  gameinfo:Sprite=ViewsContainer.gameinfo;
         gameinfo.dispatchEventWith("DISPLAY");
-        gameinfo.dispatchEventWith("UPDATE_DATING");
+
 
         DebugTrace.msg("MenuScene.onFadeoutComplete click_type="+click_type);
 
         if(click_type=="Cancel")
         {
             click_type=DataContainer.currentScene;
+            gameinfo.dispatchEventWith("UPDATE_DATING");
+
         }
         var _data:Object=new Object();
         _data.name=click_type;
