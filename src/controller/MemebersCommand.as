@@ -500,6 +500,8 @@ public class MemebersCommand implements MembersInterface
             {
                 //disabled on Beta version
                 TweenMax.killAll();
+                var command:MainInterface=new MainCommand();
+                command.stopBackgroudSound();
                 if(cpu_gameover)
                 {
 
@@ -740,7 +742,7 @@ public class MemebersCommand implements MembersInterface
     }
     private function onSaveComplete(savegame:SaveGame):void
     {
-        DebugTrace.msg("MembersCommand. onSaveComplete")
+        DebugTrace.msg("MembersCommand. onSaveComplete");
         flox.save("se",seObj);
     }
 }

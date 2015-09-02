@@ -2,9 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e5634857-ca85-444f-9915-08f826b15827" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/ChatScene.as" afterPath="$PROJECT_DIR$/src/views/ChatScene.as" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/model/CusomAssets.as" afterPath="$PROJECT_DIR$/src/model/CusomAssets.as" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/data/DataContainer.as" afterPath="$PROJECT_DIR$/src/data/DataContainer.as" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/DatingScene.as" afterPath="$PROJECT_DIR$/src/views/DatingScene.as" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/GameInfobar.as" afterPath="$PROJECT_DIR$/src/views/GameInfobar.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/MenuScene.as" afterPath="$PROJECT_DIR$/src/views/MenuScene.as" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/MainCommand.as" afterPath="$PROJECT_DIR$/src/controller/MainCommand.as" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/MemebersCommand.as" afterPath="$PROJECT_DIR$/src/controller/MemebersCommand.as" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/MiniGameCommand.as" afterPath="$PROJECT_DIR$/src/controller/MiniGameCommand.as" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/MiniGameScene.as" afterPath="$PROJECT_DIR$/src/views/MiniGameScene.as" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="SimgirlsLovermoreApp.iws" />
@@ -43,11 +49,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="FloxCommand.as" pinned="false" current-in-tab="false">
+      <file leaf-file-name="FloxCommand.as" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/controller/FloxCommand.as">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="1013" column="0" selection-start-line="1013" selection-start-column="0" selection-end-line="1013" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.39726028">
+              <caret line="999" column="9" selection-start-line="999" selection-start-column="9" selection-end-line="999" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -56,11 +62,31 @@
       <file leaf-file-name="MainCommand.as" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/controller/MainCommand.as">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.518518">
-              <caret line="897" column="57" selection-start-line="897" selection-start-column="51" selection-end-line="897" selection-end-column="57" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="914" column="0" selection-start-line="914" selection-start-column="0" selection-end-line="914" selection-end-column="0" />
               <folding>
                 <element signature="e#22#52#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CusomAssets.as" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/model/CusomAssets.as">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="37" column="51" selection-start-line="37" selection-start-column="51" selection-end-line="37" selection-end-column="51" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DataContainer.as" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/data/DataContainer.as">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -69,49 +95,19 @@
         <entry file="file://$PROJECT_DIR$/src/views/DatingScene.as">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="178" column="0" selection-start-line="178" selection-start-column="0" selection-end-line="178" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SceneCommnad.as" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/controller/SceneCommnad.as">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.0">
-              <caret line="240" column="43" selection-start-line="240" selection-start-column="43" selection-end-line="240" selection-end-column="43" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GameInfobar.as" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/views/GameInfobar.as">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-23.88889">
-              <caret line="453" column="24" selection-start-line="453" selection-start-column="24" selection-end-line="453" selection-end-column="24" />
+              <caret line="183" column="17" selection-start-line="183" selection-start-column="17" selection-end-line="183" selection-end-column="17" />
               <folding>
-                <element signature="e#18#50#0" expanded="true" />
+                <element signature="e#18#43#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MenuScene.as" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/views/MenuScene.as">
+      <file leaf-file-name="ChatScene.as" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/views/ChatScene.as">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="376" column="1" selection-start-line="376" selection-start-column="1" selection-end-line="376" selection-end-column="1" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CusomAssets.as" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/model/CusomAssets.as">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.37542662">
-              <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+              <caret line="379" column="0" selection-start-line="379" selection-start-column="0" selection-end-line="379" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -142,8 +138,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/views/SceneVideo.as" />
-        <option value="$PROJECT_DIR$/src/Game.as" />
         <option value="$PROJECT_DIR$/src/views/InputNamePannel.as" />
         <option value="$PROJECT_DIR$/src/model/BattleData.as" />
         <option value="$PROJECT_DIR$/src/controller/CpuMembersCommand.as" />
@@ -166,13 +160,11 @@
         <option value="$PROJECT_DIR$/src/views/AssetsTiledLayout.as" />
         <option value="$PROJECT_DIR$/src/controller/AssetEmbeds.as" />
         <option value="$PROJECT_DIR$/src/views/ShoppingListLayout.as" />
-        <option value="$PROJECT_DIR$/src/controller/MemebersCommand.as" />
         <option value="$PROJECT_DIR$/src/views/ContactsSheet.as" />
         <option value="$PROJECT_DIR$/src/model/SystemData.as" />
         <option value="$PROJECT_DIR$/src/views/AlertMessage.as" />
         <option value="$PROJECT_DIR$/src/data/Config.as" />
         <option value="$PROJECT_DIR$/src/views/CharacterFacials.as" />
-        <option value="$PROJECT_DIR$/src/data/DataContainer.as" />
         <option value="$PROJECT_DIR$/src/controller/MainInterface.as" />
         <option value="$PROJECT_DIR$/src/views/VictoryBonus.as" />
         <option value="$PROJECT_DIR$/src/views/SkillsStore.as" />
@@ -181,18 +173,22 @@
         <option value="$PROJECT_DIR$/src/controller/FloxCommand.as" />
         <option value="$PROJECT_DIR$/src/views/CardsList.as" />
         <option value="$PROJECT_DIR$/src/views/FoundSomeScene.as" />
-        <option value="$PROJECT_DIR$/src/views/ChatScene.as" />
-        <option value="$PROJECT_DIR$/src/controller/MainCommand.as" />
-        <option value="$PROJECT_DIR$/src/views/DatingScene.as" />
         <option value="$PROJECT_DIR$/src/controller/SceneCommnad.as" />
         <option value="$PROJECT_DIR$/src/views/ProfileScene.as" />
         <option value="$PROJECT_DIR$/src/views/CalendarScene.as" />
         <option value="$PROJECT_DIR$/src/views/SettingsScene.as" />
         <option value="$PROJECT_DIR$/src/views/ContactsScene.as" />
         <option value="$PROJECT_DIR$/src/views/PhotosScene.as" />
-        <option value="$PROJECT_DIR$/src/views/GameInfobar.as" />
         <option value="$PROJECT_DIR$/src/views/MenuScene.as" />
+        <option value="$PROJECT_DIR$/src/controller/MiniGameCommand.as" />
+        <option value="$PROJECT_DIR$/src/views/MiniGameScene.as" />
+        <option value="$PROJECT_DIR$/src/controller/MemebersCommand.as" />
+        <option value="$PROJECT_DIR$/src/views/GameInfobar.as" />
+        <option value="$PROJECT_DIR$/src/controller/MainCommand.as" />
+        <option value="$PROJECT_DIR$/src/data/DataContainer.as" />
+        <option value="$PROJECT_DIR$/src/views/ChatScene.as" />
         <option value="$PROJECT_DIR$/src/model/CusomAssets.as" />
+        <option value="$PROJECT_DIR$/src/views/DatingScene.as" />
       </list>
     </option>
   </component>
@@ -214,7 +210,7 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="953" />
+    <option name="x" value="968" />
     <option name="y" value="23" />
     <option name="width" value="1568" />
     <option name="height" value="1340" />
@@ -381,8 +377,8 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
       <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -823,7 +819,9 @@
       <workItem from="1440707655895" duration="3552000" />
       <workItem from="1440711722357" duration="18019000" />
       <workItem from="1440797155280" duration="12511000" />
-      <workItem from="1441045735104" duration="5724000" />
+      <workItem from="1441045735104" duration="18430000" />
+      <workItem from="1441138227325" duration="21151000" />
+      <workItem from="1441219733227" duration="10095000" />
     </task>
     <task id="LOCAL-00001" summary="update setting on intelliJ">
       <created>1406764639395</created>
@@ -1059,11 +1057,17 @@
       <option name="project" value="LOCAL" />
       <updated>1440815407726</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="1. fixed dating icon will deaspear at GameInfo when leaving any scenes.">
+      <created>1441057868064</created>
+      <option name="number" value="00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1441057868064</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1272638000" />
+    <option name="totallyTimeSpent" value="1316590000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1075,21 +1079,22 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="953" y="23" width="1568" height="1340" extended-state="0" />
+    <frame x="968" y="23" width="1568" height="1340" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32932693" sideWeight="0.4901704" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3288" sideWeight="0.48492792" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27564102" sideWeight="0.56290954" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24916388" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32998884" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27323717" sideWeight="0.4259502" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27564102" sideWeight="0.43709043" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31490386" sideWeight="0.50278705" order="8" side_tool="true" content_ui="combo" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1845039" sideWeight="0.5046948" order="4" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20432693" sideWeight="0.64613366" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.252" sideWeight="0.34731323" order="12" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.204" sideWeight="0.64285713" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2872" sideWeight="0.4344692" order="12" side_tool="true" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21714744" sideWeight="0.49600533" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24972129" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32998884" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1102,7 +1107,6 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27644232" sideWeight="0.57404983" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -1119,7 +1123,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="command cloud fadein and fadeout animted,fixed give assets item in dating scene to reflash assets form." />
     <MESSAGE value="uppate dating UI,modified get values that display animate" />
     <MESSAGE value="modified work,learn,train,meditate commands what those need consume and get rewards" />
     <MESSAGE value="modified relationship setting, fixed bug: Into DatingScene commit StartDating when dating with someone" />
@@ -1144,14 +1147,22 @@
     <MESSAGE value="1. fixed update correct facial texture when chang mood&#10;2. fixed bugs in Dating" />
     <MESSAGE value="1. fixed enabled skill card bug when received flox call back&#10;" />
     <MESSAGE value="1. fixed scenes in Menu show up the Start Dating command cloud when it's is in dating, &#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="1. fixed scenes in Menu show up the Start Dating command cloud when it's is in dating, &#10;" />
+    <MESSAGE value="1. fixed dating icon will deaspear at GameInfo when leaving any scenes." />
+    <option name="LAST_COMMIT_MESSAGE" value="1. fixed dating icon will deaspear at GameInfo when leaving any scenes." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="flex">
+          <url>file://$PROJECT_DIR$/src/controller/MainCommand.as</url>
+          <line>914</line>
+          <option name="timeStamp" value="121" />
+        </line-breakpoint>
+      </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="116" />
+      <option name="time" value="123" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1160,62 +1171,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/views/AcademyScene.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.115942">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/controller/FloxInterface.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.68031704">
-          <caret line="33" column="17" selection-start-line="33" selection-start-column="17" selection-end-line="33" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/controller/MemebersCommand.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.14811715">
-          <caret line="447" column="13" selection-start-line="447" selection-start-column="13" selection-end-line="447" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/BattleData.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="267" column="41" selection-start-line="267" selection-start-column="41" selection-end-line="267" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Game.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/SimgirlsLovemore.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.9302857">
-          <caret line="80" column="38" selection-start-line="80" selection-start-column="26" selection-end-line="80" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/AlertMessage.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.42694065">
-          <caret line="43" column="60" selection-start-line="43" selection-start-column="60" selection-end-line="43" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/controller/AvatarCommand.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2904328">
-          <caret line="36" column="9" selection-start-line="36" selection-start-column="9" selection-end-line="36" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/controller/AssetEmbeds.as">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-10.481482">
@@ -1227,13 +1182,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="470" column="0" selection-start-line="470" selection-start-column="0" selection-end-line="470" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/data/DataContainer.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.25559482">
-          <caret line="413" column="40" selection-start-line="413" selection-start-column="27" selection-end-line="413" selection-end-column="40" />
         </state>
       </provider>
     </entry>
@@ -1281,29 +1229,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/BattleScene.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-21.62963">
-          <caret line="4199" column="21" selection-start-line="4199" selection-start-column="12" selection-end-line="4199" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/CardsList.as">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-12.888889">
           <caret line="356" column="59" selection-start-line="356" selection-start-column="59" selection-end-line="356" selection-end-column="59" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/VictoryBonus.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.4444444">
-          <caret line="77" column="56" selection-start-line="77" selection-start-column="56" selection-end-line="77" selection-end-column="56" />
-          <folding>
-            <element signature="e#17#47#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1318,6 +1248,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.20774648">
           <caret line="84" column="0" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1325,7 +1256,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-12.851851">
           <caret line="56" column="20" selection-start-line="56" selection-start-column="20" selection-end-line="56" selection-end-column="20" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1333,14 +1263,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.22535211">
           <caret line="497" column="9" selection-start-line="497" selection-start-column="9" selection-end-line="497" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/ChatScene.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.15727699">
-          <caret line="473" column="29" selection-start-line="473" selection-start-column="12" selection-end-line="473" selection-end-column="29" />
           <folding />
         </state>
       </provider>
@@ -1361,20 +1283,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/TakePhotos.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/SettingsScene.as">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.025028441">
           <caret line="1" column="24" selection-start-line="1" selection-start-column="24" selection-end-line="1" selection-end-column="24" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1382,6 +1295,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="60" column="31" selection-start-line="59" selection-start-column="10" selection-end-line="60" selection-end-column="31" />
+          <folding>
+            <element signature="n#!!doc" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1389,6 +1305,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1403,6 +1320,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="53" column="5" selection-start-line="53" selection-start-column="5" selection-end-line="53" selection-end-column="5" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1418,6 +1336,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1437,37 +1356,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/DatingScene.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="178" column="0" selection-start-line="178" selection-start-column="0" selection-end-line="178" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/controller/SceneCommnad.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.0">
-          <caret line="240" column="43" selection-start-line="240" selection-start-column="43" selection-end-line="240" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/controller/MainCommand.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.518518">
-          <caret line="897" column="57" selection-start-line="897" selection-start-column="51" selection-end-line="897" selection-end-column="57" />
-          <folding>
-            <element signature="e#22#52#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/model/SaveGame.as">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.13615024">
           <caret line="52" column="33" selection-start-line="52" selection-start-column="33" selection-end-line="52" selection-end-column="33" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1476,7 +1368,7 @@
         <state vertical-scroll-proportion="-0.03169014">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#!!doc" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1497,20 +1389,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/data/Config.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33333334">
-          <caret line="888" column="29" selection-start-line="888" selection-start-column="23" selection-end-line="888" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/ShoppingForm.as">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="61.25926">
           <caret line="36" column="48" selection-start-line="36" selection-start-column="48" selection-end-line="36" selection-end-column="48" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#!!doc" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1520,7 +1404,7 @@
         <state vertical-scroll-proportion="-0.031615924">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#!!doc" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1533,28 +1417,172 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/GameInfobar.as">
+    <entry file="file://$PROJECT_DIR$/src/views/VictoryBonus.as">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-23.88889">
-          <caret line="453" column="24" selection-start-line="453" selection-start-column="24" selection-end-line="453" selection-end-column="24" />
+        <state vertical-scroll-proportion="0.025028441">
+          <caret line="77" column="56" selection-start-line="77" selection-start-column="56" selection-end-line="77" selection-end-column="56" />
           <folding>
-            <element signature="e#18#50#0" expanded="true" />
+            <element signature="e#17#47#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/controller/FloxCommand.as">
+    <entry file="jar://$PROJECT_DIR$/lib/DefeatAlert.swc!/library.swf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.07508533">
+          <caret line="3" column="25" selection-start-line="3" selection-start-column="25" selection-end-line="3" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/BattleScene.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.25589624">
+          <caret line="506" column="35" selection-start-line="506" selection-start-column="24" selection-end-line="506" selection-end-column="35" />
+          <folding>
+            <element signature="e#17#47#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/controller/MemebersCommand.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="9.028302">
+          <caret line="450" column="48" selection-start-line="450" selection-start-column="48" selection-end-line="450" selection-end-column="48" />
+          <folding>
+            <element signature="e#21#51#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/TrainingGame.as">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="1013" column="0" selection-start-line="1013" selection-start-column="0" selection-end-line="1013" selection-end-column="0" />
+          <caret line="15" column="29" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/TraceGame.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/StarlingBattleScene.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="13" selection-start-line="0" selection-start-column="13" selection-end-line="0" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/TakePhotos.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33254716">
+          <caret line="109" column="28" selection-start-line="109" selection-start-column="27" selection-end-line="109" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/MiniGameScene.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33254716">
+          <caret line="354" column="54" selection-start-line="354" selection-start-column="42" selection-end-line="354" selection-end-column="54" />
+          <folding>
+            <element signature="e#17#47#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/controller/MiniGameInterface.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/controller/MiniGameCommand.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="853" column="12" selection-start-line="853" selection-start-column="12" selection-end-line="853" selection-end-column="12" />
+          <folding>
+            <element signature="e#22#52#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/GameInfobar.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="152" column="0" selection-start-line="152" selection-start-column="0" selection-end-line="152" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/data/Config.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.28246012">
+          <caret line="21" column="37" selection-start-line="21" selection-start-column="24" selection-end-line="21" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/controller/SceneCommnad.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="910" column="82" selection-start-line="910" selection-start-column="69" selection-end-line="910" selection-end-column="82" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/ChatScene.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="379" column="0" selection-start-line="379" selection-start-column="0" selection-end-line="379" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/model/CusomAssets.as">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.37542662">
-          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="37" column="51" selection-start-line="37" selection-start-column="51" selection-end-line="37" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/data/DataContainer.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/DatingScene.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="183" column="17" selection-start-line="183" selection-start-column="17" selection-end-line="183" selection-end-column="17" />
+          <folding>
+            <element signature="e#18#43#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/controller/MainCommand.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="914" column="0" selection-start-line="914" selection-start-column="0" selection-end-line="914" selection-end-column="0" />
+          <folding>
+            <element signature="e#22#52#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/controller/FloxCommand.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.39726028">
+          <caret line="999" column="9" selection-start-line="999" selection-start-column="9" selection-end-line="999" selection-end-column="9" />
           <folding />
         </state>
       </provider>

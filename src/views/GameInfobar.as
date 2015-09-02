@@ -139,14 +139,14 @@ public class GameInfobar extends Sprite
     private function onDisplayHandle(e:Event):void{
 
 
-        var current_dating:String=DataContainer.currentDating;
-        DebugTrace.msg("GameInfobar.onDisplayHandle current_dating="+current_dating);
+
 
         morebar.visible=true;
         player_icon.visible=true;
         proTxt.visible=true;
 
-        if(current_dating){
+        var current_dating:String=flox.getSaveData("dating");
+        if(current_dating!=""){
             dating_icon.visible=true;
         }
     }

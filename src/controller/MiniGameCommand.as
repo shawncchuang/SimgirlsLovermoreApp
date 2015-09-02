@@ -740,9 +740,7 @@ import flash.desktop.NativeApplication;
 			
 			TweenMax.killChildTweensOf(player);
 			TweenMax.killChildTweensOf(enemy);
-			
-		
-			
+
 			command.playBackgroudSound("BattleVictory");
 			gameAlert=new VictoryAlert();	
 			gameStage.addChild(gameAlert);
@@ -815,6 +813,8 @@ import flash.desktop.NativeApplication;
 			
 			NativeApplication.nativeApplication.exit();  
 			*/
+			DebugTrace.msg("MiniGameCommnad.doQuitHandle");
+			command.stopBackgroudSound();
             TweenMax.killAll();
             var gameEvt:GameEvent=SimgirlsLovemore.gameEvent;
             gameEvt._name="remove_mini_game";

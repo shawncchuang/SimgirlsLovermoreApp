@@ -26,8 +26,14 @@ import flash.events.TimerEvent;
 import flash.geom.Point;
 import flash.utils.Timer;
 
+import model.CusomAssets;
+
 import model.SaveGame;
 import model.Scenes;
+
+import starling.animation.DelayedCall;
+
+import starling.animation.Juggler;
 
 import starling.animation.Transitions;
 import starling.animation.Tween;
@@ -121,6 +127,8 @@ public class DatingScene extends Scenes {
 
         initLayout();
 
+        var customAssets:CusomAssets=new CusomAssets();
+        customAssets.checkRatingAssets();
     }
 
     private function doUpdateDatingInfo(e:Event):void {
@@ -171,12 +179,12 @@ public class DatingScene extends Scenes {
             case "Leave":
                 datingTopic.visible = false;
 
+
                 var _data:Object = new Object();
                 _data.name = DataContainer.currentScene;
                 command.sceneDispatch(SceneEvent.CHANGED, _data);
 
-
-
+                command.updateInfo();
 
                 break;
             case "Chat":
@@ -1141,20 +1149,19 @@ public class DatingScene extends Scenes {
 
     private var actSrc:String;
     private var actCallBack:Function;
-
+    private var delayCall:DelayedCall;
     private function actTransform(src:String, callback:Function):void {
 
         actSrc = src;
         actCallBack = callback;
-        var timer:Timer = new Timer(1000, 1);
-        timer.addEventListener(TimerEvent.TIMER_COMPLETE, onDelayTimeOut);
-        timer.start();
+
+        delayCall= new DelayedCall(onDelayTimeOut,1);
+        Starling.juggler.add(delayCall);
     }
 
-    private function onDelayTimeOut(e:TimerEvent):void {
+    private function onDelayTimeOut():void {
 
-        e.target.stop();
-        e.target.removeEventListener(TimerEvent.TIMER_COMPLETE, onDelayTimeOut);
+        Starling.juggler.remove(delayCall);
 
         var mediaReq:MediaInterface = new MediaCommand();
         mediaReq.SWFPlayer("transform", actSrc, actCallBack);

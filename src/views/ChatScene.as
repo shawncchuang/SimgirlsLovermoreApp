@@ -56,7 +56,7 @@ public class ChatScene extends Sprite
     public function ChatScene()
     {
         initBingo();
-       //initCharacter();
+        //initCharacter();
         initBubble();
         initBingoMachine();
         initCancelHandle();
@@ -374,8 +374,12 @@ public class ChatScene extends Sprite
                 // item 100~-100
 
                 item=praseItemRating();
+                for(var id:String in item){
+                    var item_id:String=id;
+                }
+
                 ratingLv=DataContainer.assetsRatingLevel(item.rating);
-                assets=systemAssets[item.id];
+                assets=systemAssets[item_id];
                 //DebugTrace.msg("ChatScene.onChatWithPlayer assets:"+JSON.stringify(assets));
 
                 sentence=datingchat[ratingLv];
@@ -418,7 +422,7 @@ public class ChatScene extends Sprite
     {
         Starling.juggler.removeTweens(bubble);
 
-        var chatTxt:TextField=new TextField(255,190,sentence,"SimImpact",20,0x000000)
+        var chatTxt:TextField=new TextField(255,190,sentence,"SimImpact",20,0x000000);
         chatTxt.hAlign="left";
         chatTxt.x=634;
         chatTxt.y=110;
@@ -486,9 +490,10 @@ public class ChatScene extends Sprite
         item=assets[item_index];
         DebugTrace.msg("ChatScnen.praseItemRating  item="+JSON.stringify(item));
         var rating_index:Number=0;
+
         for(var j:uint=0;j<assets.length;j++){
 
-            if(assets[j].id==item.id){
+            if(assets[j][item.id]!= null){
                 rating_index=j;
                 break
             }

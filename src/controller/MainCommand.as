@@ -912,10 +912,12 @@ public class MainCommand implements MainInterface {
         var rating:Number=0;
         var assets_ratingData:Object = flox.getSaveData("assets");
         var assets_rating:Array = assets_ratingData[dating];
+        DebugTrace.msg("MainCommand.searchAssetRating assets_rating.length="+assets_rating.length);
 
         for (var i:uint = 0; i < assets_rating.length; i++) {
-            if (assets_rating[i].id == item_id) {
-                rating = Number(assets_rating[i].rating);
+
+            if (assets_rating[i][item_id] != null) {
+                rating = Number(assets_rating[i][item_id]);
                 break
             }
             //if

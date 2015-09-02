@@ -1,7 +1,10 @@
 package views
 {
-	
-	import flash.desktop.NativeApplication;
+
+import controller.MainCommand;
+import controller.MainInterface;
+
+import flash.desktop.NativeApplication;
 	import flash.events.KeyboardEvent;
 	import flash.events.TimerEvent;
 	import flash.geom.Point;
@@ -354,7 +357,7 @@ package views
 			NativeApplication.nativeApplication.removeEventListener(KeyboardEvent.KEY_UP,doKeyUpHandle);
 			this.removeEventListener((EnterFrameEvent.ENTER_FRAME), gameBgLoop);
 			gameTimer.stop();
-			
+
 			var seObj:Object=flox.getSaveData("se");
             var seMax:Number=flox.getSaveData("love").player;
 

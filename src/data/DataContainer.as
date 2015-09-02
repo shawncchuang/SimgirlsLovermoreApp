@@ -43,7 +43,16 @@ public class DataContainer
     private static var _battleScene:String;
     private static var battlecode:String;
     private static var characterLocalcation:Array;
+    private static var assets_id:Array;
 
+    public static function set AssetsId(ids:Array):void
+    {
+        assets_id=ids;
+    }
+    public static function get AssetsId():Array
+    {
+        return assets_id;
+    }
 
     public static function set currentVersion(ver:String):void
     {
