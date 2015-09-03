@@ -60,16 +60,19 @@ import utils.DebugTrace;
 		}
 		private function init():void
 		{
-			
+			num=0;
+			bonusMax=Math.floor(Math.random()*41)+10;
+
 			var cpu_team:Object=flox.getSaveData("cpu_teams");
 			var cpuID:Number=DataContainer.setCputID;
+            var seMax:Number=0;
 			for(var i:uint=0;i<8;i++)
 			{
-				var seMax:Number=cpu_team["t"+cpuID+"_"+i].seMax;
-				bonusMax+=seMax;
+                seMax+=cpu_team["t"+cpuID+"_"+i].seMax;
+
 			}
-			//for	
-			bonusMax=50;
+			//for
+            bonusMax+=Math.floor(seMax/100);
 			DebugTrace.msg("VictoryBonus.init bonusMax="+bonusMax);
 
 			
@@ -115,7 +118,7 @@ import utils.DebugTrace;
 		private function updateBonus(e:Event):void
 		{
 			
-			DebugTrace.msg("VictoryBonus.updateBonus score="+score);
+			//DebugTrace.msg("VictoryBonus.updateBonus score="+score);
 			score++;
 			bonustitle.honour.text="+"+score;
 			
@@ -139,7 +142,7 @@ import utils.DebugTrace;
 		}
 		private function callNewStar():void
 		{
-			TweenMax.delayedCall(0.2,createNewStar);
+			TweenMax.delayedCall(0.5,createNewStar);
 		}
 		private function createNewStar():void
 		{
@@ -155,7 +158,8 @@ import utils.DebugTrace;
 			}
 			else
 			{
-				DebugTrace.msg("VictoryBonus.createNewStar Stop Bonus");
+				DebugTrace.msg("VictoryBonus.createNewStar Stop Bonus ---> score="+score);
+
                 honors=flox.getSaveData("honor");
 
 				//var player_power:Array=DataContainer.PlayerPower;
@@ -181,7 +185,7 @@ import utils.DebugTrace;
 			 
 				addChild(bunosAlert);
 				bunosAlert.addEventListener(Event.ENTER_FRAME,doScoreRunning);
-				bunosAlert.confirm.addEventListener(MouseEvent.MOUSE_DOWN,doConfirmHandle)
+				bunosAlert.confirm.addEventListener(MouseEvent.MOUSE_DOWN,doConfirmHandle);
 				//TweenMax.delayedCall(3,onBonusFadeout)
 					
 				starPhysicsHandle();
