@@ -142,12 +142,12 @@ public class CommandCloud extends MovieClip
         else
         {
             var battle_target:Number=0;
-            if(com=="Join"){
+            if(com=="Battle"){
                 var battledata:BattleData=new BattleData();
                 battle_target= battledata.checkBattleSchedule("Battle","");
                 if(battle_target==-1){
                     var _data:Object=new Object();
-                    _data.removed="Cannot Join";
+                    _data.removed="Cannot Participate";
                     var current_scene:Sprite=ViewsContainer.currentScene;
                     current_scene.dispatchEventWith(TopViewEvent.REMOVE,false,_data);
 

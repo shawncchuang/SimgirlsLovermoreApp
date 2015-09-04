@@ -1796,13 +1796,13 @@ public class MainCommand implements MainInterface {
     }
 
     public function checkSystemStatus():void {
-
+        //type---> normal,maintaining,warning
         var flox:FloxInterface = new FloxCommand();
         var status:Object = flox.getSyetemData("status");
         DebugTrace.msg("MainCommand.checkSystemStatus status=" + status.type);
         if (status.type != "normal") {
 
-            //type---> normal,maintaining,warning
+
             MainCommand.sysAlert(status.type, status.log);
 
         }

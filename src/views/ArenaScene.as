@@ -108,7 +108,7 @@ import model.SaveGame;
 					_data.name="MainScene";
 					command.sceneDispatch(SceneEvent.CHANGED,_data);
 					break
-				case "Join":
+				case "Battle":
                     DataContainer.battleType="schedule";
 
 					gameEvent._name="clear_comcloud";
@@ -121,12 +121,12 @@ import model.SaveGame;
 					flox.logEvent("CloudCommand", evtObj);
 
 					break
-                case "Rank":
+                case "CheckStatus":
                     gameinfo.visible=false;
                     raningScene=new RankBoard();
                     Starling.current.nativeOverlay.addChild(raningScene);
 
-					evtObj.command = "Rank@"+scene;
+					evtObj.command = "CheckStatus@"+scene;
 					flox.logEvent("CloudCommand", evtObj);
 
                     break
@@ -137,10 +137,10 @@ import model.SaveGame;
                     break
 				case "ani_complete":
 					var sysCommand:Object=flox.getSyetemData("command");
-					command.showCommandValues(this,"Join");
+					command.showCommandValues(this,"Battle");
 					init();
 					break
-                case "Cannot Join":
+                case "Cannot Participate":
                         var msg:String="There's no game today.";
                         var alert:AlertMessage=new AlertMessage(msg);
                         addChild(alert);

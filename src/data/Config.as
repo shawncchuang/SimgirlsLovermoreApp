@@ -283,7 +283,7 @@ public class Config
             "next_switch":"s001",
             "current_switch":"s001|on",
             "status":"Normal",
-            "cash":10000,
+            "cash":1000,
             "first_name":"",
             "last_name":"",
             "date":"Tue.1.Mar.2022|12",
@@ -443,7 +443,7 @@ public class Config
             "rel":{
                 player:"-",
                 lenus:"acquaintance",
-                sirena:"close friend",
+                sirena:"acquaintance",
                 dea:"acquaintance",
                 sao:"acquaintance",
                 klr:"acquaintance",
@@ -454,7 +454,7 @@ public class Config
             "pts":{
                 player: "-",
                 lenus: 0,
-                sirena: 333,
+                sirena: 0,
                 dea: 0,
                 sao: 0,
                 klr: 0,
@@ -509,26 +509,26 @@ public class Config
             },
             "love":{
                 //love==Max se
-                player:500,
-                lenus: 500,
-                sirena:500,
-                dea: 500,
-                sao: 500,
-                klr: 500,
-                tomoru: 500,
+                player:100,
+                lenus: 100,
+                sirena:100,
+                dea: 100,
+                sao: 100,
+                klr: 100,
+                tomoru: 100,
                 zack: 0,
-                ceil: 500
+                ceil: 100
             },
             "se":{
-                lenus: 500,
-                sirena: 500,
-                dea: 500,
-                sao: 500,
-                klr: 500,
-                tomoru: 500,
-                ceil: 500,
+                lenus: 100,
+                sirena: 100,
+                dea: 100,
+                sao: 100,
+                klr: 100,
+                tomoru: 100,
+                ceil: 100,
                 zack: 0,
-                player:400
+                player:100
             },
             "s_ele":"air",
             "skills":
