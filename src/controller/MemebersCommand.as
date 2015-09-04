@@ -540,7 +540,7 @@ public class MemebersCommand implements MembersInterface
 
 
                     }
-                    var command:MainInterface=new MainCommand();
+
                     var _data:Object=new Object();
                     _data.name= scene;
                     command.sceneDispatch(SceneEvent.CHANGED,_data);

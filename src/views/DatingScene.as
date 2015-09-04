@@ -554,6 +554,8 @@ public class DatingScene extends Scenes {
         var ap:Number = flox.getSaveData("ap");
         var apMax:Number = flox.getSaveData("ap_max");
         apTxt.text = ap + "/" + apMax;
+        command.updateInfo();
+
     }
 
 
@@ -761,8 +763,20 @@ public class DatingScene extends Scenes {
 
                 var times_permission:Boolean = checkCommandEnabled();
                 if (times_permission) {
+                    // can do this command
                     var ap_permissions:Boolean = command.consumeHandle(com);
                     if (ap_permissions) {
+                        // ap enough
+                        if (com != "Give" && com!="Leave") {
+
+                            var command_dating:Object = flox.getSaveData("command_dating");
+                            var dating:String = DataContainer.currentDating;
+                            var comTimes:Number = command_dating[dating][com];
+                            comTimes--;
+                            command_dating[dating][com] = comTimes;
+                            flox.save("command_dating", command_dating);
+                        }
+
 
                         for (var i:uint = 0; i < clouds.length; i++) {
                             clouds[i].removeEventListener(TouchEvent.TOUCH, onTouchedCloudHandler);
@@ -800,12 +814,12 @@ public class DatingScene extends Scenes {
             var comTimes:Number = command_dating[dating][com];
             if (comTimes > 0) {
                 enabled = true;
-                if (com != "Give") {
-
-                    comTimes--;
-                    command_dating[dating][com] = comTimes;
-                    flox.save("command_dating", command_dating);
-                }
+//                if (com != "Give") {
+//
+//                    comTimes--;
+//                    command_dating[dating][com] = comTimes;
+//                    flox.save("command_dating", command_dating);
+//                }
 
             } else {
 

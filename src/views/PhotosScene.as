@@ -17,6 +17,8 @@ import events.SceneEvent;
 import flash.geom.Point;
 import flash.geom.Rectangle;
 
+import model.SaveGame;
+
 import starling.animation.Transitions;
 
 import starling.animation.Tween;
@@ -161,7 +163,7 @@ public class PhotosScene extends Sprite {
         }
 
     }
-    private function onSavePhotoComplete():void{
+    private function onSavePhotoComplete(result:SaveGame):void{
 
         var emptyTexture:Texture=Assets.getTexture("IconTrashEmpty");
         trash.upState=emptyTexture;

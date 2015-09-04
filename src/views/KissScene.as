@@ -108,7 +108,7 @@ public class KissScene extends Sprite
 
 
         var filter:FilterInterface=new FilterManager();
-        filter.setSource(character)
+        filter.setSource(character);
         filter.startFlash();
 
     }
@@ -177,7 +177,7 @@ public class KissScene extends Sprite
         bubble.scaleX=-1;
         addChild(bubble);
         var chat:String="Bye.";
-        var chatTxt:TextField=new TextField(255,190,chat,"SimFutura",20,0x000000)
+        var chatTxt:TextField=new TextField(255,190,chat,"SimFutura",20,0x000000);
         chatTxt.hAlign="center";
         chatTxt.x=634;
         chatTxt.y=110;

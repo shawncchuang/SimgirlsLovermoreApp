@@ -115,15 +115,15 @@ public class ContactsSheet extends PanelScreen {
         addChild(contactlist);
 
         var _data:Array=new Array();
-        for(var i:uint=0;i<contacts.length;i++)
+        for(var j:uint=0;j<contacts.length;j++)
         {
             var renderObj:Object=new Object();
-            renderObj.text=contacts[i].name+"\nLocation: "+contacts[i].location;
+            renderObj.text=contacts[j].name+"\nLocation: "+contacts[j].location;
 
-            var xml:XML=Assets.getAtalsXML(contacts[i].name+"FacialsXML");
-            var textrue:Texture=Assets.getTexture(contacts[i].name+"Facials");
+            var xml:XML=Assets.getAtalsXML(contacts[j].name+"FacialsXML");
+            var textrue:Texture=Assets.getTexture(contacts[j].name+"Facials");
             var textureAtlas:TextureAtlas=new TextureAtlas(textrue,xml);
-            var _texture:Texture=textureAtlas.getTexture(contacts[i].name+"-pleased1");
+            var _texture:Texture=textureAtlas.getTexture(contacts[j].name+"-pleased1");
             renderObj.thumbnail=_texture;
             _data.push(renderObj);
         }

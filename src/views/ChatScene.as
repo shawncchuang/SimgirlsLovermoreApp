@@ -393,7 +393,7 @@ public class ChatScene extends Sprite
                 var secrets:Object=flox.getSaveData("secrets");
                 var dating_secrets:Array=secrets[dating];
                 var index:uint=uint(Math.random()*dating_secrets.length);
-                var id:String=dating_secrets[index].id;
+                id=dating_secrets[index].id;
                 var secretsQ:String=sysSecrets[id].q;
                 var ans:String=dating_secrets[index].ans;
                 sentence=secretsQ.split("|~|").join(ans);

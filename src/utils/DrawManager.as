@@ -125,7 +125,8 @@ public class DrawManager implements DrawerInterface
 
         var rs:RenderSupport = new RenderSupport();
         rs.clear();
-        rs.setOrthographicProjection(0,0,nativeWidth, nativeHeight);
+        //rs.setOrthographicProjection(0,0,nativeWidth, nativeHeight);
+        rs.setProjectionMatrix(0,0,nativeWidth, nativeHeight);
 
 
         rs.translateMatrix(-rc.x, -rc.y); // move to 0,0
