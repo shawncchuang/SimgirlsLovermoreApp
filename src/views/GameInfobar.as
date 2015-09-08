@@ -183,6 +183,7 @@ public class GameInfobar extends Sprite
         {
             dayImg.visible=false;
         }
+
     }
 
     private function showDate():void
@@ -318,7 +319,7 @@ public class GameInfobar extends Sprite
         var menuIcon:Image=new Image(bgTexture);
 
         menuIcon.useHandCursor=true;
-        menuIcon.addEventListener(TouchEvent.TOUCH,doTouchMenuIcon)
+        menuIcon.addEventListener(TouchEvent.TOUCH,doTouchMenuIcon);
 
         morebar=new Sprite();
         morebar.x=13;

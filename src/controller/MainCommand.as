@@ -614,8 +614,7 @@ public class MainCommand implements MainInterface {
             setNowMood();
             praseOwnedAssets(1);
             reseatDatingCommandTimes();
-
-
+            submitDailyReport();
         }
 
         if (comType == "Rest") {
@@ -1951,6 +1950,33 @@ public class MainCommand implements MainInterface {
             flox.save("scenelikes",scenelikes);
         }
         //if
+    }
+
+    private function submitDailyReport():void{
+
+        var report:Object=new Object();
+        var flox:FloxInterface = new FloxCommand();
+
+        var intObj:Object=flox.getSaveData("int");
+        var imageObj:Object=flox.getSaveData("image");
+        var honorObj:Object=flox.getSaveData("honor");
+        //var ap_max:Number=flox.getSaveData("ap_max");
+        var cash:Number=flox.getSaveData("cash");
+        var loveObj:Object=flox.getSaveData("love");
+        var moodObj:Object=flox.getSaveData("mood");
+        var seObj:Object=flox.getSaveData("se");
+        var skillPtsObj:Object=flox.getSaveData("skillPts");
+        var time:String=String(flox.getSaveData("date").split("|")[0]);
+
+        report.intelligent=intObj.player;
+        report.image=imageObj.player;
+        report.cash=cash;
+        report.love=loveObj.player;
+        report.honor=honorObj.player;
+        report.mood=moodObj.player;
+        report.se=seObj.player;
+        report.skill_point=skillPtsObj.player;
+        flox.logEvent("DailyReport-"+time,report);
     }
 
 }

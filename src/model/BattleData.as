@@ -28,6 +28,7 @@ public class BattleData
     public static var surviveCombats:Array
     private var targetArea:Array;
     private var skillarea:Array=new Array();
+    private var extra_damage:Number=1.5;
     public static function rangeMatrix(power:Object):Array
     {
         var matrix:Array=new Array();
@@ -187,8 +188,8 @@ public class BattleData
     {
         var damage:Number;
 
-        var power:Number=member_power.power;
-        var extra_power:Number=Math.floor(power/10)
+        var power:Number=Math.floor(member_power.power*extra_damage);
+        var extra_power:Number=Math.floor(power/10);
         var extra:Number=extra_power-(Math.floor(Math.random()*(extra_power*2)));
 
         //DebugTrace.msg("BattleData.damageCaculator power="+power);
