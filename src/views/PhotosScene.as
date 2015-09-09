@@ -270,7 +270,11 @@ public class PhotosScene extends Sprite {
             var bg:Image=new Image(bgTexture);
             photo.addChild(bg);
 
-            command.drawPlayer(photo);
+            var player:Sprite=command.drawPlayer(photo);
+            player.y-=20;
+            player.scaleX=1.3;
+            player.scaleY=1.3;
+
             var style:String = pic.character.style;
             command.drawCharacter(photo, style);
 

@@ -47,10 +47,14 @@ public class ShoppingListLayout extends PanelScreen {
     private var current_item:String;
     private var steppers:Array;
     private var reseat_stepper:Boolean=false;
+
+    public var sort:String="";
+    public var sort_index:Number=0;
+
     public function ShoppingListLayout() {
 
 
-        this.height=350;
+        this.height=320;
         this.addEventListener(FeathersEventType.INITIALIZE, initializeHandler);
     }
     private function initializeHandler(e:Event):void
@@ -62,7 +66,7 @@ public class ShoppingListLayout extends PanelScreen {
 
         for(var id:String in assetsData){
             var _assets:Object = assetsData[id];
-            //if(_assets.cate==cate) {
+            if(_assets.cate==cate) {
                 var item:Object=new Object();
                 item.id = id;
                 item.name = assetsData[id].name;
@@ -71,7 +75,7 @@ public class ShoppingListLayout extends PanelScreen {
                 item.qty = 1;
                 assetslist.push(item);
                 DebugTrace.msg( "ShoppingListLayout.initializeHandler id="+id+" ,name="+item.name);
-            //}
+            }
 
         }
 
@@ -87,6 +91,30 @@ public class ShoppingListLayout extends PanelScreen {
         this.layout = layout;
         this.verticalScrollPolicy = ScrollContainer.SCROLL_POLICY_ON;
         this.snapScrollPositionsToPixels = true;
+
+        if(assetslist.length>0){
+
+            switch(sort){
+                case "expiration":
+                    //expiration (Number)
+                    if(sort_index==-1){
+                        assetslist=assetslist.sortOn(sort,Array.NUMERIC | Array.DESCENDING);
+                    }else if (sort_index==0){
+                        assetslist=assetslist.sortOn(sort,Array.NUMERIC);
+                    }
+                    break;
+                default:
+                    //others (String)
+                    if(sort_index==-1){
+                        assetslist=assetslist.sortOn(sort,Array.CASEINSENSITIVE | Array.DESCENDING);
+                    }else if (sort_index==0){
+                        assetslist=assetslist.sortOn(sort,Array.CASEINSENSITIVE);
+                    }
+
+                    break
+            }
+
+        }
 
         var font:String="SimMyriadPro";
         for(var j:uint=0;j<assetslist.length;j++)
@@ -116,7 +144,7 @@ public class ShoppingListLayout extends PanelScreen {
             nametTxt.vAlign="center";
 
             var brandHeader:TextField=new TextField(50,16,"Brand:",font,12,0x333333,true);
-            brandHeader.x=220;
+            brandHeader.x=215;
             brandHeader.hAlign="left";
             itemRender.addChild(brandHeader);
             var brandTxt:TextField=new TextField(100,renderH,item.brand,font,20,0,false);
@@ -126,10 +154,11 @@ public class ShoppingListLayout extends PanelScreen {
 
 
             var priceHeader:TextField=new TextField(80,16,"Price:",font,12,0x333333,true);
-            priceHeader.x=320;
+            priceHeader.x=310;
             priceHeader.hAlign="left";
             itemRender.addChild(priceHeader);
-            var priceTxt:TextField=new TextField(80,renderH,item.price,font,20,0,false);
+            var _price:String=DataContainer.currencyFormat(item.price);
+            var priceTxt:TextField=new TextField(80,renderH,_price,font,20,0,false);
             priceTxt.x=priceHeader.x;
             priceTxt.vAlign="center";
             priceTxt.hAlign="left";
@@ -213,11 +242,11 @@ public class ShoppingListLayout extends PanelScreen {
         amount=payment[current_item] * price;
 
 
-        for(var attr:String in payment)
-        {
-            DebugTrace.msg("ShoppingListLayout.onTapBuyHandler attr="+attr+", value="+payment[attr]);
-
-        }
+//        for(var attr:String in payment)
+//        {
+//            DebugTrace.msg("ShoppingListLayout.onTapBuyHandler attr="+attr+", value="+payment[attr]);
+//
+//        }
 
         if(cash>amount)
         {
@@ -264,7 +293,7 @@ public class ShoppingListLayout extends PanelScreen {
         if(hover)
         {
             current_item=target.name;
-            DebugTrace.msg( "ShoppingListLayout.onTouchedHoverItem current_item="+current_item);
+            //DebugTrace.msg( "ShoppingListLayout.onTouchedHoverItem current_item="+current_item);
         }
 
 
@@ -274,7 +303,7 @@ public class ShoppingListLayout extends PanelScreen {
         var stepper:NumericStepper = NumericStepper(e.currentTarget);
 
         if(!reseat_stepper){
-            DebugTrace.msg( "ShoppingListLayout.onStepperChangeHandler ,value changed:"+ stepper.value);
+            //DebugTrace.msg( "ShoppingListLayout.onStepperChangeHandler ,value changed:"+ stepper.value);
             payment[current_item]=stepper.value;
         }
 

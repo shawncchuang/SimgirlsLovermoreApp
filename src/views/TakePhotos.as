@@ -45,6 +45,9 @@ public class TakePhotos extends Sprite{
         initCharacter();
 
         player=command.drawPlayer(this);
+        player.y-=20;
+        player.scaleX=1.3;
+        player.scaleY=1.3;
 
         initCancelHandle();
 

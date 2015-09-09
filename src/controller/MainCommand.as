@@ -526,7 +526,7 @@ public class MainCommand implements MainInterface {
     private var overday:Boolean;
 
     public function dateManager(type:String):void {
-        //start Tur.1.Mar.2022|12
+        //start Tur.1.Mar.2033|12
         DebugTrace.msg("MainCommand.dateManager  type:" + type);
 
 

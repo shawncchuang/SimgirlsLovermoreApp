@@ -26,7 +26,7 @@ public class Config
     //schedule [index+ current month]
     public static var scheduleIndex:Object={"lenus":88,"sirena":12,"dea":25,"sao":38,"klr":51,"tomoru":64,"ceil":77,"zack":90};
 
-    //battle schedule 2022 Tuesday
+    //battle schedule 2033 Tuesday
 
     public static var team_schedule:Array=[
 
@@ -286,7 +286,7 @@ public class Config
             "cash":1000,
             "first_name":"",
             "last_name":"",
-            "date":"Tue.1.Mar.2022|12",
+            "date":"Tue.1.Mar.2033|12",
             "ap":100,
             "ap_max":100,
             "dating":"",
