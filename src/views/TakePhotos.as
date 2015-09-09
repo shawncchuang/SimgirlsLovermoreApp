@@ -42,15 +42,15 @@ public class TakePhotos extends Sprite{
     public function TakePhotos() {
 
 
-        initCharacter();
+
 
         player=command.drawPlayer(this);
         player.y-=20;
         player.scaleX=1.3;
         player.scaleY=1.3;
+        initCharacter();
 
         initCancelHandle();
-
         addPhotos();
 
         updateReward();
@@ -102,7 +102,7 @@ public class TakePhotos extends Sprite{
 
         }else{
 
-            var msg:String="Yours photos space was full !!"
+            var msg:String="Yours photos space was full !!";
             new AlertMessage(msg);
 
         }
