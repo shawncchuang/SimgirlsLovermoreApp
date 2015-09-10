@@ -400,14 +400,22 @@ public class GameInfobar extends Sprite
     private function onDrawProfile(e:Event):void
     {
         DebugTrace.msg("GameInfobar.onDrawProfile");
+        try{
+
+            player_icon.removeFromParent(true);
+        }catch(e:Error){
+            DebugTrace.msg("GameInfobar remove  player_icon Error");
+        }
         drawProfile();
     }
     private function drawProfile():void
     {
 
-        var savedata:SaveGame=FloxCommand.savegame;
-        var gender:String=savedata.avatar.gender;
-
+        var flox:FloxInterface=new FloxCommand();
+        var gender:String=flox.getSaveData("avatar").gender;
+        if(!gender){
+            gender="Male";
+        }
         var modelObj:Object=Config.modelObj;
         var modelRec:Rectangle=modelObj[gender];
 
@@ -424,8 +432,9 @@ public class GameInfobar extends Sprite
         drawcom.updateBaseModel("Eyes");
         drawcom.updateBaseModel("Hair");
         drawcom.updateBaseModel("Features");
-        playerProfile();
 
+
+        playerProfile();
 
     }
     private var proTxt:TextField;
@@ -433,7 +442,7 @@ public class GameInfobar extends Sprite
     {
 
         player_icon=new Sprite();
-        drawcom.drawPlayerProfileIcon(player_icon,1,new Point(64,50))
+        drawcom.drawPlayerProfileIcon(player_icon,1,new Point(64,50));
         player_icon.name="Player";
         player_icon.scaleX=0.89;
         player_icon.scaleY=0.89;

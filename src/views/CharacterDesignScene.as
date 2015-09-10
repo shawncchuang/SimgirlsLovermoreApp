@@ -23,17 +23,19 @@ package views
 	
 	import starling.core.Starling;
 	import starling.display.Button;
- 
-	import starling.display.Image;
+import starling.display.Image;
+
+import starling.display.Image;
 	import starling.display.MovieClip;
 	import starling.display.Sprite;
 	import starling.events.Event;
 	import starling.textures.Texture;
 	import starling.textures.TextureAtlas;
 	import starling.textures.TextureSmoothing;
-	 
-	
-	import utils.DebugTrace;
+import starling.utils.Color;
+
+
+import utils.DebugTrace;
 	import utils.DrawManager;
 	import utils.ViewsContainer;
 	
@@ -43,7 +45,7 @@ package views
 		private var base_sprite:Sprite;
 		private var command:MainInterface=new MainCommand();
 		private var scencom:SceneInterface=new SceneCommnad();
-		private var floxcom:FloxInterface=new FloxCommand();
+		private var flox:FloxInterface=new FloxCommand();
 		private var haircolor:ColorSwatches;
 		private var maleImg:Button;
 		private var femaleImg:Button;
@@ -54,13 +56,14 @@ package views
 		private var fake_head:Image;
 		private var hair:Image;
 		private var hairStytleAtlas:TextureAtlas ;
+        private var eyes:Image;
 		private var hairIndex:Number=0;
 		private var hairTexture:Texture;
 		private var hairdemo:Sprite;
 		private var featuresdemo:Sprite;
 		private var hairstyleMax:Number;
 		private var body:MovieClip;
-		private var rbgObj:Object=null;
+		private var rgbObj:Object=null;
 		private var basemodel:Sprite;
 		private var featuresMax:Number;
 		private var featuresIndex:Number=0;
@@ -91,10 +94,37 @@ package views
 		private function onColorUpadeted(e:Event):void
 		{
 			//DebugTrace.msg("CharacterDesignScene.onColorUpadeted type:"+e.data.rgb);
-			var savedata:SaveGame=FloxCommand.savegame;
-			rbgObj=e.data.rgb
-			
-			drawcom.updateModelColor(e.data.type,rbgObj);
+			//var savedata:SaveGame=FloxCommand.savegame;
+			rgbObj=e.data.rgb;
+
+            var flox:FloxInterface=new FloxCommand();
+            var avatar:Object=flox.getSaveData("avatar");
+            var partmodel:Image=basemodel.getChildByName(e.data.type) as Image;
+            partmodel.color=Color.rgb(rgbObj.r,rgbObj.g,rgbObj.b);
+            switch(e.data.type)
+            {
+
+                case "Hair":
+                    //hair.color=Color.rgb(rgbObj.r,rgbObj.g,rgbObj.b);
+                    avatar.haircolor=partmodel.color;
+                    break
+                case "Skin":
+                    //body.color=Color.rgb(rgbObj.r,rgbObj.g,rgbObj.b);
+                    avatar.skincolor=partmodel.color;
+                    break
+                case "Eyes":
+                    //eyes.color=Color.rgb(rgbObj.r,rgbObj.g,rgbObj.b);
+                    avatar.eyescolor=partmodel.color;
+                    break
+
+
+            }
+            //switch
+            flox.save("avatar",avatar);
+
+
+
+			//drawcom.updateModelColor(e.data.type,rbgObj);
 			
 		}
 		private function initLayout():void
@@ -178,7 +208,7 @@ package views
 				malefilter.visible=false;
 				femalefilter.visible=true;
 			}
-			DebugTrace.msg("CharacterDesignScene.doTriggeredSex gender:"+gender)
+			DebugTrace.msg("CharacterDesignScene.doTriggeredSex gender:"+gender);
 			
 			updateSaveData();
 			initBaseModel();
@@ -487,8 +517,9 @@ package views
 			var _data:Object=new Object();
 			if(target.name=="confirm")
 			{
-				
-				_data.name="Tarotreading";
+
+                _data.name="MainScene";
+				//_data.name="Tarotreading";
 				command.sceneDispatch(SceneEvent.CHANGED,_data);
 			}
 			else
@@ -511,13 +542,16 @@ package views
 		}
 		private function updateSaveData():void
 		{
-			var savedata:SaveGame=FloxCommand.savegame;
-			savedata.avatar.hairstyle=hairIndex;
-			savedata.avatar.features=featuresIndex;
-			FloxCommand.savegame=savedata;
-			
-			
-			
+
+			var flox:FloxInterface=new FloxCommand();
+			var avatar:Object=flox.getSaveData("avatar");
+            if(!avatar){
+                avatar=new Object();
+            }
+            avatar.hairstyle=hairIndex;
+            avatar.features=featuresIndex;
+            flox.save("avatar",avatar);
+
 		}
 		private function onCallback():void
 		{

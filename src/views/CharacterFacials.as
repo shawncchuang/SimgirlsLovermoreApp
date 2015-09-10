@@ -1,5 +1,5 @@
 /**
- * Created by raymondwu on 2014-08-21.
+ * Created by shawnhuang on 2014-08-21.
  */
 package views {
 import controller.Assets;

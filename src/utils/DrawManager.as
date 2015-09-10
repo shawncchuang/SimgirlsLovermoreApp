@@ -1,5 +1,7 @@
 package utils
 {
+import data.Config;
+
 import flash.display.BitmapData;
 import flash.display.Shape;
 import flash.display3D.Context3D;
@@ -51,11 +53,11 @@ public class DrawManager implements DrawerInterface
     private var gender:String;
     private var basemodel:Sprite;
     //private var body:MovieClip;
-    private var body:Image;
-    private var hair:Image;
-    private var eyes:Image;
-    private var pants:Image;
-    private var clothes:Image;
+    public var body:Image;
+    public var hair:Image;
+    public var eyes:Image;
+    public var pants:Image;
+    public var clothes:Image;
     private var hairAtlas:TextureAtlas ;
     private var hairIndex:Number;
     private var pantsAtlas:TextureAtlas;
@@ -143,26 +145,25 @@ public class DrawManager implements DrawerInterface
 
     }
 
-    public function drawCharacter(model:Sprite,attr:Object):void
+    public function drawCharacter(model:Sprite=null,attr:Object=null):void
     {
         basemodel=model;
-
-        var savedata:SaveGame=FloxCommand.savegame;
-        gender=attr.gender;
-
-        DebugTrace.msg("DrawManager.drawCharacter gender:"+gender);
+        var flox:FloxInterface=new FloxCommand();
+        var avatar:Object=flox.getSaveData("avatar");
+        gender=avatar.gender;
 
         var texture:Texture=Assets.getTexture(gender+"Body");
         body=new Image(texture);
-
+        body.name="Skin";
         //body=Assets.getDynamicAtlas(gender+"Body");
         //body.smoothing=TextureSmoothing.TRILINEAR;
 
-        var _color:Number=savedata.avatar.skincolor;
+        var _color:Number=avatar.skincolor;
         body.color=Color.rgb(Color.getRed(_color),Color.getGreen(_color),Color.getBlue(_color));
+
         basemodel.addChild(body);
 
-        DebugTrace.msg("DrawManager.drawCharacter attr:"+JSON.stringify(attr));
+        DebugTrace.msg("DrawManager.drawCharacter attr:"+JSON.stringify(avatar));
         if(attr.width && attr.height)
         {
             basemodel.width=attr.width;
@@ -170,7 +171,7 @@ public class DrawManager implements DrawerInterface
         }
         else
         {
-            basemodel.scaleX=attr.scaleX
+            basemodel.scaleX=attr.scaleX;
             basemodel.scaleY=attr.scaleY;
         }
 
@@ -180,11 +181,13 @@ public class DrawManager implements DrawerInterface
 
         //var part:DisplayObject=basemodel.getChildByName(target);
         //DebugTrace.msg("DrawManager.updateBaseModel target:"+ target)
-        var savedata:SaveGame=FloxCommand.savegame;
-        hairIndex=savedata.avatar.hairstyle;
-        pantsIndex=savedata.avatar.pants;
-        clothesIndex=savedata.avatar.clothes;
-        featuresIndex=savedata.avatar.features;
+       // var savedata:SaveGame=FloxCommand.savegame;
+        var flox:FloxInterface=new FloxCommand();
+        var avatar:Object=flox.getSaveData("avatar");
+        hairIndex=avatar.hairstyle;
+        pantsIndex=avatar.pants;
+        clothesIndex=avatar.clothes;
+        featuresIndex=avatar.features;
         //DebugTrace.msg("DrawManager.updateBaseModel gender:"+ gender)
         //DebugTrace.msg("DrawManager.updateBaseModel featuresIndex:"+ featuresIndex)
         var pos:Point=switchPosition(target);
@@ -201,9 +204,9 @@ public class DrawManager implements DrawerInterface
                 hair=new Image(atlas_texture);
                 hair.smoothing=TextureSmoothing.TRILINEAR;
                 hair.name=target;
-                hair.x=pos.x
+                hair.x=pos.x;
                 hair.y=pos.y;
-                _color=savedata.avatar.haircolor;
+                _color=avatar.haircolor;
                 hair.color=Color.rgb(Color.getRed(_color),Color.getGreen(_color),Color.getBlue(_color));
                 basemodel.addChild(hair);
                 break
@@ -219,7 +222,7 @@ public class DrawManager implements DrawerInterface
                 eyes.name=target;
                 eyes.x=pos.x;
                 eyes.y=pos.y;
-                _color=savedata.avatar.eyescolor;
+                _color=avatar.eyescolor;
                 eyes.color=Color.rgb(Color.getRed(_color),Color.getGreen(_color),Color.getBlue(_color));
                 basemodel.addChild(eyes);
                 break
@@ -257,7 +260,7 @@ public class DrawManager implements DrawerInterface
                 features=new Image(featureTexture);
                 features.smoothing=TextureSmoothing.TRILINEAR;
                 features.name=target;
-                features.x=pos.x
+                features.x=pos.x;
                 features.y=pos.y;
                 basemodel.addChild(features);
                 break
@@ -273,32 +276,34 @@ public class DrawManager implements DrawerInterface
 
 
     }
-    public function updateModelColor(type:String,rgb:Object):void
-    {
-        var savedata:SaveGame=FloxCommand.savegame;
-        var rgbObj:Object=rgb;
-        switch(type)
-        {
-            case "Hair":
-                hair.color=Color.rgb(rgbObj.r,rgbObj.g,rgbObj.b);
-                savedata.avatar.haircolor=hair.color;
-                break
-            case "Skin":
-                body.color=Color.rgb(rgbObj.r,rgbObj.g,rgbObj.b);
-                savedata.avatar.skincolor=body.color;
-                break
-            case "Eyes":
-                eyes.color=Color.rgb(rgbObj.r,rgbObj.g,rgbObj.b);
-                savedata.avatar.eyescolor=eyes.color;
-                break
-
-
-        }
-        //switch
-        FloxCommand.savegame=savedata;
-
-
-    }
+//    public function updateModelColor(type:String,rgb:Object):void
+//    {
+//        var flox:FloxInterface=new FloxCommand();
+//        var avatar:Object=flox.getSaveData("avatar");
+//       // var savedata:SaveGame=FloxCommand.savegame;
+//        var rgbObj:Object=rgb;
+//        switch(type)
+//        {
+//            case "Hair":
+//                hair.color=Color.rgb(rgbObj.r,rgbObj.g,rgbObj.b);
+//                avatar.haircolor=hair.color;
+//                break
+//            case "Skin":
+//                body.color=Color.rgb(rgbObj.r,rgbObj.g,rgbObj.b);
+//                avatar.skincolor=body.color;
+//                break
+//            case "Eyes":
+//                eyes.color=Color.rgb(rgbObj.r,rgbObj.g,rgbObj.b);
+//                avatar.eyescolor=eyes.color;
+//                break
+//
+//
+//        }
+//        //switch
+//        flox.save("avatar",avatar);
+//
+//
+//    }
     public function playerModelCopy(target:Sprite,pos:Point):void
     {
 

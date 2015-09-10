@@ -399,6 +399,8 @@ public class Scenes extends Sprite
             if(infobar){
                 var gameInfobar:Sprite=ViewsContainer.gameinfo;
                 gameInfobar.dispatchEventWith("DISPLAY");
+
+                gameInfobar.dispatchEventWith("DRAW_PROFILE");
             }
 
 

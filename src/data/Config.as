@@ -277,8 +277,7 @@ public class Config
     public static function PlayerAttributes():Object
     {
         //Save Game
-        //rel(relation):"stranger","new friend","acquaintance","close friend","girlfriend","lover","wife"
-        //Tue.1.Mar.2022|12
+        //Tue.1.Mar.2033|12
         playerInfo={
             "next_switch":"s001",
             "current_switch":"s001|on",

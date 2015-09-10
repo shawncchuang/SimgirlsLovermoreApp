@@ -400,7 +400,9 @@ public class ChatScene extends Sprite
                 break
             default:
                 //no bingo talking
-                sentence="...............";
+                var trashtalkings:Array=flox.getSyetemData("trashtalking");
+                sentence=trashtalkings[Math.floor(Math.random()*trashtalkings.length)];
+
                 break
         }
         //switch

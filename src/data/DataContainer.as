@@ -1,6 +1,7 @@
 package data
 {
 import flash.globalization.CurrencyFormatter;
+import flash.globalization.LocaleID;
 
 import controller.FloxCommand;
 import controller.FloxInterface;
@@ -146,7 +147,8 @@ public class DataContainer
     }
     public static function currencyFormat(value:Number):String
     {
-        var localID:String="CAD"
+
+        var localID:String=LocaleID.DEFAULT;
         var cf:CurrencyFormatter = new CurrencyFormatter(localID);
         cf.trailingZeros=false;
         /*
@@ -161,7 +163,7 @@ public class DataContainer
          }
          */
         var currecy:String=cf.format(value);
-        var num_currency:String=String(currecy.split(localID).join(""));
+        var num_currency:String=String(currecy.split(cf.currencyISOCode).join(""));
         return 	num_currency;
     }
 

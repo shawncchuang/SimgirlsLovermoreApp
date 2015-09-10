@@ -1644,6 +1644,7 @@ public class MainCommand implements MainInterface {
         var pass_se:Boolean = true;
         var success:Boolean = false;
         var scene:Sprite = ViewsContainer.MainScene;
+        var gameEvent:GameEvent = SimgirlsLovemore.gameEvent;
         var flox:FloxInterface = new FloxCommand();
         var ap:Number = flox.getSaveData("ap");
         var sysCommand:Object = flox.getSyetemData("command");
@@ -1657,10 +1658,6 @@ public class MainCommand implements MainInterface {
 
             var current_scene:String = DataContainer.currentScene.split("Scene").join("");
             com = current_scene + com;
-        }
-        var payAP:Number = sysCommand[com].ap;
-        if (sysCommand[com].values) {
-            payCash = sysCommand[com].values.cash;
         }
 
         if (com == "Meditate") {
@@ -1676,6 +1673,20 @@ public class MainCommand implements MainInterface {
                 scene.addChild(alert);
 
             }
+        }
+        if(com =="CannotPaticipate"){
+
+            msg = "There's no game today.";
+            alert = new AlertMessage(msg, onClosedAlert);
+            scene.addChild(alert);
+
+            gameEvent._name = "clear_comcloud";
+            gameEvent.displayHandler();
+            return false;
+        }
+        var payAP:Number = sysCommand[com].ap;
+        if (sysCommand[com].values) {
+            payCash = sysCommand[com].values.cash;
         }
 
         if (payAP < 0) {
@@ -1751,7 +1762,7 @@ public class MainCommand implements MainInterface {
 
         if (!success) {
 
-            var gameEvent:GameEvent = SimgirlsLovemore.gameEvent;
+
             gameEvent._name = "clear_comcloud";
             gameEvent.displayHandler();
         }

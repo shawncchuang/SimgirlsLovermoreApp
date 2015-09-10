@@ -140,10 +140,11 @@ import model.SaveGame;
 					command.showCommandValues(this,"Battle");
 					init();
 					break
-                case "Cannot Participate":
-                        var msg:String="There's no game today.";
-                        var alert:AlertMessage=new AlertMessage(msg);
-                        addChild(alert);
+                case "CannotParticipate":
+						// from CommandCloud
+//                        var msg:String="There's no game today.";
+//                        var alert:AlertMessage=new AlertMessage(msg);
+//                        addChild(alert);
                     break
 				
 			}

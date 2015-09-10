@@ -190,9 +190,9 @@ package
 			//_data.name="HotelScene";
 			//_data.name="ProfileScene";
 			//_data.name="MenuScene";
-			//_data.name="CharacterDesignScene";
+			_data.name="CharacterDesignScene";
 			//_data.name="ChangeFormationScene";
-			_data.name="MainScene";
+			//_data.name="MainScene";
 			//_data.name="Tarotreading";
 			//_data.name="AirplaneScene";
 			//_data.name="BlackMarketScene";

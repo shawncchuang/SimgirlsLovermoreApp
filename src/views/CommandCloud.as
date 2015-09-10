@@ -142,20 +142,23 @@ public class CommandCloud extends MovieClip
         else
         {
             var battle_target:Number=0;
+            var success:Boolean=false;
             if(com=="Battle"){
                 var battledata:BattleData=new BattleData();
                 battle_target= battledata.checkBattleSchedule("Battle","");
                 if(battle_target==-1){
-                    var _data:Object=new Object();
-                    _data.removed="Cannot Participate";
-                    var current_scene:Sprite=ViewsContainer.currentScene;
-                    current_scene.dispatchEventWith(TopViewEvent.REMOVE,false,_data);
+//                    var _data:Object=new Object();
+//                    _data.removed="CannotParticipate";
+//                    var current_scene:Sprite=ViewsContainer.currentScene;
+//                    current_scene.dispatchEventWith(TopViewEvent.REMOVE,false,_data);
+
+                    command.consumeHandle("CannotPaticipate");
 
                 }
             }
 
             if(battle_target!=-1){
-                var success:Boolean=command.consumeHandle(com);
+                success=command.consumeHandle(com);
             }
             if(success){
                 onCloudClicked();

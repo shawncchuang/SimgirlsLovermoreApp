@@ -197,12 +197,14 @@ import utils.DebugTrace;
 		private function doScoreRunning(e:Event):void
 		{
 			score_num++;
-			bunosAlert.honor.text="+"+score_num;
-			if(score_num==score)
+
+			if(score_num>=score)
 			{
 				bunosAlert.removeEventListener(Event.ENTER_FRAME,doScoreRunning);
+				score_num=score;
 			}
 			//if
+			bunosAlert.honor.text="+"+score_num;
 		}
 		private function starPhysicsHandle():void
 		{
