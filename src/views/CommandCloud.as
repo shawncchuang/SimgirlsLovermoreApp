@@ -141,25 +141,39 @@ public class CommandCloud extends MovieClip
         }
         else
         {
-            var battle_target:Number=0;
-            var success:Boolean=false;
-            if(com=="Battle"){
-                var battledata:BattleData=new BattleData();
-                battle_target= battledata.checkBattleSchedule("Battle","");
-                if(battle_target==-1){
+            var battle_target:Number=-1;
+            var success:Boolean=true;
+            var battledata:BattleData=new BattleData();
+
+            switch(com){
+                case "Battle":
+                    battle_target= battledata.checkBattleSchedule("Battle","");
+                    if(battle_target==-1){
 //                    var _data:Object=new Object();
 //                    _data.removed="CannotParticipate";
 //                    var current_scene:Sprite=ViewsContainer.currentScene;
 //                    current_scene.dispatchEventWith(TopViewEvent.REMOVE,false,_data);
 
-                    command.consumeHandle("CannotPaticipate");
+                        success=command.consumeHandle("CannotPaticipate");
 
-                }
+                    }else{
+
+                        success=command.consumeHandle(com);
+
+                    }
+                    break;
+                case "Practice":
+                    success=battledata.checkSurvivor();
+                    if(!success){
+                        command.consumeHandle("NoSurvivor");
+                    }
+
+                    break;
+                default :
+                    success=command.consumeHandle(com);
+                    break;
             }
 
-            if(battle_target!=-1){
-                success=command.consumeHandle(com);
-            }
             if(success){
                 onCloudClicked();
             }
@@ -258,8 +272,8 @@ public class CommandCloud extends MovieClip
         if(de_label=="StartDating"){
 
 
-           var flox:FloxInterface=new FloxCommand();
-           var dating:String=flox.getSaveData("dating");
+            var flox:FloxInterface=new FloxCommand();
+            var dating:String=flox.getSaveData("dating");
             if(dating!=""){
 
                 DataContainer.currentDating=dating;

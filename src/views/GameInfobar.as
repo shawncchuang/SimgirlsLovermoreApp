@@ -446,7 +446,7 @@ public class GameInfobar extends Sprite
         player_icon.name="Player";
         player_icon.scaleX=0.89;
         player_icon.scaleY=0.89;
-        player_icon.alpha=0;
+        //player_icon.alpha=0;
         addChild(player_icon);
 
 
@@ -459,11 +459,10 @@ public class GameInfobar extends Sprite
         proTxt.text="# "+progress;
         addChild(proTxt);
 
-        var tween:Tween=new Tween(player_icon,1,Transitions.EASE_IN_OUT);
-        tween.fadeTo(1);
-        tween.delay=0.5;
-        tween.onComplete=onProfileIconFadein;
-        Starling.juggler.add(tween);
+//        var tween:Tween=new Tween(player_icon,0.5,Transitions.EASE_IN_OUT);
+//        tween.fadeTo(1);
+//        tween.onComplete=onProfileIconFadein;
+//        Starling.juggler.add(tween);
 
 
     }

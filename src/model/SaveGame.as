@@ -54,6 +54,7 @@ package model
         public var current_battle:Object;
         public var command_dating:Object;
         public var photos:Array;
+		public var current_scene:String;
 		public function SaveGame()
 		{
 	 

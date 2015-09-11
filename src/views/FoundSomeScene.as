@@ -178,7 +178,7 @@ package views
 			{
 				//nobody
 				
-				var msg:String="sorry,nobody here!!";
+				var msg:String="sorry,nobody's here!!";
 				var talkingAlert:Sprite=new AlertMessage(msg,onDisabledAlertTalking);
 				addChild(talkingAlert);
 				

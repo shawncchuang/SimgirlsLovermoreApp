@@ -97,6 +97,7 @@ import events.GameEvent;
                     gameEvent.displayHandler();
                     _data.name="ChangeFormationScene";
                     command.sceneDispatch(SceneEvent.CHANGED,_data);
+
                     break
 				case "LearnSkills":
 					
@@ -106,10 +107,10 @@ import events.GameEvent;
 					break
 				case "ani_complete":
 					
-					var value_data:Object=new Object();
-					value_data.attr="honor";
-					value_data.values="+10";
-					command.displayUpdateValue(this,value_data);
+//					var value_data:Object=new Object();
+//					value_data.attr="honor";
+//					value_data.values="+10";
+//					command.displayUpdateValue(this,value_data);
 					init();
 					break
 				

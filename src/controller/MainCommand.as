@@ -530,8 +530,9 @@ public class MainCommand implements MainInterface {
         DebugTrace.msg("MainCommand.dateManager  type:" + type);
 
 
-        var savegame:SaveGame = FloxCommand.savegame;
-        var dateStr:String = savegame.date;
+        //var savegame:SaveGame = FloxCommand.savegame;
+        var flox:FloxInterface=new FloxCommand();
+        var dateStr:String = flox.getSaveData("date");
         var dayStr:String = dateStr.split("|")[0];
         var _day:String = dayStr.split(".")[0];
         var _data_index:Number = Days.indexOf(_day);
@@ -560,8 +561,10 @@ public class MainCommand implements MainInterface {
                     var dataCon:DataContainer=new DataContainer();
                     var scenelikes:Object=dataCon.initChacacterLikeScene();
                     var secrets:Object=dataCon.setupCharacterSecrets();
-                    savegame.scenelikes=scenelikes;
-                    savegame.secrets=secrets;
+                    flox.save("scenelikes",scenelikes);
+                    flox.save("secrets",secrets);
+                    //savegame.scenelikes=scenelikes;
+                    //savegame.secrets=secrets;
 
                 }
                 //if
@@ -606,6 +609,7 @@ public class MainCommand implements MainInterface {
         _data.date = new_date;
         var flox:FloxInterface = new FloxCommand();
         flox.save("date", new_date);
+        healSpiritEngine();
         if (overday) {
 
             //syncSpiritEnergy();
@@ -615,6 +619,7 @@ public class MainCommand implements MainInterface {
             praseOwnedAssets(1);
             reseatDatingCommandTimes();
             submitDailyReport();
+
         }
 
         if (comType == "Rest") {
@@ -1684,6 +1689,15 @@ public class MainCommand implements MainInterface {
             gameEvent.displayHandler();
             return false;
         }
+        if(com=="NoSurvivor"){
+            msg = "No anyone can do this !!";
+            alert = new AlertMessage(msg, onClosedAlert);
+            scene.addChild(alert);
+
+            gameEvent._name = "clear_comcloud";
+            gameEvent.displayHandler();
+            return false;
+        }
         var payAP:Number = sysCommand[com].ap;
         if (sysCommand[com].values) {
             payCash = sysCommand[com].values.cash;
@@ -1811,7 +1825,6 @@ public class MainCommand implements MainInterface {
         var status:Object = flox.getSyetemData("status");
         DebugTrace.msg("MainCommand.checkSystemStatus status=" + status.type);
         if (status.type != "normal") {
-
 
             MainCommand.sysAlert(status.type, status.log);
 
@@ -1989,6 +2002,32 @@ public class MainCommand implements MainInterface {
         report.skill_point=skillPtsObj.player;
         flox.logEvent("DailyReport-"+time,report);
     }
+
+    private function healSpiritEngine():void{
+        var flox:FloxInterface = new FloxCommand();
+        //Love=se maximum
+        var seMaxObj:Object=flox.getSaveData("love");
+        var seObj:Object=flox.getSaveData("se");
+
+        for(var name:String in seObj){
+
+            if(name!="player"){
+                var se:Number= seObj[name];
+                var seMax:Number= seMaxObj[name];
+                se+=Math.floor(seMax*0.5);
+
+                if(se>seMax){
+                    se=seMax;
+                }
+                seObj[name]=se;
+            }
+
+        }
+        flox.save("se",seObj);
+
+
+    }
+
 
 }
 }

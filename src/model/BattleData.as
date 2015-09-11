@@ -756,5 +756,24 @@ public class BattleData
       //DebugTrace.msg("BattleData.checkBattleResult ranking="+JSON.stringify(ranking));
     }
 
+    public function checkSurvivor():Boolean{
+
+        var survivor:Boolean=false;
+        var seObj:Object=flox.getSaveData("se");
+
+        for(var name:String in seObj){
+
+            if(seObj[name]>0){
+
+                survivor=true;
+                break
+            }
+        }
+
+
+        return survivor
+
+    }
+
 }
 }

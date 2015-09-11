@@ -183,22 +183,31 @@ package
             command.setNowMood();
             command.initStyleSechedule();
 
-			
-			var _data:Object=new Object();
 
-			//_data.name="BattleScene";
-			//_data.name="HotelScene";
-			//_data.name="ProfileScene";
-			//_data.name="MenuScene";
-			_data.name="CharacterDesignScene";
-			//_data.name="ChangeFormationScene";
-			//_data.name="MainScene";
-			//_data.name="Tarotreading";
-			//_data.name="AirplaneScene";
-			//_data.name="BlackMarketScene";
-			//_data.name="TraceGame";
-			//_data.name="TrainingGame";
-			//_data.name="BetaScene";
+			var _data:Object=new Object();
+			var flox:FloxInterface=new FloxCommand();
+			var current_scene:String=flox.getSaveData("current_scene");
+
+			if(current_scene){
+				_data.name="MainScene";
+			}
+			else{
+				//_data.name="BattleScene";
+				//_data.name="HotelScene";
+				//_data.name="ProfileScene";
+				//_data.name="MenuScene";
+				_data.name="CharacterDesignScene";
+				//_data.name="ChangeFormationScene";
+				//_data.name="MainScene";
+				//_data.name="Tarotreading";
+				//_data.name="AirplaneScene";
+				//_data.name="BlackMarketScene";
+				//_data.name="TraceGame";
+				//_data.name="TrainingGame";
+				//_data.name="BetaScene";
+
+			}
+
 			command.sceneDispatch(SceneEvent.CHANGED,_data)
 			
 			
