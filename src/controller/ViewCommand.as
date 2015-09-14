@@ -34,7 +34,7 @@ public class ViewCommand  implements ViewInterface{
 
     private var flox:FloxInterface=new FloxCommand();
     private var drawcom:DrawerInterface=new DrawManager();
-    private var playerIcon:Sprite;
+    private var player_icon:Sprite;
     private var rootTarget:Sprite;
     private var skillTarget:Sprite;
     private var character:String;
@@ -77,27 +77,32 @@ public class ViewCommand  implements ViewInterface{
         modelAttr.width=modelRec.width;
         modelAttr.height=modelRec.height;
 
-        var _basemodel:Sprite=new Sprite();
-        drawcom.drawCharacter(_basemodel,modelAttr);
+        var basemodel:Sprite=new Sprite();
+        basemodel.x=modelRec.x;
+        basemodel.y=modelRec.y;
+        drawcom.drawCharacter(basemodel,modelAttr);
         drawcom.updateBaseModel("Eyes");
         drawcom.updateBaseModel("Hair");
         drawcom.updateBaseModel("Features");
 
-        playerIcon=new Sprite();
-        playerIcon.name="Player";
 
-        var dp:Point=new Point(-85,-21);
+        var dp:Point=new Point(-80,-22);
         if(gender=="Female")
         {
-            dp=new Point(-82,-6);
+            dp=new Point(-77,-9);
         }
-        drawcom.drawPlayerProfileIcon(playerIcon,1,new Point(60,710),dp);
-        playerIcon.scaleX=0.89;
-        playerIcon.scaleY=0.89;
-        playerIcon.x=180;
-        target.addChild(playerIcon);
-        playerIcon.clipRect=new Rectangle(-55,-(playerIcon.height/2),playerIcon.width,playerIcon.height);
-        playerIcon.addEventListener(TouchEvent.TOUCH,onTouchCharaterIcon);
+
+        player_icon=new Sprite();
+        player_icon.name="Player";
+        drawcom.drawPlayerProfileIcon(player_icon,1,new Point(60,710),dp);
+        player_icon.scaleX=0.89;
+        player_icon.scaleY=0.89;
+
+
+        player_icon.x=180;
+        target.addChild(player_icon);
+        player_icon.clipRect=new Rectangle(-55,-(player_icon.height/2),player_icon.width,player_icon.height);
+        player_icon.addEventListener(TouchEvent.TOUCH,onTouchCharaterIcon);
 
 
 

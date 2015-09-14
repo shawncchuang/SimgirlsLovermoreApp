@@ -34,7 +34,7 @@ public class MediaCommand implements MediaInterface
 {
     private var path:String;
 
-    private const VIDEO_FINISHED:String = "NetStream.Play.Stop";
+    private const VIDEO_FINISHED:String = "NetStream.Play.Complete";
     private const VIDEO_NOT_FOUND:String = "NetStream.Play.StreamNotFound";
 
     /*== Video Loading==*/
@@ -128,6 +128,7 @@ public class MediaCommand implements MediaInterface
         };
 
         ns.addEventListener(NetStatusEvent.NET_STATUS, onPlayStatus);
+
         var sw:Number=Starling.current.stage.stageWidth;
         var sh:Number=Starling.current.stage.stageHeight;
 

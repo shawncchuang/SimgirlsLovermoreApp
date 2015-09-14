@@ -12,7 +12,7 @@ public class Config
     private static var points:Object=new Object();
     private static var playerInfo:Object=new Object();
     public static var modelObj:Object={"Male":new Rectangle(0,-20,276,660),
-        "Female":new Rectangle(-25,-20,262,613)}
+        "Female":new Rectangle(-25,-20,262,613)};
     public static var btl_elements:Array=new Array("fire","air","earth","water","neutral","com");
     public static var elements:Array=new Array("fire","air","earth","water","neutral");
     private static var skillssheet:Array=new Array();
@@ -740,15 +740,15 @@ public class Config
             "ranking":[
                 {"team_id":"player",
                     "name":"Apollyon",
-                    "win":10
+                    "win":0
                 },
                 {"team_id":"t0",
                     "name":"Vulpecula",
-                    "win":3
+                    "win":0
                 },
                 {"team_id":"t1",
                     "name":"Lupus",
-                    "win":9
+                    "win":0
                 },
                 {"team_id":"t2",
                     "name":"Phoenix",
@@ -756,7 +756,7 @@ public class Config
                 },
                 {"team_id":"t3",
                     "name":"Serpens",
-                    "win":5
+                    "win":0
                 },
                 {"team_id":"t4",
                     "name":"Canis Minor",
@@ -768,15 +768,15 @@ public class Config
                 },
                 {"team_id":"t6",
                     "name":"Monoceros",
-                    "win":7
+                    "win":0
                 },
                 {"team_id":"t7",
                     "name":"Draco",
-                    "win":2
+                    "win":0
                 },
                 {"team_id":"t8",
                     "name":"Zephon",
-                    "win":1
+                    "win":0
                 }
             ],
             current_battle:{

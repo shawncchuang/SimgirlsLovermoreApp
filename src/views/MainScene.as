@@ -297,11 +297,11 @@ public class MainScene extends Scenes
                     openDay=false;
                     openNight=true;
                     break
-                case "FitnessClubScene":
-                    msg="The Fitness Club'll open in the morning.";
-                    openDay=true;
-                    openNight=false;
-                    break
+//                case "FitnessClubScene":
+//                    msg="The Fitness Club'll open in the morning.";
+//                    openDay=true;
+//                    openNight=false;
+//                    break
                 default:
                     msg=null;
                     openDay=true;

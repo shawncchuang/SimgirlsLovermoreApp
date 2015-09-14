@@ -40,8 +40,11 @@ public class AssetEmbeds
     [Embed(source = "../../media/textures/scenes/cinema.atf" ,mimeType="application/octet-stream")]
     public static const  CinemaBg:Class;
 
-    [Embed(source = "../../media/textures/scenes/gym.atf" ,mimeType="application/octet-stream")]
-    public static const  FitnessClubBg:Class;
+    [Embed(source = "../../media/textures/scenes/gym_day.atf" ,mimeType="application/octet-stream")]
+    public static const  FitnessClubBgDay:Class;
+    [Embed(source = "../../media/textures/scenes/gym_night.atf" ,mimeType="application/octet-stream")]
+    public static const  FitnessClubBgNight:Class;
+
 
     [Embed(source = "../../media/textures/scenes/hotspring.atf" ,mimeType="application/octet-stream")]
     public static const  HotSpringBg:Class;
@@ -342,7 +345,7 @@ public class AssetEmbeds
     public static const DecrementButton:Class;
 
     [Embed(source="../../media/textures/icons/male-fake-head.png")]
-    public static const MaleFakeHead:Class;
+    public static const FakeHead:Class;
 
     [Embed(source="../../media/textures/icons/icon_profile_skill_fire.png")]
     public static const Cate_fire:Class;

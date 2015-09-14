@@ -185,7 +185,7 @@ public class Scenes extends Sprite
             scene_container.addChild(scenebg);
 
             filtersMC=new flash.display.MovieClip();
-            filtersMC.name="waving"
+            filtersMC.name="waving";
             Starling.current.nativeOverlay.addChild(filtersMC);
 
 

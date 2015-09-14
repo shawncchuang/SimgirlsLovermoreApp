@@ -75,7 +75,7 @@ public class SceneCommnad implements SceneInterface
     //private var background:MovieClip=null;d
     private var background:Sprite;
     private var bgSprtie:Image;
-    private var scene_container:Sprite
+    private var scene_container:Sprite;
     private var day:String;
     private var switchID:String="";
     private var location:String="";
@@ -500,7 +500,7 @@ public class SceneCommnad implements SceneInterface
     public function movingCharacter(target:String,dir:String):void
     {
         DebugTrace.msg("ChatCommand.movingCharacter target:"+target+" ;dir:"+dir);
-        var current_ch:Image=display_container[target]
+        var current_ch:Image=display_container[target];
         moving_tween=new Tween(current_ch,0.5,Transitions.EASE_OUT);
         moving_tween.animate("x",ch_pos[dir].x);
         moving_tween.onComplete=onMovingComplete
@@ -515,7 +515,7 @@ public class SceneCommnad implements SceneInterface
     {
         DebugTrace.msg("ChatCommand.createPhotoMessage");
         photoframe=new PhotoMessage(target,onPhotoRemoved);
-        photoframe.name="photoframe"
+        photoframe.name="photoframe";
         photoframe.x=Starling.current.stage.stageWidth/2;
         photoframe.y=Starling.current.stage.stageHeight/2;
 
@@ -629,8 +629,9 @@ public class SceneCommnad implements SceneInterface
         var scene:Sprite=ViewsContainer.MainScene;
         scene_container=scene.getChildByName("scene_container") as Sprite;
 
-        var savedata:SaveGame=FloxCommand.savegame;
-        var dateStr:String=savedata.date.split("|")[1];
+        var dateSaved:String=flox.getSaveData("date");
+        //var savedata:SaveGame=FloxCommand.savegame;
+        var dateStr:String=dateSaved.split("|")[1];
         day="Day";
         if(dateStr=="24")
         {
@@ -721,7 +722,7 @@ public class SceneCommnad implements SceneInterface
         scene_container.addChild(bgSprtie);
 
         function praseSceneDayNight():void{
-
+            //open at day or night
             switch(location){
                 case "HotelScene":
                 case "ParkScene":
@@ -730,6 +731,7 @@ public class SceneCommnad implements SceneInterface
                 case "LovemoreMansionScene":
                 case "GardenScene":
                 case "PrivateIslandScene":
+                case "FitnessClubScene":
                     bgSrc=(bgSrc+day);
                     break
             }

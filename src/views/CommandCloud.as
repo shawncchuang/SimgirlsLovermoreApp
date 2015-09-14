@@ -38,13 +38,13 @@ import utils.ViewsContainer;
 
 public class CommandCloud extends MovieClip
 {
-    private var _label:String
+    private var _label:String;
     private var comcloud:MovieClip;
     private var cloudTxt:TextField;
     private var command:MainInterface=new MainCommand();
     private var scenecom:SceneInterface=new SceneCommnad();
     private var pos:Object={"L1":new Point(3,374),"L2":new Point(-11,469),"L3":new Point(-8,278),"L4":new Point(2,565),"L5":new Point(1,182),
-        "R1":new Point(872,375),"R2":new Point(860,469),"R3":new Point(826,279),"R4":new Point(872,566),"R5":new Point(872,183)}
+        "R1":new Point(872,375),"R2":new Point(860,469),"R3":new Point(826,279),"R4":new Point(872,566),"R5":new Point(872,183)};
     private var de_label:String="";
     private var directions:MovieClip;
 
@@ -171,6 +171,10 @@ public class CommandCloud extends MovieClip
                     break;
                 default :
                     success=command.consumeHandle(com);
+                    if(com=="LookAround"){
+                        var gameinfo:Sprite = ViewsContainer.gameinfo;
+                        gameinfo.dispatchEventWith("UPDATE_INFO");
+                    }
                     break;
             }
 
@@ -202,9 +206,9 @@ public class CommandCloud extends MovieClip
         DebugTrace.msg("CommandCloud.onCloudComplete com="+com);
 
 
-        if(com=="LookAround" || com=="Leave"){
+        if(com=="Leave"){
 
-            doCloudCommandHandler()
+            doCloudCommandHandler();
 
         }else{
 
@@ -278,6 +282,7 @@ public class CommandCloud extends MovieClip
 
                 DataContainer.currentDating=dating;
             }
+
 
 
             var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;

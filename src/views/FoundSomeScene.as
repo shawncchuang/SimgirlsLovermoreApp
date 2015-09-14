@@ -178,7 +178,7 @@ package views
 			{
 				//nobody
 				
-				var msg:String="sorry,nobody's here!!";
+				var msg:String="Nobody's here.";
 				var talkingAlert:Sprite=new AlertMessage(msg,onDisabledAlertTalking);
 				addChild(talkingAlert);
 				
@@ -186,70 +186,7 @@ package views
 			}
 			
 		}
-//		private function checkSchedule(name:String):Object
-//		{
-//			//DebugTrace.msg("FoundSomeScene.checkSchedule likesObj:"+JSON.stringify(likesObj));
-//
-//			var _likesObj:Object=new Object();
-//			var dateIndx:Object=DataContainer.currentDateIndex;
-//			//var schedule:Array=DataContainer.scheduleListbrary;
-//			//var schedule:Array=flox.getSyetemData("schedule");
-//			var schIndex:Object=Config.scheduleIndex;
-//			var index:Number=schIndex[name];
-//			var schedule_scene:String=schedule[index+dateIndx.month][dateIndx.date];
-//			var current_scene:String=DataContainer.currentScene;
-//			var scene:String=current_scene.split("Scene").join("");
-//			//DebugTrace.msg("FoundSomeScene.checkSchedule date:"+dateIndx.date);
-//			//DebugTrace.msg("FoundSomeScene.checkSchedule schedule:"+schedule[index+dateIndx.month][dateIndx.date]);
-//			//DebugTrace.msg("FoundSomeScene.checkSchedule dateIndx:"+JSON.stringify(dateIndx));
-//			//DebugTrace.msg("FoundSomeScene.checkSchedule schedule_scene:"+schedule_scene+" ;scene:"+scene);
-//			if(schedule_scene==scene)
-//			{
-//				_likesObj.value=100;
-//				_likesObj.name=name;
-//			}
-//			else
-//			{
-//				/*var scenelikes:Object=savegame.scenelikes;
-//				index=schIndex[name];
-//				schedule_scene=schedule[index+dateIndx.month][dateIndx.date];
-//				for(var i:uint=0;i<scenelikes[name].length;i++)
-//				{
-//				//character has schedule
-//				scenelikes[name][i].likes=0;
-//				}
-//				savegame.scenelikes=scenelikes;
-//				FloxCommand.savegame=savegame;*/
-//				_likesObj=null;
-//			}
-//			return _likesObj;
-//		}
-//		private function arrivedCh(name:String):void
-//		{
-//			//var savegame:SaveGame=FloxCommand.savegame;
-//			//var scenelikes:Object=savegame.scenelikes;
-//			var scenelikes:Object=flox.getSaveData("scenelikes");
-//			var dateIndx:Object=DataContainer.currentDateIndex;
-//			//var schedule:Array=DataContainer.scheduleListbrary;
-//			var schIndex:Object=Config.scheduleIndex;
-//			var index:Number=schIndex[name];
-//			var schedule_scene:String=schedule[index+dateIndx.month][dateIndx.date];
-//			DebugTrace.msg("FoundSomeScene.characterInSchedule  date:"+dateIndx.date);
-//			DebugTrace.msg("FoundSomeScene.characterInSchedule  schedule_scene:"+schedule_scene);
-//			if(schedule_scene)
-//			{
-//				//character has schedule
-//				for(var i:uint=0;i<scenelikes[name].length;i++)
-//				{
-//
-//					scenelikes[name][i].likes=0;
-//				}
-//				//savegame.scenelikes=scenelikes;
-//				//FloxCommand.savegame=savegame;
-//				flox.save("scenelikes",scenelikes);
-//			}
-//			//if
-//		}
+
 		private function onDisabledAlertTalking():void
 		{
 			
@@ -340,19 +277,7 @@ package views
 			
 		}
 		
-		/*private function onFadinComplete():void
-		{
-		 
-			if(index==arrivedCh.length)
-			{
-				for(var i:uint=0;i<iconslist.length;i++)
-				{
-					var _sprite:Sprite=iconslist[i];
-					//Starling.juggler.removeTweens(_sprite);
-					_sprite.addEventListener(TouchEvent.TOUCH,onTouchCharaterIcon);
-				}
-			}
-		}*/
+
 		private function onTouchCharaterIcon(e:TouchEvent):void
 		{
 			var target:Sprite=e.currentTarget as Sprite;

@@ -338,11 +338,11 @@ public class DrawManager implements DrawerInterface
         //player_icon.useHandCursor=true;
         var shapObj:Object=new Object()
 
-        var rec:Rectangle=new Rectangle(-87,-21,100,100);
+        var rec:Rectangle=new Rectangle(-80,-22,100,100);
 
         if(gender=="Female")
         {
-            rec=new Rectangle(-82,-6,100,100);
+            rec=new Rectangle(-77,-9,100,100);
         }
 
         var texture:Texture=Assets.getTexture("ProEmpty");
@@ -367,7 +367,8 @@ public class DrawManager implements DrawerInterface
             basemodel.x=bp.x;
             basemodel.y=bp.y;
         }
-
+        basemodel.scaleX=0.96;
+        basemodel.scaleY=0.96;
 
         var maskedDisplayObject:PixelMaskDisplayObject = new PixelMaskDisplayObject(-1,false);
         maskedDisplayObject.addChild(basemodel);
@@ -493,7 +494,7 @@ public class DrawManager implements DrawerInterface
         var attr:String=gender+"_"+part;
         var pos:Object={
             "Male_Hair":new Point(69,-30),
-            "Female_Hair":new Point(44,-17),
+            "Female_Hair":new Point(44,-21),
             "Male_HairStyle":new Point(223,-33),
             "Female_HairStyle":new Point(54,-39),
             "Male_Eyes":new Point(112,70),
@@ -582,6 +583,7 @@ public class DrawManager implements DrawerInterface
     }
     public function drawBackground():*
     {
+
         //backgound image or sprite
         var flox:FloxInterface=new FloxCommand();
         var date:String=flox.getSaveData("date");
@@ -598,12 +600,14 @@ public class DrawManager implements DrawerInterface
 
         var bgSrc:String=DataContainer.currentScene.split("Scene").join("Bg");
         switch(scene){
+            //scenes need day or night background
             case "BeachScene":
             case "ParkScene":
             case "PierScene":
             case "LovemoreMansionScene":
             case "HotelScene":
             case "GardenScene":
+            case "FitnessClubScene":
                 bgSrc+=_time;
                 break
 
