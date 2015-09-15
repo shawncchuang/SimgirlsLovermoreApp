@@ -120,7 +120,7 @@ package controller
 		}
 		public static function getTexture(name:String):Texture
 		{
-			DebugTrace.msg("Assets.getTexture name:"+name);
+			//DebugTrace.msg("Assets.getTexture name:"+name);
 			if (sTextures[name] == undefined)
 			{
 				var data:Object = create(name);

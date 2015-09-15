@@ -179,7 +179,7 @@ public class ShoppingForm extends Sprite{
         }
 
 
-        removeChild(shoppinglist);
+        shoppinglist.removeFromParent(true);
         sort=target.name.toLowerCase();
         sort_index=index;
         initShoppingListLayout();
@@ -227,7 +227,7 @@ public class ShoppingForm extends Sprite{
 
             var cate_index:Number=tag_names.indexOf(target.name);
             cate=catelist[cate_index];
-            removeChild(shoppinglist);
+            shoppinglist.removeFromParent(true);
             initShoppingListLayout();
         }
 

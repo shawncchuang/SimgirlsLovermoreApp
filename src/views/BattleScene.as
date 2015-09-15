@@ -308,6 +308,10 @@ public class BattleScene extends Sprite
 		background=swfloader.getSWFChild("bg") as MovieClip;
 		background.gotoAndStop(1);
 		var stageID:Number=Math.floor(Math.random()*background.mc.totalFrames)+1;
+		trace("BattleScene.onStageBGComplete battle_type=",battle_type);
+		if(battle_type=="practice"){
+			stageID=2;
+		}
 		DebugTrace.msg("BattleScene.onStageBGComplete background.width"+background.width);
 
 		background.width=1224;
@@ -425,7 +429,7 @@ public class BattleScene extends Sprite
 		}
 		else
 		{
-			var msg:String="Select target first!"
+			var msg:String="Select target first!";
 			//MainCommand.addAlertMsg(msg);
 			command.addAttention(msg)
 		}
@@ -522,10 +526,16 @@ public class BattleScene extends Sprite
 		TweenMax.to(sebar,0.4,{y:325,onComplete:onSEbarFadein,easing:Elastic.easeOut});
 		TweenMax.to(hptsbar,0.3,{y:367,onComplete:onHSPtsbarFadein,easing:Elastic.easeOut});
 		DebugTrace.msg("BattleScene.doSelectPlayer id:"+e.target.name);
+		var gender:String=flox.getSaveData("avatar").gender;
 		var id:String=e.target.name;
 		var battleteam:Object=memberscom.getBattleTeam();
 		current_player=battleteam[id];
 		var power:Object=current_player.power;
+		var profile_name:String=power.name;
+		if(profile_name=="player"){
+			profile_name+="_"+gender;
+		}
+		DebugTrace.msg("BattleScene.doSelectPlayer profile_name="+profile_name);
 		playerteam=memberscom.getPlayerTeam();
 
 		for(var i:uint=0;i<playerteam.length;i++)
@@ -540,7 +550,7 @@ public class BattleScene extends Sprite
 		//for
 		DebugTrace.msg("BattleScene.doSelectPlayer  player_index:"+player_index);
 		DebugTrace.msg("BattleScene.doSelectPlayer  current_player:"+current_player.name+" , power="+JSON.stringify(power));
-		updateProfile(power.name);
+		updateProfile(profile_name);
 		updateHonourSkillPts(power.name);
 
 		memberscom.setPlayerIndex(player_index);
@@ -693,7 +703,7 @@ public class BattleScene extends Sprite
 			cardnote=swfloader.getSWFChild("card") as MovieClip;
 
 			TweenMax.to(cardnote,0.2,{frameLabel:"over"});
-			var note:String="<p><font size='14' align='justify'>"+skillsys[skill_id].note+"</font></p>"
+			var note:String="<p><font size='14' align='justify'>"+skillsys[skill_id].note+"</font></p>";
 			//var format:TextFormat=new TextFormat();
 			//format.size=16;
 			//cardnote.note.txt.defaultTextFormat=format;

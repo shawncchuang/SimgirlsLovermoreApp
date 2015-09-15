@@ -94,7 +94,7 @@ public class MenuScene extends Scenes
         centerframe.alpha=0;
         addChild(centerframe);
         var centeframeTween:Tween=new Tween(centerframe,0.2,Transitions.EASE_IN_OUT_BACK);
-        centeframeTween.delay=1;
+        centeframeTween.delay=0.3;
         centeframeTween.animate("alpha",1);
         Starling.juggler.add(centeframeTween);
 
@@ -121,7 +121,7 @@ public class MenuScene extends Scenes
          addChild(titleIcon);
          */
 
-        tween=new Tween(network,1,Transitions.EASE_IN_OUT_BACK);
+        tween=new Tween(network,0.3,Transitions.EASE_IN_OUT_BACK);
         tween.scaleTo(1);
         tween.animate("y",428);
         tween.animate("alpha",1);
@@ -215,7 +215,7 @@ public class MenuScene extends Scenes
         }
         //for
         var delayCall:Tween=new Tween(this,0.5);
-        delayCall.delay=0.5;
+        delayCall.delay=0.2;
         delayCall.onComplete=onIconsComplete;
         Starling.juggler.add(delayCall);
     }

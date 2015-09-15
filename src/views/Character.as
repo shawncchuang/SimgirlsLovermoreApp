@@ -45,6 +45,7 @@ import views.BattleScene;
 public class Character extends MovieClip
 {
 
+
     protected var flox:FloxInterface=new FloxCommand();
     protected var memberscom:MembersInterface=new MemebersCommand();
     private var command:MainInterface=new  MainCommand();
@@ -83,8 +84,8 @@ public class Character extends MovieClip
         "G":gpart_pack
     };
     private var otherCharacters:Array=["zack","xns","vdk","smn","prms","prml","fan","bdh","mia","san","chef","akr"];
-    private var boy_names:Array=["lenus","sao","zack","Male_player"];
-    private var girl_names:Array=["sirena","tomoru","dea","klr","ceil","Female_player"];
+    private var boy_names:Array=["lenus","sao","zack","Male_player","Female_player"];
+    private var girl_names:Array=["sirena","tomoru","dea","klr","ceil"];
 
 
     private  static var ready:String="RDY";
@@ -976,7 +977,7 @@ public class Character extends MovieClip
         {
             actModel.gotoAndStop(Character.ready);
             effect.gotoAndStop(Character.ready);
-            DebugTrace.msg(part_pack.toString())
+            //DebugTrace.msg(part_pack.toString())
             for(var j:uint=0;j<part_pack.length;j++)
             {
                 if(_part=="ceil")
@@ -1488,19 +1489,22 @@ public class Character extends MovieClip
         {
             //player
             var acatar:Object=flox.getSaveData("avatar");
-            if(acatar.gender=="Male")
-            {
-                part_pack=bpart_pack;
-                gender="B";
-                _gender="Boy";
-            }
-            else
-            {
-                part_pack=gpart_pack
-                gender="G";
-                _gender="Girl";
-            }
-            //if
+            part_pack=bpart_pack;
+            gender="B";
+            _gender="Boy";
+//            if(acatar.gender=="Male")
+//            {
+//                part_pack=bpart_pack;
+//                gender="B";
+//                _gender="Boy";
+//            }
+//            else
+//            {
+//                part_pack=gpart_pack
+//                gender="G";
+//                _gender="Girl";
+//            }
+//            //if
         }
         else
         {

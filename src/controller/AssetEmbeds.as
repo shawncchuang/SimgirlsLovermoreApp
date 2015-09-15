@@ -623,7 +623,7 @@ public class AssetEmbeds
     public static const zackRdy:Class;
 
     [Embed(source="../../media/textures/characters/rdy_player_m.png")]
-    public static const playerMaleRdy:Class;
+    public static const playerRdy:Class;
 
     [Embed(source="../../media/textures/characters/rdy_player_f.png")]
     public static const playerFemaleRdy:Class;

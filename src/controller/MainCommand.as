@@ -607,7 +607,6 @@ public class MainCommand implements MainInterface {
         DebugTrace.msg("MainCommand.dateManager  new_date:" + new_date);
         var _data:Object = new Object();
         _data.date = new_date;
-        var flox:FloxInterface = new FloxCommand();
         flox.save("date", new_date);
         healSpiritEngine();
         if (overday) {

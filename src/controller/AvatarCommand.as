@@ -56,10 +56,10 @@ package controller
 			name=attr.name;
 			attrs=attr;
 			onReadyComplete=fun;
-            if(name=="player")
-			{
-				name=name+attrs.gender;
-			}
+//            if(name=="player")
+//			{
+//				name=name+attrs.gender;
+//			}
 			DebugTrace.msg("ChangeFormationScene.createAvatar name="+name);
 			var texture:Texture=Assets.getTexture(name+"Rdy");
 			var img:Image=new Image(texture);

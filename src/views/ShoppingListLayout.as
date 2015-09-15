@@ -74,7 +74,7 @@ public class ShoppingListLayout extends PanelScreen {
                 item.price = assetsData[id].price;
                 item.qty = 1;
                 assetslist.push(item);
-                DebugTrace.msg( "ShoppingListLayout.initializeHandler id="+id+" ,name="+item.name);
+                //DebugTrace.msg( "ShoppingListLayout.initializeHandler id="+id+" ,name="+item.name);
             }
 
         }
