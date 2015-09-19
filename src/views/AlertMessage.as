@@ -1,109 +1,147 @@
 package views
 {
-	import flash.geom.Point;
-	
-	import controller.Assets;
-	import controller.MainCommand;
-	import controller.MainInterface;
-	
-	import starling.animation.Transitions;
-	import starling.animation.Tween;
-	import starling.core.Starling;
-	import starling.display.Button;
-	import starling.display.Image;
-	import starling.display.MovieClip;
-	import starling.display.Sprite;
-	import starling.events.Event;
-	import starling.text.TextField;
-	import starling.textures.Texture;
+import flash.geom.Point;
 
-	import utils.DebugTrace;
-	
-	public class AlertMessage extends Sprite
-	{
-		private var comfirm:Sprite=new Sprite();
-		//private var alertframe:MovieClip;
-		private var alertframe:Image;
-		private var btn:Button;
-		private var onClosed:Function;
-		private var command:MainInterface=new MainCommand();
-        private var font:String="SimMyriadPro";
-		public function AlertMessage(msg:String,callback:Function=null):void
-		{
-			onClosed=callback;
-			comfirm=new Sprite();
+import controller.Assets;
+import controller.MainCommand;
+import controller.MainInterface;
 
+import starling.animation.Transitions;
+import starling.animation.Tween;
+import starling.core.Starling;
+import starling.display.Button;
+import starling.display.Image;
+import starling.display.MovieClip;
+import starling.display.Quad;
+import starling.display.Sprite;
+import starling.events.Event;
+import starling.events.Touch;
+import starling.events.TouchEvent;
+import starling.events.TouchPhase;
+import starling.text.TextField;
+import starling.textures.Texture;
+import starling.utils.Color;
 
-			//alertframe=Assets.getDynamicAtlas("AlertTalking");
+import utils.DebugTrace;
 
-			//alertframe.loop=false;
-			//alertframe.stop();
-			//alertframe.pivotX=alertframe.width/2;
-			//alertframe.pivotY=alertframe.height/2;
-			
-			var texture:Texture=Assets.getTexture("SceneMask");
-			alertframe=new Image(texture);
-			alertframe.pivotX=alertframe.width/2;
-			alertframe.pivotY=alertframe.height/2;
-			
-			
-			
-			var txt:TextField=new TextField(1024,80,msg,font,20,0xFFFFFF);
-			txt.hAlign="center";
-			txt.x=-512;
-			txt.y=290;
-			
-			/*var btntexture:Texture=Assets.getTexture("XAlt");
-			btn=new Button(btntexture);
-			btn.name="closebtn";
-			btn.x=438;
-			btn.y=319;
-			btn.addEventListener(Event.TRIGGERED,onTouchAlertFrame);*/
-			
-			
-			comfirm.addChild(alertframe);
-			comfirm.addChild(txt);
-			command.addedCancelButton(comfirm,onTouchAlertFrame,new Point(438,319));
-			//comfirm.addChild(btn);
-			comfirm.x= Starling.current.stage.stageWidth/2;
-			comfirm.y= Starling.current.stage.stageHeight/2;
-			addChild(comfirm);
-			comfirm.alpha=0.5;
-			var tween:Tween=new Tween(comfirm,0.5,Transitions.EASE_OUT_ELASTIC);
-			tween.animate("alpha",1);
-			tween.onComplete=onAlertMessageFadeIn;
-			Starling.juggler.add(tween);
-		}
-		private function onAlertMessageFadeIn():void
-		{
-			//btn.visible=true;
-            Starling.juggler.removeTweens(alertframe);
+public class AlertMessage extends Sprite
+{
+    private var comfirm:Sprite=new Sprite();
+    //private var alertframe:MovieClip;
+    private var alertframe:Image;
+    private var btn:Button;
+    private var onClosed:Function;
+    private var command:MainInterface=new MainCommand();
+    private var font:String="SimMyriadPro";
+    private var msg:String="";
+    private var quad:Quad;
+    private var clickmouse:Sprite;
+    public function AlertMessage(content:String,callback:Function=null,type:String=null):void
+    {
+        onClosed=callback;
+        comfirm=new Sprite();
+        msg=content;
+        if(type=="screen_type"){
+
+            initScreenType();
+        }else{
+
+            initButtonType();
+        }
 
 
+    }
+    private function initScreenType():void{
 
-			
-		}
-		private function onTouchAlertFrame():void
-		{
-			DebugTrace.msg("AlertMessage.onTouchAlertFrame");
-			//var target:Sprite=e.currentTarget as Sprite;
-			//var BEGAN:Touch=e.getTouch(target,TouchPhase.BEGAN);
-			//removeChild(comfirm);
+        var width:Number=Starling.current.stage.stageWidth;
+        var height:Number=Starling.current.stage.stageHeight;
+        quad= new Quad(width,height,Color.AQUA);
+        quad.alpha=0;
+        addChild(quad);
 
-
-            try{
-
-                comfirm.removeFromParent(true);
-                alertframe.removeFromParent(true);
-                if(onClosed)
-                    onClosed();
+        clickmouse=new ClickMouseIcon();
+        clickmouse.x=973;
+        clickmouse.y=704;
+        addChild(clickmouse);
+        this.addEventListener(TouchEvent.TOUCH,doCancelHandler);
 
 
-            }catch(error:Error)
-            {
-                DebugTrace.msg("AlertMessage.onTouchAlertFrame Error");
-            }
+    }
+    private function doCancelHandler(e:TouchEvent):void{
 
-		}
-	}
+        var began:Touch=e.getTouch(this,TouchPhase.BEGAN);
+        if(began){
+            this.removeFromParent(true);
+            this.removeEventListener(Event.TRIGGERED,doCancelHandler);
+
+            if(onClosed)
+                onClosed();
+        }
+
+
+
+    }
+    private function initButtonType():void{
+
+
+        var texture:Texture=Assets.getTexture("SceneMask");
+        alertframe=new Image(texture);
+        alertframe.pivotX=alertframe.width/2;
+        alertframe.pivotY=alertframe.height/2;
+
+
+
+        var txt:TextField=new TextField(1024,80,msg,font,20,0xFFFFFF);
+        txt.hAlign="center";
+        txt.x=-512;
+        txt.y=290;
+
+
+
+        comfirm.addChild(alertframe);
+        comfirm.addChild(txt);
+        command.addedCancelButton(comfirm,onTouchAlertFrame,new Point(438,319));
+        //comfirm.addChild(btn);
+        comfirm.x= Starling.current.stage.stageWidth/2;
+        comfirm.y= Starling.current.stage.stageHeight/2;
+        addChild(comfirm);
+        comfirm.alpha=0.5;
+        var tween:Tween=new Tween(comfirm,0.5,Transitions.EASE_OUT_ELASTIC);
+        tween.animate("alpha",1);
+        tween.onComplete=onAlertMessageFadeIn;
+        Starling.juggler.add(tween);
+
+    }
+    private function onAlertMessageFadeIn():void
+    {
+        //btn.visible=true;
+        Starling.juggler.removeTweens(alertframe);
+
+
+
+
+    }
+    private function onTouchAlertFrame():void
+    {
+        DebugTrace.msg("AlertMessage.onTouchAlertFrame");
+        //var target:Sprite=e.currentTarget as Sprite;
+        //var BEGAN:Touch=e.getTouch(target,TouchPhase.BEGAN);
+        //removeChild(comfirm);
+
+
+        try{
+
+            this.removeFromParent(true);
+
+            if(onClosed)
+                onClosed();
+
+
+        }catch(error:Error)
+        {
+            DebugTrace.msg("AlertMessage.onTouchAlertFrame Error");
+        }
+
+    }
+}
 }

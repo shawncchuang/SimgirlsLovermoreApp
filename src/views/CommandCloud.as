@@ -163,9 +163,11 @@ public class CommandCloud extends MovieClip
                     }
                     break;
                 case "Practice":
-                    success=battledata.checkSurvivor();
-                    if(!success){
-                        command.consumeHandle("NoSurvivor");
+                    var survivor:Boolean=battledata.checkSurvivor();
+                    if(!survivor){
+                        success=command.consumeHandle("NoSurvivor");
+                    }else{
+                        success=command.consumeHandle(com);
                     }
 
                     break;
@@ -327,9 +329,24 @@ public class CommandCloud extends MovieClip
         if(looking_index!=-1)
         {
             //Looking for someone at scene
+            var battledata:BattleData=new BattleData();
+            var ranbattle:Boolean=battledata.checkSurvivor();
+            var perbattle:Number=Math.floor(Math.random()*100)+1;
+            DebugTrace.msg("CommandCloud.checkSceneCommand perbattle="+perbattle);
+            if(ranbattle && perbattle<=10){
+                //could random fight
+                DataContainer.battleType="random_battle";
+                DataContainer.currentScene="ChangeFormationScene";
+                command.consumeHandle("RandomBattle");
 
-            _data.name="FoundSomeScene";
-            command.sceneDispatch(SceneEvent.CHANGED,_data);
+
+            }else{
+
+                _data.name="FoundSomeScene";
+                command.sceneDispatch(SceneEvent.CHANGED,_data);
+
+            }
+
 
 
 
@@ -346,6 +363,17 @@ public class CommandCloud extends MovieClip
          }
          //if
          */
+    }
+    private function onClosedRandomFightAlert():void{
+
+        var gameEvent:GameEvent = SimgirlsLovemore.gameEvent;
+        gameEvent._name = "clear_comcloud";
+        gameEvent.displayHandler();
+
+        var _data:Object = new Object();
+        _data.name = DataContainer.currentScene;
+        var command:MainInterface = new MainCommand();
+        command.sceneDispatch(SceneEvent.CHANGED, _data);
     }
 
     private function onInitCurrentScene():void

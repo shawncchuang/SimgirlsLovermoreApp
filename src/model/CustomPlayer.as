@@ -16,7 +16,8 @@ package model
 		public var player_name:String="";
 		public var password:String="";
 		private var currentPlayer:Player;
-		
+
+		//0=null,1=used
 		public var saved:Array;
 		public var assets:Object;
 		public var paid:Boolean;

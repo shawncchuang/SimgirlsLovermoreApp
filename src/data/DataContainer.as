@@ -46,6 +46,8 @@ public class DataContainer
     private static var characterLocalcation:Array;
     private static var assets_id:Array;
 
+    private static var shortcuts_scene:String;
+
     public static function set AssetsId(ids:Array):void
     {
         assets_id=ids;
@@ -177,7 +179,7 @@ public class DataContainer
          */
 
         var chls:Object=new Object();
-        var characters:Array=Config.characters;
+        var characters:Array=Config.datingCharacters;
         var scenes:Object=Config.stagepoints;
         var dating:String=DataContainer.dating;
 
@@ -327,7 +329,7 @@ public class DataContainer
     {
         var flox:FloxInterface=new FloxCommand();
         var secretsData:Object=flox.getSyetemData("secrets");
-        var charts:Array=Config.characters;
+        var charts:Array=Config.datingCharacters;
         var secrets:Object=new Object();
 
         for(var i:uint=0;i<charts.length;i++)
@@ -769,6 +771,12 @@ public class DataContainer
 
         return characterLocalcation;
 
+    }
+    public static function set shortcutsScene(name:String):void{
+        shortcuts_scene=name;
+    }
+    public static function get shortcutsScene():String{
+        return shortcuts_scene;
     }
 }
 }

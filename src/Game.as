@@ -112,6 +112,11 @@ package
 					break
 				case "remove_loadgame_gametitle":
 					removeChild(bgImg);
+						if(uiView){
+							removeChild(uiView);
+							uiView=null;
+						}
+
 					break
 				case "characterdesign_to_loadgame":
 					var scene:Sprite=ViewsContainer.MainScene;
@@ -142,7 +147,7 @@ package
 			bgImg=new Image(bgtexture);
 			addChild(bgImg);
 			
-			saveloadlist=new SaveandLoadList("Arrived");
+			saveloadlist=new SaveandLoadList("Arrive");
 			saveloadlist.x=Starling.current.stage.stageWidth/2;
 			saveloadlist.y=Starling.current.stage.stageHeight/2;
 			saveloadlist.alpha=0;

@@ -529,8 +529,11 @@ public class MemebersCommand implements MembersInterface
 
                         scene="AcademyScene";
 
-                    }else
-                    {
+                    }else if(battle_type=="random_battle"){
+
+                        scene="MainScene";
+
+                    }else{
 
                         if(scene=="Story"){
 

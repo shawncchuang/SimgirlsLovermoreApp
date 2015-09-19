@@ -43,7 +43,7 @@ package views
 		}
 		private function onUpdateExcerpt(e:Event):void
 		{
-			DebugTrace.msg("ExcerptBox.onUpdateExcerpt type="+e.data.type+" ,id="+e.data.id+" ,skill="+e.data.skill);
+			//DebugTrace.msg("ExcerptBox.onUpdateExcerpt type="+e.data.type+" ,id="+e.data.id+" ,skill="+e.data.skill);
 			switch(e.data.type)
 			{
 				case "assets":

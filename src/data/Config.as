@@ -12,7 +12,7 @@ public class Config
     private static var points:Object=new Object();
     private static var playerInfo:Object=new Object();
     public static var modelObj:Object={"Male":new Rectangle(0,-20,276,660),
-        "Female":new Rectangle(-25,-20,262,613)};
+        "Female":new Rectangle(-25,0,240,563)};
     public static var btl_elements:Array=new Array("fire","air","earth","water","neutral","com");
     public static var elements:Array=new Array("fire","air","earth","water","neutral");
     private static var skillssheet:Array=new Array();
@@ -22,9 +22,10 @@ public class Config
     public static const allCharacters:Array=["lenus","sirena","dea","sao","klr","tomoru","ceil","zack"];
     //zack don't show up in somewhere
     public static const characters:Array=["lenus","sirena","dea","sao","klr","tomoru","ceil"];
+    public static const datingCharacters:Array=["lenus","sirena","dea","zack","klr","tomoru","ceil"];
     public static const NPC:Object={"daz":"npc001"};
     //schedule [index+ current month]
-    public static var scheduleIndex:Object={"lenus":88,"sirena":12,"dea":25,"sao":38,"klr":51,"tomoru":64,"ceil":77,"zack":90};
+    public static var scheduleIndex:Object={"lenus":88,"sirena":12,"dea":25,"sao":38,"klr":51,"tomoru":64,"ceil":77,"zack":38};
 
     //battle schedule 2033 Tuesday
 
@@ -350,6 +351,14 @@ public class Config
                     "Give":2
                 },
                 dea:{
+                    "Kiss":2,
+                    "Flirt":2,
+                    "TakePhoto":2,
+                    "Chat":6,
+                    "Date":1,
+                    "Give":2
+                },
+                zack:{
                     "Kiss":2,
                     "Flirt":2,
                     "TakePhoto":2,

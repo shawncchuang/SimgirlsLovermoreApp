@@ -75,7 +75,10 @@ package views
 					break
 				case "loadtoStart":
 					removeChild(saveloadlist);
-					
+
+					var gameinfo:Sprite = ViewsContainer.gameinfo;
+					gameinfo.dispatchEventWith("UPDATE_INFO", false);
+
 					_data.name="MainScene";
 					command.sceneDispatch(SceneEvent.CHANGED,_data);
 					break
@@ -91,7 +94,7 @@ package views
 		private function tweenCtrl(value:Number,onTweenComplete:Function=null):void
 		{
 			
-			var tween:Tween=new Tween(saveloadlist,0.5)
+			var tween:Tween=new Tween(saveloadlist,0.5);
 			tween.animate("alpha",value);
 			tween.onComplete=onTweenComplete;
 			Starling.juggler.add(tween);

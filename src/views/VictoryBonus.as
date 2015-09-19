@@ -94,7 +94,8 @@ import utils.DebugTrace;
 			var satageID:Number=DataContainer.stageID;
 			var swfloader:SWFLoader = LoaderMax.getLoader("background");
 			var background:MovieClip=swfloader.getSWFChild("bg") as MovieClip;
-			background.gotoAndStop(satageID);
+			background.gotoAndStop(1);
+			background.mc.gotoAndStop(satageID);
 			
 			initLayout();
 			
@@ -234,9 +235,9 @@ import utils.DebugTrace;
 
                 scene="SSCCArenaScene";
 
-            }else if(battleType=="practice"){
+            }else if(battleType=="random_battle"){
 
-                scene="AcademyScene";
+                scene="MainScene";
 
             }else{
 

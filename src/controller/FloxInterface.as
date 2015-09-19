@@ -17,7 +17,7 @@ package controller
         function refreshSaveData(callback:Function=null):void
 		function loadEntities():void
         function loadSystemData():void
-	    function loadSavedEntities():void
+	    function loadBackupsavedEntities():void
 		function saveSystemDataEntities():void
 		function saveSystemData(attr:String,value:*):void
 		function loadSystemDataEntities():void
@@ -32,7 +32,9 @@ package controller
 		function LoginForDestroyPlayer(key:String="",email:String=""):void
 		function destoryEntities(type:String,id:String):void
 		function logEvent(evt:String,info:Object=null):void
-	
+		function syncSaved(callback:Function=null):void
+		function syncBackupSaved(callback:Function=null):void
+        function loadBackupsaved():void
 			
 		
 	}

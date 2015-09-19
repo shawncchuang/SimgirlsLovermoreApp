@@ -34,7 +34,7 @@ public class CusomAssets
     public function praseRating():void {
 
         DebugTrace.msg("CusomAssets.praseRating");
-        var characters:Array = Config.characters;
+        var characters:Array = Config.datingCharacters;
         var assets_id:Array=DataContainer.AssetsId;
 
         assets_rating = new Object();

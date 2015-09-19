@@ -188,9 +188,8 @@ public class GameInfobar extends Sprite
 
     private function showDate():void
     {
-
-        var savedata:SaveGame=FloxCommand.savegame;
-        var dateStr:String=savedata.date.split("|")[0];
+        var datedata:String=flox.getSaveData("date");
+        var dateStr:String=datedata.split("|")[0];
         var datelist:Array=dateStr.split(".");
         datelist.pop();
 
@@ -205,8 +204,8 @@ public class GameInfobar extends Sprite
     }
     private function showCash():void
     {
-        var savedata:SaveGame=FloxCommand.savegame;
-        var cashStr:String=String(savedata.cash);
+        var cash:Number=flox.getSaveData("cash");
+        var cashStr:String=String(cash);
         cashTxt=new TextField(170,40,cashStr,font,22,fonColor);
         cashTxt.hAlign="left";
         cashTxt.vAlign="center";
@@ -218,9 +217,11 @@ public class GameInfobar extends Sprite
     private function showAP():void
     {
 
-        var savedata:SaveGame=FloxCommand.savegame;
-        var cashStr:String=String(savedata.ap);
-        var value:String=cashStr+"/"+savedata.ap_max;
+
+        var ap:Number=flox.getSaveData("ap");
+        var ap_max:Number=flox.getSaveData("ap_max");
+        var cashStr:String=String(ap);
+        var value:String=cashStr+"/"+ap_max;
         apTxt=new TextField(200,40,value,font,22,fonColor);
         apTxt.hAlign="left";
         apTxt.vAlign="center";
@@ -359,7 +360,7 @@ public class GameInfobar extends Sprite
 
             Starling.juggler.removeTweens(morebar);
 
-            tween=new Tween(morebar,0.2,Transitions.EASE_OUT)
+            tween=new Tween(morebar,0.2,Transitions.EASE_OUT);
             tween.animate("y",-217);
             tween.fadeTo(0);
             Starling.juggler.add(tween);

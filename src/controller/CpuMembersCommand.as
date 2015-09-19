@@ -122,7 +122,7 @@ public class CpuMembersCommand implements CpuMembersInterface
             if(cpuIndex==9)
                 cpuIndex=10;
 
-        }else if(battleType=="practice"){
+        }else if(battleType=="practice" || battleType=="random_battle"){
 
             cpuIndex=11;
             var se:Number=0;

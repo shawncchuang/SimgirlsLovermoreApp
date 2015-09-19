@@ -171,8 +171,23 @@ public class BattleScene extends Sprite
 	private function onStartBonusGame(e:Event):void
 	{
 
-		var victorybounse:Sprite=new VictoryBonus();
-		addChild(victorybounse);
+		if(battle_type=="random_battle"){
+
+
+			var victorybounse:Sprite=new VictoryBonus();
+			addChild(victorybounse);
+
+
+		}else{
+
+			var gameEvt:GameEvent=SimgirlsLovemore.gameEvent;
+			gameEvt._name="remove_battle";
+			gameEvt.displayHandler();
+
+			var _data:Object=new Object();
+			_data.name=DataContainer.currentLabel;
+			command.sceneDispatch(SceneEvent.CHANGED,_data);
+		}
 
 	}
 	private function onCPUCommaderItems(e:Event):void
@@ -308,11 +323,33 @@ public class BattleScene extends Sprite
 		background=swfloader.getSWFChild("bg") as MovieClip;
 		background.gotoAndStop(1);
 		var stageID:Number=Math.floor(Math.random()*background.mc.totalFrames)+1;
-		trace("BattleScene.onStageBGComplete battle_type=",battle_type);
+		//trace("BattleScene.onStageBGComplete battle_type=",battle_type);
 		if(battle_type=="practice"){
 			stageID=2;
 		}
-		DebugTrace.msg("BattleScene.onStageBGComplete background.width"+background.width);
+		switch(battle_type){
+			case "practice":
+				stageID=2;
+				break
+			case "random_battle":
+				var currentlabel:String=DataContainer.currentLabel;
+				DebugTrace.msg("BattleScene.onStageBGComplete currentLabel="+currentlabel);
+				if(currentlabel=="BeachScene" || currentlabel=="ThemedParkScene" ||
+						currentlabel=="GardenScene" || currentlabel=="ParkScene" || currentlabel=="PierScene"){
+					stageID=5;
+				}else{
+					stageID=3;
+				}
+				var dateStr:String = flox.getSaveData("date");
+				var _time:Number = Number(dateStr.split("|")[1]);
+				if(_time==24){
+					stageID++;
+				}
+
+				break
+
+		}
+		//DebugTrace.msg("BattleScene.onStageBGComplete background.width"+background.width);
 
 		background.width=1224;
 		background.x=-100;
@@ -1046,7 +1083,7 @@ public class BattleScene extends Sprite
 
 	}
 	private var rageTimer:Timer;
-	private var rtSec:Number=0
+	private var rtSec:Number=0;
 	private function doRageAction():void
 	{
 
@@ -1942,7 +1979,7 @@ public class BattleScene extends Sprite
 							partnertEvt.updateMemberAct();
 
 
-							var offer:Number=0
+							var offer:Number=0;
 							switch(attack_member.power.skillID)
 							{
 								case "a1":
@@ -2192,7 +2229,7 @@ public class BattleScene extends Sprite
 
 
 	}
-	private var team:Array
+	private var team:Array;
 	private var hitT:Number=0;
 	private function doAttackHandle():void
 	{
@@ -2281,7 +2318,7 @@ public class BattleScene extends Sprite
 			catch(e:Error)
 			{
 				DebugTrace.msg("BattleScene.doAttackHandle attack_member.skillAni Null");
-				TweenMax.delayedCall(2,onWaitingSkillAni)
+				TweenMax.delayedCall(2,onWaitingSkillAni);
 
 				function onWaitingSkillAni():void
 				{
@@ -3051,7 +3088,7 @@ public class BattleScene extends Sprite
 		//battleEvt=attack_member.memberEvt;
 		//battleEvt.processAction();
 
-		var _target_member:Member
+		var _target_member:Member;
 		if(area.length<=1)
 		{
 			//Heal

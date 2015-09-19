@@ -35,6 +35,8 @@ import events.GameEvent;
 import events.SceneEvent;
 import events.TopViewEvent;
 
+import flash.ui.Keyboard;
+
 import model.BattleData;
 
 import model.SaveGame;
@@ -42,12 +44,15 @@ import model.SystemData;
 
 import services.LoaderRequest;
 
+import starling.animation.Juggler;
+
 import starling.animation.Transitions;
 import starling.animation.Tween;
 import starling.core.Starling;
 import starling.display.Image;
 import starling.display.MovieClip;
 import starling.display.Sprite;
+import starling.events.KeyboardEvent;
 import starling.events.Touch;
 import starling.events.TouchEvent;
 import starling.events.TouchPhase;
@@ -899,7 +904,7 @@ public class MainCommand implements MainInterface {
     public function moodCalculator(item_id:String, dating:String):Number {
         var flox:FloxInterface = new FloxCommand();
         var sysAssets:Object = flox.getSyetemData("assets");
-       // var pst:Number = flox.getSaveData("pts")[dating];
+        // var pst:Number = flox.getSaveData("pts")[dating];
         var price:Number = sysAssets[item_id].price;
         var rating:Number = searchAssetRating(item_id);
         var mood:Number = Math.floor(price * Number((rating / 100).toFixed(2))) * 4;
@@ -926,7 +931,7 @@ public class MainCommand implements MainInterface {
             //if
         }
         //for
-         return rating;
+        return rating;
 
     }
 
@@ -1146,7 +1151,7 @@ public class MainCommand implements MainInterface {
         gameEvent.displayHandler();
 
         var mediacom:MediaInterface = new MediaCommand();
-        mediacom.VideoPlayer(new Point(1024, 250), new Point(0, 260))
+        mediacom.VideoPlayer(new Point(1024, 250), new Point(0, 260));
         mediacom.play("video/rest-animated.flv", false, onFinishAnimated);
 
         var restObj:Object = sysCommad.Stay;
@@ -1355,6 +1360,7 @@ public class MainCommand implements MainInterface {
     }
 
     public function showCommandValues(target:Sprite, attr:String, values:Object = null):void {
+        //show up reward after excuting command
         var flox:FloxInterface = new FloxCommand();
         var sysCommad:Object = flox.getSyetemData("command");
         var rewards:Object = new Object();
@@ -1387,6 +1393,17 @@ public class MainCommand implements MainInterface {
         value_data.attr = attrlist.toString();
         value_data.values = valueslist.toString();
         command.displayUpdateValue(target, value_data);
+
+        if(attr=="FreeRest"){
+
+            var juggler:Juggler= Starling.juggler;
+            juggler.delayCall(function onTimeOut():void{
+                var _data:Object=new Object();
+                _data.name=DataContainer.currentScene;
+                command.sceneDispatch(SceneEvent.CHANGED,_data);
+            },1.5);
+
+        }
 
     }
 
@@ -1692,9 +1709,17 @@ public class MainCommand implements MainInterface {
             msg = "No anyone can do this !!";
             alert = new AlertMessage(msg, onClosedAlert);
             scene.addChild(alert);
-
             gameEvent._name = "clear_comcloud";
             gameEvent.displayHandler();
+            return false;
+        }
+        if(com=="RandomBattle"){
+
+            ViewsContainer.UIViews.visible = false;
+            msg = "Got into a street fight !!";
+            alert = new AlertMessage(msg, onClosedAlert);
+            scene.addChild(alert);
+
             return false;
         }
         var payAP:Number = sysCommand[com].ap;
@@ -1768,6 +1793,8 @@ public class MainCommand implements MainInterface {
                 var command:MainInterface = new MainCommand();
                 command.displayUpdateValue(scene, value_data);
 
+                var gameinfo:Sprite = ViewsContainer.gameinfo;
+                gameinfo.dispatchEventWith("UPDATE_INFO");
             }
 
             success = true;
@@ -1837,7 +1864,7 @@ public class MainCommand implements MainInterface {
         var scenelikes:Object=flox.getSaveData("scenelikes");
         var schedule:Array=flox.getSyetemData("schedule");
         var current_scene:String=DataContainer.currentScene.split("Scene").join("");
-        var allChacters:Array=Config.characters;
+        var allChacters:Array=Config.datingCharacters;
         var dating:String=flox.getSaveData("dating");
 
         var chlist:Array=new Array();
@@ -1870,8 +1897,8 @@ public class MainCommand implements MainInterface {
                         //but likes this scene with character;
                         var _scenelikes:Object=scenelikes[character][0];
 
-                            var likes:Number = Number(_scenelikes.likes);
-                            var scene:String = String(_scenelikes.name);
+                        var likes:Number = Number(_scenelikes.likes);
+                        var scene:String = String(_scenelikes.name);
                         var chlikes:Object;
                         switch(type){
                             case "all_scene":
@@ -1899,7 +1926,7 @@ public class MainCommand implements MainInterface {
                                 break
 
                         }
-                         //switch
+                        //switch
 
                     }
                 }
@@ -2023,6 +2050,50 @@ public class MainCommand implements MainInterface {
 
         }
         flox.save("se",seObj);
+
+    }
+    public function addShortcuts():void{
+
+
+        Starling.current.stage.addEventListener(KeyboardEvent.KEY_UP, doShortcuts);
+    }
+    private function doShortcuts(e:KeyboardEvent):void{
+        var toScene:String="";
+        var shortcutsScene:String= DataContainer.shortcutsScene;
+        switch(e.keyCode){
+
+            case Keyboard.SPACE:
+                toScene="ProfileScene";
+                break
+            case Keyboard.C:
+                toScene="ContactsScene";
+                break
+            case Keyboard.D:
+                toScene="CalendarScene";
+                break
+            case Keyboard.Q:
+                toScene="MainScene";
+                break
+
+        }
+        DebugTrace.msg("MainCommand.doShortcuts  toScene="+toScene+" , shortcutsScene="+shortcutsScene);
+        if(toScene!="" && shortcutsScene!=toScene){
+
+            var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
+            gameEvent._name="clear_comcloud";
+            gameEvent.displayHandler();
+
+            var _data:Object=new Object();
+            _data.name=toScene;
+            sceneDispatch(SceneEvent.CHANGED,_data);
+
+        }
+
+    }
+    public function removeShortcuts():void{
+
+
+        Starling.current.stage.removeEventListener(KeyboardEvent.KEY_UP, doShortcuts);
 
 
     }

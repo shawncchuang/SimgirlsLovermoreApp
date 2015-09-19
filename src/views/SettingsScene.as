@@ -75,7 +75,7 @@ public class SettingsScene extends Sprite{
 
         var panel:Image=new Image(Assets.getTexture("SettingPanel"));
         panel.x=330;
-        panel.y=320;
+        panel.y=270;
         addChild(panel);
 
 
@@ -83,7 +83,7 @@ public class SettingsScene extends Sprite{
         toggle=new Image(Assets.getTexture("IconSoundToggleDefault"));
         toggle.useHandCursor=true;
         toggle.x=525;
-        toggle.y=402;
+        toggle.y=290;
         addChild(toggle);
         toggle.addEventListener(TouchEvent.TOUCH, toggleSwitchChangeHandler);
         /*

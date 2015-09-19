@@ -159,7 +159,9 @@ public class Scenes extends Sprite
         //var scene:Sprite=ViewsContainer.MainScene;
         ViewsContainer.InfoDataView.visible=true;
         if(next_scene!="MenuScene" && next_scene!="ProfileScene" &&
-                next_scene!="SettingsScene" &&  next_scene!="ContactsScene" && next_scene!="CalendarScene" && next_scene!="PhotosScene")
+                next_scene!="SettingsScene" &&  next_scene!="ContactsScene" &&
+                next_scene!="CalendarScene" && next_scene!="PhotosScene" &&
+                next_scene!="BattleScene" && next_scene!="ChangeFormationScene")
         {
             DataContainer.currentLabel=next_scene;
         }
@@ -170,6 +172,7 @@ public class Scenes extends Sprite
         {
             DataContainer.currentScene=next_scene;
         }
+        DataContainer.shortcutsScene=next_scene;
         scene_container=new Sprite();
         scene_container.name="scene_container";
 
@@ -385,8 +388,19 @@ public class Scenes extends Sprite
         tween.onComplete=onGameIngbarFadeinComplete;
         Starling.juggler.add(tween);
 
+        command.removeShortcuts();
+
+        var shortcutsScene:String=DataContainer.shortcutsScene;
+        if(shortcutsScene.indexOf("Game")==-1 && shortcutsScene.indexOf("Battle")==-1 &&
+                shortcutsScene!="DatingScene" && shortcutsScene.indexOf("Formation")==-1){
+            DebugTrace.msg("Scenes.changeSceneHandle addShortcuts shortcutsScene:"+shortcutsScene);
+            command.addShortcuts();
+        }
+
+
         if(next_scene.indexOf("Game")==-1)
         {
+
             var currentScene:String = DataContainer.currentScene;
             var evtObj:Object = new Object();
             var scene_name:String=currentScene.split("Scene").join("");
@@ -409,7 +423,6 @@ public class Scenes extends Sprite
             UIViews.visible=infobar;
             Starling.juggler.removeTweens(gameInfobar);
         }
-
 
 
     }

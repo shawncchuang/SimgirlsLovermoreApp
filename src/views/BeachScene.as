@@ -10,17 +10,11 @@ import controller.MainInterface;
 import controller.SceneCommnad;
 import controller.SceneInterface;
 
-import data.DataContainer;
-
 import events.GameEvent;
 import events.SceneEvent;
 import events.TopViewEvent;
 
-import flash.events.TimerEvent;
 
-import flash.utils.Timer;
-
-import model.SaveGame;
 import model.Scenes;
 
 import starling.animation.Tween;
@@ -96,7 +90,6 @@ public class BeachScene extends Scenes
     {
         DebugTrace.msg("BeachScene.doTopViewDispatch removed:"+e.data.removed);
         var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
-        var savegame:SaveGame=FloxCommand.savegame;
         var _data:Object=new Object();
 
         switch(e.data.removed)
@@ -114,17 +107,6 @@ public class BeachScene extends Scenes
             case "ani_complete":
 
                 command.showCommandValues(this,"FreeRest");
-
-                var timer:Timer=new Timer(1500,1);
-                timer.addEventListener(TimerEvent.TIMER_COMPLETE, onTimeOut);
-                timer.start();
-
-            function onTimeOut(e:TimerEvent):void{
-                timer.stop();
-                timer.removeEventListener(TimerEvent.TIMER_COMPLETE, onTimeOut);
-                _data.name=DataContainer.currentScene;
-                command.sceneDispatch(SceneEvent.CHANGED,_data);
-            }
 
                 break
             case "ani_complete_clear_character":

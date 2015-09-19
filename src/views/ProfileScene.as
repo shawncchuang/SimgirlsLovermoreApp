@@ -397,7 +397,7 @@ public class ProfileScene extends Scenes
         assets.addChild(excerptbox);
         ViewsContainer.ExcerptBox=excerptbox;
         //var savedata:SaveGame=FloxCommand.savegame;
-        var chName:String
+        var chName:String;
         if(ch_index==-1)
         {
             //player cash
@@ -481,7 +481,7 @@ public class ProfileScene extends Scenes
         //if
 
         var skillPts:Object=flox.getSaveData("skillPts");
-        var spTxt:TextField=new TextField(70,24,String(skillPts[character]),font,20)
+        var spTxt:TextField=new TextField(70,24,String(skillPts[character]),font,20);
         spTxt.vAlign="center";
         spTxt.x=198;
         spTxt.y=62;
@@ -491,7 +491,7 @@ public class ProfileScene extends Scenes
         skillexcbox=new ExcerptBox();
         skillexcbox.x=-345;
         skillexcbox.y=113;
-        skills.addChild(skillexcbox)
+        skills.addChild(skillexcbox);
         ViewsContainer.SkillExcerptBox=skillexcbox;
     }
 
@@ -537,7 +537,12 @@ public class ProfileScene extends Scenes
 
 
         var params:Object=new Object();
-        params.pos=new Point(54,180);
+        var gender:String=flox.getSaveData("avatar").gender;
+        var _point:Point=new Point(54,180);
+        if(gender=="Female"){
+            _point=new Point(64,227);
+        }
+        params.pos=_point;
         params.clipRect=new Rectangle(0,-30,276,500);
         viewcom.fullSizeCharacter(basemodel,params);
 

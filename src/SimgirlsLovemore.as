@@ -215,7 +215,7 @@ import com.greensock.loading.LoaderMax;
 					break;
 				case "comcloud":
 					com_btn_txt=e.target.data;
-					comcloud=new CommandCloud(com_btn_txt)
+					comcloud=new CommandCloud(com_btn_txt);
 					topview.addChild(comcloud);
 					comcouldlist.push(comcloud);
 					/*comcloud=new ComCloud();

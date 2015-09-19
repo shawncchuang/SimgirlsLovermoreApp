@@ -124,7 +124,12 @@ import flash.geom.Point;
 
 
             var params:Object=new Object();
-            params.pos=new Point(54,180);
+			var gender:String=flox.getSaveData("avatar").gender;
+			var _point:Point=new Point(54,180);
+			if(gender=="Female"){
+				_point=new Point(64,227);
+			}
+            params.pos=_point;
             params.clipRect=new Rectangle(0,-30,276,500);
             viewcom.fullSizeCharacter(basemodel,params);
 

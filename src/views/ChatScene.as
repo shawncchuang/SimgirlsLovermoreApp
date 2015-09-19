@@ -6,9 +6,6 @@ import controller.FloxCommand;
 import controller.FloxInterface;
 import controller.MainCommand;
 import controller.MainInterface;
-
-import data.Config;
-
 import data.DataContainer;
 
 import events.SceneEvent;
@@ -16,21 +13,18 @@ import events.SceneEvent;
 import starling.animation.Transitions;
 import starling.animation.Tween;
 import starling.core.Starling;
-import starling.display.Button;
+
 import starling.display.Image;
-import starling.display.MovieClip;
-import starling.display.Quad;
+
 import starling.display.ScrollImage;
-import starling.display.Sprite;
+
 import starling.display.Sprite;
 import starling.events.Event;
-import starling.events.Touch;
-import starling.events.TouchEvent;
-import starling.events.TouchPhase;
+
 import starling.text.TextField;
 import starling.textures.Texture;
 import starling.textures.TextureSmoothing;
-import starling.utils.Color;
+
 
 import utils.DebugTrace;
 import utils.ViewsContainer;
@@ -45,14 +39,15 @@ public class ChatScene extends Sprite
     private var bottom:Number=100;
 
     private var speed:Number=20;
-    private var cancelbtn:Button;
+//    private var cancelbtn:Button;
     private var command:MainInterface=new MainCommand();
     private var relist:Array=new Array();
     private var flox:FloxInterface=new FloxCommand();
     private var chatbubbleTex:Texture;
     private var result:Number;
-    private var clickmouse:Sprite;
-    private var quad:Quad;
+//    private var clickmouse:Sprite;
+//    private var quad:Quad;
+    private var alert:Sprite;
     public function ChatScene()
     {
         initBingo();
@@ -519,40 +514,21 @@ public class ChatScene extends Sprite
         //cancel button
 
 
-        //added cancel button
-        //command.addedCancelButton(this,doCancelHandler);
-        var width:Number=Starling.current.stage.stageWidth;
-        var height:Number=Starling.current.stage.stageHeight;
-        quad= new Quad(width,height,Color.AQUA);
-        quad.alpha=0;
-        addChild(quad);
 
-        clickmouse=new ClickMouseIcon();
-        clickmouse.x=973;
-        clickmouse.y=704;
-        addChild(clickmouse);
-        this.addEventListener(TouchEvent.TOUCH,doCancelHandler);
-
+        alert = new AlertMessage("", doCancelHandler,"screen_type");
+        addChild(alert);
 
     }
-    private function doCancelHandler(e:TouchEvent):void
+    private function doCancelHandler():void
     {
 
-        var began:Touch=e.getTouch(this,TouchPhase.BEGAN);
-        if(began)
-        {
-            quad.removeFromParent(true);
-            clickmouse.removeFromParent(true);
-            this.removeEventListener(Event.TRIGGERED,doCancelHandler);
 
-            displayBingo(false,false,false);
-            Starling.juggler.removeTweens(bingo);
+        displayBingo(false,false,false);
+        Starling.juggler.removeTweens(bingo);
 
-            var _data:Object=new Object();
-            _data.name=DataContainer.currentLabel;
-            command.sceneDispatch(SceneEvent.CHANGED,_data);
-
-        }
+        var _data:Object=new Object();
+        _data.name=DataContainer.currentLabel;
+        command.sceneDispatch(SceneEvent.CHANGED,_data);
 
     }
     private function praseRelAndMood(attr:Object):Object
