@@ -411,8 +411,9 @@ public class SaveandLoadList extends Sprite
 
         }else{
             //load game
+            DataContainer.currentScene="MainScene";
             flox.loadBackupsavedEntities();
-            flox.syncBackupSaved(onSynsBackupSavedComplete);
+            //flox.syncBackupSaved(onSynsBackupSavedComplete);
 
         }
 

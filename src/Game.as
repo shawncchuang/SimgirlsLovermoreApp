@@ -191,8 +191,8 @@ package
 
 			var _data:Object=new Object();
 			var flox:FloxInterface=new FloxCommand();
-			var current_scene:String=flox.getSaveData("current_scene");
-
+			//var current_scene:String=flox.getSaveData("current_scene");
+			var current_scene:String=DataContainer.currentScene;
 			if(current_scene){
 				_data.name="MainScene";
 			}

@@ -476,6 +476,8 @@ public class AssetEmbeds
     [Embed(source="../../assets/images/items/house.jpg")]
     public static const House:Class;
 
+    [Embed(source="../../assets/images/blackmarket/bm_1.jpg")]
+    public static const TimeMachine:Class;
 
     [Embed(source="../../media/textures/icons/prevBtn.png")]
     public static const IconPrevBtn:Class;
@@ -524,6 +526,7 @@ public class AssetEmbeds
 
     [Embed(source="../../media/textures/icons/buy_button_down_skin.png")]
     public static const BuyButtonDown_Skin:Class;
+
 
     /*------------------icons-------------------------------------------------*/
 
@@ -996,6 +999,9 @@ public class AssetEmbeds
     [Embed(source="../../media/textures/panels/setting_panel.png")]
     public static const SettingPanel:Class;
 
+    [Embed(source="../../media/textures/panels/blackmarket_tab.png")]
+    public static const BlackMarketAssets:Class;
+
     //calendar
     [Embed(source="../../media/textures/panels/calendar_ym.xml", mimeType="application/octet-stream")]
     public static const CalendarYMXML:Class;
@@ -1052,6 +1058,9 @@ public class AssetEmbeds
 
     [Embed(source="../../media/textures/panels/photofield.png")]
     public static const PhotoField:Class;
+
+    [Embed(source="../../media/textures/panels/popupbg.png")]
+    public static const PopupBg:Class;
 
     /*-------------------panels-------------------------------------------------------------------*/
     [Embed(source = "../../media/textures/scenes/battle_scene.jpg")]

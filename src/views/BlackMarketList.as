@@ -1,6 +1,9 @@
 package views
 {
-	import flash.net.URLRequest;
+import data.DataContainer;
+
+import flash.geom.Rectangle;
+import flash.net.URLRequest;
 	import flash.net.navigateToURL;
 	
 	import controller.Assets;
@@ -13,8 +16,10 @@ package views
 	
 	import events.GameEvent;
 	import events.SceneEvent;
-	
-	import starling.display.Button;
+
+import flash.text.TextFieldAutoSize;
+
+import starling.display.Button;
 	import starling.display.Image;
 	import starling.display.MovieClip;
 	import starling.display.Sprite;
@@ -23,10 +28,12 @@ package views
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
 	import starling.text.TextField;
-	import starling.textures.Texture;
+
+import starling.textures.Texture;
 	
 	import utils.DebugTrace;
 	import utils.ViewsContainer;
+import com.gamua.flox.utils.SHA256;
 
 	public class BlackMarketList extends Sprite
 	{
@@ -35,6 +42,8 @@ package views
 		private var flox:FloxInterface=new FloxCommand();
 		private var excerptbox:Sprite;
 		private var command:MainInterface=new MainCommand();
+        private var coinTxt:TextField;
+        private var font:String="SimMyriadPro";
 		public function BlackMarketList()
 		{
 			ViewsContainer.blackmarketform=this;
@@ -42,7 +51,8 @@ package views
 			this.addEventListener("UPDAT_BLANCE",doUpdateBlance);
 			initCharacter();
 			initMarketList();
-			initCancelHandle()
+			initCancelHandle();
+            initCoin();
 		}
 		private function initCharacter():void
 		{
@@ -75,7 +85,7 @@ package views
 			buybtn.x=810;
 			buybtn.y=150;
 			addChild(buybtn);
-			buybtn.addEventListener(Event.TRIGGERED,doBuyNmow);
+			buybtn.addEventListener(Event.TRIGGERED,doBuyNow);
 			
 			excerptbox=new ExcerptBox();
 			excerptbox.x=100;
@@ -89,11 +99,14 @@ package views
 			
 			 
 		}
-		private function doBuyNmow(e:Event):void
+		private function doBuyNow(e:Event):void
 		{
-		  
-		
-			var  authKey:String=flox.getPlayerData("authId");
+
+            var email:String=flox.getPlayerData("email");
+            var pwd:String=flox.getPlayerData("password");
+            var permision:String=Config.permision;
+            var authKey:String=SHA256.hashString(String(email+permision+pwd));
+
 			var url:String=Config.payCoinURL+authKey;
 			DebugTrace.msg("BlackTileList onClickItemHandler url:"+url);
 			var req:URLRequest=new URLRequest(url);
@@ -118,9 +131,23 @@ package views
 			var _data:Object=new Object();
 			_data.coin=coin;
 			flox.savePlayer(_data);
-					
-			
+
+            coinTxt.text=String(coin);
 		}
+        private function initCoin():void{
+
+
+            var coin:Number=flox.getPlayerData("coin");
+            var format:Object=new Object();
+            format.font=font;
+            format.size=20;
+            format.color=0x000000;
+
+            coinTxt=addTextField(this,new Rectangle(117,62,158,25),format);
+            coinTxt.name="coin";
+            coinTxt.text=DataContainer.currencyFormat(coin);
+
+        }
 		private function initCancelHandle():void
 		{
 			//cancel button
@@ -135,10 +162,19 @@ package views
 			gameEvent._name="remove_blackmarket_form";
 			gameEvent.displayHandler();
 			
-			
-			var _data:Object=new Object();
-			_data.name="BlackMarketScene";
-			command.sceneDispatch(SceneEvent.CHANGED,_data)
+
 		}
+        private function addTextField(target:Sprite,rec:Rectangle,format:Object):TextField
+        {
+            var txt:TextField=new TextField(rec.width,rec.height,"",font,format.size,format.color);
+            txt.hAlign="left";
+            txt.vAlign="center";
+            txt.autoSize=TextFieldAutoSize.LEFT;
+            txt.x=rec.x;
+            txt.y=rec.y;
+            target.addChild(txt);
+
+            return txt
+        }
 	}
 }
