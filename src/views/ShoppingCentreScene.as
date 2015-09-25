@@ -9,8 +9,10 @@ package views
 	import controller.MainInterface;
 	import controller.SceneCommnad;
 	import controller.SceneInterface;
-	
-	import events.GameEvent;
+
+import data.DataContainer;
+
+import events.GameEvent;
 	import events.SceneEvent;
 	import events.TopViewEvent;
 
@@ -37,7 +39,8 @@ import model.SaveGame;
 		private var floxcom:FloxInterface=new FloxCommand();
 
 		private var shoppingform:ShoppingForm=null;
-	 
+
+
 		public function ShoppingCentreScene()
 		{
 			/*var pointbgTexture:Texture=Assets.getTexture("PointsBg");
@@ -64,6 +67,15 @@ import model.SaveGame;
         }
 		private function onCallback():void
 		{
+
+            var getfrom:String=DataContainer.shoppingFrom;
+            DebugTrace.msg("ShoppingCentreScene.onCallback getfrom:"+getfrom);
+           if(getfrom=="main"){
+               var _data:Object=new Object();
+               _data.removed="Buy";
+               this.dispatchEventWith(TopViewEvent.REMOVE,false,_data);
+           }
+
 			
 		}
 		private function onSceneTriggered(e:Event):void
@@ -79,11 +91,11 @@ import model.SaveGame;
 			
 			
 		}
-		private function doTopViewDispatch(e:TopViewEvent):void
+		private function doTopViewDispatch(e:Event):void
 		{
 			DebugTrace.msg("ShoppingCentreScene.doTopViewDispatch removed:"+e.data.removed);
 			var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
-			var savegame:SaveGame=FloxCommand.savegame;
+
 			var _data:Object=new Object();
 		
 			switch(e.data.removed)

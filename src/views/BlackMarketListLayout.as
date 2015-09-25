@@ -99,6 +99,7 @@ public class BlackMarketListLayout extends PanelScreen {
             var itemRender:Sprite = new Sprite();
             itemRender.name = item.id;
 
+
             var itemTt:Texture = Assets.getTexture(item.texture);
             var itemImg:Image = new Image(itemTt);
             var renderH:Number = itemImg.height;
@@ -184,12 +185,27 @@ public class BlackMarketListLayout extends PanelScreen {
 
         var target:Sprite=e.currentTarget as Sprite;
         var hover:Touch=e.getTouch(target,TouchPhase.HOVER);
+
         //var began:Touch=e.getTouch(target,TouchPhase.BEGAN);
+        var _data:Object=new Object();
+        var scene:Sprite=ViewsContainer.currentScene;
         if(hover)
         {
             item_id=target.name;
+            _data._visible=true;
+            _data.desc=marketlist[item_id].desc;
+            scene.dispatchEventWith("UPDATE_DESC",false,_data);
             //DebugTrace.msg( "ShoppingListLayout.onTouchedHoverItem current_item="+current_item);
+        }else{
+
+            _data._visible=false;
+            scene.dispatchEventWith("UPDATE_DESC",false,_data);
+
+
         }
+
+
+
 
     }
     private function addConfirmPoup(msg:String):void{
@@ -231,7 +247,7 @@ public class BlackMarketListLayout extends PanelScreen {
             _data.price=price;
 
             var scene:Sprite = ViewsContainer.currentScene;
-            scene.dispatchEventWith("UPDAT_BLANCE_BLACKMARKET",false,_data);
+            scene.dispatchEventWith("UPDATE_BLANCE_BLACKMARKET",false,_data);
 
         }
 
@@ -249,6 +265,8 @@ public class BlackMarketListLayout extends PanelScreen {
         textRenderer.embedFonts = true;
         return textRenderer;
     }
+
+
 
 
 }

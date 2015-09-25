@@ -50,6 +50,8 @@ public class BlackMarketScene extends Scenes
 	private var panellist:Image;
 	private var coinTxt:TextField;
 	private var font:String="SimMyriadPro";
+	private var desc:Sprite;
+	private var descTxt:TextField;
 	public function BlackMarketScene()
 	{
 		/*var pointbgTexture:Texture=Assets.getTexture("PointsBg");
@@ -70,8 +72,8 @@ public class BlackMarketScene extends Scenes
 		scencom.start();
 		scencom.disableAll();
 
-		this.addEventListener("UPDAT_BLANCE_BLACKMARKET",doUpdateBlance);
-
+		this.addEventListener("UPDATE_BLANCE_BLACKMARKET",doUpdateBlance);
+		this.addEventListener("UPDATE_DESC",doUpdateDESC);
 
 	}
 	private function doUpdateBlance(e:Event):void
@@ -167,7 +169,7 @@ public class BlackMarketScene extends Scenes
 
 	}
 
-	private function doTopViewDispatch(e:TopViewEvent):void
+	private function doTopViewDispatch(e:Event):void
 	{
 		DebugTrace.msg("BlackStoreScene.doTopViewDispatch removed:"+e.data.removed);
 		var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
@@ -206,6 +208,8 @@ public class BlackMarketScene extends Scenes
 		initPanel();
 		initCoin();
 		initGetMoreUSDIcon();
+		initDesc();
+
 
 		var marketlayout:BlackMarketListLayout=new BlackMarketListLayout();
 		marketlayout.x=390;
@@ -224,13 +228,42 @@ public class BlackMarketScene extends Scenes
 		command.sceneDispatch(SceneEvent.CHANGED,_data);
 
 	}
-	private function onClearComplete():void
-	{
-		Starling.juggler.removeTweens(this);
-		var _data:Object=new Object();
-		_data.name= "MainScene";
-		command.sceneDispatch(SceneEvent.CHANGED,_data);
+
+
+	private function initDesc():void{
+
+		desc=new Sprite();
+		desc.x=24;
+		desc.y=275;
+		var bgTexture:Texture=Assets.getTexture("ExcerptBox");
+		var bg:Image=new Image(bgTexture);
+
+		descTxt=new TextField(270,255,"",font,20,0xFFFFFF,false);
+		descTxt.x=15;
+		descTxt.y=24;
+		descTxt.hAlign="left";
+		desc.addChild(bg);
+		desc.addChild(descTxt);
+		desc.visible=false;
+
+		addChild(desc);
+
 	}
+	private function doUpdateDESC(e:Event):void{
+
+		if(e.data._visible){
+			desc.visible=true;
+			descTxt.text=e.data.desc;
+
+		}else{
+			desc.visible=false;
+			descTxt.text="";
+
+		}
+
+
+	}
+
 	private function addTextField(target:Sprite,rec:Rectangle,format:Object):TextField
 	{
 

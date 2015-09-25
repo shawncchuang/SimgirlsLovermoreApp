@@ -318,6 +318,11 @@ public class Scenes extends Sprite
                 current_scence=new LovemoreMansionScene();
                 break
             case "ShoppingCentreScene":
+                DataContainer.shoppingFrom="main";
+                current_scence=new ShoppingCentreScene();
+                break
+            case "ShoppingCentreScene_fromlist":
+                DataContainer.shoppingFrom="list";
                 current_scence=new ShoppingCentreScene();
                 break
             case "CinemaScene":

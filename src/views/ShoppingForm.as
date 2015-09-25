@@ -105,7 +105,7 @@ public class ShoppingForm extends Sprite{
         shoppinglist.removeFromParent();
 
         var _data:Object=new Object();
-        _data.name= "ShoppingCentreScene";
+        _data.name= "ShoppingCentreScene_fromlist";
         command.sceneDispatch(SceneEvent.CHANGED,_data);
 
 

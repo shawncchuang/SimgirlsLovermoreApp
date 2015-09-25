@@ -36,7 +36,7 @@ import com.greensock.loading.LoaderMax;
 	import utils.ViewsContainer;
 
 	import views.BattleScene;
-	import views.BlackTileList;
+
 	import views.CommandCloud;
 	import views.GameStartPanel;
 	import views.LoginPanel;
@@ -294,8 +294,8 @@ import com.greensock.loading.LoaderMax;
 					topview.removeChild(battlescene);
 					break;
 				case  "blackmarket_form":
-					blackmarketform=new BlackTileList();
-					topview.addChild(blackmarketform);
+					//blackmarketform=new BlackTileList();
+					//topview.addChild(blackmarketform);
 					break;
 				case "remove_blackmarket_form":
 					topview.removeChild(blackmarketform);
