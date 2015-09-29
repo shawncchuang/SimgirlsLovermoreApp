@@ -53,7 +53,7 @@ public class CommandCloud extends MovieClip
 
     public function CommandCloud(src:String):void{
         //L1_^Departures
-        var p:String=src.split("_")[0]
+        var p:String=src.split("_")[0];
         _label=src.split("_")[1];
         //DebugTrace.msg("CommandCloud.addDisplayObj _label:"+_label);
 

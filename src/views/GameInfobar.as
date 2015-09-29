@@ -602,7 +602,6 @@ public class GameInfobar extends Sprite
         }
         //if
 
-
         if(e.data.enabled && attr!="Leave")
         {
 

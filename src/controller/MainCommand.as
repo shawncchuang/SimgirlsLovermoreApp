@@ -76,12 +76,6 @@ import views.Reward;
 public class MainCommand implements MainInterface {
 
 
-    private var Days:Array = new Array("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat");
-    private var Months:Object = {
-        "Jan": 31, "Feb": 28, "Mar": 31, "Apr": 30, "May": 31, "Jun": 30,
-        "Jul": 31, "Aug": 31, "Sep": 30, "Oct": 31, "Nov": 30, "Dec": 31
-    }
-    private var Manthslist:Array = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 
     private var item:flash.display.MovieClip;
@@ -533,9 +527,10 @@ public class MainCommand implements MainInterface {
     public function dateManager(type:String):void {
         //start Tur.1.Mar.2033|12
         DebugTrace.msg("MainCommand.dateManager  type:" + type);
+        var Days:Array=Config.Days;
+        var Monthslist:Array=Config.Monthslist;
+        var Months:Object=Config.Months;
 
-
-        //var savegame:SaveGame = FloxCommand.savegame;
         var flox:FloxInterface=new FloxCommand();
         var dateStr:String = flox.getSaveData("date");
         var dayStr:String = dateStr.split("|")[0];
@@ -589,7 +584,7 @@ public class MainCommand implements MainInterface {
         }
         //switch
         DebugTrace.msg("MainCommand.dateManager  _data_index:" + _data_index);
-        var month_index:uint = Manthslist.indexOf(_month);
+        var month_index:uint = Monthslist.indexOf(_month);
         if (_data_index >= Days.length) {
             _data_index -= Days.length;
         }
@@ -597,13 +592,13 @@ public class MainCommand implements MainInterface {
             _date = 1;
 
             month_index++;
-            if (month_index > Manthslist.length - 1) {
+            if (month_index > Monthslist.length - 1) {
                 //Cross Year
                 month_index = 0;
                 _year++;
             }
             //if
-            _month = Manthslist[month_index];
+            _month = Monthslist[month_index];
         }
         //if
         var dateIndex:Object = {"date": _date - 1, "month": month_index};
@@ -658,13 +653,13 @@ public class MainCommand implements MainInterface {
         if (!pay && _type != "Rest" && _type != "Stay") {
             //didn't pay this game
             var deadline:Number = Config.deadline;
-            for (var k:uint = Manthslist.indexOf(_de_month); k < Manthslist.length; k++) {
-                var monthdays:Number = Months[Manthslist[k]];
+            for (var k:uint = Monthslist.indexOf(_de_month); k < Monthslist.length; k++) {
+                var monthdays:Number = Months[Monthslist[k]];
                 //DebugTrace.msg("MainCommand.dateManager monthdays:"+monthdays);
                 if (deadline > monthdays) {
                     deadline -= monthdays;
                     //DebugTrace.msg("MainCommand.dateManager pay_day:"+pay_day);
-                    var end_month:String = Manthslist[k];
+                    var end_month:String = Monthslist[k];
                     var end_date:Number = deadline;
                 }
                 else {
@@ -677,7 +672,7 @@ public class MainCommand implements MainInterface {
             //for
             DebugTrace.msg("MainCommand.dateManager  end_month:" + end_month + "; end_day:" + end_date);
             DebugTrace.msg("MainCommand.dateManager  _type:" + _type);
-            if (Manthslist.indexOf(_month) >= Manthslist.indexOf(end_month) && _date >= end_date) {
+            if (Monthslist.indexOf(_month) >= Monthslist.indexOf(end_month) && _date >= end_date) {
                 //deadline
                 DataContainer.deadline = true;
                 var mainstage:Sprite = ViewsContainer.MainStage;
@@ -1213,6 +1208,9 @@ public class MainCommand implements MainInterface {
         rewards.image = reward_img;
         rewards.cash = cash_pay;
 
+        cash += cash_pay;
+        flox.save("cash", cash);
+
 
         var gameinfo:Sprite = ViewsContainer.gameinfo;
         gameinfo.dispatchEventWith("UPDATE_INFO", false);
@@ -1681,6 +1679,7 @@ public class MainCommand implements MainInterface {
             com = current_scene + com;
         }
 
+
         if (com == "Meditate") {
 
             var seMax:Number = flox.getSaveData("love").player;
@@ -1757,6 +1756,7 @@ public class MainCommand implements MainInterface {
 
             var cash:Number = flox.getSaveData("cash");
             var cash_pay:Number = sysCommand[com].values.cash;
+
             cash += cash_pay;
             if (cash >= 0) {
 
@@ -2094,7 +2094,6 @@ public class MainCommand implements MainInterface {
 
 
         Starling.current.stage.removeEventListener(KeyboardEvent.KEY_UP, doShortcuts);
-
 
     }
 

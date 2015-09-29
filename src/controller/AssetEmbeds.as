@@ -528,6 +528,15 @@ public class AssetEmbeds
     public static const BuyButtonDown_Skin:Class;
 
 
+    [Embed(source="../../media/textures/icons/use_button_de_skin.png")]
+    public static const UseButtonDe_Skin:Class;
+
+    [Embed(source="../../media/textures/icons/use_button_down_skin.png")]
+    public static const UseButtonDown_Skin:Class;
+
+
+    [Embed(source="../../media/textures/icons/pickerlist_time_bg.png")]
+    public static const PickList_Time_BG_Skin:Class;
     /*------------------icons-------------------------------------------------*/
 
 
@@ -1001,6 +1010,10 @@ public class AssetEmbeds
 
     [Embed(source="../../media/textures/panels/blackmarket_tab.png")]
     public static const BlackMarketAssets:Class;
+
+    //blackmarket_tab
+    [Embed(source="../../media/textures/panels/blackmarket_use_tab.png")]
+    public static const BlackMarketUseAssets:Class;
 
     //calendar
     [Embed(source="../../media/textures/panels/calendar_ym.xml", mimeType="application/octet-stream")]

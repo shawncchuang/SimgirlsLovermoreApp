@@ -28,6 +28,14 @@ public class Config
     //schedule [index+ current month]
     public static var scheduleIndex:Object={"lenus":88,"sirena":12,"dea":25,"sao":38,"klr":51,"tomoru":64,"ceil":77,"zack":38};
 
+     public static var Days:Array = new Array("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat");
+    public static var Months:Object = {
+        "Jan": 31, "Feb": 28, "Mar": 31, "Apr": 30, "May": 31, "Jun": 30,
+        "Jul": 31, "Aug": 31, "Sep": 30, "Oct": 31, "Nov": 30, "Dec": 31
+    }
+    public static var Monthslist:Array = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    public static var PickerMonthslist:Array = ["Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
     //battle schedule 2033 Tuesday
 
     public static var team_schedule:Array=[

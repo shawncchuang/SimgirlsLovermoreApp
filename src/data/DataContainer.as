@@ -47,8 +47,8 @@ public class DataContainer
     private static var assets_id:Array;
 
     private static var shortcuts_scene:String;
-
     private static var shopping_from:String;
+
 
     public static function set AssetsId(ids:Array):void
     {
@@ -787,5 +787,7 @@ public class DataContainer
     public static function get shoppingFrom():String{
         return shopping_from;
     }
+
+
 }
 }

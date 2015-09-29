@@ -41,6 +41,7 @@ import utils.ViewsContainer;
 
 public class BlackMarketScene extends Scenes
 {
+	private var marketlayout:BlackMarketListLayout;
 	private var speaker_sprite:Sprite;
 	private var command:MainInterface=new MainCommand();
 	private var button:Button;
@@ -52,6 +53,12 @@ public class BlackMarketScene extends Scenes
 	private var font:String="SimMyriadPro";
 	private var desc:Sprite;
 	private var descTxt:TextField;
+
+	private var type:String="";
+
+	//BlackMarketUseAssets , BlackMarketAssets
+	private var PANEL_TEXTURE_BG:String="";
+
 	public function BlackMarketScene()
 	{
 		/*var pointbgTexture:Texture=Assets.getTexture("PointsBg");
@@ -68,28 +75,59 @@ public class BlackMarketScene extends Scenes
 	private function init():void
 	{
 
+
 		scencom.init("BlackStoreScene",speaker_sprite,58,onCallback);
 		scencom.start();
 		scencom.disableAll();
 
-		this.addEventListener("UPDATE_BLANCE_BLACKMARKET",doUpdateBlance);
+
 		this.addEventListener("UPDATE_DESC",doUpdateDESC);
+		this.addEventListener("BUY_BLACKMARKET_ITEM",doBuyItem);
+		this.addEventListener("CONSUME_BLACKMARKET_ITEM",doConsumeItem);
 
 	}
-	private function doUpdateBlance(e:Event):void
-	{
 
-		DebugTrace.msg("BlackMarketScene.doUpdateBlance");
+	private function doBuyItem(e:Event):void{
 
+		var id:String=e.data.item_id;
 		var price:Number=e.data.price;
 		var coin:Number=flox.getPlayerData("coin");
 		coin=Number((coin-price).toFixed(2));
 
+
+		var items:Object=flox.getPlayerData("items");
+		if(!items){
+			items=new Object();
+		}
+		var blackmarket:Object=flox.getSyetemData("blackmarket");
+		var itemData:Object=blackmarket[id];
+		items[id]=itemData;
+
 		var _data:Object=new Object();
 		_data.coin=coin;
+		_data.items=items;
 		flox.savePlayer(_data);
 
 		coinTxt.text=String(coin);
+	}
+	private function doConsumeItem(e:Event):void{
+
+		var id:String=e.data.item_id;
+		var items:Object=flox.getPlayerData("items");
+		var currentItems:Object=new Object();
+
+		for(var item_id:String in items){
+
+			if(item_id!=id){
+				currentItems[id]=items[id];
+			}
+		}
+
+		var _data:Object=new Object();
+		_data.items=currentItems;
+		flox.savePlayer(_data);
+
+
 	}
 	private function initCharacter():void
 	{
@@ -109,7 +147,7 @@ public class BlackMarketScene extends Scenes
 
 
 
-		panellist=new Image(Assets.getTexture("BlackMarketAssets"));
+		panellist=new Image(Assets.getTexture(PANEL_TEXTURE_BG));
 		panelbase.addChild(panellist);
 
 
@@ -129,7 +167,7 @@ public class BlackMarketScene extends Scenes
 		format.size=20;
 		format.color=0x000000;
 
-		coinTxt=addTextField(this,new Rectangle(485,187,158,25),format);
+		coinTxt=addTextField(this,new Rectangle(435,187,158,25),format);
 		coinTxt.name="coin";
 		coinTxt.text=DataContainer.currencyFormat(coin);
 
@@ -185,8 +223,8 @@ public class BlackMarketScene extends Scenes
 				command.sceneDispatch(SceneEvent.CHANGED,_data);
 				break
 			case "Buy":
-
-
+			case "Use":
+				type=e.data.removed;
 				gameEvent._name="clear_comcloud";
 				gameEvent.displayHandler();
 				flox.refreshPlayer(onRefreshComplete);
@@ -201,17 +239,27 @@ public class BlackMarketScene extends Scenes
 	private function onRefreshComplete():void
 	{
 
-		//var marklist:BlackMarketList=new BlackMarketList();
-		//addChild(marklist);
+		switch(type){
 
-		initCharacter();
-		initPanel();
-		initCoin();
-		initGetMoreUSDIcon();
+			case "Buy":
+				PANEL_TEXTURE_BG="BlackMarketAssets";
+				initCharacter();
+				initPanel();
+				initCoin();
+				initGetMoreUSDIcon();
+				break
+			case "Use":
+				PANEL_TEXTURE_BG="BlackMarketUseAssets";
+				initPanel();
+				break
+
+		}
+
 		initDesc();
 
 
 		var marketlayout:BlackMarketListLayout=new BlackMarketListLayout();
+		marketlayout.type=type;
 		marketlayout.x=390;
 		marketlayout.y=250;
 		addChild(marketlayout);
@@ -269,7 +317,6 @@ public class BlackMarketScene extends Scenes
 
 		var txt:TextField=new TextField(rec.width,rec.height,"",font,format.size,format.color);
 		txt.hAlign="left";
-		txt.vAlign="center";
 		txt.autoSize=TextFieldAutoSize.LEFT;
 		txt.x=rec.x;
 		txt.y=rec.y;

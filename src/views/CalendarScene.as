@@ -49,17 +49,6 @@ public class CalendarScene extends Sprite {
         addChild(base_sprite);
         base_sprite.flatten();
 
-        initializeHandler();
-        initializeLayout();
-        initializeMonthBtns();
-    }
-    private function initializeHandler():void{
-
-
-        scencom.init("CalendarScene",base_sprite,20);
-//        scencom.start();
-//        scencom.disableAll();
-
 
 
         var dateData:String=flox.getSaveData("date");
@@ -68,6 +57,19 @@ public class CalendarScene extends Sprite {
         current_month=_date.split(".")[2];
         current_date=_date.split(".")[1];
         current_day=_date.split(".")[0];
+
+        initializeHandler();
+        initializeLayout();
+        initializeMonthBtns();
+
+        updateCalendar();
+    }
+    private function initializeHandler():void{
+
+
+        scencom.init("CalendarScene",base_sprite,20);
+
+
     }
     private function initializeLayout():void{
 
