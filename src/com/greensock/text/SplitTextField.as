@@ -139,7 +139,7 @@ TweenMax.allFrom(stf3.textFields, 1, {x:"200", autoAlpha:0, onComplete:stf3.deac
 		 * @param offset Determines the offset x/y of the new TextFields. By default, the TextFields will be positioned in the container as though the container's registration point was aligned perfectly with the source TextField's. The source TextField's scale, rotation, and x/y coordinates will have no effect whatsoever. 
 		 * @return Array of TextFields resulting from the split.
 		 */
-		public static function split(source:TextField, spitType:String="characters", container:DisplayObjectContainer=null, offset:Point=null):Array {
+		public static function split(source:TextField, spitType:String="characters", container:*=null, offset:Point=null):Array {
 			if (container == null) {
 				container = source.parent;
 			}
