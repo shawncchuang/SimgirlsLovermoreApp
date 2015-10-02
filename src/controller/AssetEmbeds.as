@@ -478,6 +478,19 @@ public class AssetEmbeds
 
     [Embed(source="../../assets/images/blackmarket/bm_1.jpg")]
     public static const TimeMachine:Class;
+    [Embed(source="../../assets/images/blackmarket/bm_1.jpg")]
+    public static const SkillPointPlus:Class;
+    [Embed(source="../../assets/images/blackmarket/bm_1.jpg")]
+    public static const HornorPlus:Class;
+    [Embed(source="../../assets/images/blackmarket/bm_1.jpg")]
+    public static const LovePlus:Class;
+    [Embed(source="../../assets/images/blackmarket/bm_1.jpg")]
+    public static const IntelligencePlus:Class;
+    [Embed(source="../../assets/images/blackmarket/bm_1.jpg")]
+    public static const ImagesPlus:Class;
+    [Embed(source="../../assets/images/blackmarket/bm_1.jpg")]
+    public static const SHDPlus:Class;
+
 
     [Embed(source="../../media/textures/icons/prevBtn.png")]
     public static const IconPrevBtn:Class;
@@ -537,6 +550,7 @@ public class AssetEmbeds
 
     [Embed(source="../../media/textures/icons/pickerlist_time_bg.png")]
     public static const PickList_Time_BG_Skin:Class;
+
     /*------------------icons-------------------------------------------------*/
 
 

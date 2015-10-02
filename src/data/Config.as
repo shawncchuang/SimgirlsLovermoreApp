@@ -8,7 +8,7 @@ public class Config
 {
     public static var permision:String="black!@spears#$";
     public static var deadline:Number=20;
-    public static var payCoinURL:String="http://localhost:8888/simgilrs/payment/index.php?cate=coin&authkey=";
+    public static var payCoinURL:String="http://localhost:8888/simgilrs/dgpayment/index.php?cate=coin&authkey=";
     public static var payGameURL:String="http://localhost:8888/simgilrs/payment/index.php?cate=game&authkey=";
     private static var points:Object=new Object();
     private static var playerInfo:Object=new Object();

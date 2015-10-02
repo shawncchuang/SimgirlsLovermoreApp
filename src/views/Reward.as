@@ -36,7 +36,9 @@ public class Reward extends Sprite{
         "cash":"Cashsign",
         "image":"Appearance",
         "int":"Intelligence",
-        "love":"HeartLv1"
+        "love":"HeartLv1",
+        "skillPts":"SkillPtsIcon",
+        "honor":"Honor"
     }
 
     public function Reward() {
@@ -70,16 +72,15 @@ public class Reward extends Sprite{
         addChild(reward);
 
 
-
         fliter.setSource(reward);
         fliter.setShadow();
 
 
-        var tween:Tween=new Tween(reward,2,Transitions.EASE_OUT_BACK);
+        var tween:Tween=new Tween(reward,1,Transitions.EASE_OUT_BACK);
         tween.delay=index*0.4;
         tween.animate("y",reward.y-50);
-
-        //tween.scaleTo(1.5);
+        tween.animate("scaleX",1.2);
+        tween.animate("scaleY",1.2);
         tween.onComplete=onRewardFadeOut;
         Starling.juggler.add(tween);
 

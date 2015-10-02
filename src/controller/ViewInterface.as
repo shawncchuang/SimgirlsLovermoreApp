@@ -6,8 +6,9 @@ import starling.display.Sprite;
 
 public interface ViewInterface {
 
+
     function fullSizeCharacter(target:Sprite,params:Object=null):void
-    function characterIcons(target:Sprite):void
+    function characterIcons(target:Sprite,cate:String=null):void
     function skillIcons(target:Sprite):void
     function replaceCharacter(model:Sprite):void
 

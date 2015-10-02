@@ -595,8 +595,16 @@ public class ChangeFormationScene extends Scenes
     {
 
 
-        command.addedConfirmButton(this,doFinished)
+        command.addedConfirmButton(this,doFinished);
         //command.addedCancelButton(this,doFinished);
+
+        var battle_type:String=DataContainer.battleType;
+        if(battle_type=="random_battle"){
+            var templete:MenuTemplate=new MenuTemplate();
+            templete.addBackStepButton(doCannelHandler);
+            addChild(templete);
+        }
+
 
     }
     private function doFinished(e:TouchEvent):void
@@ -658,6 +666,14 @@ public class ChangeFormationScene extends Scenes
     private function onCallback():void
     {
         scencom.disableAll();
+    }
+    private function doCannelHandler():void{
+
+        var current_label:String= DataContainer.currentLabel;
+        var _data:Object=new Object();
+        _data.name= current_label;
+        command.sceneDispatch(SceneEvent.CHANGED,_data);
+
     }
 }
 }

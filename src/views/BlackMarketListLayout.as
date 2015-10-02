@@ -5,44 +5,23 @@ package views {
 import controller.Assets;
 import controller.FloxCommand;
 import controller.FloxInterface;
-import controller.MainCommand;
-import controller.MainInterface;
-
-import data.Config;
-
-import events.GameEvent;
-import events.SceneEvent;
-
-import feathers.controls.Alert;
 
 import feathers.controls.Button;
-import feathers.controls.NumericStepper;
 
 import feathers.controls.PanelScreen;
-import feathers.controls.PickerList;
 import feathers.controls.ScrollContainer;
-import feathers.controls.popups.DropDownPopUpContentManager;
-import feathers.controls.popups.VerticalCenteredPopUpContentManager;
-import feathers.controls.renderers.DefaultListItemRenderer;
-import feathers.controls.renderers.IListItemRenderer;
 import feathers.controls.text.TextFieldTextRenderer;
 import feathers.core.ITextRenderer;
 import feathers.core.PopUpManager;
-import feathers.data.ListCollection;
-import feathers.display.Scale9Image;
 import feathers.events.FeathersEventType;
 import feathers.layout.TiledRowsLayout;
 import feathers.layout.VerticalLayout;
-import feathers.textures.Scale9Textures;
 
-import flash.geom.Point;
 
 import flash.text.TextFormat;
 
 import starling.display.Image;
 import starling.display.Quad;
-import starling.display.Sprite;
-
 import starling.display.Sprite;
 
 import starling.events.Event;
@@ -53,9 +32,6 @@ import starling.text.TextField;
 import starling.textures.Texture;
 
 import utils.DebugTrace;
-
-import utils.DebugTrace;
-
 import utils.ViewsContainer;
 
 public class BlackMarketListLayout extends PanelScreen {
@@ -64,7 +40,7 @@ public class BlackMarketListLayout extends PanelScreen {
     private var itemlist:Array;
     private var marketlist:Object;
     private var item_id:String;
-    private var font:String="SimMyriadPro";
+    public static var font:String="SimMyriadPro";
     private var price:Number;
 
     public var type:String;
@@ -72,7 +48,9 @@ public class BlackMarketListLayout extends PanelScreen {
     private var BUTTON_MOUSEUP_TEXTURE:String="";
     private var BUTTON_MOUSEDOWN_TEXTURE:String="";
 
-    private var popup:Sprite;
+    private var popup:Sprite=null;
+    private var popupTM:TimeMachinePopup=null;
+    private var popupPlus:BlackMarketPlusPopup=null;
 
     public function BlackMarketListLayout() {
 
@@ -223,7 +201,7 @@ public class BlackMarketListLayout extends PanelScreen {
         else
         {
 
-            msg = "Not enough Coin.";
+            msg = "Not enough USD.";
             var scene:Sprite = ViewsContainer.MainScene;
             var alertMsg:AlertMessage=new AlertMessage(msg);
             scene.addChild(alertMsg);
@@ -233,11 +211,28 @@ public class BlackMarketListLayout extends PanelScreen {
     }
     private function onTapUseHandler(e:Event):void{
     //tap use
+
         switch(item_id){
             case "bm_1":
                 //TimeMachine
-                var msg:String="";
-                addUseTimeMachinePoup(msg);
+
+                popupTM=new TimeMachinePopup();
+                popupTM.item_id=item_id;
+                popupTM.msg="TimeMachine";
+                popupTM.init();
+
+                break
+            case "bm_2":
+            case "bm_3":
+            case "bm_4":
+            case "bm_5":
+            case "bm_6":
+            case "bm_7":
+                popupPlus=new BlackMarketPlusPopup();
+                popupPlus.item_id=item_id;
+                popupPlus.msg="Increase ";
+                popupPlus.init();
+
                 break
 
         }
@@ -346,198 +341,9 @@ public class BlackMarketListLayout extends PanelScreen {
 
     }
 
-    private var monthStr:String="Mar";
-    private var month:Number=0;
-    private var dateStr:String="1";
-    private var date:Number=1;
-    private var yearStr:String="2033";
-    private var monthPicker:PickerList;
-    private var datePicker:PickerList;
-    private function addUseTimeMachinePoup(msg:String):void{
-
-        var bgTexture:Texture=Assets.getTexture("PopupBg");
-        popup=new Sprite();
-        var bg:Image=new Image(bgTexture);
-
-        var msgTxt:TextField=new TextField(370,80,msg,font,16,0,false);
-        msgTxt.x=15;
-        msgTxt.y=30;
 
 
-        var monthslist:Array=Config.PickerMonthslist;
-        var listdata:Array=new Array();
-        for(var i:uint=0;i<monthslist.length;i++){
-
-            var collection:Object=new Object();
-
-            collection["text"]=monthslist[i];
-            listdata.push(collection);
-        }
-        monthPicker=addPickList("Month",new Point(65,110),listdata);
-        monthPicker.addEventListener(Event.CHANGE, onMonthListChangedHandler);
-
-        praseDataPakerList("add");
-
-
-        var yearlist:Array=new Array("2033","2034");
-        listdata=new Array();
-        for(var i:uint=0;i<yearlist.length;i++){
-
-            var collection:Object=new Object();
-
-            collection["text"]=yearlist[i];
-            listdata.push(collection);
-        }
-        var yearPicker:PickerList=addPickList("Year",new Point(270,110),listdata);
-        yearPicker.addEventListener(Event.CHANGE, onYearListChangedHandler);
-
-
-        var okBtn:Button=new Button();
-        okBtn.label="OK";
-        okBtn.x=90;
-        okBtn.y=145;
-        okBtn.setSize(80,40);
-        okBtn.labelFactory =  getItTextRender;
-        okBtn.addEventListener(Event.TRIGGERED, useTimeMachindHandler);
-
-        var cancelBtn:Button=new Button();
-        cancelBtn.label="Cancel";
-        cancelBtn.x=220;
-        cancelBtn.y=145;
-        cancelBtn.setSize(80,40);
-        cancelBtn.labelFactory =  getItTextRender;
-        cancelBtn.addEventListener(Event.TRIGGERED, cancelButton_triggeredHandler);
-
-
-        popup.addChild(bg);
-        popup.addChild(msgTxt);
-        popup.addChild(monthPicker);
-        popup.addChild(datePicker);
-        popup.addChild(yearPicker);
-        popup.addChild(okBtn);
-        popup.addChild(cancelBtn);
-        PopUpManager.addPopUp( popup, true, true );
-
-    }
-    private function onMonthListChangedHandler(e:Event):void{
-
-        var list:PickerList = PickerList( e.currentTarget );
-        var item:Object = list.selectedItem;
-        var index:int = list.selectedIndex;
-        DebugTrace.msg("BlackMarketListLayout.onMonthListChangedHandler  item.text="+item.text+" ; index="+index);
-        monthStr=item.text;
-        month=index;
-        praseDataPakerList("update");
-
-    }
-
-    private function praseDataPakerList(type:String):void{
-
-
-        var dateMax:Object=Config.Months;
-        var listdata:Array=new Array();
-
-        for(var i:uint=0;i<dateMax[monthStr];i++){
-
-            var collection:Object=new Object();
-
-            collection["text"]=i+1;
-            listdata.push(collection);
-        }
-        if(type=="add"){
-
-
-            datePicker=addPickList("Date",new Point(165,110),listdata);
-            datePicker.addEventListener(Event.CHANGE, onDateListChangedHandler);
-
-        }else{
-            //update
-            var listcollection:ListCollection = new ListCollection(listdata);
-            datePicker.dataProvider = listcollection;
-
-        }
-
-
-    }
-    private function onDateListChangedHandler(e:Event):void{
-        var list:PickerList = PickerList( e.currentTarget );
-        var item:Object = list.selectedItem;
-        var index:int = list.selectedIndex;
-        dateStr=item.text;
-        date=index;
-
-    }
-
-    private function onYearListChangedHandler(e:Event):void{
-
-        var list:PickerList = PickerList( e.currentTarget );
-        var item:Object = list.selectedItem;
-        //var index:int = list.selectedIndex;
-        yearStr=item.text;
-        updateMonthList();
-
-
-
-    }
-    private function updateMonthList():void{
-
-        var monthslist:Array=Config.PickerMonthslist;
-        var listdata:Array=new Array();
-
-
-        if(yearStr=="2034"){
-            monthslist=["Jan","Feb"];
-        }
-        for(var i:uint=0;i<monthslist.length;i++){
-
-            var collection:Object=new Object();
-
-            collection["text"]=monthslist[i];
-            listdata.push(collection);
-        }
-
-        var listcollection:ListCollection = new ListCollection(listdata);
-        monthPicker.dataProvider = listcollection;
-
-    }
-
-    private function useTimeMachindHandler(e:Event):void{
-
-        PopUpManager.removePopUp(popup,true);
-
-        var date:Date=new Date(Number(yearStr),month,date);
-        var daylist:Array=Config.Days;
-        var dayStr:String=daylist[date.day];
-        //Tue.1.Mar.2033|24
-        DebugTrace.msg(dayStr+"."+dateStr+"."+monthStr+"."+yearStr);
-        var pickerDate:String=dayStr+"."+dateStr+"."+monthStr+"."+yearStr+"|12";
-        flox.save("date",pickerDate,onTimeTravel);
-
-        function onTimeTravel():void{
-
-            var _data:Object=new Object();
-            _data.item_id=item_id;
-            var scene:Sprite=ViewsContainer.currentScene;
-            scene.dispatchEventWith("CONSUME_BLACKMARKET_ITEM",false,_data);
-
-
-            var command:MainInterface=new MainCommand();
-            command.updateInfo();
-
-            var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
-            gameEvent._name="clear_comcloud";
-            gameEvent.displayHandler();
-
-            var _data:Object=new Object();
-            _data.name= "MainScene";
-            command.sceneDispatch(SceneEvent.CHANGED,_data);
-        }
-    }
-
-
-
-
-    private function getItTextRender():ITextRenderer{
+        private function getItTextRender():ITextRenderer{
         var textRenderer:TextFieldTextRenderer = new TextFieldTextRenderer();
         textRenderer.textFormat = new TextFormat( font, 16, 0x000000 );
         textRenderer.embedFonts = true;
@@ -550,71 +356,33 @@ public class BlackMarketListLayout extends PanelScreen {
         return textRenderer;
 
     }
-
-    private function addPickList(name:String,point:Point,data:Array):PickerList{
-
-        var list:PickerList = new PickerList();
-        list.x=point.x;
-        list.y=point.y;
-        list.width=70;
-        list.height=30;
-        var listcollection:ListCollection = new ListCollection(data);
-        list.dataProvider = listcollection;
-
-        //list.listProperties.backgroundSkin = new Quad( 10, 10, 0xFFFFFF );
-        list.listProperties.itemRendererFactory = function():IListItemRenderer {
-
-            var renderer:DefaultListItemRenderer = new DefaultListItemRenderer();
-            renderer.labelField = "text";
-            renderer.setSize(68,30);
-            renderer.defaultSkin=new Quad( 68, 30, 0xFFFFFF );
-            renderer.hoverSkin=new Quad( 68, 30, 0xD8D8D8 );
-            renderer.labelFactory=getPickListTsxtRender;
-            return renderer;
-        };
-        list.labelField = "text";
-        var defaultBg:Texture=Assets.getTexture("PickList_Time_BG_Skin");
-        list.buttonProperties.defaultSkin = new Image( defaultBg );
-        list.prompt = name;
-
-        list.selectedIndex = -1;
-        list.buttonFactory = function():Button
-        {
-            //default button
-            var button:Button = new Button();
-            button.labelFactory=getPickListTsxtRender;
-
-            return button;
-        };
-
-//        list.popUpContentManager = new DropDownPopUpContentManager();
-//        var popUpContentManager:VerticalCenteredPopUpContentManager = new VerticalCenteredPopUpContentManager();
-//        popUpContentManager.marginTop = 20;
-//        popUpContentManager.marginRight = 25;
-//        popUpContentManager.marginBottom = 20;
-//        popUpContentManager.marginLeft = 25;
-//        list.popUpContentManager = popUpContentManager;
-        return list;
-
-    }
-
-
     private function onRemovedStageHandler(e:Event):void{
 
-        try{
+        DebugTrace.msg("BlackMarketListLayout.onRemovedStageHandler");
+       try{
             PopUpManager.removePopUp(popup,true);
 
-        }catch(error:Error){
+        }catch (error:Error){
+
+       }
+        if(popupTM){
+            popupTM.dispatchEventWith("REMOVED_FROM_SCENE");
+
+        }
+
+        if(popupPlus){
+            popupPlus.dispatchEventWith("REMOVED_FROM_SCENE");
         }
 
     }
-
     private function cancelButton_triggeredHandler(e:Event):void{
 
 
             PopUpManager.removePopUp(popup,true);
 
     }
+
+
 
 }
 }

@@ -38,6 +38,8 @@ public class ViewCommand  implements ViewInterface{
     private var rootTarget:Sprite;
     private var skillTarget:Sprite;
     private var character:String;
+    private var icons:Array=new Array();
+
     public function fullSizeCharacter(target:Sprite,params:Object=null):void{
 
 
@@ -61,10 +63,11 @@ public class ViewCommand  implements ViewInterface{
         target.clipRect=params.clipRect;
 
     }
-
-    public function characterIcons(target:Sprite):void{
+    private var _cate:String="";
+    public function characterIcons(target:Sprite,cate:String=null):void{
 
         rootTarget=target;
+        _cate=cate;
 
         var gender:String=flox.getSaveData("avatar").gender;
 
@@ -85,7 +88,7 @@ public class ViewCommand  implements ViewInterface{
         drawcom.updateBaseModel("Hair");
         drawcom.updateBaseModel("Features");
 
-
+        var player_point:Point=new Point(60,710);
         var dp:Point=new Point(-80,-22);
         if(gender=="Female")
         {
@@ -94,7 +97,7 @@ public class ViewCommand  implements ViewInterface{
 
         player_icon=new Sprite();
         player_icon.name="Player";
-        drawcom.drawPlayerProfileIcon(player_icon,1,new Point(60,710),dp);
+        drawcom.drawPlayerProfileIcon(player_icon,1,player_point,dp);
         player_icon.scaleX=0.89;
         player_icon.scaleY=0.89;
 
@@ -103,7 +106,7 @@ public class ViewCommand  implements ViewInterface{
         target.addChild(player_icon);
         player_icon.clipRect=new Rectangle(-55,-(player_icon.height/2),player_icon.width,player_icon.height);
         player_icon.addEventListener(TouchEvent.TOUCH,onTouchCharaterIcon);
-
+        icons.push(player_icon);
 
 
         var characters:Array=Config.characters;
@@ -119,7 +122,7 @@ public class ViewCommand  implements ViewInterface{
             icon.name=characters[i];
             icon.useHandCursor=enabled;
             icon.x=i*100+280;
-            icon.y=710;
+            icon.y=player_point.y;
 
             if(pts!=-1)
             {
@@ -140,8 +143,20 @@ public class ViewCommand  implements ViewInterface{
             }
             //if
 
-            target.addChild(icon);
+            if(cate){
+                player_icon.scaleX=0.45;
+                player_icon.scaleY=0.45;
+                player_icon.x=50;
+                player_icon.y=120;
+                icon.scaleX=0.5;
+                icon.scaleY=0.5;
+                icon.x=(i*icon.width+5)+(player_icon.x+player_icon.width/2);
+                icon.y=120;
 
+            }
+
+            target.addChild(icon);
+            icons.push(icon);
             if(enabled)
             {
                 icon.addEventListener(TouchEvent.TOUCH,onTouchCharaterIcon);
@@ -149,6 +164,8 @@ public class ViewCommand  implements ViewInterface{
             //if
         }
         //for
+
+
     }
 
     private function onTouchCharaterIcon(e:TouchEvent):void
@@ -160,9 +177,18 @@ public class ViewCommand  implements ViewInterface{
         var began:Touch=e.getTouch(target,TouchPhase.BEGAN);
         if(hover)
         {
+            var _scale:Number=1.1;
+            if(_cate){
+                //for blackmarket
+                _scale=0.6;
+                if(target.name=="Player")
+                {
+                    _scale=0.5;
+                }
+            }
 
             var tween:Tween=new Tween(target,0.2,Transitions.LINEAR);
-            tween.scaleTo(1.1);
+            tween.scaleTo(_scale);
             Starling.juggler.add(tween);
 
 
@@ -174,7 +200,15 @@ public class ViewCommand  implements ViewInterface{
             {
                 scale=0.89;
             }
-            //if
+            if(_cate){
+                //for blackmarket
+                scale=0.5;
+                if(target.name=="Player")
+                {
+                    scale=0.45;
+                }
+            }
+
             tween=new Tween(target,0.2,Transitions.LINEAR);
             tween.scaleTo(scale);
             Starling.juggler.add(tween);
@@ -183,17 +217,22 @@ public class ViewCommand  implements ViewInterface{
         if(began)
         {
             character=target.name.toLowerCase();
-
-
-
             var _data:Object=new Object();
-            _data.ch_index=Config.characters.indexOf(target.name);;
+            _data.ch_index=Config.characters.indexOf(target.name);
             _data.character=character;
-
             rootTarget.dispatchEventWith("TouchedIcon",false,_data);
 
-
-
+            if(_cate){
+                //for market
+                for(var i:uint=0 ; i<icons.length;i++){
+                    tween=new Tween(icons[i],0.2,Transitions.LINEAR);
+                    tween.animate("alpha",0.3);
+                    Starling.juggler.add(tween);
+                }
+                tween=new Tween(target,0.2,Transitions.LINEAR);
+                tween.animate("alpha",1);
+                Starling.juggler.add(tween);
+            }
         }
         //if
     }

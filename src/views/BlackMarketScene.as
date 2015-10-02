@@ -112,14 +112,18 @@ public class BlackMarketScene extends Scenes
 	}
 	private function doConsumeItem(e:Event):void{
 
+
+
 		var id:String=e.data.item_id;
 		var items:Object=flox.getPlayerData("items");
 		var currentItems:Object=new Object();
 
+        DebugTrace.msg("BlackMarketScene.doConsumeItem id="+id);
+
 		for(var item_id:String in items){
 
 			if(item_id!=id){
-				currentItems[id]=items[id];
+				currentItems[item_id]=items[item_id];
 			}
 		}
 
@@ -231,6 +235,7 @@ public class BlackMarketScene extends Scenes
 
 				break
 			case "ani_complete":
+
 				break
 
 		}

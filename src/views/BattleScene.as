@@ -9,12 +9,10 @@ import com.greensock.easing.Quint;
 import com.greensock.events.LoaderEvent;
 import com.greensock.loading.LoaderMax;
 import com.greensock.loading.SWFLoader;
-import com.greensock.loading.display.ContentDisplay;
 import com.greensock.plugins.FrameLabelPlugin;
 import com.greensock.plugins.FramePlugin;
 import com.greensock.plugins.TweenPlugin;
 import com.greensock.text.SplitTextField;
-
 
 import flash.display.MovieClip;
 import flash.display.Sprite;
@@ -159,6 +157,8 @@ public class BattleScene extends Sprite
 		command.playBackgroudSound("BattleMusic");
 
 
+
+
 		//sound testing
 		//command.playSound("BingoSound");
 
@@ -176,6 +176,9 @@ public class BattleScene extends Sprite
 
 			var victorybounse:Sprite=new VictoryBonus();
 			addChild(victorybounse);
+
+
+
 
 
 		}else{
