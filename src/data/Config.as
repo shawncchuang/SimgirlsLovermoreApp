@@ -28,7 +28,7 @@ public class Config
     //schedule [index+ current month]
     public static var scheduleIndex:Object={"lenus":88,"sirena":12,"dea":25,"sao":38,"klr":51,"tomoru":64,"ceil":77,"zack":38};
 
-     public static var Days:Array = new Array("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat");
+    public static var Days:Array = new Array("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat");
     public static var Months:Object = {
         "Jan": 31, "Feb": 28, "Mar": 31, "Apr": 30, "May": 31, "Jun": 30,
         "Jul": 31, "Aug": 31, "Sep": 30, "Oct": 31, "Nov": 30, "Dec": 31
@@ -38,18 +38,16 @@ public class Config
 
     //battle schedule 2033 Tuesday
 
-    public static var team_schedule:Array=[
-
+    public static var battleDays:Array=[
         "Jul_5","Jul_12","Jul_19","Jul_26",
         "Aug_2","Aug_9","Aug_16","Aug_23","Aug_30",
-        "Sep_6","Sep_13","Sep_20","Sep_27",
-
-
         "Oct_4","Oct_11","Oct_18","Oct_25",
-        "Nov_1","Nov_8","Nov_15","Nov_22","Nov_29",
-        "Dec_6","Dec_13","Dec_20","Dec_27"
-
+        "Nov_1","Nov_8","Nov_15","Nov_22","Nov_29"
     ]
+
+
+
+
     public static function  battleSchedule():Dictionary
     {
         var scheduls:Dictionary=new Dictionary();
@@ -58,6 +56,7 @@ public class Config
         scheduls["Jul_12"]= ["p|1", "0|2", "3|5", "4|7", "8|6"];
         scheduls["Jul_19"]= ["p|3", "4|0", "1|7", "6|2", "8|5"];
         scheduls["Jul_26"]= ["p|2", "0|1", "6|3", "7|5", "4|8"];
+
         scheduls["Aug_2"]= ["7|0", "p|6", "5|1", "2|4", "8|3"];
         scheduls["Aug_9"]=["2|7", "1|3", "6|4", "p|5", "8|0"];
         scheduls["Aug_16"]=["p|4", "7|6", "5|0", "2|3", "1|8"];
@@ -68,6 +67,7 @@ public class Config
         scheduls["Oct_11"]= ["p|1", "0|2", "3|5", "4|7", "8|6"];
         scheduls["Oct_18"]=["p|3", "4|0", "1|7", "6|2", "8|5"];
         scheduls["Oct_25"]=["p|2", "0|1", "6|3", "7|5", "4|8"];
+
         scheduls["Nov_1"]= ["7|0", "p|6", "5|1", "2|4", "8|3"];
         scheduls["Nov_8"]=["2|7", "1|3", "6|4", "p|5", "8|0"];
         scheduls["Nov_15"]= ["p|4", "7|6", "5|0", "2|3", "1|8"];
@@ -76,6 +76,28 @@ public class Config
 
 
         return scheduls
+    }
+    public static var defaultCurrentBattle:Object={
+
+            "Jul_5": ["0|0", "0|0", "0|0", "0|0", "0|0"],
+            "Jul_12": ["0|0", "0|0", "0|0", "0|0", "0|0"],
+            "Jul_19": ["0|0", "0|0", "0|0", "0|0", "0|0"],
+            "Jul_26": ["0|0", "0|0", "0|0", "0|0", "0|0"],
+            "Aug_2": ["0|0", "0|0", "0|0", "0|0", "0|0"],
+            "Aug_9": ["0|0", "0|0", "0|0", "0|0", "0|0"],
+            "Aug_16": ["0|0", "0|0", "0|0", "0|0", "0|0"],
+            "Aug_23": ["0|0", "0|0", "0|0", "0|0", "0|0"],
+            "Aug_30": ["0|0", "0|0", "0|0", "0|0", "0|0"],
+            "Oct_4": ["0|0", "0|0", "0|0", "0|0", "0|0"],
+            "Oct_11": ["0|0", "0|0", "0|0", "0|0", "0|0"],
+            "Oct_18": ["0|0", "0|0", "0|0", "0|0", "0|0"],
+            "Oct_25": ["0|0", "0|0", "0|0", "0|0", "0|0"],
+            "Nov_1": ["0|0", "0|0", "0|0", "0|0", "0|0"],
+            "Nov_8": ["0|0", "0|0", "0|0", "0|0", "0|0"],
+            "Nov_15": ["0|0", "0|0", "0|0", "0|0", "0|0"],
+            "Nov_22": ["0|0", "0|0", "0|0", "0|0", "0|0"],
+            "Nov_29": ["0|0", "0|0", "0|0", "0|0", "0|0"]
+
     }
     public static function set AccType(value:String):void
     {
@@ -797,27 +819,7 @@ public class Config
                     "win":0
                 }
             ],
-            current_battle:{
-                "Jul_5": ["0|0", "0|0", "0|0", "0|0", "0|0"],
-                "Jul_12": ["0|0", "0|0", "0|0", "0|0", "0|0"],
-                "Jul_19": ["0|0", "0|0", "0|0", "0|0", "0|0"],
-                "Jul_26": ["0|0", "0|0", "0|0", "0|0", "0|0"],
-                "Aug_2": ["0|0", "0|0", "0|0", "0|0", "0|0"],
-                "Aug_9": ["0|0", "0|0", "0|0", "0|0", "0|0"],
-                "Aug_16": ["0|0", "0|0", "0|0", "0|0", "0|0"],
-                "Aug_23": ["0|0", "0|0", "0|0", "0|0", "0|0"],
-                "Aug_30": ["0|0", "0|0", "0|0", "0|0", "0|0"],
-                "Oct_4": ["0|0", "0|0", "0|0", "0|0", "0|0"],
-                "Oct_11": ["0|0", "0|0", "0|0", "0|0", "0|0"],
-                "Oct_18": ["0|0", "0|0", "0|0", "0|0", "0|0"],
-                "Oct_25": ["0|0", "0|0", "0|0", "0|0", "0|0"],
-                "Nov_1": ["0|0", "0|0", "0|0", "0|0", "0|0"],
-                "Nov_8": ["0|0", "0|0", "0|0", "0|0", "0|0"],
-                "Nov_15": ["0|0", "0|0", "0|0", "0|0", "0|0"],
-                "Nov_22": ["0|0", "0|0", "0|0", "0|0", "0|0"],
-                "Nov_29": ["0|0", "0|0", "0|0", "0|0", "0|0"]
-
-            },
+            current_battle:defaultCurrentBattle,
             "photos":new Array()
 
         }

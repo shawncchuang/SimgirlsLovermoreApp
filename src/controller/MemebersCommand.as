@@ -505,6 +505,19 @@ public class MemebersCommand implements MembersInterface
                 if(cpu_gameover)
                 {
 
+                   var ranking:Array=flox.getSaveData("ranking");
+
+                    for(var i:uint=0;i< ranking.length;i++){
+                        if(ranking[i].team_id == "player"){
+                           var win:Number= ranking[i].win;
+                            win++;
+                            ranking[i].win=win;
+                            break
+                        }
+                    }
+                    flox.save("ranking",ranking);
+
+
                     var battleEvt:BattleEvent=BattleScene.battleEvt;
                     battleEvt.onStartBonusGame();
 
@@ -524,6 +537,7 @@ public class MemebersCommand implements MembersInterface
                     {
 
                         scene="SSCCArenaScene";
+
 
                     }else if(battle_type=="practice"){
 

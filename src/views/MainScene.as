@@ -2,11 +2,6 @@ package views
 {
 
 
-import com.doitflash.consts.Easing;
-import com.doitflash.consts.Orientation;
-import com.doitflash.events.ScrollEvent;
-import com.doitflash.starling.utils.scroller.Scroller;
-
 import flash.display.MovieClip;
 import flash.geom.Point;
 

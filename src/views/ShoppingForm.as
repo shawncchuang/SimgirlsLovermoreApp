@@ -50,8 +50,8 @@ public class ShoppingForm extends Sprite{
     private var cate:String=catelist[0];
 
     private var sortings:Array=new Array();
-    private var sort:String="id";
-    private var sort_index:Number=-2;
+    private var sort:String="name";
+    private var sort_index:Number=0;
     private var tag_names:Array=["Consumable","Misc","Fashion","Luxury"];
 
     public function ShoppingForm() {

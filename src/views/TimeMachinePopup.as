@@ -2,6 +2,8 @@
  * Created by shawnhuang on 15-09-30.
  */
 package views {
+import model.BattleData;
+
 import starling.display.Sprite;
 import controller.Assets;
 import controller.FloxCommand;
@@ -108,11 +110,11 @@ public class TimeMachinePopup extends Sprite {
 
         var yearlist:Array=new Array("2033","2034");
         listdata=new Array();
-        for(var i:uint=0;i<yearlist.length;i++){
+        for(var j:uint=0;j<yearlist.length;j++){
 
             var collection:Object=new Object();
 
-            collection["text"]=yearlist[i];
+            collection["text"]=yearlist[j];
             listdata.push(collection);
         }
         var yearPicker:PickerList=addPickList("Year",new Point(270,110),listdata);
@@ -263,6 +265,7 @@ public class TimeMachinePopup extends Sprite {
         scene.dispatchEventWith("CONSUME_BLACKMARKET_ITEM",false,_data);
 
 
+
         var command:MainInterface=new MainCommand();
         command.updateInfo();
 
@@ -273,6 +276,12 @@ public class TimeMachinePopup extends Sprite {
         var scene_data:Object=new Object();
         scene_data.name="MainScene";
         command.sceneDispatch(SceneEvent.CHANGED,scene_data);
+
+
+        var battleData:BattleData=new BattleData();
+        battleData.checkBattleSchedule("TimeTravelBattleRanking","cpu_team");
+
+
     }
 
 

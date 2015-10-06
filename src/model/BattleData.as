@@ -582,17 +582,20 @@ public class BattleData
         }
         return scene;
     }
-
+    private var ranking:Array;
+    private var current_battle:Object;
     public function checkBattleSchedule(type:String,target:String):Number
     {
         //type:Battle || BattleResault ; target:player_team || cpu_team
         var cpuIndex:Number=-1;
         var date:String=flox.getSaveData("date").split(".")[1];
         var month:String=flox.getSaveData("date").split(".")[2];
+
         var schedule:Dictionary=Config.battleSchedule();
 
         var dayStr:String=month+"_"+date;
         var player_index:Number=-1;
+        var battled:Array=flox.getSaveData("current_battle")[dayStr];
 
         if(dayStr=="Feb_28")
         {
@@ -605,7 +608,7 @@ public class BattleData
         {
 
             var team_battle:Array=schedule[dayStr];
-            DebugTrace.msg("BattleData.checkBattleSchedule team_battle="+JSON.stringify(team_battle));
+            //DebugTrace.msg("BattleData.checkBattleSchedule team_battle="+JSON.stringify(team_battle));
             if(team_battle) {
                 for (var i:uint = 0; i < team_battle.length; i++) {
                     var key:String = team_battle[i].split("|")[0];
@@ -616,24 +619,111 @@ public class BattleData
 
                     if(type == "BattleResult"){
                         checkBattleResult(i,target,dayStr,key,team_battle[i].split("|")[1]);
+
+
                     }
 
                 }
+
+                for(var j:uint=0;j<battled.length;j++){
+                    //check already battle today
+                    key= battled[j].split("|")[0];
+                    if(key=="p"){
+                        //already battled today
+                        player_index=-1;
+                    }
+
+                }
+
                 if(player_index!=-1) {
                     //cpu found out
                     cpuIndex = Number(team_battle[player_index].split("|")[1]);
                 }
+
+
             }
+
         }
+
+        var battleDays:Array=Config.battleDays;
+        var monthsList:Array= Config.Monthslist;
+        if(type == "BattleRanking" || type=="TimeTravelBattleRanking"){
+
+            if(type=="TimeTravelBattleRanking"){
+                //uesd timemachine reset current_battle
+                var defaultCurrentBattle:Object=Config.defaultCurrentBattle;
+                flox.save("current_battle",defaultCurrentBattle);
+            }
+
+            var pastIndex:Number=0;
+            var currentMonthIndex:Number=monthsList.indexOf(month);
+            for(var n:uint=0;n<battleDays.length;n++){
+                //Jan,Feb....Nov
+                var battle_month:String=battleDays[n].split("_")[0];
+                var battle_date:Number=Number(battleDays[n].split("_")[1]);
+                var scheduleMonthIndex:Number=monthsList.indexOf(battle_month);
+
+                if(currentMonthIndex>5){
+                    //after Jul
+
+                    if(currentMonthIndex>=scheduleMonthIndex){
+                        pastIndex++;
+
+                        if(currentMonthIndex==scheduleMonthIndex){
+
+                            if(Number(date)<battle_date){
+                                pastIndex--;
+                                break;
+                            }
+                        }
+                    }else{
+
+                        pastIndex--;
+                        break;
+
+                    }
+
+
+
+                }
+
+            }
+            //DebugTrace.msg("BattleData.checkBattleResult pastIndex="+pastIndex);
+            if(pastIndex>0){
+                var current_battle:Object=flox.getSaveData("current_battle");
+                for(var k:uint=0;k<pastIndex;k++){
+                    var battleDay:String=battleDays[k];
+                    var team_battle:Array=schedule[battleDay];
+                    var battled:Array=current_battle[battleDay];
+                    for(var m:uint = 0; m < team_battle.length; m++) {
+                        //DebugTrace.msg("BattleData.checkBattleResult team_battle[m]="+team_battle[m]);
+                        if(battled[m]=="0|0" || type=="TimeTravelBattleRanking"){
+                            //did not battle yet
+                            var team1ID:String = team_battle[m].split("|")[0];
+                            if(team1ID!="p"){
+                                //not included player
+                                var team2ID:String = team_battle[m].split("|")[1];
+                                checkBattleResult(m, target, battleDay, team1ID, team2ID);
+                            }
+                        }
+
+                    }
+                }
+
+
+            }
+
+        }
+
         return cpuIndex;
     }
     private function checkBattleResult(index:uint,target:String,day:String,team1:String,team2:String):void{
 
         var cpu_team:Object=flox.getSaveData("cpu_teams");
-        var current_battle:Object=flox.getSaveData("current_battle");
+        current_battle=flox.getSaveData("current_battle");
         var current_teams:Array=current_battle[day];
         var team:String=current_teams[index];
-        var ranking:Array=flox.getSaveData("ranking");
+        ranking=flox.getSaveData("ranking");
         var win_wadge1:Number=Math.floor(Math.random()*40)+1;
         var win_wadge2:Number=Math.floor(Math.random()*40)+1;
         var win_index:uint=0;
@@ -675,8 +765,10 @@ public class BattleData
 
 
         }
-        var team1_rate:Number=team1SE*(1+Number((win_wadge1/100).toFixed(2)));
-        var team2_rate:Number=team2SE*(1+Number((win_wadge2/100).toFixed(2)));
+        //DebugTrace.msg("BattleData.checkBattleResult team1SE="+team1SE+" ; team2SE="+team2SE);
+        //DebugTrace.msg("BattleData.checkBattleResult win_wadge1="+win_wadge1+" ; win_wadge2="+win_wadge2);
+        var team1_rate:Number=Number((team1SE*(1+win_wadge1/100)).toFixed(2));
+        var team2_rate:Number=Number((team2SE*(1+win_wadge2/100)).toFixed(2));
         DebugTrace.msg("BattleData.checkBattleResult team1_rate="+team1_rate+" ; team2_rate="+team2_rate);
         if(team1_rate>team2_rate){
 
@@ -739,8 +831,8 @@ public class BattleData
             current_teams[index]=team;
             current_battle[day]=current_teams;
 
-            flox.save("current_battle",current_battle)
-          //DebugTrace.msg("BattleData.checkBattleResult current_battle="+JSON.stringify(current_battle));
+            flox.save("current_battle",current_battle);
+            //DebugTrace.msg("BattleData.checkBattleResult current_battle="+JSON.stringify(current_battle));
         }
         for(var i:uint=0;i<ranking.length;i++) {
             if (ranking[i].team_id == win_team) {
@@ -753,7 +845,7 @@ public class BattleData
         }
         flox.save("ranking",ranking);
 
-      //DebugTrace.msg("BattleData.checkBattleResult ranking="+JSON.stringify(ranking));
+        //DebugTrace.msg("BattleData.checkBattleResult ranking="+JSON.stringify(ranking));
     }
 
     public function checkSurvivor():Boolean{

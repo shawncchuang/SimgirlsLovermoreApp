@@ -48,7 +48,7 @@ public class ShoppingListLayout extends PanelScreen {
     private var steppers:Array;
     private var reseat_stepper:Boolean=false;
 
-    public var sort:String="";
+    public var sort:String;
     public var sort_index:Number=0;
 
     public function ShoppingListLayout() {

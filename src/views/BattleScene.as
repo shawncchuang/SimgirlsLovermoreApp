@@ -179,8 +179,6 @@ public class BattleScene extends Sprite
 
 
 
-
-
 		}else{
 
 			var gameEvt:GameEvent=SimgirlsLovemore.gameEvent;

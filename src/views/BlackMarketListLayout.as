@@ -313,9 +313,9 @@ public class BlackMarketListLayout extends PanelScreen {
             }else{
 
                 var msg:String= "You already owned this.";
-                var scene:Sprite = ViewsContainer.MainScene;
+                var mainscene:Sprite = ViewsContainer.MainScene;
                 var alertMsg:AlertMessage=new AlertMessage(msg);
-                scene.addChild(alertMsg);
+                mainscene.addChild(alertMsg);
 
             }
 

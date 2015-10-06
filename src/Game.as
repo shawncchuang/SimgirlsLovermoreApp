@@ -12,8 +12,10 @@ package
 	import events.GameEvent;
 	import events.SceneEvent;
 	import events.TopViewEvent;
-	
-	//import model.Avatar;
+
+import model.BattleData;
+
+//import model.Avatar;
 	import model.Scenes;
 	
 	import services.LoaderRequest;
@@ -56,8 +58,7 @@ package
 		}
 		public function Game()
 		{
-			
-			
+
 			
 			Starling.current.stage.stageWidth=1024;
 			Starling.current.stage.stageHeight=768;
@@ -79,6 +80,7 @@ package
 			assets.initSoundAssetsManager();
 
 
+
 			if(loadgame)
 			{
 				
@@ -90,6 +92,8 @@ package
 				
 				initMainScene();
 				initUI();
+                var battleData:BattleData=new BattleData();
+                battleData.checkBattleSchedule("BattleRanking","cpu_team");
 				
 			}
 			
@@ -105,7 +109,9 @@ package
 					removeChild(saveloadlist);
 					initMainScene();
 					initUI();
-					break
+
+
+                    break
 				case "loadgame":
 					initLoadScene();
 					
@@ -168,7 +174,7 @@ package
 		private function tweenCtrl(value:Number,onTweenComplete:Function=null):void
 		{
 			
-			var tween:Tween=new Tween(saveloadlist,0.5)
+			var tween:Tween=new Tween(saveloadlist,0.5);
 			tween.animate("alpha",value);
 			tween.onComplete=onTweenComplete;
 			Starling.juggler.add(tween);
@@ -189,7 +195,8 @@ package
             command.initStyleSechedule();
 
 
-			var _data:Object=new Object();
+
+            var _data:Object=new Object();
 			var flox:FloxInterface=new FloxCommand();
 			//var current_scene:String=flox.getSaveData("current_scene");
 			var current_scene:String=DataContainer.currentScene;

@@ -619,6 +619,10 @@ public class MainCommand implements MainInterface {
             reseatDatingCommandTimes();
             submitDailyReport();
 
+            var battleData:BattleData=new BattleData();
+            battleData.checkBattleSchedule("BattleRanking","cpu_team");
+
+
         }
 
         if (comType == "Rest") {
@@ -630,24 +634,7 @@ public class MainCommand implements MainInterface {
             comType = "";
 
         }
-        function onUpdatedDateComplete():void {
-            //prase expiration
-            /*
-             if(overday){
-
-
-             flox.save("dating","");
-             reeseatDating();
-             setNowMood();
-             praseOwnedAssets(1);
-             reseatDatingCommandTimes();
-
-             }
-             */
-            var battledata:BattleData = new BattleData();
-            battledata.checkBattleSchedule("BattleResult", "cpu_team");
-
-        }
+        
 
         var pay:Boolean = flox.getPlayerData("paid");
         if (!pay && _type != "Rest" && _type != "Stay") {
