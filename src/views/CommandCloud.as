@@ -310,7 +310,7 @@ public class CommandCloud extends MovieClip
 
     }
 
-    private function checkSceneCommand():void
+    private function    checkSceneCommand():void
     {
         var currentlable:String=DataContainer.currentLabel;
         var currentScene:String=DataContainer.currentScene;
@@ -333,10 +333,9 @@ public class CommandCloud extends MovieClip
             var ranbattle:Boolean=battledata.checkSurvivor();
             var perbattle:Number=Math.floor(Math.random()*100)+1;
             DebugTrace.msg("CommandCloud.checkSceneCommand perbattle="+perbattle);
-            if(ranbattle && perbattle<=10){
+            if(ranbattle && perbattle<=100){
                 //could random fight
                 DataContainer.battleType="random_battle";
-                DataContainer.currentScene="ChangeFormationScene";
                 command.consumeHandle("RandomBattle");
 
 

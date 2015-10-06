@@ -70,6 +70,7 @@ import views.AlertMessage;
 
 import views.FloxManagerView;
 import views.DatingScene;
+import views.RandomBattlePopup;
 import views.Reward;
 
 
@@ -634,7 +635,7 @@ public class MainCommand implements MainInterface {
             comType = "";
 
         }
-        
+
 
         var pay:Boolean = flox.getPlayerData("paid");
         if (!pay && _type != "Rest" && _type != "Stay") {
@@ -1702,9 +1703,13 @@ public class MainCommand implements MainInterface {
         if(com=="RandomBattle"){
 
             ViewsContainer.UIViews.visible = false;
-            msg = "Got into a street fight !!";
-            alert = new AlertMessage(msg, onClosedAlert);
-            scene.addChild(alert);
+            //msg = "Got into a street fight !!";
+            //alert = new AlertMessage(msg, onClosedAlert);
+            //scene.addChild(alert);
+
+            var popup:RandomBattlePopup=new RandomBattlePopup();
+            popup.init();
+            scene.addChild(popup);
 
             return false;
         }
@@ -1726,7 +1731,6 @@ public class MainCommand implements MainInterface {
 
                 DebugTrace.msg("MainCommand.paidAP ap=" + ap);
                 pass_ap = true;
-
 
             }
             //if
@@ -1753,9 +1757,15 @@ public class MainCommand implements MainInterface {
 
             } else {
 
-                msg = "Not enough money.";
+                if(com=="RunAwayRandomBattle"){
+                    msg = "Not enough money.\n You can not run away.";
+
+                }else{
+                    msg = "Not enough money.";
+                }
                 alert = new AlertMessage(msg, onClosedAlert);
                 scene.addChild(alert);
+
             }
 
         } else {
@@ -1768,16 +1778,31 @@ public class MainCommand implements MainInterface {
 
 
         if (pass_ap && pass_cash && pass_se) {
-
+            var value_data:Object = new Object();
+            var attrArr:Array=new Array();
+            var valuesArr:Array=new Array();
             if (payAP < 0) {
                 //have to spend AP
                 ap = ap + payAP;
                 flox.save("ap", ap);
 
-                var value_data:Object = new Object();
-                value_data.attr = "ap";
-                value_data.values = String(payAP);
+                attrArr.push("ap");
+                valuesArr.push(payAP);
+
+
+            }
+            if(cash_pay<0){
+                //have to spend Cash
+                flox.save("cash", cash);
+
+                attrArr.push("cash");
+                valuesArr.push(cash_pay);
+
+            }
+            if(attrArr.length>0){
                 var command:MainInterface = new MainCommand();
+                value_data.attr = attrArr.toString();
+                value_data.values =valuesArr.toString();
                 command.displayUpdateValue(scene, value_data);
 
                 var gameinfo:Sprite = ViewsContainer.gameinfo;

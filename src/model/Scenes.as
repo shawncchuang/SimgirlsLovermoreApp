@@ -323,6 +323,7 @@ public class Scenes extends Sprite
                 break
             case "ShoppingCentreScene_fromlist":
                 DataContainer.shoppingFrom="list";
+                DataContainer.currentScene="ShoppingCentreScene";
                 current_scence=new ShoppingCentreScene();
                 break
             case "CinemaScene":

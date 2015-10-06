@@ -598,12 +598,6 @@ public class ChangeFormationScene extends Scenes
         command.addedConfirmButton(this,doFinished);
         //command.addedCancelButton(this,doFinished);
 
-        var battle_type:String=DataContainer.battleType;
-        if(battle_type=="random_battle"){
-            var templete:MenuTemplate=new MenuTemplate();
-            templete.addBackStepButton(doCannelHandler);
-            addChild(templete);
-        }
 
 
     }
