@@ -211,6 +211,8 @@ public class BlackMarketListLayout extends PanelScreen {
     }
     private function onTapUseHandler(e:Event):void{
     //tap use
+        var popupMsg:String="Use this item?\nWarning! Once it is used it will be gone for good.\n" +
+                "Make sure you save your game afterwards.";
 
         switch(item_id){
             case "bm_1":
@@ -218,7 +220,7 @@ public class BlackMarketListLayout extends PanelScreen {
 
                 popupTM=new TimeMachinePopup();
                 popupTM.item_id=item_id;
-                popupTM.msg="TimeMachine";
+                popupTM.msg=popupMsg;
                 popupTM.init();
 
                 break
@@ -230,7 +232,7 @@ public class BlackMarketListLayout extends PanelScreen {
             case "bm_7":
                 popupPlus=new BlackMarketPlusPopup();
                 popupPlus.item_id=item_id;
-                popupPlus.msg="Increase ";
+                popupPlus.msg=popupMsg;
                 popupPlus.init();
 
                 break

@@ -157,7 +157,7 @@ public class BlackMarketPlusPopup extends Sprite {
         }else{
 
             PopUpManager.removePopUp(popup,true);
-            var msg:String = "Please choice who would like to accept?";
+            var msg:String = "Opps! Choose a character icon first.";
             var scene:Sprite = ViewsContainer.MainScene;
             var alertMsg:AlertMessage=new AlertMessage(msg);
             scene.addChild(alertMsg);

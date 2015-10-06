@@ -2,17 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e5634857-ca85-444f-9915-08f826b15827" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/model/BattleData.as" afterPath="$PROJECT_DIR$/src/model/BattleData.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/BattleScene.as" afterPath="$PROJECT_DIR$/src/views/BattleScene.as" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/BlackMarketListLayout.as" afterPath="$PROJECT_DIR$/src/views/BlackMarketListLayout.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/data/Config.as" afterPath="$PROJECT_DIR$/src/data/Config.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Game.as" afterPath="$PROJECT_DIR$/src/Game.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/MainCommand.as" afterPath="$PROJECT_DIR$/src/controller/MainCommand.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/MainScene.as" afterPath="$PROJECT_DIR$/src/views/MainScene.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/MemebersCommand.as" afterPath="$PROJECT_DIR$/src/controller/MemebersCommand.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/ShoppingForm.as" afterPath="$PROJECT_DIR$/src/views/ShoppingForm.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/ShoppingListLayout.as" afterPath="$PROJECT_DIR$/src/views/ShoppingListLayout.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/TimeMachinePopup.as" afterPath="$PROJECT_DIR$/src/views/TimeMachinePopup.as" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/BlackMarketPlusPopup.as" afterPath="$PROJECT_DIR$/src/views/BlackMarketPlusPopup.as" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="SimgirlsLovermoreApp.iws" />
@@ -51,36 +42,14 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="FloxCommand.as" pinned="false" current-in-tab="false">
+      <file leaf-file-name="FloxCommand.as" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/controller/FloxCommand.as">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="1029" column="0" selection-start-line="1029" selection-start-column="0" selection-end-line="1029" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.15570176">
+              <caret line="1019" column="52" selection-start-line="1019" selection-start-column="52" selection-end-line="1019" selection-end-column="52" />
               <folding>
                 <element signature="e#21#50#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RankBoard.as" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/views/RankBoard.as">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="38.074074">
-              <caret line="62" column="20" selection-start-line="62" selection-start-column="12" selection-end-line="62" selection-end-column="20" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BattleData.as" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/model/BattleData.as">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-86.37037">
-              <caret line="861" column="13" selection-start-line="861" selection-start-column="13" selection-end-line="861" selection-end-column="13" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -91,19 +60,6 @@
             <state vertical-scroll-proportion="-26.88889">
               <caret line="80" column="0" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TimeMachinePopup.as" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/views/TimeMachinePopup.as">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="4.762637">
-              <caret line="289" column="47" selection-start-line="289" selection-start-column="47" selection-end-line="289" selection-end-column="47" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-                <element signature="e#62#86#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -179,7 +135,6 @@
         <option value="$PROJECT_DIR$/src/controller/ViewInterface.as" />
         <option value="$PROJECT_DIR$/src/views/Reward.as" />
         <option value="$PROJECT_DIR$/src/controller/ViewCommand.as" />
-        <option value="$PROJECT_DIR$/src/views/BlackMarketPlusPopup.as" />
         <option value="$PROJECT_DIR$/src/views/BlackMarketScene.as" />
         <option value="$PROJECT_DIR$/src/views/ChangeFormationScene.as" />
         <option value="$PROJECT_DIR$/src/views/CommandCloud.as" />
@@ -188,13 +143,14 @@
         <option value="$PROJECT_DIR$/src/controller/MemebersCommand.as" />
         <option value="$PROJECT_DIR$/src/views/MainScene.as" />
         <option value="$PROJECT_DIR$/src/Game.as" />
-        <option value="$PROJECT_DIR$/src/views/BlackMarketListLayout.as" />
         <option value="$PROJECT_DIR$/src/views/TimeMachinePopup.as" />
         <option value="$PROJECT_DIR$/src/controller/MainCommand.as" />
         <option value="$PROJECT_DIR$/src/data/Config.as" />
         <option value="$PROJECT_DIR$/src/views/ShoppingListLayout.as" />
         <option value="$PROJECT_DIR$/src/views/ShoppingForm.as" />
         <option value="$PROJECT_DIR$/src/model/BattleData.as" />
+        <option value="$PROJECT_DIR$/src/views/BlackMarketListLayout.as" />
+        <option value="$PROJECT_DIR$/src/views/BlackMarketPlusPopup.as" />
       </list>
     </option>
   </component>
@@ -216,8 +172,8 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1048" />
-    <option name="y" value="23" />
+    <option name="x" value="1067" />
+    <option name="y" value="24" />
     <option name="width" value="1513" />
     <option name="height" value="1368" />
   </component>
@@ -877,13 +833,7 @@
       <workItem from="1443490876553" duration="9602000" />
       <workItem from="1443644072720" duration="46830000" />
       <workItem from="1443820849373" duration="24000" />
-      <workItem from="1443820933565" duration="43071000" />
-    </task>
-    <task id="LOCAL-00009" summary="profile assets tab that sorted by name or brand or expiration">
-      <created>1408127519514</created>
-      <option name="number" value="00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1408127519514</updated>
+      <workItem from="1443820933565" duration="44188000" />
     </task>
     <task id="LOCAL-00010" summary="mini menu handler,made calendar scene and contacts UI">
       <created>1408415502770</created>
@@ -1173,11 +1123,17 @@
       <option name="project" value="LOCAL" />
       <updated>1443824409116</updated>
     </task>
-    <option name="localTasksCounter" value="58" />
+    <task id="LOCAL-00058" summary="1.update battle ranking recoding&#10; &#10;">
+      <created>1444156206307</created>
+      <option name="number" value="00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1444156206307</updated>
+    </task>
+    <option name="localTasksCounter" value="59" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1729768000" />
+    <option name="totallyTimeSpent" value="1730885000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1189,7 +1145,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1048" y="23" width="1513" height="1368" extended-state="0" />
+    <frame x="1067" y="24" width="1513" height="1368" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1200,7 +1156,7 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27332363" sideWeight="0.51810926" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24916388" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32998884" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26489028" sideWeight="0.48189074" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26447573" sideWeight="0.48189074" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3136" sideWeight="0.50278705" order="8" side_tool="true" content_ui="combo" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1845039" sideWeight="0.5046948" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2026239" sideWeight="0.6267649" order="10" side_tool="false" content_ui="tabs" />
@@ -1233,7 +1189,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="shopping items form is already in shooping centre" />
     <MESSAGE value="mouse click alert message replace X symbol ,chat rolling decrease 50%" />
     <MESSAGE value="1. contacts list&#10;2. fixd stock after battle in pratice mode" />
     <MESSAGE value="1. fixed update correct facial texture when chang mood&#10;2. fixed bugs in Dating" />
@@ -1258,7 +1213,8 @@
     <MESSAGE value="1.update that provide to buy and use TimeMachine  in blackmarket&#10;2.update that show up a date options on  popup when use TimeMachane&#10;" />
     <MESSAGE value="1.update that provide to use addition plus items  in blackmarket&#10;2.update Reward effect&#10;" />
     <MESSAGE value="1.update geensock SplitTextField bugs&#10; &#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="1.update geensock SplitTextField bugs&#10; &#10;" />
+    <MESSAGE value="1.update battle ranking recoding&#10; &#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="1.update battle ranking recoding&#10; &#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1482,32 +1438,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/BlackMarketPlusPopup.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="151" column="34" selection-start-line="151" selection-start-column="34" selection-end-line="151" selection-end-column="34" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-            <element signature="e#62#87#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/controller/CpuMembersCommand.as">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-1.5272045">
           <caret line="244" column="57" selection-start-line="244" selection-start-column="57" selection-end-line="244" selection-end-column="57" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/BattleScene.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.18683651">
-          <caret line="157" column="0" selection-start-line="157" selection-start-column="0" selection-end-line="157" selection-end-column="0" />
-          <folding>
-            <element signature="e#17#47#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1619,33 +1554,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/BlackMarketListLayout.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="7.1164837">
-          <caret line="307" column="20" selection-start-line="307" selection-start-column="20" selection-end-line="307" selection-end-column="20" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="e#62#87#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/RankBoard.as">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="38.074074">
           <caret line="62" column="20" selection-start-line="62" selection-start-column="12" selection-end-line="62" selection-end-column="20" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/controller/FloxCommand.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="1029" column="0" selection-start-line="1029" selection-start-column="0" selection-end-line="1029" selection-end-column="0" />
-          <folding>
-            <element signature="e#21#50#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1666,13 +1580,52 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/BattleScene.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="157" column="0" selection-start-line="157" selection-start-column="0" selection-end-line="157" selection-end-column="0" />
+          <folding>
+            <element signature="e#17#47#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/BlackMarketListLayout.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-20.666666">
+          <caret line="230" column="24" selection-start-line="230" selection-start-column="24" selection-end-line="230" selection-end-column="24" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#62#87#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/TimeMachinePopup.as">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="4.762637">
-          <caret line="289" column="47" selection-start-line="289" selection-start-column="47" selection-end-line="289" selection-end-column="47" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="88" column="42" selection-start-line="88" selection-start-column="42" selection-end-line="88" selection-end-column="42" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
             <element signature="e#62#86#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/BlackMarketPlusPopup.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="159" column="66" selection-start-line="159" selection-start-column="66" selection-end-line="159" selection-end-column="66" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/controller/FloxCommand.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.15570176">
+          <caret line="1019" column="52" selection-start-line="1019" selection-start-column="52" selection-end-line="1019" selection-end-column="52" />
+          <folding>
+            <element signature="e#21#50#0" expanded="true" />
           </folding>
         </state>
       </provider>
