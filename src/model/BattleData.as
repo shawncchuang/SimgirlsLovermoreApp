@@ -639,6 +639,11 @@ public class BattleData
                     //cpu found out
                     cpuIndex = Number(team_battle[player_index].split("|")[1]);
                 }
+                var battles:Array=flox.getSaveData("current_battle")[dayStr];
+                if(battles[0]!="0|0"){
+                    //already battled today;
+                    cpuIndex=-2;
+                }
 
 
             }
@@ -864,6 +869,47 @@ public class BattleData
 
 
         return survivor
+
+    }
+    public function finishedBattle(winner:String,opponetID:String):void{
+
+        DebugTrace.msg("BattleScene finishedBattle--------winner="+winner+" ,opponetID="+opponetID);
+        var ranking:Array=flox.getSaveData("ranking");
+        var current_battle:Object=flox.getSaveData("current_battle");
+        var date:String=flox.getSaveData("date").split(".")[1];
+        var month:String=flox.getSaveData("date").split(".")[2];
+        var dateStr:String=month+"_"+date;
+        var battles:Array=current_battle[dateStr];
+        var team_result:String="";
+        var targetID:String="";
+
+        if(winner=="player"){
+            targetID="player";
+            team_result="W|L";
+        }else{
+            targetID=opponetID;
+            team_result="L|W";
+
+        }
+        battles[0]=team_result;
+        current_battle[dateStr]=battles;
+        flox.save("current_battle",current_battle);
+        //DebugTrace.msg("BattleScene finishedBattle ranking="+JSON.stringify(ranking));
+        for(var i:uint=0;i<ranking.length;i++){
+            var team:Object=ranking[i];
+
+            if(team.team_id==targetID){
+                var win_time:Number=team.win;
+                win_time++;
+                team.win=win_time;
+                ranking[i]=team;
+
+                break;
+            }
+
+        }
+
+        flox.save("ranking",ranking);
 
     }
 

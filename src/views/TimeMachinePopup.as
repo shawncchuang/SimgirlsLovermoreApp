@@ -253,6 +253,10 @@ public class TimeMachinePopup extends Sprite {
 
         }else{
 
+            //close item list
+            var currentScene:Sprite=ViewsContainer.currentScene;
+            currentScene.dispatchEventWith("USE_BLACKMARTET_ITEM");
+
             flox.save("date",pickerDate,onTimeTravel);
         }
 

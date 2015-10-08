@@ -431,7 +431,7 @@ public class MemebersCommand implements MembersInterface
             //GameOver--------------------------------
             SoundMixer.stopAll();
 
-            DebugTrace.msg("BattleScene checkTeamSurvive-------- Batttle Over seObj:"+JSON.stringify(seObj));
+           // DebugTrace.msg("BattleScene checkTeamSurvive-------- Batttle Over seObj:"+JSON.stringify(seObj));
             battleover=true;
 
 
@@ -444,6 +444,10 @@ public class MemebersCommand implements MembersInterface
 
             var evtObj:Object = new Object();
 
+            var winner:String="";
+            var team_id:String=cputeam[0].name.split("_")[0];
+
+
             if(cpu_gameover)
             {
                 evtObj.event = "Victory@"+scene;
@@ -453,6 +457,8 @@ public class MemebersCommand implements MembersInterface
                 battlealert=new VictoryAlert();
                 command.playBackgroudSound("BattleVictory");
                 saveRecord("victory");
+
+                winner="player";
             }
             if(player_gameover)
             {
@@ -463,6 +469,8 @@ public class MemebersCommand implements MembersInterface
                 battlealert=new DefeatAlert();
                 command.playBackgroudSound("BattleDefeat");
                 saveRecord("defeat");
+
+                winner="cpu";
             }
             battlealert.x=-1718;
             battlealert.y=-455;
@@ -472,6 +480,9 @@ public class MemebersCommand implements MembersInterface
             replaybtn.buttonMode=true;
             quitbtn.buttonMode=true;
             battlescene.addChild(battlealert);
+
+            var battleData:BattleData=new BattleData();
+            battleData.finishedBattle(winner,team_id);
 
             //ViewsContainer.BattleAlert=battlealert;
 

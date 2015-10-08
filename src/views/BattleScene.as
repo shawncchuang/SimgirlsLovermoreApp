@@ -323,12 +323,12 @@ public class BattleScene extends Sprite
 		var swfloader:SWFLoader = LoaderMax.getLoader("background");
 		background=swfloader.getSWFChild("bg") as MovieClip;
 		background.gotoAndStop(1);
-		var stageID:Number=Math.floor(Math.random()*background.mc.totalFrames)+1;
+
+		//var stageID:Number=Math.floor(Math.random()*background.mc.totalFrames)+1;
 		//trace("BattleScene.onStageBGComplete battle_type=",battle_type);
-		if(battle_type=="practice"){
-			stageID=2;
-		}
+		var stageID:Number=1;
 		switch(battle_type){
+
 			case "practice":
 				stageID=2;
 				break
@@ -348,6 +348,7 @@ public class BattleScene extends Sprite
 				}
 
 				break
+
 
 		}
 		//DebugTrace.msg("BattleScene.onStageBGComplete background.width"+background.width);

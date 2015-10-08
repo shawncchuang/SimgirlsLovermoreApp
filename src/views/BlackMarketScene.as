@@ -42,6 +42,7 @@ import utils.ViewsContainer;
 public class BlackMarketScene extends Scenes
 {
 	private var marketlayout:BlackMarketListLayout;
+    private var templete:MenuTemplate;
 	private var speaker_sprite:Sprite;
 	private var command:MainInterface=new MainCommand();
 	private var button:Button;
@@ -155,13 +156,19 @@ public class BlackMarketScene extends Scenes
 		panelbase.addChild(panellist);
 
 
-		var templete:MenuTemplate=new MenuTemplate();
+        templete=new MenuTemplate();
 		templete.addBackStepButton(doCannelHandler);
 		addChild(templete);
-
+		this.addEventListener("USE_BLACKMARTET_ITEM",onUseBlackMarketItem);
 
 
 	}
+	private function onUseBlackMarketItem(e:Event):void{
+		panelbase.removeFromParent(true);
+        marketlayout.removeFromParent(true);
+        templete.removeFromParent(true);
+	}
+
 	private function initCoin():void{
 
 
@@ -263,7 +270,7 @@ public class BlackMarketScene extends Scenes
 		initDesc();
 
 
-		var marketlayout:BlackMarketListLayout=new BlackMarketListLayout();
+        marketlayout=new BlackMarketListLayout();
 		marketlayout.type=type;
 		marketlayout.x=390;
 		marketlayout.y=250;

@@ -109,6 +109,13 @@ public class CpuMembersCommand implements CpuMembersInterface
         //DebugTrace.msg("CpuMembersCommand. setupBattleTeam month:"+month+", date:"+date);
         //var scene:String=DataContainer.BatttleScene;(scene==Arena)
         var teams:Object=flox.getSaveData("cpu_teams");
+        var date:String=flox.getSaveData("date").split(".")[1];
+        var month:String=flox.getSaveData("date").split(".")[2];
+        var dateStr:String=month+"_"+date;
+        var schedule:Dictionary=Config.battleSchedule();
+        var battle_schedule:Array=schedule[dateStr];
+
+
         bossName=Config.bossName;
         var battleType:String=DataContainer.battleType;
         //DebugTrace.msg("CpuMembersCommand. battleType :"+battleType);
@@ -118,7 +125,9 @@ public class CpuMembersCommand implements CpuMembersInterface
             cpuIndex=batteData.checkBattleSchedule("Battle","");
 
             //---------------------fake CPU team
-            cpuIndex=Math.floor(Math.random()*10);
+            //cpuIndex=Math.floor(Math.random()*10);
+            cpuIndex=Number(battle_schedule[0].split("|")[1]);
+
             if(cpuIndex==9)
                 cpuIndex=10;
 

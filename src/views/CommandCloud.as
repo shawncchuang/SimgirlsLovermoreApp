@@ -51,6 +51,8 @@ public class CommandCloud extends MovieClip
     public static var HIDED:String="hided";
     TweenPlugin.activate([TransformAroundCenterPlugin]);
 
+    private var ran_battle_rate:Number=100;
+
     public function CommandCloud(src:String):void{
         //L1_^Departures
         var p:String=src.split("_")[0];
@@ -156,9 +158,14 @@ public class CommandCloud extends MovieClip
 
                         success=command.consumeHandle("CannotPaticipate");
 
+                    }else if(battle_target==-2) {
+                        //already battle today
+                        success=command.consumeHandle("CannotBattleToday");
+
                     }else{
 
-                        success=command.consumeHandle(com);
+                            success=command.consumeHandle(com);
+
 
                     }
                     break;
@@ -310,7 +317,7 @@ public class CommandCloud extends MovieClip
 
     }
 
-    private function    checkSceneCommand():void
+    private function checkSceneCommand():void
     {
         var currentlable:String=DataContainer.currentLabel;
         var currentScene:String=DataContainer.currentScene;
@@ -333,8 +340,8 @@ public class CommandCloud extends MovieClip
             var ranbattle:Boolean=battledata.checkSurvivor();
             var perbattle:Number=Math.floor(Math.random()*100)+1;
             DebugTrace.msg("CommandCloud.checkSceneCommand perbattle="+perbattle);
-            if(ranbattle && perbattle<=100){
-                //could random fight
+            if(ranbattle && perbattle<=ran_battle_rate){
+                //could random battle
                 DataContainer.battleType="random_battle";
                 command.consumeHandle("RandomBattle");
 
@@ -345,8 +352,6 @@ public class CommandCloud extends MovieClip
                 command.sceneDispatch(SceneEvent.CHANGED,_data);
 
             }
-
-
 
 
         }

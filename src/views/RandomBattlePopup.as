@@ -59,10 +59,10 @@ public class RandomBattlePopup extends Sprite {
         okBtn.addEventListener(Event.TRIGGERED, fightHandler);
 
         var cancelBtn:Button=new Button();
-        cancelBtn.label="Run Away";
+        cancelBtn.label="Pay Pizzo $100";
         cancelBtn.x=220;
         cancelBtn.y=145;
-        cancelBtn.setSize(80,40);
+        cancelBtn.setSize(100,40);
         cancelBtn.labelFactory =  getItTextRender;
         cancelBtn.addEventListener(Event.TRIGGERED, runawayTriggeredHandler);
 

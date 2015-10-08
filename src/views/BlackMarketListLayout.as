@@ -58,6 +58,7 @@ public class BlackMarketListLayout extends PanelScreen {
         this.addEventListener(FeathersEventType.INITIALIZE, initializeHandler);
         this.addEventListener(Event.REMOVED_FROM_STAGE,onRemovedStageHandler);
 
+
     }
     private function initializeHandler(e:Event):void{
 

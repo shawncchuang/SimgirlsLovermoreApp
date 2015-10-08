@@ -1692,6 +1692,17 @@ public class MainCommand implements MainInterface {
             gameEvent.displayHandler();
             return false;
         }
+        if(com=="CannotBattleToday"){
+
+            msg = "You alreay battled today.";
+            alert = new AlertMessage(msg, onClosedAlert);
+            scene.addChild(alert);
+
+            gameEvent._name = "clear_comcloud";
+            gameEvent.displayHandler();
+            return false;
+
+        }
         if(com=="NoSurvivor"){
             msg = "No anyone can do this !!";
             alert = new AlertMessage(msg, onClosedAlert);

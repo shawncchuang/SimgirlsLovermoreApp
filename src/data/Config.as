@@ -53,26 +53,26 @@ public class Config
         var scheduls:Dictionary=new Dictionary();
 
         scheduls["Jul_5"]= ["p|0", "2|1", "4|3", "5|6", "7|8"];
-        scheduls["Jul_12"]= ["p|1", "0|2", "3|5", "4|7", "8|6"];
-        scheduls["Jul_19"]= ["p|3", "4|0", "1|7", "6|2", "8|5"];
-        scheduls["Jul_26"]= ["p|2", "0|1", "6|3", "7|5", "4|8"];
+        scheduls["Jul_12"]=["p|1", "0|2", "3|5", "4|7", "8|6"];
+        scheduls["Jul_19"]=["p|3", "4|0", "1|7", "6|2", "8|5"];
+        scheduls["Jul_26"]=["p|2", "0|1", "6|3", "7|5", "4|8"];
 
-        scheduls["Aug_2"]= ["7|0", "p|6", "5|1", "2|4", "8|3"];
-        scheduls["Aug_9"]=["2|7", "1|3", "6|4", "p|5", "8|0"];
+        scheduls["Aug_2"]= ["p|6", "7|0", "5|1", "2|4", "8|3"];
+        scheduls["Aug_9"]= ["p|5", "2|7", "1|3", "6|4", "8|0"];
         scheduls["Aug_16"]=["p|4", "7|6", "5|0", "2|3", "1|8"];
         scheduls["Aug_23"]=["p|7", "0|3", "4|5", "6|1", "2|8"];
-        scheduls["Aug_30"]=["0|6", "5|2", "1|4", "3|7", "p|8"];
+        scheduls["Aug_30"]=["p|8", "0|6", "5|2", "1|4", "3|7"];
 
-        scheduls["Oct_4"]=["p|0", "2|1", "4|3", "5|6", "7|8"];
-        scheduls["Oct_11"]= ["p|1", "0|2", "3|5", "4|7", "8|6"];
+        scheduls["Oct_4"]= ["p|0", "2|1", "4|3", "5|6", "7|8"];
+        scheduls["Oct_11"]=["p|1", "0|2", "3|5", "4|7", "8|6"];
         scheduls["Oct_18"]=["p|3", "4|0", "1|7", "6|2", "8|5"];
         scheduls["Oct_25"]=["p|2", "0|1", "6|3", "7|5", "4|8"];
 
-        scheduls["Nov_1"]= ["7|0", "p|6", "5|1", "2|4", "8|3"];
-        scheduls["Nov_8"]=["2|7", "1|3", "6|4", "p|5", "8|0"];
-        scheduls["Nov_15"]= ["p|4", "7|6", "5|0", "2|3", "1|8"];
+        scheduls["Nov_1"]= ["p|6", "7|0", "5|1", "2|4", "8|3"];
+        scheduls["Nov_8"]= ["p|5", "2|7", "1|3", "6|4", "8|0"];
+        scheduls["Nov_15"]=["p|4", "7|6", "5|0", "2|3", "1|8"];
         scheduls["Nov_22"]=["p|7", "0|3", "4|5", "6|1", "2|8"];
-        scheduls["Nov_29"]=["0|6", "5|2", "1|4", "3|7", "p|8"];
+        scheduls["Nov_29"]=["p|8", "0|6", "5|2", "1|4", "3|7"];
 
 
         return scheduls
@@ -119,14 +119,14 @@ public class Config
     {
         "t0":
         {
-            "acc":0xFF0000,
+            "acc":0xA04A1A,
             "acc_tint":0.5,
-            "body":0xFFFFFF,
-            "body_tint":0.9,
-            "skin":null,
-            "skin_tint":null,
-            "member":[0xFFFFFF,0xFF0000],
-            "member_tint":[0.9,0.5]
+            "body":0xFEE169,
+            "body_tint":0.5,
+            "skin":0xA04A1A,
+            "skin_tint":0.5,
+            "member":[0xFEE169,0x000000],
+            "member_tint":[0.5,0.5]
         },
         "t1":
         {
@@ -137,84 +137,84 @@ public class Config
             "skin":null,
             "skin_tint":null,
             "member":[0x8FAB6E,0x3F5134],
-            "member_tint":[0.9,0.5]
+            "member_tint":[0.5,0.5]
         },
         "t2":
         {
-            "acc":0x539FCF,
-            "acc_tint":0.8,
-            "body":0xDF67C5,
-            "body_tint":0.8,
+            "acc":0xCC0000,
+            "acc_tint":0.5,
+            "body":0xFF0000,
+            "body_tint":0.5,
             "skin":null,
             "skin_tint":null,
-            "member":[0xD94886,0xDF67C5],
-            "member_tint":[0.8,0.8]
+            "member":[0xFF0000,0x000000],
+            "member_tint":[0.5,0.5]
         },
         "t3":
         {
             "acc":0x3C74B6,
             "acc_tint":0.5,
             "body":0x36435A,
-            "body_tint":0.9,
+            "body_tint":0.5,
             "skin":null,
             "skin_tint":null,
             "member":[0x36435A,0x3C74B6],
-            "member_tint":[0.9,0.5]
+            "member_tint":[0.5,0.5]
         },
         "t4":
         {
-            "acc":null,
+            "acc":0xAC324C,
             "acc_tint":0.5,
-            "body":null,
-            "body_tint":0.9,
+            "body":0xFF6DBC,
+            "body_tint":0.5,
             "skin":null,
             "skin_tint":null,
-            "member":[0x1E1E1E,0x595959],
-            "member_tint":[0.9,0.5]
+            "member":[0xFF6DBC,0xAC324C],
+            "member_tint":[0.5,0.5]
         },
         "t5":
         {
-            "acc":0xc51111,
+            "acc":0x263E33,
             "acc_tint":0.5,
-            "body":0xff5c00,
+            "body":0x7F9D5D,
             "body_tint":0.9,
             "skin":null,
             "skin_tint":null,
-            "member":[0xff5c00,0xc51111],
-            "member_tint":[0.8,0.5]
+            "member":[0x7F9D5D,0x263E33],
+            "member_tint":[0.5,0.5]
         },
         "t6":
         {
-            "acc":null,
+            "acc":0x275B80,
             "acc_tint":0.5,
-            "body":null,
+            "body":0x93C8F9,
             "body_tint":0.9,
-            "skin":0x333333,
-            "skin_tint":0.5,
-            "member":[null,null],
-            "member_tint":[0.9,0.5]
+            "skin":null,
+            "skin_tint":null,
+            "member":[0x93C8F9,0x275B80],
+            "member_tint":[0.5,0.5]
         },
         "t7":
         {
-            "acc":null,
-            "acc_tint":0.5,
-            "body":null,
-            "body_tint":0.9,
+            "acc":0xA83B3B,
+            "acc_tint":0.8,
+            "body":0xFFFFFF,
+            "body_tint":0.8,
             "skin":null,
             "skin_tint":null,
-            "member":[null,null],
-            "member_tint":[0.9,0.5]
+            "member":[0xFFFFFF,0xA83B3B],
+            "member_tint":[0.8,0.8]
         },
         "t8":
         {
-            "acc":null,
-            "acc_tint":0.5,
-            "body":null,
+            "acc":0xBBE8EE,
+            "acc_tint":0.8,
+            "body":0x2D6392,
             "body_tint":0.9,
             "skin":null,
-            "skin_tint":null,
-            "member":[null,null],
-            "member_tint":[0.9,0.5]
+            "skin_tint":0.6,
+            "member":[0x2D6392,0xBBE8EE],
+            "member_tint":[0.9,0.8]
         },
         "t11":
         {
@@ -247,8 +247,8 @@ public class Config
         "t3_0":"shn",
         "t4_0":"mia",
         "t5_0":"tgr",
-        "t6_0":"akr",
-        "t7_0":"bdh",
+        "t6_0":"bdh",
+        "t7_0":"xns",
         "t8_0":"gor",
         "t10_0":"fat",
         "t11_0":"fan"
