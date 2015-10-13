@@ -50,7 +50,7 @@ public class ParticleSystem implements ParticleInterface
 				_color=0xFF66FF;
 				lifespan=1.5;
 				lifespanVariance=1.5;
-				if("reduce_changed_relationship"){
+				if(_type=="reduce_changed_relationship"){
 					_color=0x00FFFF;
 				}
 				break
@@ -79,8 +79,8 @@ public class ParticleSystem implements ParticleInterface
 		ps.start(_duration);
 		ps.startColorVariance=ColorArgb.fromRgb(_color);
 		ps.endColorVariance=ColorArgb.fromRgb(_color);
-		ps.startColor=ColorArgb.fromRgb(_color);
-		ps.endColor=ColorArgb.fromRgb(_color);
+		//ps.startColor=ColorArgb.fromRgb(_color);
+		//ps.endColor=ColorArgb.fromRgb(_color);
 		ps.speed=300;
 		ps.maxNumParticles=maxNum;
 		ps.lifespan=lifespan;

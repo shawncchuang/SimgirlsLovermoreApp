@@ -251,7 +251,7 @@ public class ChangeFormationScene extends Scenes
     private function onReadyComplete():void
     {
 
-        DebugTrace.msg("ChangeFormationScene.initSubstitues subsindex:"+subsindex)
+        DebugTrace.msg("ChangeFormationScene.initSubstitues subsindex:"+subsindex);
         var avatar:Sprite=avatarcom.getAvatar();
         var armature:Armature=avatarcom.getArmaute();
         //var body:Bone = armature.getBone("body");

@@ -107,7 +107,7 @@ public class GameInfobar extends Sprite
         showDayIcon();
 
         showMenu();
-        showAppearance();
+        showImage();
         showIntelligence();
         showHonor();
         showLove();
@@ -237,7 +237,7 @@ public class GameInfobar extends Sprite
         var honorStr:String=String(honor.play);
 
 
-        honorTxt=new TextField(morebar.width,40,honorStr,font,20,0xFFFFFF);
+        honorTxt=new TextField(morebar.width,40,honorStr,font,18,0xFFFFFF);
         honorTxt.vAlign="center";
         honorTxt.hAlign="center";
         honorTxt.y=60;
@@ -248,7 +248,7 @@ public class GameInfobar extends Sprite
         var love:Object=flox.getSaveData("love");
         var loveStr:String=String(love.player);
 
-        loveTxt=new TextField(morebar.width,40,loveStr,font,20,0xFFFFFF);
+        loveTxt=new TextField(morebar.width,40,loveStr,font,18,0xFFFFFF);
         loveTxt.vAlign="center";
         loveTxt.hAlign="center";
         loveTxt.y=130;
@@ -261,20 +261,20 @@ public class GameInfobar extends Sprite
         var intStr:String=String(intObj.player);
 
 
-        intTxt=new TextField(morebar.width,40,intStr,font,20,0xFFFFFF);
+        intTxt=new TextField(morebar.width,40,intStr,font,18,0xFFFFFF);
         intTxt.vAlign="center";
         intTxt.hAlign="center";
         intTxt.y=200;
         morebar.addChild(intTxt);
     }
 
-    private function showAppearance():void
+    private function showImage():void
     {
 
         var image:Object=flox.getSaveData("image");
         var imageStr:String=String(image.player);
 
-        imageTxt=new TextField(morebar.width,40,imageStr,font,20,0xFFFFFF);
+        imageTxt=new TextField(morebar.width,40,imageStr,font,18,0xFFFFFF);
         imageTxt.vAlign="center";
         imageTxt.hAlign="center";
         imageTxt.y=270;

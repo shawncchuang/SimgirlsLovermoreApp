@@ -1257,8 +1257,8 @@ public class DatingScene extends Scenes {
                 //moodPass=true;
                 break;
             case "Kiss":
-                limitRel = relationship_level["closefriend-Min"];
-                limitMood = mood_level["loved-Min"];
+                limitRel = relationship_level["datingpartner-Min"];
+                limitMood = mood_level["smitten-Min"];
                 break;
             case "Leave":
                 relPass = true;
