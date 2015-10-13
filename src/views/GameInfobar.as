@@ -447,7 +447,6 @@ public class GameInfobar extends Sprite
         player_icon.name="Player";
         player_icon.scaleX=0.89;
         player_icon.scaleY=0.89;
-        //player_icon.alpha=0;
         addChild(player_icon);
 
 
@@ -459,6 +458,7 @@ public class GameInfobar extends Sprite
         proTxt.vAlign="top";
         proTxt.text="# "+progress;
         addChild(proTxt);
+
 
 //        var tween:Tween=new Tween(player_icon,0.5,Transitions.EASE_IN_OUT);
 //        tween.fadeTo(1);
@@ -480,16 +480,17 @@ public class GameInfobar extends Sprite
             dating_icon.removeFromParent(true);
 
         }
-        var tween:Tween=new Tween(player_icon,0.3,Transitions.EASE_IN_OUT);
-        tween.fadeTo(0);
-        tween.onComplete=function():void{
-            Starling.juggler.removeTweens(player_icon);
-            player_icon.removeFromParent(true);
-
-
-
-        };
-        Starling.juggler.add(tween);
+        player_icon.removeFromParent(true);
+//        var tween:Tween=new Tween(player_icon,0.3,Transitions.EASE_IN_OUT);
+//        tween.fadeTo(0);
+//        tween.onComplete=function():void{
+//            Starling.juggler.removeTweens(player_icon);
+//            player_icon.removeFromParent(true);
+//
+//
+//
+//        };
+//        Starling.juggler.add(tween);
 
     }
 
@@ -498,15 +499,15 @@ public class GameInfobar extends Sprite
 
         current_dating=flox.getSaveData("dating");
         if(current_dating!="") {
+            dating_icon.removeFromParent(true);
 
-
-            var tween:Tween = new Tween(dating_icon, 0.1, Transitions.EASE_IN_OUT);
-            tween.fadeTo(0);
-            tween.onComplete = function ():void{
-                Starling.juggler.removeTweens(dating_icon);
-                dating_icon.removeFromParent(true);
-            };
-            Starling.juggler.add(tween);
+//            var tween:Tween = new Tween(dating_icon, 0.1, Transitions.EASE_IN_OUT);
+//            tween.fadeTo(0);
+//            tween.onComplete = function ():void{
+//                Starling.juggler.removeTweens(dating_icon);
+//                dating_icon.removeFromParent(true);
+//            };
+//            Starling.juggler.add(tween);
 
         }
 

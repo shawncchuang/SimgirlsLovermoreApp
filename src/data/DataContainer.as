@@ -388,39 +388,41 @@ public class DataContainer
         //var reStep:Object=Config.relationshipStep;
 
         var rel:String="";
+        var relIndex:Number=0;
         if(pts<=reStep["foe-Max"])
         {
-            rel="foe";
+            relIndex=0;
         }
         else if(pts>=reStep["acquaintance-Min"] && pts<=reStep["acquaintance-Max"])
         {
-            rel="acquaintance";
+            relIndex=1;
         }
         else if(pts>=reStep["friend-Min"] && pts<=reStep["friend-Max"])
         {
-            rel="friend";
+            relIndex=2;
 
         }
         else if(pts>=reStep["closefriend-Min"] && pts<=reStep["closefriend-Max"])
         {
-            rel="close friend";
+            relIndex=3;
 
         }
         else if(pts>=reStep["datingpartner-Min"] && pts<=reStep["datingpartner-Max"])
         {
-            rel="dating partner";
+            relIndex=4;
 
         }
         else if(pts>=reStep["lover-Min"] && pts<=reStep["lover-Max"])
         {
-            rel="lover";
+            relIndex=5;
 
         }
         else if(pts>=reStep["spouse-Min"])
         {
-            rel="spouse";
+            relIndex=6;
 
         }
+        rel=Config.relatoinshipHeirarchy[relIndex];
 
         return rel
 

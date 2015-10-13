@@ -45,8 +45,8 @@ public class Config
         "Nov_1","Nov_8","Nov_15","Nov_22","Nov_29"
     ]
 
-
-
+    public static var relatoinshipHeirarchy:Array=["foe","acquaintance","friend","close friend",
+        "dating partner","lover","spouse"];
 
     public static function  battleSchedule():Dictionary
     {

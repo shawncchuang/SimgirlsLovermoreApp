@@ -547,9 +547,11 @@ public class AssetEmbeds
     [Embed(source="../../media/textures/icons/use_button_down_skin.png")]
     public static const UseButtonDown_Skin:Class;
 
-
     [Embed(source="../../media/textures/icons/pickerlist_time_bg.png")]
     public static const PickList_Time_BG_Skin:Class;
+
+    [Embed(source="../../media/textures/icons/relationshipchanged.png")]
+    public static const RelationshipChangedTexture:Class;
 
     /*------------------icons-------------------------------------------------*/
 

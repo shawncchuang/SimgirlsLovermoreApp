@@ -6,6 +6,8 @@ import com.greensock.loading.LoaderMax;
 import com.greensock.loading.SWFLoader;
 import com.shortybmc.data.parser.CSV;
 
+import data.Config;
+
 import flash.desktop.NativeApplication;
 
 import flash.desktop.NativeDragActions;
@@ -870,8 +872,29 @@ public class MainCommand implements MainInterface {
         }
 
         ptsObj[dating] = pts;
-
         rel = DataContainer.getRelationship(pts, dating);
+
+        if(relObj[dating]!=rel){
+            //relationship changed
+
+            var oldLv:Number= Config.relatoinshipHeirarchy.indexOf(relObj[dating]);
+            var currentLv:Number=Config.relatoinshipHeirarchy.indexOf(rel);
+            DebugTrace.msg("MainCommand.updateRelationship changed oldLv="+oldLv+", currentLv="+currentLv);
+            var _data:Object=new Object();
+            if(oldLv>currentLv){
+                //reduce
+                _data.change_type="reduce";
+
+            }else{
+                //raise
+                _data.change_type="raise";
+            }
+            var datingScene:Sprite=ViewsContainer.baseSprite;
+            datingScene.dispatchEventWith(DatingScene.CHANGED_RELATIONSHIP,false,_data);
+
+        }
+
+
         relObj[dating] = rel;
 
         var _data:Object = new Object();
@@ -1694,7 +1717,7 @@ public class MainCommand implements MainInterface {
         }
         if(com=="CannotBattleToday"){
 
-            msg = "You alreay battled today.";
+            msg = "You have already battled today.";
             alert = new AlertMessage(msg, onClosedAlert);
             scene.addChild(alert);
 
@@ -1703,9 +1726,16 @@ public class MainCommand implements MainInterface {
             return false;
 
         }
-        if(com=="NoSurvivor"){
-            msg = "No anyone can do this !!";
-            alert = new AlertMessage(msg, onClosedAlert);
+        if(com=="NoSurvivor" || com=="NoSurvivor_Normal"){
+            //random battle
+            var alertType:String="nobutton_type";
+            msg = "No anyone can do this ,Please Pay Pizzo $100.";
+            if(com=="NoSurvivor_Normal"){
+                //battle , pratice
+                alertType="button_type";
+                msg = "No anyone can do this !!";
+            }
+            alert = new AlertMessage(msg, onClosedAlert,alertType);
             scene.addChild(alert);
             gameEvent._name = "clear_comcloud";
             gameEvent.displayHandler();

@@ -95,11 +95,17 @@ public class ChangeFormationScene extends Scenes
 
         soldilers_name=new Array();
         var formation:Object=flox.getSaveData("se");
+        var pts:Object=flox.getSaveData("pts");
+        var reLv:Object=flox.getSyetemData("relationship_level");
         for(var name:String in formation)
         {
             if(formation[name]>0)
             {
-                soldilers_name.push(name);
+                if(pts[name]>reLv["closefriend-Min"] || name=="player"){
+                    soldilers_name.push(name);
+                }
+
+
             }
         }
         DebugTrace.msg("ChangeFormationScene.init soldilers_name:"+soldilers_name)

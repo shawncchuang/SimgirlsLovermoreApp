@@ -18,6 +18,8 @@ import feathers.core.PopUpManager;
 
 import flash.text.TextFormat;
 
+import model.BattleData;
+
 import starling.animation.Tween;
 import starling.core.Starling;
 
@@ -75,16 +77,29 @@ public class RandomBattlePopup extends Sprite {
     }
     private function fightHandler(e:Event):void{
 
-        PopUpManager.removePopUp(popup,true);
+        var battledata:BattleData=new BattleData();
+        var survivor:Boolean=battledata.checkSurvivor();
 
-        var gameEvent:GameEvent = SimgirlsLovemore.gameEvent;
-        gameEvent._name = "clear_comcloud";
-        gameEvent.displayHandler();
+        if(!survivor){
+            e.currentTarget.removeEventListener(Event.TRIGGERED, fightHandler);
+            command.consumeHandle("NoSurvivor");
 
-        var _data:Object = new Object();
-        _data.name = "ChangeFormationScene";
-        var command:MainInterface = new MainCommand();
-        command.sceneDispatch(SceneEvent.CHANGED, _data);
+        }else{
+            PopUpManager.removePopUp(popup,true);
+
+            var gameEvent:GameEvent = SimgirlsLovemore.gameEvent;
+            gameEvent._name = "clear_comcloud";
+            gameEvent.displayHandler();
+
+            var _data:Object = new Object();
+            _data.name = "ChangeFormationScene";
+
+            command.sceneDispatch(SceneEvent.CHANGED, _data);
+
+
+        }
+
+
 
     }
     private function runawayTriggeredHandler(e:Event):void {

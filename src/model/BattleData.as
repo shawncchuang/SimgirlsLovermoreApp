@@ -858,12 +858,19 @@ public class BattleData
         var survivor:Boolean=false;
         var seObj:Object=flox.getSaveData("se");
 
+        var pts:Object=flox.getSaveData("pts");
+        var reLv:Object=flox.getSyetemData("relationship_level");
+
         for(var name:String in seObj){
 
             if(seObj[name]>0){
 
-                survivor=true;
-                break
+                if(pts[name]>reLv["closefriend-Min"] || name=="player"){
+                    survivor=true;
+                    break
+                }
+
+
             }
         }
 

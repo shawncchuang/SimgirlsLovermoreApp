@@ -41,12 +41,17 @@ public class AlertMessage extends Sprite
         onClosed=callback;
         comfirm=new Sprite();
         msg=content;
-        if(type=="screen_type"){
+        switch(type){
 
-            initScreenType();
-        }else{
-
-            initButtonType();
+            case "screen_type":
+                initScreenType();
+                break;
+            case "nobutton_type":
+                initNoButtonType();
+                break
+            default:
+                initButtonType();
+                break
         }
 
 
@@ -58,6 +63,11 @@ public class AlertMessage extends Sprite
         quad= new Quad(width,height,Color.AQUA);
         quad.alpha=0;
         addChild(quad);
+
+        var txt:TextField=new TextField(1024,80,msg,font,20,0xFFFFFF);
+        txt.hAlign="center";
+        txt.x=-512;
+        txt.y=290;
 
         clickmouse=new ClickMouseIcon();
         clickmouse.x=973;
@@ -81,6 +91,43 @@ public class AlertMessage extends Sprite
 
 
     }
+    private function initNoButtonType():void{
+
+        var width:Number=Starling.current.stage.stageWidth;
+        var height:Number=Starling.current.stage.stageHeight;
+        quad= new Quad(width,height,Color.AQUA);
+        quad.alpha=0;
+        addChild(quad);
+
+
+        var texture:Texture=Assets.getTexture("SceneMask");
+        alertframe=new Image(texture);
+        alertframe.pivotX=alertframe.width/2;
+        alertframe.pivotY=alertframe.height/2;
+        comfirm.addChild(alertframe);
+
+
+        var txt:TextField=new TextField(1024,80,msg,font,20,0xFFFFFF);
+        txt.hAlign="center";
+        txt.x=-512;
+        txt.y=290;
+        comfirm.addChild(txt);
+
+        comfirm.x= Starling.current.stage.stageWidth/2;
+        comfirm.y= Starling.current.stage.stageHeight/2;
+        addChild(comfirm);
+
+
+        clickmouse=new ClickMouseIcon();
+        clickmouse.x=973;
+        clickmouse.y=704;
+        addChild(clickmouse);
+
+        this.addEventListener(TouchEvent.TOUCH,doCancelHandler);
+
+
+
+    }
     private function initButtonType():void{
 
 
@@ -95,8 +142,6 @@ public class AlertMessage extends Sprite
         txt.hAlign="center";
         txt.x=-512;
         txt.y=290;
-
-
 
         comfirm.addChild(alertframe);
         comfirm.addChild(txt);

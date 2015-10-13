@@ -481,8 +481,11 @@ public class MemebersCommand implements MembersInterface
             quitbtn.buttonMode=true;
             battlescene.addChild(battlealert);
 
-            var battleData:BattleData=new BattleData();
-            battleData.finishedBattle(winner,team_id);
+            if(type!="random_battle"){
+                var battleData:BattleData=new BattleData();
+                battleData.finishedBattle(winner,team_id);
+            }
+
 
             //ViewsContainer.BattleAlert=battlealert;
 

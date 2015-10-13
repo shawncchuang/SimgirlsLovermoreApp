@@ -51,7 +51,7 @@ public class CommandCloud extends MovieClip
     public static var HIDED:String="hided";
     TweenPlugin.activate([TransformAroundCenterPlugin]);
 
-    private var ran_battle_rate:Number=100;
+    private var ran_battle_rate:Number=10;
 
     public function CommandCloud(src:String):void{
         //L1_^Departures
@@ -146,15 +146,14 @@ public class CommandCloud extends MovieClip
             var battle_target:Number=-1;
             var success:Boolean=true;
             var battledata:BattleData=new BattleData();
-
+            var survivor:Boolean=false;
             switch(com){
                 case "Battle":
                     battle_target= battledata.checkBattleSchedule("Battle","");
+
+                    DebugTrace.msg("CommandCloud.doClickComCloud survivor="+survivor);
+
                     if(battle_target==-1){
-//                    var _data:Object=new Object();
-//                    _data.removed="CannotParticipate";
-//                    var current_scene:Sprite=ViewsContainer.currentScene;
-//                    current_scene.dispatchEventWith(TopViewEvent.REMOVE,false,_data);
 
                         success=command.consumeHandle("CannotPaticipate");
 
@@ -164,15 +163,21 @@ public class CommandCloud extends MovieClip
 
                     }else{
 
+                        survivor=battledata.checkSurvivor();
+                        if(!survivor){
+                            success=command.consumeHandle("NoSurvivor_Normal");
+                        }else{
                             success=command.consumeHandle(com);
-
+                        }
 
                     }
+
+
                     break;
                 case "Practice":
-                    var survivor:Boolean=battledata.checkSurvivor();
+                    survivor=battledata.checkSurvivor();
                     if(!survivor){
-                        success=command.consumeHandle("NoSurvivor");
+                        success=command.consumeHandle("NoSurvivor_Normal");
                     }else{
                         success=command.consumeHandle(com);
                     }
@@ -337,10 +342,10 @@ public class CommandCloud extends MovieClip
         {
             //Looking for someone at scene
             var battledata:BattleData=new BattleData();
-            var ranbattle:Boolean=battledata.checkSurvivor();
+            //var ranbattle:Boolean=battledata.checkSurvivor();
             var perbattle:Number=Math.floor(Math.random()*100)+1;
             DebugTrace.msg("CommandCloud.checkSceneCommand perbattle="+perbattle);
-            if(ranbattle && perbattle<=ran_battle_rate){
+            if(perbattle<=ran_battle_rate){
                 //could random battle
                 DataContainer.battleType="random_battle";
                 command.consumeHandle("RandomBattle");

@@ -90,6 +90,7 @@ public class DatingScene extends Scenes {
     public static var DISPLAY_ALERT:String = "display_alert";
     public static var UPDATE_INFO:String = "update_info";
     public static var REJECT_GIFT:String = "reject_gift";
+    public static var CHANGED_RELATIONSHIP:String="changed_relationship";
     private var gameEvent:GameEvent = SimgirlsLovemore.gameEvent;
     private var excerptbox:ExcerptBox;
     private var item_id:String;
@@ -106,6 +107,8 @@ public class DatingScene extends Scenes {
     private var panelbase:Sprite;
     private var itemImg:Image;
 
+    private var heartView:Sprite;
+    private var timer:Timer;
     public function DatingScene() {
         //ViewsContainer.InfoDataView.visible=false;
 
@@ -116,6 +119,7 @@ public class DatingScene extends Scenes {
         this.addEventListener(DatingScene.DISPLAY_ALERT, doAlerMessage);
         this.addEventListener(DatingScene.UPDATE_INFO, doUpdateDatingInfo);
         this.addEventListener(DatingScene.REJECT_GIFT, doRejectGiftHandle);
+        this.addEventListener(DatingScene.CHANGED_RELATIONSHIP, doChandedRelactionshipHandle);
         ViewsContainer.baseSprite = this;
 
 
@@ -333,7 +337,7 @@ public class DatingScene extends Scenes {
     private function startPaticles():void {
         //	var assets:Object=flox.getSaveData("assets");
 
-        var rating:Number = command.searchAssetRating(item_id)
+        var rating:Number = command.searchAssetRating(item_id);
         var type:String = "like";
         if (rating < 0) {
             type = "unlike"
@@ -365,13 +369,14 @@ public class DatingScene extends Scenes {
             mood_value = "+" + reward_mood;
         }
 
+        command.updateRelationship();
+
+
         var value_data:Object = new Object();
         value_data.attr = "mood";
         value_data.values = "MOOD " + mood_value;
         command.displayUpdateValue(this, value_data);
 
-        //updateRelPoint();
-        command.updateRelationship();
 
 
     }
@@ -1252,7 +1257,7 @@ public class DatingScene extends Scenes {
                 //moodPass=true;
                 break;
             case "Kiss":
-                limitRel = relationship_level["lover-Min"];
+                limitRel = relationship_level["closefriend-Min"];
                 limitMood = mood_level["loved-Min"];
                 break;
             case "Leave":
@@ -1273,13 +1278,15 @@ public class DatingScene extends Scenes {
             }
 
         }
-        if (relPass) {
+
+        if (relPass || !moodPass) {
 
             if (mood >= limitMood) {
                 moodPass = true;
             }
 
         }
+
         var attr:Object = new Object();
         attr.x = 640;
         attr.y = 132;
@@ -1340,6 +1347,58 @@ public class DatingScene extends Scenes {
 
         var takephoto:TakePhotos = new TakePhotos();
         addChild(takephoto);
+
+
+    }
+    private function doChandedRelactionshipHandle(e:Event):void{
+
+        var point:Point=new Point();
+        point.x=Starling.current.stage.stageWidth/2;
+        point.y=Starling.current.stage.stageHeight/2;
+
+        heartView=new Sprite();
+        addChild(heartView);
+
+
+        timer=new Timer(1000,3);
+        timer.addEventListener(TimerEvent.TIMER_COMPLETE,onTimeOut);
+        timer.start();
+
+        var change_type:String=e.data.change_type;
+        var type:String=change_type+"_"+DatingScene.CHANGED_RELATIONSHIP;
+        var ps:ParticleInterface = new ParticleSystem();
+        ps.init(heartView,type,point);
+        ps.showParticles();
+
+
+        var texture:Texture=Assets.getTexture("RelationshipChangedTexture");
+        var txtImage:Image=new Image(texture);
+        txtImage.pivotX=txtImage.width/2;
+        txtImage.pivotY=txtImage.height/2;
+        txtImage.x=point.x;
+        txtImage.y=point.y;
+
+        heartView.addChild(txtImage);
+        var tween:Tween=new Tween(txtImage,1,Transitions.EASE_OUT_ELASTIC);
+        tween.animate("scaleX",0.2);
+        tween.animate("scaleY",0.2);
+        tween.scaleTo(1.2);
+        tween.animate("alpha",0.7);
+        tween.animate("alpha",1);
+        if(change_type=="reduce")
+        tween.animate("color",0x00FFFF);
+        Starling.juggler.add(tween);
+
+    }
+
+    private function onTimeOut(e:TimerEvent):void {
+
+        timer.removeEventListener(TimerEvent.TIMER_COMPLETE, onTimeOut);
+        timer.stop();
+
+        Starling.juggler.removeTweens(this);
+
+        heartView.removeFromParent(true);
 
 
     }
