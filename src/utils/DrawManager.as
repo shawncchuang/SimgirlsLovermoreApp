@@ -597,22 +597,29 @@ public class DrawManager implements DrawerInterface
             _time="Night";
         }
         var scene:String=DataContainer.currentScene;
+        var allDNScene:Array=Config.daynightScene;
 
         var bgSrc:String=DataContainer.currentScene.split("Scene").join("Bg");
-        switch(scene){
-            //scenes need day or night background
-            case "BeachScene":
-            case "ParkScene":
-            case "PierScene":
-            case "LovemoreMansionScene":
-            case "HotelScene":
-            case "GardenScene":
-            case "FitnessClubScene":
-            case "PrivateIslandScene":
-                bgSrc+=_time;
-                break
+       var scene_index:Number=allDNScene.indexOf(scene);
 
+        if(scene_index!=-1){
+            //scenes need day or night background
+            bgSrc+=_time;
         }
+//        switch(scene){
+//            //scenes need day or night background
+//            case "BeachScene":
+//            case "ParkScene":
+//            case "PierScene":
+//            case "LovemoreMansionScene":
+//            case "HotelScene":
+//            case "GardenScene":
+//            case "FitnessClubScene":
+//            case "PrivateIslandScene":
+//                bgSrc+=_time;
+//                break
+//
+//        }
 
         var bgTexture:Texture=Assets.getTexture(bgSrc);
         var bgImg:Image=new Image(bgTexture);

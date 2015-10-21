@@ -10,9 +10,13 @@ import controller.MainInterface;
 import controller.SceneCommnad;
 import controller.SceneInterface;
 
+import data.Config;
+
 import data.DataContainer;
 
 import events.SceneEvent;
+
+import flash.display.BitmapData;
 
 import flash.geom.Point;
 import flash.geom.Rectangle;
@@ -51,6 +55,8 @@ public class PhotosScene extends Sprite {
     private  var leftArrow:Button;
     private var rightArrow:Button;
     private var trash:Button;
+
+
 
     public function PhotosScene() {
 
@@ -249,22 +255,29 @@ public class PhotosScene extends Sprite {
             //photo.scaleX=0.65;
             //photo.scaleY=0.65;
             addChild(photo);
-            var scene:String=pic.scene.split("Scene").join("");
-
-            switch(scene){
-
-                case "Beach":
-                case "Garden":
-                case "Hotel":
-                case "LovemoreMansion":
-                case "Park":
-                case "Pier":
-                    scene=scene+"Bg"+time;
-                    break
-                default:
-                    scene=scene+"Bg";
-                    break
+            //var scene:String=pic.scene.split("Scene").join("");
+            var scene:String=pic.scene;
+            var allDNScene:Array=Config.daynightScene;
+            var scene_index:Number=allDNScene.indexOf(scene);
+            if(scene_index!=-1){
+                scene=scene+"Bg"+time;
+            }else{
+                scene=scene+"Bg";
             }
+//            switch(scene){
+//
+//                case "Beach":
+//                case "Garden":
+//                case "Hotel":
+//                case "LovemoreMansion":
+//                case "Park":
+//                case "Pier":
+//                    scene=scene+"Bg"+time;
+//                    break
+//                default:
+//                    scene=scene+"Bg";
+//                    break
+//            }
 
             var bgTexture:Texture=Assets.getTexture(scene);
             var bg:Image=new Image(bgTexture);
@@ -289,9 +302,53 @@ public class PhotosScene extends Sprite {
             photo.height=rec.height;
         }
 
+        //var bitmapdata:BitmapData= copyToBitmap();
+        //
+        //var bytes:ByteArray = bitmapData.encode(bitmapData.rect, new flash.display.JPEGEncoderOptions());
+        //saveImageFile(bytes,"jpg");
 
     }
+    /*
+    save file
 
+    private function saveImageFile(image:ByteArray,imgTxt:String):void{
+    var filename:String="xxxx."+imgTxt;
+         var file:File = new File();
+         file.nativePath = fileName;
+         var fileStream:FileStream = new FileStream();
+         fileStream.open(file, FileMode.WRITE);
+         fileStream.writeBytes(image);
+         fileStream.close();
+    }
+
+
+     */
+
+    /*
+     public function copyToBitmap(disp:DisplayObject, scl:Number=1.0):BitmapData
+     {
+     var rc:Rectangle = new Rectangle();
+     disp.getBounds(disp, rc);
+
+     var stage:Stage= Starling.current.stage;
+     var rs:RenderSupport = new RenderSupport();
+
+     rs.clear();
+     rs.scaleMatrix(scl, scl);
+     rs.setOrthographicProjection(0, 0, stage.stageWidth, stage.stageHeight);
+     rs.translateMatrix(-rc.x, -rc.y); // move to 0,0
+     disp.render(rs, 1.0);
+     rs.finishQuadBatch();
+
+     var outBmp:BitmapData = new BitmapData(rc.width*scl, rc.height*scl, true);
+     Starling.context.drawToBitmapData(outBmp);
+
+     return outBmp;
+     }
+
+
+
+     */
 
 }
 }

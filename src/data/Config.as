@@ -43,7 +43,10 @@ public class Config
         "Oct_2","Oct_9","Oct_16","Oct_23","Oct_30",
         "Nov_4","Nov_11","Nov_18","Nov_25",
         "Jan_1","Jan_8","Jan_15","Jan_22","Jan_29"
-    ]
+    ];
+
+    public static var daynightScene:Array=["BeachScene","ParkScene","PierScene","LovemoreMansionScene"
+        ,"HotelScene","GardenScene","FitnessClubScene","PrivateIslandScene"];
 
     public static var relatoinshipHeirarchy:Array=["foe","acquaintance","friend","close friend",
         "dating partner","lover","spouse"];
