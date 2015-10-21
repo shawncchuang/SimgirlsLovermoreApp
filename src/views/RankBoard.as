@@ -62,7 +62,7 @@ public class RankBoard extends MovieClip{
         var month:String=flox.getSaveData("date").split(".")[2];
         var schedule:Dictionary=Config.battleSchedule();
 
-        //month="Jul";
+        //month="Sep";
         //date="5";
 
         var dayStr:String=month+"_"+date;

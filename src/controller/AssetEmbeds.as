@@ -256,9 +256,9 @@ public class AssetEmbeds
     [Embed(source="../../media/textures/icons/pro_empty.png")]
     public static const ProEmpty:Class;
 
-    [Embed(source="../../media/textures/icons/icon_mouseclick.xml", mimeType="application/octet-stream")]
+    [Embed(source="../../media/textures/icons/ani/icon_mouseclick.xml", mimeType="application/octet-stream")]
     public static const IconMouseXML:Class;
-    [Embed(source="../../media/textures/icons/icon_mouseclick.png")]
+    [Embed(source="../../media/textures/icons/ani/icon_mouseclick.png")]
     public static const IconMouse:Class;
 
 
@@ -418,6 +418,9 @@ public class AssetEmbeds
     [Embed(source="../../media/textures/icons/icon_skillPts1.png")]
     public static const SkillPtsValueIcon:Class;
 
+
+
+
     [Embed(source="../../assets/images/items/art.jpg")]
     public static const Art:Class;
 
@@ -495,9 +498,9 @@ public class AssetEmbeds
     [Embed(source="../../media/textures/icons/prevBtn.png")]
     public static const IconPrevBtn:Class;
 
-    [Embed(source="../../media/textures/icons/menu_mini_bg.xml", mimeType="application/octet-stream")]
+    [Embed(source="../../media/textures/icons/ani/menu_mini_bg.xml", mimeType="application/octet-stream")]
     public static const MiniMenusXML:Class;
-    [Embed(source="../../media/textures/icons/menu_mini_bg.png")]
+    [Embed(source="../../media/textures/icons/ani/menu_mini_bg.png")]
     public static const MiniMenus:Class;
 
 
@@ -520,9 +523,9 @@ public class AssetEmbeds
     public static const IconDatingSceneTitle:Class;
 
 
-    [Embed(source="../../media/textures/icons/com_cloud_sprites.xml", mimeType="application/octet-stream")]
+    [Embed(source="../../media/textures/icons/ani/com_cloud_sprites.xml", mimeType="application/octet-stream")]
     public static const ComCloudXML:Class;
-    [Embed(source="../../media/textures/icons/com_cloud_sprites.png")]
+    [Embed(source="../../media/textures/icons/ani/com_cloud_sprites.png")]
     public static const ComCloud:Class;
 
     [Embed(source="../../media/textures/icons/icon_arrow_photos.png")]
@@ -552,6 +555,11 @@ public class AssetEmbeds
 
     [Embed(source="../../media/textures/icons/relationshipchanged.png")]
     public static const RelationshipChangedTexture:Class;
+
+    [Embed(source="../../media/textures/icons/ani/preloading.xml", mimeType="application/octet-stream")]
+    public static const PreloadingXML:Class;
+    [Embed(source="../../media/textures/icons/ani/preloading.png")]
+    public static const Preloading:Class;
 
     /*------------------icons-------------------------------------------------*/
 
@@ -770,176 +778,247 @@ public class AssetEmbeds
     [Embed(source="../../media/textures/npc/npc024.png")]
     public static const npc024:Class;
 
-    [Embed(source="../../media/textures/characters/styles/ceil/style0001.png")]
-    public static const ceil_s0001:Class;
-    [Embed(source="../../media/textures/characters/styles/ceil/style0002.png")]
-    public static const ceil_s0002:Class;
-    [Embed(source="../../media/textures/characters/styles/ceil/style0003.png")]
-    public static const ceil_s0003:Class;
-    [Embed(source="../../media/textures/characters/styles/ceil/style0004.png")]
-    public static const ceil_s0004:Class;
-    [Embed(source="../../media/textures/characters/styles/ceil/style0005.png")]
-    public static const ceil_s0005:Class;
-    [Embed(source="../../media/textures/characters/styles/ceil/style0006.png")]
-    public static const ceil_s0006:Class;
-    [Embed(source="../../media/textures/characters/styles/ceil/style0007.png")]
-    public static const ceil_s0007:Class;
-    [Embed(source="../../media/textures/characters/styles/ceil/style0008.png")]
-    public static const ceil_s0008:Class;
-    [Embed(source="../../media/textures/characters/styles/ceil/style0009.png")]
-    public static const ceil_s0009:Class;
-    [Embed(source="../../media/textures/characters/styles/ceil/style0010.png")]
-    public static const ceil_s0010:Class;
-    [Embed(source="../../media/textures/characters/styles/ceil/style0011.png")]
-    public static const ceil_s0011:Class;
-    [Embed(source="../../media/textures/characters/styles/ceil/style0012.png")]
-    public static const ceil_s0012:Class;
-
-    [Embed(source="../../media/textures/characters/styles/dea/style0001.png")]
-    public static const dea_s0001:Class;
-    [Embed(source="../../media/textures/characters/styles/dea/style0002.png")]
-    public static const dea_s0002:Class;
-    [Embed(source="../../media/textures/characters/styles/dea/style0003.png")]
-    public static const dea_s0003:Class;
-    [Embed(source="../../media/textures/characters/styles/dea/style0004.png")]
-    public static const dea_s0004:Class;
-    [Embed(source="../../media/textures/characters/styles/dea/style0005.png")]
-    public static const dea_s0005:Class;
-    [Embed(source="../../media/textures/characters/styles/dea/style0006.png")]
-    public static const dea_s0006:Class;
-    [Embed(source="../../media/textures/characters/styles/dea/style0007.png")]
-    public static const dea_s0007:Class;
-    [Embed(source="../../media/textures/characters/styles/dea/style0008.png")]
-    public static const dea_s0008:Class;
-    [Embed(source="../../media/textures/characters/styles/dea/style0009.png")]
-    public static const dea_s0009:Class;
-    [Embed(source="../../media/textures/characters/styles/dea/style0010.png")]
-    public static const dea_s0010:Class;
-    [Embed(source="../../media/textures/characters/styles/dea/style0011.png")]
-    public static const dea_s0011:Class;
-    [Embed(source="../../media/textures/characters/styles/dea/style0012.png")]
-    public static const dea_s0012:Class;
-    [Embed(source="../../media/textures/characters/styles/dea/style0013.png")]
-    public static const dea_s0013:Class;
-
-    [Embed(source="../../media/textures/characters/styles/klr/style0001.png")]
-    public static const klr_s0001:Class;
-    [Embed(source="../../media/textures/characters/styles/klr/style0002.png")]
-    public static const klr_s0002:Class;
-    [Embed(source="../../media/textures/characters/styles/klr/style0003.png")]
-    public static const klr_s0003:Class;
-    [Embed(source="../../media/textures/characters/styles/klr/style0004.png")]
-    public static const klr_s0004:Class;
-    [Embed(source="../../media/textures/characters/styles/klr/style0005.png")]
-    public static const klr_s0005:Class;
-    [Embed(source="../../media/textures/characters/styles/klr/style0006.png")]
-    public static const klr_s0006:Class;
-    [Embed(source="../../media/textures/characters/styles/klr/style0007.png")]
-    public static const klr_s0007:Class;
-    [Embed(source="../../media/textures/characters/styles/klr/style0008.png")]
-    public static const klr_s0008:Class;
-    [Embed(source="../../media/textures/characters/styles/klr/style0009.png")]
-    public static const klr_s0009:Class;
-    [Embed(source="../../media/textures/characters/styles/klr/style0010.png")]
-    public static const klr_s0010:Class;
-    [Embed(source="../../media/textures/characters/styles/klr/style0011.png")]
-    public static const klr_s0011:Class;
-    [Embed(source="../../media/textures/characters/styles/klr/style0012.png")]
-    public static const klr_s0012:Class;
-    [Embed(source="../../media/textures/characters/styles/klr/style0013.png")]
-    public static const klr_s0013:Class;
-
-    [Embed(source="../../media/textures/characters/styles/lenus/style0001.png")]
-    public static const lenus_s0001:Class;
-    [Embed(source="../../media/textures/characters/styles/lenus/style0002.png")]
-    public static const lenus_s0002:Class;
-    [Embed(source="../../media/textures/characters/styles/lenus/style0003.png")]
-    public static const lenus_s0003:Class;
-    [Embed(source="../../media/textures/characters/styles/lenus/style0004.png")]
-    public static const lenus_s0004:Class;
-    [Embed(source="../../media/textures/characters/styles/lenus/style0005.png")]
-    public static const lenus_s0005:Class;
-    [Embed(source="../../media/textures/characters/styles/lenus/style0006.png")]
-    public static const lenus_s0006:Class;
-
-    [Embed(source="../../media/textures/characters/styles/sao/style0001.png")]
-    public static const sao_s0001:Class;
-    [Embed(source="../../media/textures/characters/styles/sao/style0002.png")]
-    public static const sao_s0002:Class;
-    [Embed(source="../../media/textures/characters/styles/sao/style0003.png")]
-    public static const sao_s0003:Class;
+    [Embed(source="../../media/textures/characters/styles/ceil/battle.png")]
+    public static const ceil_battle:Class;
+    [Embed(source="../../media/textures/characters/styles/ceil/casual1.png")]
+    public static const ceil_casual1:Class;
+    [Embed(source="../../media/textures/characters/styles/ceil/casual2.png")]
+    public static const ceil_casual2:Class;
+    [Embed(source="../../media/textures/characters/styles/ceil/club.png")]
+    public static const ceil_club:Class;
+    [Embed(source="../../media/textures/characters/styles/ceil/dojo.png")]
+    public static const ceil_dojo:Class;
+    [Embed(source="../../media/textures/characters/styles/ceil/gym.png")]
+    public static const ceil_gym:Class;
+    [Embed(source="../../media/textures/characters/styles/ceil/holloween.png")]
+    public static const ceil_holloween:Class;
+    [Embed(source="../../media/textures/characters/styles/ceil/party.png")]
+    public static const ceil_party:Class;
+    [Embed(source="../../media/textures/characters/styles/ceil/pj.png")]
+    public static const ceil_pj:Class;
+    [Embed(source="../../media/textures/characters/styles/ceil/school.png")]
+    public static const ceil_school:Class;
+    [Embed(source="../../media/textures/characters/styles/ceil/special.png")]
+    public static const ceil_special:Class;
+    [Embed(source="../../media/textures/characters/styles/ceil/swimsuit1.png")]
+    public static const ceil_swimsuit1:Class;
+    [Embed(source="../../media/textures/characters/styles/ceil/swimsuit2.png")]
+    public static const ceil_swimsuit2:Class;
+    [Embed(source="../../media/textures/characters/styles/ceil/swimsuit3.png")]
+    public static const ceil_swimsuit3:Class;
+    [Embed(source="../../media/textures/characters/styles/ceil/towel.png")]
+    public static const ceil_towel:Class;
+    [Embed(source="../../media/textures/characters/styles/ceil/underwear.png")]
+    public static const ceil_underwear:Class;
+    [Embed(source="../../media/textures/characters/styles/ceil/wedding.png")]
+    public static const ceil_wedding:Class;
+    [Embed(source="../../media/textures/characters/styles/ceil/work.png")]
+    public static const ceil_work:Class;
 
 
-    [Embed(source="../../media/textures/characters/styles/sirena/style0001.png")]
-    public static const sirena_s0001:Class;
-    [Embed(source="../../media/textures/characters/styles/sirena/style0002.png")]
-    public static const sirena_s0002:Class;
-    [Embed(source="../../media/textures/characters/styles/sirena/style0003.png")]
-    public static const sirena_s0003:Class;
-    [Embed(source="../../media/textures/characters/styles/sirena/style0004.png")]
-    public static const sirena_s0004:Class;
-    [Embed(source="../../media/textures/characters/styles/sirena/style0005.png")]
-    public static const sirena_s0005:Class;
-    [Embed(source="../../media/textures/characters/styles/sirena/style0006.png")]
-    public static const sirena_s0006:Class;
-    [Embed(source="../../media/textures/characters/styles/sirena/style0007.png")]
-    public static const sirena_s0007:Class;
-    [Embed(source="../../media/textures/characters/styles/sirena/style0008.png")]
-    public static const sirena_s0008:Class;
-    [Embed(source="../../media/textures/characters/styles/sirena/style0009.png")]
-    public static const sirena_s0009:Class;
-    [Embed(source="../../media/textures/characters/styles/sirena/style0010.png")]
-    public static const sirena_s0010:Class;
-    [Embed(source="../../media/textures/characters/styles/sirena/style0011.png")]
-    public static const sirena_s0011:Class;
-    [Embed(source="../../media/textures/characters/styles/sirena/style0012.png")]
-    public static const sirena_s0012:Class;
-    [Embed(source="../../media/textures/characters/styles/sirena/style0013.png")]
-    public static const sirena_s0013:Class;
-
-    [Embed(source="../../media/textures/characters/styles/tomoru/style0001.png")]
-    public static const tomoru_s0001:Class;
-    [Embed(source="../../media/textures/characters/styles/tomoru/style0002.png")]
-    public static const tomoru_s0002:Class;
-    [Embed(source="../../media/textures/characters/styles/tomoru/style0003.png")]
-    public static const tomoru_s0003:Class;
-    [Embed(source="../../media/textures/characters/styles/tomoru/style0004.png")]
-    public static const tomoru_s0004:Class;
-    [Embed(source="../../media/textures/characters/styles/tomoru/style0005.png")]
-    public static const tomoru_s0005:Class;
-    [Embed(source="../../media/textures/characters/styles/tomoru/style0006.png")]
-    public static const tomoru_s0006:Class;
-    [Embed(source="../../media/textures/characters/styles/tomoru/style0007.png")]
-    public static const tomoru_s0007:Class;
-    [Embed(source="../../media/textures/characters/styles/tomoru/style0008.png")]
-    public static const tomoru_s0008:Class;
-    [Embed(source="../../media/textures/characters/styles/tomoru/style0009.png")]
-    public static const tomoru_s0009:Class;
-    [Embed(source="../../media/textures/characters/styles/tomoru/style0010.png")]
-    public static const tomoru_s0010:Class;
-    [Embed(source="../../media/textures/characters/styles/tomoru/style0011.png")]
-    public static const tomoru_s0011:Class;
-    [Embed(source="../../media/textures/characters/styles/tomoru/style0012.png")]
-    public static const tomoru_s0012:Class;
-    [Embed(source="../../media/textures/characters/styles/tomoru/style0013.png")]
-    public static const tomoru_s0013:Class;
+    [Embed(source="../../media/textures/characters/styles/dea/battle.png")]
+    public static const dea_battle:Class;
+    [Embed(source="../../media/textures/characters/styles/dea/casual1.png")]
+    public static const dea_casual1:Class;
+    [Embed(source="../../media/textures/characters/styles/dea/casual2.png")]
+    public static const dea_casual2:Class;
+    [Embed(source="../../media/textures/characters/styles/dea/casual3.png")]
+    public static const dea_casual3:Class;
+    [Embed(source="../../media/textures/characters/styles/dea/club.png")]
+    public static const dea_club:Class;
+    [Embed(source="../../media/textures/characters/styles/dea/dojo.png")]
+    public static const dea_dojo:Class;
+    [Embed(source="../../media/textures/characters/styles/dea/gym.png")]
+    public static const dea_gym:Class;
+    [Embed(source="../../media/textures/characters/styles/dea/holloween.png")]
+    public static const dea_holloween:Class;
+    [Embed(source="../../media/textures/characters/styles/dea/night.png")]
+    public static const dea_night:Class;
+    [Embed(source="../../media/textures/characters/styles/dea/party1.png")]
+    public static const dea_party1:Class;
+    [Embed(source="../../media/textures/characters/styles/dea/party2.png")]
+    public static const dea_party2:Class;
+    [Embed(source="../../media/textures/characters/styles/dea/pj.png")]
+    public static const dea_pj:Class;
+    [Embed(source="../../media/textures/characters/styles/dea/school.png")]
+    public static const dea_school:Class;
+    [Embed(source="../../media/textures/characters/styles/dea/swimsuit1.png")]
+    public static const dea_swimsuit1:Class;
+    [Embed(source="../../media/textures/characters/styles/dea/swimsuit2.png")]
+    public static const dea_swimsuit2:Class;
+    [Embed(source="../../media/textures/characters/styles/dea/underwear.png")]
+    public static const dea_underwear:Class;
+    [Embed(source="../../media/textures/characters/styles/dea/wedding.png")]
+    public static const dea_wedding:Class;
+    [Embed(source="../../media/textures/characters/styles/dea/work.png")]
+    public static const dea_work:Class;
 
 
-    [Embed(source="../../media/textures/characters/styles/zack/style0001.png")]
-    public static const zack_s0001:Class;
-    [Embed(source="../../media/textures/characters/styles/zack/style0002.png")]
-    public static const zack_s0002:Class;
-    [Embed(source="../../media/textures/characters/styles/zack/style0003.png")]
-    public static const zack_s0003:Class;
-    [Embed(source="../../media/textures/characters/styles/zack/style0004.png")]
-    public static const zack_s0004:Class;
-    [Embed(source="../../media/textures/characters/styles/zack/style0005.png")]
-    public static const zack_s0005:Class;
-    [Embed(source="../../media/textures/characters/styles/zack/style0006.png")]
-    public static const zack_s0006:Class;
-    [Embed(source="../../media/textures/characters/styles/zack/style0007.png")]
-    public static const zack_s0007:Class;
+    [Embed(source="../../media/textures/characters/styles/klr/battle.png")]
+    public static const klr_battle:Class;
+    [Embed(source="../../media/textures/characters/styles/klr/casual1.png")]
+    public static const klr_casual1:Class;
+    [Embed(source="../../media/textures/characters/styles/klr/casual2.png")]
+    public static const klr_casual2:Class;
+    [Embed(source="../../media/textures/characters/styles/klr/casual3.png")]
+    public static const klr_casual3:Class;
+    [Embed(source="../../media/textures/characters/styles/klr/casual4.png")]
+    public static const klr_casual4:Class;
+    [Embed(source="../../media/textures/characters/styles/klr/casual5.png")]
+    public static const klr_casual5:Class;
+    [Embed(source="../../media/textures/characters/styles/klr/club.png")]
+    public static const klr_club:Class;
+    [Embed(source="../../media/textures/characters/styles/klr/dojo.png")]
+    public static const klr_dojo:Class;
+    [Embed(source="../../media/textures/characters/styles/klr/gym.png")]
+    public static const klr_gym:Class;
+    [Embed(source="../../media/textures/characters/styles/klr/holloween.png")]
+    public static const klr_holloween:Class;
+    [Embed(source="../../media/textures/characters/styles/klr/party.png")]
+    public static const klr_party:Class;
+    [Embed(source="../../media/textures/characters/styles/klr/pj.png")]
+    public static const klr_pj:Class;
+    [Embed(source="../../media/textures/characters/styles/klr/school.png")]
+    public static const klr_school:Class;
+    [Embed(source="../../media/textures/characters/styles/klr/swimsuit.png")]
+    public static const klr_swimsuit:Class;
+    [Embed(source="../../media/textures/characters/styles/klr/towel.png")]
+    public static const klr_towel:Class;
+    [Embed(source="../../media/textures/characters/styles/klr/underwear.png")]
+    public static const klr_underwear:Class;
+    [Embed(source="../../media/textures/characters/styles/klr/wedding.png")]
+    public static const klr_wedding:Class;
+    [Embed(source="../../media/textures/characters/styles/klr/work.png")]
+    public static const klr_work:Class;
 
+
+    [Embed(source="../../media/textures/characters/styles/lenus/battle.png")]
+    public static const lenus_battle:Class;
+    [Embed(source="../../media/textures/characters/styles/lenus/casual1.png")]
+    public static const lenus_casual1:Class;
+    [Embed(source="../../media/textures/characters/styles/lenus/casual2.png")]
+    public static const lenus_casual2:Class;
+    [Embed(source="../../media/textures/characters/styles/lenus/dojo.png")]
+    public static const lenus_dojo:Class;
+    [Embed(source="../../media/textures/characters/styles/lenus/gym.png")]
+    public static const lenus_gym:Class;
+    [Embed(source="../../media/textures/characters/styles/lenus/swimsuit.png")]
+    public static const lenus_swimsuit:Class;
+    [Embed(source="../../media/textures/characters/styles/lenus/wedding.png")]
+    public static const lenus_wedding:Class;
+    [Embed(source="../../media/textures/characters/styles/lenus/work.png")]
+    public static const lenus_work:Class;
+
+
+
+    [Embed(source="../../media/textures/characters/styles/sao/battle.png")]
+    public static const sao_battle:Class;
+    [Embed(source="../../media/textures/characters/styles/sao/casual1.png")]
+    public static const sao_casual1:Class;
+    [Embed(source="../../media/textures/characters/styles/sao/dojo.png")]
+    public static const sao_dojo:Class;
+    [Embed(source="../../media/textures/characters/styles/sao/party.png")]
+    public static const sao_party:Class;
+    [Embed(source="../../media/textures/characters/styles/sao/swimsuit.png")]
+    public static const sao_swimsuit:Class;
+
+
+    [Embed(source="../../media/textures/characters/styles/sirena/battle.png")]
+    public static const sirena_battle:Class;
+    [Embed(source="../../media/textures/characters/styles/sirena/casual1.png")]
+    public static const sirena_casual1:Class;
+    [Embed(source="../../media/textures/characters/styles/sirena/casual2.png")]
+    public static const sirena_casual2:Class;
+    [Embed(source="../../media/textures/characters/styles/sirena/casual3.png")]
+    public static const sirena_casual3:Class;
+    [Embed(source="../../media/textures/characters/styles/sirena/club.png")]
+    public static const sirena_club:Class;
+    [Embed(source="../../media/textures/characters/styles/sirena/dojo.png")]
+    public static const sirena_dojo:Class;
+    [Embed(source="../../media/textures/characters/styles/sirena/gym.png")]
+    public static const sirena_gym:Class;
+    [Embed(source="../../media/textures/characters/styles/sirena/holloween.png")]
+    public static const sirena_holloween:Class;
+    [Embed(source="../../media/textures/characters/styles/sirena/party.png")]
+    public static const sirena_party:Class;
+    [Embed(source="../../media/textures/characters/styles/sirena/pj.png")]
+    public static const sirena_pj:Class;
+    [Embed(source="../../media/textures/characters/styles/sirena/school.png")]
+    public static const sirena_school:Class;
+    [Embed(source="../../media/textures/characters/styles/sirena/swimsuit1.png")]
+    public static const sirena_swimsuit1:Class;
+    [Embed(source="../../media/textures/characters/styles/sirena/swimsuit2.png")]
+    public static const sirena_swimsuit2:Class;
+    [Embed(source="../../media/textures/characters/styles/sirena/towel.png")]
+    public static const sirena_towel:Class;
+    [Embed(source="../../media/textures/characters/styles/sirena/underwear1.png")]
+    public static const sirena_underwear1:Class;
+    [Embed(source="../../media/textures/characters/styles/sirena/underwear2.png")]
+    public static const sirena_underwear2:Class;
+    [Embed(source="../../media/textures/characters/styles/sirena/wedding.png")]
+    public static const sirena_wedding:Class;
+    [Embed(source="../../media/textures/characters/styles/sirena/work.png")]
+    public static const sirena_work:Class;
+
+
+    [Embed(source="../../media/textures/characters/styles/tomoru/battle.png")]
+    public static const tomoru_battle:Class;
+    [Embed(source="../../media/textures/characters/styles/tomoru/casual1.png")]
+    public static const tomoru_casual1:Class;
+    [Embed(source="../../media/textures/characters/styles/tomoru/casual2.png")]
+    public static const tomoru_casual2:Class;
+    [Embed(source="../../media/textures/characters/styles/tomoru/casual3.png")]
+    public static const tomoru_casual3:Class;
+    [Embed(source="../../media/textures/characters/styles/tomoru/casual4.png")]
+    public static const tomoru_casual4:Class;
+    [Embed(source="../../media/textures/characters/styles/tomoru/club.png")]
+    public static const tomoru_club:Class;
+    [Embed(source="../../media/textures/characters/styles/tomoru/dojo.png")]
+    public static const tomoru_dojo:Class;
+    [Embed(source="../../media/textures/characters/styles/tomoru/gym.png")]
+    public static const tomoru_gym:Class;
+    [Embed(source="../../media/textures/characters/styles/tomoru/holloween.png")]
+    public static const tomoru_holloween:Class;
+    [Embed(source="../../media/textures/characters/styles/tomoru/night.png")]
+    public static const tomoru_night:Class;
+    [Embed(source="../../media/textures/characters/styles/tomoru/party.png")]
+    public static const tomoru_party:Class;
+    [Embed(source="../../media/textures/characters/styles/tomoru/pj.png")]
+    public static const tomoru_pj:Class;
+    [Embed(source="../../media/textures/characters/styles/tomoru/school.png")]
+    public static const tomoru_school:Class;
+    [Embed(source="../../media/textures/characters/styles/tomoru/specail.png")]
+    public static const tomoru_special:Class;
+    [Embed(source="../../media/textures/characters/styles/tomoru/swimsuit.png")]
+    public static const tomoru_swimsuit:Class;
+    [Embed(source="../../media/textures/characters/styles/tomoru/towel.png")]
+    public static const tomoru_towel:Class;
+    [Embed(source="../../media/textures/characters/styles/tomoru/underwear.png")]
+    public static const tomoru_underwear:Class;
+    [Embed(source="../../media/textures/characters/styles/tomoru/wedding.png")]
+    public static const tomoru_wedding:Class;
+    [Embed(source="../../media/textures/characters/styles/tomoru/work.png")]
+    public static const tomoru_work:Class;
+
+
+    [Embed(source="../../media/textures/characters/styles/zack/casual1.png")]
+    public static const zack_casual1:Class;
+    [Embed(source="../../media/textures/characters/styles/zack/casual2.png")]
+    public static const zack_casual2:Class;
+    [Embed(source="../../media/textures/characters/styles/zack/casual3.png")]
+    public static const zack_casual3:Class;
+    [Embed(source="../../media/textures/characters/styles/zack/gym.png")]
+    public static const zack_gym:Class;
+    [Embed(source="../../media/textures/characters/styles/zack/holloween.png")]
+    public static const zack_hollowean:Class;
+    [Embed(source="../../media/textures/characters/styles/zack/party.png")]
+    public static const zack_party:Class;
+    [Embed(source="../../media/textures/characters/styles/zack/special.png")]
+    public static const zack_special:Class;
+    [Embed(source="../../media/textures/characters/styles/zack/underwear.png")]
+    public static const zack_underwear:Class;
+    [Embed(source="../../media/textures/characters/styles/zack/battle.png")]
+    public static const zack_battle:Class;
 
     /*------------------characters-------------------------------------------------*/
 

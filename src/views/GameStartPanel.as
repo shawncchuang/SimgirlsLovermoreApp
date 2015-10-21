@@ -9,7 +9,7 @@ package views
 	public class GameStartPanel extends MovieClip
 	{
 		private var panel:MovieClip;
-		private var floxcom:FloxInterface=new FloxCommand();
+		private var flox:FloxInterface=new FloxCommand();
 		public function GameStartPanel()
 		{
 			panel=new GameStartUI();
@@ -36,7 +36,7 @@ package views
 		{
 			
 			Game.LoadGame=false;
-			floxcom.setupSaveGame();
+			flox.setupSaveGame();
 			
 		}
 		private function doLoadGameHandle(e:MouseEvent):void

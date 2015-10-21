@@ -114,6 +114,8 @@ public class GameInfobar extends Sprite
 
 
         drawProfile();
+        showSavedProgress();
+
         showCommandDirections();
 
 
@@ -123,6 +125,8 @@ public class GameInfobar extends Sprite
         this.addEventListener("UPDATE_DIRECTION",onUpdateDirections);
        this.addEventListener("UPDATE_DATING",onUpdateDating);
         this.addEventListener("CANCEL_DATING",onCancelDating);
+        this.addEventListener("REMOVE",onRemovedHandler);
+        this.addEventListener("DISPLAY",onDisplayHandler);
         this.addEventListener("DRAW_PROFILE",onDrawProfile);
         this.addEventListener("DISPLAY",onDisplayHandle);
         this.dispatchEventWith("UPDATE_INFO");
@@ -183,6 +187,9 @@ public class GameInfobar extends Sprite
         {
             dayImg.visible=false;
         }
+
+        var progress:Number=flox.getPlayerData("inGameProgress");
+        proTxt.text="No."+progress;
 
     }
 
@@ -381,7 +388,7 @@ public class GameInfobar extends Sprite
             gameInfobarFadeout();
 
 
-            removeChild(proTxt);
+
 
             var currentScene:String=DataContainer.currentScene;
             var main_index:Number=currentScene.indexOf("MainScene");
@@ -450,14 +457,6 @@ public class GameInfobar extends Sprite
         addChild(player_icon);
 
 
-        var progress:Number=flox.getPlayerData("inGameProgress");
-        proTxt=new TextField(40,30,"",font,16,0xffffff,true);
-        //proTxt.x=100;
-        //proTxt.y=18;
-        proTxt.hAlign="left";
-        proTxt.vAlign="top";
-        proTxt.text="# "+progress;
-        addChild(proTxt);
 
 
 //        var tween:Tween=new Tween(player_icon,0.5,Transitions.EASE_IN_OUT);
@@ -466,6 +465,17 @@ public class GameInfobar extends Sprite
 //        Starling.juggler.add(tween);
 
 
+    }
+    private function showSavedProgress():void{
+
+        var progress:Number=flox.getPlayerData("inGameProgress");
+        proTxt=new TextField(100,30,"",font,14,0xffffff,true);
+        //proTxt.x=100;
+        //proTxt.y=18;
+        proTxt.hAlign="left";
+        proTxt.vAlign="top";
+        proTxt.text="No."+progress;
+        addChild(proTxt);
     }
     private function onProfileIconFadein():void{
 
@@ -677,8 +687,14 @@ public class GameInfobar extends Sprite
 
         }
 
+    }
 
+    private function onRemovedHandler(e:Event):void{
 
+        this.visible=false;
+    }
+    private function onDisplayHandler(e:Event):void{
+        this.visible=true;
     }
 
     private function gameInfobarFadeout():void{

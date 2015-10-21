@@ -167,12 +167,12 @@ package controller
 
 			try
 			{
-				
+
 				var scale:Number=1;
 				var rate:Number=1;
 				if(src=="ShutterstockFrameAni")
 				{
-					rate=30;	
+					rate=30;
 				}
 				else if(src.indexOf("Tile")!=-1)
 				{
@@ -180,15 +180,15 @@ package controller
 				}
 				var atlas:TextureAtlas = DynamicAtlas.fromMovieClipContainer(subclassObj[src],scale,0,true,true);
 				mc_ground = new starling.display.MovieClip(atlas.getTextures("images"), rate);
-				
+
 			}
 			catch(error:Error)
 			{
 				DebugTrace.msg("Assets.getDynamicAtlas:  Resource limit for this resource type exceded");
-				
+
 			}
 			//if
-			
+
 			return mc_ground;
 		}
 		

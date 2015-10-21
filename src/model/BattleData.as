@@ -656,7 +656,7 @@ public class BattleData
 
             if(type=="TimeTravelBattleRanking"){
                 //uesd timemachine reset current_battle
-                var defaultCurrentBattle:Object=Config.defaultCurrentBattle;
+                var defaultCurrentBattle:Object=Config.defaultCurrentBattle();
                 flox.save("current_battle",defaultCurrentBattle);
             }
 
@@ -668,8 +668,8 @@ public class BattleData
                 var battle_date:Number=Number(battleDays[n].split("_")[1]);
                 var scheduleMonthIndex:Number=monthsList.indexOf(battle_month);
 
-                if(currentMonthIndex>5){
-                    //after Jul
+                if(currentMonthIndex>8 || currentMonthIndex==0){
+                    //after Sep and Jan
 
                     if(currentMonthIndex>=scheduleMonthIndex){
                         pastIndex++;
@@ -698,8 +698,8 @@ public class BattleData
                 var current_battle:Object=flox.getSaveData("current_battle");
                 for(var k:uint=0;k<pastIndex;k++){
                     var battleDay:String=battleDays[k];
-                    var team_battle:Array=schedule[battleDay];
-                    var battled:Array=current_battle[battleDay];
+                    team_battle=schedule[battleDay];
+                    battled=current_battle[battleDay];
                     for(var m:uint = 0; m < team_battle.length; m++) {
                         //DebugTrace.msg("BattleData.checkBattleResult team_battle[m]="+team_battle[m]);
                         if(battled[m]=="0|0" || type=="TimeTravelBattleRanking"){

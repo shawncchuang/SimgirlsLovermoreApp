@@ -65,6 +65,7 @@ import model.BattleData;
 			
 			DataContainer.deadline=false;
             DataContainer.battleType="";
+			DataContainer.currentScene="MainScene";
 			mainstage=this;
 			ViewsContainer.MainStage=mainstage;
 			var scenes:Scenes=new Scenes();
@@ -85,15 +86,15 @@ import model.BattleData;
 			{
 				
 				initLoadScene();
-				
+
 			}
 			else
 			{
 				
 				initMainScene();
 				initUI();
-                var battleData:BattleData=new BattleData();
-                battleData.checkBattleSchedule("BattleRanking","cpu_team");
+				var battleData:BattleData=new BattleData();
+				battleData.checkBattleSchedule("BattleRanking","cpu_team");
 				
 			}
 			
@@ -200,7 +201,7 @@ import model.BattleData;
 			var flox:FloxInterface=new FloxCommand();
 			//var current_scene:String=flox.getSaveData("current_scene");
 			var current_scene:String=DataContainer.currentScene;
-			if(current_scene){
+			if(loadgame){
 				_data.name="MainScene";
 			}
 			else{

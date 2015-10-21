@@ -1,5 +1,7 @@
 package views
 {
+import com.gamua.flox.Player;
+
 import events.SceneEvent;
 
 import flash.geom.Point;
@@ -29,6 +31,7 @@ import starling.text.TextField;
 import starling.textures.Texture;
 
 import utils.DebugTrace;
+import utils.ViewsContainer;
 
 
 public class SaveandLoadList extends Sprite
@@ -75,6 +78,8 @@ public class SaveandLoadList extends Sprite
 
     private function onLoadCompleteToInit():void
     {
+
+        DebugTrace.msg("SaveandLoadList.onLoadCompleteToInit ");
 
         removeChild(buffer);
         init();
@@ -134,7 +139,7 @@ public class SaveandLoadList extends Sprite
             empty_index++;
             var emptybar:Sprite=new Sprite();
             emptybar.useHandCursor=true;
-            emptybar.name="savedbar"+i;
+            emptybar.name="savedbar"+saverecord[i].id;
             emptybar.x=emptypos[i].x;
             emptybar.y=emptypos[i].y;
             progressbar.push(emptybar);
@@ -145,8 +150,9 @@ public class SaveandLoadList extends Sprite
 
             var name_txt:TextField=new TextField(70,emptyImg.height,saverecord[i].first_name+"\n"+saverecord[i].last_name,font,20,0xFFFFFF);
             emptybar.addChild(name_txt);
+            var peogress:Number=saverecord[i].id+1;
             var _date:String=saverecord[i].date.split("|")[0];
-            var info_data:String=_date+"\n"+saverecord[i].cash+"\nAP "+saverecord[i].ap+"/"+saverecord[i].ap_max;
+            var info_data:String="No."+peogress+", "+_date+"\n"+saverecord[i].cash+"\nAP "+saverecord[i].ap+"/"+saverecord[i].ap_max;
             var info_txt:TextField=new TextField(emptyImg.width-50,emptyImg.height,info_data,font,20,0xFFFFFF);
             info_txt.hAlign="right";
             info_txt.vAlign="center";
@@ -197,60 +203,55 @@ public class SaveandLoadList extends Sprite
          emptybars[j].alpha=0.5;
          }*/
     }
+    private var current_saved:Array;
+    private var progress:Number=0;
     private function doSaveLoadListTouched(e:TouchEvent):void
     {
         var target:Sprite=e.currentTarget as Sprite;
         //DebugTrace.msg("SceneCommand.onChatSceneTouched name:"+target.name);
         var BEGAN:Touch = e.getTouch(target, TouchPhase.BEGAN);
         var inGameProgress:Number=flox.getPlayerData("inGameProgress");
-        var savedstr:String=flox.getPlayerData("saved");
-        var saved:Array=savedstr.split(",");
+
         playerData=DataContainer.player;
         //var playerToStr:String=JSON.stringify(playerData);
         //DebugTrace.msg("SaveandLoadList.doSaveLoadListTouched playerToStr:"+playerToStr);
         if(BEGAN)
         {
-            DebugTrace.msg("SaveandLoadList.doSaveLoadListTouched target:"+target.name+" ; saved:"+saved);
-            var progress:Number;
+
+
             var selbar:String=target.name;
             _data=new Object();
             save_new=false;
+            current_saved=flox.getPlayerData("saved");
+            DebugTrace.msg("SaveandLoadList.doSaveLoadListTouched target:"+target.name+" ; saved:"+current_saved);
             if(_type=="Depart")
             {
                 //Do save
 
-                var saverecord:Array=DataContainer.SaveRecord;
-
                 if(selbar.indexOf("savedbar")!=-1)
                 {
-                    DebugTrace.msg("Do over write Saved");
+                    DebugTrace.msg("Rewrite Saved");
 
+                    _data=null;
                     progress=Number(selbar.split("savedbar").join(""))+1;
                     //_data.inGameProgress=progress;
-                    _data=null;
-                    playerData.inGameProgress=progress;
+                    //playerData.inGameProgress=progress;
+                    current_saved[progress-1]="saved"+progress;
                 }
                 //if
                 if(selbar.indexOf("emptybar")!=-1)
                 {
-                    DebugTrace.msg("Do  write to empty");
+                    DebugTrace.msg("Write into empty");
                     save_new=true;
                     //progress=Number(selbar.split("emptybar").join(""))+1;
 
-                    var old_savedstr:String=flox.getPlayerData("saved");
-                    var old_saved:Array=old_savedstr.split(",");
-                    progress=saverecord.length+1;
-                    old_saved.push("saved"+progress);
-                    if(old_saved[0]=="")
-                    {
-                        old_saved.shift();
-                    }
-                    //_data.inGameProgress=progress;
-                    DebugTrace.msg("old_saved :"+old_saved);
-                    playerData.inGameProgress=progress;
-                    playerData.saved=old_saved;
+                    progress=current_saved.length+1;
+                    current_saved.push("saved"+progress);
+
+
+                    //playerData.inGameProgress=progress;
+                    //playerData.saved=saved;
                 }
-                DataContainer.player=playerData;
 
                 //flox.savePlayer(_data,onSavePlayerComplete);
                 //addBuffer();
@@ -264,9 +265,8 @@ public class SaveandLoadList extends Sprite
 
                     DebugTrace.msg("Do  load for saved");
                     progress=Number(selbar.split("savedbar").join(""))+1;
-                    playerData.inGameProgress=progress;
-                    DataContainer.player=playerData;
-                    _data.inGameProgress=progress;
+
+
 
                     //flox.savePlayer(_data,onSavePlayerComplete);
                     //addBuffer();
@@ -341,6 +341,12 @@ public class SaveandLoadList extends Sprite
     }
     private function addBuffer():void
     {
+        var gameinfo:Sprite=ViewsContainer.gameinfo;
+        if(gameinfo){
+            gameinfo.dispatchEventWith("REMOVE");
+        }
+
+
         buffer=new LoadingBuffer();
         buffer.pivotX=Starling.current.stage.stageWidth/2;
         buffer.pivotY=Starling.current.stage.stageHeight/2;
@@ -364,6 +370,12 @@ public class SaveandLoadList extends Sprite
         var _data:Object=new Object();
         _data.removed="back";
         command.topviewDispatch(TopViewEvent.REMOVE,_data);
+
+        var gameinfo:Sprite=ViewsContainer.gameinfo;
+        if(gameinfo){
+            gameinfo.dispatchEventWith("DISPLAY");
+        }
+
 
 
     }
@@ -404,16 +416,21 @@ public class SaveandLoadList extends Sprite
         var _data:Object={removed:"remove_loadgame_gametitle"};
         command.topviewDispatch(TopViewEvent.REMOVE,_data);
 
-        flox.savePlayer(playerData,onSavePlayerComplete);
+        //flox.savePlayer(playerData,onSavePlayerComplete);
         if(_type=="Depart"){
             //save game
+            flox.savePlayerData("inGameProgress",progress);
+            flox.savePlayerData("saved",current_saved);
             flox.syncSaved(onSynsComplete);
 
         }else{
             //load game
             DataContainer.currentScene="MainScene";
+
+            FloxCommand.onLoadComplete=onSynsBackupSavedComplete;
+            flox.savePlayerData("inGameProgress",progress);
             flox.loadBackupsavedEntities();
-            //flox.syncBackupSaved(onSynsBackupSavedComplete);
+
 
         }
 
@@ -430,7 +447,7 @@ public class SaveandLoadList extends Sprite
         command.topviewDispatch(TopViewEvent.REMOVE,_data);
 
     }
-    private function onSynsBackupSavedComplete(result:*):void{
+    private function onSynsBackupSavedComplete():void{
 
         flox.loadEntities();
 
@@ -465,17 +482,17 @@ public class SaveandLoadList extends Sprite
     }
     private function doCloseConfirm(e:Event):void
     {
-        if(save_new)
-        {
-            playerData=DataContainer.player;
-            var saved:Array=playerData.saved;
-            if(saved.length>0)
-            {
-                saved.pop();
-                playerData.saved=saved;
-                DataContainer.player=playerData;
-            }
-        }
+//        if(save_new)
+//        {
+//            playerData=DataContainer.player;
+//            var saved:Array=flox.getPlayerData("saved");
+//            if(saved.length>0)
+//            {
+//                saved.pop();
+//                playerData.saved=saved;
+//                DataContainer.player=playerData;
+//            }
+//        }
         comfirm.removeFromParent();
         removeChild(comfirm);
     }

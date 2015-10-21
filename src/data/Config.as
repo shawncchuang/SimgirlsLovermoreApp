@@ -39,10 +39,10 @@ public class Config
     //battle schedule 2033 Tuesday
 
     public static var battleDays:Array=[
-        "Jul_5","Jul_12","Jul_19","Jul_26",
-        "Aug_2","Aug_9","Aug_16","Aug_23","Aug_30",
-        "Oct_4","Oct_11","Oct_18","Oct_25",
-        "Nov_1","Nov_8","Nov_15","Nov_22","Nov_29"
+        "Sep_5","Sep_12","Sep_19","Sep_26",
+        "Oct_2","Oct_9","Oct_16","Oct_23","Oct_30",
+        "Nov_4","Nov_11","Nov_18","Nov_25",
+        "Jan_1","Jan_8","Jan_15","Jan_22","Jan_29"
     ]
 
     public static var relatoinshipHeirarchy:Array=["foe","acquaintance","friend","close friend",
@@ -52,51 +52,59 @@ public class Config
     {
         var scheduls:Dictionary=new Dictionary();
 
-        scheduls["Jul_5"]= ["p|0", "2|1", "4|3", "5|6", "7|8"];
-        scheduls["Jul_12"]=["p|1", "0|2", "3|5", "4|7", "8|6"];
-        scheduls["Jul_19"]=["p|3", "4|0", "1|7", "6|2", "8|5"];
-        scheduls["Jul_26"]=["p|2", "0|1", "6|3", "7|5", "4|8"];
+        scheduls[battleDays[0]]= ["p|0", "2|1", "4|3", "5|6", "7|8"];
+        scheduls[battleDays[1]]=["p|1", "0|2", "3|5", "4|7", "8|6"];
+        scheduls[battleDays[2]]=["p|3", "4|0", "1|7", "6|2", "8|5"];
+        scheduls[battleDays[3]]=["p|2", "0|1", "6|3", "7|5", "4|8"];
 
-        scheduls["Aug_2"]= ["p|6", "7|0", "5|1", "2|4", "8|3"];
-        scheduls["Aug_9"]= ["p|5", "2|7", "1|3", "6|4", "8|0"];
-        scheduls["Aug_16"]=["p|4", "7|6", "5|0", "2|3", "1|8"];
-        scheduls["Aug_23"]=["p|7", "0|3", "4|5", "6|1", "2|8"];
-        scheduls["Aug_30"]=["p|8", "0|6", "5|2", "1|4", "3|7"];
+        scheduls[battleDays[4]]= ["p|6", "7|0", "5|1", "2|4", "8|3"];
+        scheduls[battleDays[5]]= ["p|5", "2|7", "1|3", "6|4", "8|0"];
+        scheduls[battleDays[6]]=["p|4", "7|6", "5|0", "2|3", "1|8"];
+        scheduls[battleDays[7]]=["p|7", "0|3", "4|5", "6|1", "2|8"];
+        scheduls[battleDays[8]]=["p|8", "0|6", "5|2", "1|4", "3|7"];
 
-        scheduls["Oct_4"]= ["p|0", "2|1", "4|3", "5|6", "7|8"];
-        scheduls["Oct_11"]=["p|1", "0|2", "3|5", "4|7", "8|6"];
-        scheduls["Oct_18"]=["p|3", "4|0", "1|7", "6|2", "8|5"];
-        scheduls["Oct_25"]=["p|2", "0|1", "6|3", "7|5", "4|8"];
+        scheduls[battleDays[9]]= ["p|0", "2|1", "4|3", "5|6", "7|8"];
+        scheduls[battleDays[10]]=["p|1", "0|2", "3|5", "4|7", "8|6"];
+        scheduls[battleDays[11]]=["p|3", "4|0", "1|7", "6|2", "8|5"];
+        scheduls[battleDays[12]]=["p|2", "0|1", "6|3", "7|5", "4|8"];
 
-        scheduls["Nov_1"]= ["p|6", "7|0", "5|1", "2|4", "8|3"];
-        scheduls["Nov_8"]= ["p|5", "2|7", "1|3", "6|4", "8|0"];
-        scheduls["Nov_15"]=["p|4", "7|6", "5|0", "2|3", "1|8"];
-        scheduls["Nov_22"]=["p|7", "0|3", "4|5", "6|1", "2|8"];
-        scheduls["Nov_29"]=["p|8", "0|6", "5|2", "1|4", "3|7"];
+        scheduls[battleDays[13]]= ["p|6", "7|0", "5|1", "2|4", "8|3"];
+        scheduls[battleDays[14]]= ["p|5", "2|7", "1|3", "6|4", "8|0"];
+        scheduls[battleDays[15]]=["p|4", "7|6", "5|0", "2|3", "1|8"];
+        scheduls[battleDays[16]]=["p|7", "0|3", "4|5", "6|1", "2|8"];
+        scheduls[battleDays[17]]=["p|8", "0|6", "5|2", "1|4", "3|7"];
 
 
         return scheduls
     }
-    public static var defaultCurrentBattle:Object={
 
-            "Jul_5": ["0|0", "0|0", "0|0", "0|0", "0|0"],
-            "Jul_12": ["0|0", "0|0", "0|0", "0|0", "0|0"],
-            "Jul_19": ["0|0", "0|0", "0|0", "0|0", "0|0"],
-            "Jul_26": ["0|0", "0|0", "0|0", "0|0", "0|0"],
-            "Aug_2": ["0|0", "0|0", "0|0", "0|0", "0|0"],
-            "Aug_9": ["0|0", "0|0", "0|0", "0|0", "0|0"],
-            "Aug_16": ["0|0", "0|0", "0|0", "0|0", "0|0"],
-            "Aug_23": ["0|0", "0|0", "0|0", "0|0", "0|0"],
-            "Aug_30": ["0|0", "0|0", "0|0", "0|0", "0|0"],
-            "Oct_4": ["0|0", "0|0", "0|0", "0|0", "0|0"],
-            "Oct_11": ["0|0", "0|0", "0|0", "0|0", "0|0"],
-            "Oct_18": ["0|0", "0|0", "0|0", "0|0", "0|0"],
-            "Oct_25": ["0|0", "0|0", "0|0", "0|0", "0|0"],
-            "Nov_1": ["0|0", "0|0", "0|0", "0|0", "0|0"],
-            "Nov_8": ["0|0", "0|0", "0|0", "0|0", "0|0"],
-            "Nov_15": ["0|0", "0|0", "0|0", "0|0", "0|0"],
-            "Nov_22": ["0|0", "0|0", "0|0", "0|0", "0|0"],
-            "Nov_29": ["0|0", "0|0", "0|0", "0|0", "0|0"]
+    public static function defaultCurrentBattle():Object{
+        var defaultCB:Object=new Object();
+
+        for(var i:uint=0;i<battleDays.length;i++){
+            defaultCB[battleDays[i]]=["0|0", "0|0", "0|0", "0|0", "0|0"];
+
+        }
+//            "Sep_5": ["0|0", "0|0", "0|0", "0|0", "0|0"],
+//            "Sep_12": ["0|0", "0|0", "0|0", "0|0", "0|0"],
+//            "Sep_19": ["0|0", "0|0", "0|0", "0|0", "0|0"],
+//            "Sep_26": ["0|0", "0|0", "0|0", "0|0", "0|0"],
+//            "Oct_2": ["0|0", "0|0", "0|0", "0|0", "0|0"],
+//            "Oct_9": ["0|0", "0|0", "0|0", "0|0", "0|0"],
+//            "Oct_16": ["0|0", "0|0", "0|0", "0|0", "0|0"],
+//            "Oct_23": ["0|0", "0|0", "0|0", "0|0", "0|0"],
+//            "Oct_30": ["0|0", "0|0", "0|0", "0|0", "0|0"],
+//            "Nov_4": ["0|0", "0|0", "0|0", "0|0", "0|0"],
+//            "Nov_11": ["0|0", "0|0", "0|0", "0|0", "0|0"],
+//            "Nov_18": ["0|0", "0|0", "0|0", "0|0", "0|0"],
+//            "Nov_25": ["0|0", "0|0", "0|0", "0|0", "0|0"],
+//            "Jan_1": ["0|0", "0|0", "0|0", "0|0", "0|0"],
+//            "Jan_8": ["0|0", "0|0", "0|0", "0|0", "0|0"],
+//            "Jan_15": ["0|0", "0|0", "0|0", "0|0", "0|0"],
+//            "Jan_22": ["0|0", "0|0", "0|0", "0|0", "0|0"],
+//            "Jan_29": ["0|0", "0|0", "0|0", "0|0", "0|0"]
+
+        return defaultCB;
 
     }
     public static function set AccType(value:String):void
@@ -309,7 +317,7 @@ public class Config
     public static function PlayerAttributes():Object
     {
         //Save Game
-        //Tue.1.Mar.2033|12
+        //Wed.1.Jun.2033|12
         playerInfo={
             "next_switch":"s001",
             "current_switch":"s001|on",
@@ -317,7 +325,7 @@ public class Config
             "cash":1000,
             "first_name":"",
             "last_name":"",
-            "date":"Tue.1.Mar.2033|12",
+            "date":"Wed.1.Jun.2033|12",
             "ap":100,
             "ap_max":100,
             "dating":"",
@@ -477,7 +485,7 @@ public class Config
                 klr: 0,
                 tomoru: 0,
                 ceil: 0,
-                zack: -1
+                zack: 0
             },
             "mood":{
                 lenus: 0,
@@ -819,7 +827,7 @@ public class Config
                     "win":0
                 }
             ],
-            current_battle:defaultCurrentBattle,
+            current_battle:defaultCurrentBattle(),
             "photos":new Array()
 
         }
@@ -898,6 +906,216 @@ public class Config
         "love-Max":100
 
 
+    }
+    public static var styles:Object= {
+        "sirena_Pier": ["casual3"],
+        "ceil_ChangingRoom": ["underwear"],
+        "ceil_CoffeeShop": ["work"],
+        "lenus_Garden": ["casual2"],
+        "lenus_PrivateIsland": [],
+        "lenus_BlackMarket": ["work"],
+        "sirena_ThemedPark": ["work"],
+        "zack_PrivateIsland": ["casual3"],
+        "dea_Hotel": ["pj"],
+        "dea_Airport": ["casual1"],
+        "lenus_ChangingRoom": ["underwear"],
+        "lenus_CoffeeShop": ["work"],
+        "sirena_Airport": ["casual1"],
+        "sirena_Bank": ["casual1"],
+        "zack_Garden": ["casual3"],
+        "dea_SSCCArena": ["battle"],
+        "dea_Academy": ["dojo"],
+        "tomoru_Hotel": ["pj"],
+        "tomoru_Airport": ["work"],
+        "sirena_Hotel": ["pj"],
+        "sirena_PrivateIsland": [],
+        "zack_ChangingRoom": ["underwear"],
+        "dea_SpiritTemple": ["work"],
+        "dea_Museum": ["casual1"],
+        "sirena_Garden": ["casual3"],
+        "tomoru_SSCCArena": ["battle"],
+        "tomoru_Academy": ["dojo"],
+        "dea_PoliceStation": ["casual1"],
+        "sirena_BlackMarket": ["work"],
+        "sao_Hotel": ["casual1"],
+        "tomoru_SpiritTemple": ["casual1"],
+        "dea_Casino": ["night"],
+        "zack_BlackMarket": ["casual2"],
+        "sirena_ChangingRoom": ["underwear"],
+        "sao_Airport": ["casual1"],
+        "tomoru_Museum": ["casual1"],
+        "dea_SportsBar": ["night"],
+        "sao_SSCCArena": ["battle"],
+        "tomoru_PoliceStation": ["casual4"],
+        "dea_Nightclub": ["club"],
+        "zack_CoffeeShop": ["casual2"],
+        "sirena_HotSpring": ["towel"],
+        "sao_Academy": ["dojo"],
+        "sirena_CoffeeShop": ["casual3"],
+        "klr_FitnessClub": ["gym"],
+        "klr_Hotel": ["pj"],
+        "klr_ShoppingCentre": ["casual4"],
+        "dea_LovemoreMansion": ["pj"],
+        "sao_Casino": ["casual1"],
+        "tomoru_Casino": ["night"],
+        "klr_Beach": ["swimsuit"],
+        "klr_Airport": ["casual5"],
+        "dea_ShoppingCentre": ["casual1"],
+        "klr_Park": ["casual3"],
+        "klr_Cinema": ["casual2"],
+        "dea_FitnessClub": ["gym"],
+        "tomoru_SportsBar": ["night"],
+        "klr_Pier": ["casual3"],
+        "sao_SpiritTemple": ["casual1"],
+        "dea_Beach": ["swimsuit1", "swimsuit2"],
+        "dea_Park": ["casual3"],
+        "klr_Restaurant": ["party"],
+        "sao_Museum": ["casual1"],
+        "tomoru_ShoppingCentre": ["casual1"],
+        "tomoru_LovemoreMansion": ["pj"],
+        "klr_HotSpring": ["towel"],
+        "sao_PoliceStation": ["casual1"],
+        "dea_Cinema": ["casual2"],
+        "dea_Pier": ["casual3"],
+        "dea_Restaurant": ["party1", "party2"],
+        "tomoru_Nightclub": ["club"],
+        "tomoru_Beach": ["swimsuit"],
+        "tomoru_FitnessClub": ["gym"],
+        "tomoru_Pier": ["casual3"],
+        "sao_SportsBar": ["casual1"],
+        "sirena_Cinema": ["casual2"],
+        "klr_ThemedPark": ["casual2"],
+        "sao_Park": ["casual3"],
+        "tomoru_Restaurant": ["party"],
+        "sao_Nightclub": ["casual1"],
+        "dea_HotSpring": ["towel"],
+        "sao_Cinema": ["casual1"],
+        "tomoru_HotSpring": ["towel"],
+        "sao_LovemoreMansion": ["casual1"],
+        "sirena_Park": ["casual3"],
+        "klr_Bank": ["casual1"],
+        "sao_Pier": ["casual1"],
+        "tomoru_ThemedPark": ["casual2"],
+        "sao_ShoppingCentre": ["casual1"],
+        "klr_SSCCArena": ["battle"],
+        "sao_Restaurant": ["party"],
+        "klr_Museum": ["casual1"],
+        "tomoru_Park": ["casual3"],
+        "sirena_Beach": ["swimsuit1", "swimsuit2"],
+        "dea_Bank": ["casual1"],
+        "tomoru_Bank": ["casual1"],
+        "dea_BlackMarket": ["casual2"],
+        "tomoru_Cinema": ["casual2"],
+        "sao_HotSpring": ["casual1"],
+        "klr_PoliceStation": ["work"],
+        "klr_Casino": ["casual5"],
+        "sirena_FitnessClub": ["gym"],
+        "tomoru_PrivateIsland": [],
+        "ceil_Hotel": ["pj"],
+        "ceil_Airport": ["casual1"],
+        "sao_FitnessClub": ["casual1"],
+        "klr_PrivateIsland": [],
+        "klr_SportsBar": ["casual3"],
+        "dea_ChangingRoom": ["underwear"],
+        "dea_CoffeeShop": ["casual2"],
+        "ceil_SSCCArena": ["battle"],
+        "sao_Beach": ["swimsuit"],
+        "klr_Academy": ["dojo"],
+        "sirena_ShoppingCentre": ["casual1"],
+        "tomoru_BlackMarket": ["casual4"],
+        "lenus_Hotel": ["pj"],
+        "ceil_Academy": ["dojo"],
+        "klr_Nightclub": ["club"],
+        "tomoru_ChangingRoom": ["underwear"],
+        "lenus_Airport": ["casual1"],
+        "ceil_SpiritTemple": ["casual1"],
+        "dea_ThemedPark": ["casual3"],
+        "dea_Garden": ["work"],
+        "klr_LovemoreMansion": ["pj"],
+        "tomoru_CoffeeShop": ["work"],
+        "lenus_SSCCArena": ["battle"],
+        "ceil_Museum": ["casual1"],
+        "klr_Garden": ["casual4"],
+        "sirena_LovemoreMansion": ["pj"],
+        "zack_Hotel": ["underwear"],
+        "lenus_Academy": ["dojo"],
+        "ceil_PoliceStation": ["casula1"],
+        "dea_PrivateIsland": [],
+        "tomoru_Garden": ["casual2"],
+        "sirena_Nightclub": ["club"],
+        "sao_ThemedPark": ["casual1"],
+        "lenus_SpiritTemple": ["casual1"],
+        "ceil_Casino": ["night"],
+        "klr_ChangingRoom": ["underwear"],
+        "sao_PrivateIsland": ["casual1"],
+        "zack_SSCCArena": ["battle"],
+        "lenus_Museum": ["work"],
+        "ceil_SportsBar": ["work"],
+        "klr_CoffeeShop": ["work"],
+        "sao_Garden": ["casual1"],
+        "zack_Academy": ["dojo"],
+        "lenus_PoliceStation": ["work"],
+        "ceil_Nightclub": ["club"],
+        "sao_Bank": ["casual1"],
+        "sao_BlackMarket": ["casual1"],
+        "sirena_SportsBar": ["casual2"],
+        "zack_SpiritTemple": ["casual1"],
+        "lenus_Casino": ["casual1"],
+        "ceil_LovemoreMansion": ["pj"],
+        "sao_ChangingRoom": ["casual1"],
+        "zack_Museum": ["casual1"],
+        "lenus_SportsBar": ["casual2"],
+        "ceil_ShoppingCentre": ["casual1"],
+        "zack_Airport": ["casual1"],
+        "zack_PoliceStation": ["casual2"],
+        "lenus_Nightclub": ["club"],
+        "ceil_FitnessClub": ["gym"],
+        "sirena_Casino": ["night"],
+        "zack_Casino": ["casual2"],
+        "lenus_LovemoreMansion": ["casual2"],
+        "ceil_Beach": ["swimsuit1", "swimsuit2", "swimsuit3"],
+        "klr_SpiritTemple": ["casual1"],
+        "zack_SportsBar": ["casual2"],
+        "lenus_ShoppingCentre": ["casual2"],
+        "ceil_Park": ["casual2"],
+        "sao_CoffeeShop": ["casual1"],
+        "zack_Nightclub": ["club"],
+        "lenus_FitnessClub": ["gym"],
+        "ceil_Cinema": ["casual2"],
+        "klr_BlackMarket": ["work"],
+        "zack_LovemoreMansion": [],
+        "lenus_Beach": ["swimsuit"],
+        "ceil_Pier": ["casual2"],
+        "zack_ShoppingCentre": ["casual2"],
+        "lenus_Park": ["casual2"],
+        "ceil_Restaurant": ["party"],
+        "zack_FitnessClub": ["gym"],
+        "lenus_Cinema": ["casual2"],
+        "ceil_HotSpring": ["towel"],
+        "sirena_PoliceStation": ["casual2"],
+        "zack_Beach": ["swimsuit"],
+        "lenus_Pier": ["casual2"],
+        "zack_Cinema": ["casual2"],
+        "zack_Park": ["casual3"],
+        "ceil_ThemedPark": ["casual2"],
+        "sirena_Museum": ["casual1"],
+        "sirena_Restaurant": ["party"],
+        "lenus_Restaurant": ["party"],
+        "ceil_Bank": ["casual1"],
+        "ceil_PrivateIsland": [],
+        "sirena_SpiritTemple": ["casual1"],
+        "lenus_HotSpring": ["towel"],
+        "lenus_ThemedPark": ["casual2"],
+        "zack_HotSpring": ["towel"],
+        "zack_Pier": ["casual3"],
+        "ceil_Garden": ["casual2"],
+        "zack_ThemedPark": ["casual2"],
+        "lenus_Bank": ["casual1"],
+        "sirena_Academy": ["dojo"],
+        "zack_Bank": ["casual1"],
+        "sirena_SSCCArena": ["battle"],
+        "ceil_BlackMarket": ["casual2"],
+        "zack_Restaurant": ["party"]
     }
 
     public function Config()

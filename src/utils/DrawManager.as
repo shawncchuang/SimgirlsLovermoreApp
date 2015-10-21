@@ -608,6 +608,7 @@ public class DrawManager implements DrawerInterface
             case "HotelScene":
             case "GardenScene":
             case "FitnessClubScene":
+            case "PrivateIslandScene":
                 bgSrc+=_time;
                 break
 

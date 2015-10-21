@@ -112,7 +112,7 @@ public class TimeMachinePopup extends Sprite {
         listdata=new Array();
         for(var j:uint=0;j<yearlist.length;j++){
 
-            var collection:Object=new Object();
+            collection=new Object();
 
             collection["text"]=yearlist[j];
             listdata.push(collection);

@@ -4,26 +4,45 @@ package views
 	
 	import starling.core.Starling;
 	import starling.display.Image;
-	import starling.display.Sprite;
+import starling.display.MovieClip;
+import starling.display.Sprite;
 	import starling.text.TextField;
 	import starling.textures.Texture;
+import starling.textures.TextureAtlas;
 
-	public class LoadingBuffer extends Sprite
+import utils.ViewsContainer;
+
+public class LoadingBuffer extends Sprite
 	{
 		public function LoadingBuffer()
 		{
 			var bg_texture:Texture=Assets.getTexture("Whitebg");
 			var bgImg:Image=new Image(bg_texture);
-			bgImg.alpha=0.5;
-			bgImg.color=0x000000
+			bgImg.alpha=0.6;
+			bgImg.color=0x000000;
 			bgImg.width=Starling.current.stage.stageWidth;
 			bgImg.height=Starling.current.stage.stageHeight;
 			addChild(bgImg);
 			
-			var saving_txt:TextField=new TextField(Starling.current.stage.stageWidth,50,"Loading....Please wait a minute.","Eras Demi ITC",20,0xFFFFFF);
-			saving_txt.hAlign="center";
-			saving_txt.y=Starling.current.stage.stageHeight/2-saving_txt.height/2;
-			addChild(saving_txt);
+
+
+			var preloadXML:XML=Assets.getAtalsXML("PreloadingXML");
+			var preloadTexture:Texture=Assets.getTexture("Preloading");
+			var atlas:TextureAtlas = new TextureAtlas(preloadTexture, preloadXML);
+			var preloadMC:MovieClip=new MovieClip(atlas.getTextures("Sprite"),24);
+
+			preloadMC.pivotX=(preloadMC.width/2);
+			preloadMC.pivotY=(preloadMC.height/2);
+			preloadMC.x=Starling.current.stage.stageWidth/2;
+			preloadMC.y=Starling.current.stage.stageHeight/2;
+			preloadMC.loop=true;
+			addChild(preloadMC);
+			preloadMC.play();
+			Starling.juggler.add(preloadMC);
+
+
+
+
 		}
 	}
 }

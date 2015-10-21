@@ -34,7 +34,7 @@ package controller
 		function logEvent(evt:String,info:Object=null):void
 		function syncSaved(callback:Function=null):void
 		function syncBackupSaved(callback:Function=null):void
-        function loadBackupsaved():void
+        function loadBackupsaved(callback:Function=null):void
 			
 		
 	}

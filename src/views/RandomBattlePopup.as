@@ -34,7 +34,7 @@ import utils.DebugTrace;
 public class RandomBattlePopup extends Sprite {
 
     private var popup:Sprite;
-    private var font="SimMyriadPro";
+    private var font:String="SimMyriadPro";
     private var command:MainInterface=new MainCommand();
     public function RandomBattlePopup() {
     }

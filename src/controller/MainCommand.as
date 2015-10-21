@@ -616,7 +616,7 @@ public class MainCommand implements MainInterface {
 
             //syncSpiritEnergy();
             reeseatDating();
-            initStyleSechedule();
+           // initStyleSechedule();
             setNowMood();
             praseOwnedAssets(1);
             reseatDatingCommandTimes();
@@ -841,8 +841,30 @@ public class MainCommand implements MainInterface {
 
             }
             if (style == "") {
-                var index:Number = Math.floor(Math.random() * schedules.length);
-                style = schedules[index].src;
+                //normal day ,depends on located
+                var currentScene:String=DataContainer.currentScene;
+                var current_scene:String=currentScene.split("Scene").join("");
+                var normalStyles:Object=Config.styles;
+                var scenesPoint:Object=Config.stagepoints;
+                var build_scenes:Array=new Array();
+                for(var scene_name:String in scenesPoint){
+                    build_scenes.push(scene_name);
+                }
+                var styleNames:Array=new Array();
+                var scene_index:Number=build_scenes.indexOf(current_scene);
+                if(scene_index==-1){
+                    styleNames=["casual1"];
+                }else{
+                    styleNames=normalStyles[_name+"_"+current_scene];
+                }
+
+                if(styleNames){
+                    style=_name+"_"+styleNames[0];
+                    if(styleNames.length>1){
+                        style=_name+"_"+styleNames[Math.floor(Math.random()*styleNames.length)];
+                    }
+                }
+
 
             }
             suitup[_name] = style;
@@ -897,7 +919,7 @@ public class MainCommand implements MainInterface {
 
         relObj[dating] = rel;
 
-        var _data:Object = new Object();
+        _data = new Object();
         _data.rel = relObj;
         _data.pts = ptsObj;
         // FloxCommand.savegame=savegame;
@@ -1956,7 +1978,7 @@ public class MainCommand implements MainInterface {
                         switch(type){
                             case "all_scene":
                                 if (likes > 0) {
-                                    // most like
+                                    // the most like
                                     chlikes = new Object();
                                     chlikes.name = character;
                                     chlikes.value = likes;

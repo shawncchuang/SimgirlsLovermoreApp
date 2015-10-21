@@ -565,9 +565,11 @@ public class DatingScene extends Scenes {
 
 
     private function initCharacter():void {
-        var dating:String = DataContainer.currentDating;
 
-        var style:String = DataContainer.styleSechedule[dating];
+        command.initStyleSechedule();
+        var dating:String = DataContainer.currentDating;
+        var styleSechedule:Object=DataContainer.styleSechedule;
+        var style:String = styleSechedule[dating];
         var clothTexture:Texture = Assets.getTexture(style);
 
         character = new Image(clothTexture);
@@ -577,7 +579,7 @@ public class DatingScene extends Scenes {
         var tween:Tween = new Tween(character, 0.3, Transitions.EASE_IN_OUT);
         tween.moveTo(400, character.y - 80);
         tween.scaleTo(1.2);
-        Starling.juggler.add(tween)
+        Starling.juggler.add(tween);
 
 
     }

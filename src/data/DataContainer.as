@@ -191,29 +191,32 @@ public class DataContainer
 
         //DebugTrace.msg("rendom scene  : "+ran_sceneslist+" ; length : "+ran_sceneslist.length);
         //40% likes-random 100 ,
+
         for(var i:uint=0;i<characters.length;i++)
         {
             chlikesScene=new Array();
-            var likes:Number=100;
+            var likes:Number=200;
             var ch_name:String=characters[i];
-            //var scene_like:Object=new Object();
             var ran_sceneslist:Array=setupRandomSencenLikes();
             //DebugTrace.msg("DataContainer.initChacacterLikeScene ran_sceneslist:"+ran_sceneslist);
-            for(var k:uint=0;k<ran_sceneslist.length;k++)
-            {
+            for(var k:uint=0;k<ran_sceneslist.length;k++) {
                 //every scene rating;
 
-                var scene_rating:Object=new Object();
+                var scene_rating:Object = new Object();
 
-                var reLikes:uint=uint(Math.random()*likes);
-                var scene_name:String=ran_sceneslist[k];
+                var reLikes:uint = uint(Math.random() * likes);
+                var scene_name:String = ran_sceneslist[k];
                 //DebugTrace.msg("scene_name  : "+scene_name);
-                if(scene_name=="PrivateIsland" || scene_name=="Airport" || scene_name=="LovemoreMansion" || scene_name=="Hotel" || scene_name=="PoliceStation" || scene_name=="SSCCArena")
+//                if(scene_name=="PrivateIsland" || scene_name=="Airport" || scene_name=="LovemoreMansion" || scene_name=="Hotel" || scene_name=="PoliceStation" || scene_name=="SSCCArena")
+//                {
+//                    //no people at here
+//                    reLikes=0;
+//                }
+                if (scene_name == "PrivateIsland" && ch_name!="zack")
                 {
-                    //no people at here
                     reLikes=0;
                 }
-                //scene_like[scene_name]=reLikes;
+
                 //DebugTrace.msg("DataContainer.initChacacterLikeScene scene_name:"+scene_name);
 
 
@@ -221,15 +224,16 @@ public class DataContainer
                 scene_rating.likes=reLikes;
 
 
-                //----------------fake------------------------------------------------------------------
-
-                if(scene_name=="Park"){
-
-                    // scene_rating.likes=100;
-
-                }
+                //----------------fake For Testing------------------------------------------------------------------
+//                if(scene_name=="SSCCArena"){
+//
+//                     scene_rating.likes=100;
+//
+//                }
                 //*-----------------------------------------------------------------------
-
+                if(ch_name=="zack" && scene_name == "LovemoreMansion"){
+                    scene_rating.likes=0;
+                }
                 likes-=reLikes;
                 var gress:Number=Math.floor(ran_sceneslist.length*0.4);
                 if(likes<50 && k<gress)
@@ -286,10 +290,10 @@ public class DataContainer
         var scenes:Object=Config.stagepoints;
         for(var scene:String in scenes)
         {
-            if(scene!="Hotel")
-            {
+            //if(scene!="Hotel")
+            //{
                 sceneslist.push(scene);
-            }
+            //}
         }
         //for
         //make random all scenes
