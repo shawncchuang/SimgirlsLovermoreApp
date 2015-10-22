@@ -40,6 +40,7 @@ public class MenuTemplate extends Sprite{
     private var bgEff2:Image;
     public var cate:String="";
     public var font:String="";
+    public var label:String="";
     private var titlebar:Sprite;
     private var titleIcon:Image;
     private var command:MainInterface=new MainCommand();
@@ -114,8 +115,8 @@ public class MenuTemplate extends Sprite{
         var title:Image=new Image(getTexture("MenuTitleBG"));
         title.pivotY=title.height/2;
         titlebar.addChild(title);
-
-        var title_txt:TextField=new TextField(95,40,this.cate,this.font,35,0x292929,false);
+        
+        var title_txt:TextField=new TextField(95,40,this.label,this.font,35,0x292929,false);
         title_txt.autoSize=TextFieldAutoSize.HORIZONTAL;
         title_txt.x=245;
         title_txt.y=-20;
@@ -176,6 +177,7 @@ public class MenuTemplate extends Sprite{
          break
          }
          */
+
         var iconScr:String="Icon"+this.cate+"Title";
         titleIcon=new Image(getTexture(iconScr));
         titleIcon.pivotX=titleIcon.width/2;

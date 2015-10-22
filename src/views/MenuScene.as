@@ -55,9 +55,13 @@ public class MenuScene extends Scenes
     private var titleIcon:Image;
     private var templete:MenuTemplate;
     private var iconsLabelList:Array=new Array();
+    private var shilfies:Image;
+    private var precioursmoments:Image;
+    private var options:Array=new Array();
+    private var optionTxts:Array=new Array();
+
     public function MenuScene()
     {
-
 
         base_sprite=new Sprite();
         addChild(base_sprite);
@@ -255,16 +259,23 @@ public class MenuScene extends Scenes
             click_type=target.name;
 
             if(click_type.indexOf("Scene")!=-1){
-                doFadeoutTransatoin();
-            }
 
+                if(click_type=="PhotosScene"){
+                    //add photo options
+                    initPhotosOptoins();
+                }
+                else{
+                    doFadeoutTransatoin();
+
+                }
+
+            }
 
         }
     }
 
     private function doFadeoutTransatoin():void
     {
-
 
 
         for(var i:uint=0;i<iconsname.length;i++)
@@ -321,7 +332,7 @@ public class MenuScene extends Scenes
 
             var iconlabels:TextField=iconsLabelList[i];
             if(iconlabels)
-            iconlabels.removeFromParent(true);
+                iconlabels.removeFromParent(true);
         }
         Starling.juggler.removeTweens(network);
         network.removeFromParent(true);
@@ -359,11 +370,221 @@ public class MenuScene extends Scenes
             gameinfo.dispatchEventWith("UPDATE_DATING");
 
         }
+
+
         var _data:Object=new Object();
         _data.name=click_type;
         command.sceneDispatch(SceneEvent.CHANGED,_data);
 
     }
+    private function initPhotosOptoins():void{
+
+        options=new Array();
+        optionTxts=new Array();
+
+        for(var i:uint=0;i<iconsname.length;i++) {
+            var iconimg:Image = iconsimg[i];
+            iconimg.removeEventListener(TouchEvent.TOUCH,doTouchIconHandler);
+            var icon_tween:Tween=new Tween(iconimg,0.5,Transitions.EASE_IN_OUT_BACK);
+            icon_tween.scaleTo(0.5);
+            icon_tween.fadeTo(0.5);
+            Starling.juggler.add(icon_tween);
+            iconsLabelList[i].alpha=0.1;
+
+        }
+
+
+        var shilfiesTexture:Texture=Assets.getTexture("SelfiesIcon");
+        shilfies=new Image(shilfiesTexture);
+        shilfies.useHandCursor=true;
+        shilfies.name="PhotosScene";
+        shilfies.pivotX=shilfies.width/2;
+        shilfies.pivotY=shilfies.height/2;
+        shilfies.x=597;
+        shilfies.y=570;
+        shilfies.scaleX=0.2;
+        shilfies.scaleY=0.2;
+        var shTxt:TextField=new TextField(100,40,"Selfies",font,30,0x292929,false);
+        shTxt.pivotX=shTxt.width/2;
+        shTxt.name="Label-"+shilfies.name;
+        shTxt.x=shilfies.x;
+        shTxt.y=shilfies.y;
+        shTxt.alpha=0;
+        //shTxt.y=640;
+
+        optionTxts.push(shTxt);
+        options.push(shilfies);
+
+        var pmTexture:Texture=Assets.getTexture("PrecriousIcon");
+        precioursmoments=new Image(pmTexture);
+        precioursmoments.useHandCursor=true;
+        precioursmoments.name="PreciousPhotosScene";
+        precioursmoments.pivotX=precioursmoments.width/2;
+        precioursmoments.pivotY=precioursmoments.height/2;
+        precioursmoments.x=748;
+        precioursmoments.y=570;
+        precioursmoments.scaleX=0.2;
+        precioursmoments.scaleY=0.2;
+
+        var pmTxt:TextField=new TextField(300,40,"Precious Moments",font,30,0x292929,false);
+        pmTxt.pivotX=pmTxt.width/2;
+        pmTxt.name="Label-"+precioursmoments.name;
+        pmTxt.x=precioursmoments.x;
+        pmTxt.y=precioursmoments.y;
+        pmTxt.alpha=0;
+        //pmTxt.y=640;
+
+        addChild(pmTxt);
+        addChild(shTxt);
+
+        addChild(shilfies);
+        addChild(precioursmoments);
+
+        optionTxts.push(pmTxt);
+        options.push(precioursmoments);
+
+
+        for(var j:uint=0;j<options.length;j++){
+
+            var optionIcon:Image=options[j];
+            var tween:Tween=new Tween(optionIcon,0.3,Transitions.EASE_IN_OUT_BACK);
+            tween.scaleTo(0.9);
+            tween.onComplete=onOptionsFadein;
+            Starling.juggler.add(tween);
+
+            optionIcon.addEventListener(TouchEvent.TOUCH,doTouchOptionsHandler);
+
+        }
+        network.addEventListener(TouchEvent.TOUCH,doEnanbleMenuHandler);
+
+
+    }
+    private function doEnanbleMenuHandler(e:TouchEvent):void{
+
+        var target:Image=e.currentTarget as Image;
+        var began:Touch= e.getTouch(target, TouchPhase.BEGAN);
+        if(began){
+
+            for(var i:uint=0;i<iconsname.length;i++) {
+                var iconimg:Image = iconsimg[i];
+
+                var icon_tween:Tween=new Tween(iconimg,0.5,Transitions.EASE_IN_OUT_BACK);
+                icon_tween.scaleTo(1);
+                icon_tween.fadeTo(1);
+                Starling.juggler.add(icon_tween);
+                iconsLabelList[i].alpha=1;
+
+            }
+            for(var j:uint=0;j<options.length;j++) {
+
+                var optionIcon:Image = options[j];
+                var optionTxt:TextField=optionTxts[j] as TextField;
+
+                optionIcon.removeEventListener(TouchEvent.TOUCH,doTouchOptionsHandler);
+                Starling.juggler.removeTweens(optionIcon);
+
+
+                optionTxt.removeFromParent(true);
+                optionIcon.removeFromParent(true);
+
+            }
+            onIconsComplete();
+            network.removeEventListener(TouchEvent.TOUCH,doEnanbleMenuHandler);
+        }
+
+    }
+    private function onOptionsFadein():void{
+
+        Starling.juggler.removeTweens(shilfies);
+        Starling.juggler.removeTweens(precioursmoments);
+
+    }
+
+    private function doTouchOptionsHandler(e:TouchEvent):void{
+
+        var target:Image=e.currentTarget as Image;
+        var hovor:Touch = e.getTouch(target, TouchPhase.HOVER);
+        var began:Touch= e.getTouch(target, TouchPhase.BEGAN);
+
+
+        var optionTween:Tween;
+        var labelTween:Tween;
+
+        var optionName:String=target.name;
+        var labelTxt:TextField=this.getChildByName("Label-"+optionName) as TextField;
+
+        if(hovor){
+
+            optionTween=new Tween(target,0.1,Transitions.EASE_IN_OUT_BACK);
+            optionTween.scaleTo(1);
+            Starling.juggler.add(optionTween);
+
+
+            labelTween=new Tween(labelTxt,0.1,Transitions.EASE_IN_OUT_BACK);
+            labelTween.animate("y",640);
+            labelTween.fadeTo(1);
+            Starling.juggler.add(labelTween);
+        }else
+        {
+            Starling.juggler.removeTweens(target);
+            Starling.juggler.removeTweens(labelTxt);
+
+
+            optionTween=new Tween(target,0.1,Transitions.EASE_IN_OUT_BACK);
+            optionTween.scaleTo(0.8);
+            Starling.juggler.add(optionTween);
+
+
+            labelTween=new Tween(labelTxt,0.1,Transitions.EASE_IN_OUT_BACK);
+            labelTween.animate("y",target.y);
+            labelTween.fadeTo(0);
+            Starling.juggler.add(labelTween);
+
+        }
+
+        if(began){
+
+            Starling.juggler.removeTweens(target);
+            Starling.juggler.removeTweens(labelTxt);
+
+            click_type=target.name;
+            optionIconsFadeout();
+
+        }
+
+    }
+    private function optionIconsFadeout():void
+    {
+
+
+        for(var j:uint=0;j<options.length;j++) {
+
+            var optionIcon:Image = options[j];
+            var optionTxt:TextField=optionTxts[j] as TextField;
+
+            var tween:Tween = new Tween(optionIcon, 0.5, Transitions.EASE_IN_OUT_BACK);
+            tween.scaleTo(0.1);
+            tween.fadeTo(0);
+            tween.onComplete = onOptionsFadeoutComplete;
+            Starling.juggler.add(tween);
+
+            optionTxt.removeFromParent(true);
+        }
+
+
+    }
+    private function onOptionsFadeoutComplete():void{
+
+        for(var j:uint=0;j<options.length;j++) {
+
+            var optionIcon:Image = options[j];
+            Starling.juggler.removeTweens(optionIcon);
+            optionIcon.removeFromParent(true);
+        }
+
+        doFadeoutTransatoin();
+    }
+
     private function onCallback():void
     {
 

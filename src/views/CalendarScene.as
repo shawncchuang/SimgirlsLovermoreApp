@@ -78,6 +78,7 @@ public class CalendarScene extends Sprite {
         templete=new MenuTemplate();
         templete.font=font;
         templete.cate="CALENDAR";
+        templete.label="CALENDAR";
         templete.addBackground();
         var attrs:Array=[{from:new Point(-456,408),to:new Point(-146,408)},
             {from:new Point(1478,-108),to:new Point(1168,-108)}];

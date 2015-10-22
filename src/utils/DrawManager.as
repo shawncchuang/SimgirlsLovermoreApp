@@ -606,20 +606,6 @@ public class DrawManager implements DrawerInterface
             //scenes need day or night background
             bgSrc+=_time;
         }
-//        switch(scene){
-//            //scenes need day or night background
-//            case "BeachScene":
-//            case "ParkScene":
-//            case "PierScene":
-//            case "LovemoreMansionScene":
-//            case "HotelScene":
-//            case "GardenScene":
-//            case "FitnessClubScene":
-//            case "PrivateIslandScene":
-//                bgSrc+=_time;
-//                break
-//
-//        }
 
         var bgTexture:Texture=Assets.getTexture(bgSrc);
         var bgImg:Image=new Image(bgTexture);

@@ -78,6 +78,7 @@ public class PhotosScene extends Sprite {
         templete=new MenuTemplate();
         templete.font=font;
         templete.cate="PHOTOS";
+        templete.label="SELFIES";
         templete.addBackground();
         var attrs:Array=[{from:new Point(-420,110),to:new Point(-180,150)},
             {from:new Point(1440,150),to:new Point(1200,150)}];
@@ -264,20 +265,6 @@ public class PhotosScene extends Sprite {
             }else{
                 scene=scene+"Bg";
             }
-//            switch(scene){
-//
-//                case "Beach":
-//                case "Garden":
-//                case "Hotel":
-//                case "LovemoreMansion":
-//                case "Park":
-//                case "Pier":
-//                    scene=scene+"Bg"+time;
-//                    break
-//                default:
-//                    scene=scene+"Bg";
-//                    break
-//            }
 
             var bgTexture:Texture=Assets.getTexture(scene);
             var bg:Image=new Image(bgTexture);

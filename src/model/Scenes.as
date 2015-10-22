@@ -62,6 +62,7 @@ import views.ParkScene;
 import views.PhotosScene;
 import views.PierScene;
 import views.PoliceStationScene;
+import views.PreciousPhotosScene;
 import views.PrivateIslandScene;
 import views.ProfileScene;
 import views.SettingsScene;
@@ -160,7 +161,7 @@ public class Scenes extends Sprite
         ViewsContainer.InfoDataView.visible=true;
         if(next_scene!="MenuScene" && next_scene!="ProfileScene" &&
                 next_scene!="SettingsScene" &&  next_scene!="ContactsScene" &&
-                next_scene!="CalendarScene" && next_scene!="PhotosScene" &&
+                next_scene!="CalendarScene" && next_scene!="PhotosScene" &&  next_scene!="PrecioursPhotosScene" &&
                 next_scene!="BattleScene" && next_scene!="ChangeFormationScene")
         {
             DataContainer.currentLabel=next_scene;
@@ -168,7 +169,7 @@ public class Scenes extends Sprite
         if(next_scene!="FoundSomeScene" && next_scene!="DatingScene" &&
                 next_scene!="MenuScene" && next_scene!="ProfileScene" &&
                 next_scene!="SettingsScene" &&  next_scene!="ContactsScene" &&
-                next_scene!="CalendarScene" && next_scene!="PhotosScene")
+                next_scene!="CalendarScene" && next_scene!="PhotosScene" && next_scene!="PrecioursPhotosScene")
         {
             DataContainer.currentScene=next_scene;
         }
@@ -287,8 +288,13 @@ public class Scenes extends Sprite
                 current_scence=new ContactsScene();
                 break
             case "PhotosScene":
+                    //Selfies
                 infobar=false;
                 current_scence=new PhotosScene();
+                break
+            case "PreciousPhotosScene":
+                infobar=false;
+                current_scence=new PreciousPhotosScene();
                 break
             case "FoundSomeScene":
                 infobar=false;

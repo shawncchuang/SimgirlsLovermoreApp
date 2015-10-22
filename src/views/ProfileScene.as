@@ -149,6 +149,7 @@ public class ProfileScene extends Scenes
         templete=new MenuTemplate();
         templete.font=font;
         templete.cate="PROFILE";
+        templete.label="PROFILE";
         templete.addBackground();
         var attrs:Array=[{from:new Point(-460,110),to:new Point(-150,110)},
             {from:new Point(1500,151),to:new Point(1170,410)}];

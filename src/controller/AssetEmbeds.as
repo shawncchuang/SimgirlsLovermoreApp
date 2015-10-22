@@ -561,6 +561,12 @@ public class AssetEmbeds
     [Embed(source="../../media/textures/icons/ani/preloading.png")]
     public static const Preloading:Class;
 
+    [Embed(source="../../media/textures/icons/icon_selfies.png")]
+    public static const SelfiesIcon:Class;
+
+    [Embed(source="../../media/textures/icons/icon_precious.png")]
+    public static const PrecriousIcon:Class;
+
     /*------------------icons-------------------------------------------------*/
 
 
