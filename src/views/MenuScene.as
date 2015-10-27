@@ -104,7 +104,6 @@ public class MenuScene extends Scenes
 
 
 
-
         network=new Image(getTexture("IconNetwork"));
         network.useHandCursor=true;
         network.pivotX=network.width/2;
@@ -156,7 +155,22 @@ public class MenuScene extends Scenes
         var infobar:Sprite=ViewsContainer.gameinfo;
         infobar.dispatchEventWith("DRAW_PROFILE");
 
+
+        for(var j:uint=0;j<options.length;j++) {
+
+            var optionIcon:Image = options[j];
+            var optionTxt:TextField=optionTxts[j] as TextField;
+
+
+            optionTxt.removeFromParent(true);
+            optionIcon.removeFromParent(true);
+
+        }
+        options=new Array();
+        optionTxts=new Array();
+
         doFadeoutTransatoin();
+
 
 
 
@@ -465,32 +479,39 @@ public class MenuScene extends Scenes
         var began:Touch= e.getTouch(target, TouchPhase.BEGAN);
         if(began){
 
-            for(var i:uint=0;i<iconsname.length;i++) {
-                var iconimg:Image = iconsimg[i];
-
-                var icon_tween:Tween=new Tween(iconimg,0.5,Transitions.EASE_IN_OUT_BACK);
-                icon_tween.scaleTo(1);
-                icon_tween.fadeTo(1);
-                Starling.juggler.add(icon_tween);
-                iconsLabelList[i].alpha=1;
-
-            }
-            for(var j:uint=0;j<options.length;j++) {
-
-                var optionIcon:Image = options[j];
-                var optionTxt:TextField=optionTxts[j] as TextField;
-
-                optionIcon.removeEventListener(TouchEvent.TOUCH,doTouchOptionsHandler);
-                Starling.juggler.removeTweens(optionIcon);
-
-
-                optionTxt.removeFromParent(true);
-                optionIcon.removeFromParent(true);
-
-            }
+            onTranstionToMenuScene();
             onIconsComplete();
             network.removeEventListener(TouchEvent.TOUCH,doEnanbleMenuHandler);
         }
+
+    }
+    private function onTranstionToMenuScene():void{
+
+        for(var i:uint=0;i<iconsname.length;i++) {
+            var iconimg:Image = iconsimg[i];
+
+            var icon_tween:Tween=new Tween(iconimg,0.5,Transitions.EASE_IN_OUT_BACK);
+            icon_tween.scaleTo(1);
+            icon_tween.fadeTo(1);
+            Starling.juggler.add(icon_tween);
+            iconsLabelList[i].alpha=1;
+
+        }
+        for(var j:uint=0;j<options.length;j++) {
+
+            var optionIcon:Image = options[j];
+            var optionTxt:TextField=optionTxts[j] as TextField;
+
+            optionIcon.removeEventListener(TouchEvent.TOUCH,doTouchOptionsHandler);
+            Starling.juggler.removeTweens(optionIcon);
+
+
+            optionTxt.removeFromParent(true);
+            optionIcon.removeFromParent(true);
+
+        }
+
+
 
     }
     private function onOptionsFadein():void{

@@ -161,7 +161,7 @@ public class Scenes extends Sprite
         ViewsContainer.InfoDataView.visible=true;
         if(next_scene!="MenuScene" && next_scene!="ProfileScene" &&
                 next_scene!="SettingsScene" &&  next_scene!="ContactsScene" &&
-                next_scene!="CalendarScene" && next_scene!="PhotosScene" &&  next_scene!="PrecioursPhotosScene" &&
+                next_scene!="CalendarScene" && next_scene!="PhotosScene" &&  next_scene!="PreciousPhotosScene" &&
                 next_scene!="BattleScene" && next_scene!="ChangeFormationScene")
         {
             DataContainer.currentLabel=next_scene;
@@ -169,7 +169,7 @@ public class Scenes extends Sprite
         if(next_scene!="FoundSomeScene" && next_scene!="DatingScene" &&
                 next_scene!="MenuScene" && next_scene!="ProfileScene" &&
                 next_scene!="SettingsScene" &&  next_scene!="ContactsScene" &&
-                next_scene!="CalendarScene" && next_scene!="PhotosScene" && next_scene!="PrecioursPhotosScene")
+                next_scene!="CalendarScene" && next_scene!="PhotosScene" && next_scene!="PreciousPhotosScene")
         {
             DataContainer.currentScene=next_scene;
         }

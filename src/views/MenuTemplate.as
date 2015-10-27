@@ -45,6 +45,7 @@ public class MenuTemplate extends Sprite{
     private var titleIcon:Image;
     private var command:MainInterface=new MainCommand();
     private var mini_menu:Sprite;
+    private var cancel:Button;
     public function MenuTemplate() {
 
 
@@ -115,7 +116,7 @@ public class MenuTemplate extends Sprite{
         var title:Image=new Image(getTexture("MenuTitleBG"));
         title.pivotY=title.height/2;
         titlebar.addChild(title);
-        
+
         var title_txt:TextField=new TextField(95,40,this.label,this.font,35,0x292929,false);
         title_txt.autoSize=TextFieldAutoSize.HORIZONTAL;
         title_txt.x=245;
@@ -151,12 +152,16 @@ public class MenuTemplate extends Sprite{
 
     public function addBackStepButton(callback:Function):void{
 
-        var cancel:Button=new Button(getTexture("IconPrevBtn"));
+        cancel=new Button(getTexture("IconPrevBtn"));
         cancel.name="cancel";
         cancel.x=16;
         cancel.y=678;
         addChild(cancel);
         cancel.addEventListener(Event.TRIGGERED,callback);
+
+    }
+    public function visbleBackStepButton(boolean:Boolean):void{
+        cancel.visible=boolean;
 
     }
 

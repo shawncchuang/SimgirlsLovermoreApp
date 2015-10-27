@@ -38,6 +38,8 @@ public class SystemData extends Entity
     public var relationship_level:Object;
     public var mood_level:Object;
     public var rating_level:Object;
+    public var preciousphotos:Object;
+    public var photodomain:String;
     public var switchs:Object=
     {
         "s001":{

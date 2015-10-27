@@ -1281,6 +1281,12 @@ public class AssetEmbeds
     [Embed(source="../../media/textures/photos/CEIL_cat.jpg")]
     public static const CeilCat:Class;
 
+    [Embed(source="../../media/textures/photos/preview_frame.png")]
+    public static const PreviewFrame:Class;
+
+    [Embed(source="../../media/textures/photos/preview_lock.png")]
+    public static const PreviewLock:Class;
+
     /*----------------------------------------*/
 }
 }
