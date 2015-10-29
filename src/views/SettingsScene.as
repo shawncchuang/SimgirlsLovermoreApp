@@ -81,34 +81,18 @@ public class SettingsScene extends Sprite{
 
 
 
-        toggle=new Image(Assets.getTexture("IconSoundToggleDefault"));
+        var Mute:Boolean=SoundController.Mute;
+        var soundtoggle:String="IconSoundToggleDefault";
+        if(Mute){
+            soundtoggle="IconSoundToggleDown";
+        }
+        toggle=new Image(Assets.getTexture(soundtoggle));
         toggle.useHandCursor=true;
         toggle.x=525;
         toggle.y=290;
         addChild(toggle);
         toggle.addEventListener(TouchEvent.TOUCH, toggleSwitchChangeHandler);
-        /*
-         var toggle:ToggleSwitch=new ToggleSwitch();
-         toggle.trackLayoutMode = ToggleSwitch.TRACK_LAYOUT_MODE_ON_OFF;
-         toggle.setSize(91,55);
-         toggle.x=525;
-         toggle.y=402;
-         toggle.isSelected=false;
-         toggle.addEventListener(Event.CHANGE,toggleSwitchChangeHandler);
-         // setInitializerForClass( Button, toggleSwitchCustomThumbInitializer, "my-custom-thumb" );
-         addChild(toggle);
 
-
-
-         toggle.thumbFactory=function():Button{
-         var btn:Button=new Button();
-         // btn.defaultSkin=new Image(Assets.getTexture("IconSoundToggleDefault"));
-         // btn.downSkin=new Image(Assets.getTexture("IconSoundToggleDown"));
-         btn.defaultIcon=new Image(Assets.getTexture("IconSoundToggleDefault"));
-         // btn.downIcon=new Image(Assets.getTexture("IconSoundToggleDown"));
-         return btn;
-         }
-         */
 
     }
     private function toggleSwitchChangeHandler(e:TouchEvent):void{
@@ -130,9 +114,6 @@ public class SettingsScene extends Sprite{
                 toggle.texture=Assets.getTexture("IconSoundToggleDefault");
                 SoundController.Mute=false;
             }
-            trace(enabled);
-
-
 
         }
     }

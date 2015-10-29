@@ -1103,7 +1103,7 @@ public class Config
         "ceil_ThemedPark": ["casual2"],
         "sirena_Museum": ["casual1"],
         "sirena_Restaurant": ["party"],
-        "lenus_Restaurant": ["party"],
+        "lenus_Restaurant": ["casual2"],
         "ceil_Bank": ["casual1"],
         "ceil_PrivateIsland": [],
         "sirena_SpiritTemple": ["casual1"],

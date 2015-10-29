@@ -843,15 +843,16 @@ public class MainCommand implements MainInterface {
             if (style == "") {
                 //normal day ,depends on located
                 var currentScene:String=DataContainer.currentScene;
+                var shortcutsScene:String=DataContainer.shortcutsScene;
                 var current_scene:String=currentScene.split("Scene").join("");
                 var normalStyles:Object=Config.styles;
                 var scenesPoint:Object=Config.stagepoints;
-                var build_scenes:Array=new Array();
+                var scenes:Array=new Array();
                 for(var scene_name:String in scenesPoint){
-                    build_scenes.push(scene_name);
+                    scenes.push(scene_name);
                 }
                 var styleNames:Array=new Array();
-                var scene_index:Number=build_scenes.indexOf(current_scene);
+                var scene_index:Number=scenes.indexOf(current_scene);
                 if(scene_index==-1){
                     styleNames=["casual1"];
                 }else{
@@ -865,8 +866,14 @@ public class MainCommand implements MainInterface {
                     }
                 }
 
-
             }
+            DebugTrace.msg("MainCommand.initStyleSechedule shortcutsScene="+shortcutsScene);
+            if(shortcutsScene=="ProfileScene"){
+
+                style=_name+"_"+normalStyles[_name+"_"+scenes[Math.floor(Math.random()*scenes.length)]];
+                DebugTrace.msg("MainCommand.initStyleSechedule style="+style);
+            }
+
             suitup[_name] = style;
         }
         DataContainer.styleSechedule = suitup;

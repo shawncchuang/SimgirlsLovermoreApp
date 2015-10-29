@@ -18,6 +18,8 @@ import data.Config;
 
 import events.SceneEvent;
 
+import flash.media.SoundChannel;
+
 import model.SaveGame;
 import model.Scenes;
 
@@ -34,6 +36,7 @@ import starling.events.TouchEvent;
 import starling.events.TouchPhase;
 import starling.textures.Texture;
 import starling.textures.TextureAtlas;
+import starling.utils.AssetManager;
 
 import utils.DebugTrace;
 import utils.ViewsContainer;
@@ -58,6 +61,7 @@ public class MainScene extends Scenes
     private var scroll_area:uint=350;
     private var speed:Number=.2;
     private var mediacom:MediaInterface=new MediaCommand();
+    private var wavesSound:SoundChannel;
     public function MainScene()
     {
 
@@ -87,6 +91,9 @@ public class MainScene extends Scenes
         //Starling.juggler.add(waveing);
         //container.addChild(waveing);
 
+        var assets:AssetManager=Assets.SoundManager;
+        wavesSound=assets.playSound("MapWaves");
+
     }
 
     private var movieX:Number;
@@ -112,11 +119,16 @@ public class MainScene extends Scenes
         movieX=(1536-stageW)/scrollX;
         movieY=(1195-stageH)/scrollY;
 
+        this.addEventListener(Event.REMOVED_FROM_STAGE,onRemovedHandle);
 
         var gameInfo:Sprite=ViewsContainer.gameinfo;
         gameInfo.addEventListener(TouchEvent.TOUCH,onGameInfobarTouched);
         scene.addEventListener(TouchEvent.TOUCH,onSceneTouched);
         scene.addEventListener(Event.ENTER_FRAME,doSceneEnterFrame);
+    }
+    private function onRemovedHandle(e:Event):void{
+
+        wavesSound.stop();
     }
     private  var new_gx:Number=0;
     private  var new_gy:Number=0;

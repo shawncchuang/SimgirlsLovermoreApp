@@ -788,7 +788,7 @@ public class DatingScene extends Scenes {
         }
 
         if (began) {
-
+            command.playSound("Break");
             var mr_permission:Boolean = specificChecking(com);
             if (mr_permission) {
 

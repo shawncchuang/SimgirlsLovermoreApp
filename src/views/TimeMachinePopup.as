@@ -263,6 +263,9 @@ public class TimeMachinePopup extends Sprite {
     }
     private function onTimeTravel(result:*=null):void{
 
+        DebugTrace.msg("TimeMachinePopup.onTimeTravel");
+
+
         var _data:Object=new Object();
         _data.item_id=item_id;
         var scene:Sprite=ViewsContainer.currentScene;

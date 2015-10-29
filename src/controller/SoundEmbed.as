@@ -7,7 +7,7 @@ package controller
 		[Embed(source="../../media/textures/sound/popup.mp3")]
 		public static const Popup:Class;
 		
-		[Embed(source="../../media/textures/sound/break.mp3")]
+		[Embed(source="../../media/textures/sound/timer bell.mp3")]
 		public static const Break:Class;
 		
 		[Embed(source="../../media/textures/sound/bingo.mp3")]
@@ -79,7 +79,8 @@ package controller
 		[Embed(source="../../media/textures/sound/door open.mp3")]
 		public static const DoorOpen:Class;
 
-
+		[Embed(source="../../media/textures/sound/main map waves.mp3")]
+		public static const MapWaves:Class;
 
 	}
 }
