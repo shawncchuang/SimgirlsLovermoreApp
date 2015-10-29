@@ -23,6 +23,7 @@ import starling.textures.Texture;
 import starling.utils.Color;
 
 import utils.DebugTrace;
+import utils.ViewsContainer;
 
 public class AlertMessage extends Sprite
 {
@@ -38,6 +39,7 @@ public class AlertMessage extends Sprite
     private var clickmouse:Sprite;
     public function AlertMessage(content:String,callback:Function=null,type:String=null):void
     {
+        DebugTrace.msg("AlertMessage");
         onClosed=callback;
         comfirm=new Sprite();
         msg=content;
@@ -54,7 +56,20 @@ public class AlertMessage extends Sprite
                 break
         }
 
+        var current_scene:Sprite=ViewsContainer.currentScene;
+        current_scene.addEventListener("ALERT_DISABLE_TOUCHSCREEN",onDisableHandle);
+        current_scene.addEventListener("ALERT_ENABLE_TOUCHSCREEN",onEnableHandle);
+    }
+    private function onDisableHandle(e:Event):void{
 
+        DebugTrace.msg("AlertMessage.onDisableHandle");
+
+        this.removeEventListener(TouchEvent.TOUCH,doCancelHandler);
+    }
+    private function onEnableHandle(e:Event):void{
+
+        DebugTrace.msg("AlertMessage.onEnableHandle");
+        this.addEventListener(TouchEvent.TOUCH,doCancelHandler);
     }
     private function initScreenType():void{
 
@@ -92,6 +107,8 @@ public class AlertMessage extends Sprite
 
     }
     private function initNoButtonType():void{
+
+        DebugTrace.msg("AlertMessage.initNoButtonType");
 
         var width:Number=Starling.current.stage.stageWidth;
         var height:Number=Starling.current.stage.stageHeight;

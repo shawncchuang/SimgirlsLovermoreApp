@@ -62,7 +62,8 @@ import model.BattleData;
 			
 			Starling.current.stage.stageWidth=1024;
 			Starling.current.stage.stageHeight=768;
-			
+
+			DataContainer.DatingSuit="";
 			DataContainer.deadline=false;
             DataContainer.battleType="";
 			DataContainer.currentScene="MainScene";

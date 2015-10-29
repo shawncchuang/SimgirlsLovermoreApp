@@ -48,21 +48,20 @@ public class ChatScene extends Sprite
 //    private var clickmouse:Sprite;
 //    private var quad:Quad;
     private var alert:Sprite;
-    public function ChatScene()
+    public function     ChatScene()
     {
         initBingo();
         //initCharacter();
         initBubble();
         initBingoMachine();
-        initCancelHandle();
 
         this.addEventListener(Event.REMOVED_FROM_STAGE, onChatSceneRemoved)
     }
     private function initBingo():void
     {
-        //60% bingo,40% trash talking
-        var bingo:uint=60;
-        var moodBingo:uint=40;
+        //80% bingo,20% trash talking
+        var bingo:uint=80;
+        var moodBingo:uint=60;
         var chat_bingo:Number=uint(Math.random()*100)+1;
 
         if(chat_bingo<=bingo)
@@ -72,18 +71,18 @@ public class ChatScene extends Sprite
 
             if(item_bingo>=1 && item_bingo<=moodBingo)
             {
-                // location match 40%
+                // moood reward ,location match 60%
                 setResult(0);
             }
-            else if(item_bingo>moodBingo && item_bingo<=moodBingo+30)
+            else if(item_bingo>moodBingo && item_bingo<=moodBingo+20)
             {
-                //secrets match 30%
+                //secrets match 20%
                 setResult(2);
 
             }
             else
             {
-                //gift match 30%
+                //gift match 20%
                 setResult(1);
 
             }
@@ -103,6 +102,7 @@ public class ChatScene extends Sprite
     {
         result=re;
         var _relist:Array=new Array(0,1,2);
+
         for(var i:uint=0;i<bingoMax;i++)
         {
 
@@ -192,9 +192,9 @@ public class ChatScene extends Sprite
             var bingoitems:ScrollImage=new ScrollImage(items_texture);
             bingoitems.name="bingo"+i;
             bingoitems.x=i*bingoitems.width;
-            bingoitems.clipMaskTop=0
+            bingoitems.clipMaskTop=0;
             bingoitems.clipMaskLeft=0;
-            bingoitems.clipMaskBottom=100
+            bingoitems.clipMaskBottom=100;
             bingoitems.clipMaskRight=100;
 
             bingo.addChild(bingoitems);
@@ -337,7 +337,7 @@ public class ChatScene extends Sprite
         var ratingLv:Number;
         var likes:String;
         var dating:String=DataContainer.currentDating;
-        var assets:Object
+        var assets:Object;
         var chat:Object=flox.getSyetemData("chat_"+dating);
         var item:Object;
 
@@ -357,7 +357,7 @@ public class ChatScene extends Sprite
                 sentence=sentences[index];
 
                 var _int:Number=flox.getSaveData("int").player;
-                var reward:Number=Math.floor(_int/4);
+                var reward:Number=Math.floor(_int/8);
                 var _data:Object=new Object();
                 _data.com="Reward_Mood";
                 _data.mood=reward;
@@ -424,6 +424,8 @@ public class ChatScene extends Sprite
         chatTxt.x=634;
         chatTxt.y=110;
         addChild(chatTxt);
+
+        initCancelHandle();
 
     }
     private function praseSceneRating(ratinglv:Number):String
@@ -522,7 +524,7 @@ public class ChatScene extends Sprite
     private function doCancelHandler():void
     {
 
-
+        alert.removeFromParent(true);
         displayBingo(false,false,false);
         Starling.juggler.removeTweens(bingo);
 

@@ -26,6 +26,27 @@ package controller
 		
 		[Embed(source="../../media/textures/music/mayhem.mp3")]
 		public static const Mayhem:Class;
-		
+
+
+		[Embed(source="../../media/textures/music/characters/ceil.mp3")]
+		public static const ceilMusic:Class;
+
+		[Embed(source="../../media/textures/music/characters/dea.mp3")]
+		public static const deaMusic:Class;
+
+		[Embed(source="../../media/textures/music/characters/klr.mp3")]
+		public static const klrMusic:Class;
+
+		[Embed(source="../../media/textures/music/characters/lenus.mp3")]
+		public static const lenusMusic:Class;
+
+		[Embed(source="../../media/textures/music/characters/sirena.mp3")]
+		public static const sirenaMusic:Class;
+
+		[Embed(source="../../media/textures/music/characters/tomoru.mp3")]
+		public static const tomoruMusic:Class;
+
+		[Embed(source="../../media/textures/music/characters/zack.mp3")]
+		public static const zackMusic:Class;
 	}
 }

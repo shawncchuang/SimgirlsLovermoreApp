@@ -879,7 +879,6 @@ public class MainCommand implements MainInterface {
         var flox:FloxInterface = new FloxCommand();
         var dating:String = DataContainer.currentDating;
         var relObj:Object = flox.getSaveData("rel");
-        var rel:String = relObj[dating];
         var ptsObj:Object = flox.getSaveData("pts");
         var mood:Number = flox.getSaveData("mood")[dating];
         var pts:Number = Number(ptsObj[dating]);
@@ -894,7 +893,7 @@ public class MainCommand implements MainInterface {
         }
 
         ptsObj[dating] = pts;
-        rel = DataContainer.getRelationship(pts, dating);
+        var rel:String = DataContainer.getRelationship(pts, dating);
 
         if(relObj[dating]!=rel){
             //relationship changed
@@ -907,12 +906,21 @@ public class MainCommand implements MainInterface {
                 //reduce
                 _data.change_type="reduce";
 
-            }else{
+            }
+            if(oldLv<currentLv){
                 //raise
                 _data.change_type="raise";
             }
             var datingScene:Sprite=ViewsContainer.baseSprite;
-            datingScene.dispatchEventWith(DatingScene.CHANGED_RELATIONSHIP,false,_data);
+            if(oldLv != currentLv){
+
+                datingScene.dispatchEventWith(DatingScene.CHANGED_RELATIONSHIP,false,_data);
+            }else{
+                datingScene.dispatchEventWith(DatingScene.NONE_RELATIONSHIP);
+                //var current_scene:Sprite=ViewsContainer.currentScene;
+                //current_scene.dispatchEventWith("ALERT_ENABLE_TOUCHSCREEN");
+            }
+
 
         }
 
@@ -1078,6 +1086,7 @@ public class MainCommand implements MainInterface {
         target.addChild(cancelbtn);
         return cancelbtn
     }
+
 
 
 

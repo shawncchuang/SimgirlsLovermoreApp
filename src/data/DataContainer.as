@@ -49,6 +49,7 @@ public class DataContainer
     private static var shortcuts_scene:String;
     private static var shopping_from:String;
 
+    private static var datingsuit_style:String;
 
     public static function set AssetsId(ids:Array):void
     {
@@ -185,10 +186,6 @@ public class DataContainer
         var scenes:Object=Config.stagepoints;
         var dating:String=DataContainer.dating;
 
-
-
-
-
         //DebugTrace.msg("rendom scene  : "+ran_sceneslist+" ; length : "+ran_sceneslist.length);
         //40% likes-random 100 ,
 
@@ -292,7 +289,7 @@ public class DataContainer
         {
             //if(scene!="Hotel")
             //{
-                sceneslist.push(scene);
+            sceneslist.push(scene);
             //}
         }
         //for
@@ -369,7 +366,7 @@ public class DataContainer
         var maxTimes:Number=anslist.length;
         for(var i:uint=0;i<maxTimes;i++)
         {
-            var index:uint=uint(Math.random()*anslist.length)
+            var index:uint=uint(Math.random()*anslist.length);
             var ran_ans:String=anslist[index];
             //DebugTrace.msg("DataContainer.praseSecretAnswer ran_ans:"+ran_ans);
             ran_anslist.push(ran_ans);
@@ -794,6 +791,14 @@ public class DataContainer
         return shopping_from;
     }
 
+    public static function set DatingSuit(style:String):void{
+        datingsuit_style=style;
+
+    }
+    public static function get DatingSuit():String{
+        return datingsuit_style;
+
+    }
 
 }
 }

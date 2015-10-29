@@ -78,7 +78,8 @@ package controller
 		
 		[Embed(source="../../media/textures/sound/door open.mp3")]
 		public static const DoorOpen:Class;
-		
-		
+
+
+
 	}
 }
