@@ -2,15 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e5634857-ca85-444f-9915-08f826b15827" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/AlertMessage.as" afterPath="$PROJECT_DIR$/src/views/AlertMessage.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/ChatScene.as" afterPath="$PROJECT_DIR$/src/views/ChatScene.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/data/Config.as" afterPath="$PROJECT_DIR$/src/data/Config.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/data/DataContainer.as" afterPath="$PROJECT_DIR$/src/data/DataContainer.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/DatingScene.as" afterPath="$PROJECT_DIR$/src/views/DatingScene.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Game.as" afterPath="$PROJECT_DIR$/src/Game.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/MainCommand.as" afterPath="$PROJECT_DIR$/src/controller/MainCommand.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/MusicEmbed.as" afterPath="$PROJECT_DIR$/src/controller/MusicEmbed.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/SoundEmbed.as" afterPath="$PROJECT_DIR$/src/controller/SoundEmbed.as" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="SimgirlsLovermoreApp.iws" />
@@ -64,8 +55,8 @@
       <file leaf-file-name="DatingScene.as" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/views/DatingScene.as">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.48401827">
-              <caret line="1393" column="53" selection-start-line="1393" selection-start-column="53" selection-end-line="1393" selection-end-column="53" />
+            <state vertical-scroll-proportion="0.66132724">
+              <caret line="1400" column="70" selection-start-line="1400" selection-start-column="70" selection-end-line="1400" selection-end-column="70" />
               <folding>
                 <element signature="e#18#49#0" expanded="true" />
               </folding>
@@ -872,13 +863,7 @@
       <workItem from="1445883793721" duration="2587000" />
       <workItem from="1445889946777" duration="18627000" />
       <workItem from="1445967575645" duration="1626000" />
-      <workItem from="1445983573637" duration="43434000" />
-    </task>
-    <task id="LOCAL-00019" summary="added new kiss animated,swap flirt and kiss scene,fixed bug when player finish date command cloud &quot;start dating&quot; should disabled.">
-      <created>1410316181575</created>
-      <option name="number" value="00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1410316181575</updated>
+      <workItem from="1445983573637" duration="43640000" />
     </task>
     <task id="LOCAL-00020" summary="control photos to change prev or next, and click trashcan to delete the photo. 100 photos  is maxim  in TakePhotosScene.">
       <created>1410572863240</created>
@@ -1168,11 +1153,17 @@
       <option name="project" value="LOCAL" />
       <updated>1445982048075</updated>
     </task>
-    <option name="localTasksCounter" value="68" />
+    <task id="LOCAL-00068" summary="1.update showing up the precious photo and play background music when  relationship will be upgraded.&#10; &#10;">
+      <created>1446148546157</created>
+      <option name="number" value="00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1446148546181</updated>
+    </task>
+    <option name="localTasksCounter" value="69" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2048253000" />
+    <option name="totallyTimeSpent" value="2048459000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1195,7 +1186,7 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.271518" sideWeight="0.47783622" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24860725" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32998884" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.271518" sideWeight="0.5221638" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27194357" sideWeight="0.5221638" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31298906" sideWeight="0.50278705" order="8" side_tool="true" content_ui="combo" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1845039" sideWeight="0.5046948" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2026239" sideWeight="0.6267649" order="10" side_tool="false" content_ui="tabs" />
@@ -1228,7 +1219,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="1.increase extra 1.5 power &#10;" />
     <MESSAGE value="1.increase extra 1.5 power in battle&#10;" />
     <MESSAGE value="1.fixed bugs.&#10;2.update about sorting by name and categeoriess in shopping centre.&#10;3.update characters photos by taking photo." />
     <MESSAGE value="1.update characters photos by taking photo." />
@@ -1253,7 +1243,8 @@
     <MESSAGE value="1.update Config.daynightScen to orgenize day and night scene&#10; &#10;" />
     <MESSAGE value="1.update Photos has two option icons , click network icon can return to Menu scene when the photos option will be available.&#10; &#10;" />
     <MESSAGE value="1.update Precious Photos interface and scene&#10; &#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="1.update Precious Photos interface and scene&#10; &#10;" />
+    <MESSAGE value="1.update showing up the precious photo and play background music when  relationship will be upgraded.&#10; &#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="1.update showing up the precious photo and play background music when  relationship will be upgraded.&#10; &#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1655,8 +1646,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/DatingScene.as">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.48401827">
-          <caret line="1393" column="53" selection-start-line="1393" selection-start-column="53" selection-end-line="1393" selection-end-column="53" />
+        <state vertical-scroll-proportion="0.66132724">
+          <caret line="1400" column="70" selection-start-line="1400" selection-start-column="70" selection-end-line="1400" selection-end-column="70" />
           <folding>
             <element signature="e#18#49#0" expanded="true" />
           </folding>
