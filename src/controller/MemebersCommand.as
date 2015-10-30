@@ -383,7 +383,7 @@ public class MemebersCommand implements MembersInterface
     public function checkTeamSurvive():void
     {
         var cpu_gameover:Boolean=true;
-        var cpu_teams_saved:Object=flox.getSaveData("cpu_teams");
+        //var cpu_teams_saved:Object=flox.getSaveData("cpu_teams");
         var player_gameover:Boolean=true;
         seObj=flox.getSaveData("se");
         var member:Member;
@@ -759,6 +759,7 @@ public class MemebersCommand implements MembersInterface
 
     private function saveRecord(type:String):void
     {
+        DebugTrace.msg("MembersCommand.saveRecord");
         var record:Object=flox.getSaveData(type);
         var members:Array=playerteam;
         for(var i:uint=0;i<members.length;i++)
@@ -771,9 +772,9 @@ public class MemebersCommand implements MembersInterface
         //for
         flox.save(type,record,onSaveComplete);
     }
-    private function onSaveComplete(savegame:SaveGame):void
+    private function onSaveComplete(savegame:*=null):void
     {
-        DebugTrace.msg("MembersCommand. onSaveComplete");
+        DebugTrace.msg("MembersCommand.onSaveComplete");
         flox.save("se",seObj);
     }
 }

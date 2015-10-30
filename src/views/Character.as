@@ -612,7 +612,7 @@ public class Character extends MovieClip
                         round=1;
                     }
                     processMember("scared");
-                    power.speeded="false;"
+                    power.speeded="false";
                     removeClickTap();
                     break
 

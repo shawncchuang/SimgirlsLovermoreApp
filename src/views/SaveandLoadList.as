@@ -447,7 +447,7 @@ public class SaveandLoadList extends Sprite
         command.topviewDispatch(TopViewEvent.REMOVE,_data);
 
     }
-    private function onSynsBackupSavedComplete():void{
+    private function onSynsBackupSavedComplete(result:*=null):void{
 
         flox.loadEntities();
 
