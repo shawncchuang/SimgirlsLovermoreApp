@@ -51,7 +51,7 @@ public class CommandCloud extends MovieClip
     public static var HIDED:String="hided";
     TweenPlugin.activate([TransformAroundCenterPlugin]);
 
-    private var ran_battle_rate:Number=10;
+    private var ran_battle_rate:Number=7;
 
     public function CommandCloud(src:String):void{
         //L1_^Departures

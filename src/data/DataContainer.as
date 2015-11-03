@@ -423,7 +423,7 @@ public class DataContainer
             relIndex=6;
 
         }
-        rel=Config.relatoinshipHeirarchy[relIndex];
+        rel=Config.relHierarchy[relIndex];
 
         return rel
 

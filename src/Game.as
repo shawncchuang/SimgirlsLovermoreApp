@@ -6,8 +6,10 @@ package
 	import controller.FloxInterface;
 	import controller.MainCommand;
 	import controller.MainInterface;
-	
-	import data.DataContainer;
+
+import data.Config;
+
+import data.DataContainer;
 	
 	import events.GameEvent;
 	import events.SceneEvent;
@@ -81,8 +83,6 @@ import model.BattleData;
 			assets.initMusicAssetsManager();
 			assets.initSoundAssetsManager();
 
-
-
 			if(loadgame)
 			{
 				
@@ -91,7 +91,7 @@ import model.BattleData;
 			}
 			else
 			{
-				
+
 				initMainScene();
 				initUI();
 				var battleData:BattleData=new BattleData();

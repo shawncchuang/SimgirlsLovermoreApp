@@ -604,51 +604,49 @@ public class BattleData
 
 
         }
-        else
-        {
-
-            var team_battle:Array=schedule[dayStr];
-            //DebugTrace.msg("BattleData.checkBattleSchedule team_battle="+JSON.stringify(team_battle));
-            if(team_battle) {
-                for (var i:uint = 0; i < team_battle.length; i++) {
-                    var key:String = team_battle[i].split("|")[0];
-
-                    if (key == "p") {
-                        player_index = Number(i);
-                    }
-
-                    if(type == "BattleResult"){
-                        checkBattleResult(i,target,dayStr,key,team_battle[i].split("|")[1]);
 
 
-                    }
+        var team_battle:Array=schedule[dayStr];
+        //DebugTrace.msg("BattleData.checkBattleSchedule team_battle="+JSON.stringify(team_battle));
+        if(team_battle) {
+            for (var i:uint = 0; i < team_battle.length; i++) {
+                var key:String = team_battle[i].split("|")[0];
 
+                if (key == "p") {
+                    player_index = Number(i);
                 }
 
-                for(var j:uint=0;j<battled.length;j++){
-                    //check already battle today
-                    key= battled[j].split("|")[0];
-                    if(key=="p"){
-                        //already battled today
-                        player_index=-1;
-                    }
+                if(type == "BattleResult"){
+                    checkBattleResult(i,target,dayStr,key,team_battle[i].split("|")[1]);
+
 
                 }
-
-                if(player_index!=-1) {
-                    //cpu found out
-                    cpuIndex = Number(team_battle[player_index].split("|")[1]);
-                }
-                var battles:Array=flox.getSaveData("current_battle")[dayStr];
-                if(battles[0]!="0|0"){
-                    //already battled today;
-                    cpuIndex=-2;
-                }
-
 
             }
 
+            for(var j:uint=0;j<battled.length;j++){
+                //check already battle today
+                key= battled[j].split("|")[0];
+                if(key=="p"){
+                    //already battled today
+                    player_index=-1;
+                }
+
+            }
+
+            if(player_index!=-1) {
+                //cpu found out
+                cpuIndex = Number(team_battle[player_index].split("|")[1]);
+            }
+            var battles:Array=flox.getSaveData("current_battle")[dayStr];
+            if(battles[0]!="0|0"){
+                //already battled today;
+                cpuIndex=-2;
+            }
+
+
         }
+
 
         var battleDays:Array=Config.battleDays;
         var monthsList:Array= Config.Monthslist;

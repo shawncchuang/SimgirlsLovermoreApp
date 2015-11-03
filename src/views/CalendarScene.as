@@ -74,7 +74,6 @@ public class CalendarScene extends Sprite {
     private function initializeLayout():void{
 
 
-
         templete=new MenuTemplate();
         templete.font=font;
         templete.cate="CALENDAR";

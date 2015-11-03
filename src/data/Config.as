@@ -39,16 +39,16 @@ public class Config
     //battle schedule 2033 Tuesday
 
     public static var battleDays:Array=[
-        "Sep_5","Sep_12","Sep_19","Sep_26",
-        "Oct_2","Oct_9","Oct_16","Oct_23","Oct_30",
-        "Nov_4","Nov_11","Nov_18","Nov_25",
-        "Jan_1","Jan_8","Jan_15","Jan_22","Jan_29"
+        "Sep_6","Sep_13","Sep_20","Sep_27",
+        "Oct_4","Oct_11","Oct_18","Oct_25",
+        "Nov_1","Nov_8","Nov_15","Nov_22","Nov_29",
+        "Jan_3","Jan_10","Jan_17","Jan_24","Jan_31"
     ];
 
     public static var daynightScene:Array=["BeachScene","ParkScene","PierScene","LovemoreMansionScene"
         ,"HotelScene","GardenScene","FitnessClubScene","PrivateIslandScene"];
 
-    public static var relatoinshipHeirarchy:Array=["foe","acquaintance","friend","close friend",
+    public static var relHierarchy:Array=["foe","acquaintance","friend","close friend",
         "dating partner","lover","spouse"];
 
     public static function  battleSchedule():Dictionary
@@ -64,8 +64,8 @@ public class Config
         scheduls[battleDays[5]]= ["p|5", "2|7", "1|3", "6|4", "8|0"];
         scheduls[battleDays[6]]=["p|4", "7|6", "5|0", "2|3", "1|8"];
         scheduls[battleDays[7]]=["p|7", "0|3", "4|5", "6|1", "2|8"];
-        scheduls[battleDays[8]]=["p|8", "0|6", "5|2", "1|4", "3|7"];
 
+        scheduls[battleDays[8]]=["p|8", "0|6", "5|2", "1|4", "3|7"];
         scheduls[battleDays[9]]= ["p|0", "2|1", "4|3", "5|6", "7|8"];
         scheduls[battleDays[10]]=["p|1", "0|2", "3|5", "4|7", "8|6"];
         scheduls[battleDays[11]]=["p|3", "4|0", "1|7", "6|2", "8|5"];
@@ -944,7 +944,7 @@ public class Config
         "tomoru_SpiritTemple": ["casual1"],
         "dea_Casino": ["night"],
         "zack_BlackMarket": ["casual2"],
-        "sirena_ChangingRoom": ["underwear1,underwear2"],
+        "sirena_ChangingRoom": ["underwear1", "underwear1"],
         "sao_Airport": ["casual1"],
         "tomoru_Museum": ["casual1"],
         "dea_SportsBar": ["night"],
@@ -1048,7 +1048,7 @@ public class Config
         "sirena_Nightclub": ["club"],
         "sao_ThemedPark": ["casual1"],
         "lenus_SpiritTemple": ["casual1"],
-        "ceil_Casino": ["casual1"],
+        "ceil_Casino": ["night"],
         "klr_ChangingRoom": ["underwear"],
         "sao_PrivateIsland": ["casual1"],
         "zack_SSCCArena": ["battle"],

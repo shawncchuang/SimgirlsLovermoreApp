@@ -820,6 +820,8 @@ public class AssetEmbeds
     public static const ceil_wedding:Class;
     [Embed(source="../../media/textures/characters/styles/ceil/work.png")]
     public static const ceil_work:Class;
+    [Embed(source="../../media/textures/characters/styles/ceil/night.png")]
+    public static const ceil_night:Class;
 
 
     [Embed(source="../../media/textures/characters/styles/dea/battle.png")]
@@ -858,6 +860,8 @@ public class AssetEmbeds
     public static const dea_wedding:Class;
     [Embed(source="../../media/textures/characters/styles/dea/work.png")]
     public static const dea_work:Class;
+    [Embed(source="../../media/textures/characters/styles/dea/towel.png")]
+    public static const dea_towel:Class;
 
 
     [Embed(source="../../media/textures/characters/styles/klr/battle.png")]
@@ -914,6 +918,10 @@ public class AssetEmbeds
     public static const lenus_wedding:Class;
     [Embed(source="../../media/textures/characters/styles/lenus/work.png")]
     public static const lenus_work:Class;
+    [Embed(source="../../media/textures/characters/styles/lenus/towel.png")]
+    public static const lenus_towel:Class;
+    [Embed(source="../../media/textures/characters/styles/lenus/party.png")]
+    public static const lenus_party:Class;
 
 
 
@@ -1025,6 +1033,10 @@ public class AssetEmbeds
     public static const zack_underwear:Class;
     [Embed(source="../../media/textures/characters/styles/zack/battle.png")]
     public static const zack_battle:Class;
+    [Embed(source="../../media/textures/characters/styles/zack/towel.png")]
+    public static const zack_towel:Class;
+    [Embed(source="../../media/textures/characters/styles/zack/swimsuit.png")]
+    public static const zack_swimsuit:Class;
 
     /*------------------characters-------------------------------------------------*/
 

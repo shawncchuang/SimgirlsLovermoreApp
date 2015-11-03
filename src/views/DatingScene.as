@@ -25,21 +25,14 @@ import events.SceneEvent;
 
 import feathers.controls.ImageLoader;
 
-import flash.events.TimerEvent;
-
 import flash.geom.Point;
 import flash.media.SoundChannel;
-import flash.utils.Timer;
 
 import model.CusomAssets;
-
 import model.SaveGame;
 import model.Scenes;
 
 import starling.animation.DelayedCall;
-
-import starling.animation.Juggler;
-
 import starling.animation.Transitions;
 import starling.animation.Tween;
 import starling.core.Starling;
@@ -58,8 +51,6 @@ import starling.textures.Texture;
 import starling.textures.TextureAtlas;
 import starling.textures.TextureSmoothing;
 import starling.utils.AssetManager;
-import starling.utils.HAlign;
-import starling.utils.VAlign;
 
 import utils.DebugTrace;
 import utils.DrawManager;
@@ -98,11 +89,8 @@ public class DatingScene extends Scenes {
     public static var REJECT_GIFT:String = "reject_gift";
     public static var CHANGED_RELATIONSHIP:String="changed_relationship";
     public static var NONE_RELATIONSHIP:String="none_relationship";
-    private var gameEvent:GameEvent = SimgirlsLovemore.gameEvent;
     private var excerptbox:ExcerptBox;
     private var item_id:String;
-    private var loveSprite:Sprite;
-    private var cancel:Image;
     private var bubble:Sprite;
     private var goDating:Number = 0;
     private var chat:String;
@@ -112,13 +100,10 @@ public class DatingScene extends Scenes {
     private var com:String;
     private var assets:AssetsForm;
     private var panelbase:Sprite;
-    private var itemImg:Image;
-
     private var heartView:Sprite;
-    private var timer:Timer;
+
     private var talkingAlert:Sprite;
     public function DatingScene() {
-        //ViewsContainer.InfoDataView.visible=false;
 
         base_sprite = new Sprite();
         addChild(base_sprite);
@@ -351,9 +336,6 @@ public class DatingScene extends Scenes {
     }
 
     private function startPaticles():void {
-        //	var assets:Object=flox.getSaveData("assets");
-
-
 
         var rating:Number = command.searchAssetRating(item_id);
         var type:String = "like";
@@ -408,9 +390,7 @@ public class DatingScene extends Scenes {
         var savegame:SaveGame = FloxCommand.savegame;
         var ptsObj:Object = savegame.pts;
         old_pts = Number(ptsObj[dating]);
-        DebugTrace.msg("DatingScene.updateRelPoint old_pts:" + old_pts);
-        //this.addEventListener(Event.ENTER_FRAME,doUpdatePts);
-
+        //DebugTrace.msg("DatingScene.updateRelPoint old_pts:" + old_pts);
 
     }
 
@@ -822,9 +802,8 @@ public class DatingScene extends Scenes {
 
                         } else {
 
-                            var timer:Timer = new Timer(1000, 1);
-                            timer.addEventListener(TimerEvent.TIMER_COMPLETE, onTimerController);
-                            timer.start();
+
+                            clickedCloudHandle();
                         }
                     }
                 }
@@ -871,14 +850,10 @@ public class DatingScene extends Scenes {
 
     }
 
-    private function onTimerController(e:TimerEvent):void {
 
-        e.target.removeEventListener(TimerEvent.TIMER_COMPLETE, onTimerController);
-        clickedCloudHandle();
-
-    }
 
     private function clickedCloudHandle():void {
+
 
 
         var mc:MovieClip = cloud.getChildByName("mc") as MovieClip;
@@ -898,12 +873,13 @@ public class DatingScene extends Scenes {
 
     private function onCloudMovieComplete(e:Event):void {
 
-        DebugTrace.msg("DatingScene.onCloudMovieComplete");
+        //DebugTrace.msg("DatingScene.onCloudMovieComplete");
         var target:MovieClip = e.currentTarget as MovieClip;
         target.pause();
         Starling.juggler.remove(target);
+        target.visible=false;
 
-        layoutFadeout();
+        TweenLite.delayedCall(.8,layoutFadeout);
 
     }
 
@@ -917,7 +893,7 @@ public class DatingScene extends Scenes {
 
     private function layoutFadeout():void {
 
-
+        TweenLite.killDelayedCallsTo(layoutFadeout);
         for (var i:uint = 0; i < clouds.length; i++) {
 
             var cloud:Sprite = clouds[i];
@@ -996,7 +972,6 @@ public class DatingScene extends Scenes {
         Starling.juggler.removeTweens(bgEfftween);
         Starling.juggler.removeTweens(titleIcontween);
         Starling.juggler.removeTweens(relactionInfoTween);
-        Starling.juggler.removeTweens(chTween);
         Starling.juggler.removeTweens(mainProTween);
 
 

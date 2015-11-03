@@ -338,8 +338,14 @@ public class ChatScene extends Sprite
         var likes:String;
         var dating:String=DataContainer.currentDating;
         var assets:Object;
-        var chat:Object=flox.getSyetemData("chat_"+dating);
         var item:Object;
+        var chatDataAttr:String="chat_"+dating;
+        var switchRate:Number=Math.floor(Math.random()*100);
+
+        if(switchRate<50){
+            chatDataAttr="chat_"+dating+"_loc";
+        }
+        var chat:Object=flox.getSyetemData(chatDataAttr);
 
         switch(relist.toString())
         {
@@ -351,8 +357,13 @@ public class ChatScene extends Sprite
                 var pts:Number=ptsObj[dating];
                 var mood:Number=moodObj[dating];
                 var result:Object=praseRelAndMood({mood:mood,pts:pts,dating:dating});
-                DebugTrace.msg("SimgirlsLovemore.onChatWithPlayer result:"+JSON.stringify(result));
-                var sentences:Array=chat[result.rel][result.mood];
+                //DebugTrace.msg("SimgirlsLovemore.onChatWithPlayer result:"+JSON.stringify(result));
+                var condition:String=result.mood;
+                if(switchRate<50) {
+                    condition=DataContainer.currentScene.split("Scene").join("");
+                }
+
+                var sentences:Array=chat[result.rel][condition];
                 index=Math.floor(Math.random()*sentences.length);
                 sentence=sentences[index];
 

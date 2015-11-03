@@ -64,7 +64,7 @@ public class PhotosTiledRowsLayout extends PanelScreen{
         this.snapToPages=TiledRowsLayout.PAGING_NONE;
         this.snapScrollPositionsToPixels = true;
 
-        var relHeirarchy:Array=Config.relatoinshipHeirarchy;
+        var relHeirarchy:Array=Config.relHierarchy;
         var characters:Array=Config.datingCharacters;
         var photosstore:Object=flox.getSyetemData("preciousphotos");
         var allRel:Object=flox.getSaveData("rel");

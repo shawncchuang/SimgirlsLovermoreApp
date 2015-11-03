@@ -867,11 +867,11 @@ public class MainCommand implements MainInterface {
                 }
 
             }
-            DebugTrace.msg("MainCommand.initStyleSechedule shortcutsScene="+shortcutsScene);
+            //DebugTrace.msg("MainCommand.initStyleSechedule shortcutsScene="+shortcutsScene);
             if(shortcutsScene=="ProfileScene"){
 
                 style=_name+"_"+normalStyles[_name+"_"+scenes[Math.floor(Math.random()*scenes.length)]];
-                DebugTrace.msg("MainCommand.initStyleSechedule style="+style);
+                //DebugTrace.msg("MainCommand.initStyleSechedule style="+style);
             }
 
             suitup[_name] = style;
@@ -905,8 +905,8 @@ public class MainCommand implements MainInterface {
         if(relObj[dating]!=rel){
             //relationship changed
 
-            var oldLv:Number= Config.relatoinshipHeirarchy.indexOf(relObj[dating]);
-            var currentLv:Number=Config.relatoinshipHeirarchy.indexOf(rel);
+            var oldLv:Number= Config.relHierarchy.indexOf(relObj[dating]);
+            var currentLv:Number=Config.relHierarchy.indexOf(rel);
             DebugTrace.msg("MainCommand.updateRelationship changed oldLv="+oldLv+", currentLv="+currentLv);
             var _data:Object=new Object();
             if(oldLv>currentLv){
