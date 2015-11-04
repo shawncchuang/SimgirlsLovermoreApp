@@ -922,7 +922,10 @@ public class AssetEmbeds
     public static const lenus_towel:Class;
     [Embed(source="../../media/textures/characters/styles/lenus/party.png")]
     public static const lenus_party:Class;
-
+    [Embed(source="../../media/textures/characters/styles/lenus/underwear.png")]
+    public static const lenus_underwear:Class;
+    [Embed(source="../../media/textures/characters/styles/lenus/pj.png")]
+    public static const lenus_pj:Class;
 
 
     [Embed(source="../../media/textures/characters/styles/sao/battle.png")]
@@ -1027,8 +1030,8 @@ public class AssetEmbeds
     public static const zack_hollowean:Class;
     [Embed(source="../../media/textures/characters/styles/zack/party.png")]
     public static const zack_party:Class;
-    [Embed(source="../../media/textures/characters/styles/zack/special.png")]
-    public static const zack_special:Class;
+    [Embed(source="../../media/textures/characters/styles/zack/wedding.png")]
+    public static const zack_wedding:Class;
     [Embed(source="../../media/textures/characters/styles/zack/underwear.png")]
     public static const zack_underwear:Class;
     [Embed(source="../../media/textures/characters/styles/zack/battle.png")]

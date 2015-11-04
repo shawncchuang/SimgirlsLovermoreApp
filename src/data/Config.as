@@ -944,7 +944,7 @@ public class Config
         "tomoru_SpiritTemple": ["casual1"],
         "dea_Casino": ["night"],
         "zack_BlackMarket": ["casual2"],
-        "sirena_ChangingRoom": ["underwear1", "underwear1"],
+        "sirena_ChangingRoom": ["underwear1", "underwear2"],
         "sao_Airport": ["casual1"],
         "tomoru_Museum": ["casual1"],
         "dea_SportsBar": ["night"],

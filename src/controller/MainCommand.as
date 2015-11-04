@@ -840,18 +840,21 @@ public class MainCommand implements MainInterface {
                 }
 
             }
+            var normalStyles:Object=Config.styles;
+            var scenes:Array=new Array();
+            var styleNames:Array=new Array();
             if (style == "") {
                 //normal day ,depends on located
                 var currentScene:String=DataContainer.currentScene;
                 var shortcutsScene:String=DataContainer.shortcutsScene;
                 var current_scene:String=currentScene.split("Scene").join("");
-                var normalStyles:Object=Config.styles;
+
                 var scenesPoint:Object=Config.stagepoints;
-                var scenes:Array=new Array();
+
                 for(var scene_name:String in scenesPoint){
                     scenes.push(scene_name);
                 }
-                var styleNames:Array=new Array();
+
                 var scene_index:Number=scenes.indexOf(current_scene);
                 if(scene_index==-1){
                     styleNames=["casual1"];
@@ -869,8 +872,13 @@ public class MainCommand implements MainInterface {
             }
             //DebugTrace.msg("MainCommand.initStyleSechedule shortcutsScene="+shortcutsScene);
             if(shortcutsScene=="ProfileScene"){
+                styleNames=new Array();
+                styleNames=normalStyles[_name+"_"+scenes[Math.floor(Math.random()*scenes.length)]];
 
-                style=_name+"_"+normalStyles[_name+"_"+scenes[Math.floor(Math.random()*scenes.length)]];
+                style=_name+"_"+styleNames[0];
+                if(styleNames.length>1){
+                    style=_name+"_"+styleNames[Math.floor(Math.random()*styleNames.length)];
+                }
                 //DebugTrace.msg("MainCommand.initStyleSechedule style="+style);
             }
 
