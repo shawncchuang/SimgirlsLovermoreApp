@@ -62,8 +62,6 @@ import model.SaveGame;
 			scencom.disableAll();
 
 
-
-
         }
 		private function onCallback():void
 		{

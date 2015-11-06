@@ -660,7 +660,9 @@ public class Config
                 eyescolor:0xFFFFFF,
                 features:0,
                 clothes:1,
-                pants:1
+                pants:1,
+                uppercolor:0xCCCCCC,
+                lowercolor:0xCCCCCC
             },
             "formation":[
 

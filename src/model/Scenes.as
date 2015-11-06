@@ -40,6 +40,7 @@ import views.BetaScene;
 import views.BlackMarketScene;
 import views.CalendarScene;
 import views.CasinoScene;
+import views.ChangeClothesScene;
 import views.ChangeFormationScene;
 import views.ChangingRoomScene;
 import views.CharacterDesignScene;
@@ -169,7 +170,7 @@ public class Scenes extends Sprite
         if(next_scene!="FoundSomeScene" && next_scene!="DatingScene" &&
                 next_scene!="MenuScene" && next_scene!="ProfileScene" &&
                 next_scene!="SettingsScene" &&  next_scene!="ContactsScene" &&
-                next_scene!="CalendarScene" && next_scene!="PhotosScene" && next_scene!="PreciousPhotosScene")
+                next_scene!="CalendarScene" && next_scene!="PhotosScene" && next_scene!="PreciousPhotosScene" && next_scene!="ChangeClothesScene")
         {
             DataContainer.currentScene=next_scene;
         }
@@ -379,6 +380,10 @@ public class Scenes extends Sprite
             case "BetaScene":
                 infobar=false;
                 current_scence=new BetaScene();
+                break
+            case "ChangeClothesScene":
+                infobar=false;
+                current_scence=new ChangeClothesScene();
                 break
 
         }

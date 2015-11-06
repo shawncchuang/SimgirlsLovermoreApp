@@ -233,10 +233,16 @@ public class DrawManager implements DrawerInterface
                 atlas_texture=pantsAtlas.getTexture("pant"+pantsIndex);
                 pants=new Image(atlas_texture);
                 pants.smoothing=TextureSmoothing.TRILINEAR;
+                _color=avatar.lowercolor;
+                pants.color=Color.rgb(Color.getRed(_color),Color.getGreen(_color),Color.getBlue(_color));
                 pants.name=target;
                 pants.x=pos.x;
                 pants.y=pos.y;
                 basemodel.addChild(pants);
+                break
+            case "LowerBodyStyle":
+                var lowerStyle:Texture=pantsAtlas.getTexture("pant"+pantsIndex);
+                pants.texture=lowerStyle;
                 break
             case "Clothes":
                 var clothes_texture:Texture=Assets.getTexture(gender+"Clothes");
@@ -245,12 +251,16 @@ public class DrawManager implements DrawerInterface
                 atlas_texture=clothesAtlas.getTexture("clothes"+clothesIndex);
                 clothes=new Image(atlas_texture);
                 clothes.smoothing=TextureSmoothing.TRILINEAR;
-                //clothes.scaleX=2;
-                //clothes.scaleY=2;
+                _color=avatar.uppercolor;
+                clothes.color=Color.rgb(Color.getRed(_color),Color.getGreen(_color),Color.getBlue(_color));
                 clothes.name=target;
                 clothes.x=pos.x;
                 clothes.y=pos.y;
                 basemodel.addChild(clothes);
+                break
+            case "UpperBodyStyle":
+                var upperStyle:Texture=clothesAtlas.getTexture("clothes"+clothesIndex);
+                clothes.texture=upperStyle;
                 break
             case "Features":
                 var features_texture:Texture=Assets.getTexture(gender+"Features");
@@ -606,6 +616,7 @@ public class DrawManager implements DrawerInterface
             //scenes need day or night background
             bgSrc+=_time;
         }
+
 
         var bgTexture:Texture=Assets.getTexture(bgSrc);
         var bgImg:Image=new Image(bgTexture);

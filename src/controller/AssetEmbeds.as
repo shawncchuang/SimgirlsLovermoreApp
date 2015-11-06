@@ -567,6 +567,14 @@ public class AssetEmbeds
     [Embed(source="../../media/textures/icons/icon_precious.png")]
     public static const PrecriousIcon:Class;
 
+
+    [Embed(source="../../media/textures/icons/icons_changeclothes_upperbody.png")]
+    public static const UpperBodyIcon:Class;
+    [Embed(source="../../media/textures/icons/icons_changeclothes_lowerbody.png")]
+    public static const LowerBodyIcon:Class;
+
+
+
     /*------------------icons-------------------------------------------------*/
 
 

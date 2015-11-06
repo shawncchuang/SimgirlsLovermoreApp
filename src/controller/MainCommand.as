@@ -1265,8 +1265,8 @@ public class MainCommand implements MainInterface {
         rewards.image = reward_img;
         rewards.cash = cash_pay;
 
-        cash += cash_pay;
-        flox.save("cash", cash);
+        //cash += cash_pay;
+        //flox.save("cash", cash);
 
 
         var gameinfo:Sprite = ViewsContainer.gameinfo;
@@ -1357,11 +1357,11 @@ public class MainCommand implements MainInterface {
         //DebugTrace.msg("MainCommand.doLearn sysCommand="+JSON.stringify(sysCommand));
 
         var reward_int:Number = minInt + Math.floor(Math.random() * (maxInt - minInt)) + 1;
-        cash += cash_pay;
+       // cash += cash_pay;
         intObj.player += reward_int;
 
         flox.save("int", intObj);
-        flox.save("cash", cash);
+        //flox.save("cash", cash);
 
         rewards = new Object();
         rewards.int = reward_int;
@@ -1834,7 +1834,6 @@ public class MainCommand implements MainInterface {
 
             var cash:Number = flox.getSaveData("cash");
             var cash_pay:Number = sysCommand[com].values.cash;
-
             cash += cash_pay;
             if (cash >= 0) {
 

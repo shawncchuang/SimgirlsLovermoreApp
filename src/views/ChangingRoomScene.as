@@ -9,8 +9,10 @@ package views
 	import controller.MainInterface;
 	import controller.SceneCommnad;
 	import controller.SceneInterface;
-	
-	import events.GameEvent;
+
+import data.DataContainer;
+
+import events.GameEvent;
 	import events.SceneEvent;
 	import events.TopViewEvent;
 	
@@ -32,7 +34,7 @@ package views
 		private var command:MainInterface=new MainCommand();
 		private var button:Button;
 		private var scencom:SceneInterface=new SceneCommnad();
-		private var floxcom:FloxInterface=new FloxCommand();
+		private var flox:FloxInterface=new FloxCommand();
 		
 	 
 		public function ChangingRoomScene()
@@ -50,7 +52,9 @@ package views
 		}
 		private function init():void
 		{
-			
+
+
+
 			scencom.init("ChangingRoomScene",speaker_sprite,60,onCallback);
 			scencom.start();
 			scencom.disableAll();
@@ -87,9 +91,11 @@ package views
 					_data.name="MainScene";
 					command.sceneDispatch(SceneEvent.CHANGED,_data);
 					break
-				case "":
-					
-					
+				case "Change":
+					gameEvent._name="clear_comcloud";
+					gameEvent.displayHandler();
+					_data.name="ChangeClothesScene";
+					command.sceneDispatch(SceneEvent.CHANGED,_data);
 			 
 					break
 				case "ani_complete":

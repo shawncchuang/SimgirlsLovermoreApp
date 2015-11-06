@@ -51,6 +51,9 @@ public class DataContainer
 
     private static var datingsuit_style:String;
 
+
+    private static var contanst_avatar:Object;
+
     public static function set AssetsId(ids:Array):void
     {
         assets_id=ids;
@@ -798,6 +801,12 @@ public class DataContainer
     public static function get DatingSuit():String{
         return datingsuit_style;
 
+    }
+    public static function set contanstAvatar(obj:Object):void{
+        contanst_avatar=obj;
+    }
+    public static function get contanstAvatar():Object{
+        return contanst_avatar;
     }
 
 }
