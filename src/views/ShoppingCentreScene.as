@@ -38,7 +38,7 @@ import model.SaveGame;
 		private var scencom:SceneInterface=new SceneCommnad();
 		private var floxcom:FloxInterface=new FloxCommand();
 
-		private var shoppingform:ShoppingForm=null;
+		private var shoppingform:Sprite=null;
 
 
 		public function ShoppingCentreScene()
@@ -68,11 +68,11 @@ import model.SaveGame;
 
             var getfrom:String=DataContainer.shoppingFrom;
             DebugTrace.msg("ShoppingCentreScene.onCallback getfrom:"+getfrom);
-           if(getfrom=="main"){
-               var _data:Object=new Object();
-               _data.removed="Buy";
-               this.dispatchEventWith(TopViewEvent.REMOVE,false,_data);
-           }
+//           if(getfrom=="main"){
+//               var _data:Object=new Object();
+//               _data.removed="Buy";
+//               this.dispatchEventWith(TopViewEvent.REMOVE,false,_data);
+//           }
 
 			
 		}
@@ -104,7 +104,7 @@ import model.SaveGame;
 					_data.name="MainScene";
 					command.sceneDispatch(SceneEvent.CHANGED,_data);
 					break
-				case "Buy":
+				case "BuyGifts":
 					gameEvent._name="clear_comcloud";
 					gameEvent.displayHandler();
 
@@ -112,9 +112,15 @@ import model.SaveGame;
 					addChild(shoppingform);
 			 
 					break
+				case "BuyClothes":
+					gameEvent._name="clear_comcloud";
+					gameEvent.displayHandler();
+					shoppingform=new ShoppingClothesForm();
+					addChild(shoppingform);
+
+					break
 				case "ani_complete":
-				 
-					
+
 					var value_data:Object=new Object();
 					value_data.attr="honor";
 					value_data.values="+10";

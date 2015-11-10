@@ -61,8 +61,8 @@ public class PhotosTiledRowsLayout extends PanelScreen{
         layout.paging = TiledRowsLayout.PAGING_NONE;
 
         this.layout = layout;
-        this.snapToPages=TiledRowsLayout.PAGING_NONE;
-        this.snapScrollPositionsToPixels = true;
+        //this.snapToPages=TiledRowsLayout.PAGING_NONE;
+        //this.snapScrollPositionsToPixels = true;
 
         var relHeirarchy:Array=Config.relHierarchy;
         var characters:Array=Config.datingCharacters;

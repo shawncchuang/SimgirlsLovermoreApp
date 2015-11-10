@@ -43,8 +43,8 @@ public class TakePhotos extends Sprite{
 
 
 
-
-        player=command.drawPlayer(this);
+        var base_sprite:Sprite=ViewsContainer.baseSprite;
+        player=command.drawPlayer(base_sprite);
         player.y-=20;
         player.scaleX=1.3;
         player.scaleY=1.3;
@@ -61,8 +61,8 @@ public class TakePhotos extends Sprite{
 
         var dating:String=DataContainer.currentDating;
         style=DataContainer.styleSechedule[dating];
-
-        character=command.drawCharacter(this,style);
+        var base_sprite:Sprite=ViewsContainer.baseSprite;
+        character=command.drawCharacter(base_sprite,style);
 
     }
 
@@ -86,6 +86,7 @@ public class TakePhotos extends Sprite{
     private function addPhotos():void{
 
         var photos:Array=flox.getSaveData("photos");
+        var avatar:Object=flox.getSaveData("avatar");
         if(photos.length<1){
 
             photos=new Array();
@@ -94,7 +95,13 @@ public class TakePhotos extends Sprite{
         if(photos.length<100) {
             var pic:Object = new Object();
             pic.scene = DataContainer.currentScene;
-            pic.player = {x: player.x, y: player.y};
+            pic.player = {x: player.x,
+                 y: player.y,
+                "clothes":avatar.clothes,
+                "pants":avatar.pants,
+                "uppercolor":avatar.uppercolor,
+                "lowercolor":avatar.lowercolor
+            };
             pic.character = {x: character.x, y: character.y, style: style};
             photos.push(pic);
 
@@ -142,8 +149,6 @@ public class TakePhotos extends Sprite{
         _data.mood=mood;
         var base_sprite:Sprite=ViewsContainer.baseSprite;
         base_sprite.dispatchEventWith(DatingScene.COMMIT,false,_data);
-
-
 
 
 

@@ -20,7 +20,7 @@ package controller
 
 		function copyAsBitmapData(sprite:DisplayObject,rec:Rectangle=null,point:Point=null):BitmapData;
 		function drawCharacter(basemodel:Sprite=null,attr:Object=null):void
-		function updateBaseModel(target:String):void
+		function updateBaseModel(target:String,avatar:Object=null):void
 //		function updateModelColor(type:String,rgb:Object):void
 		function drawPlayerProfileIcon(target:Sprite,scale:Number,p:Point,bp:Point=null):void
 		function drawCircyleImage(target:Sprite):void

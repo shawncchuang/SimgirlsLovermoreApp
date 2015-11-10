@@ -531,6 +531,7 @@ public class AssetEmbeds
     [Embed(source="../../media/textures/icons/icon_arrow_photos.png")]
     public static const IconArrowPhotos:Class;
 
+
     [Embed(source="../../media/textures/icons/icon_trash_empty.png")]
     public static const IconTrashEmpty:Class;
 
@@ -573,7 +574,13 @@ public class AssetEmbeds
     [Embed(source="../../media/textures/icons/icons_changeclothes_lowerbody.png")]
     public static const LowerBodyIcon:Class;
 
+    [Embed(source="../../media/textures/icons/dollartssign.png")]
+    public static const DollarSign:Class;
 
+    [Embed(source="../../media/textures/icons/cateIconUpperbody.png")]
+    public static const cateUpperbodyIcon:Class;
+    [Embed(source="../../media/textures/icons/cateIconLowerbody.png")]
+    public static const cateLowerbodyIcon:Class;
 
     /*------------------icons-------------------------------------------------*/
 
@@ -916,6 +923,8 @@ public class AssetEmbeds
     public static const lenus_casual1:Class;
     [Embed(source="../../media/textures/characters/styles/lenus/casual2.png")]
     public static const lenus_casual2:Class;
+    [Embed(source="../../media/textures/characters/styles/lenus/casual3.png")]
+    public static const lenus_casual3:Class;
     [Embed(source="../../media/textures/characters/styles/lenus/dojo.png")]
     public static const lenus_dojo:Class;
     [Embed(source="../../media/textures/characters/styles/lenus/gym.png")]

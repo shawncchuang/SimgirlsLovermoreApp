@@ -170,7 +170,7 @@ public class PhotosScene extends Sprite {
         }
 
     }
-    private function onSavePhotoComplete(result:SaveGame):void{
+    private function onSavePhotoComplete(result:SaveGame=null):void{
 
         var emptyTexture:Texture=Assets.getTexture("IconTrashEmpty");
         trash.upState=emptyTexture;
@@ -256,8 +256,8 @@ public class PhotosScene extends Sprite {
             //photo.scaleX=0.65;
             //photo.scaleY=0.65;
             addChild(photo);
-            //var scene:String=pic.scene.split("Scene").join("");
-            var scene:String=pic.scene;
+            var scene:String=pic.scene.split("Scene").join("");
+            //var scene:String=pic.scene;
             var allDNScene:Array=Config.daynightScene;
             var scene_index:Number=allDNScene.indexOf(scene);
             if(scene_index!=-1){
@@ -270,7 +270,15 @@ public class PhotosScene extends Sprite {
             var bg:Image=new Image(bgTexture);
             photo.addChild(bg);
 
-            var player:Sprite=command.drawPlayer(photo);
+
+
+            var avatar:Object=new Object();
+            avatar.clothes=pic.player.clothes;
+            avatar.pants=pic.player.pants;
+            avatar.uppercolor=pic.player.uppercolor;
+            avatar.lowercolor=pic.player.lowercolor;
+
+            var player:Sprite=command.drawPlayer(photo,avatar);
             player.y-=20;
             player.scaleX=1.3;
             player.scaleY=1.3;
@@ -296,17 +304,17 @@ public class PhotosScene extends Sprite {
 
     }
     /*
-    save file
+     save file
 
-    private function saveImageFile(image:ByteArray,imgTxt:String):void{
-    var filename:String="xxxx."+imgTxt;
+     private function saveImageFile(image:ByteArray,imgTxt:String):void{
+     var filename:String="xxxx."+imgTxt;
          var file:File = new File();
          file.nativePath = fileName;
          var fileStream:FileStream = new FileStream();
          fileStream.open(file, FileMode.WRITE);
          fileStream.writeBytes(image);
          fileStream.close();
-    }
+     }
 
 
      */

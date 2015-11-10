@@ -324,7 +324,7 @@ public class ShoppingListLayout extends PanelScreen {
 
         var evtObj:Object = new Object();
         var scene_name:String = DataContainer.currentScene;
-        evtObj.command = "Buy@"+scene_name+"_"+current_item;
+        evtObj.command = "Gifts@"+scene_name+"_"+current_item;
         flox.logEvent("Buy", evtObj);
 
 

@@ -884,6 +884,7 @@ public class MainCommand implements MainInterface {
 
             suitup[_name] = style;
         }
+        DebugTrace.msg("MainCommand.initStyleSechedule suitup="+JSON.stringify(suitup));
         DataContainer.styleSechedule = suitup;
     }
 
@@ -1485,7 +1486,7 @@ public class MainCommand implements MainInterface {
     private var basemodel:Sprite;
 
 
-    public function drawPlayer(target:Sprite):Sprite {
+    public function drawPlayer(target:Sprite,avatar:Object=null):Sprite {
 
         var flox:FloxInterface = new FloxCommand();
         var gender:String = flox.getSaveData("avatar").gender;
@@ -1505,13 +1506,24 @@ public class MainCommand implements MainInterface {
         modelAttr.width = modelRec.width;
         modelAttr.height = modelRec.height;
 
+
+
         var drawcom:DrawerInterface = new DrawManager();
         drawcom.drawCharacter(player, modelAttr);
         drawcom.updateBaseModel("Hair");
         drawcom.updateBaseModel("Eyes");
-        drawcom.updateBaseModel("Pants");
-        drawcom.updateBaseModel("Clothes");
+        if(avatar){
+            drawcom.updateBaseModel("Pants",avatar);
+            drawcom.updateBaseModel("Clothes",avatar);
+        }else{
+            drawcom.updateBaseModel("Pants");
+            drawcom.updateBaseModel("Clothes");
+
+        }
+
         drawcom.updateBaseModel("Features");
+        drawcom.updateBaseModel("Features");
+
 
         player.x = pos.x + Math.floor(player.width / 2);
         player.y = pos.y;

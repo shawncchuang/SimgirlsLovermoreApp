@@ -103,6 +103,8 @@ public class DatingScene extends Scenes {
     private var heartView:Sprite;
 
     private var talkingAlert:Sprite;
+    private var takephoto:Sprite=null;
+
     public function DatingScene() {
 
         base_sprite = new Sprite();
@@ -174,7 +176,6 @@ public class DatingScene extends Scenes {
 
         }
 
-
         switch (com) {
             case "Give":
                 initAssetsForm();
@@ -228,7 +229,8 @@ public class DatingScene extends Scenes {
             case "TakePhoto":
 
                 character.removeFromParent(true);
-                actTransform("../swf/photos.swf", onPhotosActComplete);
+
+                actTransform("../swf/photos.swf",onPhotosActComplete);
 
                 break;
             case "TakePhotosReward":
@@ -1170,7 +1172,7 @@ public class DatingScene extends Scenes {
     private var actSrc:String;
     private var actCallBack:Function;
     private var delayCall:DelayedCall;
-    private function actTransform(src:String, callback:Function):void {
+    private function actTransform(src:String, callback:Function=null):void {
 
         actSrc = src;
         actCallBack = callback;
@@ -1198,7 +1200,6 @@ public class DatingScene extends Scenes {
 
         var dating:String = DataContainer.currentDating;
         reward_mood = Number(command.moodCalculator(item_id, dating));
-
 
 
         updateMood();
@@ -1348,7 +1349,9 @@ public class DatingScene extends Scenes {
 
     private function onPhotosActComplete():void {
 
+
         var takephoto:TakePhotos = new TakePhotos();
+        takephoto.name="TakePhoto";
         addChild(takephoto);
 
     }
@@ -1368,13 +1371,10 @@ public class DatingScene extends Scenes {
         point.x=Starling.current.stage.stageWidth/2;
         point.y=Starling.current.stage.stageHeight/2;
 
+
+
         heartView=new Sprite();
         addChild(heartView);
-
-
-        //timer=new Timer(1000,3);
-        //timer.addEventListener(TimerEvent.TIMER_COMPLETE,onTimeOut);
-        //timer.start();
 
 
         relationshipChaned=change_type+"_"+DatingScene.CHANGED_RELATIONSHIP;
@@ -1389,8 +1389,10 @@ public class DatingScene extends Scenes {
         txtImage.pivotY=txtImage.height/2;
         txtImage.x=point.x;
         txtImage.y=point.y;
-
         heartView.addChild(txtImage);
+
+
+
         var tween:Tween=new Tween(txtImage,1,Transitions.EASE_OUT_ELASTIC);
         tween.animate("scaleX",0.2);
         tween.animate("scaleY",0.2);
@@ -1402,7 +1404,6 @@ public class DatingScene extends Scenes {
         Starling.juggler.add(tween);
 
         TweenLite.delayedCall(3,onTimeOut);
-
 
 
     }
@@ -1520,6 +1521,7 @@ public class DatingScene extends Scenes {
 
         Starling.juggler.removeTweens(photo);
         photo.removeFromParent(true);
+        if(screenview)
         screenview.removeFromParent(true);
 
     }

@@ -176,18 +176,28 @@ public class DrawManager implements DrawerInterface
         }
 
     }
-    public function updateBaseModel(target:String):void
+    private var lowercolor:Number=0;
+    private var uppercolor:Number=0;
+    public function updateBaseModel(target:String,avatar:Object=null):void
     {
 
         //var part:DisplayObject=basemodel.getChildByName(target);
         //DebugTrace.msg("DrawManager.updateBaseModel target:"+ target)
        // var savedata:SaveGame=FloxCommand.savegame;
-        var flox:FloxInterface=new FloxCommand();
-        var avatar:Object=flox.getSaveData("avatar");
+
+        if(!avatar){
+            var flox:FloxInterface=new FloxCommand();
+            avatar=flox.getSaveData("avatar");
+
+        }
         hairIndex=avatar.hairstyle;
         pantsIndex=avatar.pants;
         clothesIndex=avatar.clothes;
         featuresIndex=avatar.features;
+
+        uppercolor=avatar.uppercolor;
+        lowercolor=avatar.lowercolor;
+
         //DebugTrace.msg("DrawManager.updateBaseModel gender:"+ gender)
         //DebugTrace.msg("DrawManager.updateBaseModel featuresIndex:"+ featuresIndex)
         var pos:Point=switchPosition(target);
@@ -230,10 +240,10 @@ public class DrawManager implements DrawerInterface
                 var pants_texture:Texture=Assets.getTexture(gender+"PantsStyle");
                 xml=Assets.getAtalsXML(gender+"PantsStyleXML");
                 pantsAtlas=new TextureAtlas(pants_texture, xml);
-                atlas_texture=pantsAtlas.getTexture("pant"+pantsIndex);
+                atlas_texture=pantsAtlas.getTexture("pants"+pantsIndex);
                 pants=new Image(atlas_texture);
                 pants.smoothing=TextureSmoothing.TRILINEAR;
-                _color=avatar.lowercolor;
+                _color=lowercolor;
                 pants.color=Color.rgb(Color.getRed(_color),Color.getGreen(_color),Color.getBlue(_color));
                 pants.name=target;
                 pants.x=pos.x;
@@ -241,7 +251,7 @@ public class DrawManager implements DrawerInterface
                 basemodel.addChild(pants);
                 break
             case "LowerBodyStyle":
-                var lowerStyle:Texture=pantsAtlas.getTexture("pant"+pantsIndex);
+                var lowerStyle:Texture=pantsAtlas.getTexture("pants"+pantsIndex);
                 pants.texture=lowerStyle;
                 break
             case "Clothes":
@@ -251,7 +261,7 @@ public class DrawManager implements DrawerInterface
                 atlas_texture=clothesAtlas.getTexture("clothes"+clothesIndex);
                 clothes=new Image(atlas_texture);
                 clothes.smoothing=TextureSmoothing.TRILINEAR;
-                _color=avatar.uppercolor;
+                _color=uppercolor;
                 clothes.color=Color.rgb(Color.getRed(_color),Color.getGreen(_color),Color.getBlue(_color));
                 clothes.name=target;
                 clothes.x=pos.x;
@@ -609,9 +619,9 @@ public class DrawManager implements DrawerInterface
         var scene:String=DataContainer.currentScene;
         var allDNScene:Array=Config.daynightScene;
 
-        var bgSrc:String=DataContainer.currentScene.split("Scene").join("Bg");
-       var scene_index:Number=allDNScene.indexOf(scene);
-
+        var bgSrc:String=DataContainer.currentScene.split("Scene").join("");
+       var scene_index:Number=allDNScene.indexOf(bgSrc);
+        bgSrc+="Bg";
         if(scene_index!=-1){
             //scenes need day or night background
             bgSrc+=_time;

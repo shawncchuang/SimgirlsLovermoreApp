@@ -53,6 +53,9 @@ public class ChangeClothesScene extends Scenes {
     private var lowerStyleTxt:TextField;
     private var command:MainInterface=new MainCommand();
 
+    private var upperstyles:Array=new Array();
+    private var lowerstyles:Array=new Array();
+
 
     public function ChangeClothesScene() {
         ViewsContainer.chacaterdesignScene=this;
@@ -94,11 +97,12 @@ public class ChangeClothesScene extends Scenes {
             _avatar[attr]=avatar[attr];
         }
         DataContainer.contanstAvatar=_avatar;
-        DebugTrace.msg("ChangeClothesScence.init avatar="+JSON.stringify(avatar));
-
+        DebugTrace.msg("ChangeClothesScence.init _avatar="+JSON.stringify(_avatar));
+        upperstyles=_avatar.upperbody;
+        lowerstyles=_avatar.lowerbody;
         gender=avatar.gender;
-        upperstyleIndex=avatar.clothes;
-        lowerstyleIndex=avatar.pants;
+        upperstyleIndex= upperstyles.indexOf(String(_avatar.clothes));
+        lowerstyleIndex=lowerstyles.indexOf(String(_avatar.pants));
         this.addEventListener(CharacterDesignScene.COLOR_UPDATE,onColorUpadeted);
 
 
@@ -187,16 +191,19 @@ public class ChangeClothesScene extends Scenes {
     }
     private function initUpperbodyStyles():void{
 
+        upperstyles=flox.getSaveData("avatar").upperbody;
+
         var texture:Texture=getTexture(gender+"Clothes");
         var xml:XML=Assets.getAtalsXML(gender+"ClothesXML");
-        upperstyleMax=xml.SubTexture.length();
+        //upperstyleMax=xml.SubTexture.length();
+        upperstyleMax=upperstyles.length;
 
         var icons:Image=new Image(getTexture("UpperBodyIcon"));
         icons.x=30;
         icons.y=195;
         addChild(icons);
-
-        upperStyleTxt=new TextField(160,35,"Style "+(upperstyleIndex+1),font,30,0xFFFFFF,true);
+        var styleID:Number= Number(upperstyles[upperstyleIndex])+1;
+        upperStyleTxt=new TextField(160,35,"Style "+styleID,font,30,0xFFFFFF,true);
         upperStyleTxt.x=88;
         upperStyleTxt.y=350;
         addChild(upperStyleTxt);
@@ -239,24 +246,28 @@ public class ChangeClothesScene extends Scenes {
                 break
 
         }
-        upperStyleTxt.text="Style "+(upperstyleIndex+1);
+        var styleID:Number= Number(upperstyles[upperstyleIndex])+1;
+        upperStyleTxt.text="Style "+styleID;
         updateSaveData();
         drawcom.updateBaseModel("UpperBodyStyle");
     }
     private function initLowerbodyStyles():void{
 
+        lowerstyles=flox.getSaveData("avatar").lowerbody;
 
         var texture:Texture=getTexture(gender+"PantsStyle");
         var xml:XML=Assets.getAtalsXML(gender+"PantsStyleXML");
-        lowerstyleMax=xml.SubTexture.length();
-
+        //lowerstyleMax=xml.SubTexture.length();
+        lowerstyleMax=lowerstyles.length;
 
         var icons:Image=new Image(getTexture("LowerBodyIcon"));
         icons.x=680;
         icons.y=195;
         addChild(icons);
 
-        lowerStyleTxt=new TextField(160,35,"Style "+(lowerstyleIndex+1),font,30,0xFFFFFF,true);
+
+        var styleID:Number=Number(lowerstyles[lowerstyleIndex])+1;
+        lowerStyleTxt=new TextField(160,35,"Style "+styleID,font,30,0xFFFFFF,true);
         lowerStyleTxt.x=753;
         lowerStyleTxt.y=350;
         addChild(lowerStyleTxt);
@@ -300,7 +311,9 @@ public class ChangeClothesScene extends Scenes {
                 break
 
         }
-        lowerStyleTxt.text="Style "+(lowerstyleIndex+1);
+
+        var styleID:Number=Number(lowerstyles[lowerstyleIndex])+1;
+        lowerStyleTxt.text="Style "+styleID;
         updateSaveData();
         drawcom.updateBaseModel("LowerBodyStyle");
 
@@ -334,7 +347,7 @@ public class ChangeClothesScene extends Scenes {
     {
         var current_avatar:Object=flox.getSaveData("avatar");
 
-        current_avatar.clothes=upperstyleIndex;
+        current_avatar.clothes=Number(upperstyles[upperstyleIndex]);
         current_avatar.pants=lowerstyleIndex;
         flox.save("avatar",current_avatar);
 
