@@ -50,9 +50,9 @@ public class DataContainer
     private static var shopping_from:String;
 
     private static var datingsuit_style:String;
-
-
     private static var contanst_avatar:Object;
+
+    private static var preview_story:Array;
 
     public static function set AssetsId(ids:Array):void
     {
@@ -807,6 +807,13 @@ public class DataContainer
     }
     public static function get contanstAvatar():Object{
         return contanst_avatar;
+    }
+    public static function set previewStory(story:Array):void{
+        preview_story=story;
+    }
+    public static function get previewStory():Array{
+        return preview_story;
+
     }
 
 }

@@ -11,7 +11,10 @@
 	import flash.events.NetStatusEvent;
 	import flash.net.SharedObject;
 	import flash.net.SharedObjectFlushStatus;
-	import flash.net.URLRequest;
+import flash.net.URLLoader;
+import flash.net.URLLoader;
+import flash.net.URLLoaderDataFormat;
+import flash.net.URLRequest;
 	import flash.net.navigateToURL;
 	
 	import controller.FloxCommand;
@@ -23,7 +26,8 @@
 	import utils.ViewsContainer;
 	public class LoaderRequest
 	{
-	 
+	 private var loaderdata:URLLoader;
+		private var onComplete:Function;
 		public function LoaderHandle(target:MovieClip,url:String,callback:Function=null):void
 		{
 			var loader:Loader=new Loader();
@@ -124,5 +128,24 @@
 		{
 			trace("error occured with " + e.target + ": " + e.text);
 		}
+
+		public function LoaderDataHandle(url:String,callback:Function):void{
+
+			onComplete=callback;
+			loaderdata= new URLLoader();
+			loaderdata.dataFormat = URLLoaderDataFormat.VARIABLES;
+			loaderdata.addEventListener(Event.COMPLETE, onLoadedComplete);
+
+			var request:URLRequest = new URLRequest(url);
+			loaderdata.load(request);
+
+		}
+		private function onLoadedComplete(e:Event):void{
+
+			onComplete(loaderdata.data);
+
+		}
+
+
 	}
 }

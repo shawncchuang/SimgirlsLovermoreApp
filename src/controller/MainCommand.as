@@ -448,7 +448,7 @@ public class MainCommand implements MainInterface {
     }
 
     public function initMainStory():void {
-        trace("initMainStory")
+
         main_story = new CSV();
         main_story.addEventListener(Event.COMPLETE, onMainStoryComplete);
         main_story.load(new URLRequest('csv/main_story_scenes.csv'));
@@ -874,17 +874,19 @@ public class MainCommand implements MainInterface {
             if(shortcutsScene=="ProfileScene"){
                 styleNames=new Array();
                 styleNames=normalStyles[_name+"_"+scenes[Math.floor(Math.random()*scenes.length)]];
-
+                if(styleNames.length<1){
+                    styleNames.push("casual1");
+                }
                 style=_name+"_"+styleNames[0];
                 if(styleNames.length>1){
                     style=_name+"_"+styleNames[Math.floor(Math.random()*styleNames.length)];
                 }
-                //DebugTrace.msg("MainCommand.initStyleSechedule style="+style);
+               // DebugTrace.msg("MainCommand.initStyleSechedule style="+style);
             }
 
             suitup[_name] = style;
         }
-        DebugTrace.msg("MainCommand.initStyleSechedule suitup="+JSON.stringify(suitup));
+        //DebugTrace.msg("MainCommand.initStyleSechedule suitup="+JSON.stringify(suitup));
         DataContainer.styleSechedule = suitup;
     }
 

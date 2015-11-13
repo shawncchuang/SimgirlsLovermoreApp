@@ -303,7 +303,7 @@ public class ShoppingClothesListLayout extends Sprite {
             // already bought before
             bought=true;
 
-            msg = "You already had this one.";
+            msg = "You already have this one.";
             alertMsg=new AlertMessage(msg);
             scene.addChild(alertMsg);
 

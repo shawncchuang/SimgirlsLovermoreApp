@@ -42,7 +42,8 @@ import com.greensock.loading.LoaderMax;
 	import views.LoginPanel;
 	import views.QADisplayContainer;
 	import views.SceneVideo;
-	import views.TarotCardsDisplay;
+import views.StoryPreview;
+import views.TarotCardsDisplay;
 	import views.TraceGame;
 	import views.TrainingGame;
 	
@@ -84,6 +85,8 @@ import com.greensock.loading.LoaderMax;
 
 
 		private var manager:Boolean=false;
+		public static var previewStory:Boolean=true;
+
 		public static var verifyKey:String;
 		private var longinUI:MovieClip;
 		
@@ -179,6 +182,9 @@ import com.greensock.loading.LoaderMax;
 				//---------------------------
 			}
 			//if
+
+
+
 			NativeApplication.nativeApplication.addEventListener(flash.events.Event.EXITING,onNavieAppExit);
 
 
@@ -247,7 +253,7 @@ import com.greensock.loading.LoaderMax;
 				case "QA":
 					//inputUI=new InputNamePannel(onSubmitComplete);	
 					//topview.addChild(inputUI);
-					qa_label=e.target.qa_label
+					qa_label=e.target.qa_label;
 					qaDisplay=new QADisplayContainer(qa_label,onSubmitComplete);
 					topview.addChild(qaDisplay);
 					break;
@@ -394,11 +400,15 @@ import com.greensock.loading.LoaderMax;
 				longinUI=null;	
 				
 			}
-			
-			gamestartUI=new GameStartPanel();
-			//gamestartUI.x=408;
-			//gamestartUI.y=525;
-			addChild(gamestartUI);
+			if(previewStory){
+				removeChild(gametitle);
+				start();
+			}else{
+
+				gamestartUI=new GameStartPanel();
+				addChild(gamestartUI);
+			}
+
 			
 		}
 		private function onGameStart():void
@@ -408,16 +418,18 @@ import com.greensock.loading.LoaderMax;
 			removeChild(gametitle);
 			if(!mStarling)
 			{
-				
-				if(stage)
-				{	
-					start();
-				}
-				else
-				{
-					addEventListener(flash.events.Event.ADDED_TO_STAGE, onAddedToStage);	
-				}
-				//if
+
+
+					if(stage)
+					{
+						start();
+					}
+					else
+					{
+						addEventListener(flash.events.Event.ADDED_TO_STAGE, onAddedToStage);
+					}
+					//if
+
 			}
 			else
 			{
@@ -472,7 +484,7 @@ import com.greensock.loading.LoaderMax;
 		}
 		private function onContextCreated(e:starling.events.Event):void
 		{
-			
+
 			if (Starling.context.driverInfo.toLowerCase().indexOf("software") != -1)
 			{
 				Starling.current.nativeStage.frameRate = 30;

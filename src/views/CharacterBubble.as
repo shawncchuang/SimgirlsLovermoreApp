@@ -64,6 +64,10 @@ package views
 					library=flox.getSyetemData("main_story");
 					talks=library[part_index];
 					break
+				case "StoryPreview":
+					library=DataContainer.previewStory;
+					talks=library[part_index];
+					break
 				default:
 					library=flox.getSyetemData("scenelibrary");
 					talks=library[part_index];
@@ -133,7 +137,7 @@ package views
 			bubbletext=new TextField(200,200,"","SimImpact",22,0x000000);
 			bubbletext.hAlign="center";
 			bubbletext.autoScale=true;
-			bubbletext.text=sentence;
+			bubbletext.text=sentence.split("<>").join(",");
 			bubbletext.pivotX=bubbletext.width/2+20*diraction;
 			var pioveY:Number=bubbletext.height/2+15;
 			if(texture_name=="BubbleThink")

@@ -71,6 +71,7 @@ import views.RestaurantScene;
 import views.ShoppingCentreScene;
 import views.SportsBarScene;
 import views.StarlingBattleScene;
+import views.StoryPreview;
 import views.TarotreadingScene;
 import views.TempleScene;
 import views.ThemedParkScene;
@@ -384,6 +385,10 @@ public class Scenes extends Sprite
             case "ChangeClothesScene":
                 infobar=false;
                 current_scence=new ChangeClothesScene();
+                break
+            case "StoryPreview":
+                infobar=false;
+                current_scence=new StoryPreview();
                 break
 
         }

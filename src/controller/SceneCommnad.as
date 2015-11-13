@@ -72,7 +72,7 @@ public class SceneCommnad implements SceneInterface
     private var moving_tween:Tween;
     private var finishedcallback:Function;
     private var photoframe:PhotoMessage=null;
-    //private var background:MovieClip=null;d
+    //private var background:MovieClip=null;
     private var background:Sprite;
     private var bgSprtie:Image;
     private var scene_container:Sprite;
@@ -103,6 +103,7 @@ public class SceneCommnad implements SceneInterface
 
         if(MenuScene.iconsname.indexOf(current)==-1 && current!="MenuScene"){
            datingComCloudHandle();
+
         }
 
     }
@@ -185,7 +186,7 @@ public class SceneCommnad implements SceneInterface
         hitArea.width=Starling.current.stage.stageWidth;
         hitArea.height=Starling.current.stage.stageHeight;
         hitArea.alpha=0;
-        scene_sprite.addChild(hitArea)
+        scene_sprite.addChild(hitArea);
         //hitArea.addEventListener(TouchEvent.TOUCH,onChatSceneTouched);
 
         scene_sprite.addEventListener(TouchEvent.TOUCH,onChatSceneTouched);
@@ -346,7 +347,7 @@ public class SceneCommnad implements SceneInterface
 
     private function commandHandle():void
     {
-        var commands:Array=com_content.split(",");
+        var commands:Array=com_content.split("^");
         for(var i:uint=0;i<commands.length;i++)
         {
             var actions:Array=commands[i].split("|");
@@ -686,25 +687,7 @@ public class SceneCommnad implements SceneInterface
 
         if(scene=="Story")
         {
-            /*
-             if(location=="hotel" || location=="park" || location=="beach" || location=="pier" || location=="lovemoremansion")
-             {
-             var bg_scene:String=bgSrc.split("Scene").join("").toLowerCase();
-             trace("SceneCommand.onBackgroundComplete bgSrc="+bgSrc)
-             if(bg_scene!=location)
-             {
-             bgTexture=Assets.getTexture(bgSrc);
-             }
-             else
-             {
-             bgTexture=Assets.getTexture(bgSrc+day);
-             }
-             //if
-             bgSprtie=new Image(bgTexture);
-             scene_container.addChild(bgSprtie);
-             }
-             //if
-             */
+
             praseSceneDayNight();
         }
         else{
@@ -723,24 +706,13 @@ public class SceneCommnad implements SceneInterface
 
         function praseSceneDayNight():void{
             //open at day or night
-            switch(location){
-                case "HotelScene":
-                case "ParkScene":
-                case "BeachScene":
-                case "PierScene":
-                case "LovemoreMansionScene":
-                case "GardenScene":
-                case "PrivateIslandScene":
-                case "FitnessClubScene":
-                    bgSrc=(bgSrc+day);
-                    break
+            var scene:String=location.split("Scene").join("");
+            var sceneIndex:Number=Config.daynightScene.indexOf(scene);
+            if(sceneIndex!=-1){
+                bgSrc=(bgSrc+day);
             }
 
         }
-
-
-
-
 
     }
     public function doClearAll():void
