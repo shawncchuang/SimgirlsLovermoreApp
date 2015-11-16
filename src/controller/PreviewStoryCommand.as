@@ -7,6 +7,8 @@ import data.DataContainer;
 
 import events.GameEvent;
 
+import flash.desktop.NativeApplication;
+
 import flash.events.Event;
 import flash.geom.Point;
 
@@ -100,6 +102,7 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
         //main_scene.addChild(scene_sprite);
 
         talk_index=0;
+        part_index=0;
         scene=current;
         display_container=new Object();
         finishedcallback=finshed;
@@ -114,7 +117,7 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
         DebugTrace.msg("PreviewStoryCommand.init talks:"+talks.length);
 
         if(MenuScene.iconsname.indexOf(current)==-1 && current!="MenuScene"){
-           //var loaderdata:LoaderRequest=new LoaderRequest();
+            //var loaderdata:LoaderRequest=new LoaderRequest();
             //loaderdata.LoaderDataHandle("",datingComCloudHandle)
         }
 
@@ -170,12 +173,12 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
         talk_index++;
         end_index=talks.indexOf("END");
         DebugTrace.msg("PreviewStoryCommand.onChatSceneTouched talk_index:"+talk_index+",end_index="+end_index);
-        DebugTrace.msg("PreviewStoryCommand.onChatSceneTouched talks="+talks);
+        //DebugTrace.msg("PreviewStoryCommand.onChatSceneTouched talks="+talks);
         if(talk_index<end_index)
         {
             if(bubble)
             {
-                _target.removeChild(bubble);
+                bubble.removeFromParent(true);
                 bubble=null;
             }
             //if
@@ -209,15 +212,19 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
                 talkmask=null;
             }
 
+
         }
-        try
+        if(photoframe){
+
+            photoframe.removeFromParent(true);
+            photoframe=null;
+        }
+        if(talkfield)
         {
             talkfield.removeFromParent(true);
-
+            talkfield=null;
         }
-        catch(e:Error){
 
-        }
         switch(todo)
         {
             case "player":
@@ -251,13 +258,13 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
     }
     private function commandHandle():void
     {
-        //**********
+        //@@@@@@@@@@@@@@@@@@@@
         var commandsStr:String=com_content.split("#").toString();
         //commandsStr=commandsStr.split("<>").toString();
         var commands:Array=commandsStr.split(",");
         for(var i:uint=0;i<commands.length;i++)
         {
-            DebugTrace.msg(commands[i]);
+            //DebugTrace.msg(commands[i]);
 
             var actions:Array=commands[i].split("|");
             //ex:display_sao_casual1_center
@@ -282,7 +289,7 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
             }
             if(todo=="player" || todo=="display" || todo=="move"){
                 if(act.split("_").length==4)
-                target+="_"+act.split("_")[2];
+                    target+="_"+act.split("_")[2];
             }
 
             switch(todo)
@@ -290,11 +297,15 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
                 case "remove":
                     if(target=="player")
                     {
-                        _target.removeChild(talkmask);
+                        talkmask.removeFromParent(true);
                         talkmask=null;
                     }
-                    _target.removeChild(display_container[target]);
-                    display_container[target]=null;
+                        if(display_container[target]){
+                            display_container[target].removeFromParent(true);
+                            //_target.removeChild(display_container[target]);
+                            display_container[target]=null;
+                        }
+
                     break
                 case "display":
                     createCharacter(target,pos);
@@ -339,10 +350,15 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
         //if
         if(photoframe)
         {
+            var photoframeIndex:Number=_target.getChildIndex(photoframe);
+            var talkmaskeIndex:Number=_target.getChildIndex(talkmask);
+
             if(talkmask)
             {
-                _target.swapChildren(talkmask,photoframe);
-                //_target.swapChildren(talkmask,hitArea);
+                if(photoframeIndex<talkmaskeIndex){
+                    _target.swapChildren(talkmask,photoframe);
+                }
+
             }
             else if(bubble)
             {
@@ -356,18 +372,11 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
     {
 
 
-
-        var sentence:String=com_content.split("player|").join("");
-        talks[talk_index]=sentence.split("<>").join(",");
-        talking=command.filterTalking(talks);
-        //DebugTrace.msg("TarotreadingScene.creartePlayerChat talking:"+talking);
-
-
         if(!talkmask)
         {
             talkmask=new MyTalkingDisplay();
-            _target.addChild(talkmask);
             talkmask.addMask();
+            _target.addChild(talkmask);
 
             try
             {
@@ -385,7 +394,9 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
     private function createTalkField():void
     {
         talkfield=new MyTalkingDisplay();
-        var scentance:String=talking[talk_index].split("<>").join(",");
+        var scentance:String=talks[talk_index];
+        scentance=scentance.split("<>").join(",");
+        scentance=scentance.split("player|").join("");
         talkfield.addTextField(scentance);
         _target.addChild(talkfield);
         display_container.player=talkfield;
@@ -455,8 +466,8 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
         display_container[name]=character;
 
 
-        var tween:Tween=new Tween(character,2,Transitions.EASE_OUT);
-        tween.animate("alpha",1);
+        var tween:Tween=new Tween(character,0.5,Transitions.EASE_OUT);
+        tween.fadeTo(1);
         tween.onComplete=onCharacterDisplayed;
         Starling.juggler.add(tween);
 
@@ -493,8 +504,10 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
     }
     private function onPhotoRemoved():void
     {
-        photoframe.removeFromParent(true);
-        photoframe=null;
+        if(photoframe) {
+            photoframe.removeFromParent(true);
+            photoframe = null;
+        }
 
     }
     private function displayVideo(src:String):void
@@ -596,7 +609,8 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
     public function addDisplayContainer(src:String):void
     {
         DebugTrace.msg("SceneCommand.addDisplayContainer src:"+src+" ; scene:"+scene);
-        command.addDisplayObj(scene,src);
+        //preview skip QA
+        //command.addDisplayObj(scene,src);
         if(_target)
         {
             //_target.removeEventListener(TouchEvent.TOUCH,onChatSceneTouched);
@@ -666,6 +680,9 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
             //if
         }
         //for
+        if(photoframe){
+            photoframe.removeFromParent(true);
+        }
         if(bgSprtie){
             bgSprtie.removeFromParent(true);
         }
@@ -678,14 +695,15 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
     public function disableAll():void
     {
 
-        try
-        {
-            scene_sprite.removeEventListener(TouchEvent.TOUCH,onChatSceneTouched);
-        }
-        catch(e:Error)
-        {
-            DebugTrace.msg("SceneCommand.disableAll scene_sprite NUll");
-        }
+        DebugTrace.msg("SceneCommand.disableAll hitArea");
+//        try
+//        {
+//            scene_sprite.removeEventListener(TouchEvent.TOUCH,onChatSceneTouched);
+//        }
+//        catch(e:Error)
+//        {
+//            DebugTrace.msg("SceneCommand.disableAll scene_sprite NUll");
+//        }
         try
         {
             hitArea.removeFromParent(true);
@@ -760,8 +778,45 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
         display_container=new Object();
         part_index++;
         var previewStory:Array=DataContainer.previewStory;
+
+        if(part_index>previewStory.length-1){
+
+            part_index=0;
+        }
         talks=previewStory[part_index];
         DebugTrace.msg("PreviewStoryCommand.nextStoryPart talks="+talks);
+        showChat();
+    }
+    public function prevStoryStep():void{
+        //doClearAll();
+        talk_index--;
+        display_container=new Object();
+
+        if(bubble)
+        {
+            bubble.removeFromParent(true);
+            bubble=null;
+        }
+        var previewStory:Array=DataContainer.previewStory;
+        if(talk_index<0){
+            talk_index=0;
+            part_index--;
+            if(part_index<0){
+                part_index=0;
+            }
+
+        }
+//        talks=new Array();
+//        for(var i:uint=0;i<previewStory[part_index].length;i++){
+//            talks.push(previewStory[part_index][i])
+//        }
+        talks=previewStory[part_index];
+        //DebugTrace.msg("PreviewStroyCoommand.prevStoryStep talks["+talk_index+"]="+talks[talk_index]);
+
+        if(character){
+            character.removeFromParent();
+
+        }
 
         showChat();
     }

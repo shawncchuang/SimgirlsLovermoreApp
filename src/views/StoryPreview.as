@@ -55,9 +55,20 @@ public class StoryPreview extends Scenes {
 
         var texture:Texture=Assets.getTexture("IncrementButton");
         var filebtn:Button=new Button(texture,"");
+        filebtn.y=5;
         addChild(filebtn);
         filebtn.addEventListener(Event.TRIGGERED, onAdddFile);
-        //initCSV();
+
+        var arrowTxtr:Texture=Assets.getTexture("IconPrevBtn");
+        var prevbtn:Button=new Button(arrowTxtr,"");
+        prevbtn.scaleX=0.5;
+        prevbtn.scaleY=0.5;
+        prevbtn.x=filebtn.width+10;
+        prevbtn.addEventListener(Event.TRIGGERED, doPrevStory);
+        addChild(prevbtn);
+
+
+
     }
     private function onAdddFile(e:Event):void{
 
@@ -70,6 +81,9 @@ public class StoryPreview extends Scenes {
             DebugTrace.msg(file.nativePath);
             if(file.nativePath){
 
+                if(filepath!=""){
+                    storycom.doClearAll();
+                }
                 filepath=file.url;
                 initCSV();
             }
@@ -88,12 +102,19 @@ public class StoryPreview extends Scenes {
 
             var story:Array = stories[i];
             stories[i] = filterTalking(story);
+
             //DebugTrace.msg("MainCommand.onMainStoryComplete story=" + filterTalking(story) + " ; length:" + story.length);
         }
-        //DebugTrace.msg("MainCommand.onMainStoryComplete stories="+stories);
+        //DebugTrace.msg("MainCommand.onMainStoryComplete stories="+JSON.stringify(stories));
         storycom.init(stories,"StoryPreview",speaker_sprite,0,onChatFinished);
         storycom.start();
 
+    }
+    private function doPrevStory(e:Event):void{
+
+        if(filepath!=""){
+            storycom.prevStoryStep();
+        }
     }
     public function filterTalking(source:Array):Array {
         var sentances:Array = new Array();

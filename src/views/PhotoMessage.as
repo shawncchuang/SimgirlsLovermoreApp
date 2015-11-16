@@ -24,7 +24,7 @@ package views
 		public function PhotoMessage(target:String,callback:Function=null):void
 		{
 			onRemoved=callback;
-			DebugTrace.msg("PhotoMessage  target="+target)
+			DebugTrace.msg("PhotoMessage  target="+target);
 			var texture:Texture=Assets.getTexture(target);
 			//var texture:Texture=Assets.getTexture("photoframe");
 			alertframe=new Image(texture);
