@@ -1420,7 +1420,10 @@ public class DatingScene extends Scenes {
 
         heartView.removeFromParent(true);
 
-        if(relationshipChaned=="raise_changed_relationship"){
+        var dating:String = DataContainer.currentDating;
+        var rel:Object=flox.getSaveData("rel")[dating];
+
+        if(relationshipChaned=="raise_changed_relationship" && rel!="acquaintance"){
 
             showupPreciousPhoto();
 
