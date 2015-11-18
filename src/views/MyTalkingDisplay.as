@@ -48,6 +48,7 @@ package views
 			
 			var subtitle:TextField=new TextField(785,120,"","SimImpact",24,0xFFFFFF);
 			subtitle.hAlign="center";
+			subtitle.autoScale=true;
 			subtitle.x=125;
 			subtitle.y=650;
 		    addChild(subtitle);

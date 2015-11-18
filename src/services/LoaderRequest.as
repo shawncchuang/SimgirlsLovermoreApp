@@ -28,7 +28,7 @@ import flash.net.URLRequest;
 	{
 	 private var loaderdata:URLLoader;
 		private var onComplete:Function;
-		public function LoaderHandle(target:MovieClip,url:String,callback:Function=null):void
+		public function LoaderHandle(target:MovieClip=null,url:String="",callback:Function=null):void
 		{
 			var loader:Loader=new Loader();
 			var req:URLRequest=new URLRequest(url);
@@ -36,10 +36,23 @@ import flash.net.URLRequest;
 			{
 				loader.contentLoaderInfo.addEventListener(Event.COMPLETE,callback);
 			}
-			
+			if(url!=""){
+
+				loader.load(req);
+				target.addChild(loader);
+			}
+
+		}
+		public function URLLoaderHandle(url:String="",callback:Function=null):void{
+			var loader:URLLoader = new URLLoader();
+			//loader.dataFormat = URLLoaderDataFormat.VARIABLES;
+			if(callback)
+			{	loader.addEventListener(Event.COMPLETE, callback);
+			}
+
+			var req:URLRequest = new URLRequest(url);
 			loader.load(req);
-			target.addChild(loader);
-			
+
 		}
 		public function paymentWeb(type:String):void
 		{

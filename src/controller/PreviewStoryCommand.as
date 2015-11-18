@@ -260,7 +260,6 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
     {
         //@@@@@@@@@@@@@@@@@@@@
         var commandsStr:String=com_content.split("#").toString();
-        //commandsStr=commandsStr.split("<>").toString();
         var commands:Array=commandsStr.split(",");
         for(var i:uint=0;i<commands.length;i++)
         {

@@ -2,6 +2,7 @@
  * Created by shawnhuang on 15-11-10.
  */
 package views {
+import com.greensock.loading.LoaderMax;
 import com.shortybmc.data.parser.CSV;
 
 import controller.Assets;
@@ -11,20 +12,17 @@ import controller.PreviewStoryInterface;
 
 import events.TopViewEvent;
 
-import flash.desktop.ClipboardFormats;
-import flash.desktop.NativeDragManager;
 
 import flash.events.NativeDragEvent;
 import flash.filesystem.File;
 import flash.net.FileFilter;
 import flash.net.URLLoader;
 import flash.net.URLRequest;
+import flash.net.URLVariables;
 
 import model.Scenes;
 
 import services.LoaderRequest;
-
-import starling.core.Starling;
 import starling.display.Button;
 
 import starling.display.Sprite;
@@ -39,7 +37,7 @@ public class StoryPreview extends Scenes {
 
     private var storycom:PreviewStoryInterface=new PreviewStoryCommand();
     private var speaker_sprite:Sprite;
-   // private var filepath:String="csv/main_story_scenes.csv";
+    // private var filepath:String="csv/main_story_scenes.csv";
     private var filepath:String="";
     private var main_story:CSV;
 
@@ -91,20 +89,45 @@ public class StoryPreview extends Scenes {
     }
     private function initCSV():void{
 
-        main_story = new CSV();
-        main_story.addEventListener(Event.COMPLETE, onMainStoryComplete);
-        main_story.load(new URLRequest(filepath));
+//        main_story = new CSV();
+//        main_story.addEventListener(Event.COMPLETE, onMainStoryComplete);
+//        main_story.load(new URLRequest(filepath));
+
+        var loaderReq:LoaderRequest=new LoaderRequest();
+        loaderReq.URLLoaderHandle(filepath,onMainStoryComplete);
 
     }
     private function onMainStoryComplete(e:flash.events.Event):void {
-        var stories:Array = main_story.data;
-        for (var i:uint = 0; i < stories.length; i++) {
-
-            var story:Array = stories[i];
-            stories[i] = filterTalking(story);
-
-            //DebugTrace.msg("MainCommand.onMainStoryComplete story=" + filterTalking(story) + " ; length:" + story.length);
+//        var stories:Array = main_story.data;
+//        for (var i:uint = 0; i < stories.length; i++) {
+//
+//
+//            var story:Array = stories[i];
+//            stories[i] = filterTalking(story);
+//
+//            //DebugTrace.msg("MainCommand.onMainStoryComplete story=" + filterTalking(story) + " ; length:" + story.length);
+//        }
+        var loader:URLLoader=URLLoader(e.target);
+        var data:Array=loader.data.split(/\r\n|\n|\r/);
+        var stories:Array=[];
+        for(var i:uint=0;i<data.length;i++){
+            data[i]=data[i].split(",");
         }
+
+        for(var k:uint=0;k<data[0].length;k++){
+
+
+            var story:Array=new Array();
+            for(var j:uint=1;j<data.length;j++){
+                var contnet:String=data[j][k];
+                if(contnet!="") {
+                    story.push(contnet);
+                }
+
+            }
+            stories[k]=story;
+        }
+
         //DebugTrace.msg("MainCommand.onMainStoryComplete stories="+JSON.stringify(stories));
         storycom.init(stories,"StoryPreview",speaker_sprite,0,onChatFinished);
         storycom.start();
