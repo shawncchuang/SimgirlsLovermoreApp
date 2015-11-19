@@ -1,9 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:e094ba4e0a84fa70d0ae2b98ae3d6fca:d5ca401d35489c2cb6ec911b90800a90:f08d24e3c11379be2d9e7de095b2697f$ -->
-<TextureAtlas imagePath="maleclothes.png">
-    <SubTexture name="clothes0" x="666" y="2" width="330" height="366"/>
-    <SubTexture name="clothes1" x="334" y="2" width="330" height="366"/>
-    <SubTexture name="clothes2" x="2" y="370" width="330" height="366"/>
-    <SubTexture name="clothes3" x="2" y="2" width="330" height="366"/>
-</TextureAtlas>
+﻿<?xml version="1.0" encoding="utf-8"?><TextureAtlas imagePath="maleclothes.png">	<!-- Created with Adobe Flash Professional version 15.0.1.179 -->	<!-- http://www.adobe.com/products/flash.html -->	<SubTexture name="clothes0" x="0" y="0" width="330" height="418" pivotX="0" pivotY="0.05"/>	<SubTexture name="clothes1" x="0" y="418" width="330" height="418"/>	<SubTexture name="clothes2" x="0" y="836" width="330" height="418"/>	<SubTexture name="clothes3" x="0" y="1254" width="330" height="418"/>	<SubTexture name="clothes4" x="330" y="0" width="330" height="418"/>	<SubTexture name="clothes5" x="330" y="418" width="330" height="418"/>	<SubTexture name="clothes6" x="330" y="836" width="330" height="418"/>	<SubTexture name="clothes7" x="330" y="1254" width="330" height="418"/></TextureAtlas>

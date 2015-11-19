@@ -145,11 +145,9 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
         var h:Number=Starling.current.stage.stageHeight;
         var quad:Quad=new Quad(w,h,0x000000);
 
-        //hitArea=new Image(texture);
         hitArea=new Sprite();
         hitArea.addChild(quad);
         _target.addChild(hitArea);
-        //hitArea.addEventListener(TouchEvent.TOUCH,onChatSceneTouched);
 
         _target.addEventListener(TouchEvent.TOUCH,onChatSceneTouched);
     }
@@ -214,11 +212,11 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
 
 
         }
-        if(photoframe){
-
-            photoframe.removeFromParent(true);
-            photoframe=null;
-        }
+//        if(photoframe){
+//
+//            photoframe.removeFromParent(true);
+//            photoframe=null;
+//        }
         if(talkfield)
         {
             talkfield.removeFromParent(true);
@@ -258,13 +256,12 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
     }
     private function commandHandle():void
     {
-        //@@@@@@@@@@@@@@@@@@@@
+        //Should update to SceneCommand
         var commandsStr:String=com_content.split("#").toString();
         var commands:Array=commandsStr.split(",");
         for(var i:uint=0;i<commands.length;i++)
         {
             //DebugTrace.msg(commands[i]);
-
             var actions:Array=commands[i].split("|");
             //ex:display_sao_casual1_center
             if(actions.length>1){
@@ -286,24 +283,27 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
                 //END
                 todo=actions[0];
             }
-            if(todo=="player" || todo=="display" || todo=="move"){
+            if(todo=="player" || todo=="display"){
+
                 if(act.split("_").length==4)
                     target+="_"+act.split("_")[2];
+            }
+            if(todo=="move" || todo=="remove"){
+                target+="_"+act.split("_")[2];
             }
 
             switch(todo)
             {
                 case "remove":
-                    if(target=="player")
-                    {
+                    if(target=="player") {
                         talkmask.removeFromParent(true);
                         talkmask=null;
                     }
-                        if(display_container[target]){
-                            display_container[target].removeFromParent(true);
-                            //_target.removeChild(display_container[target]);
-                            display_container[target]=null;
-                        }
+                    if(display_container[target]){
+                        display_container[target].removeFromParent(true);
+                        //_target.removeChild(display_container[target]);
+                        display_container[target]=null;
+                    }
 
                     break
                 case "display":
@@ -392,6 +392,7 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
     }
     private function createTalkField():void
     {
+        //Should update
         talkfield=new MyTalkingDisplay();
         var scentance:String=talks[talk_index];
         scentance=scentance.split("<>").join(",");
@@ -437,9 +438,8 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
 
         var npc:String="";
         var texture:Texture;
-
-        var _name:String=name.split("_")[0];
-        if(Config.characters.indexOf(_name)!=-1 || name=="zack"){
+        var target:String=name.split("_")[0];
+        if(Config.allCharacters.indexOf(target)!=-1){
 
             //character
             //var stylesechdule:Object=DataContainer.styleSechedule;
@@ -535,14 +535,6 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
         }
         bgSrc=src;
 
-        /*
-         if(background)
-         {
-         background.removeFromParent(true);
-         background=null;
-         //scene_container.removeChild(background);
-         }
-         */
         try
         {
             bgSprtie.removeFromParent(true);
@@ -550,12 +542,6 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
         }catch(e:Error){
             DebugTrace.msg("SceneCommand.createBackground remove bgSprtie Error");
         }
-        // background= new Sprite();
-
-        //background=Assets.getDynamicAtlas(src);
-        //background.stop();
-        //scene_container.addChild(background);
-
 
         onBackgroundComplete();
     }

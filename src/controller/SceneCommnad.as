@@ -23,6 +23,7 @@ import starling.display.BlendMode;
 import starling.display.Button;
 import starling.display.Image;
 import starling.display.MovieClip;
+import starling.display.Quad;
 import starling.display.Sprite;
 import starling.events.Event;
 import starling.events.Touch;
@@ -61,7 +62,7 @@ public class SceneCommnad implements SceneInterface
     private var com_content:String=new String();
     private var character:Image;
 
-    private var hitArea:Image;
+    private var hitArea:Sprite;
 
     private var clickmouse:ClickMouseIcon=null;
     private var ch_pos:Object={"center":new Point(330,0),"left":new Point(-54,0),"right":new Point(650,0)};
@@ -176,20 +177,17 @@ public class SceneCommnad implements SceneInterface
     {
 
 
-        var texture:Texture=Assets.getTexture("Whitebg");
-
-        //hitArea=new Button(texture);
-
-        hitArea=new Image(texture);
-        //hitArea.useHandCursor=true;
-        //hitArea.name="hitArea";
-        hitArea.width=Starling.current.stage.stageWidth;
-        hitArea.height=Starling.current.stage.stageHeight;
-        hitArea.alpha=0;
-        scene_sprite.addChild(hitArea);
-        //hitArea.addEventListener(TouchEvent.TOUCH,onChatSceneTouched);
-
-        scene_sprite.addEventListener(TouchEvent.TOUCH,onChatSceneTouched);
+        DebugTrace.msg("PreviewStoryCommand.addTouchArea");
+        var currentScene:Sprite=ViewsContainer.currentScene;
+        //var texture:Texture=Assets.getTexture("Whitebg");
+        var w:Number=Starling.current.stage.stageWidth;
+        var h:Number=Starling.current.stage.stageHeight;
+        var quad:Quad=new Quad(w,h,0x000000);
+        quad.alpha=0;
+        hitArea=new Sprite();
+        hitArea.addChild(quad);
+        _target.addChild(hitArea);
+        _target.addEventListener(TouchEvent.TOUCH,onChatSceneTouched);
     }
 
     private function onChatSceneTouched(e:TouchEvent):void
@@ -209,13 +207,13 @@ public class SceneCommnad implements SceneInterface
     public function onTouchedScene():void
     {
         talk_index++;
-        DebugTrace.msg("SceneCommand.onChatSceneTouched talk_index:"+talk_index);
+        //DebugTrace.msg("SceneCommand.onChatSceneTouched talk_index:"+talk_index);
         end_index=talks.indexOf("END");
         if(talk_index<end_index)
         {
             if(bubble)
             {
-                _target.removeChild(bubble);
+                bubble.removeFromParent(true);
                 bubble=null;
             }
             //if
@@ -244,12 +242,14 @@ public class SceneCommnad implements SceneInterface
         if(todo!="player")
         {
 
-            _target.removeChild(talkmask);
-            talkmask=null;
+            if(talkmask){
+                talkmask.removeFromParent(true);
+                talkmask=null;
+            }
         }
         try
         {
-            _target.removeChild(talkfield);
+            talkfield.removeFromParent(true);
         }
         catch(e:Error){
 
@@ -347,29 +347,52 @@ public class SceneCommnad implements SceneInterface
 
     private function commandHandle():void
     {
-        var commands:Array=com_content.split("^");
+        var commandsStr:String=com_content.split("#").toString();
+        var commands:Array=commandsStr.split(",");
         for(var i:uint=0;i<commands.length;i++)
         {
             var actions:Array=commands[i].split("|");
-            var act:String=actions[1];
-            var todo:String=act.split("_")[0];
-            var target:String=act.split("_")[1];
-            var pos:String="";
-            if(act.split("_").length==3)
-            {
-                pos=act.split("_")[2];
+            //ex:display_sao_casual1_center
+            if(actions.length>1){
+
+                var act:String=actions[1];
+                var todo:String=act.split("_")[0];
+
+                var target:String=act.split("_")[1];
+                var pos:String="";
+                if(act.split("_").length==4)
+                {
+                    pos=act.split("_")[3];
+                }else{
+                    pos=act.split("_")[2];
+                }
+
+                //if
+            }else{
+                //END
+                todo=actions[0];
             }
-            //if
+            if(todo=="player" || todo=="display"){
+
+                if(act.split("_").length==4)
+                    target+="_"+act.split("_")[2];
+            }
+            if(todo=="move" || todo=="remove"){
+                target+="_"+act.split("_")[2];
+            }
             switch(todo)
             {
                 case "remove":
                     if(target=="player")
                     {
-                        _target.removeChild(talkmask);
+                        talkmask.removeFromParent(true);
                         talkmask=null;
                     }
-                    _target.removeChild(display_container[target]);
-                    display_container[target]=null;
+                    if(display_container[target]){
+                        display_container[target].removeFromParent(true);
+                        //_target.removeChild(display_container[target]);
+                        display_container[target]=null;
+                    }
                     break
                 case "display":
                     createCharacter(target,pos);
@@ -381,10 +404,7 @@ public class SceneCommnad implements SceneInterface
                     createPhotoMessage(target);
                     break
                 case "photo-off":
-                    if(photoframe)
-                    {
-                        onPhotoRemoved();
-                    }
+                    onPhotoRemoved();
                     break
                 case "music-on":
                     command.playBackgroudSound(target);
@@ -434,7 +454,8 @@ public class SceneCommnad implements SceneInterface
 
         var npc:String="";
         var texture:Texture;
-        if(Config.characters.indexOf(name)!=-1 || name=="zack"){
+        var target:String=name.split("_")[0];
+        if(Config.characters.indexOf(name)!=-1){
 
             //character
             var style:String=DataContainer.styleSechedule[name];
@@ -530,27 +551,12 @@ public class SceneCommnad implements SceneInterface
     }
     private function onPhotoRemoved():void
     {
-        _target.removeChild(photoframe);
-        photoframe=null;
-        //swapHitAreaTouch(1)
+        if(photoframe) {
+            photoframe.removeFromParent(true);
+            photoframe = null;
+        }
     }
-    /*
-     private function swapHitAreaTouch(id:Number):void
-     {
 
-     if(id==0)
-     {
-     _target.removeEventListener(TouchEvent.TOUCH,onChatSceneTouched);
-     hitArea.addEventListener(Event.TRIGGERED,onHitAreaTouched);
-     }
-     else
-     {
-     _target.addEventListener(TouchEvent.TOUCH,onChatSceneTouched);
-     hitArea.removeEventListener(Event.TRIGGERED,onHitAreaTouched);
-     }
-
-     }
-     */
     private function onHitAreaTouched(e:Event):void
     {
         var target:Button=e.currentTarget as Button;
@@ -629,7 +635,6 @@ public class SceneCommnad implements SceneInterface
         location=src;
         var scene:Sprite=ViewsContainer.MainScene;
         scene_container=scene.getChildByName("scene_container") as Sprite;
-
         var dateSaved:String=flox.getSaveData("date");
         //var savedata:SaveGame=FloxCommand.savegame;
         var dateStr:String=dateSaved.split("|")[1];
@@ -641,14 +646,6 @@ public class SceneCommnad implements SceneInterface
         }
         bgSrc=src;
 
-        /*
-         if(background)
-         {
-         background.removeFromParent(true);
-         background=null;
-         //scene_container.removeChild(background);
-         }
-         */
         try
         {
             bgSprtie.removeFromParent(true);
@@ -656,12 +653,6 @@ public class SceneCommnad implements SceneInterface
         }catch(e:Error){
             DebugTrace.msg("SceneCommand.createBackground remove bgSprtie Error");
         }
-        // background= new Sprite();
-
-        //background=Assets.getDynamicAtlas(src);
-        //background.stop();
-        //scene_container.addChild(background);
-
 
         onBackgroundComplete();
     }
@@ -697,12 +688,13 @@ public class SceneCommnad implements SceneInterface
 
         if(bgSrc=="ChangeFormationBg"){
 
+
             bgSrc="NormalBg";
         }
-
         var bgTexture:Texture=Assets.getTexture(bgSrc);
         bgSprtie=new Image(bgTexture);
-        scene_container.addChild(bgSprtie);
+        //scene_sprite.addChild(bgSprtie);
+        _target.addChild(bgSprtie);
 
         function praseSceneDayNight():void{
             //open at day or night
@@ -719,34 +711,41 @@ public class SceneCommnad implements SceneInterface
     {
         for(var i:String in display_container)
         {
-            if(display_container)
+            if(display_container[i])
             {
-                _target.removeChild(display_container[i]);
+
+                display_container[i].removeFromParent(true);
             }
             //if
         }
         //for
+        if(photoframe){
+            photoframe.removeFromParent(true);
+        }
+        if(bgSprtie && scene.indexOf("Scene")==-1){
+            //normal  scene don't remove background
+            bgSprtie.removeFromParent(true);
+        }
         if(bubble)
         {
-            _target.removeChild(bubble);
+            bubble.removeFromParent(true);
         }
-
     }
     public function disableAll():void
     {
         //trace("SceneCommand.disableAll")
         //hitArea.removeEventListener(TouchEvent.TOUCH,onChatSceneTouched);
+//        try
+//        {
+//            scene_sprite.removeEventListener(TouchEvent.TOUCH,onChatSceneTouched);
+//        }
+//        catch(e:Error)
+//        {
+//            DebugTrace.msg("SceneCommand.disableAll scene_sprite NUll");
+//        }
         try
         {
-            scene_sprite.removeEventListener(TouchEvent.TOUCH,onChatSceneTouched);
-        }
-        catch(e:Error)
-        {
-            DebugTrace.msg("SceneCommand.disableAll scene_sprite NUll");
-        }
-        try
-        {
-            scene_sprite.removeChild(hitArea)
+            hitArea.removeFromParent(true);
         }
         catch(e:Error)
         {

@@ -659,12 +659,12 @@ public class Config
                 skincolor:0xFFFFFF,
                 eyescolor:0xFFFFFF,
                 features:0,
-                clothes:1,
-                pants:1,
+                clothes:0,
+                pants:0,
                 uppercolor:0xCCCCCC,
                 lowercolor:0xCCCCCC,
-                "upperbody": ["0", "1"],
-                "lowerbody": ["0", "1"]
+                "upperbody": ["0"],
+                "lowerbody": ["0"]
             },
             "formation":[
 

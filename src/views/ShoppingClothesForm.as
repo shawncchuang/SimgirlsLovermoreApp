@@ -33,7 +33,7 @@ public class ShoppingClothesForm extends Sprite {
     private var flox:FloxInterface=new FloxCommand();
     private var command:MainInterface=new MainCommand();
     private var casshtext:TextField;
-    private var font:String="SimMyriadPro";
+    private var font:String="SimNeogreyMedium";
 
 
     public function ShoppingClothesForm() {

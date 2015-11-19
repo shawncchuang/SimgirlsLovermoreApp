@@ -31,7 +31,7 @@ public class BeachScene extends Scenes
     private var speaker_sprite:Sprite;
     private var command:MainInterface=new MainCommand();
     private var button:Button;
-    private var scencom:SceneInterface=new SceneCommnad();
+    private var scenecom:SceneInterface=new SceneCommnad();
     private var flox:FloxInterface=new FloxCommand();
 
     private var getAP:Number=10;
@@ -53,8 +53,8 @@ public class BeachScene extends Scenes
     private function init(callback:Function=null):void
     {
 
-        scencom.init("BeachScene",speaker_sprite,12,callback);
-        scencom.start();
+        scenecom.init("BeachScene",speaker_sprite,12,callback);
+        scenecom.start();
 
 
     }
@@ -62,12 +62,12 @@ public class BeachScene extends Scenes
     {
         DebugTrace.msg("BeachScene.onStartStory");
 
-        scencom.disableAll();
-        var switch_verifies:Array=scencom.switchGateway("BeachScene");
+        scenecom.disableAll();
+        var switch_verifies:Array=scenecom.switchGateway("BeachScene");
         DebugTrace.msg("Beach.init switch_verifies="+switch_verifies);
         if(switch_verifies[0])
         {
-            scencom.start();
+            scenecom.start();
 
         }
 

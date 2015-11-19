@@ -1,13 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:7680cf8b7770bb2e2e4f4bdb17d5ba5f:3da791da2aaaa211f8be0501c88bae48:5d84d403655ecad18a025273d2384d09$ -->
-<TextureAtlas imagePath="femaleclothes.png">
-    <SubTexture name="clothes0" x="2" y="884" width="134" height="114" frameX="-59" frameY="-15" frameWidth="252" frameHeight="496"/>
-    <SubTexture name="clothes1" x="462" y="2" width="188" height="278" frameX="-31" frameY="-16" frameWidth="252" frameHeight="496"/>
-    <SubTexture name="clothes2" x="244" y="2" width="216" height="314" frameX="-17" frameY="-18" frameWidth="252" frameHeight="496"/>
-    <SubTexture name="clothes3" x="652" y="2" width="164" height="290" frameX="-42" frameY="-18" frameWidth="252" frameHeight="496"/>
-    <SubTexture name="clothes4" x="2" y="498" width="176" height="384" frameX="-42" frameY="-16" frameWidth="252" frameHeight="496"/>
-    <SubTexture name="clothes5" x="180" y="878" width="146" height="140" frameX="-54" frameY="-14" frameWidth="252" frameHeight="496"/>
-    <SubTexture name="clothes6" x="180" y="498" width="224" height="378" frameX="-12" frameY="-5" frameWidth="252" frameHeight="496"/>
-    <SubTexture name="clothes7" x="2" y="2" width="240" height="494" frameX="-5" frameY="-2" frameWidth="252" frameHeight="496"/>
-</TextureAtlas>
+﻿<?xml version="1.0" encoding="utf-8"?><TextureAtlas imagePath="femaleclothes.png">	<!-- Created with Adobe Flash Professional version 15.0.1.179 -->	<!-- http://www.adobe.com/products/flash.html -->	<SubTexture name="clothes0" x="0" y="0" width="248" height="496" pivotX="0" pivotY="0"/>	<SubTexture name="clothes1" x="248" y="0" width="248" height="496"/>	<SubTexture name="clothes2" x="496" y="0" width="248" height="496"/>	<SubTexture name="clothes3" x="744" y="0" width="248" height="496"/>	<SubTexture name="clothes4" x="0" y="496" width="248" height="496"/>	<SubTexture name="clothes5" x="248" y="496" width="248" height="496"/>	<SubTexture name="clothes6" x="496" y="496" width="248" height="496"/>	<SubTexture name="clothes7" x="744" y="496" width="248" height="496"/>	<SubTexture name="clothes8" x="0" y="992" width="248" height="496"/></TextureAtlas>

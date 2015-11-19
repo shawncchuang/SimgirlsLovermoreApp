@@ -90,6 +90,9 @@ public class ShoppingClothesListLayout extends Sprite {
                 posY+=50;
                 scale=0.6;
             }
+            if(gender=="Male" && _cate=="Clothes"){
+                posY+=20;
+            }
 
         } else {
             _cate = "PantsStyle";
@@ -132,7 +135,7 @@ public class ShoppingClothesListLayout extends Sprite {
         dollaSign.y = 82;
 
         var priceStr:String = DataContainer.currencyFormat(current_item.price);
-        price = new TextField(140, 43, priceStr, font, 36, 0x4A4A4A, true);
+        price = new TextField(140, 43, priceStr, "SimNeogreyMedium", 36, 0x4A4A4A, true);
         price.hAlign = "right";
         price.x = dollaSign.x + dollaSign.width;
         price.y = 86;
@@ -140,7 +143,7 @@ public class ShoppingClothesListLayout extends Sprite {
 
 
         var current:String = (itemIndex + 1) + " / " + items.length;
-        numbers = new TextField(200, 24, current, font, 20, 0x97CAF3, true);
+        numbers = new TextField(200, 24, current, "SimNeogreyMedium", 20, 0x97CAF3, true);
         numbers.pivotX = numbers.width / 2;
         numbers.x = 611 / 2;
         numbers.y = 389;
