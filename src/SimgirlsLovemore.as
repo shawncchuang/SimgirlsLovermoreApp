@@ -85,7 +85,7 @@ import views.TarotCardsDisplay;
 
 
 		private var manager:Boolean=false;
-		public static var previewStory:Boolean=true;
+		public static var previewStory:Boolean=false;
 
 		public static var verifyKey:String;
 		private var longinUI:MovieClip;

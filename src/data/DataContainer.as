@@ -720,29 +720,36 @@ public class DataContainer
         var flox:FloxInterface=new FloxCommand();
         var rating_level:Object=flox.getSyetemData("rating_level");
         var lv:uint=0;
+        var index:Array=new Array();
 
 
         if(rating>=rating_level["love-Min"] && rating<=rating_level["love-Max"]){
 
+            index=[0,1];
 
-            lv=0;
 
         }else if(rating>=rating_level["like-Min"] && rating<=rating_level["like-Max"]){
 
-            lv=1;
+
+            index=[2,3];
+
 
         }else if(rating>=rating_level["normal-Min"] && rating<=rating_level["normal-Max"]){
 
-            lv=2;
+
+            index=[4,5];
 
         }else if(rating>=rating_level["dislike-Min"] && rating<=rating_level["dislike-Max"]){
 
-            lv=3;
+
+            index=[6,7,8];
 
         }else if(rating>=rating_level["hate-Min"] && rating<=rating_level["hate-Max"]){
 
-            lv=4;
+
+            index=[9];
         }
+        lv=index[Math.floor(Math.random()*index.length)];
 
         return lv
 

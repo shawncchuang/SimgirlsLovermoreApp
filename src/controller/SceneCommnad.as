@@ -529,7 +529,7 @@ public class SceneCommnad implements SceneInterface
         var current_ch:Image=display_container[target];
         moving_tween=new Tween(current_ch,0.5,Transitions.EASE_OUT);
         moving_tween.animate("x",ch_pos[dir].x);
-        moving_tween.onComplete=onMovingComplete
+        moving_tween.onComplete=onMovingComplete;
         Starling.juggler.add(moving_tween)
 
     }

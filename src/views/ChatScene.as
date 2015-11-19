@@ -331,7 +331,7 @@ public class ChatScene extends Sprite
         Starling.juggler.removeTweens(bingo);
         removeChild(bingo);
 
-        var datingchat:Array=flox.getSyetemData("secrets_chat");
+        var seretchat:Array=flox.getSyetemData("secrets_chat");
         var systemAssets:Object=flox.getSyetemData("assets");
 
         var ratingLv:Number;
@@ -380,15 +380,17 @@ public class ChatScene extends Sprite
                 // item 100~-100
 
                 item=praseItemRating();
+                    var rating:Number=0;
                 for(var id:String in item){
                     var item_id:String=id;
+                    rating=item[id];
                 }
 
-                ratingLv=DataContainer.assetsRatingLevel(item.rating);
+                ratingLv=DataContainer.assetsRatingLevel(rating);
                 assets=systemAssets[item_id];
                 //DebugTrace.msg("ChatScene.onChatWithPlayer assets:"+JSON.stringify(assets));
 
-                sentence=datingchat[ratingLv];
+                sentence=seretchat[ratingLv];
                 sentence=sentence.split("^brand").join(assets.brand);
                 sentence=sentence.split("^item").join(assets.name);
                 DebugTrace.msg("ChatScene.onChatWithPlayer sentence:"+sentence);
