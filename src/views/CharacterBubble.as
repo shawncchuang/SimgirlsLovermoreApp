@@ -80,6 +80,9 @@ package views
 			{
 				texture_name="Bubble";
 			}
+			else if(type.indexOf("sh")!=-1){
+				texture_name="BubbleShout";
+			}
 			else if(type.indexOf("th")!=-1)
 			{
 				texture_name="BubbleThink";
@@ -140,7 +143,7 @@ package views
 			bubbletext.text=sentence.split("<>").join(",");
 			bubbletext.pivotX=bubbletext.width/2+20*diraction;
 			var pioveY:Number=bubbletext.height/2+15;
-			if(texture_name=="BubbleThink")
+			if(texture_name=="BubbleThink" || texture_name=="BubbleShout")
 			{
 				pioveY=bubbletext.height/2+45;
 			}

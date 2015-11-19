@@ -265,11 +265,12 @@ public class SceneCommnad implements SceneInterface
             case "spC":
             case "spL":
             case "spR":
-                createBubble(comlists);
-                break
             case "thC":
             case "thL":
             case "thR":
+            case "shC":
+            case "shL":
+            case "shR":
                 createBubble(comlists);
                 break
             case "choice":
@@ -502,6 +503,9 @@ public class SceneCommnad implements SceneInterface
         if(_pos.indexOf("sp")!=-1)
         {
             bubble_pos=spbubble_pos;
+        }else if(_pos.indexOf("sh")!=-1)
+        {
+            bubble_pos=shbubble_pos;
         }
         else if(_pos.indexOf("th")!=-1)
         {

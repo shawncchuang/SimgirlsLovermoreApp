@@ -142,6 +142,9 @@ public class AssetEmbeds
     [Embed(source = "../../media/textures/icons/bubble_think_icon.png")]
     public static const BubbleThink:Class;
 
+    [Embed(source = "../../media/textures/icons/bubble_shout_icon.png")]
+    public static const BubbleShout:Class;
+
     [Embed(source = "../../media/textures/icons/empty.png")]
     public static const Empty:Class;
 
