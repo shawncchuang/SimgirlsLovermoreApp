@@ -2,25 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e5634857-ca85-444f-9915-08f826b15827" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/views/HuntCriminalsForm.as" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/views/HuntCriminalsListLayout.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/AssetEmbeds.as" afterPath="$PROJECT_DIR$/src/controller/AssetEmbeds.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/model/BattleData.as" afterPath="$PROJECT_DIR$/src/model/BattleData.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/CommandCloud.as" afterPath="$PROJECT_DIR$/src/views/CommandCloud.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/data/Config.as" afterPath="$PROJECT_DIR$/src/data/Config.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/CpuMembersCommand.as" afterPath="$PROJECT_DIR$/src/controller/CpuMembersCommand.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/data/DataContainer.as" afterPath="$PROJECT_DIR$/src/data/DataContainer.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Game.as" afterPath="$PROJECT_DIR$/src/Game.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Main-app.xml" afterPath="$PROJECT_DIR$/src/Main-app.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/MainCommand.as" afterPath="$PROJECT_DIR$/src/controller/MainCommand.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/MainInterface.as" afterPath="$PROJECT_DIR$/src/controller/MainInterface.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/MainScene.as" afterPath="$PROJECT_DIR$/src/views/MainScene.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/PoliceStationScene.as" afterPath="$PROJECT_DIR$/src/views/PoliceStationScene.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/RandomBattlePopup.as" afterPath="$PROJECT_DIR$/src/views/RandomBattlePopup.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/model/SaveGame.as" afterPath="$PROJECT_DIR$/src/model/SaveGame.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/ShoppingListLayout.as" afterPath="$PROJECT_DIR$/src/views/ShoppingListLayout.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/VictoryBonus.as" afterPath="$PROJECT_DIR$/src/views/VictoryBonus.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/release/update.xml" afterPath="$PROJECT_DIR$/release/update.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/ViewCommand.as" afterPath="$PROJECT_DIR$/src/controller/ViewCommand.as" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="SimgirlsLovermoreApp.iws" />
@@ -62,8 +45,8 @@
       <file leaf-file-name="FloxCommand.as" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/controller/FloxCommand.as">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-12.222222">
-              <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+            <state vertical-scroll-proportion="-18.74074">
+              <caret line="44" column="4" selection-start-line="44" selection-start-column="4" selection-end-line="44" selection-end-column="4" />
               <folding>
                 <element signature="e#21#50#0" expanded="true" />
               </folding>
@@ -81,14 +64,34 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MainCommand.as" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MainCommand.as" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/controller/MainCommand.as">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.26381648">
-              <caret line="902" column="52" selection-start-line="902" selection-start-column="52" selection-end-line="902" selection-end-column="52" />
+            <state vertical-scroll-proportion="-13.444445">
+              <caret line="928" column="9" selection-start-line="928" selection-start-column="9" selection-end-line="928" selection-end-column="9" />
               <folding>
                 <element signature="e#22#52#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ProfileScene.as" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/views/ProfileScene.as">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="549" column="33" selection-start-line="549" selection-start-column="16" selection-end-line="549" selection-end-column="33" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ViewCommand.as" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/controller/ViewCommand.as">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.65380603">
+              <caret line="56" column="40" selection-start-line="56" selection-start-column="40" selection-end-line="56" selection-end-column="40" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -150,7 +153,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/views/SaveandLoadList.as" />
         <option value="$PROJECT_DIR$/src/controller/MemebersCommand.as" />
         <option value="$PROJECT_DIR$/src/views/CalendarScene.as" />
         <option value="$PROJECT_DIR$/src/views/ColorSwatches.as" />
@@ -201,6 +203,7 @@
         <option value="$PROJECT_DIR$/src/views/CommandCloud.as" />
         <option value="$PROJECT_DIR$/src/controller/FloxCommand.as" />
         <option value="$PROJECT_DIR$/src/controller/MainCommand.as" />
+        <option value="$PROJECT_DIR$/src/controller/ViewCommand.as" />
       </list>
     </option>
   </component>
@@ -222,7 +225,7 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="860" />
+    <option name="x" value="922" />
     <option name="y" value="23" />
     <option name="width" value="1405" />
     <option name="height" value="1368" />
@@ -896,13 +899,7 @@
       <workItem from="1446490120316" duration="211085000" />
       <workItem from="1447900750867" duration="5780000" />
       <workItem from="1447961288925" duration="20413000" />
-      <workItem from="1448305380367" duration="30911000" />
-    </task>
-    <task id="LOCAL-00034" summary="shopping items form is already in shooping centre">
-      <created>1439944334925</created>
-      <option name="number" value="00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1439944334925</updated>
+      <workItem from="1448305380367" duration="34036000" />
     </task>
     <task id="LOCAL-00035" summary="mouse click alert message replace X symbol ,chat rolling decrease 50%">
       <created>1440114388310</created>
@@ -1192,11 +1189,17 @@
       <option name="project" value="LOCAL" />
       <updated>1447969560922</updated>
     </task>
-    <option name="localTasksCounter" value="83" />
+    <task id="LOCAL-00083" summary="1.added new Hunt Criminals Ranking in police station scene.">
+      <created>1448402362572</created>
+      <option name="number" value="00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1448402362609</updated>
+    </task>
+    <option name="localTasksCounter" value="84" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2346589000" />
+    <option name="totallyTimeSpent" value="2349714000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1208,7 +1211,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="860" y="23" width="1405" height="1368" extended-state="0" />
+    <frame x="922" y="23" width="1405" height="1368" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1281,8 +1284,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="1.update  msg when useing item&#10; &#10;" />
-    <MESSAGE value="1.update  confirm random battle,for running away that need to pay in cash &#10; &#10;" />
     <MESSAGE value="1.update  battle background is stadium&#10;2.fixed 1 battle per day league &#10;3.fixed added win in ranking  after player played battle&#10;4.update random battle skip button is called &quot;'Pay Pizzo $100&quot;&#10;" />
     <MESSAGE value="1.update  battle background is stadium&#10;2.fixed 1 battle per day league &#10;3.fixed added win in ranking  after player played battle&#10;4.update random battle skip button is called &quot;'Pay Pizzo $100&quot;&#10;5.update cpu team battle uniform color&#10;" />
     <MESSAGE value="1.update only over rel of close friend who can participate battle&#10;2.update highlight effect when rel has changed&#10;3.update kiss's condition that will be over rel of close friend and mood &gt;1666  &#10;" />
@@ -1306,7 +1307,9 @@
     <MESSAGE value="1.fixed  scene command background bugs&#10;2.update female and male costumes" />
     <MESSAGE value="1.update shout bubble&#10;" />
     <MESSAGE value="1.fixed  talking about secret that secret sentences should match favouite level.&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="1.fixed  talking about secret that secret sentences should match favouite level.&#10;" />
+    <MESSAGE value="1.added new Hunt Criminals Ranking in police station scene." />
+    <MESSAGE value="1.update increase pts and love that will increase player's when change relationship point.&#10;2.fixed profile model Hair and Eyes layer" />
+    <option name="LAST_COMMIT_MESSAGE" value="1.update increase pts and love that will increase player's when change relationship point.&#10;2.fixed profile model Hair and Eyes layer" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1322,20 +1325,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/controller/FilterInterface.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.15618661">
-          <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/utils/FilterManager.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.4097363">
-          <caret line="21" column="17" selection-start-line="21" selection-start-column="17" selection-end-line="21" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/ChangingRoomScene.as">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-27.703703">
@@ -1622,16 +1611,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/controller/ViewCommand.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/controller/SoundEmbed.as">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-20.851852">
@@ -1727,10 +1706,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/controller/ViewInterface.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.15618661">
+          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/ProfileScene.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="549" column="33" selection-start-line="549" selection-start-column="16" selection-end-line="549" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/controller/FloxCommand.as">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.222222">
-          <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+        <state vertical-scroll-proportion="-18.74074">
+          <caret line="44" column="4" selection-start-line="44" selection-start-column="4" selection-end-line="44" selection-end-column="4" />
           <folding>
             <element signature="e#21#50#0" expanded="true" />
           </folding>
@@ -1739,11 +1734,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/controller/MainCommand.as">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.26381648">
-          <caret line="902" column="52" selection-start-line="902" selection-start-column="52" selection-end-line="902" selection-end-column="52" />
+        <state vertical-scroll-proportion="-13.444445">
+          <caret line="928" column="9" selection-start-line="928" selection-start-column="9" selection-end-line="928" selection-end-column="9" />
           <folding>
             <element signature="e#22#52#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/controller/ViewCommand.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.65380603">
+          <caret line="56" column="40" selection-start-line="56" selection-start-column="40" selection-end-line="56" selection-end-column="40" />
+          <folding />
         </state>
       </provider>
     </entry>

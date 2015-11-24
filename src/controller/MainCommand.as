@@ -903,11 +903,12 @@ public class MainCommand implements MainInterface {
         var ptsObj:Object = flox.getSaveData("pts");
         var loveObj:Object=flox.getSaveData("love");
         var love:Number=loveObj[dating];
+        var playerlove:Number=loveObj.player;
         var mood:Number = flox.getSaveData("mood")[dating];
         var pts:Number = Number(ptsObj[dating]);
         pts = pts + Math.floor(mood / 5);
 
-        DebugTrace.msg("MainCommand.updateRelationship mood=" + mood + " ,pts=" + pts);
+
 
         if (pts > relMax) {
             pts = relMax;
@@ -918,17 +919,33 @@ public class MainCommand implements MainInterface {
         ptsObj[dating] = pts;
 
         love+=(Math.floor(pts/5));
+        playerlove+=(Math.floor(pts/5));
+
         if(love > loveMax){
             love=loveMax;
 
         }else if(love<-(loveMax)){
             love=-(loveMax);
         }
+        if(playerlove > loveMax){
+            playerlove=loveMax;
+
+        }else if(playerlove<-(loveMax)){
+            playerlove=-(loveMax);
+        }
+
         loveObj[dating]=love;
+        loveObj.player=playerlove;
+
+        //DebugTrace.msg("MainCommand.updateRelationship pts=" + JSON.stringify(ptsObj));
+        //DebugTrace.msg("MainCommand.updateRelationship love=" + JSON.stringify(loveObj));
 
         var seObj:Object=flox.getSaveData("se");
         if(love<seObj[dating]){
             seObj[dating]=loveObj[dating];
+        }
+        if(playerlove<seObj.player){
+            seObj.player=loveObj.player;
         }
 
 

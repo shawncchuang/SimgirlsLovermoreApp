@@ -53,8 +53,8 @@ public class ViewCommand  implements ViewInterface{
         modelAttr.height=modelRec.height;
 
         drawcom.drawCharacter(target,modelAttr);
-        drawcom.updateBaseModel("Hair");
         drawcom.updateBaseModel("Eyes");
+        drawcom.updateBaseModel("Hair");
         drawcom.updateBaseModel("Pants");
         drawcom.updateBaseModel("Clothes");
         drawcom.updateBaseModel("Features");
