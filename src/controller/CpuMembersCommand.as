@@ -51,6 +51,7 @@ public class CpuMembersCommand implements CpuMembersInterface
         "3_1":30,"3_2":25,"3_3":8,"3_5":1};
     private var bossName:Object=new Object();
     private var cpu:String="";
+    private var command:MainInterface=new MainCommand();
     public static function set cputeamMember(members:Array):void
     {
         //cpu member
@@ -132,7 +133,8 @@ public class CpuMembersCommand implements CpuMembersInterface
                 cpuIndex=10;
 
         }else if(battleType=="practice" || battleType=="random_battle"){
-
+            //var criminals:Object
+            var ability:Object=command.criminalAbility();
             cpuIndex=11;
             var se:Number=0;
            for(var j:uint=0;j<mem_perteam;j++){
@@ -141,9 +143,9 @@ public class CpuMembersCommand implements CpuMembersInterface
 
                if(id=="t11_0"){
 
-                   se=Math.floor(love*0.9);
+                   se=ability.se;
                }else{
-                   se=Math.floor(love*0.6);
+                   se=ability.se;
                }
 
                teams[id].se=se;
@@ -280,7 +282,7 @@ public class CpuMembersCommand implements CpuMembersInterface
                 var itemid:String="";
                 if(formaiton || batttlecry)
                 {
-                    var power:Object=member.power
+                    var power:Object=member.power;
                     for(var j:String in skill)
                     {
                         power[j]=skill[j];

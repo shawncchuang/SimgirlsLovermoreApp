@@ -54,6 +54,9 @@ public class DataContainer
 
     private static var preview_story:Array;
 
+    private static var criminals:Array;
+    private static var criminalability:Object;
+
     public static function set AssetsId(ids:Array):void
     {
         assets_id=ids;
@@ -821,6 +824,22 @@ public class DataContainer
     public static function get previewStory():Array{
         return preview_story;
 
+    }
+    public static function set Criminals(list:Array):void{
+        criminals=list;
+
+    }
+    public static function get Criminals():Array{
+        return criminals;
+    }
+
+    public static function set CrimimalAbility(data:Object):void{
+
+        criminalability=data;
+    }
+    public static function get CrimimalAbility():Object{
+
+        return criminalability;
     }
 
 }

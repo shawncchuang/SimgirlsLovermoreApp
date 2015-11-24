@@ -125,8 +125,10 @@ public class AssetEmbeds
     public static const BetaBackground:Class;
 
     [Embed(source = "../../media/textures/scenes/sky.atf" ,mimeType="application/octet-stream")]
-    public static const Bg:Class;
+    public static const Sky:Class;
 
+    [Embed(source = "../../media/textures/scenes/sky_night.atf" ,mimeType="application/octet-stream")]
+    public static const SkyNight:Class;
     //-----------------scenes-------------------------------------------------*/
 
 
@@ -1210,6 +1212,10 @@ public class AssetEmbeds
 
     [Embed(source="../../media/textures/panels/popupbg.png")]
     public static const PopupBg:Class;
+
+
+    [Embed(source="../../media/textures/panels/huntcriminal_bg.png")]
+    public static const HuntCriminalPanel:Class;
 
     /*-------------------panels-------------------------------------------------------------------*/
     [Embed(source = "../../media/textures/scenes/battle_scene.jpg")]

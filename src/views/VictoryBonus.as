@@ -61,7 +61,7 @@ import utils.DebugTrace;
 		private function init():void
 		{
 			num=0;
-			bonusMax=Math.floor(Math.random()*41)+10;
+			bonusMax=Math.floor(Math.random()*21)+10;
 
 			var cpu_team:Object=flox.getSaveData("cpu_teams");
 			var cpuID:Number=DataContainer.setCputID;
@@ -72,7 +72,7 @@ import utils.DebugTrace;
 
 			}
 			//for
-            bonusMax+=Math.floor(seMax/100);
+            bonusMax+=Math.floor(seMax/200);
 			DebugTrace.msg("VictoryBonus.init bonusMax="+bonusMax);
 
 			
@@ -143,7 +143,7 @@ import utils.DebugTrace;
 		}
 		private function callNewStar():void
 		{
-			TweenMax.delayedCall(0.5,createNewStar);
+			TweenMax.delayedCall(0.2,createNewStar);
 		}
 		private function createNewStar():void
 		{
@@ -238,6 +238,7 @@ import utils.DebugTrace;
             }else if(battleType=="random_battle"){
 
                 scene="MainScene";
+
 
             }else{
 

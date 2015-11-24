@@ -33,6 +33,7 @@ package views
 		private var button:Button;
 		private var scencom:SceneInterface=new SceneCommnad();
 		private var floxcom:FloxInterface=new FloxCommand();
+		private var huntcriminalform:HuntCriminalsForm;
 		
 	 
 		public function PoliceStationScene()
@@ -87,8 +88,12 @@ package views
 					_data.name="MainScene";
 					command.sceneDispatch(SceneEvent.CHANGED,_data);
 					break
-				case "":
-					
+				case "HuntCriminals":
+					gameEvent._name="clear_comcloud";
+					gameEvent.displayHandler();
+
+					huntcriminalform=new HuntCriminalsForm();
+					addChild(huntcriminalform);
 					
 			 
 					break
@@ -117,6 +122,7 @@ package views
 		}
 		private function onClearComplete():void
 		{
+
 			Starling.juggler.removeTweens(this);
 			var _data:Object=new Object();
 			_data.name= "MainScene";

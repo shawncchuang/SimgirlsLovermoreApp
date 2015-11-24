@@ -60,6 +60,7 @@ import starling.events.TouchEvent;
 import starling.events.TouchPhase;
 
 import starling.textures.Texture;
+import starling.utils.AssetManager;
 
 import starling.utils.Color;
 
@@ -607,7 +608,7 @@ public class MainCommand implements MainInterface {
         var dateIndex:Object = {"date": _date - 1, "month": month_index};
         DataContainer.currentDateIndex = dateIndex;
         var new_date:String = Days[_data_index] + "." + _date + "." + _month + "." + _year + "|" + timeNum;
-        DebugTrace.msg("MainCommand.dateManager  new_date:" + new_date);
+        DebugTrace.msg("MainCommand.dateManager  new_date:" + new_date+" , overday:"+overday);
         var _data:Object = new Object();
         _data.date = new_date;
         flox.save("date", new_date);
@@ -616,11 +617,12 @@ public class MainCommand implements MainInterface {
 
             //syncSpiritEnergy();
             reeseatDating();
-           // initStyleSechedule();
+            // initStyleSechedule();
             setNowMood();
             praseOwnedAssets(1);
             reseatDatingCommandTimes();
             submitDailyReport();
+            initCriminalsRecord();
 
             var battleData:BattleData=new BattleData();
             battleData.checkBattleSchedule("BattleRanking","cpu_team");
@@ -881,7 +883,7 @@ public class MainCommand implements MainInterface {
                 if(styleNames.length>1){
                     style=_name+"_"+styleNames[Math.floor(Math.random()*styleNames.length)];
                 }
-               // DebugTrace.msg("MainCommand.initStyleSechedule style="+style);
+                // DebugTrace.msg("MainCommand.initStyleSechedule style="+style);
             }
 
             suitup[_name] = style;
@@ -893,11 +895,14 @@ public class MainCommand implements MainInterface {
     public function updateRelationship():void {
 
         var relMax:Number = 9999;
+        var loveMax:Number=9999;
 
         var flox:FloxInterface = new FloxCommand();
         var dating:String = DataContainer.currentDating;
         var relObj:Object = flox.getSaveData("rel");
         var ptsObj:Object = flox.getSaveData("pts");
+        var loveObj:Object=flox.getSaveData("love");
+        var love:Number=loveObj[dating];
         var mood:Number = flox.getSaveData("mood")[dating];
         var pts:Number = Number(ptsObj[dating]);
         pts = pts + Math.floor(mood / 5);
@@ -911,8 +916,24 @@ public class MainCommand implements MainInterface {
         }
 
         ptsObj[dating] = pts;
-        var rel:String = DataContainer.getRelationship(pts, dating);
 
+        love+=(Math.floor(pts/5));
+        if(love > loveMax){
+            love=loveMax;
+
+        }else if(love<-(loveMax)){
+            love=-(loveMax);
+        }
+        loveObj[dating]=love;
+
+        var seObj:Object=flox.getSaveData("se");
+        if(love<seObj[dating]){
+            seObj[dating]=loveObj[dating];
+        }
+
+
+
+        var rel:String = DataContainer.getRelationship(pts, dating);
         if(relObj[dating]!=rel){
             //relationship changed
 
@@ -939,7 +960,6 @@ public class MainCommand implements MainInterface {
                 //current_scene.dispatchEventWith("ALERT_ENABLE_TOUCHSCREEN");
             }
 
-
         }
 
 
@@ -948,7 +968,8 @@ public class MainCommand implements MainInterface {
         _data = new Object();
         _data.rel = relObj;
         _data.pts = ptsObj;
-        // FloxCommand.savegame=savegame;
+        _data.love= loveObj;
+        _data.se=seObj;
         flox.updateSavegame(_data);
         // DebugTrace.msg("MainCommand.updateRelationship _data="+JSON.stringify(_data));
 
@@ -1360,7 +1381,7 @@ public class MainCommand implements MainInterface {
         //DebugTrace.msg("MainCommand.doLearn sysCommand="+JSON.stringify(sysCommand));
 
         var reward_int:Number = minInt + Math.floor(Math.random() * (maxInt - minInt)) + 1;
-       // cash += cash_pay;
+        // cash += cash_pay;
         intObj.player += reward_int;
 
         flox.save("int", intObj);
@@ -1419,6 +1440,11 @@ public class MainCommand implements MainInterface {
 
     public function showCommandValues(target:Sprite, attr:String, values:Object = null):void {
         //show up reward after excuting command
+
+        var assets:AssetManager=Assets.SoundManager;
+        assets.playSound("GotFoods");
+
+
         var flox:FloxInterface = new FloxCommand();
         var sysCommad:Object = flox.getSyetemData("command");
         var rewards:Object = new Object();
@@ -2209,6 +2235,70 @@ public class MainCommand implements MainInterface {
 
     }
 
+    public function initCriminalsRecord():void{
+        //DebugTrace.msg("MainCommand.initCriminalsRecord");
+        var ranking:Array=Config.CriminalRanking;
+        var records:Array=new Array();
+        var location:Array=new Array();
+        var ranks:Array=new Array();
+        var rewards:Array=new Array();
+
+        for(var loc:String in Config.stagepoints){
+            if(loc!="PrivateIsland")
+                location.push(loc)
+        }
+        for(var j:uint=0;j<ranking.length;j++){
+            ranks.push(ranking[j].rank);
+            rewards.push(ranking[j].rewards);
+        }
+
+        for(var i:uint=0;i<location.length;i++){
+
+            var criminial:Object=new Object();
+            criminial.location=location[i];
+            var index:Number=Math.floor(Math.random()*ranks.length);
+            criminial.rank=ranks[index];
+            criminial.rewards=rewards[index];
+            records.push(criminial);
+        }
+        //var flox:FloxInterface = new FloxCommand();
+        //flox.save("criminals",records)
+        DataContainer.Criminals=records;
+
+
+    }
+    public function criminalAbility():Object{
+
+        var ranking:Array=Config.CriminalRanking;
+        var current_scene:String=DataContainer.currentLabel;
+        var scene:String=current_scene.split("Scene").join("");
+        var records:Array=DataContainer.Criminals;
+        var rank:String="";
+        var reqawrds:Number=0;
+        var se:Number=0;
+        for(var i:uint=0;i<records.length;i++){
+             if(records[i].location==scene){
+                 rank=records[i].rank;
+                 reqawrds=records[i].rewards;
+                 break
+             }
+        }
+        for(var j:uint=0;j<ranking.length;j++) {
+            if (ranking[j].rank == rank) {
+                se=ranking[j].se;
+                break
+            }
+        }
+
+        //DebugTrace.msg("MainCommand.criminalAbility rank="+rank);
+
+        var ability:Object={"se":se,"rewards":reqawrds,"rank":rank};
+        //DebugTrace.msg("MainCommand.criminalAbility ability="+JSON.stringify(ability));
+        DataContainer.CrimimalAbility=ability;
+
+
+        return ability
+    }
 
 }
 }

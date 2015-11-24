@@ -2,6 +2,8 @@ package views
 {
 
 
+import data.DataContainer;
+
 import flash.display.MovieClip;
 import flash.geom.Point;
 
@@ -83,11 +85,33 @@ public class MainScene extends Scenes
         flox.save("current_battle",defaultCurrentBattle);
         //--------------------------------------
 
+
         initScene();
         initWaving();
         initSigns();
-
+        init();
         //initPoints();
+
+    }
+    private function init():void{
+
+        //from random battle
+        var battleType:String=DataContainer.battleType;
+        var ability:Object=DataContainer.CrimimalAbility;
+        if(battleType=="random_battle"){
+            var rewards:Object={"cash":ability.rewards};
+            command.showCommandValues(this,"HuntRewards-"+ability.rank,rewards);
+
+            var flox:FloxInterface=new FloxCommand();
+            var cash:Number=flox.getSaveData("cash");
+            cash+=ability.rewards;
+            flox.save("cash",cash);
+
+            var gameinfo:Sprite = ViewsContainer.gameinfo;
+            gameinfo.dispatchEventWith("UPDATE_INFO");
+            DataContainer.battleType="";
+        }
+
 
     }
     private function initWaving():void
@@ -105,7 +129,7 @@ public class MainScene extends Scenes
         //container.addChild(waveing);
 
         var assets:AssetManager=Assets.SoundManager;
-        wavesSound=assets.playSound("MapWaves");
+        wavesSound=assets.playSound("MapWaves",0,100);
 
     }
 

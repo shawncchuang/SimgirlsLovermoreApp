@@ -106,6 +106,7 @@ public class RandomBattlePopup extends Sprite {
 
         DebugTrace.msg("RandomBattlePopup.runawayTriggeredHandler currentScene="+DataContainer.currentScene);
         PopUpManager.removePopUp(popup,true);
+        DataContainer.battleType="";
 
         command.consumeHandle("RunAwayRandomBattle");
 

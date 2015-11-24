@@ -24,7 +24,31 @@ public class Config
     //zack don't show up in somewhere
     public static const characters:Array=["lenus","sirena","dea","sao","klr","tomoru","ceil"];
     public static const datingCharacters:Array=["lenus","sirena","dea","zack","klr","tomoru","ceil"];
-    public static const NPC:Object={"daz":"npc001"};
+    public static const NPC:Object={"daz":"npc001",
+        "policestation":"npc002",
+        "sportsbar":"npc003",
+        "casino":"npc004",
+        "cinema":"npc005",
+        "nightclub":"npc006",
+        "arena":"npc007",
+        "themedpark":"npc008",
+        "shoppingmall":"npc009",
+        "blackmarket":"npc010",
+        "temple":"npc011",
+        "hotspring":"npc012",
+        "restaurant":"npc013",
+        "mansion":"npc014",
+        "bank":"npc015",
+        "dan":"npc016",
+        "pier_guy":"npc017",
+        "pier_gal":"npc018",
+        "airport_guy":"npc019",
+        "airport_gal":"npc020",
+        "themedpark_boy":"npc021",
+        "museum":"npc022",
+        "park_guy":"npc023",
+        "park_gal":"npc024"
+    };
     //schedule [index+ current month]
     public static var scheduleIndex:Object={"lenus":88,"sirena":12,"dea":25,"sao":38,"klr":51,"tomoru":64,"ceil":77,"zack":38};
 
@@ -36,8 +60,9 @@ public class Config
     public static var Monthslist:Array = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     public static var PickerMonthslist:Array = ["Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-    //battle schedule 2033 Tuesday
+    public static var gameEndDay:String="Feb_28";
 
+    //battle schedule 2033 Tuesday
     public static var battleDays:Array=[
         "Sep_6","Sep_13","Sep_20","Sep_27",
         "Oct_4","Oct_11","Oct_18","Oct_25",
@@ -110,6 +135,15 @@ public class Config
         return defaultCB;
 
     }
+
+    public static var CriminalRanking:Array=[{"rank":"S","se":2000,"rewards":20000},
+{"rank":"A","se":1500,"rewards":15000},
+{"rank":"B","se":1000,"rewards":10000},
+{"rank":"C","se":500,"rewards":5000},
+{"rank":"D","se":200,"rewards":2000},
+{"rank":"E","se":100,"rewards":1000},
+{"rank":"F","se":50,"rewards":500}];
+
     public static function set AccType(value:String):void
     {
         acctype=value;

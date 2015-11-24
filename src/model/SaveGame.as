@@ -55,6 +55,7 @@ package model
         public var command_dating:Object;
         public var photos:Array;
 		public var current_scene:String;
+		public var criminals:Array;
 		public function SaveGame()
 		{
 	 

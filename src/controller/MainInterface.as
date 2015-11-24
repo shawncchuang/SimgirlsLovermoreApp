@@ -57,6 +57,8 @@ public interface MainInterface
     function initCharacterLocation(type:String,arrived:Array=null):void
     function addShortcuts():void
     function removeShortcuts():void
+    function initCriminalsRecord():void
+    function criminalAbility():Object;
 
 }
 }

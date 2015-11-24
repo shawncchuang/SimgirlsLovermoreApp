@@ -158,13 +158,13 @@ public class ShoppingListLayout extends PanelScreen {
             priceHeader.hAlign="left";
             itemRender.addChild(priceHeader);
             var _price:String=DataContainer.currencyFormat(item.price);
-            var priceTxt:TextField=new TextField(80,renderH,_price,font,20,0,false);
+            var priceTxt:TextField=new TextField(80,renderH,_price,"SimNeogreyMedium",20,0,false);
             priceTxt.x=priceHeader.x;
             priceTxt.vAlign="center";
             priceTxt.hAlign="left";
 
 
-            var qtyHeader:TextField=new TextField(40,16,"Qty:",font,12,0x333333,true);
+            var qtyHeader:TextField=new TextField(40,16,"Qty:","SimNeogreyMedium",12,0x333333,true);
             qtyHeader.x=380;
             qtyHeader.hAlign="left";
             itemRender.addChild(qtyHeader);

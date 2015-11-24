@@ -597,7 +597,7 @@ public class BattleData
         var player_index:Number=-1;
         var battled:Array=flox.getSaveData("current_battle")[dayStr];
 
-        if(dayStr=="Feb_28")
+        if(dayStr==Config.gameEndDay)
         {
             //final battle
 

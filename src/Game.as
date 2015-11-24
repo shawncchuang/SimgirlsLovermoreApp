@@ -116,6 +116,11 @@ public class Game extends Sprite
 			}
 		}
 
+		//var criminals:Array=flox.getSaveData("criminals");
+		//if(!criminals){
+			command.initCriminalsRecord();
+		//}
+
 
 	}
 	private function doTopViewDispatch(e:TopViewEvent):void
