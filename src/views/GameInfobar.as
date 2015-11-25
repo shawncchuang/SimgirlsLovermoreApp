@@ -46,7 +46,8 @@ import utils.ViewsContainer;
 
 public class GameInfobar extends Sprite
 {
-    private var font:String="SimNeogreyMedium";
+    private var numbersfont:String="SimNeogreyMedium";
+    private var font:String="SimMyriadPro";
     private var fonColor:int=0x373535;
     private var attrlist:Array;
     private var valuelist:Array;
@@ -202,7 +203,7 @@ public class GameInfobar extends Sprite
 
         var show_date:String=String(datelist.toString().split(",").join("."));
         //DebugTrace.msg("GameInfobar.showDate show_date:"+show_date)
-        dateTxt=new TextField(200,40,show_date,font,22,fonColor);
+        dateTxt=new TextField(200,40,show_date,numbersfont,22,fonColor);
         dateTxt.hAlign="left";
         dateTxt.vAlign="center";
         dateTxt.x=335;
@@ -213,7 +214,7 @@ public class GameInfobar extends Sprite
     {
         var cash:Number=flox.getSaveData("cash");
         var cashStr:String=String(cash);
-        cashTxt=new TextField(170,40,cashStr,font,22,fonColor);
+        cashTxt=new TextField(170,40,cashStr,numbersfont,22,fonColor);
         cashTxt.hAlign="left";
         cashTxt.vAlign="center";
         cashTxt.x=572;
@@ -229,7 +230,7 @@ public class GameInfobar extends Sprite
         var ap_max:Number=flox.getSaveData("ap_max");
         var cashStr:String=String(ap);
         var value:String=cashStr+"/"+ap_max;
-        apTxt=new TextField(200,40,value,font,22,fonColor);
+        apTxt=new TextField(200,40,value,numbersfont,22,fonColor);
         apTxt.hAlign="left";
         apTxt.vAlign="center";
         apTxt.autoSize=TextFieldAutoSize.HORIZONTAL;
@@ -244,7 +245,7 @@ public class GameInfobar extends Sprite
         var honorStr:String=String(honor.play);
 
 
-        honorTxt=new TextField(morebar.width,40,honorStr,font,18,0xFFFFFF);
+        honorTxt=new TextField(morebar.width,40,honorStr,numbersfont,18,0xFFFFFF);
         honorTxt.vAlign="center";
         honorTxt.hAlign="center";
         honorTxt.y=60;
@@ -255,7 +256,7 @@ public class GameInfobar extends Sprite
         var love:Object=flox.getSaveData("love");
         var loveStr:String=String(love.player);
 
-        loveTxt=new TextField(morebar.width,40,loveStr,font,18,0xFFFFFF);
+        loveTxt=new TextField(morebar.width,40,loveStr,numbersfont,18,0xFFFFFF);
         loveTxt.vAlign="center";
         loveTxt.hAlign="center";
         loveTxt.y=130;
@@ -268,7 +269,7 @@ public class GameInfobar extends Sprite
         var intStr:String=String(intObj.player);
 
 
-        intTxt=new TextField(morebar.width,40,intStr,font,18,0xFFFFFF);
+        intTxt=new TextField(morebar.width,40,intStr,numbersfont,18,0xFFFFFF);
         intTxt.vAlign="center";
         intTxt.hAlign="center";
         intTxt.y=200;
@@ -281,7 +282,7 @@ public class GameInfobar extends Sprite
         var image:Object=flox.getSaveData("image");
         var imageStr:String=String(image.player);
 
-        imageTxt=new TextField(morebar.width,40,imageStr,font,18,0xFFFFFF);
+        imageTxt=new TextField(morebar.width,40,imageStr,numbersfont,18,0xFFFFFF);
         imageTxt.vAlign="center";
         imageTxt.hAlign="center";
         imageTxt.y=270;
@@ -546,7 +547,7 @@ public class GameInfobar extends Sprite
         comDirView.addChild(apIcon);
 
 
-        payApTxt=new TextField(70,comdir.height,"",font,25,0xFF0000);
+        payApTxt=new TextField(70,comdir.height,"",numbersfont,25,0xFF0000);
         payApTxt.vAlign=VAlign.CENTER;
         payApTxt.hAlign=HAlign.CENTER;
         payApTxt.x=550;

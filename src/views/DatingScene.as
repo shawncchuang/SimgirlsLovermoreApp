@@ -241,9 +241,10 @@ public class DatingScene extends Scenes {
                     chloveTxt.text = String(e.data.love.dating);
                 }
 
+
                 startPaticles();
                 drawcom.updatePieChart(e.data.mood);
-                command.updateRelationship();
+                //command.updateRelationship();
                 break;
             case "Kiss":
 
@@ -359,7 +360,7 @@ public class DatingScene extends Scenes {
         var moodObj:Object = flox.getSaveData("mood");
         //DebugTrace.msg("DatingScene.updateMood mood data:" + JSON.stringify(moodObj));
         mood = moodObj[dating];
-        mood = reward_mood + mood;
+        mood = mood + reward_mood;
         moodObj[dating] = mood;
         flox.save("mood", moodObj);
 
@@ -370,13 +371,12 @@ public class DatingScene extends Scenes {
             mood_value = "+" + reward_mood;
         }
 
-        command.updateRelationship();
-
-
         var value_data:Object = new Object();
         value_data.attr = "mood";
         value_data.values = "MOOD " + mood_value;
         command.displayUpdateValue(this, value_data);
+
+        command.updateRelationship();
 
 
 
@@ -400,7 +400,7 @@ public class DatingScene extends Scenes {
         startPaticles();
 
         var dating:String = DataContainer.currentDating;
-        // DebugTrace.msg("DatingScene.updateMood dating:"+dating);
+
 
         var loveObj:Object = flox.getSaveData("love");
         var moodObj:Object = flox.getSaveData("mood");
@@ -430,7 +430,8 @@ public class DatingScene extends Scenes {
             reward_love = "+" + _love;
         }
 
-
+        DebugTrace.msg("DatingScene.updateLovefromKiss reward_love:"+reward_love);
+        DebugTrace.msg("DatingScene.updateLovefromKiss reward_mood:"+reward_mood);
         drawcom.updatePieChart(mood);
 
         var value_data:Object = new Object();

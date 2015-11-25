@@ -904,9 +904,9 @@ public class MainCommand implements MainInterface {
         var loveObj:Object=flox.getSaveData("love");
         var love:Number=loveObj[dating];
         var playerlove:Number=loveObj.player;
-        var mood:Number = flox.getSaveData("mood")[dating];
+        //var mood:Number = flox.getSaveData("mood")[dating];
         var pts:Number = Number(ptsObj[dating]);
-        pts = pts + Math.floor(mood / 5);
+        pts = pts + Math.floor(rewards.mood / 5);
 
 
 
@@ -930,8 +930,8 @@ public class MainCommand implements MainInterface {
         if(playerlove > loveMax){
             playerlove=loveMax;
 
-        }else if(playerlove<-(loveMax)){
-            playerlove=-(loveMax);
+        }else if(playerlove<0){
+            playerlove=0;
         }
 
         loveObj[dating]=love;
@@ -1039,14 +1039,14 @@ public class MainCommand implements MainInterface {
     public function displayUpdateValue(target:Sprite, _data:Object):void {
         //valueSprite=target;
         var attrlist:Array = _data.attr.split(",");
-        var valuelist:Array = _data.values.split(",");
+        var rewardlist:Array = _data.values.split(",");
         var stageCW:Number = Starling.current.stage.stageWidth / 2;
         var stageCH:Number = Starling.current.stage.stageHeight / 2;
+        rewards=new Object();
 
-        var font:String = "SimNeogreyMedium";
         for (var i:uint = 0; i < attrlist.length; i++) {
             var attr:String = attrlist[i];
-            var value:String = valuelist[i];
+            var value:String = rewardlist[i];
             var posY:Number = i * 80;
 
             rewardNode = new Reward();
@@ -1057,6 +1057,15 @@ public class MainCommand implements MainInterface {
             rewardNode.y = stageCH - posY;
             rewardNode.addNode();
             target.addChild(rewardNode);
+
+            var valueNum:Number=0;
+            if(value.indexOf("+")!=-1){
+                valueNum=Number(value.split("+").join(""));
+            }
+            if(value.indexOf("+")!=-1){
+                valueNum=Number(value.split("MOOD +").join(""));
+            }
+            rewards[attr]=valueNum;
 
         }
         //for
@@ -1555,7 +1564,7 @@ public class MainCommand implements MainInterface {
 
         var drawcom:DrawerInterface = new DrawManager();
         drawcom.drawCharacter(player, modelAttr);
-        drawcom.updateBaseModel("Hair");
+
         drawcom.updateBaseModel("Eyes");
         if(avatar){
             drawcom.updateBaseModel("Pants",avatar);
@@ -1565,7 +1574,7 @@ public class MainCommand implements MainInterface {
             drawcom.updateBaseModel("Clothes");
 
         }
-
+        drawcom.updateBaseModel("Hair");
         drawcom.updateBaseModel("Features");
         drawcom.updateBaseModel("Features");
 
@@ -1634,10 +1643,11 @@ public class MainCommand implements MainInterface {
 
         var drawcom:DrawerInterface = new DrawManager();
         drawcom.drawCharacter(basemodel, modelAttr);
-        drawcom.updateBaseModel("Hair");
+
         drawcom.updateBaseModel("Eyes");
         drawcom.updateBaseModel("Pants");
         drawcom.updateBaseModel("Clothes");
+        drawcom.updateBaseModel("Hair");
         drawcom.updateBaseModel("Features");
 
         scene.addChild(basemodel);

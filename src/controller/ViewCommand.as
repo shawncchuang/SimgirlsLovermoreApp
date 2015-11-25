@@ -54,9 +54,9 @@ public class ViewCommand  implements ViewInterface{
 
         drawcom.drawCharacter(target,modelAttr);
         drawcom.updateBaseModel("Eyes");
-        drawcom.updateBaseModel("Hair");
         drawcom.updateBaseModel("Pants");
         drawcom.updateBaseModel("Clothes");
+        drawcom.updateBaseModel("Hair");
         drawcom.updateBaseModel("Features");
         target.x=params.pos.x;
         target.y=params.pos.y;

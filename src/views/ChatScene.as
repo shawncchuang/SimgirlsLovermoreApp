@@ -182,9 +182,9 @@ public class ChatScene extends Sprite
             var bingomotion:ScrollImage=new ScrollImage(motionTexture);
             bingomotion.name="motion"+i;
             bingomotion.x=i*bingomotion.width;
-            bingomotion.clipMaskTop=0
+            bingomotion.clipMaskTop=0;
             bingomotion.clipMaskLeft=0;
-            bingomotion.clipMaskBottom=100
+            bingomotion.clipMaskBottom=100;
             bingomotion.clipMaskRight=100;
             bingomotion.visible=false;
 

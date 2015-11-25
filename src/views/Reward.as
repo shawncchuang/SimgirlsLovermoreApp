@@ -26,7 +26,8 @@ public class Reward extends Sprite{
     public var index:Number;
 
     private var reward:Sprite;
-    private var font:String="SimImpact";
+    //private var font:String="SimImpact";
+    private var font:String="SimNeogreyMedium";
     private var stageCW:Number;
     private var stageCH:Number;
     private var fliter:FilterManager=new FilterManager();
@@ -50,7 +51,7 @@ public class Reward extends Sprite{
 
         reward=new Sprite();
 
-        var rewardTxt:TextField=new TextField(100,60,String(value),font,30,0xFFFFFF,true);
+        var rewardTxt:TextField=new TextField(100,60,String(value),font,40,0xFFFFFF,true);
         rewardTxt.autoSize=TextFieldAutoSize.HORIZONTAL;
         rewardTxt.hAlign="left";
         rewardTxt.vAlign="center";

@@ -138,33 +138,36 @@ public class ShoppingListLayout extends PanelScreen {
             nameHeader.hAlign="left";
             itemRender.addChild(nameHeader);
 
-            var nametTxt:TextField=new TextField(100,renderH,item.name,font,20,0,false);
+            var nametTxt:TextField=new TextField(100,renderH,item.name,font,18,0,false);
+            nametTxt.autoScale=true;
             nametTxt.x=nameHeader.x;
             nametTxt.hAlign="left";
             nametTxt.vAlign="center";
 
             var brandHeader:TextField=new TextField(50,16,"Brand:",font,12,0x333333,true);
-            brandHeader.x=215;
+            brandHeader.x=210;
             brandHeader.hAlign="left";
             itemRender.addChild(brandHeader);
-            var brandTxt:TextField=new TextField(100,renderH,item.brand,font,20,0,false);
+            var brandTxt:TextField=new TextField(80,renderH,item.brand,font,18,0,false);
+            brandTxt.autoScale=true;
             brandTxt.x=brandHeader.x;
             brandTxt.hAlign="left";
             brandTxt.vAlign="center";
 
 
             var priceHeader:TextField=new TextField(80,16,"Price:",font,12,0x333333,true);
-            priceHeader.x=310;
+            priceHeader.x=290;
             priceHeader.hAlign="left";
             itemRender.addChild(priceHeader);
             var _price:String=DataContainer.currencyFormat(item.price);
-            var priceTxt:TextField=new TextField(80,renderH,_price,"SimNeogreyMedium",20,0,false);
+            var priceTxt:TextField=new TextField(90,renderH,_price,"SimNeogreyMedium",18,0,true);
+            priceTxt.autoScale=true;
             priceTxt.x=priceHeader.x;
             priceTxt.vAlign="center";
             priceTxt.hAlign="left";
 
 
-            var qtyHeader:TextField=new TextField(40,16,"Qty:","SimNeogreyMedium",12,0x333333,true);
+            var qtyHeader:TextField=new TextField(40,16,"Qty:",font,12,0x333333,true);
             qtyHeader.x=380;
             qtyHeader.hAlign="left";
             itemRender.addChild(qtyHeader);

@@ -72,7 +72,7 @@ public class FlirtScene extends Sprite{
 
         chatTxt=new TextField(245,145,"",font,20,0x000000);
         chatTxt.hAlign="left";
-        chatTxt.vAlign="center"
+        chatTxt.vAlign="center";
         chatTxt.x=648;
         chatTxt.y=123;
         addChild(chatTxt);
@@ -247,6 +247,7 @@ public class FlirtScene extends Sprite{
             command.displayUpdateValue(this,value_data);
 
         }
+        command.updateRelationship();
 
         var _data:Object=new Object();
         _data.com="TakeFlirtReward";

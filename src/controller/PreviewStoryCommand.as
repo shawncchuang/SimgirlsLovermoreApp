@@ -290,9 +290,12 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
                     target+="_"+act.split("_")[2];
             }
             if(todo=="move" || todo=="remove"){
-                target+="_"+act.split("_")[2];
-            }
+                if(act.split("_").length>2){
+                    // characters
+                    target+="_"+act.split("_")[2];
+                }
 
+            }
             switch(todo)
             {
                 case "remove":
