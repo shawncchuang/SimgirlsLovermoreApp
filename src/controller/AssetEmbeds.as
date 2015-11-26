@@ -484,20 +484,20 @@ public class AssetEmbeds
     [Embed(source="../../assets/images/items/house.jpg")]
     public static const House:Class;
 
-    [Embed(source="../../assets/images/blackmarket/bm_1.jpg")]
-    public static const TimeMachine:Class;
-    [Embed(source="../../assets/images/blackmarket/bm_1.jpg")]
-    public static const SkillPointPlus:Class;
-    [Embed(source="../../assets/images/blackmarket/bm_1.jpg")]
-    public static const HornorPlus:Class;
-    [Embed(source="../../assets/images/blackmarket/bm_1.jpg")]
-    public static const LovePlus:Class;
-    [Embed(source="../../assets/images/blackmarket/bm_1.jpg")]
-    public static const IntelligencePlus:Class;
-    [Embed(source="../../assets/images/blackmarket/bm_1.jpg")]
-    public static const ImagesPlus:Class;
-    [Embed(source="../../assets/images/blackmarket/bm_1.jpg")]
-    public static const SHDPlus:Class;
+//    [Embed(source="../../assets/images/blackmarket/bm_1.jpg")]
+//    public static const TimeMachine:Class;
+//    [Embed(source="../../assets/images/blackmarket/bm_1.jpg")]
+//    public static const SkillPointPlus:Class;
+//    [Embed(source="../../assets/images/blackmarket/bm_1.jpg")]
+//    public static const HornorPlus:Class;
+//    [Embed(source="../../assets/images/blackmarket/bm_1.jpg")]
+//    public static const LovePlus:Class;
+//    [Embed(source="../../assets/images/blackmarket/bm_1.jpg")]
+//    public static const IntelligencePlus:Class;
+//    [Embed(source="../../assets/images/blackmarket/bm_1.jpg")]
+//    public static const ImagesPlus:Class;
+//    [Embed(source="../../assets/images/blackmarket/bm_1.jpg")]
+//    public static const SHDPlus:Class;
 
 
     [Embed(source="../../media/textures/icons/prevBtn.png")]
@@ -998,6 +998,11 @@ public class AssetEmbeds
     public static const sirena_wedding:Class;
     [Embed(source="../../media/textures/characters/styles/sirena/work.png")]
     public static const sirena_work:Class;
+       [Embed(source="../../media/textures/characters/styles/sirena/extra1.png")]
+    public static const sirena_extra1:Class;
+    [Embed(source="../../media/textures/characters/styles/sirena/night.png")]
+    public static const sirena_night:Class;
+
 
 
     [Embed(source="../../media/textures/characters/styles/tomoru/battle.png")]
@@ -1318,9 +1323,6 @@ public class AssetEmbeds
     public static const apPanel:Class;
     /*-------------------panels-------------------------------------------------------------------*/
 
-    //[Embed(source="../../media/textures/photos/watch.jpg")]
-    [Embed(source="../../media/textures/photos/CEIL_cat.jpg")]
-    public static const CeilCat:Class;
 
     [Embed(source="../../media/textures/photos/preview_frame.png")]
     public static const PreviewFrame:Class;

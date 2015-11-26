@@ -502,8 +502,8 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
         DebugTrace.msg("ChatCommand.createPhotoMessage");
         photoframe = new PhotoMessage(target, onPhotoRemoved);
         photoframe.name = "photoframe";
-        photoframe.x = Starling.current.stage.stageWidth / 2;
-        photoframe.y = Starling.current.stage.stageHeight / 2;
+        //photoframe.x = Starling.current.stage.stageWidth / 2;
+        //photoframe.y = Starling.current.stage.stageHeight / 2;
 
         _target.addChild(photoframe);
 
@@ -560,7 +560,7 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
             bgSrc=bgSrc.split("Scene").join("Bg");
         }
         else{
-            bgSrc="Bg";
+            //bgSrc="Bg";
         }
 
         DebugTrace.msg("SceneCommand.createBackground bgSrc="+bgSrc);

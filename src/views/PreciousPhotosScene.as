@@ -50,7 +50,7 @@ public class PreciousPhotosScene extends Sprite{
 
     public function PreciousPhotosScene() {
 
-        domainPath=flox.getSyetemData("photodomain");
+        domainPath=flox.getSyetemData("domainPrcious");
         ViewsContainer.currentScene=this;
 
         this.addEventListener(PreciousPhotosScene.PHOTO_ZOOM_IN,onPhotoZooomInHandle);

@@ -47,7 +47,7 @@ public class SystemData extends Entity
     public var mood_level:Object;
     public var rating_level:Object;
     public var preciousphotos:Object;
-    public var photodomain:String;
+    public var domainPrcious:String;
     public var upperbodyitems:Array;
     public var lowerbodyitems:Array;
     public var switchs:Object=

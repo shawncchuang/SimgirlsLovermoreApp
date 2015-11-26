@@ -307,7 +307,7 @@ package views
 				DebugTrace.msg("FoundSomeScene.onTouchCharaterIcon name:"+target.name);
 				if(target.name.indexOf("npc")==-1)
 				{
-					
+
 					DataContainer.currentDating=target.name;
 
                     //command.setNowMood();

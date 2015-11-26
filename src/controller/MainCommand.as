@@ -918,14 +918,22 @@ public class MainCommand implements MainInterface {
 
         ptsObj[dating] = pts;
 
-        love+=(Math.floor(pts/5));
-        playerlove+=(Math.floor(pts/5));
+        //love+=(Math.floor(pts/5));
+        //playerlove+=(Math.floor(pts/5));
+        //love player:80% ,dating target:100% , other characters:55%
+        var adjust:Number=Number((((Math.random()*3))/100).toFixed(2));
+        var loveReward:Number=Math.floor(pts/5);
+        var CloveReward:Number=Math.floor(loveReward*(0.55+adjust));
+        var PloveReward:Number=Math.floor(loveReward*(0.8+adjust));
+        love+=loveReward;
+        playerlove+=PloveReward;
+
 
         if(love > loveMax){
             love=loveMax;
 
-        }else if(love<-(loveMax)){
-            love=-(loveMax);
+        }else if(love<0){
+            love=0;
         }
         if(playerlove > loveMax){
             playerlove=loveMax;
@@ -937,17 +945,37 @@ public class MainCommand implements MainInterface {
         loveObj[dating]=love;
         loveObj.player=playerlove;
 
+        var seObj:Object=flox.getSaveData("se");
+
+        for(var character:String in loveObj ){
+            if(character!=dating && character!="player"){
+                var chlove:Number=loveObj[character];
+                chlove+=CloveReward;
+                if(chlove > loveMax){
+                    chlove=loveMax;
+
+                }else if(chlove<0){
+                    chlove=0;
+                }
+                loveObj[character]=chlove;
+
+            }
+
+            if(loveObj[character]<seObj[character]){
+                seObj[character]=loveObj[character];
+            }
+        }
+
         //DebugTrace.msg("MainCommand.updateRelationship pts=" + JSON.stringify(ptsObj));
         //DebugTrace.msg("MainCommand.updateRelationship love=" + JSON.stringify(loveObj));
 
-        var seObj:Object=flox.getSaveData("se");
-        if(love<seObj[dating]){
-            seObj[dating]=loveObj[dating];
-        }
-        if(playerlove<seObj.player){
-            seObj.player=loveObj.player;
-        }
 
+//        if(love<seObj[dating]){
+//            seObj[dating]=loveObj[dating];
+//        }
+//        if(playerlove<seObj.player){
+//            seObj.player=loveObj.player;
+//        }
 
 
         var rel:String = DataContainer.getRelationship(pts, dating);
@@ -2304,11 +2332,11 @@ public class MainCommand implements MainInterface {
         var reqawrds:Number=0;
         var se:Number=0;
         for(var i:uint=0;i<records.length;i++){
-             if(records[i].location==scene){
-                 rank=records[i].rank;
-                 reqawrds=records[i].rewards;
-                 break
-             }
+            if(records[i].location==scene){
+                rank=records[i].rank;
+                reqawrds=records[i].rewards;
+                break
+            }
         }
         for(var j:uint=0;j<ranking.length;j++) {
             if (ranking[j].rank == rank) {

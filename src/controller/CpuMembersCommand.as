@@ -141,11 +141,22 @@ public class CpuMembersCommand implements CpuMembersInterface
 
                var id:String="t"+cpuIndex+"_"+j;
 
-               if(id=="t11_0"){
-
-                   se=ability.se;
+               if(battleType=="random_battle"){
+                   if(id=="t11_0"){
+                       //leader
+                       se=ability.se;
+                   }else{
+                       se=ability.se;
+                   }
                }else{
-                   se=ability.se;
+                   //practice
+                   if(id=="t11_0"){
+                       //leader
+                       se=Math.floor(love*0.9);
+                   }else{
+                       se=Math.floor(love*0.6);
+                   }
+
                }
 
                teams[id].se=se;

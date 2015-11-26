@@ -438,8 +438,6 @@ public class DatingScene extends Scenes {
         value_data.attr = "love,mood";
         value_data.values = reward_love + ",MOOD +" + reward_mood;
         command.displayUpdateValue(this, value_data);
-
-
         command.updateRelationship();
 
 
@@ -1437,7 +1435,7 @@ public class DatingScene extends Scenes {
     private var preload:LoadingBuffer;
     private function showupPreciousPhoto():void{
 
-        var domainPath:String= flox.getSyetemData("photodomain");
+        var domainPath:String= flox.getSyetemData("domainPrcious");
         var stageW:Number=Starling.current.stage.stageWidth;
         var stageH:Number=Starling.current.stage.stageHeight;
 

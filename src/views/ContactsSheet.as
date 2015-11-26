@@ -63,7 +63,7 @@ public class ContactsSheet extends PanelScreen {
         {
             //var rel:String=assetsData[name];
             var pts:Number=flox.getSaveData("pts")[name];
-            var request_pts_min:Number=relationlevel["closefriend-Min"];
+            var request_pts_min:Number=relationlevel["friend-Min"];
             if(pts>=request_pts_min)
             {
                 for(var i:uint=0;i<locations.length;i++){
