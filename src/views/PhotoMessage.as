@@ -43,18 +43,14 @@ import starling.events.Event;
 
 			onRemoved=callback;
 			DebugTrace.msg("PhotoMessage  target="+target);
-//			var texture:Texture=Assets.getTexture(target);
-//			alertframe=new Image(texture);
-//			alertframe.pivotX=alertframe.width/2;
-//			alertframe.pivotY=alertframe.height/2;
-//			alertframe.scaleX=0.2;
-//			alertframe.scaleY=0.2;
-//			addChild(alertframe);
+
 
 			photosloader=new ImageLoader();
+			photosloader.y=-15;
 			photosloader.alpha=0;
 			photosloader.width=Starling.current.stage.stageWidth;
 			photosloader.height=Starling.current.stage.stageHeight;
+			photosloader.scaleContent=false;
 			photosloader.verticalAlign=ImageLoader.VERTICAL_ALIGN_MIDDLE;
 			photosloader.horizontalAlign=ImageLoader.HORIZONTAL_ALIGN_CENTER;
 			photosloader.source="/images/story/"+target+".jpg";
@@ -66,7 +62,7 @@ import starling.events.Event;
 		private function onPhotoLoadedComplete(e:Event):void{
 
 
-			var tween:Tween=new Tween(photosloader,1,Transitions.EASE_OUT_ELASTIC);
+			var tween:Tween=new Tween(photosloader,1,Transitions.EASE_IN_OUT);
 			tween.fadeTo(1);
 			tween.onComplete=onAlertMessageFadeIn;
 			Starling.juggler.add(tween);

@@ -2,22 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e5634857-ca85-444f-9915-08f826b15827" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/media/textures/photos/CEIL_cat.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/media/textures/photos/watch.jpg" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/AssetEmbeds.as" afterPath="$PROJECT_DIR$/src/controller/AssetEmbeds.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/ContactsSheet.as" afterPath="$PROJECT_DIR$/src/views/ContactsSheet.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/CpuMembersCommand.as" afterPath="$PROJECT_DIR$/src/controller/CpuMembersCommand.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/DatingScene.as" afterPath="$PROJECT_DIR$/src/views/DatingScene.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/FoundSomeScene.as" afterPath="$PROJECT_DIR$/src/views/FoundSomeScene.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Main-app.xml" afterPath="$PROJECT_DIR$/src/Main-app.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/MainCommand.as" afterPath="$PROJECT_DIR$/src/controller/MainCommand.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/MemebersCommand.as" afterPath="$PROJECT_DIR$/src/controller/MemebersCommand.as" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/PhotoMessage.as" afterPath="$PROJECT_DIR$/src/views/PhotoMessage.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/PreciousPhotosScene.as" afterPath="$PROJECT_DIR$/src/views/PreciousPhotosScene.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/PreviewStoryCommand.as" afterPath="$PROJECT_DIR$/src/controller/PreviewStoryCommand.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/SceneCommnad.as" afterPath="$PROJECT_DIR$/src/controller/SceneCommnad.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/SimgirlsLovemore.as" afterPath="$PROJECT_DIR$/src/SimgirlsLovemore.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/model/SystemData.as" afterPath="$PROJECT_DIR$/src/model/SystemData.as" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="SimgirlsLovermoreApp.iws" />
@@ -71,7 +56,7 @@
       <file leaf-file-name="SimgirlsLovemore.as" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/SimgirlsLovemore.as">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6228514">
+            <state vertical-scroll-proportion="0.58891016">
               <caret line="87" column="51" selection-start-line="87" selection-start-column="51" selection-end-line="87" selection-end-column="51" />
               <folding />
             </state>
@@ -83,16 +68,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="-13.481482">
               <caret line="898" column="31" selection-start-line="898" selection-start-column="31" selection-end-line="898" selection-end-column="31" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SceneCommnad.as" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/controller/SceneCommnad.as">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="547" column="4" selection-start-line="547" selection-start-column="4" selection-end-line="552" selection-end-column="37" />
               <folding />
             </state>
           </provider>
@@ -181,13 +156,13 @@
         <option value="$PROJECT_DIR$/src/controller/PreviewStoryCommand.as" />
         <option value="$PROJECT_DIR$/src/views/PreciousPhotosScene.as" />
         <option value="$PROJECT_DIR$/src/model/SystemData.as" />
-        <option value="$PROJECT_DIR$/src/views/PhotoMessage.as" />
         <option value="$PROJECT_DIR$/src/Main-app.xml" />
         <option value="$PROJECT_DIR$/src/controller/MemebersCommand.as" />
         <option value="$PROJECT_DIR$/src/controller/CpuMembersCommand.as" />
         <option value="$PROJECT_DIR$/src/views/DatingScene.as" />
         <option value="$PROJECT_DIR$/src/controller/MainCommand.as" />
         <option value="$PROJECT_DIR$/src/SimgirlsLovemore.as" />
+        <option value="$PROJECT_DIR$/src/views/PhotoMessage.as" />
       </list>
     </option>
   </component>
@@ -883,13 +858,7 @@
       <workItem from="1446490120316" duration="211085000" />
       <workItem from="1447900750867" duration="5780000" />
       <workItem from="1447961288925" duration="20413000" />
-      <workItem from="1448305380367" duration="85712000" />
-    </task>
-    <task id="LOCAL-00037" summary="1. fixed update correct facial texture when chang mood&#10;2. fixed bugs in Dating">
-      <created>1440640388497</created>
-      <option name="number" value="00037" />
-      <option name="project" value="LOCAL" />
-      <updated>1440640388497</updated>
+      <workItem from="1448305380367" duration="87325000" />
     </task>
     <task id="LOCAL-00038" summary="1. fixed enabled skill card bug when received flox call back&#10;">
       <created>1440788588341</created>
@@ -1179,11 +1148,17 @@
       <option name="project" value="LOCAL" />
       <updated>1448489932244</updated>
     </task>
-    <option name="localTasksCounter" value="86" />
+    <task id="LOCAL-00086" summary="1.update increase a  percentage of love for all characters when updating relationship.">
+      <created>1448578796589</created>
+      <option name="number" value="00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1448578796589</updated>
+    </task>
+    <option name="localTasksCounter" value="87" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2401390000" />
+    <option name="totallyTimeSpent" value="2403003000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1206,11 +1181,11 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.26995304" sideWeight="0.5781793" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24860725" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32998884" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20422535" sideWeight="0.5740097" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20422535" sideWeight="0.5740097" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31298906" sideWeight="0.50278705" order="8" side_tool="true" content_ui="combo" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1845039" sideWeight="0.5046948" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3912363" sideWeight="0.60895085" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.15962441" sideWeight="0.39104915" order="12" side_tool="true" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15962441" sideWeight="0.39104915" order="12" side_tool="true" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21714744" sideWeight="0.49600533" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24930362" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32998884" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1268,7 +1243,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="1.update  battle background is stadium&#10;2.fixed 1 battle per day league &#10;3.fixed added win in ranking  after player played battle&#10;4.update random battle skip button is called &quot;'Pay Pizzo $100&quot;&#10;5.update cpu team battle uniform color&#10;" />
     <MESSAGE value="1.update only over rel of close friend who can participate battle&#10;2.update highlight effect when rel has changed&#10;3.update kiss's condition that will be over rel of close friend and mood &gt;1666  &#10;" />
     <MESSAGE value="1.update Sao always can participate battle&#10;2.update game info text size such as images, intelligent, honour &#10;3.update kiss's condition that will be over 777  pts and 777 mood&#10;" />
     <MESSAGE value="1.update all characters wear unique suit for each scene&#10;2.fixed same game bugs&#10;3.update preloading animation&#10;" />
@@ -1293,7 +1267,8 @@
     <MESSAGE value="1.added new Hunt Criminals Ranking in police station scene." />
     <MESSAGE value="1.update increase pts and love that will increase player's when change relationship point.&#10;2.fixed profile model Hair and Eyes layer" />
     <MESSAGE value="1.update mood rewards  can increase pts that impacted on dating" />
-    <option name="LAST_COMMIT_MESSAGE" value="1.update mood rewards  can increase pts that impacted on dating" />
+    <MESSAGE value="1.update increase a  percentage of love for all characters when updating relationship." />
+    <option name="LAST_COMMIT_MESSAGE" value="1.update increase a  percentage of love for all characters when updating relationship." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1626,14 +1601,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Main-app.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.957935">
-          <caret line="51" column="52" selection-start-line="51" selection-start-column="52" selection-end-line="51" selection-end-column="52" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/controller/AssetEmbeds.as">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1704,17 +1671,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/PhotoMessage.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.3950104">
-          <caret line="69" column="23" selection-start-line="69" selection-start-column="23" selection-end-line="69" selection-end-column="23" />
-          <folding>
-            <element signature="e#17#42#0" expanded="true" />
-            <element signature="e#481#510#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/controller/SceneCommnad.as">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1741,9 +1697,28 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Main-app.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.9555106">
+          <caret line="51" column="52" selection-start-line="51" selection-start-column="52" selection-end-line="51" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/PhotoMessage.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.29349905">
+          <caret line="48" column="31" selection-start-line="48" selection-start-column="31" selection-end-line="48" selection-end-column="31" />
+          <folding>
+            <element signature="e#17#42#0" expanded="true" />
+            <element signature="e#481#510#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/SimgirlsLovemore.as">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6228514">
+        <state vertical-scroll-proportion="0.58891016">
           <caret line="87" column="51" selection-start-line="87" selection-start-column="51" selection-end-line="87" selection-end-column="51" />
           <folding />
         </state>
