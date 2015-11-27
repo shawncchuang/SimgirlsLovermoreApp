@@ -90,15 +90,16 @@ public class MainScene extends Scenes
         initWaving();
         initSigns();
         init();
-        //initPoints();
+
 
     }
     private function init():void{
 
-        //from random battle
+        //after random battle
+        var winner:String=DataContainer.BattleWinner;
         var battleType:String=DataContainer.battleType;
         var ability:Object=DataContainer.CrimimalAbility;
-        if(battleType=="random_battle"){
+        if(battleType=="random_battle" && winner=="player"){
             var rewards:Object={"cash":ability.rewards};
             command.showCommandValues(this,"HuntRewards-"+ability.rank,rewards);
 
@@ -111,6 +112,7 @@ public class MainScene extends Scenes
             gameinfo.dispatchEventWith("UPDATE_INFO");
             DataContainer.battleType="";
         }
+        DataContainer.BattleWinner="";
 
 
     }

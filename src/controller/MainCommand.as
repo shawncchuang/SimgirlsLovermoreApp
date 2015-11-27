@@ -2254,6 +2254,7 @@ public class MainCommand implements MainInterface {
     private function doShortcuts(e:KeyboardEvent):void{
         var toScene:String="";
         var shortcutsScene:String= DataContainer.shortcutsScene;
+        DataContainer.shortcuts="";
         switch(e.keyCode){
 
             case Keyboard.SPACE:
@@ -2267,6 +2268,14 @@ public class MainCommand implements MainInterface {
                 break
             case Keyboard.Q:
                 toScene="MainScene";
+                break
+            case Keyboard.H:
+                DataContainer.shortcuts="Rest";
+                toScene="HotelScene";
+                break
+            case Keyboard.B:
+                DataContainer.shortcuts="Rest";
+                toScene="BeachScene";
                 break
 
         }

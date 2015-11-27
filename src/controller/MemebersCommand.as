@@ -472,6 +472,7 @@ public class MemebersCommand implements MembersInterface
 
                 winner="cpu";
             }
+            DataContainer.BattleWinner=winner;
             battlealert.x=-1718;
             battlealert.y=-455;
             battlealert.alpha=0;
@@ -584,25 +585,7 @@ public class MemebersCommand implements MembersInterface
         {
 
             flox.save("se",seObj);
-            /*for(var k:uint=0;k<playerteam.length;k++)
-             {
-             member=playerteam[k];
-             //setxt=membermc.getChildByName("se") as TextField;
-             current_se=member.power.se;
-             if(current_se==0)
-             {
-             hurtplayer.push(playerteam[k]);
 
-             var _playerteam:Array= playerteam.splice(k)
-             _playerteam.shift();
-             var new_playerteam:Array=playerteam.concat(_playerteam);
-             playerteam=new_playerteam;
-             }
-             //if
-             }*/
-            //for
-            //DebugTrace.msg("MemebersCommand.checkTeamSurvive hurtplayer:"+hurtplayer+" ; @lu:"+hurtplayer.length);
-            //DebugTrace.msg("MemebersCommand.checkTeamSurvive playerteam:"+playerteam+" ; @lu:"+playerteam.length);
 
         }
         //if

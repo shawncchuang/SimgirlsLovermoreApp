@@ -77,12 +77,19 @@ public class HotelScene extends Scenes
         scencom.init("HotelScene",speaker_sprite,6,onStartStory);
         scencom.start();
 
+        if(DataContainer.shortcuts=="Rest"){
+
+            var _data:Object=new Object();
+            _data.removed=DataContainer.shortcuts;
+            command.topviewDispatch(TopViewEvent.REMOVE,_data);
+            DataContainer.shortcuts="";
+        }
 
 
     }
     private function onStartStory():void
     {
-        DebugTrace.msg("HotelScene.onStartStory")
+        DebugTrace.msg("HotelScene.onStartStory");
 
         scencom.disableAll();
         //var switch_verifies:Array=scencom.switchGateway("HotelScene");

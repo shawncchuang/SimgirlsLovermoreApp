@@ -34,6 +34,8 @@ package views
 	
 	import services.LoaderRequest;
 
+import starling.display.Sprite;
+
 
 import utils.DebugTrace;
 	import utils.ViewsContainer;
@@ -256,6 +258,9 @@ import utils.DebugTrace;
 			_data.name= scene;
 			command.sceneDispatch(SceneEvent.CHANGED,_data);
 			command.updateInfo();
+
+
+
 		}
 		private function onStarFadeout(bonus:Bonus):void
 		{

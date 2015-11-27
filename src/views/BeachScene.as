@@ -10,6 +10,8 @@ import controller.MainInterface;
 import controller.SceneCommnad;
 import controller.SceneInterface;
 
+import data.DataContainer;
+
 import events.GameEvent;
 import events.SceneEvent;
 import events.TopViewEvent;
@@ -55,6 +57,15 @@ public class BeachScene extends Scenes
 
         scenecom.init("BeachScene",speaker_sprite,12,callback);
         scenecom.start();
+
+
+        if(DataContainer.shortcuts=="Rest"){
+
+            var _data:Object=new Object();
+            _data.removed=DataContainer.shortcuts;
+            command.topviewDispatch(TopViewEvent.REMOVE,_data);
+            DataContainer.shortcuts="";
+        }
 
 
     }

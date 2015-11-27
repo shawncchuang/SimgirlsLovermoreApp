@@ -56,6 +56,8 @@ public class DataContainer
 
     private static var criminals:Array;
     private static var criminalability:Object;
+    private static var battlewinner:String;
+    private static var shortcuts_noted:String;
 
     public static function set AssetsId(ids:Array):void
     {
@@ -840,6 +842,21 @@ public class DataContainer
     public static function get CrimimalAbility():Object{
 
         return criminalability;
+    }
+    public static function set BattleWinner(winner:String):void{
+        battlewinner=winner;
+    }
+    public static function get BattleWinner():String{
+        return  battlewinner;
+    }
+
+    public static function set shortcuts(note:String):void{
+        shortcuts_noted=note;
+
+    }
+    public static function get shortcuts():String{
+        return shortcuts_noted;
+
     }
 
 }
