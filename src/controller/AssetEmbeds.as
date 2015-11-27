@@ -129,6 +129,39 @@ public class AssetEmbeds
 
     [Embed(source = "../../media/textures/scenes/sky_night.atf" ,mimeType="application/octet-stream")]
     public static const SkyNight:Class;
+
+   [Embed(source = "../../media/textures/scenes/alley.atf" ,mimeType="application/octet-stream")]
+    public static const Alley:Class;
+
+    [Embed(source = "../../media/textures/scenes/ballroom.atf" ,mimeType="application/octet-stream")]
+    public static const Ballroom:Class;
+
+    [Embed(source = "../../media/textures/scenes/blackspears.atf" ,mimeType="application/octet-stream")]
+    public static const Blackspears:Class;
+
+    [Embed(source = "../../media/textures/scenes/carpark.atf" ,mimeType="application/octet-stream")]
+    public static const Carpark:Class;
+
+
+    [Embed(source = "../../media/textures/scenes/hotpot.atf" ,mimeType="application/octet-stream")]
+    public static const Hotpot:Class;
+
+    [Embed(source = "../../media/textures/scenes/office.atf" ,mimeType="application/octet-stream")]
+    public static const Office:Class;
+
+    [Embed(source = "../../media/textures/scenes/officedamaged.atf" ,mimeType="application/octet-stream")]
+    public static const OfficeDamaged:Class;
+
+    [Embed(source = "../../media/textures/scenes/school.atf" ,mimeType="application/octet-stream")]
+    public static const School:Class;
+
+    [Embed(source = "../../media/textures/scenes/sewage.atf" ,mimeType="application/octet-stream")]
+    public static const Sewage:Class;
+
+    [Embed(source = "../../media/textures/scenes/woods.atf" ,mimeType="application/octet-stream")]
+    public static const Woods:Class;
+
+
     //-----------------scenes-------------------------------------------------*/
 
 
@@ -484,21 +517,6 @@ public class AssetEmbeds
     [Embed(source="../../assets/images/items/house.jpg")]
     public static const House:Class;
 
-//    [Embed(source="../../assets/images/blackmarket/bm_1.jpg")]
-//    public static const TimeMachine:Class;
-//    [Embed(source="../../assets/images/blackmarket/bm_1.jpg")]
-//    public static const SkillPointPlus:Class;
-//    [Embed(source="../../assets/images/blackmarket/bm_1.jpg")]
-//    public static const HornorPlus:Class;
-//    [Embed(source="../../assets/images/blackmarket/bm_1.jpg")]
-//    public static const LovePlus:Class;
-//    [Embed(source="../../assets/images/blackmarket/bm_1.jpg")]
-//    public static const IntelligencePlus:Class;
-//    [Embed(source="../../assets/images/blackmarket/bm_1.jpg")]
-//    public static const ImagesPlus:Class;
-//    [Embed(source="../../assets/images/blackmarket/bm_1.jpg")]
-//    public static const SHDPlus:Class;
-
 
     [Embed(source="../../media/textures/icons/prevBtn.png")]
     public static const IconPrevBtn:Class;
@@ -803,6 +821,9 @@ public class AssetEmbeds
     public static const npc023:Class;
     [Embed(source="../../media/textures/npc/npc024.png")]
     public static const npc024:Class;
+    [Embed(source="../../media/textures/npc/npc025.png")]
+    public static const npc025:Class;
+
 
     [Embed(source="../../media/textures/characters/styles/ceil/battle.png")]
     public static const ceil_battle:Class;
@@ -948,6 +969,8 @@ public class AssetEmbeds
     public static const lenus_underwear:Class;
     [Embed(source="../../media/textures/characters/styles/lenus/pj.png")]
     public static const lenus_pj:Class;
+    [Embed(source="../../media/textures/characters/styles/lenus/club.png")]
+    public static const lenus_club:Class;
 
 
     [Embed(source="../../media/textures/characters/styles/sao/battle.png")]
@@ -1067,6 +1090,8 @@ public class AssetEmbeds
     public static const zack_towel:Class;
     [Embed(source="../../media/textures/characters/styles/zack/swimsuit.png")]
     public static const zack_swimsuit:Class;
+    [Embed(source="../../media/textures/characters/styles/zack/club.png")]
+    public static const zack_club:Class;
 
     /*------------------characters-------------------------------------------------*/
 

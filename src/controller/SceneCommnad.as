@@ -3,43 +3,34 @@ package controller
 
 
 import data.Config;
-
-import flash.desktop.NativeApplication;
-import flash.events.MouseEvent;
-import flash.geom.Point;
-
 import data.DataContainer;
-
 import events.GameEvent;
 import events.SceneEvent;
 
-import model.SaveGame;
-import model.Scenes;
+import flash.geom.Point;
 
 import starling.animation.Transitions;
 import starling.animation.Tween;
 import starling.core.Starling;
-import starling.display.BlendMode;
-import starling.display.Button;
+
 import starling.display.Image;
-import starling.display.MovieClip;
 import starling.display.Quad;
 import starling.display.Sprite;
-import starling.events.Event;
 import starling.events.Touch;
 import starling.events.TouchEvent;
 import starling.events.TouchPhase;
-import starling.filters.ColorMatrixFilter;
-import starling.textures.Texture;
 import starling.textures.Texture;
 
 import utils.DebugTrace;
 import utils.FilterManager;
+
 import utils.ViewsContainer;
 
 import views.CharacterBubble;
+
 import views.ClickMouseIcon;
 import views.MenuScene;
+
 import views.MyTalkingDisplay;
 import views.PhotoMessage;
 
@@ -61,7 +52,6 @@ public class SceneCommnad implements SceneInterface
     private var command:MainInterface=new MainCommand();
     private var com_content:String=new String();
     private var character:Image;
-
     private var hitArea:Sprite;
 
     private var clickmouse:ClickMouseIcon=null;
@@ -82,9 +72,18 @@ public class SceneCommnad implements SceneInterface
     private var location:String="";
     private var part:Number=0;
 
-    public function init(current:String,target:Sprite,lbr_part:Number,finshed:Function=null):void
-    {
+    private var filter:FilterInterface=new FilterManager();
+    private var bgSrc:String="";
 
+    public function set currentSwitch(id:String):void
+    {
+        switchID=id.split("|")[0];
+    }
+    public function get currentSwitch():String
+    {
+        return switchID.split("|")[0];
+    }
+    public function init(current:String,target:Sprite,lbr_part:Number,finshed:Function=null):void {
         switchID=flox.getSaveData("current_switch");
         currentSwitch=switchID;
         scene_sprite=ViewsContainer.currentScene;
@@ -175,18 +174,17 @@ public class SceneCommnad implements SceneInterface
     }
     private function addTouchArea():void
     {
-
-
-        DebugTrace.msg("PreviewStoryCommand.addTouchArea");
+        DebugTrace.msg("SceneCommand.addTouchArea");
         var currentScene:Sprite=ViewsContainer.currentScene;
         //var texture:Texture=Assets.getTexture("Whitebg");
         var w:Number=Starling.current.stage.stageWidth;
         var h:Number=Starling.current.stage.stageHeight;
         var quad:Quad=new Quad(w,h,0x000000);
-        quad.alpha=0;
+
         hitArea=new Sprite();
         hitArea.addChild(quad);
         _target.addChild(hitArea);
+
         _target.addEventListener(TouchEvent.TOUCH,onChatSceneTouched);
     }
 
@@ -207,8 +205,9 @@ public class SceneCommnad implements SceneInterface
     public function onTouchedScene():void
     {
         talk_index++;
-        //DebugTrace.msg("SceneCommand.onChatSceneTouched talk_index:"+talk_index);
         end_index=talks.indexOf("END");
+        DebugTrace.msg("SceneCommand.onChatSceneTouched talk_index:"+talk_index+",end_index="+end_index);
+        //DebugTrace.msg("SceneCommand.onChatSceneTouched talks="+talks);
         if(talk_index<end_index)
         {
             if(bubble)
@@ -221,11 +220,12 @@ public class SceneCommnad implements SceneInterface
         }
         else
         {
-            //finish
-            doClearAll();
+            //finish current part
             DebugTrace.msg("SceneCommand finished");
-            //_target.removeEventListener(TouchEvent.TOUCH,onChatSceneTouched);
-            disableAll();
+            if(scene=="Story"){
+                doClearAll();
+                disableAll();
+            }
             if(finishedcallback)
             finishedcallback();
         }
@@ -247,13 +247,17 @@ public class SceneCommnad implements SceneInterface
                 talkmask=null;
             }
         }
-        try
+//        if(photoframe){
+//
+//            photoframe.removeFromParent(true);
+//            photoframe=null;
+//        }
+        if(talkfield)
         {
             talkfield.removeFromParent(true);
+            talkfield=null;
         }
-        catch(e:Error){
 
-        }
         switch(todo)
         {
             case "player":
@@ -286,66 +290,6 @@ public class SceneCommnad implements SceneInterface
         }
 
     }
-    public function createMouseClickIcon():void
-    {
-        //DebugTrace.msg("SceneCommand.createMouseClickIcon");
-        clickmouse=new ClickMouseIcon();
-        clickmouse.x=973;
-        clickmouse.y=704;
-        _target.addChild(clickmouse);
-    }
-    public function clearMouseClickIcon():void
-    {
-        //DebugTrace.msg("SceneCommand.clearMouseClickIcon");
-        if(clickmouse)
-        {
-            _target.removeChild(clickmouse);
-            clickmouse=null;
-        }
-
-    }
-
-    private function creartePlayerChat():void
-    {
-
-
-
-        var sentence:String=com_content.split("player|").join("");
-        talks[talk_index]=sentence;
-        talking=command.filterTalking(talks);
-        //DebugTrace.msg("TarotreadingScene.creartePlayerChat talking:"+talking);
-
-        //_target.removeChild(talkfield);
-
-        if(!talkmask)
-        {
-            talkmask=new MyTalkingDisplay();
-            _target.addChild(talkmask);
-            talkmask.addMask();
-
-            try
-            {
-                _target.swapChildren(talkmask,photoframe);
-            }
-            catch(e:Error){
-
-            }
-        }
-        //if
-        createTalkField();
-
-
-
-    }
-
-    private function createTalkField():void
-    {
-        talkfield=new MyTalkingDisplay();
-        talkfield.addTextField(talking[talk_index]);
-        _target.addChild(talkfield);
-        display_container.player=talkfield;
-    }
-
     private function commandHandle():void
     {
         var commandsStr:String=com_content.split("#").toString();
@@ -388,8 +332,7 @@ public class SceneCommnad implements SceneInterface
             switch(todo)
             {
                 case "remove":
-                    if(target=="player")
-                    {
+                    if(target=="player") {
                         talkmask.removeFromParent(true);
                         talkmask=null;
                     }
@@ -411,6 +354,7 @@ public class SceneCommnad implements SceneInterface
                     break
                 case "photo-off":
                     onPhotoRemoved();
+
                     break
                 case "music-on":
                     command.playBackgroudSound(target);
@@ -439,10 +383,15 @@ public class SceneCommnad implements SceneInterface
         //if
         if(photoframe)
         {
+            var photoframeIndex:Number=_target.getChildIndex(photoframe);
+            var talkmaskeIndex:Number=_target.getChildIndex(talkmask);
+
             if(talkmask)
             {
-                _target.swapChildren(talkmask,photoframe);
-                //_target.swapChildren(talkmask,hitArea);
+                if(photoframeIndex<talkmaskeIndex){
+                    _target.swapChildren(talkmask,photoframe);
+                }
+
             }
             else if(bubble)
             {
@@ -452,54 +401,41 @@ public class SceneCommnad implements SceneInterface
         }
         //if
     }
-    public function createCharacter(name:String,p:String):void
+    private function creartePlayerChat():void
     {
 
-        DebugTrace.msg("SceneCommand.createCharacter :"+name);
 
+        if(!talkmask)
+        {
+            talkmask=new MyTalkingDisplay();
+            talkmask.addMask();
+            _target.addChild(talkmask);
 
-        var npc:String="";
-        var texture:Texture;
-        var target:String=name.split("_")[0];
-        if(Config.characters.indexOf(name)!=-1){
+            try
+            {
+                _target.swapChildren(talkmask,photoframe);
+            }
+            catch(e:Error){
 
-            //character
-            var style:String=DataContainer.styleSechedule[name];
-            DebugTrace.msg("SceneCommand.createCharacter, style="+style);
-            texture=Assets.getTexture(style);
-
-        }else{
-
-            //NPC
-            style=Config.NPC[name];
-            texture=Assets.getTexture(style);
-
+            }
         }
-
-        character=new Image(texture);
-        character.name=name;
-        character.alpha=0;
-        character.x=ch_pos[p].x;
-        character.y=ch_pos[p].y;
-        _target.addChild(character);
-        display_container[name]=character;
-
-
-        var tween:Tween=new Tween(character,2,Transitions.EASE_OUT);
-        tween.animate("alpha",1);
-        tween.onComplete=onCharacterDisplayed;
-        Starling.juggler.add(tween);
+        //if
+        createTalkField();
 
 
     }
-    private function onCharacterDisplayed():void
+    private function createTalkField():void
     {
-        Starling.juggler.removeTweens(character);
+        talkfield=new MyTalkingDisplay();
+        var scentance:String=talks[talk_index];
+        scentance=scentance.split("<>").join(",");
+        scentance=scentance.split("player|").join("");
+        talkfield.addTextField(scentance);
+        _target.addChild(talkfield);
+        display_container.player=talkfield;
     }
     public function createBubble(comlists:Array):void
     {
-
-
 
         var _pos:String=comlists[0];
         DebugTrace.msg("SceneCommand.createBubble talk_index:"+talk_index+" ; _pos:"+_pos+" ; scene:"+scene);
@@ -528,6 +464,58 @@ public class SceneCommnad implements SceneInterface
         _target.addChild(bubble);
 
     }
+    public function createCharacter(name:String,p:String):void
+    {
+
+        DebugTrace.msg("SceneCommand.createCharacter :"+name);
+
+
+        var npc:String="";
+        var texture:Texture;
+        var target:String=name.split("_")[0];
+        if(Config.allCharacters.indexOf(target)!=-1){
+
+            //character
+            //var stylesechdule:Object=DataContainer.styleSechedule;
+            //DebugTrace.msg("SceneCommand.createCharacter, style="+stylesechdule.stringify(stylesechdule));
+            //var style:String=stylesechdule[name];
+            var style:String=name;
+            texture=Assets.getTexture(style);
+
+        }else{
+
+            //NPC
+            style=Config.NPC[name];
+            texture=Assets.getTexture(style);
+
+        }
+
+        var _ch_pos:Object=ch_pos;
+        if(style=="npc014"){
+            _ch_pos={"center":new Point(50.5,0),"left":new Point(0,0),"right":new Point(109,0)};
+        }
+
+        var pos:Point=new Point(_ch_pos[p].x,_ch_pos[p].y);
+        character=new Image(texture);
+        character.name=name;
+        character.alpha=0;
+        character.x=pos.x;
+        character.y=pos.y;
+        _target.addChild(character);
+        display_container[name]=character;
+
+
+        var tween:Tween=new Tween(character,0.5,Transitions.EASE_OUT);
+        tween.fadeTo(1);
+        tween.onComplete=onCharacterDisplayed;
+        Starling.juggler.add(tween);
+
+
+    }
+    private function onCharacterDisplayed():void
+    {
+        Starling.juggler.removeTweens(character);
+    }
     public function movingCharacter(target:String,dir:String):void
     {
         DebugTrace.msg("ChatCommand.movingCharacter target:"+target+" ;dir:"+dir);
@@ -535,42 +523,36 @@ public class SceneCommnad implements SceneInterface
         moving_tween=new Tween(current_ch,0.5,Transitions.EASE_OUT);
         moving_tween.animate("x",ch_pos[dir].x);
         moving_tween.onComplete=onMovingComplete;
-        Starling.juggler.add(moving_tween)
+        Starling.juggler.add(moving_tween);
 
     }
+
     private function onMovingComplete():void
     {
         Starling.juggler.remove(moving_tween);
     }
-    private function createPhotoMessage(target:String):void
-    {
+    private function createPhotoMessage(target:String):void {
         DebugTrace.msg("ChatCommand.createPhotoMessage");
-        photoframe=new PhotoMessage(target,onPhotoRemoved);
-        photoframe.name="photoframe";
-        //photoframe.x=Starling.current.stage.stageWidth/2;
-        //photoframe.y=Starling.current.stage.stageHeight/2;
+        photoframe = new PhotoMessage(target, onPhotoRemoved);
+        photoframe.name = "photoframe";
 
         _target.addChild(photoframe);
-
-
-        //swapHitAreaTouch(0)
-
-
 
     }
     private function onPhotoRemoved():void
     {
-        if(photoframe) {
-            photoframe.removeFromParent(true);
-            photoframe = null;
-        }
-    }
+        var tween:Tween=new Tween(photoframe,0.5,Transitions.EASE_OUT);
+        tween.onComplete=onPhotoFadeout;
+        tween.fadeTo(0);
+        Starling.juggler.add(tween);
 
-    private function onHitAreaTouched(e:Event):void
-    {
-        var target:Button=e.currentTarget as Button;
-        DebugTrace.msg("SceneCommand.onHitAreaTouched name:"+target.name);
-        onTouchedScene();
+        function onPhotoFadeout():void{
+            Starling.juggler.removeTweens(photoframe);
+            if(photoframe) {
+                photoframe.removeFromParent(true);
+                photoframe = null;
+            }
+        }
 
     }
     private function displayVideo(src:String):void
@@ -581,9 +563,62 @@ public class SceneCommnad implements SceneInterface
         gameEvent.video=src;
         gameEvent.displayHandler();
         command.stopBackgroudSound();
-        //_target.removeEventListener(TouchEvent.TOUCH,onChatSceneTouched);
-        //NativeApplication.nativeApplication.removeEventListener(MouseEvent.MOUSE_DOWN,onChatSceneTouched);
         disableAll();
+    }
+    public function createBackground(src:String):void
+    {
+        location=src;
+        var scene:Sprite=ViewsContainer.MainScene;
+        scene_container=scene.getChildByName("scene_container") as Sprite;
+        var dateSaved:String=flox.getSaveData("date");
+        var dateStr:String=dateSaved.split("|")[1];
+        day="Day";
+        if(dateStr=="24")
+        {
+            //night
+            day="Night";
+        }
+        bgSrc=src;
+
+        try
+        {
+            bgSprtie.removeFromParent(true);
+
+        }catch(e:Error){
+            DebugTrace.msg("SceneCommand.createBackground remove bgSprtie Error");
+        }
+
+        onBackgroundComplete();
+    }
+    private function onBackgroundComplete():void
+    {
+
+
+        if(bgSrc.indexOf("Scene")!=-1){
+            bgSrc=bgSrc.split("Scene").join("Bg");
+        }
+        else{
+            //bgSrc="Bg";
+        }
+
+        DebugTrace.msg("SceneCommand.createBackground bgSrc="+bgSrc);
+
+        var scene:String=location.split("Scene").join("");
+        var sceneIndex:Number=Config.daynightScene.indexOf(scene);
+        if(sceneIndex!=-1){
+            bgSrc=(bgSrc+day);
+        }
+
+        if(bgSrc=="ChangeFormationBg"){
+
+            bgSrc="NormalBg";
+        }
+
+        var bgTexture:Texture=Assets.getTexture(bgSrc);
+        bgSprtie=new Image(bgTexture);
+        _target.addChild(bgSprtie);
+
+
     }
 
     public function addDisplayContainer(src:String):void
@@ -627,95 +662,26 @@ public class SceneCommnad implements SceneInterface
         }
 
     }
-    public function enableTouch():void
+    public function clearMouseClickIcon():void
     {
-        DebugTrace.msg("SceneCommand.enableTouch ");
-        //_target.addEventListener(TouchEvent.TOUCH,onChatSceneTouched);
-        //NativeApplication.nativeApplication.addEventListener(MouseEvent.MOUSE_DOWN,onChatSceneTouched);
-
-        addTouchArea();
-        onTouchedScene();
-
-    }
-    private var filter:FilterInterface=new FilterManager();
-    private var bgSrc:String="";
-    public function createBackground(src:String):void
-    {
-        location=src;
-        var scene:Sprite=ViewsContainer.MainScene;
-        scene_container=scene.getChildByName("scene_container") as Sprite;
-        var dateSaved:String=flox.getSaveData("date");
-        //var savedata:SaveGame=FloxCommand.savegame;
-        var dateStr:String=dateSaved.split("|")[1];
-        day="Day";
-        if(dateStr=="24")
+        //DebugTrace.msg("SceneCommand.clearMouseClickIcon");
+        if(clickmouse)
         {
-            //night
-            day="Night";
-        }
-        bgSrc=src;
-
-        try
-        {
-            bgSprtie.removeFromParent(true);
-
-        }catch(e:Error){
-            DebugTrace.msg("SceneCommand.createBackground remove bgSprtie Error");
+            clickmouse.removeFromParent(true);
+            clickmouse=null;
         }
 
-        onBackgroundComplete();
     }
-    public function filterBackground():void
+
+    public function createMouseClickIcon():void
     {
-        filter.setSource(background);
-        filter.setBulr();
-
+        //DebugTrace.msg("SceneCommand.createMouseClickIcon");
+        clickmouse=new ClickMouseIcon();
+        clickmouse.x=973;
+        clickmouse.y=704;
+        _target.addChild(clickmouse);
     }
-    private function onBackgroundComplete():void
-    {
 
-
-        if(bgSrc.indexOf("Scene")!=-1){
-            bgSrc=bgSrc.split("Scene").join("Bg");
-        }
-        else{
-            bgSrc="Bg";
-        }
-
-        DebugTrace.msg("SceneCommand.createBackground bgSrc="+bgSrc);
-
-
-        if(scene=="Story")
-        {
-
-            praseSceneDayNight();
-        }
-        else{
-            praseSceneDayNight()
-
-        }
-
-        if(bgSrc=="ChangeFormationBg"){
-
-
-            bgSrc="NormalBg";
-        }
-        var bgTexture:Texture=Assets.getTexture(bgSrc);
-        bgSprtie=new Image(bgTexture);
-        //scene_sprite.addChild(bgSprtie);
-        _target.addChild(bgSprtie);
-
-        function praseSceneDayNight():void{
-            //open at day or night
-            var scene:String=location.split("Scene").join("");
-            var sceneIndex:Number=Config.daynightScene.indexOf(scene);
-            if(sceneIndex!=-1){
-                bgSrc=(bgSrc+day);
-            }
-
-        }
-
-    }
     public function doClearAll():void
     {
         for(var i:String in display_container)
@@ -731,8 +697,7 @@ public class SceneCommnad implements SceneInterface
         if(photoframe){
             photoframe.removeFromParent(true);
         }
-        if(bgSprtie && scene.indexOf("Scene")==-1){
-            //normal  scene don't remove background
+        if(bgSprtie){
             bgSprtie.removeFromParent(true);
         }
         if(bubble)
@@ -742,8 +707,8 @@ public class SceneCommnad implements SceneInterface
     }
     public function disableAll():void
     {
-        //trace("SceneCommand.disableAll")
-        //hitArea.removeEventListener(TouchEvent.TOUCH,onChatSceneTouched);
+
+        DebugTrace.msg("SceneCommand.disableAll hitArea");
 //        try
 //        {
 //            scene_sprite.removeEventListener(TouchEvent.TOUCH,onChatSceneTouched);
@@ -762,14 +727,21 @@ public class SceneCommnad implements SceneInterface
         }
         //_target.removeChild(hitArea)
     }
+    public function enableTouch():void
+    {
+        DebugTrace.msg("SceneCommand.enableTouch ");
+        //_target.addEventListener(TouchEvent.TOUCH,onChatSceneTouched);
+        //NativeApplication.nativeApplication.addEventListener(MouseEvent.MOUSE_DOWN,onChatSceneTouched);
 
-    public function set currentSwitch(id:String):void
-    {
-        switchID=id.split("|")[0];
+        addTouchArea();
+        onTouchedScene();
+
     }
-    public function get currentSwitch():String
+    public function filterBackground():void
     {
-        return switchID.split("|")[0];
+        filter.setSource(background);
+        filter.setBulr();
+
     }
     public function switchGateway(type:String ,callback:Function=null):*
     {

@@ -4,18 +4,10 @@
 package controller {
 import data.Config;
 import data.DataContainer;
-
 import events.GameEvent;
-
-import flash.desktop.NativeApplication;
-
-import flash.events.Event;
 import flash.geom.Point;
 
-import services.LoaderRequest;
-
 import starling.animation.Transitions;
-
 import starling.animation.Tween;
 import starling.core.Starling;
 
@@ -57,8 +49,6 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
     private var command:MainInterface=new MainCommand();
     private var com_content:String=new String();
     private var character:Image;
-
-    //private var hitArea:Image;
     private var hitArea:Sprite;
 
     private var clickmouse:ClickMouseIcon=null;
@@ -102,7 +92,6 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
         //main_scene.addChild(scene_sprite);
 
         talk_index=0;
-        part_index=0;
         scene=current;
         display_container=new Object();
         finishedcallback=finshed;
@@ -209,8 +198,6 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
                 talkmask.removeFromParent(true);
                 talkmask=null;
             }
-
-
         }
 //        if(photoframe){
 //
@@ -257,12 +244,10 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
     }
     private function commandHandle():void
     {
-        //Should update to SceneCommand
         var commandsStr:String=com_content.split("#").toString();
         var commands:Array=commandsStr.split(",");
         for(var i:uint=0;i<commands.length;i++)
         {
-            //DebugTrace.msg(commands[i]);
             var actions:Array=commands[i].split("|");
             //ex:display_sao_casual1_center
             if(actions.length>1){
@@ -396,7 +381,6 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
     }
     private function createTalkField():void
     {
-        //Should update
         talkfield=new MyTalkingDisplay();
         var scentance:String=talks[talk_index];
         scentance=scentance.split("<>").join(",");
@@ -407,8 +391,6 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
     }
     public function createBubble(comlists:Array):void
     {
-
-
 
         var _pos:String=comlists[0];
         DebugTrace.msg("SceneCommand.createBubble talk_index:"+talk_index+" ; _pos:"+_pos+" ; scene:"+scene);
@@ -463,11 +445,17 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
 
         }
 
+        var _ch_pos:Object=ch_pos;
+        if(style=="npc014"){
+            _ch_pos={"center":new Point(50.5,0),"left":new Point(0,0),"right":new Point(109,0)};
+        }
+
+        var pos:Point=new Point(_ch_pos[p].x,_ch_pos[p].y);
         character=new Image(texture);
         character.name=name;
         character.alpha=0;
-        character.x=ch_pos[p].x;
-        character.y=ch_pos[p].y;
+        character.x=pos.x;
+        character.y=pos.y;
         _target.addChild(character);
         display_container[name]=character;
 
@@ -502,17 +490,23 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
         DebugTrace.msg("ChatCommand.createPhotoMessage");
         photoframe = new PhotoMessage(target, onPhotoRemoved);
         photoframe.name = "photoframe";
-        //photoframe.x = Starling.current.stage.stageWidth / 2;
-        //photoframe.y = Starling.current.stage.stageHeight / 2;
 
         _target.addChild(photoframe);
 
     }
     private function onPhotoRemoved():void
     {
-        if(photoframe) {
-            photoframe.removeFromParent(true);
-            photoframe = null;
+        var tween:Tween=new Tween(photoframe,0.5,Transitions.EASE_OUT);
+        tween.onComplete=onPhotoFadeout;
+        tween.fadeTo(0);
+        Starling.juggler.add(tween);
+
+        function onPhotoFadeout():void{
+            Starling.juggler.removeTweens(photoframe);
+            if(photoframe) {
+                photoframe.removeFromParent(true);
+                photoframe = null;
+            }
         }
 
     }
@@ -531,7 +525,6 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
         location=src;
         var scene:Sprite=ViewsContainer.MainScene;
         scene_container=scene.getChildByName("scene_container") as Sprite;
-
         var dateSaved:String="Thu.2.Jun.2033|12";
         var dateStr:String=dateSaved.split("|")[1];
         day="Day";
@@ -565,15 +558,10 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
 
         DebugTrace.msg("SceneCommand.createBackground bgSrc="+bgSrc);
 
-
-        if(scene=="Story")
-        {
-
-            praseSceneDayNight();
-        }
-        else{
-            praseSceneDayNight()
-
+        var scene:String=location.split("Scene").join("");
+        var sceneIndex:Number=Config.daynightScene.indexOf(scene);
+        if(sceneIndex!=-1){
+            bgSrc=(bgSrc+day);
         }
 
         if(bgSrc=="ChangeFormationBg"){
@@ -583,18 +571,8 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
 
         var bgTexture:Texture=Assets.getTexture(bgSrc);
         bgSprtie=new Image(bgTexture);
-        //scene_container.addChild(bgSprtie);
         _target.addChild(bgSprtie);
 
-        function praseSceneDayNight():void{
-            //open at day or night
-            var scene:String=location.split("Scene").join("");
-            var sceneIndex:Number=Config.daynightScene.indexOf(scene);
-            if(sceneIndex!=-1){
-                bgSrc=(bgSrc+day);
-            }
-
-        }
 
     }
 

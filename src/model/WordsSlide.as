@@ -20,34 +20,32 @@ import starling.animation.Tween;
 			sentence=txt;
 			txtfield=txtf;
 			onCompleteSentance=callback;
-			startSlide()
+			startSlide();
 		
 		}
 		private function startSlide():void
 		{
 			
-		
-			//tween=new Tween(txtfield,0.002);
-			//tween.onComplete=onSlideNext;
-			//Starling.juggler.add(tween);
+
 
 			juggler = Starling.juggler;
-			juggler.delayCall(onSlideNext, 0.0001);
+			juggler.repeatCall(onSlideNext,0.008,sentence.length)
 
 		}
 		private function onSlideNext():void
 		{
-			juggler.removeTweens(onSlideNext);
+			//juggler.removeTweens(onSlideNext);
 			var current_txt:String=sentence.charAt(index);
 			txtfield.text+=current_txt;
 			if(index<sentence.length)
 			{
 				index++;
-				startSlide();
+
 			}
 			else
 			{
-				//Starling.juggler.removeTweens(txtfield);
+
+				juggler.removeTweens(onSlideNext);
 				onCompleteSentance();
 			}
 			//if

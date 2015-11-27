@@ -623,6 +623,7 @@ public class MainCommand implements MainInterface {
             reseatDatingCommandTimes();
             submitDailyReport();
             initCriminalsRecord();
+            initDailyUpgrade();
 
             var battleData:BattleData=new BattleData();
             battleData.checkBattleSchedule("BattleRanking","cpu_team");
@@ -2353,6 +2354,31 @@ public class MainCommand implements MainInterface {
 
 
         return ability
+    }
+
+    private function initDailyUpgrade():void{
+        var flox:FloxInterface = new FloxCommand();
+        var ch_cash:Object=flox.getSaveData("ch_cash");
+        var intObj:Object=flox.getSaveData("int");
+        var imgObj:Object=flox.getSaveData("image");
+        var cashRate:Object=Config.cashRate;
+        var intRate:Object=Config.intRate;
+        var imgRate:Object=Config.imgRate;
+        for(var ch:String in ch_cash){
+            if(ch!="player")
+            ch_cash[ch]+=cashRate[ch];
+        }
+        for(ch in intObj) {
+            if(ch!="player")
+            intObj[ch]+=intRate[ch];
+        }
+        for(ch in imgObj){
+            if(ch!="player")
+            imgObj[ch]+=imgRate[ch];
+        }
+        flox.save("ch_cash",ch_cash);
+        flox.save("int",intObj);
+        flox.save("image",imgObj);
     }
 
 }

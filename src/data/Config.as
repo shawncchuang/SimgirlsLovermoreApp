@@ -21,6 +21,12 @@ public class Config
     private static var authkey:String;
     public static var ExcerptFornt:String="SimFutura";
     public static const allCharacters:Array=["lenus","sirena","dea","sao","klr","tomoru","ceil","zack"];
+    public static const cashRate:Object={"lenus":100,
+        "sirena":35,"dea":38,"sao":5,"klr":45,"tomoru":25,"ceil":40,"zack":0};
+    public static const intRate:Object={"lenus":120,
+        "sirena":51,"dea":126,"sao":36,"klr":60,"tomoru":42,"ceil":27,"zack":0};
+    public static const imgRate:Object={"lenus":40,
+        "sirena":119,"dea":54,"sao":54,"klr":60,"tomoru":98,"ceil":63,"zack":0};
     //zack don't show up in somewhere
     public static const characters:Array=["lenus","sirena","dea","sao","klr","tomoru","ceil"];
     public static const datingCharacters:Array=["lenus","sirena","dea","zack","klr","tomoru","ceil"];
@@ -47,7 +53,8 @@ public class Config
         "themedpark_boy":"npc021",
         "museum":"npc022",
         "park_guy":"npc023",
-        "park_gal":"npc024"
+        "park_gal":"npc024",
+        "primero":"npc025"
     };
     //schedule [index+ current month]
     public static var scheduleIndex:Object={"lenus":88,"sirena":12,"dea":25,"sao":38,"klr":51,"tomoru":64,"ceil":77,"zack":38};
@@ -367,13 +374,13 @@ public class Config
             "ap_max":100,
             "dating":"",
             "ch_cash":{
-                lenus:100,
-                sirena:100,
-                dea:100,
-                sao:100,
-                klr:100,
-                tomoru:100,
-                ceil:100,
+                lenus:5000,
+                sirena:1750,
+                dea:1875,
+                sao:1000,
+                klr:2250,
+                tomoru:1250,
+                ceil:2000,
                 zack:1000000
             },
             "estate":{
@@ -548,26 +555,26 @@ public class Config
             },
             "image":{
                 player:100,
-                lenus: 0,
-                sirena:0,
-                dea: 0,
-                sao: 0,
-                klr: 0,
-                tomoru: 0,
+                lenus: 120,
+                sirena:357,
+                dea: 160,
+                sao: 162,
+                klr: 180,
+                tomoru: 294,
                 zack: 0,
-                ceil: 0
+                ceil: 189
             },
             "wealth":0,
             "int":{
                 player:100,
-                lenus: 100,
-                sirena:100,
-                dea: 100,
-                sao: 100,
-                klr: 100,
-                tomoru: 100,
+                lenus: 360,
+                sirena:153,
+                dea: 379,
+                sao: 108,
+                klr: 180,
+                tomoru: 126,
                 zack: 100,
-                ceil: 100
+                ceil: 81
             },
             "love":{
                 //love==Max se
