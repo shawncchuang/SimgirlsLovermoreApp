@@ -617,13 +617,13 @@ public class MainCommand implements MainInterface {
 
             //syncSpiritEnergy();
             reeseatDating();
-            // initStyleSechedule();
             setNowMood();
             praseOwnedAssets(1);
             reseatDatingCommandTimes();
             submitDailyReport();
             initCriminalsRecord();
             initDailyUpgrade();
+
 
             var battleData:BattleData=new BattleData();
             battleData.checkBattleSchedule("BattleRanking","cpu_team");
@@ -821,60 +821,59 @@ public class MainCommand implements MainInterface {
 
     }
 
-    public function initStyleSechedule():void {
+    public function initStyleSchedule():void {
 
         var suitup:Object = new Object();
         var characters:Array = Config.allCharacters;
         var flox:FloxInterface = new FloxCommand();
         var date:String = flox.getSaveData("date").split("|")[0];
         var styles:Object = flox.getSyetemData("style_schedule");
-        for (var j:uint = 0; j < characters.length; j++) {
-
-            var _name:String = characters[j];
-            var schedules:Array = styles[_name];
-            var style:String = "";
-
-            for (var i:uint = 0; i < schedules.length; i++) {
-
-                if (schedules[i].date == date) {
-
-                    style = schedules[i].src;
-                    break
-                }
-
+        var _name:String = DataContainer.currentDating;
+        var schedules:Array = styles[_name];
+        var style:String = "";
+        //skip special day style
+//            for (var i:uint = 0; i < schedules.length; i++) {
+//
+//                if (schedules[i].date == date) {
+//
+//                    style = schedules[i].src;
+//                    break
+//                }
+//
+//            }
+        var normalStyles:Object=Config.styles;
+        var scenes:Array=new Array();
+        var styleNames:Array=new Array();
+        var currentScene:String=DataContainer.currentScene;
+        var shortcutsScene:String=DataContainer.shortcutsScene;
+        var current_scene:String=currentScene.split("Scene").join("");
+        var scenesPoint:Object=Config.stagepoints;
+        if (style == "") {
+            //normal day ,depends on located
+            var scene_index:Number=scenes.indexOf(current_scene);
+            if(scene_index==-1){
+                styleNames=["casual1"];
+            }else{
+                styleNames=normalStyles[_name+"_"+current_scene];
             }
-            var normalStyles:Object=Config.styles;
-            var scenes:Array=new Array();
-            var styleNames:Array=new Array();
-            if (style == "") {
-                //normal day ,depends on located
-                var currentScene:String=DataContainer.currentScene;
-                var shortcutsScene:String=DataContainer.shortcutsScene;
-                var current_scene:String=currentScene.split("Scene").join("");
 
-                var scenesPoint:Object=Config.stagepoints;
-
-                for(var scene_name:String in scenesPoint){
-                    scenes.push(scene_name);
+            if(styleNames){
+                style=_name+"_"+styleNames[0];
+                if(styleNames.length>1){
+                    style=_name+"_"+styleNames[Math.floor(Math.random()*styleNames.length)];
                 }
-
-                var scene_index:Number=scenes.indexOf(current_scene);
-                if(scene_index==-1){
-                    styleNames=["casual1"];
-                }else{
-                    styleNames=normalStyles[_name+"_"+current_scene];
-                }
-
-                if(styleNames){
-                    style=_name+"_"+styleNames[0];
-                    if(styleNames.length>1){
-                        style=_name+"_"+styleNames[Math.floor(Math.random()*styleNames.length)];
-                    }
-                }
-
             }
-            //DebugTrace.msg("MainCommand.initStyleSechedule shortcutsScene="+shortcutsScene);
-            if(shortcutsScene=="ProfileScene"){
+            suitup[_name] = style;
+        }
+        //DebugTrace.msg("MainCommand.initStyleSechedule shortcutsScene="+shortcutsScene);
+        if(shortcutsScene=="ProfileScene"){
+            suitup = new Object();
+            for(var scene_name:String in scenesPoint){
+                scenes.push(scene_name);
+            }
+            for (var j:uint = 0; j < characters.length; j++) {
+
+                _name=characters[j];
                 styleNames=new Array();
                 styleNames=normalStyles[_name+"_"+scenes[Math.floor(Math.random()*scenes.length)]];
                 if(styleNames.length<1){
@@ -885,11 +884,11 @@ public class MainCommand implements MainInterface {
                     style=_name+"_"+styleNames[Math.floor(Math.random()*styleNames.length)];
                 }
                 // DebugTrace.msg("MainCommand.initStyleSechedule style="+style);
+                suitup[_name] = style;
             }
 
-            suitup[_name] = style;
         }
-        //DebugTrace.msg("MainCommand.initStyleSechedule suitup="+JSON.stringify(suitup));
+        DebugTrace.msg("MainCommand.initStyleSechedule suitup="+JSON.stringify(suitup));
         DataContainer.styleSechedule = suitup;
     }
 
@@ -2375,15 +2374,15 @@ public class MainCommand implements MainInterface {
         var imgRate:Object=Config.imgRate;
         for(var ch:String in ch_cash){
             if(ch!="player")
-            ch_cash[ch]+=cashRate[ch];
+                ch_cash[ch]+=cashRate[ch];
         }
         for(ch in intObj) {
             if(ch!="player")
-            intObj[ch]+=intRate[ch];
+                intObj[ch]+=intRate[ch];
         }
         for(ch in imgObj){
             if(ch!="player")
-            imgObj[ch]+=imgRate[ch];
+                imgObj[ch]+=imgRate[ch];
         }
         flox.save("ch_cash",ch_cash);
         flox.save("int",intObj);

@@ -126,7 +126,6 @@ public class DatingScene extends Scenes {
         mood = moodObj[dating];
 
         initLayout();
-
         var customAssets:CusomAssets=new CusomAssets();
         customAssets.checkRatingAssets();
     }
@@ -545,6 +544,7 @@ public class DatingScene extends Scenes {
         apPanel.addChild(apTxt);
         addChild(apPanel);
 
+        command.initStyleSchedule();
         updateAP();
         initCharacter();
         initTopicBar();
@@ -565,7 +565,8 @@ public class DatingScene extends Scenes {
 
     private function initCharacter():void {
 
-        command.initStyleSechedule();
+
+
         var dating:String = DataContainer.currentDating;
         var styleSechedule:Object=DataContainer.styleSechedule;
         var style:String = styleSechedule[dating];

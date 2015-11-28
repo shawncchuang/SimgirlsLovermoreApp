@@ -113,7 +113,7 @@ public class ProfileScene extends Scenes
         addChild(base_sprite);
         base_sprite.flatten();
 
-        command.initStyleSechedule();
+        command.initStyleSchedule();
 
         initLayout();
         initBaseModel();

@@ -18,7 +18,7 @@ public interface MainInterface
     function sceneDispatch(type:String,data:Object=null):void
 
     function initSceneLibrary():void
-    function initStyleSechedule():void
+    function initStyleSchedule():void
     function playBackgroudSound(src:String,st:SoundTransform=null):void
     function playSound(src:String,repeat:Number=0,st:SoundTransform=null):SoundChannel
     function stopBackgroudSound():void

@@ -1021,7 +1021,7 @@ public class AssetEmbeds
     public static const sirena_wedding:Class;
     [Embed(source="../../media/textures/characters/styles/sirena/work.png")]
     public static const sirena_work:Class;
-       [Embed(source="../../media/textures/characters/styles/sirena/extra1.png")]
+    [Embed(source="../../media/textures/characters/styles/sirena/extra1.png")]
     public static const sirena_extra1:Class;
     [Embed(source="../../media/textures/characters/styles/sirena/night.png")]
     public static const sirena_night:Class;

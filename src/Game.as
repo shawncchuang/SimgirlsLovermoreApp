@@ -216,7 +216,6 @@ public class Game extends Sprite
 		addChild(scene);
 
 		command.setNowMood();
-		command.initStyleSechedule();
 
 
 
