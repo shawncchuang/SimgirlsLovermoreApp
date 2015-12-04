@@ -58,6 +58,7 @@ public class DataContainer
     private static var criminalability:Object;
     private static var battlewinner:String;
     private static var shortcuts_noted:String;
+    private static var player_fullname:Object;
 
     public static function set AssetsId(ids:Array):void
     {
@@ -857,6 +858,12 @@ public class DataContainer
     public static function get shortcuts():String{
         return shortcuts_noted;
 
+    }
+    public static function set PlayerFullName(data:Object):void{
+        player_fullname=data;
+    }
+    public static function get PlayerFullName():Object{
+        return player_fullname;
     }
 
 }

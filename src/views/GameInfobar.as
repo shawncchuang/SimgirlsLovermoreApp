@@ -59,6 +59,7 @@ public class GameInfobar extends Sprite
     private var intTxt:TextField;
     private var honorTxt:TextField;
     private var loveTxt:TextField;
+    //private var proTxt:TextField;
     private var ypos:Number=53;
     private var diplaymc:Image;
     private var displayConvert:Image;
@@ -115,7 +116,7 @@ public class GameInfobar extends Sprite
 
 
         drawProfile();
-        showSavedProgress();
+        //showSavedProgress();
 
         showCommandDirections();
 
@@ -148,7 +149,7 @@ public class GameInfobar extends Sprite
 
         morebar.visible=true;
         player_icon.visible=true;
-        proTxt.visible=true;
+        //proTxt.visible=true;
 
         var current_dating:String=flox.getSaveData("dating");
         if(current_dating!=""){
@@ -189,8 +190,8 @@ public class GameInfobar extends Sprite
             dayImg.visible=false;
         }
 
-        var progress:Number=flox.getPlayerData("inGameProgress");
-        proTxt.text="No."+progress;
+        //var progress:Number=flox.getPlayerData("inGameProgress");
+        //proTxt.text="No."+progress;
 
     }
 
@@ -446,7 +447,7 @@ public class GameInfobar extends Sprite
         playerProfile();
 
     }
-    private var proTxt:TextField;
+
     private function playerProfile():void
     {
 
@@ -458,31 +459,19 @@ public class GameInfobar extends Sprite
         addChild(player_icon);
 
 
-
-
-//        var tween:Tween=new Tween(player_icon,0.5,Transitions.EASE_IN_OUT);
-//        tween.fadeTo(1);
-//        tween.onComplete=onProfileIconFadein;
-//        Starling.juggler.add(tween);
-
-
     }
-    private function showSavedProgress():void{
+//    private function showSavedProgress():void{
+//
+//        var progress:Number=flox.getPlayerData("inGameProgress");
+//        proTxt=new TextField(100,30,"",font,14,0xffffff,true);
+//        //proTxt.x=100;
+//        //proTxt.y=18;
+//        proTxt.hAlign="left";
+//        proTxt.vAlign="top";
+//        proTxt.text="No."+progress;
+//        addChild(proTxt);
+//    }
 
-        var progress:Number=flox.getPlayerData("inGameProgress");
-        proTxt=new TextField(100,30,"",font,14,0xffffff,true);
-        //proTxt.x=100;
-        //proTxt.y=18;
-        proTxt.hAlign="left";
-        proTxt.vAlign="top";
-        proTxt.text="No."+progress;
-        addChild(proTxt);
-    }
-    private function onProfileIconFadein():void{
-
-        Starling.juggler.removeTweens(player_icon);
-
-    }
     private function profileFadeout():void
     {
 
@@ -581,7 +570,7 @@ public class GameInfobar extends Sprite
                 var UIViews:Sprite=ViewsContainer.UIViews;
                 UIViews.visible=true;
                 player_icon.visible=false;
-                proTxt.visible=false;
+                //proTxt.visible=false;
                 if(current_dating){
                     dating_icon.visible=false;
                 }

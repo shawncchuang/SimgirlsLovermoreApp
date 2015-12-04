@@ -36,7 +36,8 @@ package views
 		private var part_index:uint=0;
 		private var diraction:Number=1;
 		private var texture_name:String;
-		public function CharacterBubble(type:String,index:uint,part:uint,point:Point,dir:Number)
+		private var onBubbleComplete:Function;
+		public function CharacterBubble(type:String,index:uint,part:uint,point:Point,dir:Number,callback:Function=null)
 		{
 			
 			scene=type;
@@ -44,6 +45,7 @@ package views
 			talk_index=index;
 			part_index=part;
 			diraction=dir;
+			onBubbleComplete=callback;
 			addBubble();
 			
 		}
@@ -119,6 +121,8 @@ package views
 		}
 		private function onBubbleDisplayed():void
 		{
+			if(onBubbleComplete)
+			onBubbleComplete();
 			Starling.juggler.removeTweens(bubble);
 			addBubbleTxt();
 		}
@@ -158,10 +162,10 @@ package views
 			switch(scene)
 			{
 				case "TarotReading":
-					var player:Object=DataContainer.player;
+					var fullname:Object=DataContainer.PlayerFullName;
 					if(re.indexOf("$$$")!=-1)
 					{
-						re=String(re.split("$$$").join(player.first_name));
+						re=String(re.split("$$$").join(fullname.first_name));
 					}
 					//if
 					break

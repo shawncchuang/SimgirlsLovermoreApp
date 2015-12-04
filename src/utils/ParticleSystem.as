@@ -85,7 +85,6 @@ public class ParticleSystem implements ParticleInterface
 		ps.maxNumParticles=maxNum;
 		ps.lifespan=lifespan;
 		ps.lifespanVariance=lifespanVariance;
-
 		Starling.juggler.add(ps);
 		_target.addChild(ps);
 	}

@@ -102,7 +102,7 @@ public class SceneCommnad implements SceneInterface
         // DebugTrace.msg("SceneCommand.init talks:"+talks);
 
         if(MenuScene.iconsname.indexOf(current)==-1 && current!="MenuScene"){
-           datingComCloudHandle();
+            datingComCloudHandle();
 
         }
 
@@ -113,7 +113,7 @@ public class SceneCommnad implements SceneInterface
 
         var library:Array=flox.getSyetemData("scenelibrary");
         talks=library[part_index];
-        DebugTrace.msg("SceneCommand.datingComCloudHandle library["+part_index+"]:"+talks);
+        //DebugTrace.msg("SceneCommand.datingComCloudHandle library["+part_index+"]:"+talks);
 
         var dating:String=flox.getSaveData("dating");
         DebugTrace.msg("SceneCommand.datingComCloudHandle dating="+dating);
@@ -162,41 +162,35 @@ public class SceneCommnad implements SceneInterface
 
             }
         }
-        DebugTrace.msg("SceneCommand.datingHandle talks:"+talks);
+        //DebugTrace.msg("SceneCommand.datingHandle talks:"+talks);
 
 
     }
     public function start():void
     {
-        addTouchArea();
+
+        if(scene!="CharacterDesignScene")
+            addTouchArea();
         showChat();
+
 
     }
     private function addTouchArea():void
     {
         DebugTrace.msg("SceneCommand.addTouchArea");
-        var currentScene:Sprite=ViewsContainer.currentScene;
-        //var texture:Texture=Assets.getTexture("Whitebg");
-        var w:Number=Starling.current.stage.stageWidth;
-        var h:Number=Starling.current.stage.stageHeight;
-        var quad:Quad=new Quad(w,h,0x000000);
 
-        hitArea=new Sprite();
-        hitArea.addChild(quad);
-        _target.addChild(hitArea);
+        Starling.current.stage.addEventListener(TouchEvent.TOUCH,onChatSceneTouched);
 
-        _target.addEventListener(TouchEvent.TOUCH,onChatSceneTouched);
     }
 
     private function onChatSceneTouched(e:TouchEvent):void
     {
 
-        var target:Sprite=e.currentTarget as Sprite;
-        //DebugTrace.msg("SceneCommand.onChatSceneTouched name:"+target.name);
-
-        var BEGAN:Touch = e.getTouch(target, TouchPhase.BEGAN);
-        if(BEGAN)
+        var BEGAN:Touch = e.getTouch( Starling.current.stage, TouchPhase.BEGAN);
+        // var HOVER:Touch = e.getTouch( Starling.current.stage, TouchPhase.HOVER);
+        if(BEGAN && BEGAN.target.name !="previousbtn")
         {
+            //disableAll();
             onTouchedScene();
         }
 
@@ -215,19 +209,19 @@ public class SceneCommnad implements SceneInterface
                 bubble.removeFromParent(true);
                 bubble=null;
             }
-            //if
             showChat();
         }
         else
         {
             //finish current part
-            DebugTrace.msg("SceneCommand finished");
+             DebugTrace.msg("SceneCommand finished");
             if(scene=="Story"){
                 doClearAll();
-                disableAll();
+
             }
             if(finishedcallback)
-            finishedcallback();
+                finishedcallback();
+            disableAll();
         }
         //if
 
@@ -247,11 +241,6 @@ public class SceneCommnad implements SceneInterface
                 talkmask=null;
             }
         }
-//        if(photoframe){
-//
-//            photoframe.removeFromParent(true);
-//            photoframe=null;
-//        }
         if(talkfield)
         {
             talkfield.removeFromParent(true);
@@ -323,7 +312,7 @@ public class SceneCommnad implements SceneInterface
                     target+="_"+act.split("_")[2];
             }
             if(todo=="move" || todo=="remove"){
-                if(act.split("_").length>2){
+                if(act.split("_").length>3){
                     // characters
                     target+="_"+act.split("_")[2];
                 }
@@ -341,7 +330,6 @@ public class SceneCommnad implements SceneInterface
                         //_target.removeChild(display_container[target]);
                         display_container[target]=null;
                     }
-
                     break
                 case "display":
                     createCharacter(target,pos);
@@ -354,7 +342,6 @@ public class SceneCommnad implements SceneInterface
                     break
                 case "photo-off":
                     onPhotoRemoved();
-
                     break
                 case "music-on":
                     command.playBackgroudSound(target);
@@ -405,21 +392,6 @@ public class SceneCommnad implements SceneInterface
     {
 
 
-        if(!talkmask)
-        {
-            talkmask=new MyTalkingDisplay();
-            talkmask.addMask();
-            _target.addChild(talkmask);
-
-            try
-            {
-                _target.swapChildren(talkmask,photoframe);
-            }
-            catch(e:Error){
-
-            }
-        }
-        //if
         createTalkField();
 
 
@@ -430,9 +402,13 @@ public class SceneCommnad implements SceneInterface
         var scentance:String=talks[talk_index];
         scentance=scentance.split("<>").join(",");
         scentance=scentance.split("player|").join("");
-        talkfield.addTextField(scentance);
+        talkfield.addTextField(scentance,onTalkingComplete);
         _target.addChild(talkfield);
         display_container.player=talkfield;
+    }
+    private function onTalkingComplete():void{
+        DebugTrace.msg("SceneCommand.onTalkingComplete");
+
     }
     public function createBubble(comlists:Array):void
     {
@@ -463,6 +439,11 @@ public class SceneCommnad implements SceneInterface
         bubble.y=new_pos.y;
         _target.addChild(bubble);
 
+
+    }
+    private function onBubbleComplete():void{
+
+        addTouchArea();
     }
     public function createCharacter(name:String,p:String):void
     {
@@ -529,31 +510,23 @@ public class SceneCommnad implements SceneInterface
 
     private function onMovingComplete():void
     {
+
         Starling.juggler.remove(moving_tween);
     }
     private function createPhotoMessage(target:String):void {
         DebugTrace.msg("ChatCommand.createPhotoMessage");
-        photoframe = new PhotoMessage(target, onPhotoRemoved);
+        photoframe = new PhotoMessage(target);
         photoframe.name = "photoframe";
-
         _target.addChild(photoframe);
 
     }
+
     private function onPhotoRemoved():void
     {
-        var tween:Tween=new Tween(photoframe,0.5,Transitions.EASE_OUT);
-        tween.onComplete=onPhotoFadeout;
-        tween.fadeTo(0);
-        Starling.juggler.add(tween);
-
-        function onPhotoFadeout():void{
-            Starling.juggler.removeTweens(photoframe);
-            if(photoframe) {
-                photoframe.removeFromParent(true);
-                photoframe = null;
-            }
+        if(photoframe) {
+            photoframe.removeFromParent(true);
+            photoframe = null;
         }
-
     }
     private function displayVideo(src:String):void
     {
@@ -618,17 +591,16 @@ public class SceneCommnad implements SceneInterface
         bgSprtie=new Image(bgTexture);
         _target.addChild(bgSprtie);
 
-
     }
 
     public function addDisplayContainer(src:String):void
     {
         DebugTrace.msg("SceneCommand.addDisplayContainer src:"+src+" ; scene:"+scene);
+        //preview skip QA
         command.addDisplayObj(scene,src);
         if(_target)
         {
-            //_target.removeEventListener(TouchEvent.TOUCH,onChatSceneTouched);
-            //disableAll();
+
             var src_index:Number=src.indexOf("ComCloud");
             //DebugTrace.msg("SceneCommand.addDisplayContainer src_index:"+src_index);
             var scene_index:Number=scene.indexOf("Scene");
@@ -640,6 +612,7 @@ public class SceneCommnad implements SceneInterface
                     //no command cloud , incloud xxxxScene
                     switch(src)
                     {
+                        case "TarotCards":
                         case "QA_nickname":
                         case "QA_airplane-phonenumber":
                             disableAll();
@@ -651,14 +624,10 @@ public class SceneCommnad implements SceneInterface
 
                 }else{
 
-                    disableAll()
+                    //disableAll()
                 }
             }
-            else
-            {
-                disableAll();
-            }
-            //if
+
         }
 
     }
@@ -709,23 +678,8 @@ public class SceneCommnad implements SceneInterface
     {
 
         DebugTrace.msg("SceneCommand.disableAll hitArea");
-//        try
-//        {
-//            scene_sprite.removeEventListener(TouchEvent.TOUCH,onChatSceneTouched);
-//        }
-//        catch(e:Error)
-//        {
-//            DebugTrace.msg("SceneCommand.disableAll scene_sprite NUll");
-//        }
-        try
-        {
-            hitArea.removeFromParent(true);
-        }
-        catch(e:Error)
-        {
-            DebugTrace.msg("SceneCommand.disableAll hitArea NUll");
-        }
-        //_target.removeChild(hitArea)
+
+        Starling.current.stage.removeEventListener(TouchEvent.TOUCH,onChatSceneTouched);
     }
     public function enableTouch():void
     {
@@ -750,8 +704,8 @@ public class SceneCommnad implements SceneInterface
         switchID=flox.getSaveData("current_switch").split("|")[0];
 
         var next_switch:String=flox.getSaveData("next_switch");
-        DebugTrace.msg("SceneCommand.switchGateway switchID="+switchID);
-        DebugTrace.msg("SceneCommand.switchGateway next_switch="+next_switch);
+        //DebugTrace.msg("SceneCommand.switchGateway switchID="+switchID);
+        //DebugTrace.msg("SceneCommand.switchGateway next_switch="+next_switch);
         switchID=next_switch;
         var switchs:Object=flox.getSyetemData("switchs");
         scene=DataContainer.currentScene;
@@ -792,8 +746,8 @@ public class SceneCommnad implements SceneInterface
             var _month:String=_date.split(".")[2];
             var switch_day:Number=Number(switch_date.split(".")[1]);
             var switch_mon:String=switch_date.split(".")[2];
-            trace("SceneCommand.switchGateway _day="+_day);
-            trace("SceneCommand.switchGateway switch_day="+switch_day);
+            DebugTrace.msg("SceneCommand.switchGateway _day="+_day);
+            DebugTrace.msg("SceneCommand.switchGateway switch_day="+switch_day);
             if(switch_day==Number(_day) && switch_mon==_month)
             {
 
@@ -843,7 +797,6 @@ public class SceneCommnad implements SceneInterface
             verify=true;
             ViewsContainer.gameinfo.visible=false;
 
-            clearCommandCloud();
             doClearAll();
             part=Number(switchID.split("s").join(""))-1;
             initStory(callback);
@@ -890,7 +843,7 @@ public class SceneCommnad implements SceneInterface
     private var switchIDlist:Array;
     public function initStory(finshed:Function=null):void
     {
-        _target=scene_sprite;
+        //_target=scene_sprite;
         talk_index=0;
         scene="Story";
         display_container=new Object();
@@ -911,40 +864,57 @@ public class SceneCommnad implements SceneInterface
     }
     public function onStoryFinished():void
     {
-        DebugTrace.msg("SceneCommand.onStoryComplete switchIDlist="+switchIDlist);
+        DebugTrace.msg("SceneCommand.onStoryComplete");
+    }
+    private function nextStoryPart():void{
 
-        var next_switch:String="";
-        //var current_switch:String=flox.getSaveData("current_switch").split("|")[0];
-        switchID=flox.getSaveData("next_switch").split("|")[0];
+        doClearAll();
+        talk_index=0;
+        display_container=new Object();
+        part_index++;
+        var previewStory:Array=DataContainer.previewStory;
 
+        if(part_index>previewStory.length-1){
 
-        var current_index:Number=switchIDlist.indexOf(switchID);
-        current_index++;
-        if(current_index<switchIDlist.length)
-        {
-            next_switch=switchIDlist[current_index];
+            part_index=0;
         }
-        DebugTrace.msg("SceneCommand.onStoryComplete switchID="+switchID);
-        DebugTrace.msg("SceneCommand.onStoryComplete next_switch="+next_switch);
-
-        flox.save("next_switch",next_switch,onUpdatedNextSwitch);
-
-        disableAll();
-        var _data:Object=new Object();
-        _data.name=DataContainer.currentScene;
-        command.sceneDispatch(SceneEvent.CHANGED,_data);
-        ViewsContainer.gameinfo.visible=true;
+        talks=previewStory[part_index];
+        DebugTrace.msg("SceneCommand.nextStoryPart talks="+talks);
+        showChat();
     }
-    private function onUpdatedNextSwitch():void
-    {
-        updateCurrentSwitch();
-    }
-    private function clearCommandCloud():void
-    {
+    public function prevStoryStep():void{
 
-        var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
-        gameEvent._name="clear_comcloud";
-        gameEvent.displayHandler();
+        talk_index--;
+        display_container=new Object();
+
+        if(bubble)
+        {
+            bubble.removeFromParent(true);
+            bubble=null;
+        }
+        var previewStory:Array=DataContainer.previewStory;
+        if(talk_index<0){
+            talk_index=0;
+            part_index--;
+            if(part_index<0){
+                part_index=0;
+            }
+
+        }
+//        talks=new Array();
+//        for(var i:uint=0;i<previewStory[part_index].length;i++){
+//            talks.push(previewStory[part_index][i])
+//        }
+        talks=previewStory[part_index];
+        //DebugTrace.msg("PreviewStroyCoommand.prevStoryStep talks["+talk_index+"]="+talks[talk_index]);
+
+        if(character){
+            character.removeFromParent();
+
+        }
+
+        showChat();
     }
+
 }
 }

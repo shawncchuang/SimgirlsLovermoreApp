@@ -14,6 +14,7 @@ import events.SceneEvent;
 import feathers.controls.ImageLoader;
 
 import feathers.controls.LayoutGroup;
+import feathers.events.FeathersEventType;
 
 import feathers.layout.TiledRowsLayout;
 
@@ -123,6 +124,7 @@ public class PreciousPhotosScene extends Sprite{
         imgloader.alpha=0;
         imgloader.source=domainPath+file+".jpg";
         imgloader.addEventListener(Event.COMPLETE, onPhotoLoadedComplete);
+
         photo.addChild(imgloader);
 
         this.addChild(photo);
@@ -135,7 +137,6 @@ public class PreciousPhotosScene extends Sprite{
         tween.fadeTo(1);
         Starling.juggler.add(tween);
     }
-
     private function onPhotoLoadedComplete(e:Event):void{
 
         preload.removeFromParent(true);

@@ -33,7 +33,7 @@ import starling.events.Event;
 	{
 		//private var alertframe:Image;
 		private var btn:Button;
-		private var onRemoved:Function;
+		private var onPhotoComplete:Function;
 		private var photosloader:ImageLoader;
 		private var domainPath:String;
 		private var photo:Sprite;
@@ -41,7 +41,7 @@ import starling.events.Event;
 		{
 
 
-			onRemoved=callback;
+			onPhotoComplete=callback;
 			DebugTrace.msg("PhotoMessage  target="+target);
 
 
@@ -69,8 +69,10 @@ import starling.events.Event;
 		}
 		private function onAlertMessageFadeIn():void
 		{
-			//btn.visible=true;
+			if(onPhotoComplete)
+			onPhotoComplete();
 			Starling.juggler.removeTweens(photosloader);
+
 			
 		}
 //		private function onTouchAlertFrame(e:Event):void

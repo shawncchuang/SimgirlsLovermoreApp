@@ -10,6 +10,7 @@ import flash.geom.Point;
 import starling.animation.Transitions;
 import starling.animation.Tween;
 import starling.core.Starling;
+import starling.display.Button;
 
 import starling.display.Image;
 import starling.display.Quad;
@@ -103,7 +104,7 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
         talks=story[part_index];
         DataContainer.previewStory=story;
 
-        DebugTrace.msg("PreviewStoryCommand.init talks:"+talks.length);
+        DebugTrace.msg("PreviewStoryCommand.init story:"+JSON.stringify(story));
 
         if(MenuScene.iconsname.indexOf(current)==-1 && current!="MenuScene"){
             //var loaderdata:LoaderRequest=new LoaderRequest();
@@ -128,30 +129,23 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
     private function addTouchArea():void
     {
         DebugTrace.msg("PreviewStoryCommand.addTouchArea");
-        var currentScene:Sprite=ViewsContainer.currentScene;
-        //var texture:Texture=Assets.getTexture("Whitebg");
-        var w:Number=Starling.current.stage.stageWidth;
-        var h:Number=Starling.current.stage.stageHeight;
-        var quad:Quad=new Quad(w,h,0x000000);
 
-        hitArea=new Sprite();
-        hitArea.addChild(quad);
-        _target.addChild(hitArea);
+        Starling.current.stage.addEventListener(TouchEvent.TOUCH,onChatSceneTouched);
 
-        _target.addEventListener(TouchEvent.TOUCH,onChatSceneTouched);
     }
 
     private function onChatSceneTouched(e:TouchEvent):void
     {
 
-        var target:Sprite=e.currentTarget as Sprite;
-        //DebugTrace.msg("PreviewStoryCommand.onChatSceneTouched name:"+target.name);
 
-        var BEGAN:Touch = e.getTouch(target, TouchPhase.BEGAN);
-        if(BEGAN)
+        var BEGAN:Touch = e.getTouch( Starling.current.stage, TouchPhase.BEGAN);
+       // var HOVER:Touch = e.getTouch( Starling.current.stage, TouchPhase.HOVER);
+        if(BEGAN && BEGAN.target.name !="previousbtn")
         {
+            disableAll();
             onTouchedScene();
         }
+
 
 
     }
@@ -176,7 +170,6 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
             //finish current part
             DebugTrace.msg("PreviewStoryCommand finished");
             doClearAll();
-            //disableAll();
             nextStoryPart();
             if(finishedcallback)
                 finishedcallback();
@@ -199,11 +192,6 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
                 talkmask=null;
             }
         }
-//        if(photoframe){
-//
-//            photoframe.removeFromParent(true);
-//            photoframe=null;
-//        }
         if(talkfield)
         {
             talkfield.removeFromParent(true);
@@ -275,7 +263,7 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
                     target+="_"+act.split("_")[2];
             }
             if(todo=="move" || todo=="remove"){
-                if(act.split("_").length>2){
+                if(act.split("_").length>3){
                     // characters
                     target+="_"+act.split("_")[2];
                 }
@@ -293,7 +281,7 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
                         //_target.removeChild(display_container[target]);
                         display_container[target]=null;
                     }
-
+                    addTouchArea();
                     break
                 case "display":
                     createCharacter(target,pos);
@@ -306,15 +294,17 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
                     break
                 case "photo-off":
                     onPhotoRemoved();
-
                     break
                 case "music-on":
+                    addTouchArea();
                     command.playBackgroudSound(target);
                     break
                 case "music-off":
+                    addTouchArea();
                     command.stopBackgroudSound();
                     break
                 case "sfx":
+                    addTouchArea();
                     command.playSound(target);
                     break
                 case "video":
@@ -360,21 +350,21 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
     {
 
 
-        if(!talkmask)
-        {
-            talkmask=new MyTalkingDisplay();
-            talkmask.addMask();
-            _target.addChild(talkmask);
-
-            try
-            {
-                _target.swapChildren(talkmask,photoframe);
-            }
-            catch(e:Error){
-
-            }
-        }
-        //if
+//        if(!talkmask)
+//        {
+//            talkmask=new MyTalkingDisplay();
+//            talkmask.addMask();
+//            _target.addChild(talkmask);
+//
+//            try
+//            {
+//                _target.swapChildren(talkmask,photoframe);
+//            }
+//            catch(e:Error){
+//
+//            }
+//        }
+//        //if
         createTalkField();
 
 
@@ -385,9 +375,13 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
         var scentance:String=talks[talk_index];
         scentance=scentance.split("<>").join(",");
         scentance=scentance.split("player|").join("");
-        talkfield.addTextField(scentance);
+        talkfield.addTextField(scentance,onTalkingComplete);
         _target.addChild(talkfield);
         display_container.player=talkfield;
+    }
+    private function onTalkingComplete():void{
+        DebugTrace.msg("SceneCommand.onTalkingComplete");
+        addTouchArea();
     }
     public function createBubble(comlists:Array):void
     {
@@ -413,11 +407,16 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
             dir=-1;
         }
         var new_pos:Point=new Point(bubble_pos[_pos].x,bubble_pos[_pos].y);
-        bubble=new CharacterBubble(scene,talk_index,part_index,new_pos,dir);
+        bubble=new CharacterBubble(scene,talk_index,part_index,new_pos,dir,onBubbleComplete);
         bubble.x=new_pos.x;
         bubble.y=new_pos.y;
         _target.addChild(bubble);
 
+
+    }
+    private function onBubbleComplete():void{
+
+        addTouchArea();
     }
     public function createCharacter(name:String,p:String):void
     {
@@ -469,6 +468,7 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
     }
     private function onCharacterDisplayed():void
     {
+        addTouchArea();
         Starling.juggler.removeTweens(character);
     }
     public function movingCharacter(target:String,dir:String):void
@@ -484,31 +484,36 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
 
     private function onMovingComplete():void
     {
+        addTouchArea();
         Starling.juggler.remove(moving_tween);
     }
     private function createPhotoMessage(target:String):void {
         DebugTrace.msg("ChatCommand.createPhotoMessage");
-        photoframe = new PhotoMessage(target, onPhotoRemoved);
+        photoframe = new PhotoMessage(target, onPhotoComplete);
         photoframe.name = "photoframe";
-
         _target.addChild(photoframe);
 
     }
+    private function onPhotoComplete():void{
+        addTouchArea();
+    }
     private function onPhotoRemoved():void
     {
-        var tween:Tween=new Tween(photoframe,0.5,Transitions.EASE_OUT);
-        tween.onComplete=onPhotoFadeout;
-        tween.fadeTo(0);
-        Starling.juggler.add(tween);
+//        var tween:Tween=new Tween(photoframe,0.5,Transitions.EASE_OUT);
+//        tween.onComplete=onPhotoFadeout;
+//        tween.fadeTo(0);
+//        Starling.juggler.add(tween);
+        onPhotoFadeout();
 
-        function onPhotoFadeout():void{
-            Starling.juggler.removeTweens(photoframe);
-            if(photoframe) {
-                photoframe.removeFromParent(true);
-                photoframe = null;
-            }
+    }
+    private function onPhotoFadeout():void{
+
+        addTouchArea();
+        //Starling.juggler.removeTweens(photoframe);
+        if(photoframe) {
+            photoframe.removeFromParent(true);
+            photoframe = null;
         }
-
     }
     private function displayVideo(src:String):void
     {
@@ -573,7 +578,7 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
         bgSprtie=new Image(bgTexture);
         _target.addChild(bgSprtie);
 
-
+        addTouchArea();
     }
 
     public function addDisplayContainer(src:String):void
@@ -596,6 +601,7 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
                     //no command cloud , incloud xxxxScene
                     switch(src)
                     {
+                        case "TarotCards":
                         case "QA_nickname":
                         case "QA_airplane-phonenumber":
                             disableAll();
@@ -666,23 +672,8 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
     {
 
         DebugTrace.msg("SceneCommand.disableAll hitArea");
-//        try
-//        {
-//            scene_sprite.removeEventListener(TouchEvent.TOUCH,onChatSceneTouched);
-//        }
-//        catch(e:Error)
-//        {
-//            DebugTrace.msg("SceneCommand.disableAll scene_sprite NUll");
-//        }
-        try
-        {
-            hitArea.removeFromParent(true);
-        }
-        catch(e:Error)
-        {
-            DebugTrace.msg("SceneCommand.disableAll hitArea NUll");
-        }
-        //_target.removeChild(hitArea)
+
+        Starling.current.stage.removeEventListener(TouchEvent.TOUCH,onChatSceneTouched);
     }
     public function enableTouch():void
     {
@@ -758,7 +749,7 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
         showChat();
     }
     public function prevStoryStep():void{
-        //doClearAll();
+
         talk_index--;
         display_container=new Object();
 

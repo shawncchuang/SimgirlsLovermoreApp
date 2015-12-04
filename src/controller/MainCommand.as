@@ -1,5 +1,7 @@
 package controller {
 
+import com.greensock.TimelineLite;
+import com.greensock.TweenLite;
 import com.greensock.TweenMax;
 import com.greensock.events.LoaderEvent;
 import com.greensock.loading.LoaderMax;
@@ -46,6 +48,8 @@ import model.SystemData;
 
 import services.LoaderRequest;
 
+import starling.animation.DelayedCall;
+
 import starling.animation.Juggler;
 
 import starling.animation.Transitions;
@@ -70,9 +74,11 @@ import utils.DrawManager;
 import utils.ViewsContainer;
 
 import views.AlertMessage;
+import views.CommandCloud;
 
 import views.FloxManagerView;
 import views.DatingScene;
+import views.PopupManager;
 import views.RandomBattlePopup;
 import views.Reward;
 
@@ -137,9 +143,17 @@ public class MainCommand implements MainInterface {
         switch (target) {
             case "ComCloud":
 
-                gameEvent.data = txt;
-                gameEvent._name = "comcloud";
-                gameEvent.displayHandler();
+                //gameEvent.data = txt;
+                //gameEvent._name = "comcloud";
+                //gameEvent.displayHandler();
+
+                    var curreent_scene:Sprite=ViewsContainer.currentScene;
+                    var comcloud:Sprite=new CommandCloud(txt);
+					curreent_scene.addChild(comcloud);
+                    var clouds:Array=ViewsContainer.CurrentClouds;
+                    clouds.push(comcloud);
+                    ViewsContainer.CurrentClouds=clouds;
+
                 break
         }
         switch (style) {
@@ -208,8 +222,8 @@ public class MainCommand implements MainInterface {
         var loaderReq:LoaderRequest = new LoaderRequest();
         loaderReq.setLoaderQueue("attention", "../swf/attention.swf", topview, onAttentionComplete);
 
-        var command:MainInterface = new MainCommand();
-        command.playSound("ErrorSound");
+        //var command:MainInterface = new MainCommand();
+        playSound("ErrorSound");
 
     }
 
@@ -224,8 +238,8 @@ public class MainCommand implements MainInterface {
             attMC.msg.text = att_msg;
             attMC.mouseChildren = false;
             attMC.addEventListener(MouseEvent.CLICK, doColseAttention);
-            //attMC.alpha=0;
-            //TweenMax.to(attMC,0.5,{alpha:1});
+
+
         }
         catch (e:Error) {
             DebugTrace.msg("MainCommand.onAttentionComplete swfloader ERROR");
@@ -246,7 +260,7 @@ public class MainCommand implements MainInterface {
 
     private function doColseAttention(e:MouseEvent):void {
 
-        TweenMax.killTweensOf(e.target);
+
         //TweenMax.to(e.target,0.5,{alpha:0,onComplete:onAttentionFadout});
         LoaderMax.getLoader("attention").unload();
 
@@ -255,6 +269,16 @@ public class MainCommand implements MainInterface {
             LoaderMax.getLoader("attention").unload();
 
         }
+    }
+    public function showSaveError(attr:String,data:*,msg:String):void{
+
+        var popup:PopupManager=new PopupManager();
+        popup.attr=attr;
+        popup.data=data;
+        popup.msg=msg;
+        popup.init();
+
+
     }
 
     public static function addAlertMsg(msg:String):void {
@@ -317,7 +341,7 @@ public class MainCommand implements MainInterface {
         alertmsg.alpha = 0;
         topview.addChild(alertmsg);
 
-        TweenMax.to(alertmsg, 0.5, {alpha: 1});
+        TweenLite.to(alertmsg, 0.5, {alpha: 1});
 
         //
     }
@@ -473,43 +497,45 @@ public class MainCommand implements MainInterface {
         //DebugTrace.msg("playBackgroudSound:"+src);
         //var assets:Assets=new Assets();
         //assets.initMusicAssetsManager(src);
-        bgsound_channel = Assets.MusicManager.playSound(src, 0, 1000, st);
-        //bgsound_channel.stop();
+        var mute:Boolean = SoundController.Mute;
+        if(!mute){
+            bgsound_channel = Assets.MusicManager.playSound(src, 0, 1000, st);
+
+        }
 
     }
-
+    private var bgSoundTween:TweenMax;
     public function stopBackgroudSound():void {
 
-        //var sound_channel:SoundChannel=Assets.MusicChannel;
-        var sound_channel:SoundChannel = BgSoundChannel;
-        sound_channel.stop();
-        try {
-            //Assets.music_manager.removeSound("")
 
-
+        if(bgsound_channel)
+        {
+            bgSoundTween=new TweenMax(bgsound_channel,1,{volume:0,onComplete:stopBgSound});
         }
-        catch (errot:Error) {
-            DebugTrace.msg("none sound_channel")
+        function stopBgSound():void{
+            TweenMax.killTweensOf(bgSoundTween);
+            bgsound_channel.stop();
         }
 
     }
-
     public function playSound(src:String, repeat:Number = 0, st:SoundTransform = null):SoundChannel {
 
 
         var mute:Boolean = SoundController.Mute;
 
         if (!mute) {
-            sound_channel = new SoundChannel();
+
             sound_channel = Assets.SoundManager.playSound(src, 0, repeat, st);
 
         }
-        return sound_channel
+        return sound_channel;
+
     }
 
-    public function stopSound():void {
+    public function stopSound(name:String):void {
 
-        //sound_channel.stop();
+
+        sound_channel.stop();
     }
 
     public function verifySwitch():Boolean {
@@ -582,7 +608,7 @@ public class MainCommand implements MainInterface {
                 new DataContainer().initChacacterLikeScene();
 
                 praseOwnedAssets(stay_days);
-                reeseatDating();
+                reseatDating();
                 break
 
         }
@@ -615,19 +641,39 @@ public class MainCommand implements MainInterface {
         healSpiritEngine();
         if (overday) {
 
-            //syncSpiritEnergy();
-            reeseatDating();
-            setNowMood();
-            praseOwnedAssets(1);
-            reseatDatingCommandTimes();
-            submitDailyReport();
-            initCriminalsRecord();
-            initDailyUpgrade();
 
 
-            var battleData:BattleData=new BattleData();
-            battleData.checkBattleSchedule("BattleRanking","cpu_team");
+            var dc1:DelayedCall= new DelayedCall(reseatDating,0.5);
+            var dc2:DelayedCall= new DelayedCall(setNowMood,1);
+            var dc3:DelayedCall= new DelayedCall(praseOwnedAssets,1,[1]);
+            var dc4:DelayedCall= new DelayedCall(reseatDatingCommandTimes,2);
+            var dc5:DelayedCall= new DelayedCall(submitDailyReport,2);
+            var dc6:DelayedCall= new DelayedCall(initCriminalsRecord,3);
+            var dc7:DelayedCall= new DelayedCall(initDailyUpgrade,3);
+            var dc8:DelayedCall= new DelayedCall(praseBattleSchedule,5);
 
+            Starling.juggler.add(dc1);
+            Starling.juggler.add(dc2);
+            Starling.juggler.add(dc3);
+            Starling.juggler.add(dc4);
+            Starling.juggler.add(dc5);
+            Starling.juggler.add(dc6);
+            Starling.juggler.add(dc7);
+            Starling.juggler.add(dc8);
+
+            function praseBattleSchedule():void{
+                var battleData:BattleData=new BattleData();
+                battleData.checkBattleSchedule("BattleRanking","cpu_team");
+
+                Starling.juggler.remove(dc1);
+                Starling.juggler.remove(dc2);
+                Starling.juggler.remove(dc3);
+                Starling.juggler.remove(dc4);
+                Starling.juggler.remove(dc5);
+                Starling.juggler.remove(dc6);
+                Starling.juggler.remove(dc7);
+                Starling.juggler.remove(dc8);
+            }
 
         }
 
@@ -819,9 +865,11 @@ public class MainCommand implements MainInterface {
         }
         flox.save("mood", moods);
 
+
+
     }
 
-    public function initStyleSchedule():void {
+    public function initStyleSchedule(callback:Function=null):void {
 
         var suitup:Object = new Object();
         var characters:Array = Config.allCharacters;
@@ -831,16 +879,6 @@ public class MainCommand implements MainInterface {
         var _name:String = DataContainer.currentDating;
         var schedules:Array = styles[_name];
         var style:String = "";
-        //skip special day style
-//            for (var i:uint = 0; i < schedules.length; i++) {
-//
-//                if (schedules[i].date == date) {
-//
-//                    style = schedules[i].src;
-//                    break
-//                }
-//
-//            }
         var normalStyles:Object=Config.styles;
         var scenes:Array=new Array();
         var styleNames:Array=new Array();
@@ -848,6 +886,9 @@ public class MainCommand implements MainInterface {
         var shortcutsScene:String=DataContainer.shortcutsScene;
         var current_scene:String=currentScene.split("Scene").join("");
         var scenesPoint:Object=Config.stagepoints;
+        for(var scene_name:String in scenesPoint){
+            scenes.push(scene_name);
+        }
         if (style == "") {
             //normal day ,depends on located
             var scene_index:Number=scenes.indexOf(current_scene);
@@ -868,9 +909,7 @@ public class MainCommand implements MainInterface {
         //DebugTrace.msg("MainCommand.initStyleSechedule shortcutsScene="+shortcutsScene);
         if(shortcutsScene=="ProfileScene"){
             suitup = new Object();
-            for(var scene_name:String in scenesPoint){
-                scenes.push(scene_name);
-            }
+
             for (var j:uint = 0; j < characters.length; j++) {
 
                 _name=characters[j];
@@ -890,6 +929,10 @@ public class MainCommand implements MainInterface {
         }
         DebugTrace.msg("MainCommand.initStyleSechedule suitup="+JSON.stringify(suitup));
         DataContainer.styleSechedule = suitup;
+
+        if(callback){
+            callback();
+        }
     }
 
     public function updateRelationship():void {
@@ -1376,22 +1419,23 @@ public class MainCommand implements MainInterface {
         var cash:Number = flox.getSaveData("cash");
         var ap:Number = flox.getSaveData("ap");
         var image:Number = flox.getSaveData("image").player;
-        var playerInt:Number = flox.getSaveData("int").player;
+        var int:Number = flox.getSaveData("int").player;
+        var love:Number=flox.getSaveData("love").player;
 
         var income:Number = 0;
         var rate:Number = 1+Number(((Math.floor(Math.random() * 100)+1) / 100).toFixed(2));
         switch (scene) {
             case "NightclubScene":
-                income = Math.floor(image / 4 * rate);
+                income = Math.floor(image / 2 * rate);
                 break
             case "BankScene":
-                income = Math.floor(playerInt / 3 * rate);
+                income = Math.floor(int / 1.5 * rate);
                 break
             case "ThemedParkScene":
-                income = 100;
+                income = 200+Math.floor(love * rate);
                 break
         }
-        income*=2;
+        //income*=2;
         cash += income;
         flox.save("cash", cash);
 
@@ -1495,8 +1539,9 @@ public class MainCommand implements MainInterface {
     public function showCommandValues(target:Sprite, attr:String, values:Object = null):void {
         //show up reward after excuting command
 
-        var assets:AssetManager=Assets.SoundManager;
-        assets.playSound("GotFoods");
+        //var assets:AssetManager=Assets.SoundManager;
+        //assets.playSound("GotFoods");
+        playSound("GodRewards");
 
 
         var flox:FloxInterface = new FloxCommand();
@@ -1545,7 +1590,7 @@ public class MainCommand implements MainInterface {
 
     }
 
-    private function reeseatDating():void {
+    private function reseatDating():void {
 
         DebugTrace.msg("MainCommand.reeseatDating");
         DataContainer.currentDating = null;
@@ -1840,7 +1885,7 @@ public class MainCommand implements MainInterface {
 
                 pass_se = false;
                 payAP = 0;
-                msg = "You do not need more Spirit Energy !!";
+                msg = "Your Spirit Energy has reached the limit!!";
                 alert = new AlertMessage(msg, onClosedAlert);
                 scene.addChild(alert);
 
@@ -1870,11 +1915,11 @@ public class MainCommand implements MainInterface {
         if(com=="NoSurvivor" || com=="NoSurvivor_Normal"){
             //random battle
             var alertType:String="nobutton_type";
-            msg = "No anyone can do this ,Please Pay Pizzo $100.";
+            msg = "No one in the team has SE to fight. Pay Pizzo $100.";
             if(com=="NoSurvivor_Normal"){
                 //battle , pratice
                 alertType="button_type";
-                msg = "No anyone can do this !!";
+                msg = "No one in the team has SE to fight.";
             }
             alert = new AlertMessage(msg, onClosedAlert,alertType);
             scene.addChild(alert);
@@ -1939,7 +1984,7 @@ public class MainCommand implements MainInterface {
             } else {
 
                 if(com=="RunAwayRandomBattle"){
-                    msg = "Not enough money.\n You can not run away.";
+                    msg = "You are broke.\n They let you go.";
 
                 }else{
                     msg = "Not enough money.";
@@ -2279,7 +2324,7 @@ public class MainCommand implements MainInterface {
 
         }
         DebugTrace.msg("MainCommand.doShortcuts  toScene="+toScene+" , shortcutsScene="+shortcutsScene);
-        if(toScene!="" && shortcutsScene!=toScene){
+        if(toScene!="" && shortcutsScene!=toScene && shortcutsScene.indexOf("Game")==-1){
 
             var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
             gameEvent._name="clear_comcloud";
@@ -2289,8 +2334,9 @@ public class MainCommand implements MainInterface {
             _data.name=toScene;
             sceneDispatch(SceneEvent.CHANGED,_data);
 
+        }else{
+            DataContainer.shortcuts="";
         }
-
     }
     public function removeShortcuts():void{
 

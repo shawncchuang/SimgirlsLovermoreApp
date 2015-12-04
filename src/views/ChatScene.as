@@ -48,7 +48,7 @@ public class ChatScene extends Sprite
 //    private var clickmouse:Sprite;
 //    private var quad:Quad;
     private var alert:Sprite;
-    public function     ChatScene()
+    public function ChatScene()
     {
         initBingo();
         //initCharacter();

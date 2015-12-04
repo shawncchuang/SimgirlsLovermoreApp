@@ -132,7 +132,7 @@ public class CharacterDesignScene extends Scenes
 
         scencom.init("CharacterDesignScene",base_sprite,16,onCallback);
         scencom.start();
-        scencom.disableAll();
+        //scencom.disableAll();
 
 
         var title:Image=new Image(getTexture("DesignAvatarTitle"));
@@ -506,8 +506,8 @@ public class CharacterDesignScene extends Scenes
         if(target.name=="confirm")
         {
 
-            _data.name="MainScene";
-            //_data.name="Tarotreading";
+            //_data.name="MainScene";
+            _data.name="Tarotreading";
             command.sceneDispatch(SceneEvent.CHANGED,_data);
         }
         else

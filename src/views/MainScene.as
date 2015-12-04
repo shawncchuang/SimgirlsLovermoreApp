@@ -2,6 +2,8 @@ package views
 {
 
 
+import controller.SoundController;
+
 import data.DataContainer;
 
 import flash.display.MovieClip;
@@ -130,8 +132,9 @@ public class MainScene extends Scenes
         //Starling.juggler.add(waveing);
         //container.addChild(waveing);
 
-        var assets:AssetManager=Assets.SoundManager;
-        wavesSound=assets.playSound("MapWaves",0,100);
+
+        command.playSound("MapWaves",100);
+
 
     }
 
@@ -167,7 +170,8 @@ public class MainScene extends Scenes
     }
     private function onRemovedHandle(e:Event):void{
 
-        wavesSound.stop();
+        command.stopSound("MapWaves");
+
     }
     private  var new_gx:Number=0;
     private  var new_gy:Number=0;
@@ -363,7 +367,7 @@ public class MainScene extends Scenes
             if(sign_name=="")
             {
                 //DebugTrace.msg("MainScene.doTouchSign touch: "+currentImg.name);
-                sign_name=currentImg.name
+                sign_name=currentImg.name;
                 var stagepoints:Object=Config.stagepoints;
                 posY=stagepoints[currentImg.name][1]-currentImg.height;
                 signTween=new Tween(currentImg,0.4,Transitions.EASE_IN_OUT);

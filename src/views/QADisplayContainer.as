@@ -24,7 +24,7 @@ package views
 		private var onComplete:Function;
 		private var qacom:QAComponent;
 		private var templete:MovieClip;
-		private var floxcom:FloxInterface=new FloxCommand();
+		private var flox:FloxInterface=new FloxCommand();
 		private var command:MainInterface=new MainCommand();
 		private var scenecom:SceneInterface=new SceneCommnad();
 		private var tempOption:Object={
@@ -35,7 +35,7 @@ package views
 		}
 		public function QADisplayContainer(label:String,callback:Function=null)
 		{
-			qa_label=label
+			qa_label=label;
 			onComplete=callback;
 			init();
 			
@@ -87,8 +87,10 @@ package views
 				var _data:Object=new Object();
 				_data.first_name=templete.firstname.text;
 				_data.last_name=templete.lastname.text;
-
-				floxcom.updateSavegame(_data);
+				DataContainer.PlayerFullName=_data;
+				flox.save("first_name",_data.first_name);
+				flox.save("last_name",_data.last_name);
+				//floxcom.updateSavegame(_data);
 				onComplete();
 				
 			}

@@ -112,7 +112,7 @@ public class PhotosTiledRowsLayout extends PanelScreen{
         }
 
         photosList=photosList.sortOn("id",Array.NUMERIC);
-        DebugTrace.msg("PhotosTiledRowsLayout.initialize photosList="+JSON.stringify(photosList));
+        //DebugTrace.msg("PhotosTiledRowsLayout.initialize photosList="+JSON.stringify(photosList));
 
 
         for(var j:int = 0; j < photosList.length; j++)

@@ -76,6 +76,7 @@ public class Game extends Sprite
 		DataContainer.currentScene="MainScene";
 		mainstage=this;
 		ViewsContainer.MainStage=mainstage;
+		ViewsContainer.CurrentClouds=new Array();
 		var scenes:Scenes=new Scenes();
 		scenes.setupEvent();
 

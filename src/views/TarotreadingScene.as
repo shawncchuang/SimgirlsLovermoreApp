@@ -77,9 +77,11 @@ package views
 		{
 			
 			var _data:Object=new Object();
-			_data.name="CharacterDesignScene";
-			//_data.name= "MainScene";
+			//_data.name="CharacterDesignScene";
+			_data.name= "MainScene";
 			command.sceneDispatch(SceneEvent.CHANGED,_data);
+
+			command.addShortcuts();
 		}
 		 
 		 

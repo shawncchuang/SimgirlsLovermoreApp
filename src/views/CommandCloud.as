@@ -1,17 +1,10 @@
 package views
 {
-import com.greensock.TweenMax;
-import com.greensock.plugins.TweenPlugin;
-import com.greensock.plugins.TransformAroundCenterPlugin;
-import com.greensock.easing.Back;
 
-import flash.display.MovieClip;
-import flash.events.Event;
-import flash.events.MouseEvent;
-import flash.geom.Point;
-import flash.text.TextField;
-import flash.text.TextFormat;
-import flash.text.TextFormatAlign;
+
+import controller.Assets;
+
+
 
 import controller.FloxCommand;
 import controller.FloxInterface;
@@ -26,7 +19,21 @@ import events.GameEvent;
 import events.SceneEvent;
 import events.TopViewEvent;
 
+import flash.geom.Point;
+
 import model.BattleData;
+
+import starling.animation.DelayedCall;
+
+import starling.animation.Juggler;
+import starling.display.MovieClip;
+import starling.events.Event;
+import starling.events.Touch;
+import starling.events.TouchEvent;
+import starling.events.TouchPhase;
+import starling.text.TextField;
+import starling.textures.Texture;
+import starling.textures.TextureAtlas;
 
 
 //import starling.animation.Tween;
@@ -36,10 +43,9 @@ import starling.display.Sprite;
 import utils.DebugTrace;
 import utils.ViewsContainer;
 
-public class CommandCloud extends MovieClip
+public class CommandCloud extends Sprite
 {
     private var _label:String;
-    private var comcloud:MovieClip;
     private var cloudTxt:TextField;
     private var command:MainInterface=new MainCommand();
     private var scenecom:SceneInterface=new SceneCommnad();
@@ -48,121 +54,150 @@ public class CommandCloud extends MovieClip
     private var de_label:String="";
     private var directions:MovieClip;
 
-    public static var HIDED:String="hided";
-    TweenPlugin.activate([TransformAroundCenterPlugin]);
+//    public static var HIDED:String="hided";
+//    TweenPlugin.activate([TransformAroundCenterPlugin]);
 
+    private var delcall:DelayedCall;
     private var ran_battle_rate:Number=10;
 
+    private var cloud:Sprite;
     public function CommandCloud(src:String):void{
         //L1_^Departures
         var p:String=src.split("_")[0];
         _label=src.split("_")[1];
         //DebugTrace.msg("CommandCloud.addDisplayObj _label:"+_label);
 
-        var format:TextFormat=new TextFormat();
-        format.font="SimImpact";
-        format.align=TextFormatAlign.CENTER;
-        format.color=0x66CCFF;
-        format.size=25;
-        cloudTxt=new TextField();
-        cloudTxt.x=22;
-        cloudTxt.y=20;
-        cloudTxt.width=114;
-        cloudTxt.height=80;
-        cloudTxt.embedFonts=true;
-        cloudTxt.multiline=true;
-        cloudTxt.defaultTextFormat=format;
 
         if(p.indexOf("L")!=-1){
-            var posX:Number=-200;
+
             var id:Number=Number(p.split("L").join(""));
         }else{
-            posX=1000;
+
             id=Number(p.split("R").join(""));
         }
         if(_label.indexOf("^")!=-1)
         {
-            if(_label.split("^")[0]!="")
-                cloudTxt.y=35;
-
-            _label=String(_label.split("^").join("\n"));
+            if(_label.split("^")[0]!=""){
+                _label=String(_label.split("^").join("\n"));
+            }else{
+                _label=String(_label.split("^").join(""));
+            }
 
         }
-        //if
-        cloudTxt.text=_label;
 
-        comcloud=new ComCloud();
-        comcloud.name=_label;
-        //comcloud.x=pos[p].x;
-        comcloud.x=posX;
-        comcloud.y=pos[p].y;
-        comcloud.buttonMode=true;
-        comcloud.mouseChildren=false;
-        comcloud.addEventListener(MouseEvent.MOUSE_DOWN,doClickComCloud);
-        comcloud.addEventListener(MouseEvent.MOUSE_OVER,doOverComCloud);
-        comcloud.addEventListener(MouseEvent.MOUSE_OUT,doOutComCloud);
 
-        comcloud.addChild(cloudTxt);
+        var cloud:Sprite = new Sprite();
+        cloud.useHandCursor = true;
+        cloud.name = _label;
+        cloud.x = pos[p].x;
+        cloud.y=pos[p].y;
 
-        comcloud.scaleX=0.1;
-        comcloud.scaleY=0.1;
+        var xml:XML = Assets.getAtalsXML("ComCloudXML");
+        var cloudTexture:Texture = Assets.getTexture("ComCloud");
+        var cloudAltas:TextureAtlas = new TextureAtlas(cloudTexture, xml);
 
-        addChild(comcloud);
+        var cloudMC:MovieClip = new MovieClip(cloudAltas.getTextures("command_cloud"), 30);
+        cloudMC.name="mc";
+        cloudMC.pivotX = cloudMC.width / 2;
+        cloudMC.pivotY = cloudMC.height / 2;
+        cloudMC.stop();
+        cloud.addChild(cloudMC);
+        Starling.juggler.add(cloudMC);
 
-        TweenMax.to(comcloud,id*0.1+0.2,{x:pos[p].x,transformAroundCenter:{scale:1},easing:Back.easeInOut});
+        cloudTxt=new TextField(cloudMC.width, cloudMC.height-5,_label,"SimImpact",25,0x66CCFF);
 
+        cloudTxt.name="txt";
+        cloudTxt.pivotX = cloudTxt.width / 2;
+        cloudTxt.pivotY = cloudTxt.height / 2;
+        cloudTxt.vAlign = "center";
+        cloudTxt.hAlign = "center";
+        cloudTxt.autoScale=true;
+        cloud.addChild(cloudTxt);
+
+        cloud.x+=cloudMC.width/2;
+        addChild(cloud);
+        cloud.addEventListener(TouchEvent.TOUCH, doClickComCloud);
+
+
+        //TweenMax.to(comcloud,id*0.1+0.2,{x:pos[p].x,transformAroundCenter:{scale:1},easing:Back.easeInOut,onComplere:onCloudComplete});
+
+//        function onCloudComplete():void{
+//            TweenMax.killTweensOf(comcloud);
+//        }
 
 
     }
 
 
     private var com:String;
-    private var targetCloud:MovieClip;
-    private function doClickComCloud(e:MouseEvent):void
+
+    private function doClickComCloud(e:TouchEvent):void
     {
-        targetCloud=e.target as MovieClip;
+        cloud = e.currentTarget as Sprite;
+        com=cloud.name.split("^").join("");
+        var began:Touch = e.getTouch(cloud, TouchPhase.BEGAN);
+        var hover:Touch = e.getTouch(cloud, TouchPhase.HOVER);
 
-        com=e.target.name.split("^").join("");
-        if(com.indexOf("\n")!=-1){
-            com=com.split("\n").join("");
+        if(hover){
+            doOverComCloud();
+        }else{
+            doOutComCloud();
         }
-        var flox:FloxInterface=new FloxCommand();
-        var turn_switch:String=flox.getSaveData("current_switch").split("|")[1];
-        if(com=="Rest" || com=="Stay")
-        {
+        if (began) {
 
-            var switch_verifies:Array=scenecom.switchGateway("Rest||Stay");
-            DebugTrace.msg("CommandCloud.doClickComCloud switch_verify="+switch_verifies);
-            if(!switch_verifies[0])
+            if(com.indexOf("\n")!=-1){
+                com=com.split("\n").join("");
+            }
+            var flox:FloxInterface=new FloxCommand();
+            var turn_switch:String=flox.getSaveData("current_switch").split("|")[1];
+            DebugTrace.msg("CommandCloud.doClickComCloud com="+com);
+            if(com=="Rest" || com=="Stay")
             {
 
-                onCloudClicked();
+                var switch_verifies:Array=scenecom.switchGateway("Rest||Stay");
+                DebugTrace.msg("CommandCloud.doClickComCloud switch_verify="+switch_verifies);
+                if(!switch_verifies[0])
+                {
+
+                    onCloudClicked();
+                }
+                //if
+
             }
-            //if
+            else
+            {
+                var battle_target:Number=-1;
+                var success:Boolean=true;
+                var battledata:BattleData=new BattleData();
+                var survivor:Boolean=false;
+                switch(com){
+                    case "Battle":
+                        battle_target= battledata.checkBattleSchedule("Battle","");
 
-        }
-        else
-        {
-            var battle_target:Number=-1;
-            var success:Boolean=true;
-            var battledata:BattleData=new BattleData();
-            var survivor:Boolean=false;
-            switch(com){
-                case "Battle":
-                    battle_target= battledata.checkBattleSchedule("Battle","");
+                        DebugTrace.msg("CommandCloud.doClickComCloud survivor="+survivor);
 
-                    DebugTrace.msg("CommandCloud.doClickComCloud survivor="+survivor);
+                        if(battle_target==-1){
 
-                    if(battle_target==-1){
+                            success=command.consumeHandle("CannotPaticipate");
 
-                        success=command.consumeHandle("CannotPaticipate");
+                        }else if(battle_target==-2) {
+                            //already battle today
+                            success=command.consumeHandle("CannotBattleToday");
 
-                    }else if(battle_target==-2) {
-                        //already battle today
-                        success=command.consumeHandle("CannotBattleToday");
+                        }else{
 
-                    }else{
+                            survivor=battledata.checkSurvivor();
+                            if(!survivor){
+                                success=command.consumeHandle("NoSurvivor_Normal");
+                            }else{
+                                success=command.consumeHandle(com);
+                            }
 
+                        }
+
+
+                        break;
+                    case "Practice":
                         survivor=battledata.checkSurvivor();
                         if(!survivor){
                             success=command.consumeHandle("NoSurvivor_Normal");
@@ -170,81 +205,80 @@ public class CommandCloud extends MovieClip
                             success=command.consumeHandle(com);
                         }
 
-                    }
-
-
-                    break;
-                case "Practice":
-                    survivor=battledata.checkSurvivor();
-                    if(!survivor){
-                        success=command.consumeHandle("NoSurvivor_Normal");
-                    }else{
+                        break;
+                    default :
                         success=command.consumeHandle(com);
-                    }
+                        if(com=="LookAround"){
+                            var gameinfo:Sprite = ViewsContainer.gameinfo;
+                            gameinfo.dispatchEventWith("UPDATE_INFO");
+                        }
+                        break;
+                }
 
-                    break;
-                default :
-                    success=command.consumeHandle(com);
-                    if(com=="LookAround"){
-                        var gameinfo:Sprite = ViewsContainer.gameinfo;
-                        gameinfo.dispatchEventWith("UPDATE_INFO");
-                    }
-                    break;
+                if(success){
+                    onCloudClicked();
+                }
+
             }
-
-            if(success){
-                onCloudClicked();
-            }
-
+            //if
+            visibleCommandDirecation();
+        }else{
+            doOutComCloud();
         }
-        //if
-        visibleCommandDirecation();
+
     }
     private function onCloudClicked():void{
 
-        cloudTxt.visible=false;
-
-        disabledComCloud();
-
-        TweenMax.to(comcloud,0.3,{frameLabel:"broke",onComplete:onCloudComplete});
-        //comcloud.gotoAndPlay("broke");
+        visibleCommandDirecation();
         command.playSound("Break");
+
+        var mc:MovieClip = cloud.getChildByName("mc") as MovieClip;
+        mc.play();
+        mc.addEventListener(Event.COMPLETE, onCloudMovieComplete);
+        Starling.juggler.add(mc);
+        var txt:TextField = cloud.getChildByName("txt") as TextField;
+        txt.visible = false;
+
+
 
 
     }
-    private function onCloudComplete():void{
+    private function onCloudMovieComplete(e:Event):void {
 
-        comcloud.visible=false;
-        TweenMax.killChildTweensOf(comcloud);
-
-        DebugTrace.msg("CommandCloud.onCloudComplete com="+com);
-
-
+        //DebugTrace.msg("DatingScene.onCloudMovieComplete");
+        var target:MovieClip = e.currentTarget as MovieClip;
+        target.pause();
+        Starling.juggler.remove(target);
+        target.visible=false;
         if(com=="Leave"){
 
             doCloudCommandHandler();
 
         }else{
 
-            TweenMax.delayedCall(1,onPaidAPComplete);
+
+            delcall=new DelayedCall(onPaidAPComplete,0.5);
+            Starling.juggler.add(delcall);
 
         }
+
 
     }
     private function onPaidAPComplete():void{
 
-        TweenMax.killDelayedCallsTo(onPaidAPComplete);
+        Starling.juggler.remove(delcall);
         doCloudCommandHandler();
     }
-    private function doOverComCloud(e:MouseEvent):void
+    private function doOverComCloud():void
     {
-
-        if(_label.indexOf("\n")!=-1)
+        //DebugTrace.msg("CommandCloud.doOverComCloud com:"+com);
+        var over_target:String=com;
+        if(com.indexOf("\n")!=-1)
         {
-            var over_target:String=String(_label.split("\n").join(" "));
+            over_target=String(com.split("\n").join(" "));
         }
 
-        DebugTrace.msg("CommandCloud.doOverComCloud _label:"+over_target);
+        //DebugTrace.msg("CommandCloud.doOverComCloud com:"+over_target);
 
         var _data:Object=new Object();
         _data.enabled=true;
@@ -255,7 +289,7 @@ public class CommandCloud extends MovieClip
             gameinfo.dispatchEventWith("UPDATE_DIRECTION",false,_data);
         }
     }
-    private function doOutComCloud(e:MouseEvent):void
+    private function doOutComCloud():void
     {
 
         visibleCommandDirecation();
@@ -270,17 +304,17 @@ public class CommandCloud extends MovieClip
         gameinfo.dispatchEventWith("UPDATE_DIRECTION",false,_data);
 
     }
-    private function disabledComCloud():void
+    public function onDisableHandle():void
     {
-        comcloud.removeEventListener(MouseEvent.MOUSE_DOWN,doClickComCloud);
-        comcloud.removeEventListener(MouseEvent.MOUSE_OVER,doOverComCloud);
-        comcloud.removeEventListener(MouseEvent.MOUSE_OUT,doOutComCloud);
+        DebugTrace.msg("CommandCloud.disableComCloud");
+
+
 
     }
     private function doCloudCommandHandler():void
     {
 
-        comcloud.visible=false;
+        cloud.visible=false;
 
         var _data:Object=new Object();
         de_label=_label.split("\n").join("");
@@ -290,14 +324,12 @@ public class CommandCloud extends MovieClip
         if(de_label=="StartDating"){
 
 
-            var flox:FloxInterface=new FloxCommand();
-            var dating:String=flox.getSaveData("dating");
-            if(dating!=""){
-
-                DataContainer.currentDating=dating;
-            }
-
-
+//            var flox:FloxInterface=new FloxCommand();
+//            var dating:String=flox.getSaveData("dating");
+//            if(dating!=""){
+//
+//                DataContainer.currentDating=dating;
+//            }
 
             var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
             gameEvent._name="clear_comcloud";
@@ -360,18 +392,7 @@ public class CommandCloud extends MovieClip
 
 
         }
-        //if
-        /*
-         if(start_dating!=-1)
-         {
-         //start dating
-         _data=new Object();
-         _data.name="DatingScene";
-         //command.sceneDispatch(SceneEvent.CHANGED,_data)
 
-         }
-         //if
-         */
     }
     private function onClosedRandomFightAlert():void{
 
@@ -389,31 +410,13 @@ public class CommandCloud extends MovieClip
     {
         DebugTrace.msg("CommandCloud.onInitCurrentScene");
 
-        TweenMax.killAll();
-        //Starling.juggler.remove(valueTween);
 
         var _data:Object=new Object();
         _data.com=de_label;
         var basesprite:Sprite=ViewsContainer.baseSprite;
         basesprite.dispatchEventWith(DatingScene.COMMIT,false,_data);
 
-        /*switch(de_label)
-         {
-         case "Give":
-         case "Chat":
-         case "Leave":
-         case "Flirt":
-         case "Dating":
 
-         var _data:Object=new Object();
-         _data.com=de_label;
-         var basesprite:Sprite=ViewsContainer.baseSprite;
-         basesprite.dispatchEventWith("commit",false,_data);
-
-         break
-         }
-         //switch
-         */
 
 
     }

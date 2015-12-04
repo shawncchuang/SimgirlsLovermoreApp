@@ -71,7 +71,7 @@ package controller
 		public static const RaceCarDriveBy:Class;
 		
 		[Embed(source="../../media/textures/sound/gotfoods.mp3")]
-		public static const GotFoods:Class;
+		public static const GodRewards:Class;
 		
 		[Embed(source="../../media/textures/sound/brake.mp3")]
 		public static const Brake:Class;

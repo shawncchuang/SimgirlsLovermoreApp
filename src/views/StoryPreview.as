@@ -59,6 +59,7 @@ public class StoryPreview extends Scenes {
 
         var arrowTxtr:Texture=Assets.getTexture("IconPrevBtn");
         var prevbtn:Button=new Button(arrowTxtr,"");
+        prevbtn.name="previousbtn";
         prevbtn.scaleX=0.5;
         prevbtn.scaleY=0.5;
         prevbtn.x=filebtn.width+10;

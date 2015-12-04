@@ -431,6 +431,7 @@ public class SaveandLoadList extends Sprite
             flox.savePlayerData("inGameProgress",progress);
             flox.loadBackupsavedEntities();
 
+            command.addShortcuts();
 
         }
 

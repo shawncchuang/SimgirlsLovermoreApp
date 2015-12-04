@@ -416,7 +416,7 @@ public class Scenes extends Sprite
         if(shortcutsScene.indexOf("Game")==-1 && shortcutsScene.indexOf("Battle")==-1 &&
                 shortcutsScene!="DatingScene" && shortcutsScene.indexOf("Formation")==-1){
             DebugTrace.msg("Scenes.changeSceneHandle addShortcuts shortcutsScene:"+shortcutsScene);
-            command.addShortcuts();
+            //command.addShortcuts();
         }
 
 

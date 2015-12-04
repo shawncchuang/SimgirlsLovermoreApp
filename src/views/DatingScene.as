@@ -1,8 +1,5 @@
 package views {
 
-
-import com.greensock.TweenLite;
-
 import controller.Assets;
 import controller.DrawerInterface;
 import controller.FilterInterface;
@@ -16,11 +13,7 @@ import controller.ParticleInterface;
 import controller.SceneCommnad;
 import controller.SceneInterface;
 
-import data.Config;
-
 import data.DataContainer;
-
-import events.GameEvent;
 import events.SceneEvent;
 
 import feathers.controls.ImageLoader;
@@ -50,7 +43,6 @@ import starling.text.TextFieldAutoSize;
 import starling.textures.Texture;
 import starling.textures.TextureAtlas;
 import starling.textures.TextureSmoothing;
-import starling.utils.AssetManager;
 
 import utils.DebugTrace;
 import utils.DrawManager;
@@ -104,6 +96,7 @@ public class DatingScene extends Scenes {
 
     private var talkingAlert:Sprite;
     private var takephoto:Sprite=null;
+    private var cloudlist:Array;
 
     public function DatingScene() {
 
@@ -173,6 +166,9 @@ public class DatingScene extends Scenes {
             talkingAlert.removeFromParent(true);
         }catch(error:Error){
 
+        }
+        for(var i:uint=0;i<cloudlist.length;i++){
+            Starling.juggler.removeTweens(cloudlist[i]);
         }
 
         switch (com) {
@@ -544,13 +540,18 @@ public class DatingScene extends Scenes {
         apPanel.addChild(apTxt);
         addChild(apPanel);
 
-        command.initStyleSchedule();
+        command.initStyleSchedule(onStyleComplete);
+
+    }
+    private function onStyleComplete():void{
+
         updateAP();
         initCharacter();
         initTopicBar();
         displayCloud();
 
         addChild(mainProfile);
+
     }
 
     private function updateAP():void {
@@ -580,16 +581,22 @@ public class DatingScene extends Scenes {
 
 
         character = new Image(clothTexture);
+        character.alpha=0;
+        character.x=400;
+        character.y=character.y - 80;
+        character.scaleX=1.2;
+        character.scaleY=1.2;
         addChild(character);
 
-        var tween:Tween = new Tween(character, 0.3, Transitions.EASE_IN_OUT);
-        tween.moveTo(400, character.y - 80);
-        tween.scaleTo(1.2);
+        var tween:Tween = new Tween(character, 0.5, Transitions.EASE_IN_OUT);
+        tween.fadeTo(1);
+        tween.onComplete=onCharaacterComplete;
         Starling.juggler.add(tween);
-
+        function onCharaacterComplete():void{
+            Starling.juggler.removeTweens(character);
+        }
 
     }
-
     private function initTopicBar():void {
 
 
@@ -637,6 +644,7 @@ public class DatingScene extends Scenes {
 
     private function displayCloud():void {
 
+        cloudlist=new Array();
         var command_dating:Object = flox.getSaveData("command_dating");
 
         var cloudAttr:Array = [{name: "Kiss", pos: new Point(182, 410)},
@@ -675,6 +683,7 @@ public class DatingScene extends Scenes {
             cloudMC.stop();
             cloud.addChild(cloudMC);
             Starling.juggler.add(cloudMC);
+            cloudlist.push(cloudMC);
 
             if (src == "TakePhoto") {
                 src = "Take\nPhoto";
@@ -881,7 +890,8 @@ public class DatingScene extends Scenes {
         Starling.juggler.remove(target);
         target.visible=false;
 
-        TweenLite.delayedCall(.8,layoutFadeout);
+        delayCall=new DelayedCall(layoutFadeout,.8);
+        Starling.juggler.add(delayCall);
 
     }
 
@@ -895,7 +905,7 @@ public class DatingScene extends Scenes {
 
     private function layoutFadeout():void {
 
-        TweenLite.killDelayedCallsTo(layoutFadeout);
+        Starling.juggler.remove(delayCall);
         for (var i:uint = 0; i < clouds.length; i++) {
 
             var cloud:Sprite = clouds[i];
@@ -1362,9 +1372,6 @@ public class DatingScene extends Scenes {
         DebugTrace.msg("DatingScene.doChandedRelactionshipHandle change_type="+e.data.change_type);
          //raise, reduce
         var change_type:String=e.data.change_type;
-        if(change_type=="raice"){
-            enabledSreenTouch();
-        }
 
 
         var point:Point=new Point();
@@ -1401,33 +1408,32 @@ public class DatingScene extends Scenes {
         tween.animate("alpha",1);
         if(change_type=="reduce")
         tween.animate("color",0x00FFFF);
+        tween.onComplete=onTxtImageComplete;
         Starling.juggler.add(tween);
+        function onTxtImageComplete():void{
+            Starling.juggler.removeTweens(txtImage);
+        }
 
-        TweenLite.delayedCall(3,onTimeOut);
+        var dating:String=DataContainer.currentDating;
+        var rel:String=flox.getSaveData("rel")[dating];
+        DebugTrace.msg("DatingScene.doChandedRelactionshipHandle rel="+rel);
+        if(change_type=="raise" && rel!="foe"){
+            disabledSreenTouch();
+
+            delayCall=new DelayedCall(onReadyShowPreciousPhoto,3);
+            Starling.juggler.add(delayCall);
+        }
 
 
     }
 
-    private function onTimeOut():void {
+    private function onReadyShowPreciousPhoto():void {
 
-        TweenLite.killDelayedCallsTo(onTimeOut);
+        Starling.juggler.remove(delayCall);
         //DebugTrace.msg("DatingScene.onTimeOut relationshipChaned="+relationshipChaned);
 
-        //timer.removeEventListener(TimerEvent.TIMER_COMPLETE, onTimeOut);
-        //timer.stop();
-
-        Starling.juggler.removeTweens(this);
-
         heartView.removeFromParent(true);
-
-        var dating:String = DataContainer.currentDating;
-        var rel:Object=flox.getSaveData("rel")[dating];
-
-        if(relationshipChaned=="raise_changed_relationship" && rel!="acquaintance"){
-
-            showupPreciousPhoto();
-
-        }
+        showupPreciousPhoto();
 
     }
     private var photo:Sprite;
@@ -1478,9 +1484,7 @@ public class DatingScene extends Scenes {
         preload=new LoadingBuffer();
         addChild(preload);
 
-        var tween:Tween=new Tween(bg,0.5,Transitions.EASE_IN);
-        tween.fadeTo(0.9);
-        Starling.juggler.add(tween);
+        bg.alpha=0.9;
 
 
     }
@@ -1488,36 +1492,35 @@ public class DatingScene extends Scenes {
     private function onPhotoLoadedComplete(e:Event):void{
 
         preload.removeFromParent(true);
-        Starling.juggler.removeTweens(bg);
 
         var tween:Tween=new Tween(imgloader,0.5,Transitions.EASE_IN);
         tween.fadeTo(1);
+        tween.onComplete=onImageComplete;
         Starling.juggler.add(tween);
+        function onImageComplete():void{
+            Starling.juggler.removeTweens(imgloader);
+        }
 
 
         var dating:String=DataContainer.currentDating;
-        var assets:AssetManager=Assets.MusicManager;
-        photoMusic=assets.playSound(dating+"Music");
+        command.playBackgroudSound(dating+"Music");
+        //photoMusic=command.playSound(dating+"Music");
 
 
-        //timer=new Timer(1000,10);
-        //timer.addEventListener(TimerEvent.TIMER_COMPLETE,onShowFinished);
-        //timer.start();
-
-        TweenLite.delayedCall(20,onShowFinished);
+        delayCall=new DelayedCall(onShowFinished,20);
+        Starling.juggler.add(delayCall);
 
     }
     private function onShowFinished():void{
-        //timer.stop();
-        //timer.removeEventListener(TimerEvent.TIMER_COMPLETE,onShowFinished);
-        TweenLite.killDelayedCallsTo(onShowFinished);
+
+        command.stopBackgroudSound();
+        Starling.juggler.remove(delayCall);
 
         var tween:Tween=new Tween(photo,1,Transitions.EASE_IN);
         tween.fadeTo(0);
         tween.onComplete=onPhotoFadeout;
         Starling.juggler.add(tween);
 
-        photoMusic.stop();
 
     }
     private function onPhotoFadeout():void{
@@ -1532,7 +1535,7 @@ public class DatingScene extends Scenes {
         screenview.removeFromParent(true);
     }
     private var screenview:Quad;
-    private function enabledSreenTouch():void{
+    private function disabledSreenTouch():void{
         var stageW:Number=Starling.current.stage.stageWidth;
         var stageH:Number=Starling.current.stage.stageHeight;
         screenview=new Quad(stageW,stageH,0x000000);

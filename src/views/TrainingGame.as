@@ -10,8 +10,10 @@ package views
 	import controller.MiniGameInterface;
 	
 	import events.MiniGameEvent;
-	
-	import utils.ViewsContainer;
+
+import starling.events.Event;
+
+import utils.ViewsContainer;
 
 	public class TrainingGame extends MovieClip
 	{
@@ -39,10 +41,11 @@ package views
 			gamecom.init(this,"training");
 			gamecom.createEnemyBike(new Point(0,380));
 			gamecom.createPlayerBike();
-			
+
 			MiniGameEvt=gamecom.initGameEvent();
-			
+
 		}
+
 		
 	}
 }

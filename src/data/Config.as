@@ -907,8 +907,8 @@ public class Config
 
         "foe-Max":-1,
         "acquaintance-Min":0,
-        "acquaintance-Max":110,
-        "friend-Min":111,
+        "acquaintance-Max":98,
+        "friend-Min":99,
         "friend-Max":332,
         "closefriend-Min":333,
         "closefriend-Max":776,

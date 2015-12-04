@@ -18,7 +18,7 @@ public interface MainInterface
     function sceneDispatch(type:String,data:Object=null):void
 
     function initSceneLibrary():void
-    function initStyleSchedule():void
+    function initStyleSchedule(callback:Function=null):void
     function playBackgroudSound(src:String,st:SoundTransform=null):void
     function playSound(src:String,repeat:Number=0,st:SoundTransform=null):SoundChannel
     function stopBackgroudSound():void
@@ -48,7 +48,7 @@ public interface MainInterface
     function addLoadind(msg:String):void
     function removeLoading():void
     function addAttention(msg:String):void
-    function stopSound():void
+    function stopSound(name:String):void
     function initMainStory():void
     function verifySwitch():Boolean
     function consumeHandle(com:String):Boolean
@@ -59,6 +59,7 @@ public interface MainInterface
     function removeShortcuts():void
     function initCriminalsRecord():void
     function criminalAbility():Object;
+    function showSaveError(attr:String,data:*,msg:String):void
 
 }
 }

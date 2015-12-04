@@ -52,9 +52,9 @@ public class Reward extends Sprite{
         reward=new Sprite();
 
         var rewardTxt:TextField=new TextField(100,60,String(value),font,40,0xFFFFFF,true);
-        rewardTxt.autoSize=TextFieldAutoSize.HORIZONTAL;
+        rewardTxt.autoSize=TextFieldAutoSize.BOTH_DIRECTIONS;
         rewardTxt.hAlign="left";
-        rewardTxt.vAlign="center";
+        rewardTxt.vAlign="top";
         reward.addChild(rewardTxt);
         if(type!="mood"){
 
@@ -63,8 +63,13 @@ public class Reward extends Sprite{
            // icon.smoothing=TextureSmoothing.TRILINEAR;
             reward.addChild(icon);
 
-            rewardTxt.height=icon.height;
-            rewardTxt.x=icon.width;
+
+            rewardTxt.x=icon.width+5;
+            if(icon.height>rewardTxt.height){
+                rewardTxt.y=(icon.height-rewardTxt.height)/2;
+            }else{
+                icon.y=(rewardTxt.height-icon.height)/2;
+            }
 
         }
         reward.pivotX=reward.width/2;

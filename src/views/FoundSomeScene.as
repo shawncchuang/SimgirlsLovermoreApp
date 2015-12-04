@@ -1,7 +1,7 @@
 package views
 {
-	
-	import flash.geom.Point;
+
+import flash.geom.Point;
 	
 	import controller.Assets;
 	import controller.DrawerInterface;
@@ -20,8 +20,12 @@ package views
 	import events.SceneEvent;
 	
 	import model.Scenes;
-	
-	import starling.animation.Transitions;
+
+import starling.animation.DelayedCall;
+
+import starling.animation.Juggler;
+
+import starling.animation.Transitions;
 	import starling.animation.Tween;
 	import starling.core.Starling;
 	import starling.display.Button;
@@ -37,9 +41,10 @@ package views
 	import utils.DebugTrace;
 	import utils.DrawManager;
 	import utils.FilterManager;
-	
-	
-	public class FoundSomeScene extends Scenes
+import utils.ViewsContainer;
+
+
+public class FoundSomeScene extends Scenes
 	{
 		private var flox:FloxInterface=new FloxCommand();
 		private var base_sprite:Sprite;
@@ -381,6 +386,7 @@ package views
 			addChild(bubble);
 			
 		}
+	private var delayedCall:DelayedCall;
 		private function onNextSpeaking(e:TouchEvent):void
 		{
 			var target:Sprite=e.currentTarget as Sprite;
@@ -406,9 +412,13 @@ package views
 				}
 				else
 				{
+
 					this.removeEventListener(TouchEvent.TOUCH,onNextSpeaking);
 					Starling.juggler.remove(bubbleTween);
-					doCanceleHandler();
+					initNPCRewards();
+
+
+					//doCanceleHandler();
 				}
 				
 				//if		
@@ -436,11 +446,72 @@ package views
 		}
 		private function doCanceleHandler():void
 		{
-			
+
+			Starling.juggler.remove(delayedCall);
+
 			var _data:Object=new Object();
 			_data.name=DataContainer.currentScene;
 			command.sceneDispatch(SceneEvent.CHANGED,_data);	
 			
+		}
+		private function initNPCRewards():void{
+			var rewardslist:Array=["image","int","cash"];
+			//image 20-30 , int 20-30 , cash 50-100
+
+			var attr:String="";
+			var rate:Number=Math.floor(Math.random()*100)+1;
+			var reward:Number=0;
+			DebugTrace.msg("FoundSomeScene.initNPCRewards rate="+rate);
+			if(rate<40){
+				attr="";
+			}else{
+				attr=rewardslist[Math.floor(Math.random()*rewardslist.length)];
+			}
+			switch(attr){
+				case "image":
+				case "int":
+					reward=Math.floor(Math.random()*11)+20;
+					break
+				case "cash":
+					reward=Math.floor(Math.random()*51)+50;
+					break
+			}
+
+			if(reward>0){
+				if(attr=="cash"){
+					var playerValue:Number=flox.getSaveData("cash");
+				}else{
+					var valueObj:Object=flox.getSaveData(attr);
+					playerValue=valueObj.player;
+				}
+				var values:Object=new Object();
+				values[attr]=reward;
+				DebugTrace.msg("FoundSomeScene.initNPCRewards reward="+reward);
+				DebugTrace.msg("FoundSomeScene.initNPCRewards values="+JSON.stringify(values));
+
+				command.showCommandValues(this,attr,values);
+
+				playerValue+=reward;
+				if(attr=="cash"){
+					flox.save(attr,playerValue);
+				}else{
+					valueObj.player=playerValue;
+					flox.save(attr,valueObj);
+				}
+
+
+				var gameinfo:Sprite = ViewsContainer.gameinfo;
+				gameinfo.dispatchEventWith("UPDATE_INFO");
+
+
+				delayedCall = new DelayedCall(doCanceleHandler, 1.5);
+				Starling.juggler.add(delayedCall);
+			}else{
+
+
+				doCanceleHandler();
+			}
+
 		}
 		
 	}
