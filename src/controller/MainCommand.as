@@ -877,18 +877,14 @@ public class MainCommand implements MainInterface {
         var date:String = flox.getSaveData("date").split("|")[0];
         var styles:Object = flox.getSyetemData("style_schedule");
         var _name:String = DataContainer.currentDating;
-        var schedules:Array = styles[_name];
         var style:String = "";
         var normalStyles:Object=Config.styles;
-        var scenes:Array=new Array();
+        var scenes:Array=Config.allScenes;
         var styleNames:Array=new Array();
         var currentScene:String=DataContainer.currentScene;
         var shortcutsScene:String=DataContainer.shortcutsScene;
         var current_scene:String=currentScene.split("Scene").join("");
-        var scenesPoint:Object=Config.stagepoints;
-        for(var scene_name:String in scenesPoint){
-            scenes.push(scene_name);
-        }
+
         if (style == "") {
             //normal day ,depends on located
             var scene_index:Number=scenes.indexOf(current_scene);

@@ -1,1 +1,33 @@
-﻿<?xml version="1.0" encoding="utf-8"?><TextureAtlas imagePath="NPCs.atf">	<!-- Created with Adobe Flash Professional version 13.1.0.226 -->	<!-- http://www.adobe.com/products/flash.html -->	<SubTexture name="npc001" x="0" y="0" width="198" height="198" pivotX="99" pivotY="99"/>	<SubTexture name="npc002" x="198" y="0" width="198" height="198"/>	<SubTexture name="npc003" x="396" y="0" width="198" height="198"/>	<SubTexture name="npc004" x="594" y="0" width="198" height="198"/>	<SubTexture name="npc005" x="792" y="0" width="198" height="198"/>	<SubTexture name="npc006" x="0" y="198" width="198" height="198"/>	<SubTexture name="npc007" x="198" y="198" width="198" height="198"/>	<SubTexture name="npc008" x="396" y="198" width="198" height="198"/>	<SubTexture name="npc009" x="594" y="198" width="198" height="198"/>	<SubTexture name="npc010" x="792" y="198" width="198" height="198"/>	<SubTexture name="npc011" x="0" y="396" width="198" height="198"/>	<SubTexture name="npc012" x="198" y="396" width="198" height="198"/>	<SubTexture name="npc013" x="396" y="396" width="198" height="198"/>	<SubTexture name="npc014" x="594" y="396" width="198" height="198"/>	<SubTexture name="npc015" x="792" y="396" width="198" height="198"/>	<SubTexture name="npc016" x="0" y="594" width="198" height="198"/>	<SubTexture name="npc017" x="198" y="594" width="198" height="198"/>	<SubTexture name="npc018" x="396" y="594" width="198" height="198"/>	<SubTexture name="npc019" x="594" y="594" width="198" height="198"/>	<SubTexture name="npc020" x="792" y="594" width="198" height="198"/>	<SubTexture name="npc021" x="0" y="792" width="198" height="198"/>	<SubTexture name="npc022" x="198" y="792" width="198" height="198"/>	<SubTexture name="npc023" x="396" y="792" width="198" height="198"/>	<SubTexture name="npc024" x="594" y="792" width="198" height="198"/></TextureAtlas>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="NPCs.png">
+	<!-- Created with Adobe Flash Professional version 15.0.1.179 -->
+	<!-- http://www.adobe.com/products/flash.html -->
+	<SubTexture name="npc001" x="0" y="0" width="198" height="198" pivotX="99" pivotY="99"/>
+	<SubTexture name="npc002" x="198" y="0" width="198" height="198"/>
+	<SubTexture name="npc003" x="396" y="0" width="198" height="198"/>
+	<SubTexture name="npc004" x="594" y="0" width="198" height="198"/>
+	<SubTexture name="npc005" x="792" y="0" width="198" height="198"/>
+	<SubTexture name="npc006" x="0" y="198" width="198" height="198"/>
+	<SubTexture name="npc007" x="198" y="198" width="198" height="198"/>
+	<SubTexture name="npc008" x="396" y="198" width="198" height="198"/>
+	<SubTexture name="npc009" x="594" y="198" width="198" height="198"/>
+	<SubTexture name="npc010" x="792" y="198" width="198" height="198"/>
+	<SubTexture name="npc011" x="0" y="396" width="198" height="198"/>
+	<SubTexture name="npc012" x="198" y="396" width="198" height="198"/>
+	<SubTexture name="npc013" x="396" y="396" width="198" height="198"/>
+	<SubTexture name="npc014" x="594" y="396" width="198" height="198"/>
+	<SubTexture name="npc015" x="792" y="396" width="198" height="198"/>
+	<SubTexture name="npc016" x="0" y="594" width="198" height="198"/>
+	<SubTexture name="npc017" x="198" y="594" width="198" height="198"/>
+	<SubTexture name="npc018" x="396" y="594" width="198" height="198"/>
+	<SubTexture name="npc019" x="594" y="594" width="198" height="198"/>
+	<SubTexture name="npc020" x="792" y="594" width="198" height="198"/>
+	<SubTexture name="npc021" x="0" y="792" width="198" height="198"/>
+	<SubTexture name="npc022" x="198" y="792" width="198" height="198"/>
+	<SubTexture name="npc023" x="396" y="792" width="198" height="198"/>
+	<SubTexture name="npc024" x="594" y="792" width="198" height="198"/>
+	<SubTexture name="npc025" x="792" y="792" width="198" height="198"/>
+	<SubTexture name="npc026" x="0" y="990" width="198" height="198"/>
+	<SubTexture name="npc027" x="198" y="990" width="198" height="198"/>
+	<SubTexture name="npc028" x="396" y="990" width="198" height="198"/>
+</TextureAtlas>

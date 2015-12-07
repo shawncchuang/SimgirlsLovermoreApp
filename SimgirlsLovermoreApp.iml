@@ -12,7 +12,7 @@
               <dependency linkage="Merged" />
             </entry>
           </entries>
-          <sdk name="AIRSDK" />
+          <sdk name="AIRSDK 19.0" />
         </dependencies>
         <compiler-options>
           <map>
@@ -20,7 +20,7 @@
             <entry key="compiler.keep-generated-actionscript" value="true" />
             <entry key="compiler.locale" value="en_US" />
           </map>
-          <option name="additionalOptions" value="-swf-version=29 -frame=StartupFrame,SimgirlsLovemore" />
+          <option name="additionalOptions" value="-swf-version=30 -frame=StartupFrame,SimgirlsLovemore" />
         </compiler-options>
         <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/src/Main-app.xml" package-file-name="SimgirlsLovermore">
           <files-to-package>
@@ -44,7 +44,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/assets" isTestSource="false" />
     </content>
-    <orderEntry type="jdk" jdkName="AIRSDK" jdkType="Flex SDK Type (new)" />
+    <orderEntry type="jdk" jdkName="AIRSDK 19.0" jdkType="Flex SDK Type (new)" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="lib" level="project" />
     <orderEntry type="library" exported="" name="bin" level="project" />

@@ -571,6 +571,10 @@ public class DatingScene extends Scenes {
         var dating:String = DataContainer.currentDating;
         var styleSechedule:Object=DataContainer.styleSechedule;
         var style:String = styleSechedule[dating];
+
+        DebugTrace.msg("DatingScene.initCharacter dating="+dating);
+        DebugTrace.msg("DatingScene.initCharacter style="+style);
+
         var datingSuit:String=DataContainer.DatingSuit;
         if(datingSuit!=""){
             style=datingSuit;

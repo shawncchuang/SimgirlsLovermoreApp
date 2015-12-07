@@ -73,18 +73,18 @@ public class MainScene extends Scenes
         stageH=Starling.current.stage.stageHeight;
 
         //update one time for 1.1.7
-        var flox:FloxInterface=new FloxCommand();
-        var savedSchedule:Object=flox.getSaveData("current_battle");
-        var defaultCurrentBattle:Object=Config.defaultCurrentBattle();
-        var update:Boolean=true;
-        for(var _day:String in defaultCurrentBattle){
-           if(!savedSchedule[_day]){
-               update=false;
-               break;
-          }
-        }
-        if(update)
-        flox.save("current_battle",defaultCurrentBattle);
+//        var flox:FloxInterface=new FloxCommand();
+//        var savedSchedule:Object=flox.getSaveData("current_battle");
+//        var defaultCurrentBattle:Object=Config.defaultCurrentBattle();
+//        var update:Boolean=true;
+//        for(var _day:String in defaultCurrentBattle){
+//           if(!savedSchedule[_day]){
+//               update=false;
+//               break;
+//          }
+//        }
+//        if(update)
+//        flox.save("current_battle",defaultCurrentBattle);
         //--------------------------------------
 
 
@@ -113,6 +113,7 @@ public class MainScene extends Scenes
             var gameinfo:Sprite = ViewsContainer.gameinfo;
             gameinfo.dispatchEventWith("UPDATE_INFO");
             DataContainer.battleType="";
+
         }
         DataContainer.BattleWinner="";
 
@@ -149,7 +150,7 @@ public class MainScene extends Scenes
         container=scene.getChildByName("scene_container") as Sprite;
         command.filterScene(container);
 
-        DebugTrace.msg("MainScene.initScene: "+container.width+" ; "+container.height)
+        DebugTrace.msg("MainScene.initScene: "+container.width+" ; "+container.height);
 
         bgX=container.x;
         bgY=container.y;

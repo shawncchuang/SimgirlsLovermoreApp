@@ -125,7 +125,7 @@ public class GameInfobar extends Sprite
         this.addEventListener("UPDATE_INFO",onUpdateInformation);
         //this.addEventListener("DISPLAY_VALUE",onShowDisplayValue);
         this.addEventListener("UPDATE_DIRECTION",onUpdateDirections);
-       this.addEventListener("UPDATE_DATING",onUpdateDating);
+        this.addEventListener("UPDATE_DATING",onUpdateDating);
         this.addEventListener("CANCEL_DATING",onCancelDating);
         this.addEventListener("REMOVE",onRemovedHandler);
         this.addEventListener("DISPLAY",onDisplayHandler);
@@ -143,8 +143,6 @@ public class GameInfobar extends Sprite
 
     }
     private function onDisplayHandle(e:Event):void{
-
-
 
 
         morebar.visible=true;
@@ -699,7 +697,7 @@ public class GameInfobar extends Sprite
     }
     private function onGameInfoFadoutComplete():void{
 
-        Starling.juggler.removeTweens(this);
+        Starling.juggler.removeTweens(infoDataView);
 
 
         var _data:Object=new Object();

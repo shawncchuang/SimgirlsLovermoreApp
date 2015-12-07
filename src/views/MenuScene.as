@@ -38,7 +38,7 @@ public class MenuScene extends Scenes
     private var network:Image;
     private var tween:Tween;
     //profile,contacts,calendar,photos,mail,option
-    public static var iconsname:Array=["ProfileScene","ContactsScene","CalendarScene","PhotosScene","Mail","SettingsScene"];
+    public static var iconsname:Array=["ProfileScene","ContactsScene","CalendarScene","PhotosScene","MessagingScene","SettingsScene"];
     private var icons:Array=[new Point(422,278),new Point(344,426),new Point(427,572),
         new Point(596,570),new Point(682,435),new Point(595,280)];
 
@@ -332,7 +332,7 @@ public class MenuScene extends Scenes
     }
     private function onNetworkFadeout():void
     {
-
+        Starling.juggler.removeTweens(network);
         for(var i:uint=0;i<iconsname.length;i++)
         {
             var iconimg:Image=iconsimg[i];

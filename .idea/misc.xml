@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="IdProvider" IDEtalkID="A629B47122E9D37F4BF2FFF74DC9970C" />
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" default="false" assert-keyword="true" jdk-15="true" project-jdk-name="AIRSDK" project-jdk-type="Flex SDK Type (new)">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" default="false" assert-keyword="true" jdk-15="true" project-jdk-name="AIRSDK 19.0" project-jdk-type="Flex SDK Type (new)">
     <output url="file://$PROJECT_DIR$/release" />
   </component>
 </project>

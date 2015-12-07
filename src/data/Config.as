@@ -42,7 +42,7 @@ public class Config
         "blackmarket":"npc010",
         "temple":"npc011",
         "hotspring":"npc012",
-        "restaurant":"npc013",
+        "waiter":"npc013",
         "mansion":"npc014",
         "bank":"npc015",
         "dan":"npc016",
@@ -54,7 +54,10 @@ public class Config
         "museum":"npc022",
         "park_guy":"npc023",
         "park_gal":"npc024",
-        "primero":"npc025"
+        "primero":"npc025",
+        "beach":"npc026",
+        "fitnessclub":"npc027",
+        "restaurant":"npc028"
     };
     //schedule [index+ current month]
     public static var scheduleIndex:Object={"lenus":88,"sirena":12,"dea":25,"sao":38,"klr":51,"tomoru":64,"ceil":77,"zack":38};
@@ -280,6 +283,15 @@ public class Config
             "member_tint":[0.9,0.5]
 
         }
+
+    }
+    public static function get allScenes():Array{
+        var scenes:Array=["Hotel","Airport","SSCCArena","Academy","SpiritTemple",
+                "Museum","PoliceStation","Casino","SportsBar","Nightclub",
+                "LovemoreMansion","ShoppingCentre","FitnessClub","Beach","Park",
+                "Cinema","Pier","Restaurant","HotSpring","ThemedPark",
+                "Bank","PrivateIsland","Garden","BlackMarket","ChangingRoom","CoffeeShop"];
+        return scenes;
 
     }
     public static function get stagepoints():Object

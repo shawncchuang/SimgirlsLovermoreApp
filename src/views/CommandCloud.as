@@ -26,6 +26,8 @@ import model.BattleData;
 import starling.animation.DelayedCall;
 
 import starling.animation.Juggler;
+import starling.animation.Transitions;
+import starling.animation.Tween;
 import starling.display.MovieClip;
 import starling.events.Event;
 import starling.events.Touch;
@@ -52,6 +54,7 @@ public class CommandCloud extends Sprite
     private var pos:Object={"L1":new Point(3,374),"L2":new Point(-11,469),"L3":new Point(-8,278),"L4":new Point(2,565),"L5":new Point(1,182),
         "R1":new Point(872,375),"R2":new Point(860,469),"R3":new Point(826,279),"R4":new Point(872,566),"R5":new Point(872,183)};
     private var de_label:String="";
+    public static var REMOVED:String;
     private var directions:MovieClip;
 
 //    public static var HIDED:String="hided";
@@ -86,7 +89,7 @@ public class CommandCloud extends Sprite
         }
 
 
-        var cloud:Sprite = new Sprite();
+        cloud = new Sprite();
         cloud.useHandCursor = true;
         cloud.name = _label;
         cloud.x = pos[p].x;
@@ -114,10 +117,11 @@ public class CommandCloud extends Sprite
         cloudTxt.autoScale=true;
         cloud.addChild(cloudTxt);
 
-        cloud.x+=cloudMC.width/2;
+        cloud.x+=(cloudMC.width/2-10);
         addChild(cloud);
         cloud.addEventListener(TouchEvent.TOUCH, doClickComCloud);
 
+        this.addEventListener(CommandCloud.REMOVED,onRemovedHandle);
 
         //TweenMax.to(comcloud,id*0.1+0.2,{x:pos[p].x,transformAroundCenter:{scale:1},easing:Back.easeInOut,onComplere:onCloudComplete});
 
@@ -144,7 +148,7 @@ public class CommandCloud extends Sprite
             doOutComCloud();
         }
         if (began) {
-
+            cloud.removeEventListener(TouchEvent.TOUCH, doClickComCloud);
             if(com.indexOf("\n")!=-1){
                 com=com.split("\n").join("");
             }
@@ -222,8 +226,6 @@ public class CommandCloud extends Sprite
             }
             //if
             visibleCommandDirecation();
-        }else{
-            doOutComCloud();
         }
 
     }
@@ -231,6 +233,11 @@ public class CommandCloud extends Sprite
 
         visibleCommandDirecation();
         command.playSound("Break");
+
+
+        var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
+        gameEvent._name="clear_comcloud";
+        gameEvent.displayHandler();
 
         var mc:MovieClip = cloud.getChildByName("mc") as MovieClip;
         mc.play();
@@ -284,7 +291,7 @@ public class CommandCloud extends Sprite
         _data.enabled=true;
         _data.content=over_target;
         var gameinfo:Sprite=ViewsContainer.gameinfo;
-        if(over_target!=" Leave")
+        if(over_target.indexOf("Leave")==-1)
         {
             gameinfo.dispatchEventWith("UPDATE_DIRECTION",false,_data);
         }
@@ -324,16 +331,6 @@ public class CommandCloud extends Sprite
         if(de_label=="StartDating"){
 
 
-//            var flox:FloxInterface=new FloxCommand();
-//            var dating:String=flox.getSaveData("dating");
-//            if(dating!=""){
-//
-//                DataContainer.currentDating=dating;
-//            }
-
-            var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
-            gameEvent._name="clear_comcloud";
-            gameEvent.displayHandler();
 
             _data.name="DatingScene";
             command.sceneDispatch(SceneEvent.CHANGED,_data);
@@ -362,11 +359,6 @@ public class CommandCloud extends Sprite
         var looking_index:Number=_label.indexOf("Look");
         var start_dating:Number=_label.indexOf("Dating");
         DebugTrace.msg("CommandCloud.checkSceneCommand currentlable:"+currentlable+" ; currentScene:"+currentScene);
-
-
-        var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
-        gameEvent._name="clear_comcloud";
-        gameEvent.displayHandler();
 
         var sussess:Boolean=false;
         var _data:Object=new Object();
@@ -416,9 +408,19 @@ public class CommandCloud extends Sprite
         var basesprite:Sprite=ViewsContainer.baseSprite;
         basesprite.dispatchEventWith(DatingScene.COMMIT,false,_data);
 
+    }
+    private function onRemovedHandle(e:Event):void{
+        cloud.removeEventListener(TouchEvent.TOUCH, doClickComCloud);
 
-
-
+        var tween:Tween=new Tween(cloud,0.5,Transitions.EASE_OUT);
+        tween.scaleTo(0);
+        tween.delay=0.25;
+        tween.onComplete=onClodFadeoutComplete;
+        Starling.juggler.add(tween);
+    }
+    private function onClodFadeoutComplete():void{
+        Starling.juggler.removeTweens(cloud);
+        cloud.removeFromParent(true);
     }
 }
 }

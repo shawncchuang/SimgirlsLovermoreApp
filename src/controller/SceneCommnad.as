@@ -172,8 +172,6 @@ public class SceneCommnad implements SceneInterface
         if(scene!="CharacterDesignScene")
             addTouchArea();
         showChat();
-
-
     }
     private function addTouchArea():void
     {
@@ -190,7 +188,7 @@ public class SceneCommnad implements SceneInterface
         // var HOVER:Touch = e.getTouch( Starling.current.stage, TouchPhase.HOVER);
         if(BEGAN && BEGAN.target.name !="previousbtn")
         {
-            //disableAll();
+
             onTouchedScene();
         }
 
@@ -390,11 +388,7 @@ public class SceneCommnad implements SceneInterface
     }
     private function creartePlayerChat():void
     {
-
-
         createTalkField();
-
-
     }
     private function createTalkField():void
     {

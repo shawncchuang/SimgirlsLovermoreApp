@@ -269,8 +269,8 @@ public class AssetEmbeds
     [Embed(source="../../media/textures/icons/menu_photos.png")]
     public static const IconPhotosScene:Class;
 
-    [Embed(source="../../media/textures/icons/menu_mail.png")]
-    public static const IconMail:Class;
+    [Embed(source="../../media/textures/icons/menu_messaging.png")]
+    public static const IconMessagingScene:Class;
 
     [Embed(source="../../media/textures/icons/menu_setting.png")]
     public static const IconSettingsScene:Class;
@@ -281,15 +281,14 @@ public class AssetEmbeds
     public static const IconPROFILETitle:Class;
     [Embed(source="../../media/textures/icons/title_icon_setting.png")]
     public static const IconSETTINGSTitle:Class;
-
     [Embed(source="../../media/textures/icons/title_icon_calendar.png")]
     public static const IconCALENDARTitle:Class;
-
     [Embed(source="../../media/textures/icons/title_icon_contacts.png")]
     public static const IconCONTACTSTitle:Class;
-
     [Embed(source="../../media/textures/icons/title_icon_photos.png")]
     public static const IconPHOTOSTitle:Class;
+    [Embed(source="../../media/textures/icons/title_icon_messaging.png")]
+    public static const IconMESSAGINGTitle:Class;
 
     [Embed(source="../../media/textures/icons/pro_empty.png")]
     public static const ProEmpty:Class;
@@ -302,7 +301,7 @@ public class AssetEmbeds
 
     [Embed(source="../../media/textures/icons/profile/NPCs.xml", mimeType="application/octet-stream")]
     public static const NPCsXML:Class;
-    [Embed(source="../../media/textures/icons/profile/NPCs.atf", mimeType="application/octet-stream")]
+    [Embed(source="../../media/textures/icons/profile/NPCs.png")]
     public static const NPCs:Class;
 
     [Embed(source="../../media/textures/icons/profile/ceil-facials.xml", mimeType="application/octet-stream")]
@@ -823,7 +822,12 @@ public class AssetEmbeds
     public static const npc024:Class;
     [Embed(source="../../media/textures/npc/npc025.png")]
     public static const npc025:Class;
-
+    [Embed(source="../../media/textures/npc/npc026.png")]
+    public static const npc026:Class;
+    [Embed(source="../../media/textures/npc/npc027.png")]
+    public static const npc027:Class;
+    [Embed(source="../../media/textures/npc/npc028.png")]
+    public static const npc028:Class;
 
     [Embed(source="../../media/textures/characters/styles/ceil/battle.png")]
     public static const ceil_battle:Class;

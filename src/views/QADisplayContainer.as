@@ -77,7 +77,7 @@ package views
 			var succuss:Boolean=true;
 			if(templete.firstname.text=="" || templete.lastname.text=="")
 			{
-				var msg:String="Please input your fisrt name or last name";	
+				var msg:String="Please input your first name and last name";
 				MainCommand.addAlertMsg(msg);
 				succuss=false;
 			}

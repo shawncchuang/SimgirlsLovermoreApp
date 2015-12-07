@@ -49,6 +49,8 @@ import views.TarotCardsDisplay;
 import views.TraceGame;
 import views.TrainingGame;
 
+import com.demonsters.debugger.MonsterDebugger;
+
 [SWF(width="1024",height="768",frameRate="24")]
 public class SimgirlsLovemore extends MovieClip
 {
@@ -125,6 +127,7 @@ public class SimgirlsLovemore extends MovieClip
 
 		//var se:SocialEngine=new SocialEngine();
 		//se.init();
+
 
 
 		ViewsContainer.PlayerProfile=null;
@@ -218,10 +221,6 @@ public class SimgirlsLovemore extends MovieClip
 				break;
 			case "comcloud":
 				com_btn_txt=e.target.data;
-//					comcloud=new CommandCloud(com_btn_txt);
-//					//topview.addChild(comcloud);
-//					Starling.current.nativeOverlay.addChild(comcloud);
-//					comcouldlist.push(comcloud);
 
 				break;
 
@@ -230,8 +229,7 @@ public class SimgirlsLovemore extends MovieClip
 				for(var i:uint=0;i<clouds.length;i++)
 				{
 					var cloud:CommandCloud=clouds[i];
-					cloud.removeFromParent(true);
-
+					cloud.dispatchEventWith(CommandCloud.REMOVED);
 				}
 				ViewsContainer.CurrentClouds=new Array();
 				break;
@@ -239,7 +237,7 @@ public class SimgirlsLovemore extends MovieClip
 				DebugTrace.msg("SimgirlsLovemore.disable_comloud");
 				for(var m:uint=0;m<comcouldlist.length;m++)
 				{
-					var cloud:CommandCloud=comcouldlist[m];
+					cloud=comcouldlist[m];
 					cloud.visible=false;
 				}
 
@@ -257,8 +255,7 @@ public class SimgirlsLovemore extends MovieClip
 				}
 				break;
 			case "QA":
-				//inputUI=new InputNamePannel(onSubmitComplete);
-				//topview.addChild(inputUI);
+
 				qa_label=e.target.qa_label;
 				qaDisplay=new QADisplayContainer(qa_label,onSubmitComplete);
 				topview.addChild(qaDisplay);

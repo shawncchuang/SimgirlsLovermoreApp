@@ -89,7 +89,6 @@ public class ContactsSheet extends PanelScreen {
             var renderer:DefaultListItemRenderer=new DefaultListItemRenderer();
             //renderer.layoutOrder=BaseDefaultItemRenderer.DEFAULT_CHILD_NAME_ICON_LABEL;
             renderer.gap = 5;
-
             renderer.iconLoaderFactory=function():ImageLoader{
                 var loader:ImageLoader = new ImageLoader();
                 loader.width=80;
@@ -118,7 +117,7 @@ public class ContactsSheet extends PanelScreen {
         for(var j:uint=0;j<contacts.length;j++)
         {
             var renderObj:Object=new Object();
-            renderObj.text=contacts[j].name+"\nLocation: "+contacts[j].location;
+            renderObj.text=switchNameFormat(contacts[j].name)+"\nLocation: "+contacts[j].location;
 
             var xml:XML=Assets.getAtalsXML(contacts[j].name+"FacialsXML");
             var textrue:Texture=Assets.getTexture(contacts[j].name+"Facials");
@@ -132,6 +131,39 @@ public class ContactsSheet extends PanelScreen {
         var contactsCollectoin:ListCollection= new ListCollection(_data);
         contactlist.dataProvider=contactsCollectoin;
 
+    }
+    private function switchNameFormat(name:String):String{
+       // "lenus","sirena","dea","sao","klr","tomoru","ceil","zack"
+        var nameformat:String="";
+
+        switch(name){
+            case "lenus":
+                nameformat="Lenus";
+                break
+            case "sirena":
+                nameformat="Sirena";
+                break
+            case "dea":
+                nameformat="Dea";
+                break
+            case "sao":
+                nameformat="Sao";
+                break
+            case "klr":
+                nameformat="Klaire";
+                break
+            case "tomoru":
+                nameformat="Tomoru";
+                break
+            case "ceil":
+                nameformat="Ceil";
+                break
+            case "zack":
+                nameformat="Zack";
+                break
+        }
+
+        return nameformat;
     }
 }
 }

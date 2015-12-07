@@ -75,6 +75,7 @@ import views.StoryPreview;
 import views.TarotreadingScene;
 import views.TempleScene;
 import views.ThemedParkScene;
+import views.MessagingScene;
 
 
 
@@ -93,6 +94,8 @@ public class Scenes extends Sprite
     private var sceneObj:Object;
     private var scenebg:Image;
     public var battle_type:String;
+    private var infobar:Boolean;
+    private var gameInfoTween:Tween;
     private function scenesPool():Object
     {
 
@@ -146,12 +149,13 @@ public class Scenes extends Sprite
             DebugTrace.msg("Scene.changeSceneHandle filtersMC=NULL");
         }
 
+        onFadeoutComplete();
 
+//        var scentTween:Tween=new Tween(scene,0.5,Transitions.EASE_OUT);
+//        scentTween.fadeTo(0);
+//        scentTween.onComplete=onFadeoutComplete;
+//        Starling.juggler.add(scentTween);
 
-        var scentTween:Tween=new Tween(scene,0.5,Transitions.EASE_OUT);
-        scentTween.fadeTo(0);
-        scentTween.onComplete=onFadeoutComplete;
-        Starling.juggler.add(scentTween);
 
     }
     private  var filtersMC:flash.display.MovieClip;
@@ -160,6 +164,7 @@ public class Scenes extends Sprite
 
 
         //var scene:Sprite=ViewsContainer.MainScene;
+
         ViewsContainer.InfoDataView.visible=true;
         if(next_scene!="MenuScene" && next_scene!="ProfileScene" &&
                 next_scene!="SettingsScene" &&  next_scene!="ContactsScene" &&
@@ -170,7 +175,7 @@ public class Scenes extends Sprite
         }
         if(next_scene!="FoundSomeScene" && next_scene!="DatingScene" &&
                 next_scene!="MenuScene" && next_scene!="ProfileScene" &&
-                next_scene!="SettingsScene" &&  next_scene!="ContactsScene" &&
+                next_scene!="SettingsScene" &&  next_scene!="ContactsScene" && next_scene!="MessagingScene" &&
                 next_scene!="CalendarScene" && next_scene!="PhotosScene" && next_scene!="PreciousPhotosScene" && next_scene!="ChangeClothesScene")
         {
             DataContainer.currentScene=next_scene;
@@ -221,12 +226,14 @@ public class Scenes extends Sprite
 
         }
 
-        var infobar:Boolean=true;
+
 
 
         //current_scence=getScene(next_scene);
+        infobar=true;
         switch(next_scene)
         {
+
             case "Tarotreading":
                 infobar=false;
                 current_scence=new TarotreadingScene();
@@ -236,6 +243,7 @@ public class Scenes extends Sprite
                 current_scence=new CharacterDesignScene();
                 break
             case "MainScene":
+                infobar=true;
                 current_scence= new MainScene();
                 break
             case "AirplaneScene":
@@ -390,32 +398,40 @@ public class Scenes extends Sprite
                 infobar=false;
                 current_scence=new StoryPreview();
                 break
+            case "MessagingScene":
+                infobar=false;
+                current_scence=new MessagingScene();
+                break
 
         }
         //switch
 
         scene.addChild(current_scence);
+
         var UIViews:Sprite=ViewsContainer.UIViews;
+        mainstage.swapChildren(scene,UIViews);
+
         var  gameInfobar:Sprite=ViewsContainer.InfoDataView;
-        var tween:Tween=new Tween(gameInfobar,0.5,Transitions.EASE_IN_OUT_BACK);
+        gameInfoTween=new Tween(gameInfobar,0.5,Transitions.EASE_IN_OUT_BACK);
+
         if(infobar){
 
-            tween.animate("y",-29);
+            gameInfoTween.animate("y",-29);
 
         }else{
 
-            tween.animate("y",-(gameInfobar.height));
+            gameInfoTween.animate("y",-(gameInfobar.height));
 
         }
-        tween.onComplete=onGameIngbarFadeinComplete;
-        Starling.juggler.add(tween);
+        gameInfoTween.onComplete=onGameIngbarFadeinComplete;
+        Starling.juggler.add(gameInfoTween);
 
         command.removeShortcuts();
 
         var shortcutsScene:String=DataContainer.shortcutsScene;
         if(shortcutsScene.indexOf("Game")==-1 && shortcutsScene.indexOf("Battle")==-1 &&
                 shortcutsScene!="DatingScene" && shortcutsScene.indexOf("Formation")==-1){
-            DebugTrace.msg("Scenes.changeSceneHandle addShortcuts shortcutsScene:"+shortcutsScene);
+            //DebugTrace.msg("Scenes.changeSceneHandle addShortcuts shortcutsScene:"+shortcutsScene);
             //command.addShortcuts();
         }
 
@@ -430,52 +446,28 @@ public class Scenes extends Sprite
             flox.logEvent("SceneVisited", evtObj);
         }
 
+    }
 
+    private function onGameIngbarFadeinComplete():void{
 
-        function onGameIngbarFadeinComplete():void{
+        Starling.juggler.removeTweens(gameInfoTween);
 
-            if(infobar){
-                var gameInfobar:Sprite=ViewsContainer.gameinfo;
-                gameInfobar.dispatchEventWith("DISPLAY");
+        var UIViews:Sprite=ViewsContainer.UIViews;
+        var  gameInfobar:Sprite=ViewsContainer.InfoDataView;
 
-                gameInfobar.dispatchEventWith("DRAW_PROFILE");
-            }
+        if(infobar){
 
-
-            UIViews.visible=infobar;
-            Starling.juggler.removeTweens(gameInfobar);
+            gameInfobar.dispatchEventWith("DISPLAY");
+            gameInfobar.dispatchEventWith("DRAW_PROFILE");
         }
+
+        UIViews.visible=infobar;
 
 
     }
-    /*private function getScene(attr:String):Sprite
-     {
-     var scene_names:Array=["Tarotreading","CharacterDesignScene",
-     "MainScene","AirplaneScene","HotelScene",
-     "BattleScene","AirportScene","FitnessClubScene",
-     "MuseumScene","BeachScene","NightClub"];
-     var index:Number=scene_names.indexOf(attr);
-     var sceneVetor:Vector.<Sprite> = new <Sprite>[new TarotreadingScene(),new CharacterDesignScene(),new MainScene(),new AirplaneScene(),
-     new HotelScene(),new BattleScene(),new AirportScene(),new FitnessClubScene(),new MuseumScene(),new BeachScene(),new NightClubScene()]
-
-
-
-     return sceneVetor[index];
-     }*/
     private function onClearedScene(e:SceneEvent):void
     {
-        /*var mainstage:Sprite=ViewsContainer.MainStage;
-         var scene:Sprite=ViewsContainer.MainScene;
-         var mainUI:Sprite=ViewsContainer.UIViews;
-         if(mainUI)
-         {
-         mainstage.removeChild(mainUI);
-         }
 
-         var scentTween:Tween=new Tween(scene,.5,Transitions.EASE_OUT);
-         scentTween.animate("alpha",0.5);
-         scentTween.onComplete=onFadeoutComplete;
-         Starling.juggler.add(scentTween);*/
         clearSceneHandle();
 
     }
@@ -503,8 +495,8 @@ public class Scenes extends Sprite
             addChild(scene);
             ViewsContainer.MainScene=scene;
             mainstage.addChild(scene);
-            var uiViews:Sprite=ViewsContainer.UIViews;
-            mainstage.swapChildren(scene,uiViews);
+
+
         }
 
         changeSceneHandle();

@@ -1,6 +1,8 @@
 package
 {
 
+import com.demonsters.debugger.MonsterDebugger;
+
 import controller.Assets;
 import controller.FloxCommand;
 import controller.FloxInterface;
@@ -66,6 +68,7 @@ public class Game extends Sprite
 	public function Game()
 	{
 
+		MonsterDebugger.initialize(this);
 
 		Starling.current.stage.stageWidth=1024;
 		Starling.current.stage.stageHeight=768;
@@ -133,8 +136,8 @@ public class Game extends Sprite
 			case "newgame":
 			case "loadtoStart":
 				removeChild(saveloadlist);
-				initMainScene();
 				initUI();
+				initMainScene();
 
 				break
 			case "loadgame":
@@ -258,7 +261,7 @@ public class Game extends Sprite
 		addChild(uiView);
 
 		ViewsContainer.UIViews=uiView;
-		uiView.visible=false
+		//uiView.visible=false
 	}
 	private function onPayCheck(e:starling.events.Event):void
 	{

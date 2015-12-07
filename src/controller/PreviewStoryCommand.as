@@ -122,9 +122,10 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
     }
     public function start():void
     {
-        addTouchArea();
-        showChat();
 
+        if(scene!="CharacterDesignScene")
+            addTouchArea();
+        showChat();
     }
     private function addTouchArea():void
     {
@@ -142,7 +143,7 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
        // var HOVER:Touch = e.getTouch( Starling.current.stage, TouchPhase.HOVER);
         if(BEGAN && BEGAN.target.name !="previousbtn")
         {
-            disableAll();
+
             onTouchedScene();
         }
 
@@ -162,7 +163,6 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
                 bubble.removeFromParent(true);
                 bubble=null;
             }
-            //if
             showChat();
         }
         else
@@ -173,6 +173,7 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
             nextStoryPart();
             if(finishedcallback)
                 finishedcallback();
+            disableAll();
         }
         //if
 
@@ -281,7 +282,6 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
                         //_target.removeChild(display_container[target]);
                         display_container[target]=null;
                     }
-                    addTouchArea();
                     break
                 case "display":
                     createCharacter(target,pos);
@@ -296,15 +296,12 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
                     onPhotoRemoved();
                     break
                 case "music-on":
-                    addTouchArea();
                     command.playBackgroudSound(target);
                     break
                 case "music-off":
-                    addTouchArea();
                     command.stopBackgroudSound();
                     break
                 case "sfx":
-                    addTouchArea();
                     command.playSound(target);
                     break
                 case "video":
@@ -348,26 +345,7 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
     }
     private function creartePlayerChat():void
     {
-
-
-//        if(!talkmask)
-//        {
-//            talkmask=new MyTalkingDisplay();
-//            talkmask.addMask();
-//            _target.addChild(talkmask);
-//
-//            try
-//            {
-//                _target.swapChildren(talkmask,photoframe);
-//            }
-//            catch(e:Error){
-//
-//            }
-//        }
-//        //if
         createTalkField();
-
-
     }
     private function createTalkField():void
     {
@@ -381,7 +359,7 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
     }
     private function onTalkingComplete():void{
         DebugTrace.msg("SceneCommand.onTalkingComplete");
-        addTouchArea();
+
     }
     public function createBubble(comlists:Array):void
     {
@@ -407,7 +385,7 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
             dir=-1;
         }
         var new_pos:Point=new Point(bubble_pos[_pos].x,bubble_pos[_pos].y);
-        bubble=new CharacterBubble(scene,talk_index,part_index,new_pos,dir,onBubbleComplete);
+        bubble=new CharacterBubble(scene,talk_index,part_index,new_pos,dir);
         bubble.x=new_pos.x;
         bubble.y=new_pos.y;
         _target.addChild(bubble);
@@ -468,7 +446,6 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
     }
     private function onCharacterDisplayed():void
     {
-        addTouchArea();
         Starling.juggler.removeTweens(character);
     }
     public function movingCharacter(target:String,dir:String):void
@@ -484,32 +461,19 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
 
     private function onMovingComplete():void
     {
-        addTouchArea();
+
         Starling.juggler.remove(moving_tween);
     }
     private function createPhotoMessage(target:String):void {
         DebugTrace.msg("ChatCommand.createPhotoMessage");
-        photoframe = new PhotoMessage(target, onPhotoComplete);
+        photoframe = new PhotoMessage(target);
         photoframe.name = "photoframe";
         _target.addChild(photoframe);
 
     }
-    private function onPhotoComplete():void{
-        addTouchArea();
-    }
+
     private function onPhotoRemoved():void
     {
-//        var tween:Tween=new Tween(photoframe,0.5,Transitions.EASE_OUT);
-//        tween.onComplete=onPhotoFadeout;
-//        tween.fadeTo(0);
-//        Starling.juggler.add(tween);
-        onPhotoFadeout();
-
-    }
-    private function onPhotoFadeout():void{
-
-        addTouchArea();
-        //Starling.juggler.removeTweens(photoframe);
         if(photoframe) {
             photoframe.removeFromParent(true);
             photoframe = null;
@@ -578,7 +542,6 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
         bgSprtie=new Image(bgTexture);
         _target.addChild(bgSprtie);
 
-        addTouchArea();
     }
 
     public function addDisplayContainer(src:String):void
@@ -588,8 +551,7 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
         //command.addDisplayObj(scene,src);
         if(_target)
         {
-            //_target.removeEventListener(TouchEvent.TOUCH,onChatSceneTouched);
-            //disableAll();
+
             var src_index:Number=src.indexOf("ComCloud");
             //DebugTrace.msg("SceneCommand.addDisplayContainer src_index:"+src_index);
             var scene_index:Number=scene.indexOf("Scene");
@@ -613,14 +575,10 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
 
                 }else{
 
-                    disableAll()
+                    //disableAll()
                 }
             }
-            else
-            {
-                disableAll();
-            }
-            //if
+
         }
 
     }
@@ -666,7 +624,6 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
         {
             bubble.removeFromParent(true);
         }
-
     }
     public function disableAll():void
     {
