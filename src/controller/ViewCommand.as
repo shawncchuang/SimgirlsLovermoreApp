@@ -28,6 +28,8 @@ import starling.events.TouchPhase;
 import starling.textures.Texture;
 import starling.textures.TextureSmoothing;
 
+import utils.DebugTrace;
+
 import utils.DrawManager;
 
 public class ViewCommand  implements ViewInterface{
@@ -301,8 +303,8 @@ public class ViewCommand  implements ViewInterface{
             old_chmc.removeFromParent(true);
 
         }
-
-        var style:String=DataContainer.styleSechedule[character];
+DebugTrace.msg("ViewCommand.replaceCharacter styleSechedule="+JSON.stringify(DataContainer.styleSchedule));
+        var style:String=DataContainer.styleSchedule[character];
         var clothTexture:Texture=Assets.getTexture(style);
         var characterImg:Image=new Image(clothTexture);
 

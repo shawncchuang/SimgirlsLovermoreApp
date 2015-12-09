@@ -59,7 +59,7 @@ public class DataContainer
     private static var battlewinner:String;
     private static var shortcuts_noted:String;
     private static var player_fullname:Object;
-
+    private static var styles_schedule:Object;
     public static function set AssetsId(ids:Array):void
     {
         assets_id=ids;
@@ -761,15 +761,15 @@ public class DataContainer
 
     }
 
-    private static var styles_sechedule:Object;
 
 
-    public static function set styleSechedule(sechedule:Object):void{
-        styles_sechedule=sechedule;
+
+    public static function set styleSchedule(sechedule:Object):void{
+        styles_schedule=sechedule;
     }
 
-    public static function get styleSechedule():Object{
-        return styles_sechedule;
+    public static function get styleSchedule():Object{
+        return styles_schedule;
 
     }
 

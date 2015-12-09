@@ -164,7 +164,7 @@ public class Scenes extends Sprite
 
 
         //var scene:Sprite=ViewsContainer.MainScene;
-
+        if(ViewsContainer.InfoDataView)
         ViewsContainer.InfoDataView.visible=true;
         if(next_scene!="MenuScene" && next_scene!="ProfileScene" &&
                 next_scene!="SettingsScene" &&  next_scene!="ContactsScene" &&
@@ -188,10 +188,10 @@ public class Scenes extends Sprite
 
 
         DebugTrace.msg("Scenes.changeSceneHandle next_scene:"+next_scene);
-        if(next_scene=="MainScene")
+        if(next_scene=="MainScene" || next_scene=="LoadMainScene")
         {
-            var scene_texture:String=next_scene.split("Scene").join("Bg");
-            var bgTexture:Texture=Assets.getTexture(scene_texture+"Day");
+            //var scene_texture:String=next_scene.split("Scene").join("Bg");
+            var bgTexture:Texture=Assets.getTexture("MainBgDay");
             scenebg=new Image(bgTexture);
             scene_container.addChild(scenebg);
 
@@ -407,24 +407,27 @@ public class Scenes extends Sprite
         //switch
 
         scene.addChild(current_scence);
-
-        var UIViews:Sprite=ViewsContainer.UIViews;
-        mainstage.swapChildren(scene,UIViews);
-
         var  gameInfobar:Sprite=ViewsContainer.InfoDataView;
-        gameInfoTween=new Tween(gameInfobar,0.5,Transitions.EASE_IN_OUT_BACK);
-
-        if(infobar){
-
-            gameInfoTween.animate("y",-29);
-
+        var UIViews:Sprite=ViewsContainer.UIViews;
+        if(next_scene=="CharacterDesignScene"){
+            return
         }else{
 
-            gameInfoTween.animate("y",-(gameInfobar.height));
+            mainstage.swapChildren(scene,UIViews);
+            gameInfoTween=new Tween(gameInfobar,0.5,Transitions.EASE_IN_OUT_BACK);
+            if(infobar){
 
+                gameInfoTween.animate("y",-29);
+
+            }else{
+
+                gameInfoTween.animate("y",-(gameInfobar.height));
+
+            }
+            gameInfoTween.onComplete=onGameIngbarFadeinComplete;
+            Starling.juggler.add(gameInfoTween);
         }
-        gameInfoTween.onComplete=onGameIngbarFadeinComplete;
-        Starling.juggler.add(gameInfoTween);
+
 
         command.removeShortcuts();
 
@@ -450,19 +453,16 @@ public class Scenes extends Sprite
 
     private function onGameIngbarFadeinComplete():void{
 
-        Starling.juggler.removeTweens(gameInfoTween);
-
+        Starling.juggler.remove(gameInfoTween);
+        DebugTrace.msg("Scene.onGameIngbarFadeinComplete infobar="+infobar);
         var UIViews:Sprite=ViewsContainer.UIViews;
-        var  gameInfobar:Sprite=ViewsContainer.InfoDataView;
-
+        var gameInfobar:Sprite=ViewsContainer.gameinfo;
         if(infobar){
-
             gameInfobar.dispatchEventWith("DISPLAY");
             gameInfobar.dispatchEventWith("DRAW_PROFILE");
         }
 
         UIViews.visible=infobar;
-
 
     }
     private function onClearedScene(e:SceneEvent):void

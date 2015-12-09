@@ -431,7 +431,7 @@ public class Config
             "command_dating":{
                 lenus:{
                     "Kiss":2,
-                    "Flirt":2,
+                    "Flirt":4,
                     "TakePhoto":2,
                     "Chat":6,
                     "Date":1,
@@ -439,7 +439,7 @@ public class Config
                 },
                 sirena:{
                     "Kiss":2,
-                    "Flirt":2,
+                    "Flirt":4,
                     "TakePhoto":2,
                     "Chat":6,
                     "Date":1,
@@ -447,7 +447,7 @@ public class Config
                 },
                 dea:{
                     "Kiss":2,
-                    "Flirt":2,
+                    "Flirt":4,
                     "TakePhoto":2,
                     "Chat":6,
                     "Date":1,
@@ -455,7 +455,7 @@ public class Config
                 },
                 zack:{
                     "Kiss":2,
-                    "Flirt":2,
+                    "Flirt":4,
                     "TakePhoto":2,
                     "Chat":6,
                     "Date":1,
@@ -463,7 +463,7 @@ public class Config
                 },
                 sao:{
                     "Kiss":2,
-                    "Flirt":2,
+                    "Flirt":4,
                     "TakePhoto":2,
                     "Chat":6,
                     "Date":1,
@@ -471,7 +471,7 @@ public class Config
                 },
                 klr:{
                     "Kiss":2,
-                    "Flirt":2,
+                    "Flirt":4,
                     "TakePhoto":2,
                     "Chat":6,
                     "Date":1,
@@ -479,7 +479,7 @@ public class Config
                 },
                 tomoru:{
                     "Kiss":2,
-                    "Flirt":2,
+                    "Flirt":4,
                     "TakePhoto":2,
                     "Chat":6,
                     "Date":1,
@@ -487,7 +487,7 @@ public class Config
                 },
                 ceil:{
                     "Kiss":2,
-                    "Flirt":2,
+                    "Flirt":4,
                     "TakePhoto":2,
                     "Chat":6,
                     "Date":1,

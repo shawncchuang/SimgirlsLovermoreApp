@@ -569,20 +569,22 @@ public class DatingScene extends Scenes {
 
 
         var dating:String = DataContainer.currentDating;
-        var styleSechedule:Object=DataContainer.styleSechedule;
+        var styleSechedule:Object=DataContainer.styleSchedule;
         var style:String = styleSechedule[dating];
 
-        DebugTrace.msg("DatingScene.initCharacter dating="+dating);
+        var datingSuit:String=DataContainer.DatingSuit;
+//        if(datingSuit!=""){
+//            style=datingSuit;
+//        }else{
+//            DataContainer.DatingSuit=style;
+//        }
+
+        //DebugTrace.msg("DatingScene.initCharacter datingSuit="+datingSuit);
+        //DebugTrace.msg("DatingScene.initCharacter dating="+dating);
         DebugTrace.msg("DatingScene.initCharacter style="+style);
 
-        var datingSuit:String=DataContainer.DatingSuit;
-        if(datingSuit!=""){
-            style=datingSuit;
-        }else{
-            DataContainer.DatingSuit=style;
-        }
-        var clothTexture:Texture = Assets.getTexture(style);
 
+        var clothTexture:Texture = Assets.getTexture(style);
 
         character = new Image(clothTexture);
         character.alpha=0;

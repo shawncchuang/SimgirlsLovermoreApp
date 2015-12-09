@@ -52,7 +52,7 @@ import events.GameEvent;
 		}
 		private function init():void
 		{
-			
+			command.initStyleSchedule();
 			scencom.init("AcademyScene",speaker_sprite,26,onCallback);
 			scencom.start();
 			scencom.disableAll();

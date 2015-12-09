@@ -16,6 +16,8 @@ import com.greensock.text.SplitTextField;
 
 import flash.display.MovieClip;
 import flash.display.Sprite;
+import flash.display.Stage;
+import flash.display.StageQuality;
 import flash.events.Event;
 import flash.events.MouseEvent;
 import flash.events.TimerEvent;
@@ -133,6 +135,7 @@ public class BattleScene extends Sprite
 	private var battle_type:String;
 	public function BattleScene()
 	{
+
 
 		battle_type=DataContainer.battleType;
 		var scene:String=DataContainer.currentScene;

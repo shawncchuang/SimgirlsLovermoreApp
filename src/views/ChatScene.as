@@ -132,7 +132,7 @@ public class ChatScene extends Sprite
         if(dating)
         {
 
-            var style:String=DataContainer.styleSechedule[dating];
+            var style:String=DataContainer.styleSchedule[dating];
             var clothTexture:Texture=Assets.getTexture(style);
             var character:Image=new Image(clothTexture);
 

@@ -33,6 +33,8 @@ import starling.textures.Texture;
 import starling.textures.TextureAtlas;
 import starling.textures.TextureSmoothing;
 
+import utils.DebugTrace;
+
 import utils.ViewsContainer;
 
 public class FlirtScene extends Sprite{
@@ -49,6 +51,8 @@ public class FlirtScene extends Sprite{
     private var cardX:Number;
     private var card_name:String;
     private var selType:String;
+    private var tweenlist:Array=new Array();
+    private var cards:Array=new Array();
     public function FlirtScene() {
 
         initDatingCard();
@@ -102,13 +106,14 @@ public class FlirtScene extends Sprite{
             card.x=1000;
             card.y=500;
             addChild(card);
-            var tween:Tween=new Tween(card,0.8,Transitions.EASE_IN_OUT);
+            cards.push(card);
+            var tween:Tween=new Tween(card,0.4,Transitions.EASE_IN_OUT);
             tween.animate("x",posX);
             tween.delay=(i*0.4);
             Starling.juggler.add(tween);
             card.useHandCursor=true;
             card.addEventListener(TouchEvent.TOUCH, onTouchCardHandle);
-
+            tweenlist.push(tween);
         }
 
     }
@@ -118,6 +123,7 @@ public class FlirtScene extends Sprite{
         var began:Touch=e.getTouch(target,TouchPhase.BEGAN);
 
         if(began){
+            removeTouchCards();
 
             cardX=target.x;
             card_name=target.name;
@@ -137,9 +143,9 @@ public class FlirtScene extends Sprite{
             var cardTween:Tween=new Tween(card,0.4,Transitions.EASE_IN_OUT);
             cardTween.animate("scaleX",1);
             Starling.juggler.add(cardTween);
+            tweenlist.push(cardTween);
 
             otherCardsFadeout();
-
             resaultHandle();
         }
 
@@ -161,8 +167,8 @@ public class FlirtScene extends Sprite{
                 var card:Image=this.getChildByName("card"+i) as Image;
                 var cardTween:Tween=new Tween(card,0.5,Transitions.EASE_IN_OUT);
                 cardTween.animate("x",cardX);
-
                 Starling.juggler.add(cardTween);
+                tweenlist.push(cardTween);
             }
 
         }
@@ -191,13 +197,14 @@ public class FlirtScene extends Sprite{
     }
     private function resaultHandle():void{
 
-
+        DebugTrace.msg("FlirtScene.resaultHandle selType="+selType);
+        DebugTrace.msg("FlirtScene.resaultHandle dating_card="+dating_card);
         var dating:String=DataContainer.currentDating;
         var moodObj:Object=flox.getSaveData("mood");
         var loveObj:Object=flox.getSaveData("love");
         var imgObj:Object=flox.getSaveData("image");
         var image:Number=imgObj.player;
-        var reward:Number=Math.floor(image/3);
+        var reward:Number=Math.floor(image/2);
         var value_data:Object=new Object();
         var love:Object=new Object();
         if(selType==dating_card){
@@ -234,37 +241,52 @@ public class FlirtScene extends Sprite{
                     command.displayUpdateValue(this,value_data);
                     break
             }
+            command.updateRelationship();
 
+            var _data:Object=new Object();
+            _data.com="TakeFlirtReward";
+            _data.mood= moodObj[dating];
+            _data.love=love;
+            var base_sprite:Sprite=ViewsContainer.baseSprite;
+            base_sprite.dispatchEventWith(DatingScene.COMMIT,false,_data);
         }else{
 
-            love=null;
-
-            moodObj[dating]+=reward;
-            flox.save("mood",moodObj);
-
-            value_data.attr="mood";
-            value_data.values= "MOOD +"+reward;
-            command.displayUpdateValue(this,value_data);
+//            love=null;
+//
+//            moodObj[dating]+=reward;
+//            flox.save("mood",moodObj);
+//
+//            value_data.attr="mood";
+//            value_data.values= "MOOD +"+reward;
+//            command.displayUpdateValue(this,value_data);
 
         }
-        command.updateRelationship();
 
-        var _data:Object=new Object();
-        _data.com="TakeFlirtReward";
-        _data.mood= moodObj[dating];
-        _data.love=love;
-        var base_sprite:Sprite=ViewsContainer.baseSprite;
-        base_sprite.dispatchEventWith(DatingScene.COMMIT,false,_data);
+
 
     }
 
     private function doCancelHandler():void
     {
-
+        clearTweens();
         var _data:Object=new Object();
         _data.name=DataContainer.currentLabel;
         command.sceneDispatch(SceneEvent.CHANGED,_data);
 
+
+    }
+    private function clearTweens():void{
+
+        for(var i:uint=0;i<tweenlist.length;i++){
+            Starling.juggler.remove(tweenlist[i]);
+        }
+
+    }
+    private function removeTouchCards():void{
+
+        for(var i:uint=0;i<cards.length;i++){
+            cards[i].removeEventListener(TouchEvent.TOUCH, onTouchCardHandle);
+        }
 
     }
 }

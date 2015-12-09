@@ -17,6 +17,10 @@ import events.GameEvent;
 import events.SceneEvent;
 import events.TopViewEvent;
 
+import flash.display.StageQuality;
+
+import flash.ui.ContextMenu;
+
 import model.BattleData;
 
 import views.StoryPreview;
@@ -56,7 +60,6 @@ public class Game extends Sprite
 	private var paymentScene:Sprite=new Sprite();
 
 
-
 	public static function set LoadGame(value:Boolean):void
 	{
 		loadgame=value;
@@ -67,7 +70,7 @@ public class Game extends Sprite
 	}
 	public function Game()
 	{
-
+		Starling.current.nativeStage.quality=StageQuality.LOW;
 		MonsterDebugger.initialize(this);
 
 		Starling.current.stage.stageWidth=1024;
@@ -111,19 +114,16 @@ public class Game extends Sprite
 			}
 			else
 			{
-
-				initMainScene();
 				initUI();
+				initMainScene();
+
 				var battleData:BattleData=new BattleData();
 				battleData.checkBattleSchedule("BattleRanking","cpu_team");
 
 			}
 		}
 
-		//var criminals:Array=flox.getSaveData("criminals");
-		//if(!criminals){
 			command.initCriminalsRecord();
-		//}
 
 
 	}
@@ -220,7 +220,7 @@ public class Game extends Sprite
 		addChild(scene);
 
 		command.setNowMood();
-
+		//command.initContextMenu();
 
 
 		var _data:Object=new Object();

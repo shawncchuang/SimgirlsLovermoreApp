@@ -65,6 +65,7 @@ public class CardsList extends Sprite
     private var cardinfo:Object;
     private var unlockSkill:Object=new Object();
     private var cards:Array;
+
     public function CardsList()
     {
 
@@ -146,7 +147,7 @@ public class CardsList extends Sprite
         //DebugTrace.msg("CardsList.initCards listTotal:"+listTotal+"; pageNum:"+pageNum+" ;cards_index:"+cards_index);
 
         //DebugTrace.msg("CardsList.initCards vertical:"+vertical+"; horizontal:"+horizontal);
-        var posX:Number=vertical*180
+        var posX:Number=vertical*180;
         var posY:Number=horizontal*180;
         cardinfo[skillscards[cards_index]]=new Point(posX,posY);
 
@@ -164,7 +165,7 @@ public class CardsList extends Sprite
         {
             //DebugTrace.msg("CardsList.onCardReady BodyBone:"+cate+"face");
            // DebugTrace.msg("CardsList.onCardReady card:"+skillscards[cards_index]);
-            var skillID:String=skillscards[cards_index]
+            var skillID:String=skillscards[cards_index];
             var cardTexture:Texture=cardAtlas.getTexture(skillID);
             var card:Image=new Image(cardTexture);
             //var card:Button=new Button(cardTexture);
@@ -209,7 +210,7 @@ public class CardsList extends Sprite
         else
         {
 
-            DebugTrace.msg("CardsList onCardReady")
+            DebugTrace.msg("CardsList onCardReady");
 
             if(from!="store"){
                 //control disable skill card
@@ -232,7 +233,7 @@ public class CardsList extends Sprite
     {
         DebugTrace.msg("CardsList.lockSkillHandle skillID="+skillID)
         var locksprite:Sprite=new Sprite();
-        locksprite.name=skillID
+        locksprite.name=skillID;
         locksprite.x=cardinfo[skillID].x;
         locksprite.y=cardinfo[skillID].y;
         cardslist.addChild(locksprite);
@@ -288,7 +289,10 @@ public class CardsList extends Sprite
             //if
         }
         //if
-        var unlockPts:Number=(index+1)*rate
+        var unlockPts:Number=(index+1)*rate;
+        if(index==1){
+            unlockPts=Math.floor(unlockPts/2);
+        }
         unlockSkill[skillscards[index]]=unlockPts;
         spend_spts.text=String(unlockPts);
         locksprite.addChild(spend_spts);
@@ -300,6 +304,7 @@ public class CardsList extends Sprite
     private var lockTween:Tween;
     private var currentSkill:Sprite;
     private var alertmsg:Sprite;
+    private var sPts:Number=0;
     private function onTouchlockSkill(e:TouchEvent):void
     {
         currentSkill=e.currentTarget as Sprite;
@@ -308,16 +313,16 @@ public class CardsList extends Sprite
         if(began)
         {
 
-            var sPts:Number=skillPts[character];
+            sPts=skillPts[character];
             var unlockPts:Number=unlockSkill[currentSkill.name];
 
             DebugTrace.msg("CardsList onTouchlockSkill unlockPts="+unlockPts+" , sPts="+sPts+" , skill="+currentSkill.name);
 
             if(unlockPts<=sPts)
             {
-                alertmsg=new AlertMessage(msg)
-                alertmsg.alpha=0;
-                skillStore.addChild(alertmsg);
+//                alertmsg=new AlertMessage(msg);
+//                alertmsg.alpha=0;
+//                skillStore.addChild(alertmsg);
 
                 currentSkill.removeEventListener(TouchEvent.TOUCH,onTouchlockSkill);
 
@@ -351,32 +356,40 @@ public class CardsList extends Sprite
                 skilllist.sort(Array.CASEINSENSITIVE);
                 skills[character][cate]=skilllist.toString();
 
-                flox.save("skills",skills,onSaveSkillsComplete);
-                function onSaveSkillsComplete(result:SaveGame):void
-                {
-                    DebugTrace.msg("CardsList.onTouchlockSkill  onSaveSkillsComplete");
+               // flox.save("skills",skills,onSaveSkillsComplete);
+                flox.save("skills",skills);
+                flox.save("skillPts",skillPts,onSavedSkillPts);
 
-                    flox.save("skillPts",skillPts,onSavedSkillPts);
-
-                }
-                function onSavedSkillPts(result:SaveGame):void
-                {
-                    DebugTrace.msg("CardsList.onTouchlockSkill  onSavedSkillPts");
-                    var re:Object=new Object();
-                    re.skillpts=sPts;
-                    skillStore.dispatchEventWith(SkillsStore.UPDATE_SKILLPTS,false,re);
-
-                    skillStore.removeChild(alertmsg);
-                }
             }
             else
             {
                 var msg:String="You need more Skill Points.";
-                var alertmsg:Sprite=new AlertMessage(msg);
+                alertmsg=new AlertMessage(msg);
 
                 skillStore.addChild(alertmsg);
 
             }
+        }
+
+    }
+    private function onSaveSkillsComplete():void
+    {
+        DebugTrace.msg("CardsList.onTouchlockSkill  onSaveSkillsComplete");
+        flox.save("skillPts",skillPts,onSavedSkillPts);
+
+    }
+    private function onSavedSkillPts():void
+    {
+        DebugTrace.msg("CardsList.onTouchlockSkill  onSavedSkillPts");
+        var skillStore:Sprite=ViewsContainer.SkillStore;
+        var re:Object=new Object();
+        re.skillpts=sPts;
+        skillStore.dispatchEventWith(SkillsStore.UPDATE_SKILLPTS,false,re);
+
+        try{
+            skillStore.removeChild(alertmsg);
+        }catch(e:Error){
+            DebugTrace.msg("CardsList.onTouchlockSkill remove alertmsg Error");
         }
 
     }

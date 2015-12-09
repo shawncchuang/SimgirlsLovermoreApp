@@ -130,6 +130,12 @@ public class AssetEmbeds
     [Embed(source = "../../media/textures/scenes/sky_night.atf" ,mimeType="application/octet-stream")]
     public static const SkyNight:Class;
 
+    [Embed(source = "../../media/textures/scenes/lobby.jpg")]
+    public static const Lobby:Class;
+
+    [Embed(source = "../../media/textures/scenes/lobby_night.jpg")]
+    public static const LobbyNight:Class;
+
    [Embed(source = "../../media/textures/scenes/alley.atf" ,mimeType="application/octet-stream")]
     public static const Alley:Class;
 

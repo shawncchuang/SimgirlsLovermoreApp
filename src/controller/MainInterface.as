@@ -61,5 +61,7 @@ public interface MainInterface
     function criminalAbility():Object;
     function showSaveError(attr:String,data:*,msg:String):void
 
+    function initContextMenu():void
+
 }
 }

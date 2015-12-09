@@ -433,12 +433,9 @@ public class MiniGameCommand implements MiniGameInterface
 			//var playerloader:SWFLoader=LoaderMax.getLoader("player");
 			//var root_player:DisplayObject=playerloader.content;
 			//gameStage.removeChild(root_player);
-			TweenMax.delayedCall(2,failHandle);
-			function failHandle():void
-			{
-				TweenMax.killDelayedCallsTo(failHandle);
-				TweenMax.to(enemy,0.5,{x:-200,onComplete:onFailHandle});
-			}
+			TweenMax.delayedCall(2,onFailHandle);
+			TweenMax.to(enemy,0.5,{x:-200});
+
 
 
 		}
@@ -695,6 +692,8 @@ public class MiniGameCommand implements MiniGameInterface
 
 	private function onFailHandle():void
 	{
+		TweenMax.killDelayedCallsTo(onFailHandle);
+		TweenMax.killTweensOf(player);
 		TweenMax.killTweensOf(enemy);
 
 		if(game=="tracing")
@@ -729,6 +728,7 @@ public class MiniGameCommand implements MiniGameInterface
 			//player_sch.stop();
 
 		}
+
 		TweenMax.to(player,1,{x:1200});
 		TweenMax.to(enemy,1,{x:-1300,onComplete:victoryHandle});
 	}

@@ -60,7 +60,7 @@ public class TakePhotos extends Sprite{
 
 
         var dating:String=DataContainer.currentDating;
-        style=DataContainer.styleSechedule[dating];
+        style=DataContainer.styleSchedule[dating];
         var base_sprite:Sprite=ViewsContainer.baseSprite;
         character=command.drawCharacter(base_sprite,style);
 

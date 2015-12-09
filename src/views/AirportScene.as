@@ -77,7 +77,8 @@ package views
 					removeChild(saveloadlist);
 
 					var gameinfo:Sprite = ViewsContainer.gameinfo;
-					gameinfo.dispatchEventWith("UPDATE_INFO", false);
+					gameinfo.dispatchEventWith("DISPLAY");
+					gameinfo.dispatchEventWith("UPDATE_INFO");
 
 					_data.name="MainScene";
 					command.sceneDispatch(SceneEvent.CHANGED,_data);

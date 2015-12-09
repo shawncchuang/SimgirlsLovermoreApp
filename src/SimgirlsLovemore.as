@@ -11,6 +11,7 @@ import flash.desktop.NativeApplication;
 import flash.display.MovieClip;
 import flash.display.Sprite;
 import flash.display.StageAlign;
+import flash.display.StageQuality;
 import flash.events.Event;
 
 
@@ -26,6 +27,7 @@ import data.DataContainer;
 import events.GameEvent;
 import events.SceneEvent;
 import events.TopViewEvent;
+
 
 import model.CustomPlayer;
 
@@ -49,7 +51,6 @@ import views.TarotCardsDisplay;
 import views.TraceGame;
 import views.TrainingGame;
 
-import com.demonsters.debugger.MonsterDebugger;
 
 [SWF(width="1024",height="768",frameRate="24")]
 public class SimgirlsLovemore extends MovieClip
@@ -296,6 +297,7 @@ public class SimgirlsLovemore extends MovieClip
 				topview.removeChild(assetsform);
 				break;
 			case "battle":
+
 				battlescene=new BattleScene();
 				topview.addChild(battlescene);
 				break;
@@ -462,9 +464,8 @@ public class SimgirlsLovemore extends MovieClip
 	private function start():void
 	{
 		//stage.scaleMode = StageScaleMode.NO_SCALE;
-
+		stage.quality=StageQuality.LOW;
 		stage.align = StageAlign.TOP_LEFT;
-
 
 		//Starling.multitouchEnabled = true; // useful on mobile devices
 		Starling.handleLostContext = true; // required on Windows and Android, needs more memory

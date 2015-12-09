@@ -12,12 +12,16 @@ import data.Config;
 
 import flash.desktop.NativeApplication;
 
-import flash.desktop.NativeDragActions;
 
 
 import flash.display.Bitmap;
 import flash.display.BitmapData;
 import flash.display.MovieClip;
+import flash.display.Stage;
+import flash.display.StageQuality;
+
+import flash.desktop.NativeApplication;
+import flash.events.ContextMenuEvent;
 import flash.events.Event;
 import flash.events.MouseEvent;
 import flash.geom.Point;
@@ -39,6 +43,10 @@ import events.GameEvent;
 import events.SceneEvent;
 import events.TopViewEvent;
 
+import flash.ui.ContextMenu;
+import flash.ui.ContextMenuItem;
+import flash.display.StageQuality;
+import flash.display.Stage;
 import flash.ui.Keyboard;
 
 import model.BattleData;
@@ -99,6 +107,7 @@ public class MainCommand implements MainInterface {
     private var sound_channel:SoundChannel;
     private var switch_verify:Boolean = false;
     //private var fliter:FilterInterface=new FilterManager();
+    private var resetdely:DelayedCall;
 
     public function updateInfo():void{
         var gameinfo:Sprite = ViewsContainer.gameinfo;
@@ -903,7 +912,7 @@ public class MainCommand implements MainInterface {
             suitup[_name] = style;
         }
         //DebugTrace.msg("MainCommand.initStyleSechedule shortcutsScene="+shortcutsScene);
-        if(shortcutsScene=="ProfileScene"){
+        if(shortcutsScene=="ProfileScene" || shortcutsScene=="AcademyScene"){
             suitup = new Object();
 
             for (var j:uint = 0; j < characters.length; j++) {
@@ -924,7 +933,7 @@ public class MainCommand implements MainInterface {
 
         }
         DebugTrace.msg("MainCommand.initStyleSechedule suitup="+JSON.stringify(suitup));
-        DataContainer.styleSechedule = suitup;
+        DataContainer.styleSchedule = suitup;
 
         if(callback){
             callback();
@@ -1575,14 +1584,21 @@ public class MainCommand implements MainInterface {
 
         if(attr=="FreeRest"){
 
-            var juggler:Juggler= Starling.juggler;
-            juggler.delayCall(function onTimeOut():void{
-                var _data:Object=new Object();
-                _data.name=DataContainer.currentScene;
-                command.sceneDispatch(SceneEvent.CHANGED,_data);
-            },1.5);
+            resetdely=new DelayedCall(onRestTimeOut,1.5);
+            Starling.juggler.add(resetdely);
 
         }
+
+    }
+    private function onRestTimeOut():void{
+
+        Starling.juggler.remove(resetdely);
+
+        var command:MainInterface = new MainCommand();
+        var _data:Object=new Object();
+        _data.name=DataContainer.currentScene;
+        command.sceneDispatch(SceneEvent.CHANGED,_data);
+
 
     }
 
@@ -1746,7 +1762,7 @@ public class MainCommand implements MainInterface {
         if (dating) {
 
 
-            var style:String = DataContainer.styleSechedule[dating];
+            var style:String = DataContainer.styleSchedule[dating];
             var clothTexture:Texture = Assets.getTexture(style);
 
             character = new Image(clothTexture);
@@ -2308,6 +2324,11 @@ public class MainCommand implements MainInterface {
                 break
             case Keyboard.Q:
                 toScene="MainScene";
+                var flox:FloxInterface=new FloxCommand();
+                var datingnow:String=flox.getSaveData("dating");
+                if(datingnow==""){
+                    DataContainer.currentDating=null;
+                }
                 break
             case Keyboard.H:
                 DataContainer.shortcuts="Rest";
@@ -2319,9 +2340,9 @@ public class MainCommand implements MainInterface {
                 break
 
         }
-        DebugTrace.msg("MainCommand.doShortcuts  toScene="+toScene+" , shortcutsScene="+shortcutsScene);
-        if(toScene!="" && shortcutsScene!=toScene && shortcutsScene.indexOf("Game")==-1){
 
+        if(toScene!="" && shortcutsScene!=toScene && shortcutsScene.indexOf("Game")==-1){
+            DebugTrace.msg("MainCommand.doShortcuts  toScene="+toScene+" , shortcutsScene="+shortcutsScene);
             var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
             gameEvent._name="clear_comcloud";
             gameEvent.displayHandler();
@@ -2429,6 +2450,38 @@ public class MainCommand implements MainInterface {
         flox.save("ch_cash",ch_cash);
         flox.save("int",intObj);
         flox.save("image",imgObj);
+    }
+    private var _menu:ContextMenu;
+    public function initContextMenu():void{
+
+        this._menu= new ContextMenu();
+        this._menu.hideBuiltInItems();
+        var QHItem:ContextMenuItem=new ContextMenuItem("Quality - High");
+        QHItem.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, doItemSelectHigh);
+        var QMItem:ContextMenuItem=new ContextMenuItem("Quality - Medium");
+        QMItem.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, doItemSelectMedium);
+        var QLItem:ContextMenuItem=new ContextMenuItem("Quality - Low");
+        QLItem.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, doItemSelectLow);
+        this._menu.customItems.push(QHItem);
+        this._menu.customItems.push(QMItem);
+        this._menu.customItems.push(QLItem);
+        Starling.current.nativeStage.addEventListener(MouseEvent.RIGHT_MOUSE_DOWN, nativeStage_rightMouseDownHandler, false, 0, true);
+    }
+    private function doItemSelectHigh(e:ContextMenuEvent):void{
+
+
+        Starling.current.nativeStage.quality=StageQuality.HIGH;
+    }
+    private function doItemSelectMedium(e:ContextMenuEvent):void{
+
+        Starling.current.nativeStage.quality=StageQuality.MEDIUM;
+    }
+    private function doItemSelectLow(e:ContextMenuEvent):void{
+
+        Starling.current.nativeStage.quality=StageQuality.LOW;
+    }
+    public function nativeStage_rightMouseDownHandler(e:MouseEvent):void{
+        this._menu.display(Starling.current.nativeStage, e.stageX, e.stageY);
     }
 
 }

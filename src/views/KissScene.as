@@ -15,6 +15,8 @@ import data.DataContainer;
 
 import events.SceneEvent;
 
+import starling.animation.DelayedCall;
+
 import starling.animation.Tween;
 import starling.core.Starling;
 import starling.core.Starling;
@@ -48,6 +50,7 @@ public class KissScene extends Sprite
     private var cancelbtn:Button;
     private var command:MainInterface=new MainCommand();
     private var character:Image;
+    private var delay:DelayedCall;
     public function KissScene()
     {
 
@@ -56,7 +59,7 @@ public class KissScene extends Sprite
         KissScene.kissScene=this;
         initCharacter();
         initHearts();
-        initCancelHandle();
+
     }
     private function onUpdateMood(e:Event):void
     {
@@ -162,7 +165,12 @@ public class KissScene extends Sprite
         var base_sprite:Sprite=ViewsContainer.baseSprite;
         base_sprite.dispatchEventWith(DatingScene.COMMIT,false,_data);
 
-
+        delay=new DelayedCall(onUpdateComplete,1);
+        Starling.juggler.add(delay);
+    }
+    private function onUpdateComplete():void{
+        Starling.juggler.remove(delay);
+        initCancelHandle();
     }
     private function initBubble():void
     {
@@ -189,7 +197,6 @@ public class KissScene extends Sprite
         //cancel button
 
         command.addedCancelButton(this,doCancelAssetesForm);
-
 
     }
     private function doCancelAssetesForm():void
