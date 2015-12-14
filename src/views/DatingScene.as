@@ -464,6 +464,8 @@ public class DatingScene extends Scenes {
         filters.setSource(bgImg);
         filters.setBulr();
         addChild(bgSprtie);
+        bgImg.addEventListener(Event.REMOVED_FROM_STAGE, onBgRemovedHandler);
+
 
         var effterxture:Texture = Assets.getTexture("DatingSceneBgEffect");
         bgEffectImg = new Image(effterxture);
@@ -543,6 +545,10 @@ public class DatingScene extends Scenes {
 
         command.initStyleSchedule(onStyleComplete);
 
+    }
+    private function onBgRemovedHandler(e:Event):void{
+        DebugTrace.msg("DatingScene.onBgRemovedHandler");
+        filters.doDispose();
     }
     private function onStyleComplete():void{
 
@@ -1447,7 +1453,7 @@ public class DatingScene extends Scenes {
     private var preload:LoadingBuffer;
     private function showupPreciousPhoto():void{
 
-        var domainPath:String= flox.getSyetemData("domainPrcious");
+        var domainPath:String= flox.getSyetemData("domainPrecious");
         var stageW:Number=Starling.current.stage.stageWidth;
         var stageH:Number=Starling.current.stage.stageHeight;
 
@@ -1460,7 +1466,7 @@ public class DatingScene extends Scenes {
         }
         var file:String=dating+"_"+rel;
 
-        DebugTrace.msg("DatingScene.showupPreciousPhoto file="+file);
+        DebugTrace.msg("DatingScene.showupPreciousPhoto source="+domainPath+file+"1.jpg");
 
         photo=new Sprite();
         bg = new Quad( stageW,stageH, 0x000000 );

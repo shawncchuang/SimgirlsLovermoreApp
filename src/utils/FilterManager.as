@@ -14,6 +14,7 @@ import starling.animation.DelayedCall;
 	import starling.core.Starling;
 	import starling.display.Image;
 import starling.display.Sprite;
+import starling.events.Event;
 import starling.filters.BlurFilter;
 	import starling.filters.ColorMatrixFilter;
 	import starling.utils.Color;
@@ -29,14 +30,15 @@ import starling.filters.BlurFilter;
 		private var complete_call:DelayedCall;
 		private var  repeat:Number=10;
 		private var repeatCount:Number=3;
-		private var bright:Number=0.3
+		private var bright:Number=0.3;
 		private var delpay:Number=0.2;
+		private var shadow:Sprite;
 		public function setSource(src:Image):void
 		{
-			 
+
 			target=src;
-			
 		}
+
 		public function changeColor(value:uint):void
 		{
 			var r:int=Color.getRed(value);
@@ -71,7 +73,7 @@ import starling.filters.BlurFilter;
 		{
 			DebugTrace.msg("FilterManager.onFlashFilters");
 			
-			colorMatrixFilter.reset()
+			colorMatrixFilter.reset();
 			target.filter =colorMatrixFilter;
 			Starling.juggler.remove(call);
 			
@@ -92,7 +94,7 @@ import starling.filters.BlurFilter;
 		public function onCompleteFlash():void
 		{
 			//DebugTrace.msg("FilterManager.onCompleteFlash")
-		 
+			target.filter.dispose();
 			target.filter=null;
 			//Starling.juggler.remove(complete_call);
 			 
@@ -111,15 +113,24 @@ import starling.filters.BlurFilter;
 		}
 		public function setShadow(src:Sprite):void
 		{
-		 
-			var dropShadow:BlurFilter = BlurFilter.createDropShadow(); 
-			src.filter = dropShadow;
+			shadow=src;
+			var dropShadow:BlurFilter = BlurFilter.createDropShadow();
+			shadow.filter = dropShadow;
+			shadow.addEventListener(Event.REMOVED_FROM_STAGE, onRevmovedShadow);
+		}
+		private function onRevmovedShadow(e:Event):void{
+			shadow.filter.dispose();
 		}
 		public function setBulr():void
 		{
 			
 			var blur:BlurFilter = new BlurFilter(5, 5);
 			target.filter = blur;
+
+		}
+		public function doDispose():void{
+
+			target.filter.dispose();
 		}
 	}
 }

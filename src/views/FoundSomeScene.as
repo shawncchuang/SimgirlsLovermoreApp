@@ -29,8 +29,11 @@ import starling.animation.Transitions;
 import starling.animation.Tween;
 import starling.core.Starling;
 import starling.display.Button;
+import starling.display.DisplayObject;
 import starling.display.Image;
 import starling.display.Sprite;
+import starling.display.Stage;
+import starling.events.Event;
 import starling.events.Touch;
 import starling.events.TouchEvent;
 import starling.events.TouchPhase;
@@ -105,10 +108,16 @@ public class FoundSomeScene extends Scenes
 		command.filterScene(bgSprtie);
 		addChild(bgSprtie);
 
+		bgImg.addEventListener(Event.REMOVED_FROM_STAGE, onBgRemovedHandler);
 //		var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
 //		gameEvent._name="clear_comcloud";
 //		gameEvent.displayHandler();
 
+	}
+	private function onBgRemovedHandler(e:Event):void{
+
+		DebugTrace.msg("FoundSomeScene.onBgRemovedHandler");
+		filters.doDispose();
 	}
 	private function onCallback():void
 	{
