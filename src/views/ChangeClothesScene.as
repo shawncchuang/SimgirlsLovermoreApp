@@ -16,6 +16,8 @@ import events.SceneEvent;
 
 import model.Scenes;
 
+import starling.animation.DelayedCall;
+
 import starling.core.Starling;
 
 import starling.display.Button;
@@ -56,6 +58,7 @@ public class ChangeClothesScene extends Scenes {
     private var upperstyles:Array=new Array();
     private var lowerstyles:Array=new Array();
 
+    private var delay:DelayedCall;
 
     public function ChangeClothesScene() {
         ViewsContainer.chacaterdesignScene=this;
@@ -64,11 +67,7 @@ public class ChangeClothesScene extends Scenes {
         addChild(base_sprite);
 
         init();
-        initBaseModel();
-        initUpperbodyStyles();
-        initLowerbodyStyles();
-        initColorSwatches();
-        initConfirm();
+
     }
     private function init():void{
 
@@ -105,8 +104,13 @@ public class ChangeClothesScene extends Scenes {
         lowerstyleIndex=lowerstyles.indexOf(String(_avatar.pants));
         this.addEventListener(CharacterDesignScene.COLOR_UPDATE,onColorUpadeted);
 
+        delay=new DelayedCall(onDelayCallComplete,1);
+        Starling.juggler.add(delay);
+
+
 
     }
+
     private function onColorUpadeted(e:Event):void
     {
         //DebugTrace.msg("CharacterDesignScene.onColorUpadeted type:"+e.data.rgb);
@@ -138,9 +142,16 @@ public class ChangeClothesScene extends Scenes {
         flox.save("avatar",current_avatar);
 
 
-
         //drawcom.updateModelColor(e.data.type,rbgObj);
 
+    }
+    private function onDelayCallComplete():void{
+        Starling.juggler.remove(delay);
+        initBaseModel();
+        initUpperbodyStyles();
+        initLowerbodyStyles();
+        initColorSwatches();
+        initConfirm();
     }
     private function initBaseModel():void
     {

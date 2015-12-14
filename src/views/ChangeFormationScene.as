@@ -71,6 +71,7 @@ public class ChangeFormationScene extends Scenes
     private var per_combat_tile:MovieClip=null;
     private var hover_subs_title:MovieClip=null;
     //private var filtercom:FilterInterface=new FilterManager();
+    private var layout_sprite:Sprite;
     public function ChangeFormationScene()
     {
 
@@ -123,27 +124,21 @@ public class ChangeFormationScene extends Scenes
         addChild(title);
 
         var layout_sprite:Sprite=new Sprite();
-        layout_sprite.x=-100;
+        layout_sprite.x=16;
         layout_sprite.y=80;
-        layout_sprite.alpha=0;
         addChild(layout_sprite);
+
+//        var tween:Tween=new Tween(layout_sprite,0.5,Transitions.EASE_IN_ELASTIC);
+//        tween.fadeTo(1);
+//        tween.animate("x",16);
+//        tween.onComplete=onSummaryComplete;
+//        Starling.juggler.add(tween);
 
         var sum_firststr:String="Drag and drop one to five soldiers to the combat zone";
         var sum_first:TextField=new TextField(650,40,sum_firststr,"SimNeogreyMedium",18,0xFFFD38);
         sum_first.hAlign="left";
-        //var sum_secstr:String="Front Row: ATK +20%  DEF -20%  AGI +20%\nMid Row: No Special Effect\nBack Row: ATK -20%  DEF +20%  AGI -20%";
-        //var sum_sec:TextField=new TextField(1024,100,sum_secstr,"Neogrey",18,0xFFFFFF);
-        //sum_sec.hAlign="left";
-        //sum_sec.y=sum_first.height-35;
         layout_sprite.addChild(sum_first);
-        //layout_sprite.addChild(sum_sec);
 
-
-        var tween:Tween=new Tween(layout_sprite,0.5,Transitions.EASE_IN_ELASTIC);
-        tween.animate("alpha",1);
-        tween.animate("x",16);
-        tween.onComplete=onSummaryComplete;
-        Starling.juggler.add(tween);
 
         //game zone
         var gamezone:Image=new Image(getTexture("CombatZone"));
@@ -161,7 +156,7 @@ public class ChangeFormationScene extends Scenes
     }
     private function onSummaryComplete():void
     {
-        Starling.juggler.removeTweens(base_sprite);
+        Starling.juggler.removeTweens(layout_sprite);
     }
     private function initSoldiersTiles():void
     {
@@ -496,7 +491,7 @@ public class ChangeFormationScene extends Scenes
                 {
 
                     //DebugTrace.msg("ChangeFormationScene.checkCombatTile index:"+index);
-                    index=i
+                    index=i;
                     break
 
                 }
@@ -515,7 +510,7 @@ public class ChangeFormationScene extends Scenes
                 space=false;
             }
             var sum:Number=0;
-            maximum=checkTeamMaxium()
+            maximum=checkTeamMaxium();
             //DebugTrace.msg("ChangeFormationScene.checkCombatTile maximum:"+maximum);
             if(!space || !maximum)
             {
@@ -562,7 +557,7 @@ public class ChangeFormationScene extends Scenes
                 if(tile_index==subs_index)
                 {
                     combat_zone[i]=null;
-                    subs_soldiers_tiles[i]=-1
+                    subs_soldiers_tiles[i]=-1;
                     break
                 }
                 //if
@@ -628,9 +623,7 @@ public class ChangeFormationScene extends Scenes
                 command.stopBackgroudSound();
                 flox.save("formation",combat_zone);
 
-
                 _data.name= "BattleScene";
-
                 command.sceneDispatch(SceneEvent.CHANGED,_data);
 
             }

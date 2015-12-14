@@ -687,8 +687,8 @@ public class SceneCommnad implements SceneInterface
     }
     public function filterBackground():void
     {
-        filter.setSource(background);
-        filter.setBulr();
+        //filter.setSource(background);
+        //filter.setBulr();
 
     }
     public function switchGateway(type:String ,callback:Function=null):*

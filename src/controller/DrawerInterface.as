@@ -7,8 +7,9 @@ package controller
 	import dragonBones.Bone;
 
 	import starling.display.DisplayObject;
+import starling.display.Image;
 
-    import starling.display.Sprite;
+import starling.display.Sprite;
 
 	public interface DrawerInterface
 	{
@@ -30,7 +31,7 @@ package controller
 		function updatePieChart(value:Number):void
 		function drawCharacterProfileIcon(target:Sprite,ch:String,scale:Number):void
 		function drawNPCProfileIcon(target:Sprite,id:String,scale:Number):void
-		function drawBackground():*
+		function drawBackground():Image
 	    function playerModelCopy(target:Sprite,pos:Point):void
 	}
 }

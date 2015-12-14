@@ -91,11 +91,13 @@ public class Scenes extends Sprite
 
     private var scene_container:Sprite;
     private var next_scene:String;
+    private var from:String;
     private var sceneObj:Object;
     private var scenebg:Image;
     public var battle_type:String;
     private var infobar:Boolean;
     private var gameInfoTween:Tween;
+    private  var filtersMC:flash.display.MovieClip;
     private function scenesPool():Object
     {
 
@@ -126,6 +128,7 @@ public class Scenes extends Sprite
 
         scene=ViewsContainer.MainScene;
         next_scene=e.data.name;
+        from=e.data.from;
         flox.save("current_scene",next_scene);
 
         clearSceneHandle();
@@ -135,19 +138,17 @@ public class Scenes extends Sprite
     private function clearSceneHandle():void
     {
 
-        try{
+        var gameEvt:GameEvent=SimgirlsLovemore.gameEvent;
+        gameEvt._name="remove_waving";
+        gameEvt.displayHandler();
 
+        if(filtersMC){
+            DebugTrace.msg("Scene.changeSceneHandle remvoe filtersMC");
             Starling.current.nativeOverlay.removeChild(filtersMC);
+            filtersMC=null;
 
-            var gameEvt:GameEvent=SimgirlsLovemore.gameEvent;
-            gameEvt=SimgirlsLovemore.gameEvent;
-            gameEvt._name="remove_waving";
-            gameEvt.displayHandler();
-
-        }catch(e:Error){
-
-            DebugTrace.msg("Scene.changeSceneHandle filtersMC=NULL");
         }
+
 
         onFadeoutComplete();
 
@@ -158,7 +159,7 @@ public class Scenes extends Sprite
 
 
     }
-    private  var filtersMC:flash.display.MovieClip;
+
     private function changeSceneHandle():void
     {
 
@@ -429,13 +430,14 @@ public class Scenes extends Sprite
         }
 
 
-        command.removeShortcuts();
-
-        var shortcutsScene:String=DataContainer.shortcutsScene;
-        if(shortcutsScene.indexOf("Game")==-1 && shortcutsScene.indexOf("Battle")==-1 &&
-                shortcutsScene!="DatingScene" && shortcutsScene.indexOf("Formation")==-1){
+        //var shortcutsScene:String=DataContainer.shortcutsScene;
+        if(next_scene.indexOf("Game")!=-1 || next_scene.indexOf("Battle")!=-1 ||
+                next_scene=="DatingScene" || next_scene.indexOf("Formation")!=-1){
             //DebugTrace.msg("Scenes.changeSceneHandle addShortcuts shortcutsScene:"+shortcutsScene);
-            //command.addShortcuts();
+            command.removeShortcuts();
+        }
+        if(from=="battle" || from=="minigame" || from=="dating"){
+            command.addShortcuts();
         }
 
 
@@ -453,7 +455,7 @@ public class Scenes extends Sprite
 
     private function onGameIngbarFadeinComplete():void{
 
-        Starling.juggler.remove(gameInfoTween);
+        Starling.juggler.removeTweens(gameInfoTween);
         DebugTrace.msg("Scene.onGameIngbarFadeinComplete infobar="+infobar);
         var UIViews:Sprite=ViewsContainer.UIViews;
         var gameInfobar:Sprite=ViewsContainer.gameinfo;
@@ -473,21 +475,27 @@ public class Scenes extends Sprite
     }
     private function onFadeoutComplete():void
     {
-        Starling.juggler.removeTweens(scene);
+        //Starling.juggler.removeTweens(scene);
 
         var mainstage:Sprite=ViewsContainer.MainStage;
-        scene.alpha=1;
+
         if(scene_container)
         {
             //DebugTrace.msg("Scenes.onFadeoutComplete:"+scene_container.numChildren);
-            if(scenebg)
+           if(scenebg)
             {
-                scenebg.removeFromParent(true);
+                scenebg.removeFromParent();
                 scenebg=null;
             }
-            current_scence.removeFromParent(true);
-            scene_container.removeFromParent(true);
+            current_scence.removeFromParent();
+            scene_container.removeFromParent();
+
             scene.removeFromParent(true);
+//            try{
+//                scene.removeFromParent();
+//            }catch(e:Error){
+//                DebugTrace.msg("Scenes.onFadeoutComplete  remove scene Error");
+//            }
 
             scene_container=null;
             //new scene

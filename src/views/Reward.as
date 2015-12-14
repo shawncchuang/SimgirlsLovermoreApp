@@ -77,9 +77,7 @@ public class Reward extends Sprite{
 
         addChild(reward);
 
-
-        fliter.setSource(reward);
-        fliter.setShadow();
+        fliter.setShadow(reward);
 
 
         var tween:Tween=new Tween(reward,1,Transitions.EASE_OUT_BACK);
@@ -96,7 +94,7 @@ public class Reward extends Sprite{
 
         Starling.juggler.removeTweens(reward);
 
-        reward.removeFromParent(this);
+        reward.removeFromParent();
 
     }
 

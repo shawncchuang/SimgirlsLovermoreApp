@@ -161,8 +161,7 @@ package views
             addChild(loveSprite);
 
             var filter:FilterManager=new FilterManager();
-            filter.setSource(loveSprite);
-            filter.setShadow();
+            filter.setShadow(loveSprite);
 
 			var tween:Tween=new Tween(loveSprite,1);
 			tween.animate("scaleX",1.2);

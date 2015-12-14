@@ -30,6 +30,7 @@ public class Config
     //zack don't show up in somewhere
     public static const characters:Array=["lenus","sirena","dea","sao","klr","tomoru","ceil"];
     public static const datingCharacters:Array=["lenus","sirena","dea","zack","klr","tomoru","ceil"];
+    public static const CommanderItems:Array=[ { "qty": 3, "id": "com0" },{ "qty": 3, "id": "com1" }, { "qty": 3, "id": "com2" }, { "qty": 3, "id": "com3" } ];
     public static const NPC:Object={"daz":"npc001",
         "policestation":"npc002",
         "sportsbar":"npc003",
@@ -919,8 +920,8 @@ public class Config
 
         "foe-Max":-1,
         "acquaintance-Min":0,
-        "acquaintance-Max":98,
-        "friend-Min":99,
+        "acquaintance-Max":76,
+        "friend-Min":77,
         "friend-Max":332,
         "closefriend-Min":333,
         "closefriend-Max":776,

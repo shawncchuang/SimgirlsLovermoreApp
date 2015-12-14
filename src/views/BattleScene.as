@@ -133,6 +133,7 @@ public class BattleScene extends Sprite
 	private var cpusX:Object=new Object();
 	private var current_skillPts:Object=new Object();
 	private var battle_type:String;
+	private var commanderSkill:Boolean=false;
 	public function BattleScene()
 	{
 
@@ -493,12 +494,12 @@ public class BattleScene extends Sprite
 	}
 	private function doMouseOverStartTab(e:MouseEvent):void
 	{
-		TweenMax.to(starttab.btn,0.5, {frameLabel:"over",onComplet:onTweenComplete});
+		TweenMax.to(starttab.btn,0.5, {frameLabel:"over",onComplet:onTweenComplete,onCompleteParams:[starttab]});
 
 	}
 	private function doMouseOutStartTab(e:MouseEvent):void
 	{
-		TweenMax.to(starttab.btn,0.5, {frameLabel:"out",onComplet:onTweenComplete});
+		TweenMax.to(starttab.btn,0.5, {frameLabel:"out",onComplet:onTweenComplete,onCompleteParams:[starttab]});
 		//TweenMax.to(starttab,0.5, {frameLabel:"out"});
 	}
 	private function onSEbarFadein():void
@@ -806,7 +807,7 @@ public class BattleScene extends Sprite
 	private function onMouseOutCard(e:MouseEvent):void
 	{
 
-		TweenMax.to(e.target.parent,0.2,{y:0,ease:Quint.easeInOut,onComplete:onTweenComplete,dropShadowFilter:{color:0x000000, alpha:0, blurX:0, blurY:0, distance:0}});
+		TweenMax.to(e.target.parent,0.2,{y:0,ease:Quint.easeInOut,onComplete:onTweenComplete,dropShadowFilter:{color:0x000000, alpha:0, blurX:0, blurY:0, distance:0},onCompleteParams:[e.target.parent]});
 		if(reqJewel)
 		{
 			if(reqJewel.length>0)
@@ -2306,8 +2307,8 @@ public class BattleScene extends Sprite
 
 
 		var boss:Array=Config.bossModels;
-		member.getSkillAni()
-		trace("member.skillAni currentLabel:" ,member.skillAni.currentLabel)
+		member.getSkillAni();
+
 		if(member.power.label.indexOf("_")!=-1 || boss.indexOf(member.power.ch_name)==-1)
 		{
 			//attack skill
@@ -2339,7 +2340,7 @@ public class BattleScene extends Sprite
 		{
 			//boss or not skill attack animation
 
-			trace("member.character currentLabel:" ,member.skillAni.currentLabel);
+			DebugTrace.msg("member.character currentLabel:" +member.skillAni.currentLabel);
 			member.character.body.act.addEventListener(Event.ENTER_FRAME,doActPlaying);
 		}
 		//if
@@ -3655,7 +3656,7 @@ public class BattleScene extends Sprite
 			commander=current_player;
 			if(power.name=="player")
 			{
-				showItemsPanel(true);
+				showItemsPanel(commanderSkill);
 			}
 			//if
 
@@ -3681,7 +3682,7 @@ public class BattleScene extends Sprite
 				itemspanel=new CommanderItemsPanel();
 				itemspanel.x=800;
 				itemspanel.y=500;
-				TweenMax.to(itemspanel,0.5,{x:225,ease:Expo.easeOut});
+				TweenMax.to(itemspanel,0.5,{x:225,ease:Expo.easeOut,onComplete:onTweenComplete,onCompleteParams:[itemspanel]});
 				addChild(itemspanel);
 			}
 			//if
@@ -3775,7 +3776,7 @@ public class BattleScene extends Sprite
 		var topview:flash.display.MovieClip=SimgirlsLovemore.topview;
 		var success:Boolean=true;
 
-		var items:Array=flox.getPlayerData("items");
+		var items:Array=flox.getPlayerData("commander_items");
 		for(var i:uint=0;i<items.length;i++)
 		{
 			if(items[i].id==itemid)
@@ -3823,7 +3824,7 @@ public class BattleScene extends Sprite
 
 					success=false;
 
-					var msg:String="Captain must be in front row to use."
+					var msg:String="Captain must be in front row to use.";
 					//MainCommand.addAlertMsg(msg);
 					command.addAttention(msg);
 					updateStepLayout("solider");
@@ -3836,8 +3837,7 @@ public class BattleScene extends Sprite
 			case "com3":
 
 				var jewelObj:Object={"com2":["1|f"],"com3":["1|e"]};
-
-				initBootItem(itemid,jewelObj[itemid])
+				initBootItem(itemid,jewelObj[itemid]);
 				break
 		}
 		//switch
@@ -3926,7 +3926,7 @@ public class BattleScene extends Sprite
 		if(type=="")
 		{
 			titleTxt.text="";
-			TweenMax.to(battletitle,0.5,{x:-500,onComplete:onTweenComplete});
+			TweenMax.to(battletitle,0.5,{x:-500,onComplete:onTweenComplete,onCompleteParams:[battletitle]});
 		}
 		else
 		{
@@ -3936,12 +3936,12 @@ public class BattleScene extends Sprite
 			}
 			//if
 			//TweenMax.to(battletitle,0.5,{x:-500})
-			TweenMax.to(battletitle,0.5,{x:0,ease:Quart.easeOut,onComplete:onTweenComplete});
+			TweenMax.to(battletitle,0.5,{x:0,ease:Quart.easeOut,onComplete:onTweenComplete,onCompleteParams:[battletitle]});
 		}
 		//if
 		if(type!="startbattle")
 		{
-			TweenMax.to(battletitle,0.5,{x:0,ease:Quart.easeOut,onComplete:onTweenComplete});
+			TweenMax.to(battletitle,0.5,{x:0,ease:Quart.easeOut,onComplete:onTweenComplete,onCompleteParams:[battletitle]});
 		}
 
 
@@ -3964,8 +3964,8 @@ public class BattleScene extends Sprite
 				profile.alpha=0;
 				starttab.btn.y=709;
 				//TweenMax.to(starttab.btn,0.8,{y:709,onComplete:onTweenComplete});
-				TweenMax.to(elementsbar,0.5,{x:1024,onComplete:onTweenComplete,ease:Expo.easeOut});
-				TweenMax.to(menubg,0.5,{y:450,onComplete:onTweenComplete,ease:Expo.easeOut});
+				TweenMax.to(elementsbar,0.5,{x:1024,onComplete:onTweenComplete,ease:Expo.easeOut,onCompleteParams:[elementsbar]});
+				TweenMax.to(menubg,0.5,{y:450,onComplete:onTweenComplete,ease:Expo.easeOut,onCompleteParams:[menubg]});
 				TweenMax.to(sebar,0.5,{y:500,onComplete:onSEbarFadein});
 				TweenMax.to(hptsbar,0.5,{y:500,onComplete:onHSPtsbarFadein});
 				TweenMax.to(menuscene,0.5,{y:354});
@@ -3975,8 +3975,8 @@ public class BattleScene extends Sprite
 
 				break;
 			case "skill":
-				TweenMax.to(stonebar,0.8,{alpha:1,onComplete:onTweenComplete,ease:Expo.easeOut});
-				TweenMax.to(elementsbar,0.5,{x:350,onComplete:onTweenComplete,ease:Expo.easeOut});
+				TweenMax.to(stonebar,0.8,{alpha:1,onComplete:onTweenComplete,ease:Expo.easeOut,onCompleteParams:[stonebar]});
+				TweenMax.to(elementsbar,0.5,{x:350,onComplete:onTweenComplete,ease:Expo.easeOut,onCompleteParams:[elementsbar]});
 
 				/*if(cardsSprtie)
 				 {
@@ -3985,10 +3985,10 @@ public class BattleScene extends Sprite
 				//if
 				break;
 			case "startbattle":
-				TweenMax.to(starttab.btn,0.5,{y:800,onComplete:onTweenComplete,ease:Expo.easeOut});
+				TweenMax.to(starttab.btn,0.5,{y:800,onComplete:onTweenComplete,ease:Expo.easeOut,onCompleteParams:[starttab]});
 				//battletitle.x=-500;
-				TweenMax.to(battletitle,0.5,{x:-500,onComplete:onTweenComplete,ease:Expo.easeOut});
-				TweenMax.to(battlescene,1,{y:-578,onComplete:onTweenComplete,ease:Expo.easeOut});
+				TweenMax.to(battletitle,0.5,{x:-500,onComplete:onTweenComplete,ease:Expo.easeOut,onCompleteParams:[battletitle]});
+				TweenMax.to(battlescene,1,{y:-578,onComplete:onTweenComplete,ease:Expo.easeOut,onCompleteParams:[battlescene]});
 				TweenMax.to(menuscene,1,{y:700,onComplete:onBattleSceneComplete});
 				break;
 			case "target":
@@ -4003,14 +4003,14 @@ public class BattleScene extends Sprite
 				break
 			case "itempanel":
 				stonebar.visible=false;
-				TweenMax.to(starttab,0.8,{y:90,ease:Expo.easeOut,onComplete:onTweenComplete});
-				TweenMax.to(elementsbar,0.5,{x:1024,onComplete:onTweenComplete,ease:Expo.easeOut});
+				TweenMax.to(starttab,0.8,{y:90,ease:Expo.easeOut,onComplete:onTweenComplete,onCompleteParams:[starttab]});
+				TweenMax.to(elementsbar,0.5,{x:1024,onComplete:onTweenComplete,ease:Expo.easeOut,onCompleteParams:[elementsbar]});
 				//TweenMax.to(menuscene,1,{y:700,onComplete:onTweenComplete});
 
 				break;
 			case "disabled itempanel":
-				TweenMax.to(menuscene,1,{y:354,onComplete:onTweenComplete,ease:Expo.easeOut});
-				TweenMax.to(starttab,0.8,{y:0,onComplete:onTweenComplete,ease:Expo.easeOut});
+				TweenMax.to(menuscene,1,{y:354,onComplete:onTweenComplete,ease:Expo.easeOut,onCompleteParams:[menuscene]});
+				TweenMax.to(starttab,0.8,{y:0,onComplete:onTweenComplete,ease:Expo.easeOut,onCompleteParams:[starttab]});
 				break
 		}
 
@@ -4190,12 +4190,7 @@ public class BattleScene extends Sprite
 			TweenMax.killTweensOf(member);
 		}
 	}
-	private function onTweenComplete():void
-	{
 
-		//TweenMax.killAll(true);
-
-	}
 	private function savePlayerTeamSE(callback:Function):void
 	{
 
@@ -4253,6 +4248,11 @@ public class BattleScene extends Sprite
 
 		}
 	}
+	private function onTweenComplete(target:*):void
+	{
 
+		TweenMax.killChildTweensOf(target);
+
+	}
 }
 }

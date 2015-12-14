@@ -473,7 +473,7 @@ public class Character extends MovieClip
         effect.name="effect";
         membermc.addChild(effect);
 
-        var se:String=String(cpu_teams_saved[id].se)
+        var se:String=String(cpu_teams_saved[id].se);
         var seTxt:TextField=seTextfield(se);
         seTxt.x=Math.floor(character.width/2-seTxt.width/2);
         seTxt.y=5;

@@ -13,7 +13,8 @@ import starling.animation.DelayedCall;
 	import starling.animation.Tween;
 	import starling.core.Starling;
 	import starling.display.Image;
-	import starling.filters.BlurFilter;
+import starling.display.Sprite;
+import starling.filters.BlurFilter;
 	import starling.filters.ColorMatrixFilter;
 	import starling.utils.Color;
 	
@@ -30,7 +31,7 @@ import starling.animation.DelayedCall;
 		private var repeatCount:Number=3;
 		private var bright:Number=0.3
 		private var delpay:Number=0.2;
-		public function setSource(src:*):void
+		public function setSource(src:Image):void
 		{
 			 
 			target=src;
@@ -108,11 +109,11 @@ import starling.animation.DelayedCall;
 			colorMatrixFilter.adjustBrightness(value); // darken image
 			target.filter = colorMatrixFilter;
 		}
-		public function setShadow():void
+		public function setShadow(src:Sprite):void
 		{
 		 
 			var dropShadow:BlurFilter = BlurFilter.createDropShadow(); 
-			target.filter = dropShadow;
+			src.filter = dropShadow;
 		}
 		public function setBulr():void
 		{

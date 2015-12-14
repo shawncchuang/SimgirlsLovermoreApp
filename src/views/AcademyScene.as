@@ -52,7 +52,7 @@ import events.GameEvent;
 		}
 		private function init():void
 		{
-			command.initStyleSchedule();
+
 			scencom.init("AcademyScene",speaker_sprite,26,onCallback);
 			scencom.start();
 			scencom.disableAll();
@@ -100,9 +100,13 @@ import events.GameEvent;
 
                     break
 				case "LearnSkills":
-					
-					store=new SkillsStore();
-					addChild(store);
+
+					command.initStyleSchedule(onInitStyleComplete);
+						function onInitStyleComplete():void{
+							store=new SkillsStore();
+							addChild(store);
+						}
+
 					
 					break
 				case "ani_complete":

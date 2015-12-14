@@ -122,6 +122,7 @@ import model.SaveGame;
 
 					break
                 case "CheckStatus":
+						command.removeShortcuts();
                     gameinfo.visible=false;
                     raningScene=new RankBoard();
                     Starling.current.nativeOverlay.addChild(raningScene);
@@ -131,6 +132,7 @@ import model.SaveGame;
 
                     break
                 case "Remove_Ranking":
+					command.addShortcuts();
                     gameinfo.visible=true;
                     Starling.current.nativeOverlay.removeChild(raningScene);
                     init();

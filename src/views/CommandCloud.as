@@ -229,6 +229,7 @@ public class CommandCloud extends Sprite
         }
 
     }
+
     private function onCloudClicked():void{
 
         visibleCommandDirecation();
@@ -244,15 +245,14 @@ public class CommandCloud extends Sprite
         mc.addEventListener(Event.COMPLETE, onCloudMovieComplete);
         Starling.juggler.add(mc);
         var txt:TextField = cloud.getChildByName("txt") as TextField;
-        txt.visible = false;
-
+        txt.removeChildren();
 
 
 
     }
     private function onCloudMovieComplete(e:Event):void {
 
-        //DebugTrace.msg("DatingScene.onCloudMovieComplete");
+        DebugTrace.msg("DatingScene.onCloudMovieComplete");
         var target:MovieClip = e.currentTarget as MovieClip;
         target.pause();
         Starling.juggler.remove(target);
@@ -264,14 +264,15 @@ public class CommandCloud extends Sprite
         }else{
 
 
-            delcall=new DelayedCall(onPaidAPComplete,0.5);
-            Starling.juggler.add(delcall);
-
+            //delcall=new DelayedCall(onPaidAPComplete,0.5);
+            //Starling.juggler.add(delcall);
+            doCloudCommandHandler();
         }
 
 
     }
     private function onPaidAPComplete():void{
+
 
         Starling.juggler.remove(delcall);
         doCloudCommandHandler();
@@ -337,15 +338,27 @@ public class CommandCloud extends Sprite
 
         }else{
 
-            _data.removed=de_label;
-            command.topviewDispatch(TopViewEvent.REMOVE,_data);
 
             var currentScene:String=DataContainer.currentScene;
             var scene_index:Number=currentScene.indexOf("Scene");
             if(scene_index!=-1)
             {
-                checkSceneCommand();
+
+                if(de_label=="LookAround"){
+                    checkSceneCommand();
+
+                }else{
+                    _data.removed=de_label;
+                    command.topviewDispatch(TopViewEvent.REMOVE,_data);
+                }
+
+            }else{
+                _data.removed=de_label;
+                command.topviewDispatch(TopViewEvent.REMOVE,_data);
             }
+
+
+
 
         }
 
@@ -353,6 +366,7 @@ public class CommandCloud extends Sprite
 
     private function checkSceneCommand():void
     {
+        DataContainer.DatingSuit="";
         var currentlable:String=DataContainer.currentLabel;
         var currentScene:String=DataContainer.currentScene;
         var scene_index:Number=currentlable.indexOf("Scene");
@@ -372,6 +386,7 @@ public class CommandCloud extends Sprite
             if(perbattle<=ran_battle_rate){
                 //could random battle
                 DataContainer.battleType="random_battle";
+                command.removeShortcuts();
                 command.consumeHandle("RandomBattle");
 
 
@@ -410,8 +425,8 @@ public class CommandCloud extends Sprite
 
     }
     private function onRemovedHandle(e:Event):void{
-        cloud.removeEventListener(TouchEvent.TOUCH, doClickComCloud);
 
+        cloud.removeEventListeners();
         var tween:Tween=new Tween(cloud,0.5,Transitions.EASE_OUT);
         tween.scaleTo(0);
         tween.delay=0.25;

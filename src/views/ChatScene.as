@@ -368,7 +368,8 @@ public class ChatScene extends Sprite
                 sentence=sentences[index];
 
                 var _int:Number=flox.getSaveData("int").player;
-                var reward:Number=Math.floor(_int/8);
+                var _img:Number=flox.getSaveData("image").player;
+                var reward:Number=Math.floor((_int+_img)/16);
                 var _data:Object=new Object();
                 _data.com="Reward_Mood";
                 _data.mood=reward;

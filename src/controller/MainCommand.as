@@ -302,7 +302,7 @@ public class MainCommand implements MainInterface {
         alertmsg.msg.embedFonts = true;
         alertmsg.msg.defaultTextFormat = format;
         alertmsg.confirm.buttonMode = true;
-        alertmsg.cancelbtn.buttonMode = true;
+        alertmsg.cancelbtn.visible=false;
         alertmsg.mouseChildren = false;
         alertmsg.addEventListener(MouseEvent.MOUSE_DOWN, doColseAlertmsg);
         //alertmsg.cancelbtn.addEventListener(MouseEvent.CLICK,doColseAlertmsg);
@@ -409,6 +409,7 @@ public class MainCommand implements MainInterface {
             var floxMg:FloxManagerView = ViewsContainer.FloxManager;
             floxMg.currentAccount();
         }
+        DebugTrace.msg("MainCommand.completePreOrderAccount emails="+JSON.stringify(emails));
     }
 
     public function initSceneLibrary():void {
@@ -1437,7 +1438,7 @@ public class MainCommand implements MainInterface {
                 income = Math.floor(int / 1.5 * rate);
                 break
             case "ThemedParkScene":
-                income = 200+Math.floor(love * rate);
+                income = 200+Math.floor(love / 2 * rate);
                 break
         }
         //income*=2;
@@ -1942,9 +1943,6 @@ public class MainCommand implements MainInterface {
         if(com=="RandomBattle"){
 
             ViewsContainer.UIViews.visible = false;
-            //msg = "Got into a street fight !!";
-            //alert = new AlertMessage(msg, onClosedAlert);
-            //scene.addChild(alert);
 
             var popup:RandomBattlePopup=new RandomBattlePopup();
             popup.init();
@@ -2075,9 +2073,15 @@ public class MainCommand implements MainInterface {
         gameEvent._name = "clear_comcloud";
         gameEvent.displayHandler();
 
+        var command:MainInterface = new MainCommand();
+        var current_label:String=  DataContainer.currentLabel;
+        if(current_label.indexOf("Dating")!=-1){
+            command.addShortcuts();
+        }
+
         var _data:Object = new Object();
         _data.name = DataContainer.currentScene;
-        var command:MainInterface = new MainCommand();
+
         command.sceneDispatch(SceneEvent.CHANGED, _data);
     }
 
@@ -2154,6 +2158,7 @@ public class MainCommand implements MainInterface {
                             case "all_scene":
                                 if (likes > 0) {
                                     // the most like
+
                                     chlikes = new Object();
                                     chlikes.name = character;
                                     chlikes.value = likes;
@@ -2208,10 +2213,8 @@ public class MainCommand implements MainInterface {
         var schedule_scene:String=String(schedule[index+dateIndx.month][dateIndx.date]);
         var current_scene:String=DataContainer.currentScene;
         var scene:String=String(current_scene.split("Scene").join());
-        //DebugTrace.msg("FoundSomeScene.checkSchedule date:"+dateIndx.date);
-        //DebugTrace.msg("FoundSomeScene.checkSchedule schedule:"+schedule[index+dateIndx.month][dateIndx.date]);
-        //DebugTrace.msg("FoundSomeScene.checkSchedule dateIndx:"+JSON.stringify(dateIndx));
-        DebugTrace.msg("FoundSomeScene.checkSchedule schedule_scene:"+schedule_scene+" ;scene:"+scene);
+
+        DebugTrace.msg("MainCommand.checkSchedule schedule_scene:"+schedule_scene+" ;scene:"+scene);
         if(schedule_scene==scene)
         {
             _likesObj.value=100;
@@ -2222,6 +2225,7 @@ public class MainCommand implements MainInterface {
 
             _likesObj=null;
         }
+
         return _likesObj;
     }
     private function characterInSchedule(name:String):void
@@ -2242,7 +2246,6 @@ public class MainCommand implements MainInterface {
             //character has schedule
             for(var i:uint=0;i<scenelikes[name].length;i++)
             {
-
                 scenelikes[name][i].likes=0;
             }
             //savegame.scenelikes=scenelikes;
@@ -2302,10 +2305,15 @@ public class MainCommand implements MainInterface {
         flox.save("se",seObj);
 
     }
+
+    public function removeShortcuts():void{
+
+        Starling.current.stage.removeEventListeners();
+    }
     public function addShortcuts():void{
 
-
         Starling.current.stage.addEventListener(KeyboardEvent.KEY_UP, doShortcuts);
+
     }
     private function doShortcuts(e:KeyboardEvent):void{
         var toScene:String="";
@@ -2355,12 +2363,7 @@ public class MainCommand implements MainInterface {
             DataContainer.shortcuts="";
         }
     }
-    public function removeShortcuts():void{
 
-
-        Starling.current.stage.removeEventListener(KeyboardEvent.KEY_UP, doShortcuts);
-
-    }
 
     public function initCriminalsRecord():void{
         //DebugTrace.msg("MainCommand.initCriminalsRecord");
@@ -2483,6 +2486,8 @@ public class MainCommand implements MainInterface {
     public function nativeStage_rightMouseDownHandler(e:MouseEvent):void{
         this._menu.display(Starling.current.nativeStage, e.stageX, e.stageY);
     }
+
+
 
 }
 }

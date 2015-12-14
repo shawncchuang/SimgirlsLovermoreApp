@@ -814,6 +814,7 @@ public class MiniGameCommand implements MiniGameInterface
 
 		var _data:Object=new Object();
 		_data.name="SpiritTempleScene";
+		_data.from="minigame";
 		command.sceneDispatch(SceneEvent.CHANGED,_data);
 
 	}

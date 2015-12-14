@@ -54,6 +54,8 @@ public class FoundSomeScene extends Scenes
 	private var command:MainInterface=new MainCommand();
 	private var index:uint=0;
 	private var iconTween:Tween;
+	private var npcIconTween:Tween;
+	private var chIconTween:Tween;
 	private var iconslist:Array=new Array();
 	private var filters:FilterInterface=new FilterManager();
 	private var cancelbtn:Image;
@@ -65,7 +67,8 @@ public class FoundSomeScene extends Scenes
 	private var bubbleTween:Tween;
 	private var schedule:Array;
 	private var datingdelay:DelayedCall;
-	private var icontweens:Array=new Array();
+
+
 	public function FoundSomeScene()
 	{
 		current_scene=DataContainer.currentScene.split("Scene").join("");
@@ -79,7 +82,7 @@ public class FoundSomeScene extends Scenes
 		initLayout();
 
 		setNPC();
-		setCharacterInside();
+
 		initCancelHandle();
 		checkEmpty();
 
@@ -93,18 +96,18 @@ public class FoundSomeScene extends Scenes
 
 		//DebugTrace.msg("FoundSomeScene.initLayout currentScene:"+DataContainer.currentScene);
 		var drawcom:DrawerInterface=new DrawManager();
-		var bgImg:*=drawcom.drawBackground();
+		var bgImg:Image=drawcom.drawBackground();
 
 		var bgSprtie:Sprite=new Sprite();
 		bgSprtie.addChild(bgImg);
-		filters.setSource(bgSprtie);
+		filters.setSource(bgImg);
 		filters.setBulr();
 		command.filterScene(bgSprtie);
 		addChild(bgSprtie);
 
-		var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
-		gameEvent._name="clear_comcloud";
-		gameEvent.displayHandler();
+//		var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
+//		gameEvent._name="clear_comcloud";
+//		gameEvent.displayHandler();
 
 	}
 	private function onCallback():void
@@ -149,19 +152,18 @@ public class FoundSomeScene extends Scenes
 			}
 			//for
 		}
+		setCharacterInside();
 
 	}
 	private function setCharacterInside():void
 	{
 
 
-
 		command.initCharacterLocation("current_scene",arrivedCh);
-
-		//var arrivedChStr:String=JSON.stringify(arrivedCh);
-		//DebugTrace.msg("FoundSomeScene.setCharacterInside arrivedChStr:"+arrivedChStr);
-		//chlikesStr:[{"value":43,"name":"sao"},{"value":42,"name":"tomoru"},{"value":32,"name":"lenus"},{"value":14,"name":"klaire"},{"value":0,"name":"sirena"},{"value":0,"name":"zack"},{"value":0,"name":"ceil"},{"value":0,"name":"dea"}]
 		arrivedCh = DataContainer.CharacherLocation;
+		DebugTrace.msg("FoundSomeScene.setCharacterInside arrivedChStr:"+JSON.stringify(arrivedCh));
+		//chlikesStr:[{"value":43,"name":"sao"},{"value":42,"name":"tomoru"},{"value":32,"name":"lenus"},{"value":14,"name":"klaire"},{"value":0,"name":"sirena"},{"value":0,"name":"zack"},{"value":0,"name":"ceil"},{"value":0,"name":"dea"}]
+
 		if(arrivedCh.length>0)
 		{
 			//found some characters at here
@@ -246,11 +248,11 @@ public class FoundSomeScene extends Scenes
 				iconslist.push(sprite);
 
 
-				iconTween=new Tween(sprite,0.5,Transitions.EASE_IN);
-				iconTween.delay=0.1*index;
-				iconTween.scaleTo(1);
-				Starling.juggler.add(iconTween);
-				icontweens.push(iconTween);
+				chIconTween=new Tween(sprite,0.5,Transitions.EASE_IN);
+				chIconTween.delay=0.1*index;
+				chIconTween.scaleTo(1);
+				Starling.juggler.add(chIconTween);
+
 
 			}
 			//if
@@ -277,12 +279,12 @@ public class FoundSomeScene extends Scenes
 		iconslist.push(sprite);
 		sprite.addEventListener(TouchEvent.TOUCH,onTouchCharaterIcon);
 
-		iconTween=new Tween(sprite,0.3,Transitions.EASE_IN);
-		iconTween.delay=0.1*index;
-		iconTween.scaleTo(1);
-		Starling.juggler.add(iconTween);
+		npcIconTween=new Tween(sprite,0.3,Transitions.EASE_IN);
+		npcIconTween.delay=0.1*index;
+		npcIconTween.scaleTo(1);
+		Starling.juggler.add(npcIconTween);
 
-		icontweens.push(iconTween);
+
 
 	}
 
@@ -303,31 +305,30 @@ public class FoundSomeScene extends Scenes
 		}
 		else
 		{
-			tween=new Tween(target,0.2,Transitions.LINEAR);
-			tween.onComplete=onIconEffectComplete;
-			tween.scaleTo(1);
-			Starling.juggler.add(tween);
+			Starling.juggler.removeTweens(target);
+			target.scaleX=1;
+			target.scaleY=1;
+//			tween=new Tween(target,0.2,Transitions.LINEAR);
+//			tween.scaleTo(1);
+//			Starling.juggler.add(tween);
 		}
 		//if
-		function onIconEffectComplete():void{
-			Starling.juggler.removeTweens(target);
-		}
+
 		if(began)
 		{
 
-			Starling.juggler.removeTweens(target);
-			target.removeEventListener(TouchEvent.TOUCH,onTouchCharaterIcon);
+			onIconsRemoveListener();
 			DebugTrace.msg("FoundSomeScene.onTouchCharaterIcon name:"+target.name);
 			if(target.name.indexOf("npc")==-1)
 			{
 
 				DataContainer.currentDating=target.name;
 
-				//datingdelay=new DelayedCall(onDatingHandle,0.8);
-				//Starling.juggler.add(datingdelay);
-
-				onIconsFadoutHandle();
-
+//				iconTween=new Tween(target,0.5);
+//				iconTween.fadeTo(0);
+//				iconTween.onComplete=onDatingHandle;
+//				Starling.juggler.add(iconTween);
+				onDatingHandle();
 
 			}
 			else
@@ -343,24 +344,20 @@ public class FoundSomeScene extends Scenes
 		//if
 	}
 
-	private function onIconsFadoutHandle():void{
+	private function onIconsRemoveListener():void{
 
 		for(var i:uint=0;i<iconslist.length;i++){
 			var icon:Sprite=iconslist[i];
-			iconTween=new Tween(icon,1,Transitions.LINEAR);
-			iconTween.fadeTo(0);
-			iconTween.onComplete=onDatingHandle;
-			Starling.juggler.add(iconTween);
-			icontweens.push(iconTween);
+			icon.removeEventListeners();
+			icon.removeFromParent(true);
 		}
-
+		Starling.juggler.removeTweens(npcIconTween);
+		Starling.juggler.removeTweens(chIconTween);
 	}
 	private function onDatingHandle():void{
 
-		//Starling.juggler.remove(datingdelay);
 
-		onIconTweenComplete();
-
+		Starling.juggler.removeTweens(iconTween);
 		var _data:Object=new Object();
 		_data.name="DatingScene";
 		command.sceneDispatch(SceneEvent.CHANGED,_data);
@@ -372,11 +369,11 @@ public class FoundSomeScene extends Scenes
 	private function npcSpeakingHandle():void
 	{
 
-		removeChild(cancelbtn);
+		cancelbtn.removeFromParent();
 		for(var i:uint=0;i<iconslist.length;i++)
 		{
 			var icon:Sprite=iconslist[i];
-			removeChild(icon);
+			icon.removeFromParent(true);
 		}
 
 
@@ -548,14 +545,7 @@ public class FoundSomeScene extends Scenes
 		}
 
 	}
-	private function onIconTweenComplete():void{
 
-		for(var i:uint=0;i<icontweens.length;i++){
-			var tween:Tween=icontweens[i];
-			Starling.juggler.remove(tween);
-		}
-
-	}
 
 }
 }

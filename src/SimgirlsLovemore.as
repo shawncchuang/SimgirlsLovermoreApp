@@ -75,7 +75,6 @@ public class SimgirlsLovemore extends MovieClip
 	public static const FuturaTTC:String;
 
 
-
 	[Embed(source="../assets/fonts/erbos_draco_1st_open_nbp.ttf",
 			fontName="SimErbosDraco",
 			mimeType="application/x-font-truetype",
@@ -217,7 +216,7 @@ public class SimgirlsLovemore extends MovieClip
 				}
 				catch(e:Error)
 				{
-
+					DebugTrace.msg("SimgirlsLovemore.displayHandler remove_waving Error");
 				}
 				break;
 			case "comcloud":
@@ -235,7 +234,7 @@ public class SimgirlsLovemore extends MovieClip
 				ViewsContainer.CurrentClouds=new Array();
 				break;
 			case "disable_comloud":
-				DebugTrace.msg("SimgirlsLovemore.disable_comloud");
+				DebugTrace.msg("SimgirlsLovemore.displayHandler disable_comloud");
 				for(var m:uint=0;m<comcouldlist.length;m++)
 				{
 					cloud=comcouldlist[m];

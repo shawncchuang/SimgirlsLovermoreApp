@@ -173,7 +173,7 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
             nextStoryPart();
             if(finishedcallback)
                 finishedcallback();
-            disableAll();
+
         }
         //if
 
@@ -509,7 +509,7 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
             bgSprtie.removeFromParent(true);
 
         }catch(e:Error){
-            DebugTrace.msg("SceneCommand.createBackground remove bgSprtie Error");
+            DebugTrace.msg("PreviewStoryCommand.createBackground remove bgSprtie Error");
         }
 
         onBackgroundComplete();
@@ -525,7 +525,7 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
             //bgSrc="Bg";
         }
 
-        DebugTrace.msg("SceneCommand.createBackground bgSrc="+bgSrc);
+        DebugTrace.msg("PreviewStoryCommand.createBackground bgSrc="+bgSrc);
 
         var scene:String=location.split("Scene").join("");
         var sceneIndex:Number=Config.daynightScene.indexOf(scene);
@@ -644,8 +644,8 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
     }
     public function filterBackground():void
     {
-        filter.setSource(background);
-        filter.setBulr();
+        //filter.setSource(background);
+        //filter.setBulr();
 
     }
     public function switchGateway(type:String ,callback:Function=null):*

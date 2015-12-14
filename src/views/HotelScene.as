@@ -55,6 +55,7 @@ public class HotelScene extends Scenes
     private var checkOverTex:Texture;
     private var checkUpTex:Texture;
     private var days:Number=1;
+    private var NO_CASH_REST:String="You don't have enough cash.";
     public function HotelScene()
     {
         /*var pointbgTexture:Texture=Assets.getTexture("PointsBg");
@@ -362,8 +363,9 @@ public class HotelScene extends Scenes
         }
         else
         {
-            var msg:String="Sorry,you don't have enough chash.";
-            var alert:AlertMessage=new AlertMessage(msg,onClosedAlert);
+            //not enough cash to rest
+
+            var alert:AlertMessage=new AlertMessage(NO_CASH_REST,onClosedAlert);
             addChild(alert);
 
             if(options)

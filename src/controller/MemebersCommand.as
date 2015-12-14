@@ -575,6 +575,7 @@ public class MemebersCommand implements MembersInterface
 
                     var _data:Object=new Object();
                     _data.name= scene;
+                    _data.from="battle";
                     command.sceneDispatch(SceneEvent.CHANGED,_data);
                 }
                 //if

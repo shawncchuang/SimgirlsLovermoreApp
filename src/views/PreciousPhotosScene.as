@@ -135,18 +135,25 @@ public class PreciousPhotosScene extends Sprite{
 
         var tween:Tween=new Tween(bg,0.5,Transitions.EASE_IN);
         tween.fadeTo(1);
+        tween.onComplete=onBgFadeinComplete;
         Starling.juggler.add(tween);
+    }
+    private function onBgFadeinComplete():void{
+        Starling.juggler.removeTweens(bg);
     }
     private function onPhotoLoadedComplete(e:Event):void{
 
         preload.removeFromParent(true);
-        Starling.juggler.removeTweens(bg);
 
         var tween:Tween=new Tween(imgloader,0.5,Transitions.EASE_IN);
         tween.fadeTo(1);
+        tween.onComplete=onImageFadinComplete;
         Starling.juggler.add(tween);
 
         photo.addEventListener(TouchEvent.TOUCH, onTouchPhotoHandler);
+    }
+    private function onImageFadinComplete():void{
+        Starling.juggler.removeTweens(imgloader);
     }
     private function onTouchPhotoHandler(e:TouchEvent):void{
         var target:Sprite=e.currentTarget as Sprite;
@@ -154,7 +161,7 @@ public class PreciousPhotosScene extends Sprite{
         //var hovor:Touch = e.getTouch(loader, TouchPhase.HOVER);
         var began:Touch = e.getTouch(target, TouchPhase.BEGAN);
         if(began){
-            target.removeEventListener(TouchEvent.TOUCH, onTouchPhotoHandler);
+            photo.removeEventListener(TouchEvent.TOUCH, onTouchPhotoHandler);
             var tween:Tween=new Tween(target,0.5,Transitions.EASE_IN);
             tween.fadeTo(0);
             tween.onComplete=onPhotoZoomInFadeout;

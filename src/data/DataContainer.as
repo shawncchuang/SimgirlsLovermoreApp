@@ -212,19 +212,18 @@ public class DataContainer
 
                 var reLikes:uint = uint(Math.random() * likes);
                 var scene_name:String = ran_sceneslist[k];
-                //DebugTrace.msg("scene_name  : "+scene_name);
-//                if(scene_name=="PrivateIsland" || scene_name=="Airport" || scene_name=="LovemoreMansion" || scene_name=="Hotel" || scene_name=="PoliceStation" || scene_name=="SSCCArena")
-//                {
-//                    //no people at here
-//                    reLikes=0;
-//                }
+
+                var allStyles:Object=Config.styles;
+                var styles:Array=allStyles[ch_name+"_"+scene_name];
+                if(styles.length==0){
+                    reLikes=0;
+                }
                 if (scene_name == "PrivateIsland" && ch_name!="zack")
                 {
                     reLikes=0;
                 }
 
                 //DebugTrace.msg("DataContainer.initChacacterLikeScene scene_name:"+scene_name);
-
 
                 scene_rating.name=scene_name;
                 scene_rating.likes=reLikes;

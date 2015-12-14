@@ -120,6 +120,7 @@ public class RandomBattlePopup extends Sprite {
     private function onCompletePay():void{
 
         Starling.juggler.removeTweens(this);
+        command.addShortcuts();
 
         var _data:Object = new Object();
         _data.name = DataContainer.currentScene;

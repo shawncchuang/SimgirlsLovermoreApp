@@ -182,6 +182,7 @@ public class DatingScene extends Scenes {
 
                 var _data:Object = new Object();
                 _data.name = DataContainer.currentScene;
+                _data.from="dating";
                 command.sceneDispatch(SceneEvent.CHANGED, _data);
 
                 command.updateInfo();
@@ -455,12 +456,12 @@ public class DatingScene extends Scenes {
     private function initLayout():void {
 
 
-        var bgImg:* = drawcom.drawBackground();
+        var bgImg:Image = drawcom.drawBackground();
 
         var bgSprtie:Sprite = new Sprite();
         bgSprtie.addChild(bgImg);
 
-        filters.setSource(bgSprtie);
+        filters.setSource(bgImg);
         filters.setBulr();
         addChild(bgSprtie);
 
@@ -573,11 +574,11 @@ public class DatingScene extends Scenes {
         var style:String = styleSechedule[dating];
 
         var datingSuit:String=DataContainer.DatingSuit;
-//        if(datingSuit!=""){
-//            style=datingSuit;
-//        }else{
-//            DataContainer.DatingSuit=style;
-//        }
+        if(datingSuit!=""){
+            style=datingSuit;
+        }else{
+            DataContainer.DatingSuit=style;
+        }
 
         //DebugTrace.msg("DatingScene.initCharacter datingSuit="+datingSuit);
         //DebugTrace.msg("DatingScene.initCharacter dating="+dating);
@@ -813,7 +814,6 @@ public class DatingScene extends Scenes {
 
                             gameInfo = ViewsContainer.gameinfo;
                             gameInfo.dispatchEventWith("UPDATE_INFO");
-                            DataContainer.DatingSuit="";
 
                             clickedCloudHandle();
 
@@ -1172,7 +1172,6 @@ public class DatingScene extends Scenes {
     private function doCancelDating():void {
         character.removeFromParent();
 
-
         var _data:Object = new Object();
         _data.name = DataContainer.currentLabel;
         command.sceneDispatch(SceneEvent.CHANGED, _data);
@@ -1478,8 +1477,11 @@ public class DatingScene extends Scenes {
         imgloader.addEventListener(Event.COMPLETE, onPhotoLoadedComplete);
         photo.addChild(imgloader);
 
-        var msg:String="Relationship level goes up! \nYou can view new photo(s) in your precious moments collection!";
+        var msg:String="Relationship level goes up!\n" +
+                "View new photo(s) in your Precious Moments Collection!\n" +
+                "Check his/her current location in your Contacts!";
         var txt:TextField=new TextField(stageW,60,msg,font,18,0xFFFFFF);
+        txt.autoScale=true;
         txt.vAlign="center";
         txt.y=stageH-txt.height;
         photo.addChild(txt);

@@ -602,7 +602,7 @@ public class DrawManager implements DrawerInterface
         }
         //if
     }
-    public function drawBackground():*
+    public function drawBackground():Image
     {
 
         //backgound image or sprite

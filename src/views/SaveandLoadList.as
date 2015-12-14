@@ -234,8 +234,6 @@ public class SaveandLoadList extends Sprite
 
                     _data=null;
                     progress=Number(selbar.split("savedbar").join(""))+1;
-                    //_data.inGameProgress=progress;
-                    //playerData.inGameProgress=progress;
                     current_saved[progress-1]="saved"+progress;
                 }
                 //if
@@ -243,10 +241,11 @@ public class SaveandLoadList extends Sprite
                 {
                     DebugTrace.msg("Write into empty");
                     save_new=true;
-                    //progress=Number(selbar.split("emptybar").join(""))+1;
 
                     progress=current_saved.length+1;
                     current_saved.push("saved"+progress);
+
+
 
 
                     //playerData.inGameProgress=progress;
@@ -419,6 +418,7 @@ public class SaveandLoadList extends Sprite
         //flox.savePlayer(playerData,onSavePlayerComplete);
         if(_type=="Depart"){
             //save game
+
             flox.savePlayerData("inGameProgress",progress);
             flox.savePlayerData("saved",current_saved);
             flox.syncSaved(onSynsComplete);

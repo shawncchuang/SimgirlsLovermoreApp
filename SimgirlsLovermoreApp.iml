@@ -22,7 +22,7 @@
           </map>
           <option name="additionalOptions" value="-swf-version=31 -frame=StartupFrame,SimgirlsLovemore" />
         </compiler-options>
-        <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/src/Main-app.xml" package-file-name="SimgirlsLovermore">
+        <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/src/Main-app.xml" package-file-name="Simgirls">
           <files-to-package>
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/src/update_config.xml" path-in-package="update_config.xml" />
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/fonts" path-in-package="fonts" />
