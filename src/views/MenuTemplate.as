@@ -46,6 +46,9 @@ public class MenuTemplate extends Sprite{
     private var command:MainInterface=new MainCommand();
     private var mini_menu:Sprite;
     private var cancel:Button;
+    private var footerbg:Image;
+    private var bgQuad:Quad;
+    private var miniIcons:Array;
     public function MenuTemplate() {
 
 
@@ -56,8 +59,8 @@ public class MenuTemplate extends Sprite{
 
     public function addBackground():void{
 
-        var quad:Quad=new Quad(Starling.current.stage.stageWidth,Starling.current.stage.stageHeight,0x649CD3);
-        addChild(quad);
+        bgQuad=new Quad(Starling.current.stage.stageWidth,Starling.current.stage.stageHeight,0x649CD3);
+        addChild(bgQuad);
 
     }
     public function backgroundEffectFadein(attrs:Array):void{
@@ -142,7 +145,8 @@ public class MenuTemplate extends Sprite{
     public function addFooter():void{
 
         var footer:Sprite=new Sprite();
-        var footerbg:Image=new Image(getTexture("FooterBg"));
+        footerbg=new Image(getTexture("FooterBg"));
+
         footer.x=512;
         footer.y=742;
         footer.addChild(footerbg);
@@ -237,6 +241,7 @@ public class MenuTemplate extends Sprite{
         var mmTextAltas:TextureAtlas=new TextureAtlas(mmTexture,xml);
 
         mini_menu=new Sprite();
+        mini_menu.flatten();
         mini_menu.x=930.5;
         mini_menu.y=79.5;
         var bg:Image=new Image(mmTextAltas.getTexture(this.cate.toLowerCase()));
@@ -253,7 +258,7 @@ public class MenuTemplate extends Sprite{
         minibgTween.animate("alpha",1);
         Starling.juggler.add(minibgTween);
 
-
+        miniIcons=new Array();
         for(var _cate:String in pos){
             if(this.cate != _cate) {
                 var iconTexture:Texture=mmTextAltas.getTexture("icon"+_cate);
@@ -264,6 +269,7 @@ public class MenuTemplate extends Sprite{
                 mmIcon.x = pos[_cate].x;
                 mmIcon.y = pos[_cate].y;
                 mini_menu.addChild(mmIcon);
+                miniIcons.push(mmIcon);
                 mmIcon.addEventListener(TouchEvent.TOUCH,onTouchMiniMenu);
             }
         }
@@ -314,6 +320,17 @@ public class MenuTemplate extends Sprite{
 
 
         Starling.juggler.removeTweens(mini_menu);
+        mini_menu.removeFromParent(true);
+        titleIcon.removeFromParent(true);
+        footerbg.removeFromParent(true);
+        bgEff1.removeFromParent(true);
+        bgEff2.removeFromParent(true);
+        bgQuad.dispose();
+        this.dispose();
+        for(var i:uint=0;i<miniIcons.length;i++){
+            var mini_icon:Button=miniIcons[i];
+            mini_icon.dispose();
+        }
 
         var _data:Object=new Object();
         _data.name=cate;

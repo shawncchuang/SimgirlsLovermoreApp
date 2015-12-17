@@ -11,6 +11,7 @@ public interface ViewInterface {
     function characterIcons(target:Sprite,cate:String=null):void
     function skillIcons(target:Sprite):void
     function replaceCharacter(model:Sprite):void
+    function removedCharacterIcons():void
 
 }
 }

@@ -166,7 +166,7 @@ public class MainCommand implements MainInterface {
                 break
         }
         switch (style) {
-            /*
+            /*d
              case "TarotReading_ComCloud":
              case "AirportScene_ComCloud":
              gameEvent.data=txt;
@@ -544,7 +544,7 @@ public class MainCommand implements MainInterface {
 
     public function stopSound(name:String):void {
 
-
+        if(sound_channel)
         sound_channel.stop();
     }
 

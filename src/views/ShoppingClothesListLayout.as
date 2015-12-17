@@ -61,6 +61,7 @@ public class ShoppingClothesListLayout extends Sprite {
         initSwitchController();
         initBuyHandler();
 
+        this.addEventListener(Event.REMOVED_FROM_STAGE,onRemovedHandler);
     }
 
     public function initItems():void {
@@ -340,6 +341,15 @@ public class ShoppingClothesListLayout extends Sprite {
 
 
         }
+    }
+    private function onRemovedHandler(e:Event):void{
+
+        itemSprite.removeFromParent(true);
+        itemname.removeFromParent();
+        price.removeFromParent();
+        numbers.removeFromParent();
+        arrowLeft.removeFromParent(true);
+        arrowRight.removeFromParent(true);
 
     }
 }

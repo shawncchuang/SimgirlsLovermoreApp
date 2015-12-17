@@ -372,6 +372,9 @@ public class MenuScene extends Scenes
 
         Starling.juggler.removeTweens(centerframe);
 
+        centerframe.removeFromParent(true);
+        templete.removeFromParent(true);
+
         var  gameinfo:Sprite=ViewsContainer.gameinfo;
         gameinfo.dispatchEventWith("DISPLAY");
 

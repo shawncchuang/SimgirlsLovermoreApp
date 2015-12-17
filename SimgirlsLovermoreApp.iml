@@ -20,7 +20,7 @@
             <entry key="compiler.keep-generated-actionscript" value="true" />
             <entry key="compiler.locale" value="en_US" />
           </map>
-          <option name="additionalOptions" value="-swf-version=31 -frame=StartupFrame,SimgirlsLovemore" />
+          <option name="additionalOptions" value="-swf-version=31 -frame=StartupFrame,SimgirlsLovemore -default-size 1024 768" />
         </compiler-options>
         <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/src/Main-app.xml" package-file-name="Simgirls">
           <files-to-package>
@@ -29,6 +29,7 @@
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/swf" path-in-package="swf" />
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/video" path-in-package="video" />
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/images" path-in-package="images" />
+            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/collection" path-in-package="collection" />
           </files-to-package>
           <AirSigningOptions keystore-path="$MODULE_DIR$/release/simgirl_cer.p12" use-temp-certificate="false" />
         </packaging-air-desktop>

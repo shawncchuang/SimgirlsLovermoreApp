@@ -46,7 +46,6 @@ import starling.events.Event;
 
 
 			photosloader=new ImageLoader();
-			photosloader.y=-15;
 			photosloader.alpha=0;
 			photosloader.width=Starling.current.stage.stageWidth;
 			photosloader.height=Starling.current.stage.stageHeight;

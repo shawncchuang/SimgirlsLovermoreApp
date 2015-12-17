@@ -142,11 +142,11 @@ public class Scenes extends Sprite
         gameEvt._name="remove_waving";
         gameEvt.displayHandler();
 
-        if(filtersMC){
-            DebugTrace.msg("Scene.changeSceneHandle remvoe filtersMC");
+        try{
             Starling.current.nativeOverlay.removeChild(filtersMC);
             filtersMC=null;
-
+        }catch(e:Error){
+            DebugTrace.msg("Scene.changeSceneHandle removed filtersMC");
         }
 
 
@@ -484,11 +484,11 @@ public class Scenes extends Sprite
             //DebugTrace.msg("Scenes.onFadeoutComplete:"+scene_container.numChildren);
            if(scenebg)
             {
-                scenebg.removeFromParent();
+                scenebg.removeFromParent(true);
                 scenebg=null;
             }
-            current_scence.removeFromParent();
-            scene_container.removeFromParent();
+            current_scence.removeFromParent(true);
+            scene_container.removeFromParent(true);
 
             scene.removeFromParent(true);
 //            try{

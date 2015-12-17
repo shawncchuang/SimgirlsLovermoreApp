@@ -109,6 +109,9 @@ public class DatingScene extends Scenes {
         this.addEventListener(DatingScene.REJECT_GIFT, doRejectGiftHandle);
         this.addEventListener(DatingScene.CHANGED_RELATIONSHIP, doChandedRelactionshipHandle);
         this.addEventListener(DatingScene.NONE_RELATIONSHIP, doNoneRelationshipHandle);
+        this.addEventListener(Event.REMOVED_FROM_STAGE, onRemovedHandler);
+
+
         ViewsContainer.baseSprite = this;
 
 
@@ -168,7 +171,9 @@ public class DatingScene extends Scenes {
 
         }
         for(var i:uint=0;i<cloudlist.length;i++){
-            Starling.juggler.removeTweens(cloudlist[i]);
+            var cloudMC:MovieClip=cloudlist[i];
+            Starling.juggler.removeTweens(cloudMC);
+
         }
 
         switch (com) {
@@ -452,19 +457,21 @@ public class DatingScene extends Scenes {
     private var apPanel:Sprite;
     private var apTxt:TextField;
     private var chFacials:CharacterFacials;
+    private var clothTexture:Texture;
+    private var bgSprtie:Sprite;
 
     private function initLayout():void {
 
 
         var bgImg:Image = drawcom.drawBackground();
 
-        var bgSprtie:Sprite = new Sprite();
+        bgSprtie = new Sprite();
         bgSprtie.addChild(bgImg);
 
         filters.setSource(bgImg);
         filters.setBulr();
         addChild(bgSprtie);
-        bgImg.addEventListener(Event.REMOVED_FROM_STAGE, onBgRemovedHandler);
+
 
 
         var effterxture:Texture = Assets.getTexture("DatingSceneBgEffect");
@@ -546,10 +553,7 @@ public class DatingScene extends Scenes {
         command.initStyleSchedule(onStyleComplete);
 
     }
-    private function onBgRemovedHandler(e:Event):void{
-        DebugTrace.msg("DatingScene.onBgRemovedHandler");
-        filters.doDispose();
-    }
+
     private function onStyleComplete():void{
 
         updateAP();
@@ -591,8 +595,7 @@ public class DatingScene extends Scenes {
         DebugTrace.msg("DatingScene.initCharacter style="+style);
 
 
-        var clothTexture:Texture = Assets.getTexture(style);
-
+        clothTexture = Assets.getTexture(style) as Texture;
         character = new Image(clothTexture);
         character.alpha=0;
         character.x=400;
@@ -744,13 +747,13 @@ public class DatingScene extends Scenes {
         }
         delayTween = new Tween(this, 0.1);
         delayTween.delay = 2;
-        delayTween.onComplete = onClodFadeInCOmplete;
+        delayTween.onComplete = onClodFadeInComplete;
         Starling.juggler.add(delayTween);
 
     }
 
 
-    private function onClodFadeInCOmplete():void {
+    private function onClodFadeInComplete():void {
 
         Starling.juggler.remove(delayTween);
 
@@ -1003,19 +1006,21 @@ public class DatingScene extends Scenes {
 
             var cloud:Sprite = clouds[i];
             Starling.juggler.removeTweens(cloud);
+           var cloudMC:MovieClip=cloudlist[i];
+            cloudMC.dispose();
             cloud.removeFromParent(true);
 
         }
-
-        bgEffectImg.removeFromParent(true);
-        titleIcon.removeFromParent(true);
-        relactionInfo.removeFromParent(true);
-        apPanel.removeFromParent(true);
-
-        if (com == "Leave") {
-            character.removeFromParent(true);
-            mainProfile.removeFromParent(true);
-        }
+//
+//        bgEffectImg.removeFromParent(true);
+//        titleIcon.removeFromParent(true);
+//        relactionInfo.removeFromParent(true);
+//        apPanel.removeFromParent(true);
+//
+//        if (com == "Leave") {
+//            character.removeFromParent(true);
+//            mainProfile.removeFromParent(true);
+//        }
     }
 
     private function onReadyToChangeScene():void {
@@ -1176,7 +1181,7 @@ public class DatingScene extends Scenes {
     }
 
     private function doCancelDating():void {
-        character.removeFromParent();
+        character.removeFromParent(true);
 
         var _data:Object = new Object();
         _data.name = DataContainer.currentLabel;
@@ -1540,6 +1545,8 @@ public class DatingScene extends Scenes {
     private function onPhotoFadeout():void{
 
         Starling.juggler.removeTweens(photo);
+        bg.dispose();
+        imgloader.dispose();
         photo.removeFromParent(true);
         if(screenview)
         screenview.removeFromParent(true);
@@ -1555,6 +1562,25 @@ public class DatingScene extends Scenes {
         screenview=new Quad(stageW,stageH,0x000000);
         screenview.alpha=0;
         addChild(screenview);
+    }
+
+    private function onRemovedHandler(e:Event):void{
+        DebugTrace.msg("DatingScene.onRemovedHandler");
+
+
+
+        filters.doDispose();
+        bgSprtie.removeFromParent(true);
+        bgEffectImg.removeFromParent(true);
+        titleIcon.removeFromParent(true);
+        relactionInfo.removeFromParent(true);
+        apPanel.removeFromParent(true);
+
+
+        character.removeFromParent(true);
+        mainProfile.removeFromParent(true);
+
+
     }
 }
 }

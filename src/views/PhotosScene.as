@@ -56,8 +56,6 @@ public class PhotosScene extends Sprite {
     private var rightArrow:Button;
     private var trash:Button;
 
-
-
     public function PhotosScene() {
 
         initailizeLayoutHandler();
@@ -227,6 +225,7 @@ public class PhotosScene extends Sprite {
     }
     private function doCannelHandler():void
     {
+        photo.removeFromParent(true);
 
         var _data:Object=new Object();
         _data.name="MenuScene";
@@ -251,6 +250,7 @@ public class PhotosScene extends Sprite {
         if(pic) {
             var rec:Rectangle=new Rectangle(222,215,575,430);
             photo = new Sprite();
+            photo.flatten();
             photo.x = rec.x;
             photo.y = rec.y;
             //photo.scaleX=0.65;

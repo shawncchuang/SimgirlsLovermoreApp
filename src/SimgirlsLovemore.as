@@ -12,6 +12,7 @@ import flash.display.MovieClip;
 import flash.display.Sprite;
 import flash.display.StageAlign;
 import flash.display.StageQuality;
+import flash.display.StageScaleMode;
 import flash.events.Event;
 
 
@@ -28,12 +29,15 @@ import events.GameEvent;
 import events.SceneEvent;
 import events.TopViewEvent;
 
+import flash.geom.Rectangle;
+
 
 import model.CustomPlayer;
 
 import services.LoaderRequest;
 
 import starling.core.Starling;
+import starling.display.Sprite;
 import starling.events.Event;
 
 import utils.DebugTrace;
@@ -44,6 +48,7 @@ import views.BattleScene;
 import views.CommandCloud;
 import views.GameStartPanel;
 import views.LoginPanel;
+import views.MainScene;
 import views.QADisplayContainer;
 import views.SceneVideo;
 import views.StoryPreview;
@@ -96,7 +101,7 @@ public class SimgirlsLovemore extends MovieClip
 
 	private var gamestartUI:MovieClip;
 	private var flox:FloxInterface=new FloxCommand();
-	private var mStarling:Starling;
+	private var _starling:Starling;
 	private var command:MainInterface=new MainCommand();
 	public static var successLogin:Function;
 	public static var failedLogin:Function;
@@ -117,9 +122,9 @@ public class SimgirlsLovemore extends MovieClip
 	private var assetsform:flash.display.Sprite;
 	public static var filtesContainer:MovieClip;
 	private var swfloader:SWFLoader;
-	private var battlescene:Sprite;
-	private var blackmarketform:Sprite;
-	private var minigamescene:Sprite;
+	private var battlescene:flash.display.Sprite;
+	private var blackmarketform:flash.display.Sprite;
+	private var minigamescene:flash.display.Sprite;
 	public function SimgirlsLovemore():void
 	{
 		//var paypal:PayPal=new PayPal();
@@ -213,10 +218,11 @@ public class SimgirlsLovemore extends MovieClip
 				try
 				{
 					LoaderMax.getLoader("waving").unload();
+
 				}
 				catch(e:Error)
 				{
-					DebugTrace.msg("SimgirlsLovemore.displayHandler remove_waving Error");
+					DebugTrace.msg("SimgirlsLovemore.displayHandler remove_waving null waving");
 				}
 				break;
 			case "comcloud":
@@ -243,16 +249,16 @@ public class SimgirlsLovemore extends MovieClip
 
 				break
 			case "hide_comcloud":
-				for(var j:uint=0;j<comcouldlist.length;j++) {
-
-					TweenMax.to(comcouldlist[j],0.5,{alpha:0});
-				}
+//				for(var j:uint=0;j<comcouldlist.length;j++) {
+//
+//					TweenMax.to(comcouldlist[j],0.5,{alpha:0});
+//				}
 				break;
 			case "show_comcloud":
-				for(var k:uint=0;k<comcouldlist.length;k++) {
-
-					TweenMax.to(comcouldlist[k],0.5,{alpha:1});
-				}
+//				for(var k:uint=0;k<comcouldlist.length;k++) {
+//
+//					TweenMax.to(comcouldlist[k],0.5,{alpha:1});
+//				}
 				break;
 			case "QA":
 
@@ -420,7 +426,7 @@ public class SimgirlsLovemore extends MovieClip
 
 		removeChild(gamestartUI);
 		removeChild(gametitle);
-		if(!mStarling)
+		if(!_starling)
 		{
 
 
@@ -462,25 +468,55 @@ public class SimgirlsLovemore extends MovieClip
 	}
 	private function start():void
 	{
-		//stage.scaleMode = StageScaleMode.NO_SCALE;
+		stage.scaleMode = StageScaleMode.NO_SCALE;
 		stage.quality=StageQuality.LOW;
-		stage.align = StageAlign.TOP_LEFT;
+		//stage.align = StageAlign.TOP_LEFT;
 
 		//Starling.multitouchEnabled = true; // useful on mobile devices
 		Starling.handleLostContext = true; // required on Windows and Android, needs more memory
 
+		var vp:Rectangle=new flash.geom.Rectangle(0, 0, 1024, 768);
+		_starling=new Starling(Game,stage,vp,null,"auto","auto");
+		//_starling.showStats=true;
 
-		mStarling=new Starling(Game,stage,null,null,"auto","auto");
-		mStarling.showStats=false;
+		//_starling.enableErrorChecking=Capabilities.isDebugger;
 
-		//mStarling.enableErrorChecking=Capabilities.isDebugger;
+		_starling.start();
+		//_starling.stage3D.addEventListener(Event.CONTEXT3D_CREATE,onContextCreated);
 
-		mStarling.start();
-		//mStarling.stage3D.addEventListener(Event.CONTEXT3D_CREATE,onContextCreated);
+		_starling.addEventListener(starling.events.Event.ROOT_CREATED, onContextCreated);
 
-		mStarling.addEventListener(starling.events.Event.ROOT_CREATED, onContextCreated);
+		this.stage.addEventListener(flash.events.Event.DEACTIVATE, stage_deactiveHadnler,false, 0, true);
 	}
-	private function onAddedToStage(event:flash.events.Event):void
+	private function stage_deactiveHadnler(e:flash.events.Event):void{
+		DebugTrace.msg("SimgirlsLovermore.stage_deactiveHadnler");
+		_starling.stop(true);
+		this.stage.addEventListener(flash.events.Event.ACTIVATE, stage_activeHadnler,false, 0, true);
+		mapActivedHander("deactive");
+	}
+	private function stage_activeHadnler(e:flash.events.Event):void{
+		DebugTrace.msg("SimgirlsLovermore.stage_activeHadnler");
+		this.stage.removeEventListener(flash.events.Event.ACTIVATE, stage_activeHadnler);
+		_starling.start();
+		mapActivedHander("active");
+	}
+	private function mapActivedHander(status:String):void{
+
+		if(DataContainer.currentScene=="MainScene"){
+
+			var mainscene:starling.display.Sprite=ViewsContainer.MainScene;
+			if(mainscene){
+				if(status=="deactive" ){
+
+					mainscene.dispatchEventWith(MainScene.DEACTAVICE);
+				}else{
+					mainscene.dispatchEventWith(MainScene.ACTAVICE);
+				}
+			}
+		}
+
+	}
+	private function onAddedToStage(e:flash.events.Event):void
 	{
 		removeEventListener(flash.events.Event.ADDED_TO_STAGE, onAddedToStage);
 		start();

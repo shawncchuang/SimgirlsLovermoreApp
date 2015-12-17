@@ -64,6 +64,8 @@ public class CommandCloud extends Sprite
     private var ran_battle_rate:Number=10;
 
     private var cloud:Sprite;
+    private var cloudMC:MovieClip;
+    private var cloudAltas:TextureAtlas;
     public function CommandCloud(src:String):void{
         //L1_^Departures
         var p:String=src.split("_")[0];
@@ -97,9 +99,9 @@ public class CommandCloud extends Sprite
 
         var xml:XML = Assets.getAtalsXML("ComCloudXML");
         var cloudTexture:Texture = Assets.getTexture("ComCloud");
-        var cloudAltas:TextureAtlas = new TextureAtlas(cloudTexture, xml);
+        cloudAltas = new TextureAtlas(cloudTexture, xml);
 
-        var cloudMC:MovieClip = new MovieClip(cloudAltas.getTextures("command_cloud"), 30);
+        cloudMC = new MovieClip(cloudAltas.getTextures("command_cloud"), 30);
         cloudMC.name="mc";
         cloudMC.pivotX = cloudMC.width / 2;
         cloudMC.pivotY = cloudMC.height / 2;
@@ -435,6 +437,8 @@ public class CommandCloud extends Sprite
     }
     private function onClodFadeoutComplete():void{
         Starling.juggler.removeTweens(cloud);
+        //cloudAltas.dispose();
+        cloudMC.dispose();
         cloud.removeFromParent(true);
     }
 }

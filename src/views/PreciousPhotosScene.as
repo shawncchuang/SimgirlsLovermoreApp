@@ -48,10 +48,10 @@ public class PreciousPhotosScene extends Sprite{
     private var preload:Sprite;
 
     private var flox:FloxInterface=new FloxCommand();
-
+    private var photoslayout:PhotosTiledRowsLayout;
     public function PreciousPhotosScene() {
 
-        domainPath=flox.getSyetemData("domainPrcious");
+        domainPath=flox.getSyetemData("domainPrecious");
         ViewsContainer.currentScene=this;
 
         this.addEventListener(PreciousPhotosScene.PHOTO_ZOOM_IN,onPhotoZooomInHandle);
@@ -84,6 +84,7 @@ public class PreciousPhotosScene extends Sprite{
     }
     private function doCannelHandler():void
     {
+        photoslayout.removeFromParent(true);
 
         var _data:Object=new Object();
         _data.name="MenuScene";
@@ -92,7 +93,7 @@ public class PreciousPhotosScene extends Sprite{
     private function initPreciousPhotos():void{
 
 
-        var photoslayout:PhotosTiledRowsLayout=new PhotosTiledRowsLayout();
+        photoslayout=new PhotosTiledRowsLayout();
         photoslayout.domainPath=domainPath;
         photoslayout.width=780;
         photoslayout.height=500;
@@ -173,6 +174,8 @@ public class PreciousPhotosScene extends Sprite{
     private function onPhotoZoomInFadeout():void{
 
         Starling.juggler.removeTweens(photo);
+        bg.dispose();
+        imgloader.dispose();
         photo.removeFromParent(true);
         templete.visbleBackStepButton(true);
     }

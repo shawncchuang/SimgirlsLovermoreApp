@@ -121,6 +121,7 @@ public class ViewCommand  implements ViewInterface{
             var enabled:Boolean=false;
 
             var icon:Sprite=new Sprite();
+            icon.flatten();
             icon.name=characters[i];
             icon.useHandCursor=enabled;
             icon.x=i*100+280;
@@ -303,7 +304,7 @@ public class ViewCommand  implements ViewInterface{
             old_chmc.removeFromParent(true);
 
         }
-DebugTrace.msg("ViewCommand.replaceCharacter styleSechedule="+JSON.stringify(DataContainer.styleSchedule));
+        DebugTrace.msg("ViewCommand.replaceCharacter styleSechedule="+JSON.stringify(DataContainer.styleSchedule));
         var style:String=DataContainer.styleSchedule[character];
         var clothTexture:Texture=Assets.getTexture(style);
         var characterImg:Image=new Image(clothTexture);
@@ -315,6 +316,14 @@ DebugTrace.msg("ViewCommand.replaceCharacter styleSechedule="+JSON.stringify(Dat
         characterImg.scaleY=0.8;
         model.addChild(characterImg);
 
+    }
+    public function removedCharacterIcons():void{
+
+        for(var i:uint=0;i<icons.length;i++){
+
+            var icon:Sprite=icons[i];
+            icon.removeFromParent(true);
+        }
     }
 }
 }

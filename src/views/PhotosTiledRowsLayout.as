@@ -32,7 +32,8 @@ public class PhotosTiledRowsLayout extends PanelScreen{
 
     public var domainPath:String="";
     private var flox:FloxInterface=new FloxCommand();
-
+    private var photoloaders:Array=new Array();
+    private var photosprites:Array=new Array();
     public function PhotosTiledRowsLayout() {
         super();
     }
@@ -40,6 +41,7 @@ public class PhotosTiledRowsLayout extends PanelScreen{
 
         super.initialize();
 
+        this.addEventListener(Event.REMOVED_FROM_STAGE, onRemovedHandler);
 
         var layout:TiledRowsLayout= new TiledRowsLayout();
         layout.padding=0;
@@ -124,7 +126,6 @@ public class PhotosTiledRowsLayout extends PanelScreen{
 
 
             var preSprite:Sprite=new Sprite();
-
             preSprite.name=photofile;
             preSprite.scaleX=0.9;
             preSprite.scaleY=0.9;
@@ -141,7 +142,7 @@ public class PhotosTiledRowsLayout extends PanelScreen{
             //imgloader.delayTesxtureCreation = true;
             imgloader.source=domainPath+photofile+".png";
             preSprite.addChild(imgloader);
-
+            photoloaders.push(imgloader);
 
             var lockTexture:Texture=Assets.getTexture("PreviewLock");
             var lock:Image=new Image(lockTexture);
@@ -155,7 +156,7 @@ public class PhotosTiledRowsLayout extends PanelScreen{
                 preSprite.addEventListener(TouchEvent.TOUCH,onTouchImageHandler);
             }
 
-
+            photosprites.push(preSprite);
             this.addChild( preSprite );
         }
 
@@ -176,6 +177,17 @@ public class PhotosTiledRowsLayout extends PanelScreen{
             _data.file=target.name;
             scene.dispatchEventWith(PreciousPhotosScene.PHOTO_ZOOM_IN,false,_data);
 
+        }
+
+    }
+    private function onRemovedHandler(e:Event):void{
+
+        DebugTrace.msg("PhotosTiledRowsLayout.onRemovedHandler");
+        for(var i:uint=0;i<photoloaders.length;i++){
+            var imgloader:ImageLoader=photoloaders[i];
+            imgloader.dispose();
+            var preSprite:Sprite=photosprites[i];
+            preSprite.removeFromParent(true);
         }
 
     }

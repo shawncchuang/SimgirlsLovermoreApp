@@ -2,6 +2,10 @@ package views
 {
 
 
+import com.greensock.loading.LoaderMax;
+import com.greensock.loading.SWFLoader;
+import com.greensock.loading.display.ContentDisplay;
+
 import controller.SoundController;
 
 import data.DataContainer;
@@ -121,21 +125,11 @@ public class MainScene extends Scenes
     }
     private function initWaving():void
     {
-        //mediacom.VideoPlayer(container,"video/map_anim.mp4");
 
-        // mediacom.VideoPlayer(new Point(1536,1195),new Point(0,0));
-        //mediacom.play("video/map_anim.flv",false);
-        //var player:MediaCommand=new MediaCommand();
-        //player.VideoPlayer(new Point(1536,1195),new Point(0,0));
-        //player.play("video/map_anim.mp4",true);
-        //container.addChild(player);
-        //var  waveing:MovieClip=Assets.getDynamicAtlas("WavingCrash1");
-        //Starling.juggler.add(waveing);
-        //container.addChild(waveing);
-
+        var swfloader:SWFLoader=LoaderMax.getLoader("waving") as SWFLoader;
+        swfloader.content.visible=true;
 
         command.playSound("MapWaves",100);
-
 
     }
 
@@ -143,10 +137,13 @@ public class MainScene extends Scenes
     private var movieY:Number;
     private var scrollX:Number;
     private var scrollY:Number;
+    private var scene:Sprite;
+    public static var DEACTAVICE:String="deactive";
+    public static var ACTAVICE:String="active";
     private function initScene():void
     {
 
-        var scene:Sprite=ViewsContainer.MainScene;
+        scene=ViewsContainer.MainScene;
         container=scene.getChildByName("scene_container") as Sprite;
         command.filterScene(container);
 
@@ -162,17 +159,41 @@ public class MainScene extends Scenes
         movieX=(1536-stageW)/scrollX;
         movieY=(1195-stageH)/scrollY;
 
-        this.addEventListener(Event.REMOVED_FROM_STAGE,onRemovedHandle);
+        this.addEventListener(Event.REMOVED_FROM_STAGE,onRemovedHandler);
+        scene.addEventListener(MainScene.DEACTAVICE,onDeactiveHandler);
+        scene.addEventListener(MainScene.ACTAVICE,onActiveHandler);
 
         var gameInfo:Sprite=ViewsContainer.gameinfo;
-        gameInfo.addEventListener(TouchEvent.TOUCH,onGameInfobarTouched);
+        //gameInfo.addEventListener(TouchEvent.TOUCH,onGameInfobarTouched);
         scene.addEventListener(TouchEvent.TOUCH,onSceneTouched);
         scene.addEventListener(Event.ENTER_FRAME,doSceneEnterFrame);
     }
-    private function onRemovedHandle(e:Event):void{
+    private function onDeactiveHandler(e:Event):void{
 
+        deactiveHandler();
+    }
+    private function onActiveHandler():void{
+        initWaving();
+        scene.addEventListener(TouchEvent.TOUCH,onSceneTouched);
+        scene.addEventListener(Event.ENTER_FRAME,doSceneEnterFrame);
+    }
+    private function onRemovedHandler(e:Event):void{
+
+        this.removeEventListener(Event.REMOVED_FROM_STAGE,onRemovedHandler);
+        scene.removeEventListener(MainScene.DEACTAVICE,onDeactiveHandler);
+        scene.removeEventListener(MainScene.ACTAVICE,onActiveHandler);
+        deactiveHandler();
+
+
+    }
+    private function deactiveHandler():void{
+
+        scene.removeEventListener(TouchEvent.TOUCH,onSceneTouched);
+        scene.removeEventListener(Event.ENTER_FRAME,doSceneEnterFrame);
         command.stopSound("MapWaves");
 
+        var swfloader:SWFLoader=LoaderMax.getLoader("waving") as SWFLoader;
+        swfloader.content.visible=false;
     }
     private  var new_gx:Number=0;
     private  var new_gy:Number=0;
@@ -261,7 +282,7 @@ public class MainScene extends Scenes
         }
 
 
-        //var waving:MovieClip=SimgirlsLovemore.filtesContainer;
+
         var waving:MovieClip=Starling.current.nativeOverlay.getChildByName("waving") as MovieClip;
         if(waving){
 

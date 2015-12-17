@@ -52,6 +52,9 @@ public class BlackMarketListLayout extends PanelScreen {
     private var popupTM:TimeMachinePopup=null;
     private var popupPlus:BlackMarketPlusPopup=null;
 
+    private var itemRenderlist:Array;
+    private var renderBtns:Array;
+
     public function BlackMarketListLayout() {
 
         this.height=340;
@@ -82,8 +85,10 @@ public class BlackMarketListLayout extends PanelScreen {
     private function initMarketList():void{
 
 
-
         itemlist=new Array();
+        itemRenderlist=new Array();
+        renderBtns=new Array();
+
 
         for(var id:String in marketlist){
             var _item:Object = marketlist[id];
@@ -160,7 +165,6 @@ public class BlackMarketListLayout extends PanelScreen {
                 renderBtn.addEventListener(Event.TRIGGERED, onTapUseHandler);
             }
 
-
             itemRender.addChild(itemImg);
             itemRender.addChild(nametTxt);
             if(type=="Buy")
@@ -171,12 +175,12 @@ public class BlackMarketListLayout extends PanelScreen {
 
 
             itemRender.addChild(renderBtn);
-
             addChild(itemRender);
 
             itemRender.addEventListener(TouchEvent.TOUCH,onTouchedHoverItem);
 
-
+            itemRenderlist.push(itemRender);
+            renderBtns.push(renderBtn);
         }
 
     }
@@ -362,6 +366,16 @@ public class BlackMarketListLayout extends PanelScreen {
     private function onRemovedStageHandler(e:Event):void{
 
         DebugTrace.msg("BlackMarketListLayout.onRemovedStageHandler");
+
+        for(var i:uint=0;i<itemRenderlist.length;i++){
+            var itembtn:Button= renderBtns[i];
+            itembtn.removeFromParent(true);
+
+            var itemrender:Sprite=itemRenderlist[i];
+            itemrender.removeFromParent(true);
+        }
+
+
        try{
             PopUpManager.removePopUp(popup,true);
 

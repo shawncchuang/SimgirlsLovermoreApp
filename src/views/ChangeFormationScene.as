@@ -30,6 +30,7 @@ import starling.core.Starling;
 import starling.display.Button;
 import starling.display.Image;
 import starling.display.MovieClip;
+import starling.display.MovieClip;
 import starling.display.Sprite;
 import starling.events.Event;
 import starling.events.Touch;
@@ -72,6 +73,7 @@ public class ChangeFormationScene extends Scenes
     private var hover_subs_title:MovieClip=null;
     //private var filtercom:FilterInterface=new FilterManager();
     private var layout_sprite:Sprite;
+    private var tileImgs:Array=new Array();
     public function ChangeFormationScene()
     {
 
@@ -123,7 +125,7 @@ public class ChangeFormationScene extends Scenes
         title.y=21;
         addChild(title);
 
-        var layout_sprite:Sprite=new Sprite();
+        layout_sprite=new Sprite();
         layout_sprite.x=16;
         layout_sprite.y=80;
         addChild(layout_sprite);
@@ -278,6 +280,7 @@ public class ChangeFormationScene extends Scenes
             tile.y=soldiers_tiles_pos[j].y;
             tile.alpha=0;
             addChild(tile);
+            tileImgs.push(tile);
             tile.addEventListener(TouchEvent.TOUCH,onPickUpHandler);
 
         }
@@ -621,6 +624,7 @@ public class ChangeFormationScene extends Scenes
             {
 
                 command.stopBackgroudSound();
+                removedHandler();
                 flox.save("formation",combat_zone);
 
                 _data.name= "BattleScene";
@@ -667,6 +671,22 @@ public class ChangeFormationScene extends Scenes
         _data.name= current_label;
         command.sceneDispatch(SceneEvent.CHANGED,_data);
 
+    }
+    private function removedHandler():void{
+
+        layout_sprite.removeFromParent(true);
+        for(var i:uint=0;i<substitues.length;i++){
+            var subtile:MovieClip=substitues[i];
+            subtile.removeFromParent(true);
+        }
+        for(var j:uint=0;j<avatars.length;j++){
+            var avatar:Sprite=avatars[j];
+            avatar.removeFromParent(true);
+        }
+        for(var k:uint=0;k<tileImgs.length;k++){
+            var tile:Image=tileImgs[k];
+            tile.removeFromParent(true);
+        }
     }
 }
 }

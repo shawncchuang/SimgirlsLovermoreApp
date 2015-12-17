@@ -124,13 +124,13 @@ import starling.filters.BlurFilter;
 		public function setBulr():void
 		{
 			
-			var blur:BlurFilter = new BlurFilter(5, 5);
-			target.filter = blur;
+			//var blur:BlurFilter = new BlurFilter(5, 5);
+			//target.filter = blur;
 
 		}
 		public function doDispose():void{
 
-			target.filter.dispose();
+			//target.filter.dispose();
 		}
 	}
 }

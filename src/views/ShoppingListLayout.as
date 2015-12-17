@@ -51,11 +51,14 @@ public class ShoppingListLayout extends PanelScreen {
     public var sort:String;
     public var sort_index:Number=0;
 
+    private var buyBtnlist:Array;
+    private var itemslist:Array;
     public function ShoppingListLayout() {
 
 
         this.height=320;
         this.addEventListener(FeathersEventType.INITIALIZE, initializeHandler);
+        this.addEventListener(Event.REMOVED_FROM_STAGE, onRemovedHandler);
     }
     private function initializeHandler(e:Event):void
     {
@@ -63,6 +66,8 @@ public class ShoppingListLayout extends PanelScreen {
         payment=new Object();
         steppers=new Array();
         assetslist=new Array();
+        buyBtnlist=new Array();
+        itemslist=new Array();
 
         for(var id:String in assetsData){
             var _assets:Object = assetsData[id];
@@ -117,6 +122,7 @@ public class ShoppingListLayout extends PanelScreen {
         }
 
         var font:String="SimMyriadPro";
+
         for(var j:uint=0;j<assetslist.length;j++)
         {
             item=assetslist[j];
@@ -148,6 +154,8 @@ public class ShoppingListLayout extends PanelScreen {
             brandHeader.x=210;
             brandHeader.hAlign="left";
             itemRender.addChild(brandHeader);
+
+
             var brandTxt:TextField=new TextField(80,renderH,item.brand,font,18,0,false);
             brandTxt.autoScale=true;
             brandTxt.x=brandHeader.x;
@@ -212,6 +220,8 @@ public class ShoppingListLayout extends PanelScreen {
             buyBtn.y=20;
             buyBtn.scaleX = 0.4;
             buyBtn.scaleY = 0.4;
+            buyBtnlist.push(buyBtn);
+
             var buyBtnUpTexture:Texture=Assets.getTexture("BuyButtonDe_Skin");
             var buyBtnDownTexture:Texture=Assets.getTexture("BuyButtonDown_Skin");
             buyBtn.defaultSkin = new Image(buyBtnUpTexture);
@@ -225,6 +235,7 @@ public class ShoppingListLayout extends PanelScreen {
             itemRender.addChild(qtyStepper);
             itemRender.addChild(buyBtn);
             addChild(itemRender);
+            itemslist.push(itemRender);
 
             itemRender.addEventListener(TouchEvent.TOUCH,onTouchedHoverItem);
         }
@@ -337,6 +348,7 @@ public class ShoppingListLayout extends PanelScreen {
     }
     private function saveMyAssets():void{
 
+        var assets:Object=flox.getSyetemData("assets");
         var ownedAssets:Object=flox.getSaveData("owned_assets");
         var my_assets:Array=ownedAssets.player;
         var payment_list:Array=new Array();
@@ -369,7 +381,7 @@ public class ShoppingListLayout extends PanelScreen {
             //already had this
             assetsObj=my_assets[assets_index];
             assetsObj.qty+=payment[assetsObj.id];
-            assetsObj.expiration=100;
+            assetsObj.expiration=assets[assetsObj.id].expiration;
             my_assets[assets_index]=assetsObj;
 
         }else{
@@ -377,13 +389,30 @@ public class ShoppingListLayout extends PanelScreen {
             var _assets:Object=new Object();
             _assets.id=payment_list[0];
             _assets.qty=payment[payment_list[0]];
-            _assets.expiration=100;
+            _assets.expiration=assets[payment_list[0]].expiration;
             my_assets.push(_assets);
 
         }
 
         ownedAssets.player=my_assets;
         flox.save("owned_assets",ownedAssets);
+    }
+    private function onRemovedHandler(e:Event):void{
+
+
+        for(var i:uint=0;i<steppers.length;i++){
+            //NumericStepper
+            var numstepper:NumericStepper=steppers[i];
+            numstepper.removeFromParent(true);
+
+            var buybtn:Button=buyBtnlist[i];
+            buybtn.removeFromParent(true);
+
+            var item:Sprite=itemslist[i];
+            item.removeFromParent(true);
+        }
+        this.dispose();
+
     }
 
 }

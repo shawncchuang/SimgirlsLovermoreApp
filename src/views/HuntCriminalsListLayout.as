@@ -23,9 +23,12 @@ public class HuntCriminalsListLayout extends PanelScreen{
     private var criminalsData:Array=new Array();
     private var flox:FloxInterface=new FloxCommand();
     private var font:String="SimMyriadPro";
+    private var vlayout:VerticalLayout;
+    private var itemslist:Array;
     public function HuntCriminalsListLayout() {
         this.height=355;
         this.addEventListener(FeathersEventType.INITIALIZE, initializeHandler);
+        this.addEventListener(Event.REMOVED_FROM_STAGE,onRemovedHandler);
     }
     private function initializeHandler(e:Event):void
     {
@@ -33,18 +36,20 @@ public class HuntCriminalsListLayout extends PanelScreen{
         //criminalsData=flox.getSaveData("criminals");
         criminalsData=DataContainer.Criminals;
 
-        var layout:VerticalLayout=new VerticalLayout();
-        layout.gap=2;
-        layout.horizontalAlign=TiledRowsLayout.HORIZONTAL_ALIGN_LEFT;
-        layout.verticalAlign=TiledRowsLayout.VERTICAL_ALIGN_TOP;
-        layout.paddingTop = 0;
-        layout.paddingRight = 0;
-        layout.paddingBottom = 0;
-        layout.paddingLeft =0;
+        vlayout=new VerticalLayout();
+        vlayout.gap=2;
+        vlayout.horizontalAlign=TiledRowsLayout.HORIZONTAL_ALIGN_LEFT;
+        vlayout.verticalAlign=TiledRowsLayout.VERTICAL_ALIGN_TOP;
+        vlayout.paddingTop = 0;
+        vlayout.paddingRight = 0;
+        vlayout.paddingBottom = 0;
+        vlayout.paddingLeft =0;
 
-        this.layout = layout;
+        this.layout = vlayout;
         this.verticalScrollPolicy = ScrollContainer.SCROLL_POLICY_ON;
         this.snapScrollPositionsToPixels = true;
+
+        itemslist=new Array();
 
         for(var i:uint=0;i<criminalsData.length;i++){
 
@@ -65,7 +70,17 @@ public class HuntCriminalsListLayout extends PanelScreen{
             rewards.autoScale=true;
             rewards.x=rankingTxt.x+rankingTxt.width;
             itemRender.addChild(rewards);
+            itemslist.push(itemRender);
             addChild(itemRender);
+        }
+
+    }
+    private function onRemovedHandler(e:Event):void{
+
+        for(var i:uint=0;i<itemslist.length;i++){
+           var item:Sprite= itemslist[i];
+            item.removeFromParent(true);
+            this.dispose();
         }
 
     }

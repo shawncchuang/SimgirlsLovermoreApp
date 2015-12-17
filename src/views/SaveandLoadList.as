@@ -410,8 +410,9 @@ public class SaveandLoadList extends Sprite
     }
     private function doCheckConfirm(e:Event):void
     {
-        panel.removeFromParent();
-        comfirm.removeFromParent();
+        panel.removeFromParent(true);
+        comfirm.removeFromParent(true);
+        command.stopSound("MapWaves");
         var _data:Object={removed:"remove_loadgame_gametitle"};
         command.topviewDispatch(TopViewEvent.REMOVE,_data);
 
@@ -431,6 +432,7 @@ public class SaveandLoadList extends Sprite
             flox.savePlayerData("inGameProgress",progress);
             flox.loadBackupsavedEntities();
 
+
             command.addShortcuts();
 
         }
@@ -449,8 +451,13 @@ public class SaveandLoadList extends Sprite
 
     }
     private function onSynsBackupSavedComplete(result:*=null):void{
-
+        DebugTrace.msg("SaveandLoadList.onSynsBackupSavedComplete");
         flox.loadEntities();
+        var gameinfo:Sprite=ViewsContainer.gameinfo;
+        if(gameinfo){
+            gameinfo.dispatchEventWith("UPDATE_PROFILE");
+        }
+
 
 
     }
@@ -494,8 +501,8 @@ public class SaveandLoadList extends Sprite
 //                DataContainer.player=playerData;
 //            }
 //        }
-        comfirm.removeFromParent();
-        removeChild(comfirm);
+        comfirm.removeFromParent(true);
+
     }
 
 }

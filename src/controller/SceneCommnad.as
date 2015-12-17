@@ -16,6 +16,7 @@ import starling.core.Starling;
 import starling.display.Image;
 import starling.display.Quad;
 import starling.display.Sprite;
+import starling.events.Event;
 import starling.events.Touch;
 import starling.events.TouchEvent;
 import starling.events.TouchPhase;
@@ -65,7 +66,7 @@ public class SceneCommnad implements SceneInterface
     private var photoframe:PhotoMessage=null;
     //private var background:MovieClip=null;
     private var background:Sprite;
-    private var bgSprtie:Image;
+    private var bgSprite:Sprite;
     private var scene_container:Sprite;
     private var day:String;
     private var switchID:String="";
@@ -324,8 +325,8 @@ public class SceneCommnad implements SceneInterface
                         talkmask=null;
                     }
                     if(display_container[target]){
-                        display_container[target].removeFromParent(true);
-                        //_target.removeChild(display_container[target]);
+                        var _character:Image= display_container[target];
+                        _character.removeFromParent(true);
                         display_container[target]=null;
                     }
                     break
@@ -547,16 +548,11 @@ public class SceneCommnad implements SceneInterface
         }
         bgSrc=src;
 
-        try
-        {
-            bgSprtie.removeFromParent(true);
 
-        }catch(e:Error){
-            DebugTrace.msg("SceneCommand.createBackground remove bgSprtie Error");
-        }
 
         onBackgroundComplete();
     }
+
     private function onBackgroundComplete():void
     {
 
@@ -568,7 +564,7 @@ public class SceneCommnad implements SceneInterface
             //bgSrc="Bg";
         }
 
-        DebugTrace.msg("SceneCommand.createBackground bgSrc="+bgSrc);
+        DebugTrace.msg("SceneCommand.onBackgroundComplete bgSrc="+bgSrc);
 
         var scene:String=location.split("Scene").join("");
         var sceneIndex:Number=Config.daynightScene.indexOf(scene);
@@ -582,9 +578,27 @@ public class SceneCommnad implements SceneInterface
         }
 
         var bgTexture:Texture=Assets.getTexture(bgSrc);
-        bgSprtie=new Image(bgTexture);
-        _target.addChild(bgSprtie);
+        var bgImg=new Image(bgTexture);
+        bgSprite=new Sprite();
+        bgSprite.flatten();
+        bgSprite.addChild(bgImg);
+        _target.addChild(bgSprite);
 
+        if(bgSprite){
+            //DebugTrace.msg("SceneCommand.onBackgroundComplete");
+            bgSprite.addEventListener(Event.REMOVED_FROM_STAGE, onBackgroundRemoved);
+
+
+        }else{
+            DebugTrace.msg("SceneCommand.onBackgroundComplete No bgSprite");
+        }
+    }
+    private function onBackgroundRemoved(e:Event):void{
+
+        DebugTrace.msg("SceneCommand.onBackgroundRemoved -");
+        bgSprite.dispose();
+        bgSprite.removeFromParent(true);
+        bgSprite=null;
     }
 
     public function addDisplayContainer(src:String):void
@@ -659,13 +673,16 @@ public class SceneCommnad implements SceneInterface
         //for
         if(photoframe){
             photoframe.removeFromParent(true);
+            photoframe=null;
         }
-        if(bgSprtie){
-            bgSprtie.removeFromParent(true);
+        if(bgSprite){
+            bgSprite.removeFromParent(true);
+            bgSprite=null;
         }
         if(bubble)
         {
             bubble.removeFromParent(true);
+            bubble=null;
         }
     }
     public function disableAll():void

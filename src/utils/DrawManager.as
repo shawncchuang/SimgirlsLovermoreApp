@@ -27,9 +27,11 @@ import model.SaveGame;
 
 import starling.core.RenderSupport;
 import starling.core.Starling;
+import starling.display.Canvas;
 import starling.display.DisplayObject;
 import starling.display.Image;
 import starling.display.MovieClip;
+import starling.display.Quad;
 import starling.display.Sprite;
 import starling.events.EnterFrameEvent;
 import starling.events.Event;
@@ -359,10 +361,11 @@ public class DrawManager implements DrawerInterface
         var shapObj:Object=new Object()
 
         var rec:Rectangle=new Rectangle(-80,-22,100,100);
-
+        var maskPoint:Point=new Point(133,72);
         if(gender=="Female")
         {
             rec=new Rectangle(-77,-9,100,100);
+            maskPoint=new Point(130,59);
         }
 
         var texture:Texture=Assets.getTexture("ProEmpty");
@@ -373,39 +376,49 @@ public class DrawManager implements DrawerInterface
         bgImg.height=rec.height;
         player_icon.addChild(bgImg);
 
-        var maskImg:Image=new Image(texture);
-        maskImg.width=rec.width;
-        maskImg.height=rec.height;
-
+//        var maskImg:Image=new Image(texture);
+//        maskImg.width=rec.width;
+//        maskImg.height=rec.height;
 
         if(!bp)
         {
-            basemodel.clipRect=new Rectangle(0,-50,150,150);
+            //basemodel.clipRect=new Rectangle(0,-50,150,150);
             basemodel.x=rec.x;
             basemodel.y=rec.y;
         }else{
+
             basemodel.x=bp.x;
             basemodel.y=bp.y;
         }
         basemodel.scaleX=0.96;
         basemodel.scaleY=0.96;
 
-        var maskedDisplayObject:PixelMaskDisplayObject = new PixelMaskDisplayObject(-1,false);
-        maskedDisplayObject.addChild(basemodel);
-        maskedDisplayObject.mask=maskImg;
 
-        maskedDisplayObject.x=-(player_icon.width/2);
-        maskedDisplayObject.y=-(player_icon.height/2);
-        player_icon.addChild(maskedDisplayObject);
+        //DebugTrace.msg("DrawManager.drawPlayerProfileIcon basemodel.width="+basemodel.width+" ,basemodel.height="+basemodel.height);
+//        var maskedDisplayObject:PixelMaskDisplayObject = new PixelMaskDisplayObject(-1,false);
+//        maskedDisplayObject.addChild(basemodel);
+//        maskedDisplayObject.mask=maskImg;
 
+//        maskedDisplayObject.x=-(player_icon.width/2);
+//        maskedDisplayObject.y=-(player_icon.height/2);
+//        player_icon.addChild(maskedDisplayObject);
+        basemodel.pivotX=(player_icon.width/2);
+        basemodel.pivotY=(player_icon.height/2);
 
-        //trace("DrawManager player_icon width:",player_icon.width," ;player_icon height:",player_icon.height);
-        //player_icon.scaleX=0.89;
-        //player_icon.scaleY=0.89;
+        var maskQuad:Canvas = new Canvas();
+        maskQuad.beginFill(0x000000);
+        maskQuad.drawCircle(maskPoint.x,maskPoint.y,53);
+        maskQuad.endFill();
+        basemodel.mask=maskQuad;
+
+        player_icon.addChild(basemodel);
+
+        //DebugTrace.msg("DrawManager bgImg width:"+bgImg.width+" ;bgImg height:"+bgImg.height);
+
         player_icon.x=point.x;
         player_icon.y=point.y;
 
-
+        //DebugTrace.msg("DrawManager.drawPlayerProfileIcon player_icon.width="+player_icon.width+" ,player_icon.height="+player_icon.height);
         ViewsContainer.PlayerProfile=player_icon;
 
     }

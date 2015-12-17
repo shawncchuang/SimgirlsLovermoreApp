@@ -14,6 +14,8 @@ import events.SceneEvent;
 
 import flash.geom.Point;
 
+import starling.display.Button;
+
 import starling.display.Image;
 import starling.display.Quad;
 
@@ -41,7 +43,7 @@ public class CalendarScene extends Sprite {
     private var ymTextAltas:TextureAtlas;
     private var ymImg:Image;
     private var monthImg:Image;
-
+    private var monthBtns:Array=new Array();
     public function CalendarScene():void{
 
 
@@ -139,6 +141,7 @@ public class CalendarScene extends Sprite {
             }else{
                 monthBtn.y=(i-10)*(monthBtn.height+2)+463;
             }
+            monthBtns.push(monthBtn);
             ymPanel.addChild(monthBtn);
             monthBtn.addEventListener(TouchEvent.TOUCH, onTouchedMonthHandler);
         }
@@ -158,6 +161,13 @@ public class CalendarScene extends Sprite {
 
     private function doCannelHandler():void
     {
+        for(var i:uint=0;i<monthBtns.length;i++){
+            var mb:Sprite=monthBtns[i];
+            mb.removeFromParent(true);
+        }
+
+        ymPanel.removeFromParent(true);
+        monthImg.removeFromParent(true);
 
         var _data:Object=new Object();
         _data.name="MenuScene";

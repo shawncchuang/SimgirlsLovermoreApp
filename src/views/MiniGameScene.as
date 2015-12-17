@@ -38,17 +38,18 @@ import flash.desktop.NativeApplication;
 	{
 		private var game:String="";
 		private var base_sprite:Sprite;
+		private var skyTexture:Texture;
 		private var bgTexture:Texture;
 		private var bgImg:Image;
 		private var keys:Array=[87,38,65,37,68,39,83,40];
 		
-		[Embed(source="../../media/textures/scenes/road_stage.atf" ,mimeType="application/octet-stream")]
+		[Embed(source="../../media/textures/scenes/road_stage.png")]
 		public static const TraceGameRoad:Class;
 		
-		[Embed(source="../../media/textures/scenes/road_stage_BG.atf" ,mimeType="application/octet-stream")]
+		[Embed(source="../../media/textures/scenes/road_stage_BG.png")]
 		public static const TraceGameBG:Class;
 		
-		[Embed(source="../../media/textures/scenes/schoo_stage.atf" ,mimeType="application/octet-stream")]
+		[Embed(source="../../media/textures/scenes/schoo_stage.jpg")]
 		public static const TrainingGameBG:Class;
 		
 		
@@ -95,15 +96,15 @@ import flash.desktop.NativeApplication;
 		}
 		private function initTraceBackGround():void
 		{
-			
-			//var bgTedture:Texture=Texture.fromBitmap(new TraceGameBG());
-            var bgTedture:Texture=Texture.fromAtfData(new TraceGameBG());
-			var skyBg:Image=new Image(bgTedture);
+
+			skyTexture=Texture.fromBitmap(new TraceGameBG());
+            //var bgTedture:Texture=Texture.fromAtfData(new TraceGameBG());
+			var skyBg:Image=new Image(skyTexture);
 			addChild(skyBg);
 			
 			
-			//bgTexture=Texture.fromBitmap(new TraceGameRoad(),true,false,1,"bgra",true);
-            bgTexture=Texture.fromAtfData(new TraceGameRoad(),1,true,null,true);
+			bgTexture=Texture.fromBitmap(new TraceGameRoad(),true,false,1,"bgra",true);
+            //bgTexture=Texture.fromAtfData(new TraceGameRoad(),1,true,null,true);
 			bgImg=new Image(bgTexture);
 			bgImg.width <<=1;
 			bgImg.setTexCoords(1, new Point(2, 0));
@@ -111,12 +112,13 @@ import flash.desktop.NativeApplication;
 			bgImg.setTexCoords(3, new Point(2, 1));
 			addChild(bgImg);
 			this.addEventListener((EnterFrameEvent.ENTER_FRAME), gameBgLoop);
+
 		}
 		private function initTrainingBackGround():void
 		{
 			
-			//bgTexture=Texture.fromBitmap(new TrainingGameBG(),true,false,1,"bgra",true);
-            bgTexture=Texture.fromAtfData(new TrainingGameBG(),1,true,null,true);
+			bgTexture=Texture.fromBitmap(new TrainingGameBG(),true,false,1,"bgra",true);
+            //bgTexture=Texture.fromAtfData(new TrainingGameBG(),1,true,null,true);
 
 			bgImg=new Image(bgTexture);
 			bgImg.width <<=1;
@@ -125,7 +127,7 @@ import flash.desktop.NativeApplication;
 			bgImg.setTexCoords(3, new Point(2, 1));
 			addChild(bgImg);
 			this.addEventListener((EnterFrameEvent.ENTER_FRAME), gameBgLoop);
-			
+
 			
 		}
 		private function gameBgLoop(e:EnterFrameEvent):void
@@ -168,8 +170,8 @@ import flash.desktop.NativeApplication;
 			kbgtween.animate("scaleY",1);
 			kbgtween.onComplete=onKBGuildComplete;
 			Starling.juggler.add(kbgtween);
-				
-			
+
+			this.addEventListener(Event.REMOVED_FROM_STAGE, onGameRemoved);
 		}
 		private function onGameReady(e:Event):void
 		{
@@ -353,9 +355,11 @@ import flash.desktop.NativeApplication;
 		private function gameComplete():void
 		{
 			DebugTrace.msg("MiniGameScene.gameComplete");
+
 			NativeApplication.nativeApplication.removeEventListener(KeyboardEvent.KEY_DOWN,doKeyDownHandle);
 			NativeApplication.nativeApplication.removeEventListener(KeyboardEvent.KEY_UP,doKeyUpHandle);
 			this.removeEventListener((EnterFrameEvent.ENTER_FRAME), gameBgLoop);
+			gameTimer.removeEventListener(TimerEvent.TIMER,onGameTimeCounter);
 			gameTimer.stop();
 
 			var seObj:Object=flox.getSaveData("se");
@@ -395,6 +399,13 @@ import flash.desktop.NativeApplication;
 
 
 
+		}
+		private function onGameRemoved(e:Event):void{
+			if(skyTexture){
+				skyTexture.dispose();
+			}
+			bgTexture.dispose();
+			bgImg.removeFromParent(true);
 		}
 	}
 }

@@ -59,6 +59,8 @@ public class AlertMessage extends Sprite
         var current_scene:Sprite=ViewsContainer.currentScene;
         current_scene.addEventListener("ALERT_DISABLE_TOUCHSCREEN",onDisableHandle);
         current_scene.addEventListener("ALERT_ENABLE_TOUCHSCREEN",onEnableHandle);
+
+
     }
     private function onDisableHandle(e:Event):void{
 
@@ -96,9 +98,8 @@ public class AlertMessage extends Sprite
 
         var began:Touch=e.getTouch(this,TouchPhase.BEGAN);
         if(began){
-            this.removeFromParent(true);
             this.removeEventListener(Event.TRIGGERED,doCancelHandler);
-
+            this.removeFromParent(true);
             if(onClosed)
                 onClosed();
         }
@@ -177,7 +178,7 @@ public class AlertMessage extends Sprite
     private function onAlertMessageFadeIn():void
     {
         //btn.visible=true;
-        Starling.juggler.removeTweens(alertframe);
+        Starling.juggler.removeTweens(comfirm);
 
 
 
@@ -205,5 +206,6 @@ public class AlertMessage extends Sprite
         }
 
     }
+
 }
 }

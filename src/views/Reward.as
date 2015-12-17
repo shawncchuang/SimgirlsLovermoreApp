@@ -94,7 +94,7 @@ public class Reward extends Sprite{
 
         Starling.juggler.removeTweens(reward);
 
-        reward.removeFromParent();
+        reward.removeFromParent(true);
 
     }
 

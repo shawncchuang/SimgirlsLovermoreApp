@@ -117,6 +117,7 @@ public class FoundSomeScene extends Scenes
 	private function onBgRemovedHandler(e:Event):void{
 
 		DebugTrace.msg("FoundSomeScene.onBgRemovedHandler");
+		base_sprite.removeFromParent(true);
 		filters.doDispose();
 	}
 	private function onCallback():void
@@ -375,6 +376,7 @@ public class FoundSomeScene extends Scenes
 
 	}
 	private var npcTween:Tween;
+	private var npcImg:Image;
 	private function npcSpeakingHandle():void
 	{
 
@@ -393,7 +395,7 @@ public class FoundSomeScene extends Scenes
 
 
 		var npcTexture:Texture=Assets.getTexture(npcID);
-		var npcImg:Image=new Image(npcTexture);
+		npcImg=new Image(npcTexture);
 		npcImg.x=Starling.current.stage.width/2-npcImg.width/2;
 		npcImg.alpha=0;
 		addChild(npcImg);
@@ -469,7 +471,7 @@ public class FoundSomeScene extends Scenes
 	private function onBubbleFadeout():void
 	{
 		Starling.juggler.remove(bubbleTween);
-		removeChild(bubble);
+		bubble.removeFromParent(true);
 		addNewBubble();
 	}
 	private function onNPCFadeIn():void
@@ -488,6 +490,9 @@ public class FoundSomeScene extends Scenes
 	private function doCanceleHandler():void
 	{
 
+		if(npcImg){
+			npcImg.removeFromParent(true);
+		}
 		Starling.juggler.remove(delayedCall);
 
 		var _data:Object=new Object();

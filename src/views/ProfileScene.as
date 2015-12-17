@@ -111,7 +111,7 @@ public class ProfileScene extends Scenes
 
         base_sprite=new Sprite();
         addChild(base_sprite);
-        base_sprite.flatten();
+
 
         command.initStyleSchedule();
 
@@ -125,7 +125,7 @@ public class ProfileScene extends Scenes
         initProIcons();
         //initCancelHandle();
 
-
+        this.addEventListener(Event.REMOVED_FROM_STAGE, onRemovedHandler);
 
     }
     private function initCancelHandle():void
@@ -369,6 +369,7 @@ public class ProfileScene extends Scenes
     {
         CharacterName="player";
         assets=new AssetsForm();
+        assets.flatten();
         panelbase.addChild(assets);
 
         var _data:Object=new Object();
@@ -512,6 +513,7 @@ public class ProfileScene extends Scenes
 
 
         cardlist=new CardsList();
+        cardlist.flatten();
         cardlist.character=character;
         cardlist.from="profile";
         cardlist.cate=cate;
@@ -572,6 +574,14 @@ public class ProfileScene extends Scenes
         }
 
 
+    }
+    private function onRemovedHandler(e:Event):void{
+        templete.removeFromParent(true);
+        chmodel.removeFromParent(true);
+        basemodel.removeFromParent(true);
+        panelbase.removeFromParent(true);
+        skills.removeFromParent(true);
+        viewcom.removedCharacterIcons();
     }
 
 }

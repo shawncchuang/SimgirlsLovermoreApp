@@ -131,8 +131,11 @@ public class GameInfobar extends Sprite
         this.addEventListener("DISPLAY",onDisplayHandler);
         this.addEventListener("DRAW_PROFILE",onDrawProfile);
         this.addEventListener("DISPLAY",onDisplayHandle);
+        this.addEventListener("UPDATE_PROFILE",onUpdateProfile);
+
         this.dispatchEventWith("UPDATE_INFO");
         this.dispatchEventWith("UPDATE_DATING");
+
     }
     private function showBackground():void
     {
@@ -408,13 +411,14 @@ public class GameInfobar extends Sprite
     private function onDrawProfile(e:Event):void
     {
         DebugTrace.msg("GameInfobar.onDrawProfile");
-        try{
-
-            player_icon.removeFromParent(true);
-        }catch(e:Error){
-            DebugTrace.msg("GameInfobar remove  player_icon Error");
-        }
-        drawProfile();
+        player_icon.visible=true;
+//        try{
+//
+//            player_icon.removeFromParent(true);
+//        }catch(e:Error){
+//            DebugTrace.msg("GameInfobar remove  player_icon Error");
+//        }
+//        drawProfile();
     }
     private function drawProfile():void
     {
@@ -469,6 +473,14 @@ public class GameInfobar extends Sprite
 //        proTxt.text="No."+progress;
 //        addChild(proTxt);
 //    }
+    private function onUpdateProfile(e:Event):void{
+
+
+        basemodel.removeFromParent(true);
+        player_icon.removeFromParent(true);
+        drawProfile();
+
+    }
 
     private function profileFadeout():void
     {
@@ -478,7 +490,8 @@ public class GameInfobar extends Sprite
             dating_icon.removeFromParent(true);
 
         }
-        player_icon.removeFromParent(true);
+        player_icon.visible=false;
+        //player_icon.removeFromParent(true);
 //        var tween:Tween=new Tween(player_icon,0.3,Transitions.EASE_IN_OUT);
 //        tween.fadeTo(0);
 //        tween.onComplete=function():void{
