@@ -40,7 +40,7 @@ public class ShoppingClothesForm extends Sprite {
 
         base_sprite=new Sprite();
         addChild(base_sprite);
-        base_sprite.flatten();
+
         initPanel();
         initCashFormat();
     }

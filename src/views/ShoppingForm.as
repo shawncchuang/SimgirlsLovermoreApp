@@ -57,7 +57,6 @@ public class ShoppingForm extends Sprite{
     public function ShoppingForm() {
         base_sprite=new Sprite();
         addChild(base_sprite);
-        base_sprite.flatten();
 
 
         initPanel();

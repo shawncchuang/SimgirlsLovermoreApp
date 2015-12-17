@@ -544,70 +544,9 @@ public class SceneCommnad implements SceneInterface
         var drawmanager:DrawerInterface=new DrawManager();
         bgSprite=drawmanager.drawBackground();
         _target.addChild(bgSprite);
-//        var dateSaved:String=flox.getSaveData("date");
-//        var dateStr:String=dateSaved.split("|")[1];
-//        day="Day";
-//        if(dateStr=="24")
-//        {
-//            //night
-//            day="Night";
-//        }
-//        bgSrc=src;
-//
-//
-//
-//        onBackgroundComplete();
+
     }
 
-//    private function onBackgroundComplete():void
-//    {
-//
-//
-//        if(bgSrc.indexOf("Scene")!=-1){
-//            bgSrc=bgSrc.split("Scene").join("Bg");
-//        }
-//        else{
-//            //bgSrc="Bg";
-//        }
-//
-//        DebugTrace.msg("SceneCommand.onBackgroundComplete bgSrc="+bgSrc);
-//
-//        var scene:String=location.split("Scene").join("");
-//        var sceneIndex:Number=Config.daynightScene.indexOf(scene);
-//        if(sceneIndex!=-1){
-//            bgSrc=(bgSrc+day);
-//        }
-//
-//        if(bgSrc=="ChangeFormationBg"){
-//
-//            bgSrc="NormalBg";
-//        }
-//
-////        var bgTexture:Texture=Assets.getTexture(bgSrc);
-////        var bgImg=new Image(bgTexture);
-//        bgloader=new ImageLoader();
-//        bgloader.source="../images/scenes/"+bgSrc+".jpg";
-//
-//        bgSprite=new Sprite();
-//        bgSprite.addChild(bgloader);
-//        _target.addChild(bgSprite);
-//
-//        if(bgSprite){
-//            //DebugTrace.msg("SceneCommand.onBackgroundComplete");
-//            bgSprite.addEventListener(Event.REMOVED_FROM_STAGE, onBackgroundRemoved);
-//
-//
-//        }else{
-//            DebugTrace.msg("SceneCommand.onBackgroundComplete No bgSprite");
-//        }
-//    }
-//    private function onBackgroundRemoved(e:Event):void{
-//
-//        DebugTrace.msg("SceneCommand.onBackgroundRemoved");
-//
-//        bgSprite.dispose();
-//        bgSprite.removeFromParent(true);
-//    }
 
     public function addDisplayContainer(src:String):void
     {

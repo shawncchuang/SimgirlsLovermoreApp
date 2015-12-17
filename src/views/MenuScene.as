@@ -65,7 +65,7 @@ public class MenuScene extends Scenes
 
         base_sprite=new Sprite();
         addChild(base_sprite);
-        base_sprite.flatten();
+
         initLayout();
     }
     private function initLayout():void

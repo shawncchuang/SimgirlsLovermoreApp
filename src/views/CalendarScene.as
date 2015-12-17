@@ -49,9 +49,6 @@ public class CalendarScene extends Sprite {
 
         base_sprite=new Sprite();
         addChild(base_sprite);
-        base_sprite.flatten();
-
-
 
         var dateData:String=flox.getSaveData("date");
         var _date:String=dateData.split("|")[0];

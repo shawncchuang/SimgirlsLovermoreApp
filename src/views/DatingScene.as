@@ -466,7 +466,6 @@ public class DatingScene extends Scenes {
         //var bgImg:Image = drawcom.drawBackground();
 
         bgSprtie =  drawcom.drawBackground();
-        bgSprtie.addChild(bgSprtie);
 
         filters.setSource(bgSprtie);
         filters.setBulr();

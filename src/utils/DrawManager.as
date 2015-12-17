@@ -648,6 +648,9 @@ public class DrawManager implements DrawerInterface
         if(bgSrc=="ChangeFormation" || bgSrc=="CharacterDesign"){
             bgSrc="Normal";
         }
+        if(bgSrc=="Dating"){
+            bgSrc=DataContainer.currentLabel.split("Scene").join("");
+        }
        var scene_index:Number=allDNScene.indexOf(bgSrc);
         bgSrc+="Bg";
         if(scene_index!=-1){

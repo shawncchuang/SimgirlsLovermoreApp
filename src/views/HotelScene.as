@@ -66,7 +66,7 @@ public class HotelScene extends Scenes
         this.addEventListener(TopViewEvent.REMOVE,doTopViewDispatch);
         speaker_sprite=new Sprite();
         addChild(speaker_sprite);
-        speaker_sprite.flatten();
+
         init();
 
 
