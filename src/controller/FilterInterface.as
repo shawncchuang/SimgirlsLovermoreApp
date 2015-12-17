@@ -7,7 +7,7 @@ import starling.display.Sprite;
 public interface FilterInterface
 {
 
-    function setSource(src:Image):void
+    function setSource(src:*):void
     function startFlash():void
     function onCompleteFlash():void
     function setShadow(src:Sprite):void

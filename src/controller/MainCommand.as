@@ -823,16 +823,16 @@ public class MainCommand implements MainInterface {
         else {
             if (dateStr == "24") {
                 //night
-                var nightSprtie:Sprite = new Sprite();
-                nightSprtie.flatten();
-                var maskTexture:Texture = Assets.getTexture("Whitebg");
-                var nightmask:Image = new Image(maskTexture);
-                nightmask.color = Color.BLACK;
-                nightmask.width = scene_container.width;
-                nightmask.height = scene_container.height;
-                nightmask.alpha = 0.5;
-                nightSprtie.addChild(nightmask);
-                scene_container.addChild(nightSprtie);
+//                var nightSprtie:Sprite = new Sprite();
+//                nightSprtie.flatten();
+//                var maskTexture:Texture = Assets.getTexture("Whitebg");
+//                var nightmask:Image = new Image(maskTexture);
+//                nightmask.color = Color.BLACK;
+//                nightmask.width = scene_container.width;
+//                nightmask.height = scene_container.height;
+//                nightmask.alpha = 0.5;
+//                nightSprtie.addChild(nightmask);
+//                scene_container.addChild(nightSprtie);
 
             }
         }

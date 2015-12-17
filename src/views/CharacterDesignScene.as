@@ -79,7 +79,7 @@ public class CharacterDesignScene extends Scenes
 
         base_sprite=new Sprite();
         addChild(base_sprite);
-        base_sprite.flatten();
+
 
         initLayout();
         initGender();

@@ -7,6 +7,8 @@ import data.DataContainer;
 import events.GameEvent;
 import events.SceneEvent;
 
+import feathers.controls.ImageLoader;
+
 import flash.geom.Point;
 
 import starling.animation.Transitions;
@@ -23,6 +25,7 @@ import starling.events.TouchPhase;
 import starling.textures.Texture;
 
 import utils.DebugTrace;
+import utils.DrawManager;
 import utils.FilterManager;
 
 import utils.ViewsContainer;
@@ -75,7 +78,7 @@ public class SceneCommnad implements SceneInterface
 
     private var filter:FilterInterface=new FilterManager();
     private var bgSrc:String="";
-
+    private var bgloader:ImageLoader;
     public function set currentSwitch(id:String):void
     {
         switchID=id.split("|")[0];
@@ -538,68 +541,73 @@ public class SceneCommnad implements SceneInterface
         location=src;
         var scene:Sprite=ViewsContainer.MainScene;
         scene_container=scene.getChildByName("scene_container") as Sprite;
-        var dateSaved:String=flox.getSaveData("date");
-        var dateStr:String=dateSaved.split("|")[1];
-        day="Day";
-        if(dateStr=="24")
-        {
-            //night
-            day="Night";
-        }
-        bgSrc=src;
-
-
-
-        onBackgroundComplete();
-    }
-
-    private function onBackgroundComplete():void
-    {
-
-
-        if(bgSrc.indexOf("Scene")!=-1){
-            bgSrc=bgSrc.split("Scene").join("Bg");
-        }
-        else{
-            //bgSrc="Bg";
-        }
-
-        DebugTrace.msg("SceneCommand.onBackgroundComplete bgSrc="+bgSrc);
-
-        var scene:String=location.split("Scene").join("");
-        var sceneIndex:Number=Config.daynightScene.indexOf(scene);
-        if(sceneIndex!=-1){
-            bgSrc=(bgSrc+day);
-        }
-
-        if(bgSrc=="ChangeFormationBg"){
-
-            bgSrc="NormalBg";
-        }
-
-        var bgTexture:Texture=Assets.getTexture(bgSrc);
-        var bgImg=new Image(bgTexture);
-        bgSprite=new Sprite();
-        bgSprite.flatten();
-        bgSprite.addChild(bgImg);
+        var drawmanager:DrawerInterface=new DrawManager();
+        bgSprite=drawmanager.drawBackground();
         _target.addChild(bgSprite);
-
-        if(bgSprite){
-            //DebugTrace.msg("SceneCommand.onBackgroundComplete");
-            bgSprite.addEventListener(Event.REMOVED_FROM_STAGE, onBackgroundRemoved);
-
-
-        }else{
-            DebugTrace.msg("SceneCommand.onBackgroundComplete No bgSprite");
-        }
+//        var dateSaved:String=flox.getSaveData("date");
+//        var dateStr:String=dateSaved.split("|")[1];
+//        day="Day";
+//        if(dateStr=="24")
+//        {
+//            //night
+//            day="Night";
+//        }
+//        bgSrc=src;
+//
+//
+//
+//        onBackgroundComplete();
     }
-    private function onBackgroundRemoved(e:Event):void{
 
-        DebugTrace.msg("SceneCommand.onBackgroundRemoved -");
-        bgSprite.dispose();
-        bgSprite.removeFromParent(true);
-        bgSprite=null;
-    }
+//    private function onBackgroundComplete():void
+//    {
+//
+//
+//        if(bgSrc.indexOf("Scene")!=-1){
+//            bgSrc=bgSrc.split("Scene").join("Bg");
+//        }
+//        else{
+//            //bgSrc="Bg";
+//        }
+//
+//        DebugTrace.msg("SceneCommand.onBackgroundComplete bgSrc="+bgSrc);
+//
+//        var scene:String=location.split("Scene").join("");
+//        var sceneIndex:Number=Config.daynightScene.indexOf(scene);
+//        if(sceneIndex!=-1){
+//            bgSrc=(bgSrc+day);
+//        }
+//
+//        if(bgSrc=="ChangeFormationBg"){
+//
+//            bgSrc="NormalBg";
+//        }
+//
+////        var bgTexture:Texture=Assets.getTexture(bgSrc);
+////        var bgImg=new Image(bgTexture);
+//        bgloader=new ImageLoader();
+//        bgloader.source="../images/scenes/"+bgSrc+".jpg";
+//
+//        bgSprite=new Sprite();
+//        bgSprite.addChild(bgloader);
+//        _target.addChild(bgSprite);
+//
+//        if(bgSprite){
+//            //DebugTrace.msg("SceneCommand.onBackgroundComplete");
+//            bgSprite.addEventListener(Event.REMOVED_FROM_STAGE, onBackgroundRemoved);
+//
+//
+//        }else{
+//            DebugTrace.msg("SceneCommand.onBackgroundComplete No bgSprite");
+//        }
+//    }
+//    private function onBackgroundRemoved(e:Event):void{
+//
+//        DebugTrace.msg("SceneCommand.onBackgroundRemoved");
+//
+//        bgSprite.dispose();
+//        bgSprite.removeFromParent(true);
+//    }
 
     public function addDisplayContainer(src:String):void
     {

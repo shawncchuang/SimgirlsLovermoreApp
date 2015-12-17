@@ -6,6 +6,8 @@ import com.greensock.loading.LoaderMax;
 import com.greensock.loading.SWFLoader;
 import com.greensock.loading.display.ContentDisplay;
 
+import controller.DrawerInterface;
+
 import controller.SoundController;
 
 import data.DataContainer;
@@ -47,6 +49,7 @@ import starling.textures.TextureAtlas;
 import starling.utils.AssetManager;
 
 import utils.DebugTrace;
+import utils.DrawManager;
 import utils.ViewsContainer;
 
 public class MainScene extends Scenes
@@ -145,8 +148,10 @@ public class MainScene extends Scenes
 
         scene=ViewsContainer.MainScene;
         container=scene.getChildByName("scene_container") as Sprite;
-        command.filterScene(container);
-
+        var drawmanager:DrawerInterface=new DrawManager();
+        var bgSprite:Sprite=drawmanager.drawBackground();
+        //command.filterScene(container);
+        container.addChild(bgSprite);
         DebugTrace.msg("MainScene.initScene: "+container.width+" ; "+container.height);
 
         bgX=container.x;

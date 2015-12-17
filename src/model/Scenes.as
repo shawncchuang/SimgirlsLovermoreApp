@@ -2,6 +2,7 @@ package model
 {
 
 import controller.Assets;
+import controller.DrawerInterface;
 import controller.FloxCommand;
 import controller.FloxInterface;
 import controller.MainCommand;
@@ -13,6 +14,8 @@ import data.DataContainer;
 
 import events.GameEvent;
 import events.SceneEvent;
+
+import feathers.controls.ImageLoader;
 
 import flash.display.MovieClip;
 
@@ -28,6 +31,7 @@ import starling.events.Event;
 import starling.textures.Texture;
 
 import utils.DebugTrace;
+import utils.DrawManager;
 import utils.ViewsContainer;
 
 import views.AcademyScene;
@@ -93,7 +97,7 @@ public class Scenes extends Sprite
     private var next_scene:String;
     private var from:String;
     private var sceneObj:Object;
-    private var scenebg:Image;
+    private var scenebg:Sprite;
     public var battle_type:String;
     private var infobar:Boolean;
     private var gameInfoTween:Tween;
@@ -191,9 +195,12 @@ public class Scenes extends Sprite
         DebugTrace.msg("Scenes.changeSceneHandle next_scene:"+next_scene);
         if(next_scene=="MainScene" || next_scene=="LoadMainScene")
         {
-            //var scene_texture:String=next_scene.split("Scene").join("Bg");
-            var bgTexture:Texture=Assets.getTexture("MainBgDay");
-            scenebg=new Image(bgTexture);
+
+            //var bgTexture:Texture=Assets.getTexture("MainBgDay");
+            //scenebg=new Image(bgTexture);
+
+            var drawmanager:DrawerInterface=new DrawManager();
+            scenebg=drawmanager.drawBackground();
             scene_container.addChild(scenebg);
 
             filtersMC=new flash.display.MovieClip();
@@ -484,6 +491,8 @@ public class Scenes extends Sprite
             //DebugTrace.msg("Scenes.onFadeoutComplete:"+scene_container.numChildren);
            if(scenebg)
             {
+
+
                 scenebg.removeFromParent(true);
                 scenebg=null;
             }

@@ -1,5 +1,6 @@
 package
 {
+import com.demonsters.debugger.MonsterDebugger;
 import com.gamua.flox.Player;
 import com.greensock.TweenMax;
 import com.greensock.loading.LoaderMax;
@@ -132,7 +133,6 @@ public class SimgirlsLovemore extends MovieClip
 
 		//var se:SocialEngine=new SocialEngine();
 		//se.init();
-
 
 
 		ViewsContainer.PlayerProfile=null;

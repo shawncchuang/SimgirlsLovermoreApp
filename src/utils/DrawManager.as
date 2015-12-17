@@ -2,6 +2,8 @@ package utils
 {
 import data.Config;
 
+import feathers.controls.ImageLoader;
+
 import flash.display.BitmapData;
 import flash.display.Shape;
 import flash.display3D.Context3D;
@@ -35,7 +37,7 @@ import starling.display.Quad;
 import starling.display.Sprite;
 import starling.events.EnterFrameEvent;
 import starling.events.Event;
-import starling.extensions.pixelmask.PixelMaskDisplayObject;
+
 import starling.textures.Texture;
 import starling.textures.TextureAtlas;
 import starling.textures.TextureSmoothing;
@@ -79,6 +81,8 @@ public class DrawManager implements DrawerInterface
     private var picchartImg:Image;
     private var result:Number=0;
     private var filter:FilterInterface=new FilterManager();
+    private var bgloader:ImageLoader;
+    private var bgSprite:Sprite;
     public function setSource(src:*):void
     {
         target=src
@@ -615,12 +619,19 @@ public class DrawManager implements DrawerInterface
         }
         //if
     }
-    public function drawBackground():Image
+    public function drawBackground():Sprite
     {
-
         //backgound image or sprite
-        var flox:FloxInterface=new FloxCommand();
-        var date:String=flox.getSaveData("date");
+        var scene:String=DataContainer.currentScene;
+        DebugTrace.msg("DrawManager.drawBackground  DataContainer.currentScene="+scene);
+        var date:String="";
+        if(scene=="HomePageScene"){
+            var playerInfo:Object=Config.PlayerAttributes();
+            date=playerInfo.date;
+        }else{
+            var flox:FloxInterface=new FloxCommand();
+            date=flox.getSaveData("date");
+        }
         var time:String=date.split("|")[1];
         if(time=="12")
         {
@@ -630,24 +641,35 @@ public class DrawManager implements DrawerInterface
         {
             _time="Night";
         }
-        var scene:String=DataContainer.currentScene;
+
         var allDNScene:Array=Config.daynightScene;
 
-        var bgSrc:String=DataContainer.currentScene.split("Scene").join("");
+        var bgSrc:String=scene.split("Scene").join("");
+        if(bgSrc=="ChangeFormation" || bgSrc=="CharacterDesign"){
+            bgSrc="Normal";
+        }
        var scene_index:Number=allDNScene.indexOf(bgSrc);
         bgSrc+="Bg";
         if(scene_index!=-1){
             //scenes need day or night background
             bgSrc+=_time;
         }
+        bgloader=new ImageLoader();
+        bgloader.source="../images/scenes/"+bgSrc+".jpg";
+        DebugTrace.msg("DrawManager.drawBackground  source:../images/scenes/"+bgSrc+".jpg");
+        //var bgTexture:Texture=Assets.getTexture(bgSrc);
+        //var bgImg:Image=new Image(bgTexture);
+        var bgSprite:Sprite=new Sprite();
+        bgSprite.addChild(bgloader);
 
+        bgloader.addEventListener(starling.events.Event.REMOVED_FROM_STAGE, onBackgroundRemoved);
+        return bgSprite
 
-        var bgTexture:Texture=Assets.getTexture(bgSrc);
-        var bgImg:Image=new Image(bgTexture);
-
-        DebugTrace.msg("DrawManager.drawBackground  currentScene:"+DataContainer.currentScene);
-        return bgImg
-
+    }
+    private function onBackgroundRemoved(e:starling.events.Event):void{
+        //DebugTrace.msg("DrawManager.drawBackground  onBackgroundRemoved");
+        bgloader.dispose();
+        //bgSprite.removeFromParent(true);
     }
 
 }

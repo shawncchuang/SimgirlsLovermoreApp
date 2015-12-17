@@ -99,16 +99,16 @@ public class FoundSomeScene extends Scenes
 
 		//DebugTrace.msg("FoundSomeScene.initLayout currentScene:"+DataContainer.currentScene);
 		var drawcom:DrawerInterface=new DrawManager();
-		var bgImg:Image=drawcom.drawBackground();
+		//var bgImg:Image=drawcom.drawBackground();
 
-		var bgSprtie:Sprite=new Sprite();
-		bgSprtie.addChild(bgImg);
-		filters.setSource(bgImg);
+		var bgSprtie:Sprite=drawcom.drawBackground();
+		//bgSprtie.addChild(bgImg);
+		filters.setSource(bgSprtie);
 		filters.setBulr();
-		command.filterScene(bgSprtie);
+		//command.filterScene(bgSprtie);
 		addChild(bgSprtie);
 
-		bgImg.addEventListener(Event.REMOVED_FROM_STAGE, onBgRemovedHandler);
+		bgSprtie.addEventListener(Event.REMOVED_FROM_STAGE, onBgRemovedHandler);
 //		var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
 //		gameEvent._name="clear_comcloud";
 //		gameEvent.displayHandler();

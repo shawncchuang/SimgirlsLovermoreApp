@@ -4,6 +4,7 @@ package
 import com.demonsters.debugger.MonsterDebugger;
 
 import controller.Assets;
+import controller.DrawerInterface;
 import controller.FloxCommand;
 import controller.FloxInterface;
 import controller.MainCommand;
@@ -22,6 +23,10 @@ import flash.display.StageQuality;
 import flash.ui.ContextMenu;
 
 import model.BattleData;
+
+import starling.display.Sprite;
+
+import utils.DrawManager;
 
 import views.StoryPreview;
 
@@ -54,11 +59,10 @@ public class Game extends Sprite
 	private var scene:Sprite;
 	private var uiView:Sprite;
 	private var saveloadlist:Sprite;
-	private var bgImg:Image;
+	private var bgImg:Sprite;
 	private static var loadgame:Boolean=false;
 	private var flox:FloxInterface=new FloxCommand();
 	private var paymentScene:Sprite=new Sprite();
-
 
 	public static function set LoadGame(value:Boolean):void
 	{
@@ -71,6 +75,7 @@ public class Game extends Sprite
 	public function Game()
 	{
 		Starling.current.nativeStage.quality=StageQuality.LOW;
+
 		MonsterDebugger.initialize(this);
 
 		//Starling.current.stage.stageWidth=1024;
@@ -175,10 +180,11 @@ public class Game extends Sprite
 
 	private function initLoadScene():void
 	{
-
-
-		var bgtexture:Texture=Assets.getTexture("HomePage");
-		bgImg=new Image(bgtexture);
+		DataContainer.currentScene="HomePageScene";
+		var drawManager:DrawerInterface=new DrawManager();
+		bgImg=drawManager.drawBackground();
+		//var bgtexture:Texture=Assets.getTexture("HomePage");
+		//bgImg=new Image(bgtexture);
 		addChild(bgImg);
 
 		saveloadlist=new SaveandLoadList("Arrive");

@@ -463,12 +463,12 @@ public class DatingScene extends Scenes {
     private function initLayout():void {
 
 
-        var bgImg:Image = drawcom.drawBackground();
+        //var bgImg:Image = drawcom.drawBackground();
 
-        bgSprtie = new Sprite();
-        bgSprtie.addChild(bgImg);
+        bgSprtie =  drawcom.drawBackground();
+        bgSprtie.addChild(bgSprtie);
 
-        filters.setSource(bgImg);
+        filters.setSource(bgSprtie);
         filters.setBulr();
         addChild(bgSprtie);
 

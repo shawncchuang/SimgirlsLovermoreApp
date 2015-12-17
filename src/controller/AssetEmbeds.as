@@ -2,11 +2,13 @@ package controller
 {
 public class AssetEmbeds
 {
-    /*------------------scenes------------------------------------------------- */
 
-    [Embed(source = "../../media/textures/scenes/homepage.jpg")]
-    public static const HomePage:Class;
 
+
+    /*------------------scenes-------------------------------------------------
+
+     [Embed(source = "../../media/textures/scenes/homepage.jpg")]
+     public static const HomePage:Class;
 
     [Embed(source = "../../media/textures/scenes/map_day.jpg")]
     public static const MainBgDay:Class;
@@ -136,7 +138,7 @@ public class AssetEmbeds
     [Embed(source = "../../media/textures/scenes/lobby_night.jpg")]
     public static const LobbyNight:Class;
 
-   [Embed(source = "../../media/textures/scenes/alley.atf" ,mimeType="application/octet-stream")]
+   [Embed(source = "../../media/textures/scenes/alley.jpg")]
     public static const Alley:Class;
 
     [Embed(source = "../../media/textures/scenes/ballroom.jpg")]

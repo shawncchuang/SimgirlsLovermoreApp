@@ -81,7 +81,7 @@ public class Config
         "Jan_3","Jan_10","Jan_17","Jan_24","Jan_31"
     ];
 
-    public static var daynightScene:Array=["Beach","Park","Pier","LovemoreMansion"
+    public static var daynightScene:Array=["Main","Beach","Park","Pier","LovemoreMansion"
         ,"Hotel","Garden","FitnessClub","PrivateIsland"];
 
     public static var relHierarchy:Array=["foe","acquaintance","friend","close friend",

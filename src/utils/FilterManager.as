@@ -33,7 +33,7 @@ import starling.filters.BlurFilter;
 		private var bright:Number=0.3;
 		private var delpay:Number=0.2;
 		private var shadow:Sprite;
-		public function setSource(src:Image):void
+		public function setSource(src:*):void
 		{
 
 			target=src;
