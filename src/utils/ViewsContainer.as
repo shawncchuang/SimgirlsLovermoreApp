@@ -46,6 +46,7 @@ package utils
 		private static var skill_store:Sprite;
 		private static var player_profile:Sprite;
 		private static var current_clouds:Array;
+		private static var scene_countainer:Sprite;
 
 		public static function set GameStage(st:Stage):void
 		{
@@ -292,6 +293,12 @@ package utils
 		public static function get CurrentClouds():Array{
 
 			return current_clouds;
+		}
+		public static function set SceneContainer(container:Sprite):void{
+			scene_countainer=container
+		}
+		public static function get SceneContainer():Sprite{
+			return scene_countainer
 		}
 	}
 }

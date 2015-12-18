@@ -33,6 +33,8 @@ import flash.media.SoundChannel;
 import model.SaveGame;
 import model.Scenes;
 
+import starling.animation.DelayedCall;
+
 import starling.animation.Transitions;
 import starling.animation.Tween;
 import starling.core.Starling;
@@ -73,6 +75,7 @@ public class MainScene extends Scenes
     private var speed:Number=.2;
     private var mediacom:MediaInterface=new MediaCommand();
     private var wavesSound:SoundChannel;
+    private var sceneDelay:DelayedCall;
     public function MainScene()
     {
 
@@ -96,11 +99,17 @@ public class MainScene extends Scenes
 
 
         initScene();
+        sceneDelay=new DelayedCall(onSceneComplete,0.5);
+        Starling.juggler.add(sceneDelay);
+
+
+
+    }
+    private function onSceneComplete():void{
+        Starling.juggler.remove(sceneDelay);
         initWaving();
         initSigns();
         init();
-
-
     }
     private function init():void{
 
@@ -148,11 +157,10 @@ public class MainScene extends Scenes
 
         scene=ViewsContainer.MainScene;
         container=scene.getChildByName("scene_container") as Sprite;
+
         var drawmanager:DrawerInterface=new DrawManager();
         var bgSprite:Sprite=drawmanager.drawBackground();
-        //command.filterScene(container);
         container.addChild(bgSprite);
-        DebugTrace.msg("MainScene.initScene: "+container.width+" ; "+container.height);
 
         bgX=container.x;
         bgY=container.y;

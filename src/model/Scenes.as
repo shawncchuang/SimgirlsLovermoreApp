@@ -25,6 +25,7 @@ import starling.core.Starling;
 import starling.display.BlendMode;
 import starling.display.Image;
 import starling.display.MovieClip;
+import starling.display.Quad;
 import starling.display.Sprite;
 import starling.display.Sprite;
 import starling.events.Event;
@@ -123,11 +124,11 @@ public class Scenes extends Sprite
 
 
         mainstage=ViewsContainer.MainStage;
-        mainstage.addEventListener(SceneEvent.CHANGED,onChengedScene);
+        mainstage.addEventListener(SceneEvent.CHANGED,onChangedScene);
         mainstage.addEventListener(SceneEvent.CLEARED,onClearedScene);
     }
 
-    private function onChengedScene(e:Event):void
+    private function onChangedScene(e:Event):void
     {
 
         scene=ViewsContainer.MainScene;
@@ -154,12 +155,12 @@ public class Scenes extends Sprite
         }
 
 
-        onFadeoutComplete();
+        //onFadeoutComplete();
 
-//        var scentTween:Tween=new Tween(scene,0.5,Transitions.EASE_OUT);
-//        scentTween.fadeTo(0);
-//        scentTween.onComplete=onFadeoutComplete;
-//        Starling.juggler.add(scentTween);
+        var scentTween:Tween=new Tween(scene,0.5,Transitions.EASE_OUT);
+        scentTween.fadeTo(0);
+        scentTween.onComplete=onFadeoutComplete;
+        Starling.juggler.add(scentTween);
 
 
     }
@@ -170,7 +171,7 @@ public class Scenes extends Sprite
 
         //var scene:Sprite=ViewsContainer.MainScene;
         if(ViewsContainer.InfoDataView)
-        ViewsContainer.InfoDataView.visible=true;
+            ViewsContainer.InfoDataView.visible=true;
         if(next_scene!="MenuScene" && next_scene!="ProfileScene" &&
                 next_scene!="SettingsScene" &&  next_scene!="ContactsScene" &&
                 next_scene!="CalendarScene" && next_scene!="PhotosScene" &&  next_scene!="PreciousPhotosScene" &&
@@ -188,20 +189,18 @@ public class Scenes extends Sprite
         DataContainer.shortcutsScene=next_scene;
         scene_container=new Sprite();
         scene_container.name="scene_container";
-
         scene.addChild(scene_container);
 
+        ViewsContainer.SceneContainer=scene_container;
 
         DebugTrace.msg("Scenes.changeSceneHandle next_scene:"+next_scene);
         if(next_scene=="MainScene" || next_scene=="LoadMainScene")
         {
 
-            //var bgTexture:Texture=Assets.getTexture("MainBgDay");
-            //scenebg=new Image(bgTexture);
+//            var drawmanager:DrawerInterface=new DrawManager();
+//            scenebg=drawmanager.drawBackground();
+//            scene_container.addChild(scenebg);
 
-            var drawmanager:DrawerInterface=new DrawManager();
-            scenebg=drawmanager.drawBackground();
-            scene_container.addChild(scenebg);
 
             filtersMC=new flash.display.MovieClip();
             filtersMC.name="waving";
@@ -218,23 +217,21 @@ public class Scenes extends Sprite
         {
 
             /*
-            try{
-                Starling.current.nativeOverlay.removeChild(filtersMC);
+             try{
+             Starling.current.nativeOverlay.removeChild(filtersMC);
 
-            }catch(e:Error){
+             }catch(e:Error){
 
-                DebugTrace.msg("Scene.changeSceneHandle filtersMC=NULL");
-            }
+             DebugTrace.msg("Scene.changeSceneHandle filtersMC=NULL");
+             }
 
-            gameEvt=SimgirlsLovemore.gameEvent;
-            gameEvt._name="remove_waving";
-            gameEvt.displayHandler();
+             gameEvt=SimgirlsLovemore.gameEvent;
+             gameEvt._name="remove_waving";
+             gameEvt.displayHandler();
 
-            */
+             */
 
         }
-
-
 
 
         //current_scence=getScene(next_scene);
@@ -306,7 +303,7 @@ public class Scenes extends Sprite
                 current_scence=new ContactsScene();
                 break
             case "PhotosScene":
-                    //Selfies
+                //Selfies
                 infobar=false;
                 current_scence=new PhotosScene();
                 break
@@ -482,39 +479,46 @@ public class Scenes extends Sprite
     }
     private function onFadeoutComplete():void
     {
-        //Starling.juggler.removeTweens(scene);
+        Starling.juggler.removeTweens(scene);
 
         var mainstage:Sprite=ViewsContainer.MainStage;
 
-        if(scene_container)
+        //if(scene_container)
+        //{
+        //DebugTrace.msg("Scenes.onFadeoutComplete:"+scene_container.numChildren);
+        if(scenebg)
         {
-            //DebugTrace.msg("Scenes.onFadeoutComplete:"+scene_container.numChildren);
-           if(scenebg)
-            {
 
 
-                scenebg.removeFromParent(true);
-                scenebg=null;
-            }
+            scenebg.removeFromParent(true);
+            scenebg=null;
+        }
+        if(current_scence){
             current_scence.removeFromParent(true);
+        }
+        if(scene_container){
             scene_container.removeFromParent(true);
+            scene_container=null;
+        }
 
-            scene.removeFromParent(true);
+        scene.removeFromParent(true);
 //            try{
 //                scene.removeFromParent();
 //            }catch(e:Error){
 //                DebugTrace.msg("Scenes.onFadeoutComplete  remove scene Error");
 //            }
 
-            scene_container=null;
-            //new scene
-            scene=new Sprite();
-            addChild(scene);
-            ViewsContainer.MainScene=scene;
-            mainstage.addChild(scene);
+        //new scene
+        scene=new Sprite();
+        scene_container=new Sprite();
+        scene_container.name="scene_container";
+        scene.addChild(scene_container);
+        addChild(scene_container);
+        ViewsContainer.MainScene=scene;
+        mainstage.addChild(scene);
 
 
-        }
+        //}
 
         changeSceneHandle();
         //flox.refreshSaveData(onRefreshComplete);

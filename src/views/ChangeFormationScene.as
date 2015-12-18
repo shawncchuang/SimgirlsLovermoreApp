@@ -81,7 +81,6 @@ public class ChangeFormationScene extends Scenes
         ViewsContainer.currentScene=this;
         base_sprite=new Sprite();
         addChild(base_sprite);
-        base_sprite.flatten();
 
 
         command.playBackgroudSound("FormationMusic");

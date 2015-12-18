@@ -3,6 +3,7 @@
  */
 package views {
 import controller.Assets;
+import controller.DrawerInterface;
 import controller.FloxCommand;
 import controller.FloxInterface;
 import controller.MainCommand;
@@ -39,6 +40,7 @@ import starling.text.TextField;
 import starling.textures.Texture;
 
 import utils.DebugTrace;
+import utils.DrawManager;
 
 public class PhotosScene extends Sprite {
 
@@ -55,6 +57,7 @@ public class PhotosScene extends Sprite {
     private  var leftArrow:Button;
     private var rightArrow:Button;
     private var trash:Button;
+    private var bgSprite:Sprite;
 
     public function PhotosScene() {
 
@@ -143,6 +146,9 @@ public class PhotosScene extends Sprite {
             leftArrow.visible=false;
         }
         pages.text=(photo_index+1)+" / "+photos.length;
+
+        this.addEventListener(Event.REMOVED_FROM_STAGE,onRemoveHandler);
+
     }
     private function onTriggeredTrash(e:Event):void{
 
@@ -225,7 +231,7 @@ public class PhotosScene extends Sprite {
     }
     private function doCannelHandler():void
     {
-        photo.removeFromParent(true);
+
 
         var _data:Object=new Object();
         _data.name="MenuScene";
@@ -250,25 +256,18 @@ public class PhotosScene extends Sprite {
         if(pic) {
             var rec:Rectangle=new Rectangle(222,215,575,430);
             photo = new Sprite();
-            photo.flatten();
             photo.x = rec.x;
             photo.y = rec.y;
-            //photo.scaleX=0.65;
-            //photo.scaleY=0.65;
             addChild(photo);
-            var scene:String=pic.scene.split("Scene").join("");
-            //var scene:String=pic.scene;
-            var allDNScene:Array=Config.daynightScene;
-            var scene_index:Number=allDNScene.indexOf(scene);
-            if(scene_index!=-1){
-                scene=scene+"Bg"+time;
-            }else{
-                scene=scene+"Bg";
-            }
 
-            var bgTexture:Texture=Assets.getTexture(scene);
-            var bg:Image=new Image(bgTexture);
-            photo.addChild(bg);
+            var scene:String=pic.scene.split("Scene").join("");
+            var drawmanager:DrawerInterface=new DrawManager();
+            drawmanager.setSource(scene);
+            bgSprite=drawmanager.drawBackground();
+            //var bgTexture:Texture=Assets.getTexture(scene);
+            //var bg:Image=new Image(bgTexture);
+            //addChild(bgSprite);
+            photo.addChild(bgSprite);
 
 
 
@@ -286,22 +285,22 @@ public class PhotosScene extends Sprite {
             var style:String = pic.character.style;
             command.drawCharacter(photo, style);
 
-
-            //var w:Number=Math.floor(photo.width+205);
-            //var h:Number=Math.floor(photo.height+150);
-            //trace(w," ; ",h);
-            //photo.clipRect=new Rectangle(0,0,w,h);
-
             photo.clipRect=new Rectangle(0,0,1024,768);
-            photo.width=rec.width;
-            photo.height=rec.height;
+            photo.scaleX=0.56;
+            photo.scaleY=0.56;
+            //photo.width=rec.width;
+            //photo.height=rec.height;
         }
 
-        //var bitmapdata:BitmapData= copyToBitmap();
-        //
-        //var bytes:ByteArray = bitmapData.encode(bitmapData.rect, new flash.display.JPEGEncoderOptions());
-        //saveImageFile(bytes,"jpg");
 
+
+    }
+    private function onRemoveHandler(e:Event):void{
+
+        if(bgSprite)
+        bgSprite.removeFromParent(true);
+        if(photo)
+        photo.removeFromParent(true);
     }
     /*
      save file

@@ -624,6 +624,7 @@ public class DrawManager implements DrawerInterface
         //backgound image or sprite
         var scene:String=DataContainer.currentScene;
         DebugTrace.msg("DrawManager.drawBackground  DataContainer.currentScene="+scene);
+        //DebugTrace.msg("DrawManager.drawBackground  DataContainer.currentLabel="+DataContainer.currentLabel);
         var date:String="";
         if(scene=="HomePageScene"){
             var playerInfo:Object=Config.PlayerAttributes();
@@ -645,12 +646,20 @@ public class DrawManager implements DrawerInterface
         var allDNScene:Array=Config.daynightScene;
 
         var bgSrc:String=scene.split("Scene").join("");
-        if(bgSrc=="ChangeFormation" || bgSrc=="CharacterDesign"){
-            bgSrc="Normal";
+        switch(bgSrc){
+            case "ChangeFormation":
+            case "CharacterDesign":
+                bgSrc="Normal";
+                break
+            case "Dating":
+                bgSrc=DataContainer.currentLabel.split("Scene").join("");
+                break
+
         }
-        if(bgSrc=="Dating"){
-            bgSrc=DataContainer.currentLabel.split("Scene").join("");
+        if(target){
+            bgSrc=target;
         }
+
        var scene_index:Number=allDNScene.indexOf(bgSrc);
         bgSrc+="Bg";
         if(scene_index!=-1){
