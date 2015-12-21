@@ -706,12 +706,12 @@ public class DataContainer
 
             comments="Oh thanks!";
 
-        }else if(rating>=rating_level["dislike-Min"] && rating<=rating_level["dislike-Max"]){
+        }else if(rating>=rating_level["dislike-Max"] && rating<=rating_level["dislike-Min"]){
 
 
             comments="Meh, it's not what I really want but thanks anyway.";
 
-        }else if(rating>=rating_level["hate-Min"] && rating<=rating_level["hate-Max"]){
+        }else if(rating>=rating_level["hate-Max"] && rating<=rating_level["hate-Min"]){
 
 
             comments="Ewww... ";
@@ -725,36 +725,35 @@ public class DataContainer
         var flox:FloxInterface=new FloxCommand();
         var rating_level:Object=flox.getSyetemData("rating_level");
         var lv:uint=0;
-        var index:Array=new Array();
 
 
         if(rating>=rating_level["love-Min"] && rating<=rating_level["love-Max"]){
 
-            index=[0,1];
+            lv=0;
 
 
         }else if(rating>=rating_level["like-Min"] && rating<=rating_level["like-Max"]){
 
 
-            index=[2,3];
+            lv=1;
 
 
         }else if(rating>=rating_level["normal-Min"] && rating<=rating_level["normal-Max"]){
 
 
-            index=[4,5];
+            lv=2;
 
-        }else if(rating>=rating_level["dislike-Min"] && rating<=rating_level["dislike-Max"]){
-
-
-            index=[6,7,8];
-
-        }else if(rating>=rating_level["hate-Min"] && rating<=rating_level["hate-Max"]){
+        }else if(rating>=rating_level["dislike-Max"] && rating<=rating_level["dislike-Min"]){
 
 
-            index=[9];
+            lv=3;
+
+        }else if(rating>=rating_level["hate-Max"] && rating<=rating_level["hate-Min"]){
+
+
+            lv=4;
         }
-        lv=index[Math.floor(Math.random()*index.length)];
+
 
         return lv
 

@@ -619,7 +619,7 @@ public class DrawManager implements DrawerInterface
         }
         //if
     }
-    public function drawBackground():Sprite
+    public function drawBackground(src:String=null):Sprite
     {
         //backgound image or sprite
         var scene:String=DataContainer.currentScene;
@@ -665,6 +665,13 @@ public class DrawManager implements DrawerInterface
         if(scene_index!=-1){
             //scenes need day or night background
             bgSrc+=_time;
+        }
+        if(src){
+            //need scene bg in story
+            bgSrc=src;
+            if(src.indexOf("Scene")!=-1){
+                bgSrc= bgSrc.split("Scene").join("Bg");
+            }
         }
         bgloader=new ImageLoader();
         bgloader.source="../images/scenes/"+bgSrc+".jpg";

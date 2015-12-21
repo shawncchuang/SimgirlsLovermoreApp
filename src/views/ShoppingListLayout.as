@@ -59,6 +59,37 @@ public class ShoppingListLayout extends PanelScreen {
         this.height=320;
         this.addEventListener(FeathersEventType.INITIALIZE, initializeHandler);
         this.addEventListener(Event.REMOVED_FROM_STAGE, onRemovedHandler);
+        this.addEventListener("UPDATE", onUpdateHandler);
+    }
+    private function onUpdateHandler(e:Event):void{
+
+
+        sort=e.data.sort;
+        sort_index=e.data.sort_index;
+        if(e.data.type=="category"){
+
+            cate=e.data.cate;
+        }
+
+        for(var i:uint=0;i<itemslist.length;i++){
+
+//            var numstepper:NumericStepper=steppers[i];
+//            numstepper.dispose();
+//            numstepper.removeFromParent(true);
+
+            var buybtn:Button=buyBtnlist[i];
+            buybtn.dispose();
+            buybtn.removeFromParent(true);
+
+            var item:Sprite=itemslist[i];
+            item.dispose();
+            item.removeFromParent(true);
+
+        }
+
+        this.dispatchEventWith(FeathersEventType.INITIALIZE);
+
+
     }
     private function initializeHandler(e:Event):void
     {
@@ -168,55 +199,52 @@ public class ShoppingListLayout extends PanelScreen {
             priceHeader.hAlign="left";
             itemRender.addChild(priceHeader);
             var _price:String=DataContainer.currencyFormat(item.price);
-            var priceTxt:TextField=new TextField(90,renderH,_price,"SimNeogreyMedium",18,0,true);
+            var priceTxt:TextField=new TextField(90,renderH,_price,"SimNeogreyMedium",16,0,true);
             priceTxt.autoScale=true;
             priceTxt.x=priceHeader.x;
             priceTxt.vAlign="center";
             priceTxt.hAlign="left";
 
 
-            var qtyHeader:TextField=new TextField(40,16,"Qty:",font,12,0x333333,true);
-            qtyHeader.x=380;
-            qtyHeader.hAlign="left";
-            itemRender.addChild(qtyHeader);
-            var qtyStepper:NumericStepper = new NumericStepper();
-            qtyStepper.buttonLayoutMode = NumericStepper.BUTTON_LAYOUT_MODE_SPLIT_HORIZONTAL;
-            var incrementTexture:Texture = Assets.getTexture("IncrementButton");
-            var decrementTexture:Texture = Assets.getTexture("DecrementButton");
-            qtyStepper.incrementButtonProperties.defaultSkin = new Image(incrementTexture);
-            qtyStepper.decrementButtonProperties.defaultSkin = new Image(decrementTexture);
-            qtyStepper.textInputFactory = function():TextInput
-            {
-                var input:TextInput = new TextInput();
-                //skin the text input here
-                //input.backgroundSkin = new Scale9Image( backgroundTextures )
-                input.verticalAlign =  TextInput.VERTICAL_ALIGN_MIDDLE;
-                input.isEditable = false;
-                input.padding=12;
-                input.setSize(40,30);
-                input.textEditorProperties.fontSize = 18;
-
-                return input;
-            }
-
-
-            qtyStepper.x=qtyHeader.x;
-            qtyStepper.y=qtyHeader.y+20;
-            qtyStepper.width=140;
-            qtyStepper.height=30;
-            qtyStepper.minimum = 1;
-            qtyStepper.maximum = 99;
-            qtyStepper.step = 1;
-            qtyStepper.value = 1;
-            qtyStepper.scaleX = 0.8;
-            qtyStepper.scaleY = 0.8;
-            steppers.push(qtyStepper);
-            qtyStepper.addEventListener( Event.CHANGE, onStepperChangeHandler);
-            //qtyStepper.decrementButtonLabel = "-";
-            //qtyStepper.incrementButtonLabel = "+";
+//            var qtyHeader:TextField=new TextField(40,16,"Qty:",font,12,0x333333,true);
+//            qtyHeader.x=380;
+//            qtyHeader.hAlign="left";
+//            itemRender.addChild(qtyHeader);
+//            var qtyStepper:NumericStepper = new NumericStepper();
+//            qtyStepper.buttonLayoutMode = NumericStepper.BUTTON_LAYOUT_MODE_SPLIT_HORIZONTAL;
+//            var incrementTexture:Texture = Assets.getTexture("IncrementButton");
+//            var decrementTexture:Texture = Assets.getTexture("DecrementButton");
+//            qtyStepper.incrementButtonProperties.defaultSkin = new Image(incrementTexture);
+//            qtyStepper.decrementButtonProperties.defaultSkin = new Image(decrementTexture);
+//            qtyStepper.textInputFactory = function():TextInput
+//            {
+//                var input:TextInput = new TextInput();
+//                //skin the text input here
+//                //input.backgroundSkin = new Scale9Image( backgroundTextures )
+//                input.verticalAlign =  TextInput.VERTICAL_ALIGN_MIDDLE;
+//                input.isEditable = false;
+//                input.padding=12;
+//                input.setSize(40,30);
+//                input.textEditorProperties.fontSize = 18;
+//
+//                return input;
+//            }
+//
+//            qtyStepper.x=qtyHeader.x;
+//            qtyStepper.y=qtyHeader.y+20;
+//            qtyStepper.width=140;
+//            qtyStepper.height=30;
+//            qtyStepper.minimum = 1;
+//            qtyStepper.maximum = 99;
+//            qtyStepper.step = 1;
+//            qtyStepper.value = 1;
+//            qtyStepper.scaleX = 0.8;
+//            qtyStepper.scaleY = 0.8;
+//            steppers.push(qtyStepper);
+//            qtyStepper.addEventListener( Event.CHANGE, onStepperChangeHandler);
 
             var buyBtn:Button=new Button();
-            buyBtn.x=qtyHeader.x+120;
+            buyBtn.x=priceTxt.x+120;
             buyBtn.y=20;
             buyBtn.scaleX = 0.4;
             buyBtn.scaleY = 0.4;
@@ -232,7 +260,7 @@ public class ShoppingListLayout extends PanelScreen {
             itemRender.addChild(nametTxt);
             itemRender.addChild(brandTxt);
             itemRender.addChild(priceTxt);
-            itemRender.addChild(qtyStepper);
+            //itemRender.addChild(qtyStepper);
             itemRender.addChild(buyBtn);
             addChild(itemRender);
             itemslist.push(itemRender);
@@ -380,7 +408,8 @@ public class ShoppingListLayout extends PanelScreen {
         {
             //already had this
             assetsObj=my_assets[assets_index];
-            assetsObj.qty+=payment[assetsObj.id];
+            //assetsObj.qty+=payment[assetsObj.id];
+            assetsObj.qty+=1;
             assetsObj.expiration=assets[assetsObj.id].expiration;
             my_assets[assets_index]=assetsObj;
 
@@ -388,7 +417,8 @@ public class ShoppingListLayout extends PanelScreen {
             //new assets
             var _assets:Object=new Object();
             _assets.id=payment_list[0];
-            _assets.qty=payment[payment_list[0]];
+            //_assets.qty=payment[payment_list[0]];
+            _assets.qty=1;
             _assets.expiration=assets[payment_list[0]].expiration;
             my_assets.push(_assets);
 
@@ -399,20 +429,25 @@ public class ShoppingListLayout extends PanelScreen {
     }
     private function onRemovedHandler(e:Event):void{
 
+        DebugTrace.msg("ShoppingListLayout.onRemovedHandler");
 
         for(var i:uint=0;i<steppers.length;i++){
             //NumericStepper
-            var numstepper:NumericStepper=steppers[i];
-            numstepper.removeFromParent(true);
+//            var numstepper:NumericStepper=steppers[i];
+//            numstepper.dispose();
+//            numstepper.removeFromParent(true);
 
             var buybtn:Button=buyBtnlist[i];
+            buybtn.dispose();
             buybtn.removeFromParent(true);
 
             var item:Sprite=itemslist[i];
+            item.dispose();
             item.removeFromParent(true);
-        }
-        this.dispose();
 
+        }
+
+        this.dispose();
     }
 
 }

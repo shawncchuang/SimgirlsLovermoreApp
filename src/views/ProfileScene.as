@@ -369,7 +369,6 @@ public class ProfileScene extends Scenes
     {
         CharacterName="player";
         assets=new AssetsForm();
-        assets.flatten();
         panelbase.addChild(assets);
 
         var _data:Object=new Object();

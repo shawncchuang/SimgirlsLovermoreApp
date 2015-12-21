@@ -650,40 +650,16 @@ public class MainCommand implements MainInterface {
         flox.save("date", new_date);
         healSpiritEngine();
         if (overday) {
+            reseatDating();
+            setNowMood();
+            praseOwnedAssets(1);
+            reseatDatingCommandTimes();
+            submitDailyReport();
+            initCriminalsRecord();
+            initDailyUpgrade();
+            var battleData:BattleData=new BattleData();
+            battleData.checkBattleSchedule("BattleRanking","cpu_team");
 
-
-
-            var dc1:DelayedCall= new DelayedCall(reseatDating,0.5);
-            var dc2:DelayedCall= new DelayedCall(setNowMood,1);
-            var dc3:DelayedCall= new DelayedCall(praseOwnedAssets,1,[1]);
-            var dc4:DelayedCall= new DelayedCall(reseatDatingCommandTimes,2);
-            var dc5:DelayedCall= new DelayedCall(submitDailyReport,2);
-            var dc6:DelayedCall= new DelayedCall(initCriminalsRecord,3);
-            var dc7:DelayedCall= new DelayedCall(initDailyUpgrade,3);
-            var dc8:DelayedCall= new DelayedCall(praseBattleSchedule,5);
-
-            Starling.juggler.add(dc1);
-            Starling.juggler.add(dc2);
-            Starling.juggler.add(dc3);
-            Starling.juggler.add(dc4);
-            Starling.juggler.add(dc5);
-            Starling.juggler.add(dc6);
-            Starling.juggler.add(dc7);
-            Starling.juggler.add(dc8);
-
-            function praseBattleSchedule():void{
-                var battleData:BattleData=new BattleData();
-                battleData.checkBattleSchedule("BattleRanking","cpu_team");
-
-                Starling.juggler.remove(dc1);
-                Starling.juggler.remove(dc2);
-                Starling.juggler.remove(dc3);
-                Starling.juggler.remove(dc4);
-                Starling.juggler.remove(dc5);
-                Starling.juggler.remove(dc6);
-                Starling.juggler.remove(dc7);
-                Starling.juggler.remove(dc8);
-            }
 
         }
 
@@ -1806,7 +1782,8 @@ public class MainCommand implements MainInterface {
 
     private function onFinishAnimated():void {
 
-
+        var queue:LoaderMax=ViewsContainer.loaderQueue;
+        queue.empty(true,true);
         try {
             Starling.current.nativeOverlay.removeChild(playerBitmap);
         }

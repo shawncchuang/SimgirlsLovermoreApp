@@ -673,7 +673,7 @@ public class ChangeFormationScene extends Scenes
     }
     private function removedHandler():void{
 
-        layout_sprite.removeFromParent(true);
+
         for(var i:uint=0;i<substitues.length;i++){
             var subtile:MovieClip=substitues[i];
             subtile.removeFromParent(true);
@@ -686,6 +686,7 @@ public class ChangeFormationScene extends Scenes
             var tile:Image=tileImgs[k];
             tile.removeFromParent(true);
         }
+        layout_sprite.removeFromParent(true);
     }
 }
 }

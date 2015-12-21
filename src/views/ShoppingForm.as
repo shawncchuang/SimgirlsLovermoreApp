@@ -34,6 +34,8 @@ import starling.events.TouchPhase;
 import starling.text.TextField;
 import starling.textures.Texture;
 
+import utils.DebugTrace;
+
 import utils.ViewsContainer;
 
 public class ShoppingForm extends Sprite{
@@ -59,6 +61,7 @@ public class ShoppingForm extends Sprite{
         addChild(base_sprite);
 
 
+        this.addEventListener(Event.REMOVED_FROM_STAGE, onRemovedHandler);
         initPanel();
         initCashFormat();
         initShoppingListLayout();
@@ -101,7 +104,6 @@ public class ShoppingForm extends Sprite{
     private function doCannelHandler(e:Event):void
     {
 
-        shoppinglist.removeFromParent();
 
         var _data:Object=new Object();
         _data.name= "ShoppingCentreScene_fromlist";
@@ -177,11 +179,14 @@ public class ShoppingForm extends Sprite{
 
         }
 
+        //sort=target.name.toLowerCase();
+        //sort_index=index;
+        var _data:Object=new Object();
+        _data.type="sorting";
+        _data.sort=target.name.toLowerCase();
+        _data.sort_index=index;
+        shoppinglist.dispatchEventWith("UPDATE",false,_data);
 
-        shoppinglist.removeFromParent(true);
-        sort=target.name.toLowerCase();
-        sort_index=index;
-        initShoppingListLayout();
 
 
     }
@@ -223,11 +228,17 @@ public class ShoppingForm extends Sprite{
             Starling.juggler.add(tween);
         }
         if(began){
-
+            Starling.juggler.removeTweens(target);
             var cate_index:Number=tag_names.indexOf(target.name);
             cate=catelist[cate_index];
-            shoppinglist.removeFromParent(true);
-            initShoppingListLayout();
+
+            var _data:Object=new Object();
+            _data.type="category";
+            _data.cate=cate;
+            _data.sort=sort;
+            _data.sort_index=sort_index;
+            shoppinglist.dispatchEventWith("UPDATE",false,_data);
+
         }
 
     }
@@ -244,6 +255,12 @@ public class ShoppingForm extends Sprite{
         target.addChild(txt);
 
         return txt
+    }
+    private function onRemovedHandler(e:Event):void{
+        DebugTrace.msg("ShoppingForm.onRemovedHandler");
+        panelbase.removeFromParent(true);
+        shoppinglist.removeFromParent(true);
+
     }
 
 

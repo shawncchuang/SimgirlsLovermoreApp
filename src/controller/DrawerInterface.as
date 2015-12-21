@@ -31,7 +31,7 @@ import starling.display.Sprite;
 		function updatePieChart(value:Number):void
 		function drawCharacterProfileIcon(target:Sprite,ch:String,scale:Number):void
 		function drawNPCProfileIcon(target:Sprite,id:String,scale:Number):void
-		function drawBackground():Sprite
+		function drawBackground(src:String=null):Sprite
 	    function playerModelCopy(target:Sprite,pos:Point):void
 	}
 }

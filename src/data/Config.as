@@ -147,13 +147,13 @@ public class Config
 
     }
 
-    public static var CriminalRanking:Array=[{"rank":"S","se":2000,"rewards":20000},
-{"rank":"A","se":1500,"rewards":15000},
-{"rank":"B","se":1000,"rewards":10000},
-{"rank":"C","se":500,"rewards":5000},
-{"rank":"D","se":200,"rewards":2000},
-{"rank":"E","se":100,"rewards":1000},
-{"rank":"F","se":50,"rewards":500}];
+    public static var CriminalRanking:Array=[{"rank":"S","se":3200,"rewards":32000},
+{"rank":"A","se":2400,"rewards":24000},
+{"rank":"B","se":1600,"rewards":16000},
+{"rank":"C","se":800,"rewards":8000},
+{"rank":"D","se":400,"rewards":4000},
+{"rank":"E","se":200,"rewards":2000},
+{"rank":"F","se":100,"rewards":1000}];
 
     public static function set AccType(value:String):void
     {
@@ -955,15 +955,16 @@ public class Config
     public  static var ratingStep:Object={
 
 
+
+        "hate-Max":-51,
         "hate-Min":-100,
-        "hate-Max":-39,
-        "dislike-Min":-40,
-        "dislike-Max":-19,
-        "normal-Min":-20,
-        "normal-Max":19,
-        "like-Min":20,
-        "like-Max":59,
-        "love-Min":60,
+        "dislike-Max":-1,
+        "dislike-Min":-50,
+        "normal-Max":29,
+        "normal-Min":0,
+        "like-Min":30,
+        "like-Max":64,
+        "love-Min":65,
         "love-Max":100
 
 

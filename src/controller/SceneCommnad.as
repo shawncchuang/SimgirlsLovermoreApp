@@ -539,10 +539,14 @@ public class SceneCommnad implements SceneInterface
     public function createBackground(src:String):void
     {
         location=src;
+        var _src:String=null;
+        if(DataContainer.currentScene=="Tarotreading") {
+            _src=location;
+        }
         var scene:Sprite=ViewsContainer.MainScene;
         scene_container=scene.getChildByName("scene_container") as Sprite;
         var drawmanager:DrawerInterface=new DrawManager();
-        bgSprite=drawmanager.drawBackground();
+        bgSprite=drawmanager.drawBackground(_src);
         _target.addChild(bgSprite);
 
     }
@@ -784,7 +788,7 @@ public class SceneCommnad implements SceneInterface
         var result:Object=value.result;
         var turn_on_id:String=result.on;
         var turn_off_id:String=result.off;
-        var current_switch:String=""
+        var current_switch:String="";
         if(turn_off_id!="")
         {
             current_switch=turn_off_id+"|off";

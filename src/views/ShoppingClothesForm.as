@@ -34,12 +34,13 @@ public class ShoppingClothesForm extends Sprite {
     private var command:MainInterface=new MainCommand();
     private var casshtext:TextField;
     private var font:String="SimNeogreyMedium";
-
+    private var clotheslayout:ShoppingClothesListLayout;
 
     public function ShoppingClothesForm() {
 
         base_sprite=new Sprite();
         addChild(base_sprite);
+        this.addEventListener(Event.REMOVED_FROM_STAGE, onRemovedHandler);
 
         initPanel();
         initCashFormat();
@@ -56,7 +57,7 @@ public class ShoppingClothesForm extends Sprite {
         panelAssets=new Image(Assets.getTexture("ShoppingAssets"));
         panelbase.addChild(panelAssets);
 
-        var clotheslayout:ShoppingClothesListLayout=new ShoppingClothesListLayout();
+        clotheslayout=new ShoppingClothesListLayout();
         panelbase.addChild(clotheslayout);
 
         var scene:Sprite=ViewsContainer.currentScene;
@@ -114,6 +115,14 @@ public class ShoppingClothesForm extends Sprite {
         target.addChild(txt);
 
         return txt
+    }
+    private function onRemovedHandler(e:Event):void{
+
+
+        clotheslayout.removeFromParent(true);
+        panelbase.removeFromParent(true);
+
+
     }
 
 }

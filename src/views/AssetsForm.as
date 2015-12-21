@@ -102,10 +102,10 @@ public class AssetsForm extends Sprite
     }
     private function onUpdatedAssersForm(e:Event):void{
 
-        DebugTrace.msg("AssetsForm.onUpdatedAssersForm");
+        DebugTrace.msg("AssetsForm.onUpdatedAssersForm taget="+e.data.chname);
         if(e.data)
             chname=e.data.chname;
-        assetsform.removeFromParent(true);
+        removeChild(assetsform);
         initAssetsTiledLayout();
 
     }

@@ -31,6 +31,7 @@ import events.SceneEvent;
 import events.TopViewEvent;
 
 import flash.geom.Rectangle;
+import flash.system.System;
 
 
 import model.CustomPlayer;
@@ -307,6 +308,8 @@ public class SimgirlsLovemore extends MovieClip
 				topview.addChild(battlescene);
 				break;
 			case "remove_battle":
+				var queue:LoaderMax=ViewsContainer.loaderQueue;
+				queue.empty(true,true);
 				topview.removeChild(battlescene);
 				break;
 			case  "blackmarket_form":
@@ -314,7 +317,7 @@ public class SimgirlsLovemore extends MovieClip
 				//topview.addChild(blackmarketform);
 				break;
 			case "remove_blackmarket_form":
-				topview.removeChild(blackmarketform);
+				//topview.removeChild(blackmarketform);
 				break;
 			case "TraceGame":
 				minigamescene=new TraceGame();
@@ -325,6 +328,8 @@ public class SimgirlsLovemore extends MovieClip
 				topview.addChild(minigamescene);
 				break;
 			case "remove_mini_game":
+				queue=ViewsContainer.loaderQueue;
+				queue.empty(true,true);
 				topview.removeChild(minigamescene);
 				break
 		}
@@ -490,6 +495,7 @@ public class SimgirlsLovemore extends MovieClip
 	}
 	private function stage_deactiveHadnler(e:flash.events.Event):void{
 		DebugTrace.msg("SimgirlsLovermore.stage_deactiveHadnler");
+		System.gc();
 		_starling.stop(true);
 		this.stage.addEventListener(flash.events.Event.ACTIVATE, stage_activeHadnler,false, 0, true);
 		mapActivedHander("deactive");

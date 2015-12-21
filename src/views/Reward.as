@@ -93,7 +93,7 @@ public class Reward extends Sprite{
     private function onRewardFadeOut():void{
 
         Starling.juggler.removeTweens(reward);
-
+        reward.dispose();
         reward.removeFromParent(true);
 
     }
