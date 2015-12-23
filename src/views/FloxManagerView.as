@@ -48,11 +48,15 @@ package views
 		private function doCreateEmailAccount(e:MouseEvent):void
 		{
 			index=-1;
-			DebugTrace.msg("FloxManagerView.doCreateEmailAccount mail="+mail);
+
+			var mailStr:String=managerUI.mailtxt.text;
 			var maillist:Array=new Array();
-			maillist.push(managerUI.mailtxt.text);
-			
-				
+			if(mailStr.indexOf(",")!=-1){
+				maillist=mailStr.split(",");
+			}else{
+				maillist.push(mailStr);
+			}
+			DebugTrace.msg("FloxManagerView.doCreateEmailAccount maillist="+maillist);
 			DataContainer.MembersMail=maillist;
 			currentAccount();
 			

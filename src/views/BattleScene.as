@@ -133,7 +133,7 @@ public class BattleScene extends Sprite
 	private var cpusX:Object=new Object();
 	private var current_skillPts:Object=new Object();
 	private var battle_type:String;
-	private var commanderSkill:Boolean=false;
+	private var commanderSkill:Boolean=true;
 	public function BattleScene()
 	{
 
@@ -897,14 +897,12 @@ public class BattleScene extends Sprite
 				var SkillUpdated:Object=new Object();
 				//var SkillUpdated:Object=battledata.skillCard(member,skill);
 				var skillPower:Number=battledata.skillCard(member,skill.power);
-				DebugTrace.msg("BattleScene.onMouseClickCard skillPower:"+skillPower);
-
 				power.power=skillPower;
 				power.from="player";
 				power.target="";
 				power.targetlist=new Array();
 				memberscom.equipedCard(power.id,e.currentTarget as MovieClip);
-
+				//DebugTrace.msg("BattleScene.onMouseClickCard power:"+JSON.stringify(power));
 				var act:String="ATTACK";
 				switch(power.skillID)
 				{
@@ -1005,6 +1003,7 @@ public class BattleScene extends Sprite
 		var battleteam:Object=memberscom.getBattleTeam();
 		var member:Member=battleteam[current_player.name];
 		DebugTrace.msg("BattleScene.usedHealHandle target:"+e.target.id+", healarea="+e.target.healarea);
+
 
 		if(e.target.id)
 		{
@@ -1266,10 +1265,9 @@ public class BattleScene extends Sprite
 	private function onSavedToFormation():void
 	{
 		DebugTrace.msg("BattleScene.onFormationSave");
+        TweenMax.killDelayedCallsTo(onSavedToFormation);
 
 		starttab.wall.visible=true;
-
-
 
 		var gameEvt:GameEvent=SimgirlsLovemore.gameEvent;
 		gameEvt._name="remove_battle";
@@ -3810,7 +3808,7 @@ public class BattleScene extends Sprite
 		{
 			case "com0":
 
-				savePlayerTeamSE(onPlayerSaveComplete);
+				savePlayerTeamSE();
 				break;
 			case "com1":
 
@@ -3882,14 +3880,17 @@ public class BattleScene extends Sprite
 		for(var i:uint=0;i<cpu_team.length;i++)
 		{
 			var member:Member=cpu_team[i];
-			DebugTrace.msg("BattleScene.onPlayerSaveComplete member:"+JSON.stringify(member.power));
+
 			var cpuObj:Object=cpu_teams[member.power.id];
 			cpuObj.se=member.power.se;
 			cpu_teams[member.power.id]=cpuObj;
 
 		}
 		//for
-		flox.save("cpu_teams",cpu_teams,onSavedToFormation);
+		DebugTrace.msg("BattleScene.onPlayerSaveComplete cpu_teams:"+JSON.stringify(cpu_teams));
+
+		flox.save("cpu_teams",cpu_teams);
+		TweenMax.delayedCall(1,onSavedToFormation)
 
 	}
 	private function doCancelClick(e:MouseEvent):void
@@ -4191,7 +4192,7 @@ public class BattleScene extends Sprite
 		}
 	}
 
-	private function savePlayerTeamSE(callback:Function):void
+	private function savePlayerTeamSE():void
 	{
 
 		var seObj:Object=flox.getSaveData("se");
@@ -4202,7 +4203,7 @@ public class BattleScene extends Sprite
 			seObj[power.name]=power.se;
 		}
 		//for
-		flox.save("se",seObj,callback);
+		flox.save("se",seObj,onPlayerSaveComplete);
 	}
 	private function changeCPUFormationHandle():void
 	{
@@ -4222,7 +4223,7 @@ public class BattleScene extends Sprite
 			LoaderMax.getLoader("attention").unLoad();
 
 			TweenMax.killDelayedCallsTo(savePlayerHandle);
-			savePlayerTeamSE(onPlayerSaveComplete);
+			savePlayerTeamSE();
 		}
 	}
 	private function recordSkillPts(atk_member:Member):void

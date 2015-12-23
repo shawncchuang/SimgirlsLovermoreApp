@@ -74,15 +74,15 @@ public class ChatScene extends Sprite
                 // moood reward ,location match 60%
                 setResult(0);
             }
-            else if(item_bingo>moodBingo && item_bingo<=moodBingo+20)
+            else if(item_bingo>moodBingo && item_bingo<=moodBingo+10)
             {
-                //secrets match 20%
+                //secrets match 10%
                 setResult(2);
 
             }
             else
             {
-                //gift match 20%
+                //gift match 30%
                 setResult(1);
 
             }

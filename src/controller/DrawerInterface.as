@@ -33,5 +33,6 @@ import starling.display.Sprite;
 		function drawNPCProfileIcon(target:Sprite,id:String,scale:Number):void
 		function drawBackground(src:String=null):Sprite
 	    function playerModelCopy(target:Sprite,pos:Point):void
+	    function drawBackgroundgFroPreview(scene:String):Sprite
 	}
 }

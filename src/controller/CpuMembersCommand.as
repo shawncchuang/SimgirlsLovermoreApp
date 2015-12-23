@@ -152,9 +152,9 @@ public class CpuMembersCommand implements CpuMembersInterface
                    //practice
                    if(id=="t11_0"){
                        //leader
-                       se=Math.floor(love*0.9);
+                       se=Math.floor(love*0.8);
                    }else{
-                       se=Math.floor(love*0.6);
+                       se=Math.floor(love*0.5);
                    }
 
                }

@@ -631,7 +631,8 @@ public class DrawManager implements DrawerInterface
             date=playerInfo.date;
         }else{
             var flox:FloxInterface=new FloxCommand();
-            date=flox.getSaveData("date");
+                date=flox.getSaveData("date");
+
         }
         var time:String=date.split("|")[1];
         if(time=="12")
@@ -683,6 +684,50 @@ public class DrawManager implements DrawerInterface
 
         bgloader.addEventListener(starling.events.Event.REMOVED_FROM_STAGE, onBackgroundRemoved);
         return bgSprite
+
+    }
+    public function drawBackgroundgFroPreview(scene:String):Sprite{
+
+
+        DebugTrace.msg("DrawManager.drawBackgroundgFroPreview scene="+scene);
+        //DebugTrace.msg("DrawManager.drawBackground  DataContainer.currentLabel="+DataContainer.currentLabel);
+        var playerInfo:Object=Config.PlayerAttributes();
+        var date:String=playerInfo.date;
+
+        var time:String=date.split("|")[1];
+        if(time=="12")
+        {
+            var _time:String="Day";
+        }
+        else
+        {
+            _time="Night";
+        }
+
+        var allDNScene:Array=Config.daynightScene;
+
+        var bgSrc:String=scene.split("Scene").join("");
+        var scene_index:Number=allDNScene.indexOf(bgSrc);
+        if(scene.indexOf("Scene")!=-1)
+        {
+            bgSrc+="Bg";
+            if(scene_index!=-1){
+                //scenes need day or night background
+                bgSrc+=_time;
+            }
+        }
+
+        bgloader=new ImageLoader();
+        bgloader.source="../images/scenes/"+bgSrc+".jpg";
+        DebugTrace.msg("DrawManager.drawBackgroundgFroPreview  source:../images/scenes/"+bgSrc+".jpg");
+        //var bgTexture:Texture=Assets.getTexture(bgSrc);
+        //var bgImg:Image=new Image(bgTexture);
+        var bgSprite:Sprite=new Sprite();
+        bgSprite.addChild(bgloader);
+
+        bgloader.addEventListener(starling.events.Event.REMOVED_FROM_STAGE, onBackgroundRemoved);
+        return bgSprite
+
 
     }
     private function onBackgroundRemoved(e:starling.events.Event):void{

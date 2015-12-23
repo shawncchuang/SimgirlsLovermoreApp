@@ -5,6 +5,10 @@ package controller {
 import data.Config;
 import data.DataContainer;
 import events.GameEvent;
+import events.SceneEvent;
+
+import feathers.controls.ImageLoader;
+
 import flash.geom.Point;
 
 import starling.animation.Transitions;
@@ -21,6 +25,7 @@ import starling.events.TouchPhase;
 import starling.textures.Texture;
 
 import utils.DebugTrace;
+import utils.DrawManager;
 import utils.FilterManager;
 
 import utils.ViewsContainer;
@@ -63,7 +68,7 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
     private var photoframe:PhotoMessage=null;
     //private var background:MovieClip=null;
     private var background:Sprite;
-    private var bgSprtie:Image;
+    private var bgSprite:Sprite;
     private var scene_container:Sprite;
     private var day:String;
     private var switchID:String="";
@@ -494,61 +499,18 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
         location=src;
         var scene:Sprite=ViewsContainer.MainScene;
         scene_container=scene.getChildByName("scene_container") as Sprite;
-        var dateSaved:String="Thu.2.Jun.2033|12";
-        var dateStr:String=dateSaved.split("|")[1];
-        day="Day";
-        if(dateStr=="24")
-        {
-            //night
-            day="Night";
-        }
-        bgSrc=src;
-
-        try
-        {
-            bgSprtie.removeFromParent(true);
-
-        }catch(e:Error){
-            DebugTrace.msg("PreviewStoryCommand.createBackground remove bgSprtie Error");
-        }
-
-        onBackgroundComplete();
-    }
-    private function onBackgroundComplete():void
-    {
-
-
-        if(bgSrc.indexOf("Scene")!=-1){
-            bgSrc=bgSrc.split("Scene").join("Bg");
-        }
-        else{
-            //bgSrc="Bg";
-        }
-
-        DebugTrace.msg("PreviewStoryCommand.createBackground bgSrc="+bgSrc);
-
-        var scene:String=location.split("Scene").join("");
-        var sceneIndex:Number=Config.daynightScene.indexOf(scene);
-        if(sceneIndex!=-1){
-            bgSrc=(bgSrc+day);
-        }
-
-        if(bgSrc=="ChangeFormationBg"){
-
-            bgSrc="NormalBg";
-        }
-
-        var bgTexture:Texture=Assets.getTexture(bgSrc);
-        bgSprtie=new Image(bgTexture);
-        _target.addChild(bgSprtie);
+        var drawmanager:DrawerInterface=new DrawManager();
+        bgSprite=drawmanager.drawBackgroundgFroPreview(src);
+        _target.addChild(bgSprite);
 
     }
+
 
     public function addDisplayContainer(src:String):void
     {
         DebugTrace.msg("SceneCommand.addDisplayContainer src:"+src+" ; scene:"+scene);
         //preview skip QA
-        //command.addDisplayObj(scene,src);
+        command.addDisplayObj(scene,src);
         if(_target)
         {
 
@@ -617,8 +579,9 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
         if(photoframe){
             photoframe.removeFromParent(true);
         }
-        if(bgSprtie){
-            bgSprtie.removeFromParent(true);
+        if(bgSprite){
+            bgSprite.removeFromParent(true);
+            bgSprite=null;
         }
         if(bubble)
         {
