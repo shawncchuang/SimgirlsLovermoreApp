@@ -208,7 +208,7 @@ public class MainCommand implements MainInterface {
             topview.removeChild(loading);
         }
         catch (e:Error) {
-            DebugTrace.msg("Error MainCommand.removeLoading");
+            DebugTrace.msg("MainCommand.removeLoading Null");
 
         }
     }
@@ -1306,8 +1306,8 @@ public class MainCommand implements MainInterface {
         gameEvent.displayHandler();
 
         var mediacom:MediaInterface = new MediaCommand();
-        mediacom.VideoPlayer(new Point(1024, 250), new Point(0, 260));
-        mediacom.play("video/rest-animated.flv", false, onFinishAnimated);
+        mediacom.VideoPlayer("rest-animated",ViewsContainer.currentScene, new Point(1024, 250), new Point(0, 260));
+        //mediacom.play("video/rest-animated.flv", false, onFinishAnimated);
 
         var restObj:Object = sysCommad.Stay;
         var getAP:Number = restObj.ap;
@@ -2464,6 +2464,34 @@ public class MainCommand implements MainInterface {
         this._menu.display(Starling.current.nativeStage, e.stageX, e.stageY);
     }
 
+    public function checkCaptainAdjustData():void{
+        var flox:FloxInterface=new FloxCommand();
+        var skills:Object=flox.getSaveData("skills");
+        if(!skills.captain){
+
+            var captain_items:Array= [
+                        {
+                            "qty": 0,
+                            "id": "com0"
+                        },
+                        {
+                            "qty": 0,
+                            "id": "com1"
+                        },
+                        {
+                            "qty": 0,
+                            "id": "com2"
+                        },
+                        {
+                            "qty": 0,
+                            "id": "com3"
+                        }
+                    ];
+            skills.captain=captain_items;
+            flox.save("skills",skills);
+
+        }
+    }
 
 
 }

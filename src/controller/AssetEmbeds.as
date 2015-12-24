@@ -464,8 +464,6 @@ public class AssetEmbeds
     public static const SkillPtsValueIcon:Class;
 
 
-
-
     [Embed(source="../../assets/images/items/art.jpg")]
     public static const Art:Class;
 
@@ -625,6 +623,9 @@ public class AssetEmbeds
     public static const cateUpperbodyIcon:Class;
     [Embed(source="../../media/textures/icons/cateIconLowerbody.png")]
     public static const cateLowerbodyIcon:Class;
+
+    [Embed(source="../../media/textures/icons/icon_captainskills_badge.png")]
+    public static const CaptainSkillItemIcon:Class;
 
 
 
@@ -1362,6 +1363,8 @@ public class AssetEmbeds
     [Embed(source="../../media/textures/panels/skillstore_tab.png")]
     public static const PanelSkillsStore:Class;
 
+    [Embed(source="../../media/textures/panels/captainskills_tab.png")]
+    public static const PanelCaptainSkillsStore:Class;
 
     [Embed(source="../../media/textures/panels/menu_bg_effect.png")]
     public static const MenuBgEffect:Class;

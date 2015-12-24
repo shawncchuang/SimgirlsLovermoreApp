@@ -33,7 +33,7 @@ package views
 		private var button:Button;
 		private var scencom:SceneInterface=new SceneCommnad();
 		private var floxcom:FloxInterface=new FloxCommand();
-		
+		private var skillstore:Sprite;
 	 
 		public function LovemoreMansionScene()
 		{
@@ -87,14 +87,16 @@ package views
 					_data.name="MainScene";
 					command.sceneDispatch(SceneEvent.CHANGED,_data);
 					break
-				case "":
-					
-					
+				case "CaptainSkills":
+					gameEvent._name="clear_comcloud";
+					gameEvent.displayHandler();
+
+					skillstore=new SkillStroeCaptain();
+					addChild(skillstore);
 			 
 					break
 				case "ani_complete":
-				 
-					
+
 					var value_data:Object=new Object();
 					value_data.attr="honor";
 					value_data.values="+10";

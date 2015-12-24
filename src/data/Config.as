@@ -704,7 +704,25 @@ public class Config
                     water:"",
                     neutral:"",
                     com:""
-                }
+                },
+                "captain":[
+                    {
+                        "qty": 0,
+                        "id": "com0"
+                    },
+                    {
+                        "qty": 0,
+                        "id": "com1"
+                    },
+                    {
+                        "qty": 0,
+                        "id": "com2"
+                    },
+                    {
+                        "qty": 0,
+                        "id": "com3"
+                    }
+                ]
             },
             "avatar":{
                 gender:"Male",

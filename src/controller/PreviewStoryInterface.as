@@ -21,5 +21,6 @@ public interface PreviewStoryInterface {
     function initStory(finshed:Function=null):void
     function onStoryFinished():void
     function prevStoryStep():void
+    function createAnimateEffect(src:String):void
 }
 }

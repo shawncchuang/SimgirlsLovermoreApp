@@ -56,7 +56,7 @@ package views
 			}else{
 				maillist.push(mailStr);
 			}
-			DebugTrace.msg("FloxManagerView.doCreateEmailAccount maillist="+maillist);
+			//DebugTrace.msg("FloxManagerView.doCreateEmailAccount maillist="+maillist);
 			DataContainer.MembersMail=maillist;
 			currentAccount();
 			

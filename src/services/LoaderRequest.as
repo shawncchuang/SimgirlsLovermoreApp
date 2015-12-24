@@ -112,7 +112,7 @@ import flash.net.URLRequest;
 			DebugTrace.msg("LoaderRequest.getSharedObject email:"+email);
 			return email;
 		}
-		public function setLoaderQueue(id:String,src:String,target:MovieClip,callback:Function=null):void
+		public function setLoaderQueue(id:String,src:String,target:*,callback:Function=null):void
 		{
 			var autoplay:Boolean=false;
             if(id=="transform"){

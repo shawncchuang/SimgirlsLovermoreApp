@@ -1,13 +1,13 @@
-package controller
-{
-
+/**
+ * Created by shawnhuang
+ */
+package controller {
+import com.greensock.loading.LoaderMax;
 
 import data.Config;
 import data.DataContainer;
 import events.GameEvent;
-import events.SceneEvent;
 
-import feathers.controls.ImageLoader;
 
 import flash.geom.Point;
 
@@ -16,9 +16,7 @@ import starling.animation.Tween;
 import starling.core.Starling;
 
 import starling.display.Image;
-import starling.display.Quad;
 import starling.display.Sprite;
-import starling.events.Event;
 import starling.events.Touch;
 import starling.events.TouchEvent;
 import starling.events.TouchPhase;
@@ -78,7 +76,7 @@ public class SceneCommnad implements SceneInterface
 
     private var filter:FilterInterface=new FilterManager();
     private var bgSrc:String="";
-    private var bgloader:ImageLoader;
+
     public function set currentSwitch(id:String):void
     {
         switchID=id.split("|")[0];
@@ -188,13 +186,15 @@ public class SceneCommnad implements SceneInterface
     private function onChatSceneTouched(e:TouchEvent):void
     {
 
+
         var BEGAN:Touch = e.getTouch( Starling.current.stage, TouchPhase.BEGAN);
-        // var HOVER:Touch = e.getTouch( Starling.current.stage, TouchPhase.HOVER);
+       // var HOVER:Touch = e.getTouch( Starling.current.stage, TouchPhase.HOVER);
         if(BEGAN && BEGAN.target.name !="previousbtn")
         {
 
             onTouchedScene();
         }
+
 
 
     }
@@ -359,6 +359,9 @@ public class SceneCommnad implements SceneInterface
                     break
                 case "bg":
                     createBackground(target);
+                    break
+                case "swf-on":
+                        createAnimateEffect(target);
                     break
             }
             //switch
@@ -550,7 +553,20 @@ public class SceneCommnad implements SceneInterface
         _target.addChild(bgSprite);
 
     }
+    public function createAnimateEffect(src:String):void{
 
+
+        DebugTrace.msg("PreviewStoryCommand.createAnimateEffect src="+src);
+
+        var mediacom:MediaInterface = new MediaCommand();
+        mediacom.SWFPlayer("transform", "../swf/"+src+".swf", onFinishAnimated);
+
+    }
+    private function onFinishAnimated():void{
+        var queue:LoaderMax=ViewsContainer.loaderQueue;
+        queue.empty(true,true);
+
+    }
 
     public function addDisplayContainer(src:String):void
     {

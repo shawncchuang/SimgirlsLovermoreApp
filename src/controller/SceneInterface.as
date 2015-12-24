@@ -20,5 +20,6 @@ package controller
 		function doClearAll():void
 		function initStory(finshed:Function=null):void
 		function onStoryFinished():void
+		function createAnimateEffect(src:String):void
 	}
 }

@@ -59,7 +59,7 @@ import views.TraceGame;
 import views.TrainingGame;
 
 
-[SWF(width="1024",height="768",frameRate="24")]
+[SWF(width="1024",height="768")]
 public class SimgirlsLovemore extends MovieClip
 {
 
@@ -482,8 +482,8 @@ public class SimgirlsLovemore extends MovieClip
 
 		var vp:Rectangle=new flash.geom.Rectangle(0, 0, 1024, 768);
 		_starling=new Starling(Game,stage,vp,null,"auto","auto");
-		//_starling.showStats=true;
-
+		//_starling.showStats=false;
+		Starling.current.nativeStage.frameRate = 30;
 		//_starling.enableErrorChecking=Capabilities.isDebugger;
 
 		_starling.start();
@@ -532,7 +532,7 @@ public class SimgirlsLovemore extends MovieClip
 
 		if (Starling.context.driverInfo.toLowerCase().indexOf("software") != -1)
 		{
-			Starling.current.nativeStage.frameRate = 30;
+			Starling.current.nativeStage.frameRate = 24;
 		}
 
 	}

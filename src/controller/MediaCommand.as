@@ -10,6 +10,7 @@ import flash.display.BitmapData;
 import flash.display.DisplayObject;
 import flash.display.Sprite;
 import flash.events.NetStatusEvent;
+import flash.filesystem.File;
 import flash.geom.Point;
 import flash.geom.Rectangle;
 import flash.media.Video;
@@ -43,6 +44,7 @@ public class MediaCommand implements MediaInterface
 
     /*== Video Holder ==*/
     private var video:Video;
+    private var videoImg:Image;
 
     /*== Video Lists ==*/
     private var currentPath:String;
@@ -60,6 +62,8 @@ public class MediaCommand implements MediaInterface
     private var act:flash.display.MovieClip;
     private var onTransFormComplete:Function;
 
+    private var _target:*;
+
     public function SWFPlayer(id:String,src:String,callback:Function):void{
 
         _id=id;
@@ -72,7 +76,7 @@ public class MediaCommand implements MediaInterface
     }
     private function onLoaderComplete(e:LoaderEvent):void{
 
-        trace("MediaCommmand.onLoaderComplete id="+_id);
+        DebugTrace.msg("MediaCommmand.onLoaderComplete id="+_id);
         var swfloader:SWFLoader = LoaderMax.getLoader(_id);
 
         swfloader.rawContent.addEventListener(flash.events.Event.ENTER_FRAME, onActComplete);
@@ -100,8 +104,10 @@ public class MediaCommand implements MediaInterface
 
     }
 
-    public function VideoPlayer(size:Point, position:Point, fps:int = 30):void
+    public function VideoPlayer(src:String,target:*,size:Point=null, position:Point=null, fps:int = 30):void
     {
+        this.currentPath=src;
+        this._target=target;
         this.size = size;
         this.position = position;
         this.loop = loop;
@@ -122,23 +128,28 @@ public class MediaCommand implements MediaInterface
         nc = new NetConnection();
         nc.connect(null); //local files
 
+        var file:File = File.applicationDirectory.resolvePath("video/"+ this.currentPath+".flv");
         ns = new NetStream(nc);
         ns.client = {
             NetStatusEvent : onPlayStatus
         };
 
         ns.addEventListener(NetStatusEvent.NET_STATUS, onPlayStatus);
+        ns.play(file.url);
 
-        var sw:Number=Starling.current.stage.stageWidth;
-        var sh:Number=Starling.current.stage.stageHeight;
-
-
-        video = new Video(size.x,size.y);
-        video.x=position.x;
-        video.y=position.y;
-        video.attachNetStream(ns);
-
-        Starling.current.nativeOverlay.addChild(video);
+        var texture:Texture = Texture.fromNetStream(ns, 1, function():void
+        {
+            this.videoImg=new Image(texture);
+            this._target.addChild(this.videoImg);
+        });
+//        var sw:Number=Starling.current.stage.stageWidth;
+//        var sh:Number=Starling.current.stage.stageHeight;
+//        video = new Video(size.x,size.y);
+//        video.x=position.x;
+//        video.y=position.y;
+//        video.attachNetStream(ns);
+//
+//        Starling.current.nativeOverlay.addChild(video);
 
     }
 
@@ -185,8 +196,9 @@ public class MediaCommand implements MediaInterface
         if(e.info.code == VIDEO_FINISHED){
             //videosList[currentPath] = tmpVector;
             stop(true);
-
-            onFinished();
+            this.videoImg.dispose();
+            this.videoImg.removeFromParent(true);
+            //onFinished();
 
 
         }

@@ -191,6 +191,7 @@ public class BattleScene extends Sprite
 
 			var _data:Object=new Object();
 			_data.name=DataContainer.currentLabel;
+			_data.from="battle";
 			command.sceneDispatch(SceneEvent.CHANGED,_data);
 		}
 
@@ -1218,7 +1219,7 @@ public class BattleScene extends Sprite
 		focusHandle("solider");
 
 	}
-	private function doBootItemHandle(attr:String):void
+	private function doBoostItemHandle(attr:String):void
 	{
 		//BootSkills
 		var members:Array=memberscom.getPlayerTeam();
@@ -1230,17 +1231,12 @@ public class BattleScene extends Sprite
 			var member:Member=members[i];
 			if(member.power.se>0)
 			{
-				//if(member.power.name!="player" || Number(member.name.split("_")[1])!=0)
-				//{	
 
 
 				var battleEvt:BattleEvent=member.memberEvt;
 				battleEvt.act="charge";
 				battleEvt.updateMemberAct();
-				//battleEvt.from="BootComplete";
-				//battleEvt.actComplete();
-				//}
-				//if
+
 
 				var boot_txt:TextField=new TextField();
 				boot_txt.width=memberWH;
@@ -3774,30 +3770,17 @@ public class BattleScene extends Sprite
 		var topview:flash.display.MovieClip=SimgirlsLovemore.topview;
 		var success:Boolean=true;
 
-		var items:Array=flox.getPlayerData("commander_items");
-		for(var i:uint=0;i<items.length;i++)
-		{
-			if(items[i].id==itemid)
-			{
-				var qty:Number=Number(items[i].qty);
-				qty--;
-				items[i].qty=qty;
-				break
-			}
-			//if
-		}
-		//for
-		var new_items:Array=new Array();
-		for(var j:uint=0;j<items.length;j++)
-		{
-			if(items[j].qty<0)
-			{
-				items[j].qty=0;
-			}
-			new_items.push(items[j]);
-			//if
-		}
-		//for
+		var skills:Object=flox.getSaveData("skills");
+		var captain_skills:Array=skills.captain;
+
+
+		var index:Number=Number(itemid.split("com").join(""));
+		var com_item:Object=captain_skills[index];
+		com_item.qty-=1;
+		captain_skills[index]=com_item;
+		skills.captain=captain_skills;
+		flox.save("skills",skills);
+
 
 		comType="item";
 
@@ -3835,17 +3818,15 @@ public class BattleScene extends Sprite
 			case "com3":
 
 				var jewelObj:Object={"com2":["1|f"],"com3":["1|e"]};
-				initBootItem(itemid,jewelObj[itemid]);
+				initBoostItem(itemid,jewelObj[itemid]);
 				break
 		}
 		//switch
 
-		var _data:Object=new Object();
-		_data.items=new_items;
-		flox.savePlayer(_data);
+
 
 	}
-	private function initBootItem(itemid:String,jewel:Array):void
+	private function initBoostItem(itemid:String,jewel:Array):void
 	{
 		elestonecom.showElementRequest(jewel);
 		new_req_list=elestonecom.getNewReqList();
@@ -3868,7 +3849,7 @@ public class BattleScene extends Sprite
 			}
 			else
 				attr="honor";
-			doBootItemHandle(attr);
+			doBoostItemHandle(attr);
 		}
 		//if
 	}

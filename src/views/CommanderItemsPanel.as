@@ -38,7 +38,7 @@ import views.BattleScene;
 		}
 		private function initItemsPanel():void
 		{
-			items=flox.getPlayerData("commander_items");
+			items=flox.getSaveData("skills").captain;
 			DebugTrace.msg("CommanderItemsPanel.initItemsPanel items="+JSON.stringify(items));
 			panel=new CommanderItems();
 			addChild(panel);

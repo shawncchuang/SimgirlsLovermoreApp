@@ -506,6 +506,9 @@ public class CharacterDesignScene extends Scenes
         if(target.name=="confirm")
         {
 
+            var gameInfo:Sprite=ViewsContainer.gameinfo;
+            gameInfo.dispatchEventWith("UPDATE_PROFILE");
+
             //_data.name="MainScene";
             _data.name="Tarotreading";
             command.sceneDispatch(SceneEvent.CHANGED,_data);

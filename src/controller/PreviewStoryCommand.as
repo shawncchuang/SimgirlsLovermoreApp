@@ -2,22 +2,20 @@
  * Created by shawnhuang on 15-11-10.
  */
 package controller {
+import com.greensock.loading.LoaderMax;
+
 import data.Config;
 import data.DataContainer;
 import events.GameEvent;
-import events.SceneEvent;
 
-import feathers.controls.ImageLoader;
 
 import flash.geom.Point;
 
 import starling.animation.Transitions;
 import starling.animation.Tween;
 import starling.core.Starling;
-import starling.display.Button;
 
 import starling.display.Image;
-import starling.display.Quad;
 import starling.display.Sprite;
 import starling.events.Touch;
 import starling.events.TouchEvent;
@@ -275,6 +273,7 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
                 }
 
             }
+            DebugTrace.msg("PreviewStoryCommand.commandHandle todo="+todo);
             switch(todo)
             {
                 case "remove":
@@ -314,6 +313,9 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
                     break
                 case "bg":
                     createBackground(target);
+                    break
+                case "swf-on":
+                        createAnimateEffect(target);
                     break
             }
             //switch
@@ -487,10 +489,15 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
     private function displayVideo(src:String):void
     {
         //DebugTrace.msg("SceneCommand.displayVideo src:"+src);
-        var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
-        gameEvent._name="show_video";
-        gameEvent.video=src;
-        gameEvent.displayHandler();
+//        var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
+//        gameEvent._name="show_video";
+//        gameEvent.video=src;
+//        gameEvent.displayHandler();
+
+        var meidaPlayer:MediaInterface=new MediaCommand();
+        meidaPlayer.VideoPlayer(src,_target);
+
+
         command.stopBackgroudSound();
         disableAll();
     }
@@ -504,7 +511,20 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
         _target.addChild(bgSprite);
 
     }
+    public function createAnimateEffect(src:String):void{
 
+
+        DebugTrace.msg("PreviewStoryCommand.createAnimateEffect src="+src);
+
+        var mediacom:MediaInterface = new MediaCommand();
+        mediacom.SWFPlayer("transform", "../swf/"+src+".swf", onFinishAnimated);
+
+    }
+    private function onFinishAnimated():void{
+        var queue:LoaderMax=ViewsContainer.loaderQueue;
+        queue.empty(true,true);
+
+    }
 
     public function addDisplayContainer(src:String):void
     {

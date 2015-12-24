@@ -62,6 +62,7 @@ public interface MainInterface
     function showSaveError(attr:String,data:*,msg:String):void
 
     function initContextMenu():void
+    function checkCaptainAdjustData():void
 
 }
 }

@@ -82,20 +82,7 @@ public class MainScene extends Scenes
         stageW=Starling.current.stage.stageWidth;
         stageH=Starling.current.stage.stageHeight;
 
-        //update one time for 1.1.7
-//        var flox:FloxInterface=new FloxCommand();
-//        var savedSchedule:Object=flox.getSaveData("current_battle");
-//        var defaultCurrentBattle:Object=Config.defaultCurrentBattle();
-//        var update:Boolean=true;
-//        for(var _day:String in defaultCurrentBattle){
-//           if(!savedSchedule[_day]){
-//               update=false;
-//               break;
-//          }
-//        }
-//        if(update)
-//        flox.save("current_battle",defaultCurrentBattle);
-        //--------------------------------------
+        command.checkCaptainAdjustData();
 
 
         initScene();

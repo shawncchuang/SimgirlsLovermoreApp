@@ -131,7 +131,7 @@ public class BlackMarketListLayout extends PanelScreen {
             itemRender.addChild(quad);
 
             var nameHeader:TextField = new TextField(50, 16, "Name:", font, 12, 0x333333, true);
-            nameHeader.x = itemImg.width + 10;
+            nameHeader.x =  10;
             nameHeader.hAlign = "left";
             itemRender.addChild(nameHeader);
 
@@ -165,7 +165,7 @@ public class BlackMarketListLayout extends PanelScreen {
                 renderBtn.addEventListener(Event.TRIGGERED, onTapUseHandler);
             }
 
-            itemRender.addChild(itemImg);
+            //itemRender.addChild(itemImg);
             itemRender.addChild(nametTxt);
             if(type=="Buy")
             {
