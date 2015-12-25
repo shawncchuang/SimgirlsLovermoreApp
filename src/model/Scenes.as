@@ -414,7 +414,8 @@ public class Scenes extends Sprite
         scene.addChild(current_scence);
         var  gameInfobar:Sprite=ViewsContainer.InfoDataView;
         var UIViews:Sprite=ViewsContainer.UIViews;
-        if(next_scene=="CharacterDesignScene"){
+
+        if(next_scene=="CharacterDesignScene" || SceneCommnad.scene=="Story"){
             return
         }else{
 
@@ -429,6 +430,7 @@ public class Scenes extends Sprite
                 gameInfoTween.animate("y",-(gameInfobar.height));
 
             }
+
             gameInfoTween.onComplete=onGameIngbarFadeinComplete;
             Starling.juggler.add(gameInfoTween);
         }
@@ -440,7 +442,7 @@ public class Scenes extends Sprite
             //DebugTrace.msg("Scenes.changeSceneHandle addShortcuts shortcutsScene:"+shortcutsScene);
             command.removeShortcuts();
         }
-        if(from=="battle" || from=="minigame" || from=="dating"){
+        if(from=="battle" || from=="minigame" || from=="dating" || from=="story"){
             command.addShortcuts();
         }
 

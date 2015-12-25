@@ -160,7 +160,7 @@ public class CommandCloud extends Sprite
             if(com=="Rest" || com=="Stay")
             {
 
-                var switch_verifies:Array=scenecom.switchGateway("Rest||Stay");
+                var switch_verifies:Array=scenecom.switchGateway("Rest");
                 DebugTrace.msg("CommandCloud.doClickComCloud switch_verify="+switch_verifies);
                 if(!switch_verifies[0])
                 {

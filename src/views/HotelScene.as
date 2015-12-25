@@ -42,7 +42,7 @@ public class HotelScene extends Scenes
     private var speaker_sprite:Sprite;
     private var command:MainInterface=new MainCommand();
     private var button:Button;
-    private var scencom:SceneInterface=new SceneCommnad();
+    private var scenecom:SceneInterface=new SceneCommnad();
     private var flox:FloxInterface=new FloxCommand();
 
     private var animation:String="stay_animation";
@@ -75,8 +75,8 @@ public class HotelScene extends Scenes
     private function init():void
     {
         days=1;
-        scencom.init("HotelScene",speaker_sprite,6,onStartStory);
-        scencom.start();
+        scenecom.init("HotelScene",speaker_sprite,6,onStartStory);
+        scenecom.start();
 
         if(DataContainer.shortcuts=="Rest"){
 
@@ -92,19 +92,22 @@ public class HotelScene extends Scenes
     {
         DebugTrace.msg("HotelScene.onStartStory");
 
-        scencom.disableAll();
-        //var switch_verifies:Array=scencom.switchGateway("HotelScene");
-        //if(switch_verifies[0])
-        //scencom.start();
+
+        var switch_verifies:Array=scenecom.switchGateway("HotelScene");
+        if(switch_verifies[0]){
+
+            scenecom.start();
+        }
+
 
     }
     private function onStoryComplete():void
     {
+        DebugTrace.msg("HotelScene.onStoryComplete");
 
-
-        scencom.disableAll();
         var _data:Object=new Object();
         _data.name= "HotelScene";
+        _data.from="story";
         command.sceneDispatch(SceneEvent.CHANGED,_data);
     }
     private function onSceneTriggered(e:Event):void
@@ -161,14 +164,18 @@ public class HotelScene extends Scenes
                     command.showCommandValues(this,attr,_data);
                 }
 
-                /*----- disable story------
-                 command.dateManager("deadline");
-                 var deadline:Boolean=DataContainer.deadline;
-                 if(!deadline)
-                 {
-                 init();
-                 }
-                 ------------------*/
+                /*----- disable story------*/
+                if(SceneCommnad.disable_story)
+                {
+                    command.dateManager("deadline");
+                    var deadline:Boolean=DataContainer.deadline;
+                    if(!deadline)
+                    {
+                        init();
+                    }
+                }
+
+                 /*------------------*/
 
                 var timer:Timer=new Timer(1500,1);
                 timer.addEventListener(TimerEvent.TIMER_COMPLETE, onTimeOut);
@@ -187,6 +194,9 @@ public class HotelScene extends Scenes
                 break
             case "ani_complete_clear_character":
                 command.clearCopyPixel();
+                break
+            case "story_complete":
+                onStoryComplete();
                 break
 
         }

@@ -671,7 +671,13 @@ public class DrawManager implements DrawerInterface
             //need scene bg in story
             bgSrc=src;
             if(src.indexOf("Scene")!=-1){
-                bgSrc= bgSrc.split("Scene").join("Bg");
+                scene_index=allDNScene.indexOf(bgSrc.split("Scene").join(""));
+                if(scene_index!=-1) {
+                    bgSrc= bgSrc.split("Scene").join("BgDay");
+                }else{
+                    bgSrc= bgSrc.split("Scene").join("Bg");
+                }
+
             }
         }
         bgloader=new ImageLoader();

@@ -60,6 +60,7 @@ public class DataContainer
     private static var shortcuts_noted:String;
     private static var player_fullname:Object;
     private static var styles_schedule:Object;
+    private static var nextswitch:String;
     public static function set AssetsId(ids:Array):void
     {
         assets_id=ids;
@@ -863,6 +864,13 @@ public class DataContainer
     public static function get PlayerFullName():Object{
         return player_fullname;
     }
+    public static function set NextSwitch(switch_id:String):void{
 
+        nextswitch=switch_id;
+    }
+    public static function get NextSwitch():String{
+
+       return  nextswitch;
+    }
 }
 }

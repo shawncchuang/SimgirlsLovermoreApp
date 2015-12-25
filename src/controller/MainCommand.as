@@ -2289,6 +2289,7 @@ public class MainCommand implements MainInterface {
     }
     public function addShortcuts():void{
 
+        DebugTrace.msg("MainCommand.addShortcuts");
         Starling.current.stage.addEventListener(KeyboardEvent.KEY_UP, doShortcuts);
 
     }

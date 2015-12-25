@@ -7,6 +7,10 @@ import flash.utils.Dictionary;
 
 public class SystemData extends Entity
 {
+    public var s001:Array;
+    public var s002:Array;
+    public var s003:Array;
+    public var s004:Array;
 
     public var scenelibrary:Array;
     public var schedule:Array;

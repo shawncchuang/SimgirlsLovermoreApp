@@ -7,9 +7,12 @@ import com.greensock.loading.LoaderMax;
 import data.Config;
 import data.DataContainer;
 import events.GameEvent;
+import events.TopViewEvent;
 
 
 import flash.geom.Point;
+
+import starling.animation.DelayedCall;
 
 import starling.animation.Transitions;
 import starling.animation.Tween;
@@ -39,7 +42,7 @@ import views.PhotoMessage;
 public class SceneCommnad implements SceneInterface
 {
     private var flox:FloxInterface=new FloxCommand();
-    private var scene:String;
+    public static var scene:String;
     private var scene_sprite:Sprite;
     private var display_container:Object=new Object();
     private var talks:Array;
@@ -63,7 +66,7 @@ public class SceneCommnad implements SceneInterface
     private var thbubble_pos:Object={"thC":new Point(278,235),"thL":new Point(480,440),"thR":new Point(580,235)};
     private var shbubble_pos:Object={"shC":new Point(278,235),"shL":new Point(480,440),"shR":new Point(580,235)};
     private var moving_tween:Tween;
-    private var finishedcallback:Function;
+    private var onCompleteCallback:Function;
     private var photoframe:PhotoMessage=null;
     //private var background:MovieClip=null;
     private var background:Sprite;
@@ -73,9 +76,12 @@ public class SceneCommnad implements SceneInterface
     private var switchID:String="";
     private var location:String="";
     private var part:Number=0;
-
     private var filter:FilterInterface=new FilterManager();
     private var bgSrc:String="";
+    public static var disable_story:Boolean=false;
+    private var delaycall:DelayedCall;
+
+
 
     public function set currentSwitch(id:String):void
     {
@@ -85,14 +91,14 @@ public class SceneCommnad implements SceneInterface
     {
         return switchID.split("|")[0];
     }
-    public function init(current:String,target:Sprite,lbr_part:Number,finshed:Function=null):void {
+    public function init(current:String,target:Sprite,lbr_part:Number,complete:Function=null):void {
         switchID=flox.getSaveData("current_switch");
         currentSwitch=switchID;
         scene_sprite=ViewsContainer.currentScene;
         talk_index=0;
         scene=current;
         display_container=new Object();
-        finishedcallback=finshed;
+        onCompleteCallback=complete;
 
         _target=target;
         part_index=lbr_part;
@@ -188,9 +194,11 @@ public class SceneCommnad implements SceneInterface
 
 
         var BEGAN:Touch = e.getTouch( Starling.current.stage, TouchPhase.BEGAN);
-       // var HOVER:Touch = e.getTouch( Starling.current.stage, TouchPhase.HOVER);
+        // var HOVER:Touch = e.getTouch( Starling.current.stage, TouchPhase.HOVER);
         if(BEGAN && BEGAN.target.name !="previousbtn")
         {
+            DebugTrace.msg("SceneCommand.onChatSceneTouched talk_index:"+talk_index);
+
 
             onTouchedScene();
         }
@@ -202,8 +210,8 @@ public class SceneCommnad implements SceneInterface
     {
         talk_index++;
         end_index=talks.indexOf("END");
-        DebugTrace.msg("SceneCommand.onChatSceneTouched talk_index:"+talk_index+",end_index="+end_index);
-        //DebugTrace.msg("SceneCommand.onChatSceneTouched talks="+talks);
+        DebugTrace.msg("SceneCommand.onTouchedScene talk_index:"+talk_index+",end_index="+end_index);
+
         if(talk_index<end_index)
         {
             if(bubble)
@@ -216,14 +224,17 @@ public class SceneCommnad implements SceneInterface
         else
         {
             //finish current part
-             DebugTrace.msg("SceneCommand finished");
+            DebugTrace.msg("SceneCommand finished");
             if(scene=="Story"){
                 doClearAll();
+                updateCurrentSwitch();
 
+            }else{
+                disableAll();
             }
-            if(finishedcallback)
-                finishedcallback();
-            disableAll();
+            if(onCompleteCallback)
+                onCompleteCallback();
+
         }
         //if
 
@@ -361,7 +372,7 @@ public class SceneCommnad implements SceneInterface
                     createBackground(target);
                     break
                 case "swf-on":
-                        createAnimateEffect(target);
+                    createAnimateEffect(target);
                     break
             }
             //switch
@@ -408,7 +419,8 @@ public class SceneCommnad implements SceneInterface
         display_container.player=talkfield;
     }
     private function onTalkingComplete():void{
-        DebugTrace.msg("SceneCommand.onTalkingComplete");
+
+        DebugTrace.msg("SceneCommand.onTalkingComplete talk_index="+talk_index);
 
     }
     public function createBubble(comlists:Array):void
@@ -543,11 +555,11 @@ public class SceneCommnad implements SceneInterface
     {
         location=src;
         var _src:String=null;
-        if(DataContainer.currentScene=="Tarotreading") {
+        if(DataContainer.currentScene=="Tarotreading" || scene=="Story") {
             _src=location;
         }
-        var scene:Sprite=ViewsContainer.MainScene;
-        scene_container=scene.getChildByName("scene_container") as Sprite;
+        var main_scene:Sprite=ViewsContainer.MainScene;
+        scene_container=main_scene.getChildByName("scene_container") as Sprite;
         var drawmanager:DrawerInterface=new DrawManager();
         bgSprite=drawmanager.drawBackground(_src);
         _target.addChild(bgSprite);
@@ -657,7 +669,8 @@ public class SceneCommnad implements SceneInterface
 
         DebugTrace.msg("SceneCommand.disableAll hitArea");
 
-        Starling.current.stage.removeEventListener(TouchEvent.TOUCH,onChatSceneTouched);
+        //Starling.current.stage.removeEventListener(TouchEvent.TOUCH,onChatSceneTouched);
+        Starling.current.stage.removeEventListeners();
     }
     public function enableTouch():void
     {
@@ -677,30 +690,36 @@ public class SceneCommnad implements SceneInterface
     }
     public function switchGateway(type:String ,callback:Function=null):*
     {
-
-        var flox:FloxInterface=new FloxCommand();
-        switchID=flox.getSaveData("current_switch").split("|")[0];
-
-        var next_switch:String=flox.getSaveData("next_switch");
-        //DebugTrace.msg("SceneCommand.switchGateway switchID="+switchID);
-        //DebugTrace.msg("SceneCommand.switchGateway next_switch="+next_switch);
-        switchID=next_switch;
-        var switchs:Object=flox.getSyetemData("switchs");
-        scene=DataContainer.currentScene;
-        var value:Object=switchs[switchID];
-        var _scene:String=scene.split("Scene").join("").toLowerCase();
-        location=value.location;
-
-
         var verify:Boolean=false;
         var local_verify:Boolean=false;
         var date_verify:Boolean=false;
         var time_verify:Boolean=false;
-        var date:String=flox.getSaveData("date");
-        var switch_date:String=value.date;
-        var switch_time:String=String(value.time);
 
-        //------------Local------------------------------------------
+        var flox:FloxInterface=new FloxCommand();
+        var current_switch:String=flox.getSaveData("current_switch");
+        switchID="";
+        if(current_switch.split("|")[1]=="on"){
+            switchID=current_switch.split("|")[0];
+        }
+        //switchID=flox.getSaveData("next_switch");
+
+        //DebugTrace.msg("SceneCommand.switch   Gateway switchID="+switchID);
+        //DebugTrace.msg("SceneCommand.switchGateway next_switch="+next_switch);
+
+        if(switchID!=""){
+            var switchs:Object=flox.getSyetemData("switchs");
+            scene=DataContainer.currentScene;
+            var value:Object=switchs[switchID];
+            var _scene:String=scene.split("Scene").join("").toLowerCase();
+            location=value.location;
+            var date:String=flox.getSaveData("date");
+            var switch_date:String=value.date;
+            var switch_time:String=String(value.time);
+
+        }
+
+
+        //------------Location------------------------------------------
         if(location!="")
         {
             if(_scene==location)
@@ -760,12 +779,15 @@ public class SceneCommnad implements SceneInterface
                 ",local_verify="+local_verify);
 
 
-        //disable story-------------------------------
-        verify=false;
-        date_verify=false;
-        time_verify=false;
-        local_verify=false;
-        type="";
+        //disable story system-------------------------------
+        if(disable_story){
+            verify=false;
+            date_verify=false;
+            time_verify=false;
+            local_verify=false;
+            type="";
+        }
+
         //----------------------------------------------
 
 
@@ -773,12 +795,18 @@ public class SceneCommnad implements SceneInterface
         if(date_verify && time_verify && local_verify)
         {
             verify=true;
-            ViewsContainer.gameinfo.visible=false;
 
             doClearAll();
             part=Number(switchID.split("s").join(""))-1;
-            initStory(callback);
 
+            var talks:Array=flox.getSyetemData(switchID);
+            if(talks.length>0){
+                initStory(callback);
+
+                var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
+                gameEvent._name="clear_comcloud";
+                gameEvent.displayHandler();
+            }
         }
         // verify: math switch  ;  !verify:no match switch
 
@@ -788,7 +816,7 @@ public class SceneCommnad implements SceneInterface
             {
 
                 verify=true;
-                updateCurrentSwitch();
+                //updateCurrentSwitch();
             }
 
         }
@@ -796,40 +824,70 @@ public class SceneCommnad implements SceneInterface
         DebugTrace.msg("SceneCommand.switchGateway return ->"+[verify,date_verify,time_verify,local_verify]);
         return new Array(verify,date_verify,time_verify,local_verify)
     }
+    private var turn_on_id:String="";
     private function updateCurrentSwitch():void
     {
 
         var switchs:Object=flox.getSyetemData("switchs");
         var value:Object=switchs[switchID];
         var result:Object=value.result;
-        var turn_on_id:String=result.on;
+        turn_on_id=result.on;
         var turn_off_id:String=result.off;
-        var current_switch:String="";
+        var curent_switch="";
+
         if(turn_off_id!="")
         {
-            current_switch=turn_off_id+"|off";
+            curent_switch=turn_off_id+"|off";
+
 
         }
         if(turn_on_id!="")
         {
-            current_switch=turn_on_id+"|on";
+            curent_switch=turn_on_id+"|on";
 
         }
-        currentSwitch=current_switch;
-        flox.save("current_switch",current_switch);
+        DataContainer.NextSwitch=turn_on_id;
+
+        flox.save("current_switch",curent_switch);
+
+        delaycall=new DelayedCall(saveNextSwitch,0.5);
+        Starling.juggler.add(delaycall);
+
+
+    }
+    private function saveNextSwitch():void{
+        Starling.juggler.remove(delaycall);
+        flox.save("next_switch",turn_on_id);
+
+        delaycall=new DelayedCall(onStoryComplete,0.5);
+        Starling.juggler.add(delaycall);
+
+    }
+    private function onStoryComplete():void{
+
+        DebugTrace.msg("SceneCommand.onStoryComplete");
+        Starling.juggler.remove(delaycall);
+        disableAll();
+        var current_scene:Sprite=ViewsContainer.currentScene;
+        var _data:Object=new Object();
+        _data.removed="story_complete";
+        current_scene.dispatchEventWith(TopViewEvent.REMOVE,false,_data);
     }
     private var switchIDlist:Array;
     public function initStory(finshed:Function=null):void
     {
         //_target=scene_sprite;
+        ViewsContainer.gameinfo.visible=false;
+
         talk_index=0;
         scene="Story";
+
         display_container=new Object();
-        finishedcallback=onStoryFinished;
+
 
         part_index=part;
-        var library:Array=flox.getSyetemData("main_story");
-        talks=library[part_index];
+        talks=flox.getSyetemData(switchID);
+
 
         var switchs:Object=flox.getSyetemData("switchs");
         switchIDlist=new Array();
@@ -842,7 +900,9 @@ public class SceneCommnad implements SceneInterface
     }
     public function onStoryFinished():void
     {
-        DebugTrace.msg("SceneCommand.onStoryComplete");
+        DebugTrace.msg("SceneCommand.onStoryFinished");
+
+
     }
     private function nextStoryPart():void{
 

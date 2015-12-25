@@ -594,25 +594,15 @@ public class GameInfobar extends Sprite
                 break
         }
 
-        if(currentscene=="HotelScene" && attr=="Rest")
-        {
-            attr="PayRest";
-        }
-        else if(attr=="Work")
+
+        if(attr=="Work")
         {
             var _attr:String=currentscene.split("Scene").join("Work");
             attr=_attr;
+        }else if(attr=="Rest"){
+            attr="FreeRest";
         }
-        else
-        {
-            if(attr=="Rest")
-            {
 
-                attr="FreeRest";
-
-            }
-        }
-        //if
 
         if(e.data.enabled && attr!="Leave")
         {
@@ -623,15 +613,14 @@ public class GameInfobar extends Sprite
 
             if(attr.indexOf("Rest")!=-1)
             {
-                var switch_verifies:Array=scenecom.switchGateway("Rest");
-
-                if(switch_verifies[0]){
+               // var switch_verifies:Array=scenecom.switchGateway("Dec");
+                var switchID:String=flox.getSaveData("current_switch").split("|")[0];
+                var switchs:Object=flox.getSyetemData("switchs");
+                var values:Object=switchs[switchID];
+                if(values && values.hints!=""){
                     apIcon.visible=false;
                     payApTxt.visible=false;
                     value=0;
-                    var switchID:String=flox.getSaveData("next_switch");
-                    var switchs:Object=flox.getSyetemData("switchs");
-                    var values:Object=switchs[switchID];
                     dec=values.hints;
                 }
                 //if

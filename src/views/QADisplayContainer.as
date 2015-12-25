@@ -118,13 +118,13 @@ package views
 		
 		private function doBattleHandle(e:MouseEvent):void
 		{
-			scenecom.initStory();
-			scenecom.onStoryFinished();
+			//scenecom.initStory();
+			//scenecom.onStoryFinished();
 			
 	 
 			onComplete();
 			DataContainer.BatttleScene="Story";
-			
+			DataContainer.battleType="story_battle";
 			var _data:Object=new Object();
 			_data.name="ChangeFormationScene";
 			command.sceneDispatch(SceneEvent.CHANGED,_data);

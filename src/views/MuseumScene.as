@@ -115,6 +115,11 @@ import events.GameEvent;
 				case "ani_complete_clear_character":
 					command.clearCopyPixel();
 					break
+				case "story_complete":
+					_data.name= "MuseumScene";
+					_data.from="story";
+					command.sceneDispatch(SceneEvent.CHANGED,_data);
+					break
 			}
 			
 		}

@@ -50,12 +50,12 @@ public class BeachScene extends Scenes
         speaker_sprite=new Sprite();
         addChild(speaker_sprite);
 
-        init(onStartStory);
+        init();
     }
-    private function init(callback:Function=null):void
+    private function init():void
     {
 
-        scenecom.init("BeachScene",speaker_sprite,12,callback);
+        scenecom.init("BeachScene",speaker_sprite,12,onStartStory);
         scenecom.start();
 
 
@@ -73,13 +73,13 @@ public class BeachScene extends Scenes
     {
         DebugTrace.msg("BeachScene.onStartStory");
 
-        scenecom.disableAll();
+
         var switch_verifies:Array=scenecom.switchGateway("BeachScene");
         DebugTrace.msg("Beach.init switch_verifies="+switch_verifies);
         if(switch_verifies[0])
         {
+            scenecom.disableAll();
             scenecom.start();
-
         }
 
 
@@ -122,6 +122,12 @@ public class BeachScene extends Scenes
                 break
             case "ani_complete_clear_character":
                 command.clearCopyPixel();
+                break
+            case "story_complete":
+
+                _data.name="BeachScene";
+                _data.from="story";
+                command.sceneDispatch(SceneEvent.CHANGED,_data);
                 break
         }
 
