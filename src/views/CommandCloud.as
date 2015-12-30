@@ -150,12 +150,12 @@ public class CommandCloud extends Sprite
             doOutComCloud();
         }
         if (began) {
-            cloud.removeEventListener(TouchEvent.TOUCH, doClickComCloud);
+
             if(com.indexOf("\n")!=-1){
                 com=com.split("\n").join("");
             }
             var flox:FloxInterface=new FloxCommand();
-            var turn_switch:String=flox.getSaveData("current_switch").split("|")[1];
+            //var turn_switch:String=flox.getSaveData("current_switch").split("|")[1];
             DebugTrace.msg("CommandCloud.doClickComCloud com="+com);
             if(com=="Rest" || com=="Stay")
             {
@@ -164,10 +164,21 @@ public class CommandCloud extends Sprite
                 DebugTrace.msg("CommandCloud.doClickComCloud switch_verify="+switch_verifies);
                 if(!switch_verifies[0])
                 {
-
+                    //no story yet
                     onCloudClicked();
+
+
+                }else{
+                    var switchID:String=flox.getSaveData("current_switch").split("|")[0];
+                    var switchs:Object=flox.getSyetemData("switchs");
+                    var values:Object=switchs[switchID];
+                    if(values && values.hints!="") {
+
+                        var alert:Sprite = new AlertMessage(values.hints);
+                        Starling.current.stage.addChild(alert);
+                    }
+
                 }
-                //if
 
             }
             else
@@ -233,10 +244,10 @@ public class CommandCloud extends Sprite
     }
 
     private function onCloudClicked():void{
+        cloud.removeEventListeners();
 
         visibleCommandDirecation();
         command.playSound("Break");
-
 
         var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
         gameEvent._name="clear_comcloud";
@@ -247,7 +258,7 @@ public class CommandCloud extends Sprite
         mc.addEventListener(Event.COMPLETE, onCloudMovieComplete);
         Starling.juggler.add(mc);
         var txt:TextField = cloud.getChildByName("txt") as TextField;
-        txt.removeChildren();
+        txt.removeFromParent(true);
 
 
 
@@ -258,7 +269,8 @@ public class CommandCloud extends Sprite
         var target:MovieClip = e.currentTarget as MovieClip;
         target.pause();
         Starling.juggler.remove(target);
-        target.visible=false;
+        target.dispose();
+        target.removeFromParent(true);
         if(com=="Leave"){
 
             doCloudCommandHandler();
@@ -332,8 +344,6 @@ public class CommandCloud extends Sprite
 
 
         if(de_label=="StartDating"){
-
-
 
             _data.name="DatingScene";
             command.sceneDispatch(SceneEvent.CHANGED,_data);

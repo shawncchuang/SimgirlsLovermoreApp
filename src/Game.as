@@ -182,7 +182,7 @@ public class Game extends Sprite
 	{
 		DataContainer.currentScene="HomePageScene";
 		var drawManager:DrawerInterface=new DrawManager();
-		bgImg=drawManager.drawBackground();
+		bgImg=drawManager.drawBackground("HomePageScene");
 		addChild(bgImg);
 
 		saveloadlist=new SaveandLoadList("Arrive");

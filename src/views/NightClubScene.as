@@ -32,9 +32,8 @@ package views
 		private var speaker_sprite:Sprite;
 		private var command:MainInterface=new MainCommand();
 		private var button:Button;
-		private var scencom:SceneInterface=new SceneCommnad();
+		private var scenceom:SceneInterface=new SceneCommnad();
 		private var flox:FloxInterface=new FloxCommand();
-		
 		private var payAP:Number;
 		private var income:Number;
 		public function NightClubScene()
@@ -52,14 +51,20 @@ package views
 		}
 		private function init():void
 		{
-			
-			scencom.init("NightClubScene",speaker_sprite,14,onCallback);
-			scencom.start();
-			scencom.disableAll();
+
+			scenceom.init("NightClubScene",speaker_sprite,14,onStartStory);
+			scenceom.start();
+
 		}
-		private function onCallback():void
+		private function onStartStory():void
 		{
-			
+
+			var switch_verifies:Array=scenceom.switchGateway("NightclubScene");
+			if(switch_verifies[0]){
+				scenceom.disableAll();
+				scenceom.start();
+			}
+
 		}
 		private function onSceneTriggered(e:Event):void
 		{
@@ -98,14 +103,26 @@ package views
 
 					command.showCommandValues(this,attr,e.data.rewards);
 					init();
+					command.addShortcuts();
 					break
 				case "ani_complete_clear_character":
 					command.clearCopyPixel();
 					break
+				case "story_complete":
+					onStoryComplete();
+					break
 			}
 			
 		}
+		private function onStoryComplete():void
+		{
+			DebugTrace.msg("HotelScene.onStoryComplete");
 
+			var _data:Object=new Object();
+			_data.name= "NightclubScene";
+			_data.from="story";
+			command.sceneDispatch(SceneEvent.CHANGED,_data);
+		}
 		private function onClosedAlert():void
 		{
 			var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;

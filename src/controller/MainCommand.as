@@ -2297,6 +2297,7 @@ public class MainCommand implements MainInterface {
         var toScene:String="";
         var shortcutsScene:String= DataContainer.shortcutsScene;
         DataContainer.shortcuts="";
+        var flox:FloxInterface=new FloxCommand();
         switch(e.keyCode){
 
             case Keyboard.SPACE:
@@ -2310,7 +2311,6 @@ public class MainCommand implements MainInterface {
                 break
             case Keyboard.Q:
                 toScene="MainScene";
-                var flox:FloxInterface=new FloxCommand();
                 var datingnow:String=flox.getSaveData("dating");
                 if(datingnow==""){
                     DataContainer.currentDating=null;
@@ -2326,20 +2326,45 @@ public class MainCommand implements MainInterface {
                 break
 
         }
+        var scenecom:SceneInterface=new SceneCommnad();
+        var switch_verifies:Array=scenecom.switchGateway("Rest");
+        var playStroy:Boolean=true;
+        if(DataContainer.shortcuts=="Rest"){
+            playStroy=switch_verifies[0];
+        }else{
+            playStroy=false;
+        }
+        if(!playStroy){
+            //no story yet
 
-        if(toScene!="" && shortcutsScene!=toScene && shortcutsScene.indexOf("Game")==-1){
-            DebugTrace.msg("MainCommand.doShortcuts  toScene="+toScene+" , shortcutsScene="+shortcutsScene);
-            var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
-            gameEvent._name="clear_comcloud";
-            gameEvent.displayHandler();
+            if(toScene!="" && shortcutsScene!=toScene && shortcutsScene.indexOf("Game")==-1){
+                DebugTrace.msg("MainCommand.doShortcuts  toScene="+toScene+" , shortcutsScene="+shortcutsScene);
+                var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
+                gameEvent._name="clear_comcloud";
+                gameEvent.displayHandler();
 
-            var _data:Object=new Object();
-            _data.name=toScene;
-            sceneDispatch(SceneEvent.CHANGED,_data);
+                var _data:Object=new Object();
+                _data.name=toScene;
+                sceneDispatch(SceneEvent.CHANGED,_data);
 
+            }else{
+                DataContainer.shortcuts="";
+            }
         }else{
             DataContainer.shortcuts="";
+            var switchID:String=flox.getSaveData("current_switch").split("|")[0];
+            var switchs:Object=flox.getSyetemData("switchs");
+            var values:Object=switchs[switchID];
+            if(values && values.hints!="") {
+
+
+                var alert:Sprite = new AlertMessage(values.hints);
+                Starling.current.stage.addChild(alert);
+
+            }
+
         }
+
     }
 
 

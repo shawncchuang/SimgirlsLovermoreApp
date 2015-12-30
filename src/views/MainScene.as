@@ -146,7 +146,7 @@ public class MainScene extends Scenes
         container=scene.getChildByName("scene_container") as Sprite;
 
         var drawmanager:DrawerInterface=new DrawManager();
-        var bgSprite:Sprite=drawmanager.drawBackground();
+        var bgSprite:Sprite=drawmanager.drawBackground("MainScene");
         container.addChild(bgSprite);
 
         bgX=container.x;

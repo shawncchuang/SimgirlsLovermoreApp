@@ -554,14 +554,14 @@ public class SceneCommnad implements SceneInterface
     public function createBackground(src:String):void
     {
         location=src;
-        var _src:String=null;
-        if(DataContainer.currentScene=="Tarotreading" || scene=="Story") {
-            _src=location;
-        }
+//        var _src:String=null;
+//        if(DataContainer.currentScene=="Tarotreading" || scene=="Story") {
+//            _src=location;
+//        }
         var main_scene:Sprite=ViewsContainer.MainScene;
         scene_container=main_scene.getChildByName("scene_container") as Sprite;
         var drawmanager:DrawerInterface=new DrawManager();
-        bgSprite=drawmanager.drawBackground(_src);
+        bgSprite=drawmanager.drawBackground(src);
         _target.addChild(bgSprite);
 
     }
@@ -800,6 +800,9 @@ public class SceneCommnad implements SceneInterface
             part=Number(switchID.split("s").join(""))-1;
 
             var talks:Array=flox.getSyetemData(switchID);
+            if(!talks){
+                talks=new Array();
+            }
             if(talks.length>0){
                 initStory(callback);
 
@@ -807,6 +810,8 @@ public class SceneCommnad implements SceneInterface
                 gameEvent._name="clear_comcloud";
                 gameEvent.displayHandler();
             }
+        }else{
+            verify=false;
         }
         // verify: math switch  ;  !verify:no match switch
 
@@ -817,6 +822,8 @@ public class SceneCommnad implements SceneInterface
 
                 verify=true;
                 //updateCurrentSwitch();
+            }else{
+                verify=false;
             }
 
         }

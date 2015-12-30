@@ -16,12 +16,10 @@ import events.GameEvent;
 import events.SceneEvent;
 import events.TopViewEvent;
 
-import flash.events.TimerEvent;
-
-import flash.utils.Timer;
-
 import model.SaveGame;
 import model.Scenes;
+
+import starling.animation.DelayedCall;
 
 import starling.animation.Transitions;
 import starling.animation.Tween;
@@ -56,6 +54,7 @@ public class HotelScene extends Scenes
     private var checkUpTex:Texture;
     private var days:Number=1;
     private var NO_CASH_REST:String="You don't have enough cash.";
+    private var delaycall:DelayedCall;
     public function HotelScene()
     {
         /*var pointbgTexture:Texture=Assets.getTexture("PointsBg");
@@ -78,13 +77,7 @@ public class HotelScene extends Scenes
         scenecom.init("HotelScene",speaker_sprite,6,onStartStory);
         scenecom.start();
 
-        if(DataContainer.shortcuts=="Rest"){
 
-            var _data:Object=new Object();
-            _data.removed=DataContainer.shortcuts;
-            command.topviewDispatch(TopViewEvent.REMOVE,_data);
-            DataContainer.shortcuts="";
-        }
 
 
     }
@@ -94,9 +87,21 @@ public class HotelScene extends Scenes
 
 
         var switch_verifies:Array=scenecom.switchGateway("HotelScene");
+        DebugTrace.msg("HotelScene.onStartStory switch_verifies="+switch_verifies);
         if(switch_verifies[0]){
 
+            scenecom.disableAll();
             scenecom.start();
+
+        }else{
+
+            if(DataContainer.shortcuts=="Rest"){
+                var _data:Object=new Object();
+                _data.removed=DataContainer.shortcuts;
+                command.topviewDispatch(TopViewEvent.REMOVE,_data);
+                DataContainer.shortcuts="";
+            }
+
         }
 
 
@@ -164,29 +169,10 @@ public class HotelScene extends Scenes
                     command.showCommandValues(this,attr,_data);
                 }
 
-                /*----- disable story------*/
-                if(SceneCommnad.disable_story)
-                {
-                    command.dateManager("deadline");
-                    var deadline:Boolean=DataContainer.deadline;
-                    if(!deadline)
-                    {
-                        init();
-                    }
-                }
 
-                 /*------------------*/
+                delaycall=new DelayedCall(onAnimateComplete,1);
+                Starling.juggler.add(delaycall);
 
-                var timer:Timer=new Timer(1500,1);
-                timer.addEventListener(TimerEvent.TIMER_COMPLETE, onTimeOut);
-                timer.start();
-
-            function onTimeOut(e:TimerEvent):void{
-                timer.stop();
-                timer.removeEventListener(TimerEvent.TIMER_COMPLETE, onTimeOut);
-                _data.name=DataContainer.currentScene;
-                command.sceneDispatch(SceneEvent.CHANGED,_data);
-            }
 
                 break
             case "restart":
@@ -202,6 +188,14 @@ public class HotelScene extends Scenes
         }
 
     }
+    private function onAnimateComplete():void{
+        delaycall.removeEventListeners();
+        Starling.juggler.remove(delaycall);
+        var _data:Object=new Object();
+        _data.name=DataContainer.currentScene;
+        command.sceneDispatch(SceneEvent.CHANGED,_data);
+    }
+
     private function userHotelPermit(value:String):void
     {
         type=value;

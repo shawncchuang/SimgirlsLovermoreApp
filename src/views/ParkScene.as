@@ -47,13 +47,20 @@ public class ParkScene extends Scenes
     private function init():void
     {
 
-        scencom.init("ParkScene",speaker_sprite,44,onCallback);
+        scencom.init("ParkScene",speaker_sprite,44,onStartStory);
         scencom.start();
-        scencom.disableAll();
-    }
-    private function onCallback():void
-    {
 
+    }
+    private function onStartStory():void
+    {
+        var switch_verifies:Array=scencom.switchGateway("ParkScene");
+        DebugTrace.msg("HotelScene.onStartStory switch_verifies="+switch_verifies);
+        if(switch_verifies[0]){
+
+            scencom.disableAll();
+            scencom.start();
+
+        }
     }
     private function onSceneTriggered(e:Event):void
     {

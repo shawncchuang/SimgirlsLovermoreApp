@@ -18,8 +18,10 @@ import events.GameEvent;
 	
 	import model.SaveGame;
 	import model.Scenes;
-	
-	import starling.animation.Tween;
+
+import starling.animation.DelayedCall;
+
+import starling.animation.Tween;
 	import starling.core.Starling;
 	import starling.display.Button;
 	import starling.display.Sprite;
@@ -41,6 +43,7 @@ import events.GameEvent;
 		//image return 5-10;
 		private var deInt:Number=5;
 		private var increaseINT:Number;
+		private var delayCall:DelayedCall;
 		public function MuseumScene()
 		{
 			/*var pointbgTexture:Texture=Assets.getTexture("PointsBg");
@@ -63,11 +66,14 @@ import events.GameEvent;
 		private function onStartStory():void
 		{
 			
-			scencom.disableAll();	
+
 			var switch_verifies:Array=scencom.switchGateway("MuseumScene");
 			DebugTrace.msg("MuseumScene.onStartStory switch_verifies="+switch_verifies[0]);
-			if(switch_verifies[0])
+			if(switch_verifies[0]){
+				scencom.disableAll();
 				scencom.start();
+			}
+
 		}
 		private function onSceneTriggered(e:Event):void
 		{
@@ -106,11 +112,8 @@ import events.GameEvent;
 
 
 					command.showCommandValues(this,"Research",e.data.rewards);
-
-                      init();
-                    //_data.name=DataContainer.currentScene;
-                    //command.sceneDispatch(SceneEvent.CHANGED,_data);
-
+					init();
+						command.addShortcuts();
 					break
 				case "ani_complete_clear_character":
 					command.clearCopyPixel();
@@ -122,6 +125,14 @@ import events.GameEvent;
 					break
 			}
 			
+		}
+		private function onWorkingAnimateComplete():void{
+
+			delayCall.removeEventListeners();
+			Starling.juggler.remove(delayCall);
+			var _data:Object=new Object();
+			_data.name="MuseumScene";
+			command.sceneDispatch(SceneEvent.CHANGED,_data);
 		}
 
 

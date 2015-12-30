@@ -442,9 +442,18 @@ public class Scenes extends Sprite
             //DebugTrace.msg("Scenes.changeSceneHandle addShortcuts shortcutsScene:"+shortcutsScene);
             command.removeShortcuts();
         }
-        if(from=="battle" || from=="minigame" || from=="dating" || from=="story"){
+        if(!from)
             command.addShortcuts();
+        switch(from){
+            case "battle":
+            case "minigame":
+            case "dating":
+            case "story":
+                command.addShortcuts();
+                break
+
         }
+
 
 
         if(next_scene.indexOf("Game")==-1)

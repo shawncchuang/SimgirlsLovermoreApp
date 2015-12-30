@@ -32,7 +32,7 @@ public class MessagingScene extends Sprite{
     private var templete:MenuTemplate;
     private var font:String="SimMyriadPro";
     private var command:MainInterface=new MainCommand();
-    private var hyperlink:String="https://www.hightail.com/download/ZWJYS3hkRkVEa1VYRHRVag";
+    private var hyperlink:String="https://storage.googleapis.com/lovemore/sim73.swf";
     public function MessagingScene() {
 
 

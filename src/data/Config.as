@@ -382,7 +382,7 @@ public class Config
             "cash":1000,
             "first_name":"",
             "last_name":"",
-            "date":"Wed.1.Jun.2033|12",
+            "date":"Wed.1.Jun.2033|24",
             "ap":100,
             "ap_max":100,
             "dating":"",

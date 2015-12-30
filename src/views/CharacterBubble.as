@@ -51,9 +51,9 @@ package views
 		}
 		private function addBubble():void
 		{
-			
-	 
-			
+
+
+
 			var library:Array;
 			talks=new Array();
 			pure_talks=new Array();
@@ -63,8 +63,10 @@ package views
 					talks=DataContainer.NpcTalkinglibrary;
 					break
 				case "Story":
-					library=flox.getSyetemData("main_story");
-					talks=library[part_index];
+					//library=flox.getSyetemData("main_story");
+					var switchID:String=flox.getSaveData("current_switch").split("|")[0];
+					//library=flox.getSyetemData(switchID);
+					talks=flox.getSyetemData(switchID);
 					break
 				case "StoryPreview":
 					library=DataContainer.previewStory;

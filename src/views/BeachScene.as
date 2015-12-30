@@ -59,15 +59,6 @@ public class BeachScene extends Scenes
         scenecom.start();
 
 
-        if(DataContainer.shortcuts=="Rest"){
-
-            var _data:Object=new Object();
-            _data.removed=DataContainer.shortcuts;
-            command.topviewDispatch(TopViewEvent.REMOVE,_data);
-            DataContainer.shortcuts="";
-        }
-
-
     }
     private function onStartStory():void
     {
@@ -78,10 +69,18 @@ public class BeachScene extends Scenes
         DebugTrace.msg("Beach.init switch_verifies="+switch_verifies);
         if(switch_verifies[0])
         {
+
             scenecom.disableAll();
             scenecom.start();
-        }
+        }else{
+            if(DataContainer.shortcuts=="Rest"){
 
+                var _data:Object=new Object();
+                _data.removed=DataContainer.shortcuts;
+                command.topviewDispatch(TopViewEvent.REMOVE,_data);
+                DataContainer.shortcuts="";
+            }
+        }
 
     }
     private function onSceneTriggered(e:Event):void

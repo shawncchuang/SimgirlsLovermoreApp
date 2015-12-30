@@ -189,7 +189,7 @@ public class DrawManager implements DrawerInterface
 
         //var part:DisplayObject=basemodel.getChildByName(target);
         //DebugTrace.msg("DrawManager.updateBaseModel target:"+ target)
-       // var savedata:SaveGame=FloxCommand.savegame;
+        // var savedata:SaveGame=FloxCommand.savegame;
 
         if(!avatar){
             var flox:FloxInterface=new FloxCommand();
@@ -622,16 +622,20 @@ public class DrawManager implements DrawerInterface
     public function drawBackground(src:String=null):Sprite
     {
         //backgound image or sprite
-        var scene:String=DataContainer.currentScene;
-        DebugTrace.msg("DrawManager.drawBackground  DataContainer.currentScene="+scene);
+        var bgSrc:String=src;
+        //var scene:String=DataContainer.currentScene;
+        if(!src){
+            src=DataContainer.currentScene;
+        }
+        DebugTrace.msg("DrawManager.drawBackground src="+src);
         //DebugTrace.msg("DrawManager.drawBackground  DataContainer.currentLabel="+DataContainer.currentLabel);
         var date:String="";
-        if(scene=="HomePageScene"){
+        if(src=="HomePageScene"){
             var playerInfo:Object=Config.PlayerAttributes();
             date=playerInfo.date;
         }else{
             var flox:FloxInterface=new FloxCommand();
-                date=flox.getSaveData("date");
+            date=flox.getSaveData("date");
 
         }
         var time:String=date.split("|")[1];
@@ -645,8 +649,10 @@ public class DrawManager implements DrawerInterface
         }
 
         var allDNScene:Array=Config.daynightScene;
-
-        var bgSrc:String=scene.split("Scene").join("");
+        if(src){
+            if(src.indexOf("Scene")!=-1)
+                bgSrc=src.split("Scene").join("");
+        }
         switch(bgSrc){
             case "ChangeFormation":
             case "CharacterDesign":
@@ -661,25 +667,18 @@ public class DrawManager implements DrawerInterface
             bgSrc=target;
         }
 
-       var scene_index:Number=allDNScene.indexOf(bgSrc);
+        var scene_index:Number=allDNScene.indexOf(bgSrc);
         bgSrc+="Bg";
         if(scene_index!=-1){
             //scenes need day or night background
             bgSrc+=_time;
         }
-        if(src){
-            //need scene bg in story
-            bgSrc=src;
-            if(src.indexOf("Scene")!=-1){
-                scene_index=allDNScene.indexOf(bgSrc.split("Scene").join(""));
-                if(scene_index!=-1) {
-                    bgSrc= bgSrc.split("Scene").join("BgDay");
-                }else{
-                    bgSrc= bgSrc.split("Scene").join("Bg");
-                }
 
-            }
+        if(src.indexOf("Scene")==-1){
+
+            bgSrc=src;
         }
+
         bgloader=new ImageLoader();
         bgloader.source="../images/scenes/"+bgSrc+".jpg";
         DebugTrace.msg("DrawManager.drawBackground  source:../images/scenes/"+bgSrc+".jpg");

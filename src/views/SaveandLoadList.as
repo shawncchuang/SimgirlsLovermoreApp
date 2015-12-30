@@ -433,7 +433,7 @@ public class SaveandLoadList extends Sprite
             flox.loadBackupsavedEntities();
 
 
-            command.addShortcuts();
+            //command.addShortcuts();
 
         }
 

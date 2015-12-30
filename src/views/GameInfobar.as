@@ -611,21 +611,21 @@ public class GameInfobar extends Sprite
             var value:Number=Number(commandData[attr].ap);
 
 
-            if(attr.indexOf("Rest")!=-1)
-            {
-               // var switch_verifies:Array=scenecom.switchGateway("Dec");
-                var switchID:String=flox.getSaveData("current_switch").split("|")[0];
-                var switchs:Object=flox.getSyetemData("switchs");
-                var values:Object=switchs[switchID];
-                if(values && values.hints!=""){
-                    apIcon.visible=false;
-                    payApTxt.visible=false;
-                    value=0;
-                    dec=values.hints;
-                }
-                //if
-            }
-            //if
+//            if(attr.indexOf("Rest")!=-1)
+//            {
+//               // var switch_verifies:Array=scenecom.switchGateway("Dec");
+//                var switchID:String=flox.getSaveData("current_switch").split("|")[0];
+//                var switchs:Object=flox.getSyetemData("switchs");
+//                var values:Object=switchs[switchID];
+//                if(values && values.hints!=""){
+//                    apIcon.visible=false;
+//                    payApTxt.visible=false;
+//                    value=0;
+//                    dec=values.hints;
+//                }
+//                //if
+//            }
+//            //if
 
             comDirTxt.text=dec;
             payApTxt.text=String(value);
