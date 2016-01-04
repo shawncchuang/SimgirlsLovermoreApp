@@ -160,22 +160,27 @@ package views
 		private function filterScentance(src:String):String
 		{
 			var re:String=src;
-			
-			switch(scene)
+			var first_name:String=flox.getSaveData("first_name");
+			if(re.indexOf("$$$")!=-1)
 			{
-				case "TarotReading":
-					var fullname:Object=DataContainer.PlayerFullName;
-					if(re.indexOf("$$$")!=-1)
-					{
-						re=String(re.split("$$$").join(fullname.first_name));
-					}
-					//if
-					break
-				case "":
-					
-					break
+				re=String(re.split("$$$").join(first_name));
 			}
-			//siwtch
+			//if
+//			switch(scene)
+//			{
+//				case "TarotReading":
+//					var fullname:Object=DataContainer.PlayerFullName;
+//					if(re.indexOf("$$$")!=-1)
+//					{
+//						re=String(re.split("$$$").join(fullname.first_name));
+//					}
+//					//if
+//					break
+//				case "":
+//
+//					break
+//			}
+//			//siwtch
 			if(texture_name=="BubbleThink")
 			{
 				re=String(re.split("|think|").join(""));

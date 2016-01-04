@@ -48,5 +48,30 @@ package controller
 
 		[Embed(source="../../media/textures/music/characters/zack.mp3")]
 		public static const zackMusic:Class;
+
+		[Embed(source="../../media/textures/music/acoustic.mp3")]
+		public static const acoustic:Class;
+
+		[Embed(source="../../media/textures/music/epicbegins.mp3")]
+		public static const epicbegins:Class;
+
+		[Embed(source="../../media/textures/music/ironic.mp3")]
+		public static const ironic:Class;
+
+		[Embed(source="../../media/textures/music/yesdoit.mp3")]
+		public static const yesdoit:Class;
+
+		[Embed(source="../../media/textures/music/robotdance.mp3")]
+		public static const robotdance:Class;
+
+		[Embed(source="../../media/textures/music/beachparty.mp3")]
+		public static const beachparty:Class;
+
+		[Embed(source="../../media/textures/music/liberty.mp3")]
+		public static const liberty:Class;
+
+		[Embed(source="../../media/textures/music/clubmusic.mp3")]
+		public static const clubmusic:Class;
+
 	}
 }

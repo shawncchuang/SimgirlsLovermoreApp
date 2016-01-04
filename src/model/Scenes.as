@@ -170,6 +170,10 @@ public class Scenes extends Sprite
 
 
         //var scene:Sprite=ViewsContainer.MainScene;
+        if(next_scene=="AirplaneScene"){
+            next_scene="MainScene";
+        }
+
         if(ViewsContainer.InfoDataView)
             ViewsContainer.InfoDataView.visible=true;
         if(next_scene!="MenuScene" && next_scene!="ProfileScene" &&

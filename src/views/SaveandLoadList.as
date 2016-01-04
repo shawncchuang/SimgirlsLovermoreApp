@@ -65,8 +65,7 @@ public class SaveandLoadList extends Sprite
         {
             FloxCommand.onLoadComplete=onLoadCompleteToInit;
             flox.loadBackupsaved();
-            //no backup saved
-            //flox.loadSavedEntities();
+
             addBuffer()
         }
         else
@@ -81,7 +80,7 @@ public class SaveandLoadList extends Sprite
 
         DebugTrace.msg("SaveandLoadList.onLoadCompleteToInit ");
 
-        removeChild(buffer);
+        buffer.removeFromParent(true);
         init();
 
     }
@@ -139,7 +138,7 @@ public class SaveandLoadList extends Sprite
             empty_index++;
             var emptybar:Sprite=new Sprite();
             emptybar.useHandCursor=true;
-            emptybar.name="savedbar"+saverecord[i].id;
+            emptybar.name=saverecord[i].id;
             emptybar.x=emptypos[i].x;
             emptybar.y=emptypos[i].y;
             progressbar.push(emptybar);
@@ -150,9 +149,9 @@ public class SaveandLoadList extends Sprite
 
             var name_txt:TextField=new TextField(70,emptyImg.height,saverecord[i].first_name+"\n"+saverecord[i].last_name,font,20,0xFFFFFF);
             emptybar.addChild(name_txt);
-            var peogress:Number=saverecord[i].id+1;
+           //   var peogress:Number=Number(saverecord[i].id.split("saved").join(""));
             var _date:String=saverecord[i].date.split("|")[0];
-            var info_data:String="No."+peogress+", "+_date+"\n"+saverecord[i].cash+"\nAP "+saverecord[i].ap+"/"+saverecord[i].ap_max;
+            var info_data:String="No."+(i+1)+", "+_date+"\n"+saverecord[i].cash+"\nAP "+saverecord[i].ap+"/"+saverecord[i].ap_max;
             var info_txt:TextField=new TextField(emptyImg.width-50,emptyImg.height,info_data,font,20,0xFFFFFF);
             info_txt.hAlign="right";
             info_txt.vAlign="center";
@@ -228,12 +227,12 @@ public class SaveandLoadList extends Sprite
             {
                 //Do save
 
-                if(selbar.indexOf("savedbar")!=-1)
+                if(selbar.indexOf("saved")!=-1)
                 {
                     DebugTrace.msg("Rewrite Saved");
 
                     _data=null;
-                    progress=Number(selbar.split("savedbar").join(""))+1;
+                    progress=Number(selbar.split("saved").join(""));
                     current_saved[progress-1]="saved"+progress;
                 }
                 //if
@@ -246,14 +245,8 @@ public class SaveandLoadList extends Sprite
                     current_saved.push("saved"+progress);
 
 
-
-
-                    //playerData.inGameProgress=progress;
-                    //playerData.saved=saved;
                 }
 
-                //flox.savePlayer(_data,onSavePlayerComplete);
-                //addBuffer();
                 displayConfirm();
             }
             else
@@ -263,12 +256,9 @@ public class SaveandLoadList extends Sprite
                 {
 
                     DebugTrace.msg("Do  load for saved");
-                    progress=Number(selbar.split("savedbar").join(""))+1;
 
+                    progress=Number(selbar.split("saved").join(""));
 
-
-                    //flox.savePlayer(_data,onSavePlayerComplete);
-                    //addBuffer();
                     msg="Are you sure?";
                     displayConfirm();
                 }
@@ -282,7 +272,7 @@ public class SaveandLoadList extends Sprite
             }
             //if
 
-            //target.removeEventListener(TouchEvent.TOUCH,doSaveLoadListTouched);
+            target.removeEventListener(TouchEvent.TOUCH,doSaveLoadListTouched);
         }
         //if
     }

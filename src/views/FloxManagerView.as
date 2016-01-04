@@ -21,9 +21,10 @@ package views
 		private var managerUI:MovieClip;
 		private var mail:String;
 		private var type:String="Player";
+		private var key:String="Fh9jSxC3pKzMJIeO";
 		public function FloxManagerView()
 		{
-			
+			flox.LoginForDestroyPlayer(key,"");
 			
 		}
 		public function init():void
@@ -100,7 +101,8 @@ package views
 		}
 		private function doLoginAccount(e:MouseEvent):void
 		{
-			var key:String=managerUI.playerkey.text;
+			if(managerUI.playerkey.text!="")
+			key=managerUI.playerkey.text;
 			//var email:String=managerUI.playermail.text;
 			flox.LoginForDestroyPlayer(key,"");
 		}

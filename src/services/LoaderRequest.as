@@ -109,7 +109,7 @@ import flash.net.URLRequest;
 			var so:SharedObject = SharedObject.getLocal("simgirls");
 			var email:String=so.data.email;
 			
-			DebugTrace.msg("LoaderRequest.getSharedObject email:"+email);
+			//DebugTrace.msg("LoaderRequest.getSharedObject email:"+email);
 			return email;
 		}
 		public function setLoaderQueue(id:String,src:String,target:*,callback:Function=null):void

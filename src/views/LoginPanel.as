@@ -85,23 +85,10 @@ package views
 			
 			
 			praseNowType();
+
+
 			
-			
-			try
-			{
-				var loaderReq:LoaderRequest=new LoaderRequest();
-				var so_email:String=loaderReq.getSharedObject();
-				panel.account.text=so_email;
-				panel.preorder_signin_ui.text=so_email;
-				
-			}
-			catch(e:Error)
-			{
-				DebugTrace.msg("ERROR LoginPanel get sharedobject email");
-				
-			}
-				
-			
+
 			
 		 
 		}
@@ -199,6 +186,7 @@ package views
 			e.target.gotoAndStop(1);
 			
 			praseNowType();
+
 		}
 		private function praseNowType():void
 		{
@@ -225,7 +213,16 @@ package views
 				panel.preorder_signin_ui.visible=true;
 			}
 			//if
-			
+			displaySharedObejct();
+		}
+		private function displaySharedObejct():void{
+			var loaderReq:LoaderRequest=new LoaderRequest();
+			var so_email:String=loaderReq.getSharedObject();
+			if(so_email){
+				panel.account.text=so_email;
+				panel.preorder_signin_ui.account.text=so_email;
+			}
+
 		}
 	}
 }

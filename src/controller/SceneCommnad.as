@@ -115,9 +115,14 @@ public class SceneCommnad implements SceneInterface
         }
 
     }
+    public function reseat():void{
+        switchID=flox.getSaveData("current_switch");
+        currentSwitch=switchID;
+        talk_index=0;
+        talks=new Array();
+    }
     private function datingComCloudHandle():void
     {
-
 
         var library:Array=flox.getSyetemData("scenelibrary");
         talks=library[part_index];
@@ -219,6 +224,7 @@ public class SceneCommnad implements SceneInterface
                 bubble.removeFromParent(true);
                 bubble=null;
             }
+
             showChat();
         }
         else
@@ -232,8 +238,11 @@ public class SceneCommnad implements SceneInterface
             }else{
                 disableAll();
             }
-            if(onCompleteCallback)
+            if(onCompleteCallback){
+
                 onCompleteCallback();
+            }
+
 
         }
         //if
@@ -592,28 +601,23 @@ public class SceneCommnad implements SceneInterface
             //DebugTrace.msg("SceneCommand.addDisplayContainer src_index:"+src_index);
             var scene_index:Number=scene.indexOf("Scene");
 
-            if(scene!="Story")
+            //if(scene!="Story")
+            //{
+            if(src_index==-1 || scene.indexOf("Scene")!=-1)
             {
-                if(src_index==-1 || scene.indexOf("Scene")!=-1)
-                {
-                    //no command cloud , incloud xxxxScene
-                    switch(src)
-                    {
-                        case "TarotCards":
-                        case "QA_nickname":
-                        case "QA_airplane-phonenumber":
-                            disableAll();
-                            break;
-                        default:
-                            onTouchedScene();
-                            break
-                    }
+                //no command cloud , incloud xxxxScene
+                if(src.indexOf("QA")!=-1 || src=="TarotCards") {
+
+                    disableAll();
 
                 }else{
-
-                    //disableAll()
+                    onTouchedScene();
                 }
+            }else{
+
+                //disableAll()
             }
+            //}
 
         }
 
@@ -669,7 +673,7 @@ public class SceneCommnad implements SceneInterface
 
         DebugTrace.msg("SceneCommand.disableAll hitArea");
 
-        //Starling.current.stage.removeEventListener(TouchEvent.TOUCH,onChatSceneTouched);
+
         Starling.current.stage.removeEventListeners();
     }
     public function enableTouch():void
@@ -694,6 +698,8 @@ public class SceneCommnad implements SceneInterface
         var local_verify:Boolean=false;
         var date_verify:Boolean=false;
         var time_verify:Boolean=false;
+        var switch_date:String="";
+        var switch_time:String="";
 
         var flox:FloxInterface=new FloxCommand();
         var current_switch:String=flox.getSaveData("current_switch");
@@ -713,8 +719,8 @@ public class SceneCommnad implements SceneInterface
             var _scene:String=scene.split("Scene").join("").toLowerCase();
             location=value.location;
             var date:String=flox.getSaveData("date");
-            var switch_date:String=value.date;
-            var switch_time:String=String(value.time);
+            switch_date=value.date;
+            switch_time=String(value.time);
 
         }
 
@@ -792,7 +798,7 @@ public class SceneCommnad implements SceneInterface
 
 
 
-        if(date_verify && time_verify && local_verify)
+        if(date_verify && time_verify && local_verify && switchID!="")
         {
             verify=true;
 
@@ -827,6 +833,13 @@ public class SceneCommnad implements SceneInterface
             }
 
         }
+        if(switchID==""){
+            verify=false;
+            date_verify=false;
+            time_verify=false;
+            local_verify=false;
+            type="";
+        }
 
         DebugTrace.msg("SceneCommand.switchGateway return ->"+[verify,date_verify,time_verify,local_verify]);
         return new Array(verify,date_verify,time_verify,local_verify)
@@ -837,29 +850,34 @@ public class SceneCommnad implements SceneInterface
 
         var switchs:Object=flox.getSyetemData("switchs");
         var value:Object=switchs[switchID];
-        var result:Object=value.result;
-        turn_on_id=result.on;
-        var turn_off_id:String=result.off;
-        var curent_switch="";
+        if(value){
+            var result:Object=value.result;
+            turn_on_id=result.on;
+            var turn_off_id:String=result.off;
+            var current_switch="";
 
-        if(turn_off_id!="")
-        {
-            curent_switch=turn_off_id+"|off";
+            if(turn_off_id!="")
+            {
+                current_switch=turn_off_id+"|off";
 
 
+            }
+            if(turn_on_id!="")
+            {
+                current_switch=turn_on_id+"|on";
+                DataContainer.NextSwitch=turn_on_id;
+
+            }
+
+
+            flox.save("current_switch",current_switch);
+
+            delaycall=new DelayedCall(saveNextSwitch,0.5);
+            Starling.juggler.add(delaycall);
+        }else{
+
+            onStoryComplete();
         }
-        if(turn_on_id!="")
-        {
-            curent_switch=turn_on_id+"|on";
-
-        }
-        DataContainer.NextSwitch=turn_on_id;
-
-        flox.save("current_switch",curent_switch);
-
-        delaycall=new DelayedCall(saveNextSwitch,0.5);
-        Starling.juggler.add(delaycall);
-
 
     }
     private function saveNextSwitch():void{
@@ -873,8 +891,10 @@ public class SceneCommnad implements SceneInterface
     private function onStoryComplete():void{
 
         DebugTrace.msg("SceneCommand.onStoryComplete");
+        SceneCommnad.scene="";
         Starling.juggler.remove(delaycall);
         disableAll();
+
         var current_scene:Sprite=ViewsContainer.currentScene;
         var _data:Object=new Object();
         _data.removed="story_complete";

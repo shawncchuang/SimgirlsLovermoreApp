@@ -29,9 +29,9 @@ package views
 		private var scenecom:SceneInterface=new SceneCommnad();
 		private var tempOption:Object={
 			"nickname":"nickname",
-			"airplane-phonenumber":"Yes&No",
-			"battle-s003-1":"Yes&No"
-			
+			"airplane-phonenumber":"phonenumber",
+			"battle-s003-1":"Yes&No",
+			"qa-s006b":"s006b"
 		}
 		public function QADisplayContainer(label:String,callback:Function=null)
 		{
@@ -52,11 +52,16 @@ package views
 				case "nickname":
 					templete.submit.addEventListener(MouseEvent.CLICK,doNickNameSubmit);
 					break
+
 				case "airplane-phonenumber":
-					templete.yesbtn.mouseChildren=false;
-					templete.nobtn.mouseChildren=false;
-					templete.yesbtn.addEventListener(MouseEvent.CLICK,doSelectedHandle);
-					templete.nobtn.addEventListener(MouseEvent.CLICK,doSelectedHandle);
+				case "qa-s006b":
+						for(var i:uint=0;i<2;i++){
+							var target:MovieClip=templete["btn"+(i+1)];
+							target.buttonMode=true;
+							target.mouseChildren=false;
+							target.addEventListener(MouseEvent.CLICK,doSelectedHandle);
+						}
+
 					break
 			}
 			//switch
@@ -98,15 +103,16 @@ package views
 		}
 		private function doSelectedHandle(e:MouseEvent):void
 		{
-			//airplane-phonenumber
-			var target:String=e.target.name;
-			DebugTrace.msg("QADisplayContainer.doSelectedHandle target:"+target);
-			if(target=="yesbtn")
+			//QA-options style
+			var option:Number=Number(e.target.name.split("btn").join(""));
+			DebugTrace.msg("QADisplayContainer.doSelectedHandle option:"+option);
+			if(option==1)
 			{
 				
 			}
 			else
 			{
+				//option==2
 				
 				
 			}

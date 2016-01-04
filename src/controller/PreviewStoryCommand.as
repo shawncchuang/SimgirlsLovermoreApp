@@ -315,7 +315,7 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
                     createBackground(target);
                     break
                 case "swf-on":
-                        createAnimateEffect(target);
+                    createAnimateEffect(target);
                     break
             }
             //switch
@@ -538,28 +538,23 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
             //DebugTrace.msg("SceneCommand.addDisplayContainer src_index:"+src_index);
             var scene_index:Number=scene.indexOf("Scene");
 
-            if(scene!="Story")
+            //if(scene!="Story")
+            //{
+            if(src_index==-1 || scene.indexOf("Scene")!=-1)
             {
-                if(src_index==-1 || scene.indexOf("Scene")!=-1)
-                {
-                    //no command cloud , incloud xxxxScene
-                    switch(src)
-                    {
-                        case "TarotCards":
-                        case "QA_nickname":
-                        case "QA_airplane-phonenumber":
-                            disableAll();
-                            break;
-                        default:
-                            onTouchedScene();
-                            break
-                    }
+                //no command cloud , incloud xxxxScene
+                if(src.indexOf("QA")!=-1 || src=="TarotCards") {
+
+                    disableAll();
 
                 }else{
-
-                    //disableAll()
+                    onTouchedScene();
                 }
+            }else{
+
+                //disableAll()
             }
+            //}
 
         }
 

@@ -146,8 +146,8 @@ public class MainCommand implements MainInterface {
         }
         var style:String = current + "_" + target;
         var gameEvent:GameEvent = SimgirlsLovemore.gameEvent;
-        //DebugTrace.msg("MainCommand.addDisplayObj style:"+style);
-        DebugTrace.msg("MainCommand.addDisplayObj txt:" + txt);
+
+        DebugTrace.msg("MainCommand.addDisplayObj txt:" + txt+" ; style:"+style);
 
         switch (target) {
             case "ComCloud":
@@ -173,6 +173,7 @@ public class MainCommand implements MainInterface {
              gameEvent._name="comcloud";
              gameEvent.displayHandler();
              break;*/
+            case "Story_QA":
             case "TarotReading_QA":
             case "AirplaneScene_QA":
                 gameEvent._name = "QA";

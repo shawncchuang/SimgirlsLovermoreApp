@@ -61,6 +61,7 @@ public class HotelScene extends Scenes
          button=new Button(pointbgTexture);
          addChild(button);
          button.addEventListener(Event.TRIGGERED, onSceneTriggered);*/
+
         ViewsContainer.currentScene=this;
         this.addEventListener(TopViewEvent.REMOVE,doTopViewDispatch);
         speaker_sprite=new Sprite();
@@ -109,11 +110,34 @@ public class HotelScene extends Scenes
     private function onStoryComplete():void
     {
         DebugTrace.msg("HotelScene.onStoryComplete");
-
         var _data:Object=new Object();
-        _data.name= "HotelScene";
-        _data.from="story";
-        command.sceneDispatch(SceneEvent.CHANGED,_data);
+        var switchID:String=flox.getSaveData("current_switch").split("|")[0];
+        DebugTrace.msg("HotelScene.onStoryComplete switchID="+switchID);
+        if(switchID=="s006b"){
+            //over next day
+
+            var date:String=flox.getSaveData("date").split("|")[0];
+            var day:Number=Number(date.split(".")[1]);
+            day++;
+            var next_date:String="Mon."+day+".Jun.2033|12";
+            flox.save("date",next_date);
+
+
+            _data.name="MainScene";
+            _data.from="story";
+            command.sceneDispatch(SceneEvent.CHANGED,_data);
+
+            command.updateInfo();
+
+        }else{
+
+
+            _data.name= "HotelScene";
+            _data.from="story";
+            command.sceneDispatch(SceneEvent.CHANGED,_data);
+
+        }
+
     }
     private function onSceneTriggered(e:Event):void
     {
@@ -183,6 +207,9 @@ public class HotelScene extends Scenes
                 break
             case "story_complete":
                 onStoryComplete();
+                break
+            case "QA":
+                scenecom.enableTouch();
                 break
 
         }

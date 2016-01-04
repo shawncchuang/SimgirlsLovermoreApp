@@ -11,7 +11,9 @@ public class SystemData extends Entity
     public var s002:Array;
     public var s003:Array;
     public var s004:Array;
-
+    public var s005:Array;
+    public var s006a:Array;
+    public var s006b:Array;
     public var scenelibrary:Array;
     public var schedule:Array;
     public var secrets_chat:Array;
