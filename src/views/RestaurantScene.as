@@ -51,9 +51,9 @@ package views
 		private function init():void
 		{
 			
-			scencom.init("LoungeScene",speaker_sprite,62,onCallback);
+			scencom.init("RestaurantScene",speaker_sprite,62,onCallback);
 			scencom.start();
-			scencom.disableAll();
+			//scencom.disableAll();
 		}
 		private function onCallback():void
 		{

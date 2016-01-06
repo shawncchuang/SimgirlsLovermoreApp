@@ -1,6 +1,8 @@
 package views
 {
-	import flash.geom.Point;
+import data.StoryDAO;
+
+import flash.geom.Point;
 	
 	import controller.AssetEmbeds;
 	import controller.Assets;
@@ -63,10 +65,8 @@ package views
 					talks=DataContainer.NpcTalkinglibrary;
 					break
 				case "Story":
-					//library=flox.getSyetemData("main_story");
 					var switchID:String=flox.getSaveData("current_switch").split("|")[0];
-					//library=flox.getSyetemData(switchID);
-					talks=flox.getSyetemData(switchID);
+					talks=StoryDAO.switchStory(switchID);
 					break
 				case "StoryPreview":
 					library=DataContainer.previewStory;
@@ -160,7 +160,11 @@ package views
 		private function filterScentance(src:String):String
 		{
 			var re:String=src;
-			var first_name:String=flox.getSaveData("first_name");
+			if(SimgirlsLovemore.previewStory){
+				var first_name:String="Preview";
+			}else{
+			  first_name=flox.getSaveData("first_name");
+			}
 			if(re.indexOf("$$$")!=-1)
 			{
 				re=String(re.split("$$$").join(first_name));

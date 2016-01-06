@@ -224,9 +224,12 @@ import utils.DebugTrace;
 		private function onBonusFadeout():void
 		{
 
-
-
+			TweenMax.killAll(true);
 			TweenMax.killDelayedCallsTo(onBonusFadeout);
+
+			removeChild(bonustitle);
+			removeChild(bonus);
+
 			var gameEvt:GameEvent=SimgirlsLovemore.gameEvent;
 			gameEvt._name="remove_battle";
 			gameEvt.displayHandler();

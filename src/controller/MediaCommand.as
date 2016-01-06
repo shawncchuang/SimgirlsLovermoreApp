@@ -79,6 +79,7 @@ public class MediaCommand implements MediaInterface
         DebugTrace.msg("MediaCommmand.onLoaderComplete id="+_id);
         var swfloader:SWFLoader = LoaderMax.getLoader(_id);
 
+        if(swfloader.rawContent)
         swfloader.rawContent.addEventListener(flash.events.Event.ENTER_FRAME, onActComplete);
 
     }

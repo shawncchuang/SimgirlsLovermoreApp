@@ -877,7 +877,8 @@ public class MainCommand implements MainInterface {
             var scene_index:Number=scenes.indexOf(current_scene);
             if(scene_index==-1){
                 styleNames=["casual1"];
-            }else{
+            }
+            else {
                 styleNames=normalStyles[_name+"_"+current_scene];
             }
 
@@ -1921,6 +1922,9 @@ public class MainCommand implements MainInterface {
         if(com=="RandomBattle"){
 
             ViewsContainer.UIViews.visible = false;
+
+            gameEvent._name="clear_comcloud";
+            gameEvent.displayHandler();
 
             var popup:RandomBattlePopup=new RandomBattlePopup();
             popup.init();

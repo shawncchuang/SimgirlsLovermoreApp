@@ -344,7 +344,7 @@ public class CommandCloud extends Sprite
 
 
         if(de_label=="StartDating"){
-
+            _data.from="CommandCloud";
             _data.name="DatingScene";
             command.sceneDispatch(SceneEvent.CHANGED,_data);
 
@@ -397,6 +397,8 @@ public class CommandCloud extends Sprite
             DebugTrace.msg("CommandCloud.checkSceneCommand perbattle="+perbattle);
             if(perbattle<=ran_battle_rate){
                 //could random battle
+
+
                 DataContainer.battleType="random_battle";
                 command.removeShortcuts();
                 command.consumeHandle("RandomBattle");
@@ -437,6 +439,8 @@ public class CommandCloud extends Sprite
 
     }
     private function onRemovedHandle(e:Event):void{
+
+        visibleCommandDirecation();
 
         cloud.removeEventListeners();
         var tween:Tween=new Tween(cloud,0.5,Transitions.EASE_OUT);

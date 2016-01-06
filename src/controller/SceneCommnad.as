@@ -6,6 +6,8 @@ import com.greensock.loading.LoaderMax;
 
 import data.Config;
 import data.DataContainer;
+import data.StoryDAO;
+
 import events.GameEvent;
 import events.TopViewEvent;
 
@@ -74,6 +76,7 @@ public class SceneCommnad implements SceneInterface
     private var scene_container:Sprite;
     private var day:String;
     private var switchID:String="";
+    private var current_switch:String="";
     private var location:String="";
     private var part:Number=0;
     private var filter:FilterInterface=new FilterManager();
@@ -130,14 +133,16 @@ public class SceneCommnad implements SceneInterface
 
         var dating:String=flox.getSaveData("dating");
         DebugTrace.msg("SceneCommand.datingComCloudHandle dating="+dating);
-        if(dating!="")
+        if(dating!="" && scene!="ChangeFormationScene")
         {
             if(scene.indexOf("Scene")!=-1 && talks.indexOf("choice|ComCloud_R1_Start^Dating")==-1)
             {
                 //at any scene
 
-                talks.unshift("choice|ComCloud_R1_Start^Dating");
-                var rIndex:Number=0;
+                var _bg:String=talks[0];
+                talks.shift();
+
+                var rIndex:Number=1;
 
                 for(var j:uint=0;j<talks.length;j++){
 
@@ -152,11 +157,16 @@ public class SceneCommnad implements SceneInterface
 
                     }
                 }
+
+                talks.unshift("choice|ComCloud_R1_Start^Dating");
+                talks.unshift(_bg);
+
             }
         }else{
 
             if(talks.indexOf("choice|ComCloud_R1_Start^Dating")!=-1){
                 rIndex=0;
+                _bg=talks[0];
                 talks.shift();
 
                 for(var k:uint=0;k<talks.length;k++){
@@ -172,6 +182,7 @@ public class SceneCommnad implements SceneInterface
 
                     }
                 }
+                talks.unshift(_bg);
 
             }
         }
@@ -344,11 +355,13 @@ public class SceneCommnad implements SceneInterface
             {
                 case "remove":
                     if(target=="player") {
+                        talkmask.dispose();
                         talkmask.removeFromParent(true);
                         talkmask=null;
                     }
                     if(display_container[target]){
                         var _character:Image= display_container[target];
+                        _character.dispose();
                         _character.removeFromParent(true);
                         display_container[target]=null;
                     }
@@ -419,10 +432,12 @@ public class SceneCommnad implements SceneInterface
     }
     private function createTalkField():void
     {
+        var first_name:String=flox.getSaveData("first_name");
         talkfield=new MyTalkingDisplay();
         var scentance:String=talks[talk_index];
         scentance=scentance.split("<>").join(",");
         scentance=scentance.split("player|").join("");
+        scentance=scentance.split("$$$").join(first_name);
         talkfield.addTextField(scentance,onTalkingComplete);
         _target.addChild(talkfield);
         display_container.player=talkfield;
@@ -508,7 +523,7 @@ public class SceneCommnad implements SceneInterface
         display_container[name]=character;
 
 
-        var tween:Tween=new Tween(character,0.5,Transitions.EASE_OUT);
+        var tween:Tween=new Tween(character,0.5);
         tween.fadeTo(1);
         tween.onComplete=onCharacterDisplayed;
         Starling.juggler.add(tween);
@@ -702,7 +717,7 @@ public class SceneCommnad implements SceneInterface
         var switch_time:String="";
 
         var flox:FloxInterface=new FloxCommand();
-        var current_switch:String=flox.getSaveData("current_switch");
+        current_switch=flox.getSaveData("current_switch");
         switchID="";
         if(current_switch.split("|")[1]=="on"){
             switchID=current_switch.split("|")[0];
@@ -805,7 +820,7 @@ public class SceneCommnad implements SceneInterface
             doClearAll();
             part=Number(switchID.split("s").join(""))-1;
 
-            var talks:Array=flox.getSyetemData(switchID);
+            var talks:Array=StoryDAO.switchStory(switchID);
             if(!talks){
                 talks=new Array();
             }
@@ -854,7 +869,7 @@ public class SceneCommnad implements SceneInterface
             var result:Object=value.result;
             turn_on_id=result.on;
             var turn_off_id:String=result.off;
-            var current_switch="";
+
 
             if(turn_off_id!="")
             {
@@ -869,11 +884,10 @@ public class SceneCommnad implements SceneInterface
 
             }
 
+            switchID=current_switch;
 
-            flox.save("current_switch",current_switch);
+            onStoryComplete();
 
-            delaycall=new DelayedCall(saveNextSwitch,0.5);
-            Starling.juggler.add(delaycall);
         }else{
 
             onStoryComplete();
@@ -881,8 +895,8 @@ public class SceneCommnad implements SceneInterface
 
     }
     private function saveNextSwitch():void{
-        Starling.juggler.remove(delaycall);
-        flox.save("next_switch",turn_on_id);
+
+        //flox.save("next_switch",turn_on_id);
 
         delaycall=new DelayedCall(onStoryComplete,0.5);
         Starling.juggler.add(delaycall);
@@ -891,6 +905,8 @@ public class SceneCommnad implements SceneInterface
     private function onStoryComplete():void{
 
         DebugTrace.msg("SceneCommand.onStoryComplete");
+        flox.save("current_switch",current_switch);
+
         SceneCommnad.scene="";
         Starling.juggler.remove(delaycall);
         disableAll();
@@ -913,7 +929,7 @@ public class SceneCommnad implements SceneInterface
 
 
         part_index=part;
-        talks=flox.getSyetemData(switchID);
+        talks=StoryDAO.switchStory(switchID);
 
 
         var switchs:Object=flox.getSyetemData("switchs");

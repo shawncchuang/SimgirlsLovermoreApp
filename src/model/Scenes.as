@@ -155,12 +155,12 @@ public class Scenes extends Sprite
         }
 
 
-        //onFadeoutComplete();
+        onFadeoutComplete();
 
-        var scentTween:Tween=new Tween(scene,0.5,Transitions.EASE_OUT);
-        scentTween.fadeTo(0);
-        scentTween.onComplete=onFadeoutComplete;
-        Starling.juggler.add(scentTween);
+//        var scentTween:Tween=new Tween(scene,0.5,Transitions.EASE_OUT);
+//        scentTween.fadeTo(0);
+//        scentTween.onComplete=onFadeoutComplete;
+//        Starling.juggler.add(scentTween);
 
 
     }
@@ -282,6 +282,7 @@ public class Scenes extends Sprite
                 current_scence=new NightClubScene();
                 break
             case "ChangeFormationScene":
+
                 infobar=false;
                 current_scence=new ChangeFormationScene();
                 break
@@ -316,6 +317,7 @@ public class Scenes extends Sprite
                 current_scence=new PreciousPhotosScene();
                 break
             case "FoundSomeScene":
+                from="foundsome";
                 infobar=false;
                 current_scence=new FoundSomeScene();
                 break
@@ -441,14 +443,17 @@ public class Scenes extends Sprite
 
 
         //var shortcutsScene:String=DataContainer.shortcutsScene;
+        command.addShortcuts();
         if(next_scene.indexOf("Game")!=-1 || next_scene.indexOf("Battle")!=-1 ||
-                next_scene=="DatingScene" || next_scene.indexOf("Formation")!=-1){
+                next_scene=="DatingScene" || next_scene.indexOf("ChangeFormation")!=-1){
             //DebugTrace.msg("Scenes.changeSceneHandle addShortcuts shortcutsScene:"+shortcutsScene);
             command.removeShortcuts();
         }
-        if(!from)
-            command.addShortcuts();
+
+
+        DebugTrace.msg("Scene.changeSceneHandle from="+from);
         switch(from){
+            case "foundsome":
             case "battle":
             case "minigame":
             case "dating":

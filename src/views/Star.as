@@ -120,6 +120,7 @@ package views
 		{
 			
 			TweenMax.killTweensOf(_star);
+
 			removeChild(_star);
 			
 			starPhysics(this,new Point(_star.x,_star.y),20)

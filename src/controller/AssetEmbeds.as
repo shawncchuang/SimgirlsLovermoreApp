@@ -854,6 +854,33 @@ public class AssetEmbeds
     [Embed(source="../../media/textures/npc/npc028.png")]
     public static const npc028:Class;
 
+    [Embed(source="../../media/textures/characters/booses/akira.png")]
+    public static const npc029:Class;
+    [Embed(source="../../media/textures/characters/booses/fatman.png")]
+    public static const npc030:Class;
+    [Embed(source="../../media/textures/characters/booses/gorilla.png")]
+    public static const npc031:Class;
+    [Embed(source="../../media/textures/characters/booses/hooker.png")]
+    public static const npc032:Class;
+    [Embed(source="../../media/textures/characters/booses/keir.png")]
+    public static const npc033:Class;
+    [Embed(source="../../media/textures/characters/booses/nighthawk.png")]
+    public static const npc034:Class;
+    [Embed(source="../../media/textures/characters/booses/o.png")]
+    public static const npc035:Class;
+    [Embed(source="../../media/textures/characters/booses/rayden.png")]
+    public static const npc036:Class;
+    [Embed(source="../../media/textures/characters/booses/sana.png")]
+    public static const npc037:Class;
+    [Embed(source="../../media/textures/characters/booses/shinichi.png")]
+    public static const npc038:Class;
+    [Embed(source="../../media/textures/characters/booses/tyren.png")]
+    public static const npc039:Class;
+    [Embed(source="../../media/textures/characters/booses/vodka.png")]
+    public static const npc040:Class;
+    [Embed(source="../../media/textures/characters/booses/xenos.png")]
+    public static const npc041:Class;
+
     [Embed(source="../../media/textures/characters/styles/ceil/battle.png")]
     public static const ceil_battle:Class;
     [Embed(source="../../media/textures/characters/styles/ceil/casual1.png")]
@@ -1121,6 +1148,8 @@ public class AssetEmbeds
     public static const zack_swimsuit:Class;
     [Embed(source="../../media/textures/characters/styles/zack/club.png")]
     public static const zack_club:Class;
+
+
 
     /*------------------characters-------------------------------------------------*/
 

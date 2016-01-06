@@ -216,10 +216,13 @@ public class DataContainer
 
                 var allStyles:Object=Config.styles;
                 var styles:Array=allStyles[ch_name+"_"+scene_name];
-                if(styles.length==0){
+               switch(ch_name+"_"+scene_name){
+                   case "zack_Academy":
+                   case "zack_LovemoreMansion":
                     reLikes=0;
+                       break
                 }
-                if (scene_name == "PrivateIsland" && ch_name!="zack")
+                if (scene_name == "PrivateIsland")
                 {
                     reLikes=0;
                 }

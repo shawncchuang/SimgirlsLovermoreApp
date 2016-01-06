@@ -96,7 +96,7 @@ public class SimgirlsLovemore extends MovieClip
 
 
 	private var manager:Boolean=false;
-	public static var previewStory:Boolean=true;
+	public static var previewStory:Boolean=false;
 
 	public static var verifyKey:String;
 	private var longinUI:MovieClip;
@@ -180,6 +180,10 @@ public class SimgirlsLovemore extends MovieClip
 		}
 
 
+		if(previewStory){
+			flox.LoginForDestroyPlayer("Fh9jSxC3pKzMJIeO","");
+
+		}
 
 		if(manager)
 		{
@@ -416,6 +420,7 @@ public class SimgirlsLovemore extends MovieClip
 
 		}
 		if(previewStory){
+
 			removeChild(gametitle);
 			start();
 		}else{
@@ -473,8 +478,8 @@ public class SimgirlsLovemore extends MovieClip
 	}
 	private function start():void
 	{
-		stage.scaleMode = StageScaleMode.NO_SCALE;
-		stage.quality=StageQuality.LOW;
+		//stage.scaleMode = StageScaleMode.NO_SCALE;
+		//stage.quality=StageQuality.LOW;
 		//stage.align = StageAlign.TOP_LEFT;
 
 		//Starling.multitouchEnabled = true; // useful on mobile devices
@@ -482,7 +487,7 @@ public class SimgirlsLovemore extends MovieClip
 
 		var vp:Rectangle=new flash.geom.Rectangle(0, 0, 1024, 768);
 		_starling=new Starling(Game,stage,vp,null,"auto","auto");
-		//_starling.showStats=false;
+		_starling.showStats=true;
 		Starling.current.nativeStage.frameRate = 30;
 		//_starling.enableErrorChecking=Capabilities.isDebugger;
 

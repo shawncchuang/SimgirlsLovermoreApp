@@ -87,13 +87,10 @@ public class RandomBattlePopup extends Sprite {
         }else{
             PopUpManager.removePopUp(popup,true);
 
-            var gameEvent:GameEvent = SimgirlsLovemore.gameEvent;
-            gameEvent._name = "clear_comcloud";
-            gameEvent.displayHandler();
 
             var _data:Object = new Object();
             _data.name = "ChangeFormationScene";
-
+            _data.from="random_battle";
             command.sceneDispatch(SceneEvent.CHANGED, _data);
 
 

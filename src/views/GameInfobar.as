@@ -599,8 +599,11 @@ public class GameInfobar extends Sprite
         {
             var _attr:String=currentscene.split("Scene").join("Work");
             attr=_attr;
-        }else if(attr=="Rest"){
+        }
+        if(attr=="Rest"){
             attr="FreeRest";
+            if(currentscene=="HotelScene")
+            attr="PayRest";
         }
 
 

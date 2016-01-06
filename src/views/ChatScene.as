@@ -55,7 +55,7 @@ public class ChatScene extends Sprite
         initBubble();
         initBingoMachine();
 
-        this.addEventListener(Event.REMOVED_FROM_STAGE, onChatSceneRemoved)
+        this.addEventListener(Event.REMOVED_FROM_STAGE, onChatSceneRemoved);
     }
     private function initBingo():void
     {
@@ -358,7 +358,7 @@ public class ChatScene extends Sprite
                 var mood:Number=moodObj[dating];
                 var result:Object=praseRelAndMood({mood:mood,pts:pts,dating:dating});
                 //DebugTrace.msg("SimgirlsLovemore.onChatWithPlayer result:"+JSON.stringify(result));
-                var condition:String=result.mood;
+                var condition:String=result["mood"];
                 if(switchRate<50) {
                     condition=DataContainer.currentScene.split("Scene").join("");
                 }
