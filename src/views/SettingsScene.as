@@ -82,9 +82,9 @@ public class SettingsScene extends Sprite{
 
 
         var Mute:Boolean=SoundController.Mute;
-        var soundtoggle:String="IconSoundToggleDefault";
+        var soundtoggle:String="IconToggleDefault";
         if(Mute){
-            soundtoggle="IconSoundToggleDown";
+            soundtoggle="IconToggleDown";
         }
         toggle=new Image(Assets.getTexture(soundtoggle));
         toggle.useHandCursor=true;
@@ -106,12 +106,12 @@ public class SettingsScene extends Sprite{
             if(enabled){
                 enabled=false;
 
-                toggle.texture=Assets.getTexture("IconSoundToggleDown");
+                toggle.texture=Assets.getTexture("IconToggleDown");
                 SoundController.Mute=true;
 
             }else{
                 enabled=true;
-                toggle.texture=Assets.getTexture("IconSoundToggleDefault");
+                toggle.texture=Assets.getTexture("IconToggleDefault");
                 SoundController.Mute=false;
             }
 

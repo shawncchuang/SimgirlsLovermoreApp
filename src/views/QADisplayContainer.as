@@ -1,6 +1,8 @@
 package views
 {
-	import flash.display.MovieClip;
+import data.Config;
+
+import flash.display.MovieClip;
 	import flash.events.MouseEvent;
 	
 	import controller.FloxCommand;
@@ -96,6 +98,8 @@ package views
 				flox.save("first_name",_data.first_name);
 				flox.save("last_name",_data.last_name);
 				//floxcom.updateSavegame(_data);
+
+				if(onComplete)
 				onComplete();
 				
 			}
@@ -117,6 +121,17 @@ package views
 				
 			}
 			//if
+			var goodevails:Object=Config.goodevails;
+			if(goodevails[qa_label]){
+
+				var goodevail:Number=goodevails[qa_label][option-1];
+				var current_goodevail:Number=flox.getSaveData("goodevail");
+				if(!current_goodevail){
+					current_goodevail=0;
+				}
+				current_goodevail+=goodevail;
+				flox.save("goodevail",current_goodevail);
+			}
 			onComplete();
 			
 		}

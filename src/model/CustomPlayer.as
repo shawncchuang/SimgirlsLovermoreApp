@@ -28,6 +28,8 @@ package model
 		public var items:Object;
 		public var commander_items:Array;
 
+
+
 		public function CustomPlayer()
 		{
 			currentPlayer=Player.current

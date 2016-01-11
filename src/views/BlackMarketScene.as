@@ -28,6 +28,8 @@ import flash.text.TextFieldAutoSize;
 import model.SaveGame;
 import model.Scenes;
 
+import services.LoaderRequest;
+
 import starling.core.Starling;
 import starling.display.Button;
 import starling.display.Image;
@@ -196,12 +198,17 @@ public class BlackMarketScene extends Scenes
 	private function doBuyNow(e:Event):void
 	{
 
+		var loaderReq:LoaderRequest=new LoaderRequest();
+		var auth:String=loaderReq.getSharedObject("auth");
+
 		var email:String=flox.getPlayerData("email");
 		var pwd:String=flox.getPlayerData("password");
 		var permision:String=Config.permision;
 		var authKey:String=SHA256.hashString(String(email+permision+pwd));
-
-		var url:String=Config.payCoinURL+authKey;
+		if(auth=="email") {
+			authKey = loaderReq.getSharedObject("email");
+		}
+		var url:String=Config.payCoinURL+authKey+"&auth="+auth;
 		DebugTrace.msg("BlackTileList onClickItemHandler url:"+url);
 		var req:URLRequest=new URLRequest(url);
 		navigateToURL(req,"_blank");

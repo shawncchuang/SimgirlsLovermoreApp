@@ -22,6 +22,7 @@ import starling.core.Starling;
 
 import starling.display.Image;
 import starling.display.Sprite;
+import starling.events.Event;
 import starling.events.Touch;
 import starling.events.TouchEvent;
 import starling.events.TouchPhase;
@@ -117,6 +118,18 @@ public class SceneCommnad implements SceneInterface
 
         }
 
+        scene_sprite.addEventListener(TopViewEvent.REMOVE,doTopViewDispatch);
+    }
+    private function doTopViewDispatch(e:Event):void{
+        switch(e.data.removed)
+        {
+            case "Choice":
+                enableTouch();
+                break
+
+
+        }
+
     }
     public function reseat():void{
         switchID=flox.getSaveData("current_switch");
@@ -197,12 +210,13 @@ public class SceneCommnad implements SceneInterface
             addTouchArea();
         showChat();
     }
-    private function addTouchArea():void
+    public function addTouchArea():void
     {
         DebugTrace.msg("SceneCommand.addTouchArea");
 
-        Starling.current.stage.addEventListener(TouchEvent.TOUCH,onChatSceneTouched);
-
+        //Starling.current.stage.addEventListener(TouchEvent.TOUCH,onChatSceneTouched);
+        var mainstage:Sprite=ViewsContainer.MainScene;
+        mainstage.addEventListener(TouchEvent.TOUCH,onChatSceneTouched);
     }
 
     private function onChatSceneTouched(e:TouchEvent):void
@@ -222,7 +236,7 @@ public class SceneCommnad implements SceneInterface
 
 
     }
-    public function onTouchedScene():void
+    private function onTouchedScene():void
     {
         talk_index++;
         end_index=talks.indexOf("END");
@@ -433,11 +447,16 @@ public class SceneCommnad implements SceneInterface
     private function createTalkField():void
     {
         var first_name:String=flox.getSaveData("first_name");
+        var twinflame:String=flox.getSaveData("twinflame");
+        if(twinflame){
+            twinflame=twinflame.toLowerCase();
+        }
         talkfield=new MyTalkingDisplay();
         var scentance:String=talks[talk_index];
         scentance=scentance.split("<>").join(",");
         scentance=scentance.split("player|").join("");
         scentance=scentance.split("$$$").join(first_name);
+        scentance=scentance.split("@@@").join(twinflame);
         talkfield.addTextField(scentance,onTalkingComplete);
         _target.addChild(talkfield);
         display_container.player=talkfield;
@@ -487,6 +506,13 @@ public class SceneCommnad implements SceneInterface
 
         DebugTrace.msg("SceneCommand.createCharacter :"+name);
 
+        if(name.indexOf("@@@")!=-1){
+            var twinflame:String=flox.getSaveData("twinflame");
+            if(twinflame){
+                twinflame=twinflame.toLowerCase();
+                name=name.split("@@@").join(twinflame);
+            }
+        }
 
         var npc:String="";
         var texture:Texture;
@@ -621,7 +647,8 @@ public class SceneCommnad implements SceneInterface
             if(src_index==-1 || scene.indexOf("Scene")!=-1)
             {
                 //no command cloud , incloud xxxxScene
-                if(src.indexOf("QA")!=-1 || src=="TarotCards") {
+
+                if(src.indexOf("QA")!=-1 || src=="TarotCards" || src=="twinflame") {
 
                     disableAll();
 
@@ -688,14 +715,14 @@ public class SceneCommnad implements SceneInterface
 
         DebugTrace.msg("SceneCommand.disableAll hitArea");
 
-
-        Starling.current.stage.removeEventListeners();
+        //Starling.current.stage.removeEventListener(TouchEvent.TOUCH,onChatSceneTouched);
+        //Starling.current.stage.removeEventListeners();
+        var mainstage:Sprite=ViewsContainer.MainScene;
+        mainstage.removeEventListeners();
     }
     public function enableTouch():void
     {
         DebugTrace.msg("SceneCommand.enableTouch ");
-        //_target.addEventListener(TouchEvent.TOUCH,onChatSceneTouched);
-        //NativeApplication.nativeApplication.addEventListener(MouseEvent.MOUSE_DOWN,onChatSceneTouched);
 
         addTouchArea();
         onTouchedScene();

@@ -400,7 +400,7 @@ public class SimgirlsLovemore extends MovieClip
 		DebugTrace.msg("SimgirlsLovemore.onSubmitComplete");
 		topview.removeChild(qaDisplay);
 		var _data:Object=new Object();
-		_data.removed="QA";
+		_data.removed="Choice";
 		command.topviewDispatch(TopViewEvent.REMOVE,_data);
 
 

@@ -14,6 +14,7 @@ import data.DataContainer;
 
 import events.GameEvent;
 import events.SceneEvent;
+import events.TopViewEvent;
 
 import feathers.controls.ImageLoader;
 
@@ -81,7 +82,7 @@ import views.TarotreadingScene;
 import views.TempleScene;
 import views.ThemedParkScene;
 import views.MessagingScene;
-
+import views.TwinFlameForm;
 
 
 public class Scenes extends Sprite
@@ -90,7 +91,7 @@ public class Scenes extends Sprite
 
     private var scene:Sprite;
     private var current_scence:Sprite;
-    private var mainstage:Sprite
+    private var mainstage:Sprite;
     private var command:MainInterface=new MainCommand();
     private var flox:FloxInterface=new FloxCommand();
 
@@ -103,6 +104,7 @@ public class Scenes extends Sprite
     private var infobar:Boolean;
     private var gameInfoTween:Tween;
     private  var filtersMC:flash.display.MovieClip;
+    private var twinflame:Sprite;
     private function scenesPool():Object
     {
 
@@ -126,6 +128,7 @@ public class Scenes extends Sprite
         mainstage=ViewsContainer.MainStage;
         mainstage.addEventListener(SceneEvent.CHANGED,onChangedScene);
         mainstage.addEventListener(SceneEvent.CLEARED,onClearedScene);
+        mainstage.addEventListener(SceneEvent.DISPLAY,onDisplayView);
     }
 
     private function onChangedScene(e:Event):void
@@ -445,9 +448,11 @@ public class Scenes extends Sprite
         //var shortcutsScene:String=DataContainer.shortcutsScene;
         command.addShortcuts();
         if(next_scene.indexOf("Game")!=-1 || next_scene.indexOf("Battle")!=-1 ||
-                next_scene=="DatingScene" || next_scene.indexOf("ChangeFormation")!=-1){
+                next_scene=="DatingScene" || next_scene.indexOf("ChangeFormation")!=-1 || next_scene=="Tarotreading"){
             //DebugTrace.msg("Scenes.changeSceneHandle addShortcuts shortcutsScene:"+shortcutsScene);
             command.removeShortcuts();
+
+
         }
 
 
@@ -491,11 +496,29 @@ public class Scenes extends Sprite
         UIViews.visible=infobar;
 
     }
-    private function onClearedScene(e:SceneEvent):void
+    private function onClearedScene(e:Event):void
     {
 
-        clearSceneHandle();
+        if(e.data.type=="twinflame"){
 
+            twinflame.dispose();
+            twinflame.removeFromParent(true);
+
+            var _data:Object=new Object();
+            _data.removed="Choice";
+            command.topviewDispatch(TopViewEvent.REMOVE,_data);
+
+        }else{
+            clearSceneHandle();
+        }
+
+
+    }
+    private function onDisplayView(e:Event):void{
+
+        var type:String=e.data.type;
+        twinflame=new TwinFlameForm();
+        Starling.current.stage.addChild(twinflame);
     }
     private function onFadeoutComplete():void
     {

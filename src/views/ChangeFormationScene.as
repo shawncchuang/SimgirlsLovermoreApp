@@ -238,7 +238,9 @@ public class ChangeFormationScene extends Scenes
         avatar_pos=[new Point(790,150),new Point(898,150),
             new Point(754,246),new Point(859,246),
             new Point(718,353),new Point(822,353),
-            new Point(683,452),new Point(788,452)];
+            new Point(683,452),new Point(788,452),
+            new Point(688,562),new Point(743,562)
+        ];
         //DebugTrace.msg("ChangeFormationScene.initSubstitues soldilers name:"+ soldilers_name[subsindex])
         var avatar_attr:Object={"name":soldilers_name[subsindex],"side":-1,"pos":avatar_pos[subsindex],"gender":avatar.gender};
         avatarcom.createAvatar(onReadyComplete,avatar_attr);

@@ -56,6 +56,8 @@ package model
         public var photos:Array;
 		public var current_scene:String;
 		public var criminals:Array;
+		public var twinflame:String;
+		public var goodevail:Number;
 		public function SaveGame()
 		{
 	 

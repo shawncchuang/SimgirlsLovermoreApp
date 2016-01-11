@@ -556,10 +556,10 @@ public class AssetEmbeds
     public static const IconSortExpiration:Class;
 
     [Embed(source="../../media/textures/icons/sound_toggle_default.png")]
-    public static const IconSoundToggleDefault:Class;
+    public static const IconToggleDefault:Class;
 
     [Embed(source="../../media/textures/icons/sound_toggle_down.png")]
-    public static const IconSoundToggleDown:Class;
+    public static const IconToggleDown:Class;
 
     [Embed(source="../../media/textures/icons/title_icon_datingscene.png")]
     public static const IconDatingSceneTitle:Class;
@@ -880,6 +880,18 @@ public class AssetEmbeds
     public static const npc040:Class;
     [Embed(source="../../media/textures/characters/booses/xenos.png")]
     public static const npc041:Class;
+
+    [Embed(source="../../media/textures/characters/booses/mia.png")]
+    public static const npc042:Class;
+    [Embed(source="../../media/textures/characters/booses/primero1.png")]
+    public static const npc043:Class;
+    [Embed(source="../../media/textures/characters/booses/rufus.png")]
+    public static const npc044:Class;
+    [Embed(source="../../media/textures/characters/booses/simman.png")]
+    public static const npc045:Class;
+    [Embed(source="../../media/textures/characters/booses/tiger.png")]
+    public static const npc046:Class;
+
 
     [Embed(source="../../media/textures/characters/styles/ceil/battle.png")]
     public static const ceil_battle:Class;

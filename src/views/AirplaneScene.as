@@ -28,7 +28,7 @@ package views
 		private var button:Button;
 		private var speaker_sprite:Sprite=new Sprite();
 		//private var speaker:SpeakerInterface=new SpeakerCommand();
-		private var chater:SceneInterface=new SceneCommnad();
+		private var scenecom:SceneInterface=new SceneCommnad();
 		private var part_index:Number;
 		public function AirplaneScene()
 		{
@@ -47,9 +47,9 @@ package views
 			 	
 			speaker_sprite=new Sprite();
 			addChild(speaker_sprite);
-		 
-			chater.init("AirplaneScene",speaker_sprite,2,onChatFinished);
-			chater.start();
+
+			scenecom.init("AirplaneScene",speaker_sprite,2,onChatFinished);
+			scenecom.start();
 		 
 		}
 		 
@@ -73,8 +73,8 @@ package views
 			DebugTrace.msg("AirplaneScene.doTopViewDispatch removed:"+e.data.removed);
 			switch(e.data.removed)
 			{
-				case "QA":
-					chater.enableTouch();
+				case "Choice":
+					//scenecom.enableTouch();
 					break
 			}
 			//switch

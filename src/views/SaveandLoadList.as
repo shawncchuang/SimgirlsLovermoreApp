@@ -147,12 +147,13 @@ public class SaveandLoadList extends Sprite
             var emptyImg:Image=new Image(empty_texture);
             emptybar.addChild(emptyImg);
 
-            var name_txt:TextField=new TextField(70,emptyImg.height,saverecord[i].first_name+"\n"+saverecord[i].last_name,font,20,0xFFFFFF);
+            var name_txt:TextField=new TextField(70,emptyImg.height,saverecord[i].first_name+"\n"+saverecord[i].last_name,font,18,0xFFFFFF);
+            name_txt.autoScale=true;
             emptybar.addChild(name_txt);
            //   var peogress:Number=Number(saverecord[i].id.split("saved").join(""));
             var _date:String=saverecord[i].date.split("|")[0];
             var info_data:String="No."+(i+1)+", "+_date+"\n"+saverecord[i].cash+"\nAP "+saverecord[i].ap+"/"+saverecord[i].ap_max;
-            var info_txt:TextField=new TextField(emptyImg.width-50,emptyImg.height,info_data,font,20,0xFFFFFF);
+            var info_txt:TextField=new TextField(emptyImg.width-50,emptyImg.height,info_data,font,16,0xFFFFFF);
             info_txt.hAlign="right";
             info_txt.vAlign="center";
             emptybar.addChild(info_txt);

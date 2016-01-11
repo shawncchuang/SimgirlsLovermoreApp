@@ -134,6 +134,7 @@ public class MainCommand implements MainInterface {
     }
 
     public function addDisplayObj(current:String, target:String):void {
+        DebugTrace.msg("MainCommand.addDisplayObj  current="+current+" ,target="+target);
         var topview:flash.display.MovieClip = SimgirlsLovemore.topview;
         var txt:String = "";
         var target_pos:String = "";
@@ -184,8 +185,16 @@ public class MainCommand implements MainInterface {
                 gameEvent._name = "tarot_cards";
                 gameEvent.displayHandler();
                 break
+            case "Story_twinflame":
+
+                    var _data:Object=new Object();
+                _data.type=style;
+                    var mainStage:Sprite=ViewsContainer.MainStage;
+                mainStage.dispatchEventWith(SceneEvent.DISPLAY,false,_data);
+                break
 
         }
+
         //switch
         if (txt.indexOf("battle") != -1) {
             gameEvent._name = "QA";

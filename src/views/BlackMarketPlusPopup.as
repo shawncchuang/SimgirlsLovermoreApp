@@ -13,6 +13,7 @@ import controller.ViewInterface;
 import events.SceneEvent;
 
 import feathers.controls.Button;
+import feathers.controls.ToggleSwitch;
 import feathers.controls.text.TextFieldTextRenderer;
 import feathers.core.ITextRenderer;
 
@@ -42,16 +43,18 @@ public class BlackMarketPlusPopup extends Sprite {
     private var popup:Sprite=null;
     private var font:String;
     private var viewcom:ViewInterface=new ViewCommand();
-    private var character:String=null;
+    private var character:String="";
     private var flox:FloxInterface=new FloxCommand();
     private var command:MainInterface=new MainCommand();
-
+    private var toggle:ToggleSwitch;
+    private var toggled:Boolean=false;
     public function BlackMarketPlusPopup() {
 
         this.addEventListener("REMOVED_FROM_SCENE",onRemovedStageHandler);
 
     }
     public function init():void{
+        character=null;
 
         popup=new Sprite();
         var bgTexture:Texture=Assets.getTexture("PopupBg");
@@ -82,12 +85,24 @@ public class BlackMarketPlusPopup extends Sprite {
 
         popup.addChild(bg);
         popup.addChild(msgTxt);
-        if(item_id!="bm_7"){
-            //cash
 
-            viewcom.characterIcons(popup,"blackmarket");
-        }else{
-            character="player";
+        switch(item_id){
+            case "bm_1":
+            case "bm_7":
+                character="player";
+                break
+            case "bm_2":
+            case "bm_3":
+            case "bm_4":
+            case "bm_5":
+            case "bm_6":
+                viewcom.characterIcons(popup,"blackmarket");
+                break
+            case "bm_8":
+            case "bm_9":
+                addToggleSwitch();
+                break
+
         }
 
         popup.addChild(okBtn);
@@ -99,16 +114,16 @@ public class BlackMarketPlusPopup extends Sprite {
     private function onTouchCharaterIcon(e:Event):void
     {
 
-        DebugTrace.msg("BlackMarketPlusPopu. onTouchCharaterIcon");
         var ch_index:Number = e.data.ch_index;
         character = e.data.character;
-        DebugTrace.msg("ch_index="+ch_index+" ,character="+character);
+        DebugTrace.msg("BlackMarketPlusPopu. onTouchCharaterIcon ch_index="+ch_index+" ,character="+character);
 
 
     }
     private function usePlusItemHandler(e:Event):void{
 
-        if(character){
+
+        if(character) {
 
             var blackmarket:Object=flox.getSyetemData("blackmarket");
             var command_type:String=blackmarket[item_id]["command"];
@@ -154,7 +169,80 @@ public class BlackMarketPlusPopup extends Sprite {
             Starling.juggler.add(tween);
 
 
-        }else{
+        }else if(item_id=="bm_8" || item_id=="bm_9") {
+
+            var items:Object=flox.getPlayerData("items");
+            items[item_id]["enable"]=toggled;
+            flox.savePlayer("items");
+
+            var _se:Number=0;
+            var _pts:Number=0;
+            var _skills:Object=new Object();
+            if(item_id=="bm_8" && toggled){
+                character="prms";
+                _se=5555;
+                _pts=9999;
+                _skills={
+                    "neutral": "",
+                    "air": "a0,a1,a2,a3",
+                    "com": "",
+                    "water": "w0,w1,w2,w3",
+                    "earth": "e0,e1,e2,e3",
+                    "exp": "n",
+                    "fire": "f0,f1,f2,f3"
+                }
+
+            }else if (item_id=="bm_8" && !toggled){
+                character="prms";
+                _se=0;
+                _pts=0;
+            }
+
+            if(item_id=="bm_9" && toggled){
+                character="smn";
+                _se=9999;
+                _pts=9999;
+                _skills={
+                    "neutral": "n0,n1,n2,n3",
+                    "air": "a0,a1,a2,a3",
+                    "com": "",
+                    "water": "w0,w1,w2,w3",
+                    "earth": "e0,e1,e2,e3",
+                    "exp": "n",
+                    "fire": "f0,f1,f2,f3"
+                }
+
+
+            }else if (item_id=="bm_8" && !toggled){
+                character="smn";
+                _se=0;
+                _pts=0;
+            }
+
+            var se:Object=flox.getSaveData("se");
+            se[character]=_se;
+
+            var pts:Object=flox.getSaveData("pts");
+            pts[character]=_pts;
+
+            flox.save("se",se);
+            flox.save("pts",pts);
+
+            var loves:Object=flox.getSaveData("love");
+            loves[character]=_se;
+            flox.save("love",loves);
+
+            var skills=flox.getSaveData("skills");
+            skills[character]=_skills;
+            flox.save("skills",skills);
+
+
+            toggle.dispose();
+            toggle.removeFromParent(true);
+            PopUpManager.removePopUp(popup,true);
+
+        }else
+        {
 
             PopUpManager.removePopUp(popup,true);
             var msg:String = "Opps! Choose a character icon first.";
@@ -167,6 +255,35 @@ public class BlackMarketPlusPopup extends Sprite {
 
 
     }
+    private function  addToggleSwitch():void{
+
+        toggle = new ToggleSwitch();
+        toggle.showLabels=false;
+        toggle.trackLayoutMode = ToggleSwitch.TRACK_LAYOUT_MODE_ON_OFF;
+        toggle.toggleDuration=0;
+        var deBtnImg:Image= new Image( Assets.getTexture("IconToggleDefault") );
+        toggle.onTrackProperties.defaultSkin = deBtnImg;
+        toggle.offTrackProperties.defaultSkin = new Image(Assets.getTexture("IconToggleDown") );
+        toggle.x=popup.width/2- deBtnImg.width/2;
+        toggle.y=85;
+        toggle.addEventListener( Event.CHANGE, toggle_changeHandler );
+
+        var items:Object=flox.getPlayerData("items");
+        if(items[item_id].enable){
+            toggled=toggle.isSelected =items[item_id].enable;
+        }else{
+            toggle.isSelected=toggled;
+        }
+        popup.addChild(toggle)
+    }
+    private function toggle_changeHandler(e:Event):void{
+
+        var toggle:ToggleSwitch = ToggleSwitch( e.currentTarget );
+        toggled=toggle.isSelected;
+        DebugTrace.msg("toggle.isSelected changed:"+ toggle.isSelected +" ,item_id="+item_id );
+
+    }
+
     private function onRewardAniComplete():void{
 
         Starling.juggler.removeTweens(this);
@@ -182,6 +299,11 @@ public class BlackMarketPlusPopup extends Sprite {
     }
     private function cancelButton_triggeredHandler(e:Event):void{
 
+
+        if(toggle){
+            toggle.dispose();
+            toggle.removeFromParent(true);
+        }
 
         PopUpManager.removePopUp(popup,true);
 

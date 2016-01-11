@@ -48,7 +48,7 @@ package views
 		
 		private var speaker_sprite:Sprite=new Sprite();
 		private var command:MainInterface=new MainCommand(); 
-		private var chater:SceneInterface=new SceneCommnad();
+		private var scenecom:SceneInterface=new SceneCommnad();
 		
 		public function TarotreadingScene()
 		{
@@ -60,9 +60,9 @@ package views
 			
 			speaker_sprite=new Sprite();
 			addChild(speaker_sprite);
-		 
-			chater.init("TarotReading",speaker_sprite,0,onChatFinished);
-			chater.start();
+
+			scenecom.init("TarotReading",speaker_sprite,0,onChatFinished);
+			scenecom.start();
 			
 		}
 		/*private function onPlayerSpeakFinished():void
@@ -92,16 +92,16 @@ package views
 			 switch(e.data.removed)
 			 {
 				case "LookAround":
-					chater.enableTouch();
+					scenecom.enableTouch();
 					break;
-				case "QA":
-					chater.enableTouch();
+				case "Choice":
+					//scenecom.enableTouch();
 					break;
 				case "tarot_cards":
 					var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
 					gameEvent._name="remove_tarot_card";
 					gameEvent.displayHandler();
-					chater.enableTouch();
+					scenecom.enableTouch();
 					break
 				 
 			 }

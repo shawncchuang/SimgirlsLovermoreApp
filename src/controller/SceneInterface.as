@@ -10,6 +10,7 @@ package controller
 		function reseat():void
 		function start():void
 	    function enableTouch():void
+		function addTouchArea():void
 		function disableAll():void
 	    function createMouseClickIcon():void
 	    function clearMouseClickIcon():void

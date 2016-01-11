@@ -123,9 +123,10 @@ public class BlackMarketListLayout extends PanelScreen {
             itemRender.name = item.id;
 
 
-            var itemTt:Texture = Assets.getTexture(item.texture);
-            var itemImg:Image = new Image(itemTt);
-            var renderH:Number = itemImg.height;
+//            var itemTt:Texture = Assets.getTexture(item.texture);
+//            var itemImg:Image = new Image(itemTt);
+//            var renderH:Number = itemImg.height;
+            var renderH:Number =60;
 
             var quad:Quad = new Quad(550, renderH, 0xffffff);
             itemRender.addChild(quad);
@@ -216,8 +217,7 @@ public class BlackMarketListLayout extends PanelScreen {
     }
     private function onTapUseHandler(e:Event):void{
     //tap use
-        var popupMsg:String="Use this item?\nWarning! Once it is used it will be gone for good.\n" +
-                "Make sure you save your game afterwards.";
+        var popupMsg:String="Use this item?\nWarning! Once it is used it will be gone for good.";
 
         switch(item_id){
             case "bm_1":
@@ -239,7 +239,16 @@ public class BlackMarketListLayout extends PanelScreen {
                 popupPlus.item_id=item_id;
                 popupPlus.msg=popupMsg;
                 popupPlus.init();
+                break
 
+            case "bm_8":
+            case "bm_9":
+                    //bm_8 :primero ; bm_9:simman
+                popupMsg="Enable primero or simman";
+                popupPlus=new BlackMarketPlusPopup();
+                popupPlus.item_id=item_id;
+                popupPlus.msg=popupMsg;
+                popupPlus.init();
                 break
 
         }

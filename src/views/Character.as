@@ -84,7 +84,7 @@ public class Character extends MovieClip
         "G":gpart_pack
     };
     private var otherCharacters:Array=["zack","xns","vdk","smn","prms","prml","fan","bdh","mia","san","chef","akr"];
-    private var boy_names:Array=["lenus","sao","zack","Male_player","Female_player"];
+    private var boy_names:Array=["lenus","sao","zack","Male_player","Female_player","prms","smn"];
     private var girl_names:Array=["sirena","tomoru","dea","klr","ceil"];
 
 
@@ -235,7 +235,7 @@ public class Character extends MovieClip
 
         if(boy_names.indexOf(ch_name)!=-1)
         {
-            characters=["lenus","sao","player"];
+            characters=["lenus","sao","player","prms","smn"];
             part_pack=bpart_pack;
             character=new Boy();
         }

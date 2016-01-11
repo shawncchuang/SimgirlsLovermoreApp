@@ -6,6 +6,7 @@ package events
 	{
 		public static const CHANGED:String = "chenged";
 		public static const CLEARED:String = "cleared";
+		public static const DISPLAY:String = "display";
 		private var mResult:Boolean;
 		public static var scene:String;
 		public function SceneEvent(type:String, result:Boolean, bubbles:Boolean=false,data:Object=null):void

@@ -71,7 +71,12 @@ public class Config
         "shinichi":"npc038",
         "tyren":"npc039",
         "vodka":"npc040",
-        "xenos":"npc041"
+        "xenos":"npc041",
+        "mia":"npc042",
+        "primero1":"npc043",
+        "rufus":"npc044",
+        "simman":"npc045",
+        "tiger":"npc046"
     };
     //schedule [index+ current month]
     public static var scheduleIndex:Object={"lenus":88,"sirena":12,"dea":25,"sao":38,"klr":51,"tomoru":64,"ceil":77,"zack":38};
@@ -1211,6 +1216,12 @@ public class Config
         "ceil_ChangingRoom": ["underwear"]
     }
 
+    public static var goodevails:Object={
+
+        "airplane-phonenumber":[-10,10],
+        "qa-s006b":[10,-10]
+
+    }
     public function Config()
     {
 

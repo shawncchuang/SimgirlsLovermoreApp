@@ -208,8 +208,8 @@ public class HotelScene extends Scenes
             case "story_complete":
                 onStoryComplete();
                 break
-            case "QA":
-                scenecom.enableTouch();
+            case "Choice":
+                //scenecom.enableTouch();
                 break
 
         }

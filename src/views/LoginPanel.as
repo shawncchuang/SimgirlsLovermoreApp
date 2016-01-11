@@ -115,7 +115,7 @@ package views
 			
 			if(!success)
 			{
-				msg=" Please input correct email and password !!"
+				msg=" Please input correct email and password !!";
 				MainCommand.addTalkingMsg(msg);
 				
 			}
@@ -217,7 +217,7 @@ package views
 		}
 		private function displaySharedObejct():void{
 			var loaderReq:LoaderRequest=new LoaderRequest();
-			var so_email:String=loaderReq.getSharedObject();
+			var so_email:String=loaderReq.getSharedObject("email");
 			if(so_email){
 				panel.account.text=so_email;
 				panel.preorder_signin_ui.account.text=so_email;

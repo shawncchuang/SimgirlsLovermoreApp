@@ -8,11 +8,14 @@ import com.greensock.easing.Quart;
 import com.greensock.easing.Quint;
 import com.greensock.events.LoaderEvent;
 import com.greensock.loading.LoaderMax;
+import com.greensock.loading.LoaderMax;
 import com.greensock.loading.SWFLoader;
 import com.greensock.plugins.FrameLabelPlugin;
 import com.greensock.plugins.FramePlugin;
 import com.greensock.plugins.TweenPlugin;
 import com.greensock.text.SplitTextField;
+
+import fl.controls.Button;
 
 import flash.display.MovieClip;
 import flash.display.Sprite;
@@ -21,7 +24,9 @@ import flash.display.StageQuality;
 import flash.events.Event;
 import flash.events.MouseEvent;
 import flash.events.TimerEvent;
+import flash.filesystem.File;
 import flash.geom.Point;
+import flash.net.FileFilter;
 import flash.text.AntiAliasType;
 import flash.text.TextField;
 import flash.text.TextFieldAutoSize;
@@ -161,8 +166,6 @@ public class BattleScene extends Sprite
 		command.playBackgroudSound("BattleMusic");
 
 
-
-
 		//sound testing
 		//command.playSound("BingoSound");
 
@@ -170,6 +173,13 @@ public class BattleScene extends Sprite
 		//var victorybounse:Sprite=new VictoryBonus();
 		//addChild(victorybounse);
 
+	}
+
+
+	private function onAnimateComplete(e:LoaderEvent):void{
+
+		var loaderQueue:LoaderMax=ViewsContainer.loaderQueue;
+		loaderQueue.getLoader("SkillTest").unload();
 	}
 
 	private function onStartBonusGame(e:Event):void
@@ -414,26 +424,26 @@ public class BattleScene extends Sprite
 	}
 	private function updateHonourSkillPts(name:String):void
 	{
-
-
+		var font:String="SimNeogreyMedium";
 		var Hformat:TextFormat=new TextFormat();
 		Hformat.color=0xFFCC33;
-		Hformat.font="SimNeogreyMedium";
+		Hformat.font=font;
 
 		var ptsformat:TextFormat=new TextFormat();
 		ptsformat.color=0xD31044;
-		ptsformat.font="SimNeogreyMedium";
+		ptsformat.font=font;
 
 		hptsbar.hxt.defaultTextFormat=Hformat;
 		hptsbar.ptsTxt.defaultTextFormat=ptsformat;
 
 		var honours:Object=flox.getSaveData("honor");
 		hptsbar.hxt.embedFonts=true;
-		hptsbar.hxt.text=String(honours[name]);
-
+		var honor:String=String(honours[name]);
 		var skillPts:Object=flox.getSaveData("skillPts");
+		var sPts:String=String(skillPts[name]);
+		hptsbar.hxt.text=String(honor);
 		hptsbar.ptsTxt.embedFonts=true;
-		hptsbar.ptsTxt.text=String(skillPts[name]);
+		hptsbar.ptsTxt.text=String(sPts);
 
 
 	}
@@ -595,8 +605,9 @@ public class BattleScene extends Sprite
 		DebugTrace.msg("BattleScene.doSelectPlayer  player_index:"+player_index);
 		DebugTrace.msg("BattleScene.doSelectPlayer  current_player:"+current_player.name+" , power="+JSON.stringify(power));
 		updateProfile(profile_name);
-		updateHonourSkillPts(power.name);
-
+		if(power.name!="smn" && power.name!="prms"){
+			updateHonourSkillPts(power.name);
+		}
 		memberscom.setPlayerIndex(player_index);
 
 		if(power.skillID!="")
@@ -1229,7 +1240,7 @@ public class BattleScene extends Sprite
 		for(var i:uint=0;i<members.length;i++)
 		{
 			var member:Member=members[i];
-			if(member.power.se>0)
+			if(member.power.se>0 && member.chname!="prms" && member.chname!="smn")
 			{
 
 
@@ -3849,6 +3860,7 @@ public class BattleScene extends Sprite
 			}
 			else
 				attr="honor";
+
 			doBoostItemHandle(attr);
 		}
 		//if

@@ -15,7 +15,8 @@ public class StoryDAO {
     private static function s001():Array{
 
         return [
-            "com|bg_HotelScene,com|display_daz_center",
+            "com|bg_HotelScene#com|display_daz_center",
+            "choice|twinflame",
             "spC|Aloha! Welcome to the Hotel Shambala.",
             "spC|While we are getting your room ready, let me explain a bit about ACTION POINTS or simply AP.",
             "spC|AP determines how many things you can do in a given time period. Most activities will consume your AP.",
@@ -26,6 +27,7 @@ public class StoryDAO {
         ]
 
     }
+    //  "com|display_sao_swimsuit_center",
     private static function s002():Array{
 
         return [
@@ -191,7 +193,7 @@ public class StoryDAO {
             "player|On the way to the museum. ",
             "com|photo-on_GardenCat",
             "player|Meow!",
-            "player|There's cat in the bush. It looks vaguely familiar. Oh! It must be that cute girl's... the cat from the picture I saw in the changing room! ",
+            "player|There's a cat in the bush. It looks vaguely familiar. Oh! It must be that cute girl's... the cat from the picture I saw in the changing room! ",
             "player|I approach the cat cautiously<> but the cat got scared and ran away. I run after the cat into the woods.",
             "com|photo-off#com|bg_Woods#com|music-on_acoustic",
             "player|What is that music? It seemed as if the cat is running towards the music. ",

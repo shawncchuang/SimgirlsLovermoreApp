@@ -75,42 +75,40 @@ import flash.net.URLRequest;
 			
 		}
 		
-		public function sendtoSharedObject(email:String):void
+		public function sendtoSharedObject(auth:String,email:String):void
 		{
 			 
 			var so:SharedObject = SharedObject.getLocal("simgirls");
-			 
 			var flushStatus:String = null;
 			try 
 			{
-				flushStatus = so.flush();
+				flushStatus=so.flush(100);
 			} catch (error:Error) {
 				DebugTrace.msg("Error...Could not write SharedObject to disk\n");
 			}
 			//try,catch
-			if (flushStatus != null) {
 				switch (flushStatus) {
 					case SharedObjectFlushStatus.PENDING:
 						DebugTrace.msg("Requesting permission to save object...\n");
 						
 						break;
 					case SharedObjectFlushStatus.FLUSHED:
+						so.data.auth=auth;
 						so.data.email=email;
 						DebugTrace.msg("Value flushed to disk.\n");
 						break;
 				}
 				//switch
-			}
-			//if
+
 		}
-		public function getSharedObject():String
+		public function getSharedObject(attr:String):String
 		{
 			
 			var so:SharedObject = SharedObject.getLocal("simgirls");
-			var email:String=so.data.email;
+			var resault:String=so.data[attr];
 			
-			//DebugTrace.msg("LoaderRequest.getSharedObject email:"+email);
-			return email;
+			//DebugTrace.msg("LoaderRequest.getSharedObject resault:"+resault);
+			return resault;
 		}
 		public function setLoaderQueue(id:String,src:String,target:*,callback:Function=null):void
 		{
