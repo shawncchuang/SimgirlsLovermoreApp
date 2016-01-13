@@ -36,7 +36,7 @@ import utils.ViewsContainer;
 			ViewsContainer.MiniGame=this;
 			
 			var st:SoundTransform=new SoundTransform(0.7);
-			command.playBackgroudSound("FoodChase",st);
+			command.playBackgroudSound("foodchase",st);
 		 
 			gamecom.init(this,"training");
 			gamecom.createEnemyBike(new Point(0,380));

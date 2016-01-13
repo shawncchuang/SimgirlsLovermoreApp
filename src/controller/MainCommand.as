@@ -153,16 +153,12 @@ public class MainCommand implements MainInterface {
         switch (target) {
             case "ComCloud":
 
-                //gameEvent.data = txt;
-                //gameEvent._name = "comcloud";
-                //gameEvent.displayHandler();
-
-                    var curreent_scene:Sprite=ViewsContainer.currentScene;
-                    var comcloud:Sprite=new CommandCloud(txt);
-					curreent_scene.addChild(comcloud);
-                    var clouds:Array=ViewsContainer.CurrentClouds;
-                    clouds.push(comcloud);
-                    ViewsContainer.CurrentClouds=clouds;
+                var curreent_scene:Sprite=ViewsContainer.currentScene;
+                var comcloud:Sprite=new CommandCloud(txt);
+                curreent_scene.addChild(comcloud);
+                var clouds:Array=ViewsContainer.CurrentClouds;
+                clouds.push(comcloud);
+                ViewsContainer.CurrentClouds=clouds;
 
                 break
         }
@@ -186,10 +182,10 @@ public class MainCommand implements MainInterface {
                 gameEvent.displayHandler();
                 break
             case "Story_twinflame":
-
-                    var _data:Object=new Object();
+            case "StoryPreview_twinflame":
+                var _data:Object=new Object();
                 _data.type=style;
-                    var mainStage:Sprite=ViewsContainer.MainStage;
+                var mainStage:Sprite=ViewsContainer.MainStage;
                 mainStage.dispatchEventWith(SceneEvent.DISPLAY,false,_data);
                 break
 
@@ -555,7 +551,7 @@ public class MainCommand implements MainInterface {
     public function stopSound(name:String):void {
 
         if(sound_channel)
-        sound_channel.stop();
+            sound_channel.stop();
     }
 
     public function verifySwitch():Boolean {
@@ -2510,23 +2506,23 @@ public class MainCommand implements MainInterface {
         if(!skills.captain){
 
             var captain_items:Array= [
-                        {
-                            "qty": 0,
-                            "id": "com0"
-                        },
-                        {
-                            "qty": 0,
-                            "id": "com1"
-                        },
-                        {
-                            "qty": 0,
-                            "id": "com2"
-                        },
-                        {
-                            "qty": 0,
-                            "id": "com3"
-                        }
-                    ];
+                {
+                    "qty": 0,
+                    "id": "com0"
+                },
+                {
+                    "qty": 0,
+                    "id": "com1"
+                },
+                {
+                    "qty": 0,
+                    "id": "com2"
+                },
+                {
+                    "qty": 0,
+                    "id": "com3"
+                }
+            ];
             skills.captain=captain_items;
             flox.save("skills",skills);
 

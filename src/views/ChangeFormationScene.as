@@ -243,7 +243,26 @@ public class ChangeFormationScene extends Scenes
         ];
         //DebugTrace.msg("ChangeFormationScene.initSubstitues soldilers name:"+ soldilers_name[subsindex])
         var avatar_attr:Object={"name":soldilers_name[subsindex],"side":-1,"pos":avatar_pos[subsindex],"gender":avatar.gender};
-        avatarcom.createAvatar(onReadyComplete,avatar_attr);
+        DebugTrace.msg(JSON.stringify(avatar_attr));
+        var items:Object=flox.getPlayerData("items");
+        var _enable:Boolean=true;
+        if(avatar_attr.name=="prms" || avatar_attr.name=="smn" ){
+            if(avatar_attr.name=="prms")
+            {
+                _enable=items.bm_8.enable;
+            }else{
+                _enable=items.bm_9.enable;
+            }
+
+        }
+
+        if(_enable){
+            avatarcom.createAvatar(onReadyComplete,avatar_attr);
+        }else{
+            onReadyComplete();
+        }
+
+
 
     }
     private function onReadyComplete():void

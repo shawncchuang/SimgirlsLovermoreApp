@@ -245,7 +245,7 @@ public class BattleData
         }
         //for
         //---------fake gems
-         //stones=["fire","fire","fire","fire","fire","fire","air"];
+        //stones=["air","water","earth","air","water","earth","neutral"];
         stoneElements=stones;
     }
     public function praseRequestStones(elements:Array,reqs:Array):Array

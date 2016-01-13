@@ -16,7 +16,6 @@ public class StoryDAO {
 
         return [
             "com|bg_HotelScene#com|display_daz_center",
-            "choice|twinflame",
             "spC|Aloha! Welcome to the Hotel Shambala.",
             "spC|While we are getting your room ready, let me explain a bit about ACTION POINTS or simply AP.",
             "spC|AP determines how many things you can do in a given time period. Most activities will consume your AP.",
@@ -151,7 +150,8 @@ public class StoryDAO {
             "player|Tyren: Attacking tourists can be criminal offense. Your father Mr. Krieg will not be happy if he has to bail you out of jail again.",
             "player|Zack: Tsk!",
             "player|Zack leaves without any further complaint. His father must be a powerful man. ",
-            "com|photo-off#com|music-off_zackMusic",
+            "com|photo-off",
+            "com|music-off_zackMusic",
             "com|remove_zack_casual1_left",
             "spR|Crap!",
             "player|Sao regains consciousness and looks dazed. He is still disarrayed by the power of Zack's attack. ",

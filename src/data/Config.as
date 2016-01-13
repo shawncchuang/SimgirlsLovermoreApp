@@ -30,6 +30,7 @@ public class Config
     //zack don't show up in somewhere
     public static const characters:Array=["lenus","sirena","dea","sao","klr","tomoru","ceil"];
     public static const datingCharacters:Array=["lenus","sirena","dea","zack","klr","tomoru","ceil"];
+    public static const fullnameCharacters:Array=["Lenus","Sirena","Dea","Zack","Klair","Tomoru","Ceil"];
     public static const CommanderItems:Array=[ { "qty": 3, "id": "com0" },{ "qty": 3, "id": "com1" }, { "qty": 3, "id": "com2" }, { "qty": 3, "id": "com3" } ];
     public static const NPC:Object={"daz":"npc001",
         "policestation":"npc002",
@@ -76,7 +77,25 @@ public class Config
         "primero1":"npc043",
         "rufus":"npc044",
         "simman":"npc045",
-        "tiger":"npc046"
+        "tiger":"npc046",
+        "primero2":"npc047",
+        "rufus1":"npc048",
+        "rufus2":"npc049",
+        "rufus3":"npc050",
+        "shinichi1":"npc051",
+        "simman1":"npc052",
+        "tiger1":"npc053",
+        "vodka1":"npc054",
+        "simman2":"npc055",
+
+        "ceilkiss":"npc056",
+        "deakiss":"npc057",
+        "klairekiss":"npc058",
+        "lenuskiss":"npc058",
+        "sirenakiss":"npc059",
+        "tomorukiss":"npc060",
+        "zackkiss":"npc061",
+        "xenos1":"npc062"
     };
     //schedule [index+ current month]
     public static var scheduleIndex:Object={"lenus":88,"sirena":12,"dea":25,"sao":38,"klr":51,"tomoru":64,"ceil":77,"zack":38};

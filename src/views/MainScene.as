@@ -192,8 +192,8 @@ public class MainScene extends Scenes
         scene.removeEventListener(Event.ENTER_FRAME,doSceneEnterFrame);
         command.stopSound("MapWaves");
 
-        var swfloader:SWFLoader=LoaderMax.getLoader("waving") as SWFLoader;
-        swfloader.content.visible=false;
+        //var swfloader:SWFLoader=LoaderMax.getLoader("waving") as SWFLoader;
+        //swfloader.content.visible=false;
     }
     private  var new_gx:Number=0;
     private  var new_gy:Number=0;

@@ -394,7 +394,6 @@ public class ChatScene extends Sprite
                 sentence=seretchat[ratingLv];
                 sentence=sentence.split("^brand").join(assets.brand);
                 sentence=sentence.split("^item").join(assets.name);
-                DebugTrace.msg("ChatScene.onChatWithPlayer sentence:"+sentence);
                 break
             case "2,2,2":
                 //secrets
@@ -488,39 +487,39 @@ public class ChatScene extends Sprite
     {
 
         var item:Object;
-        var unreleased_assets:Object=flox.getSaveData("unreleased_assets");
+        //var unreleased_assets:Object=flox.getSaveData("unreleased_assets");
         var assets_rating:Object=flox.getSaveData("assets");
         var dating:String=DataContainer.currentDating;
         var assets:Array=assets_rating[dating];
 
-        if(assets.length<1){
-            unreleased_assets=assets_rating;
-            assets=unreleased_assets[dating];
-        }
+//        if(assets.length<1){
+//            unreleased_assets=assets_rating;
+//            assets=unreleased_assets[dating];
+//        }
 
 
         var item_index:Number=Math.floor(Math.random()*assets.length);
         item=assets[item_index];
         DebugTrace.msg("ChatScnen.praseItemRating  item="+JSON.stringify(item));
-        var rating_index:Number=0;
+//        var rating_index:Number=0;
 
-        for(var j:uint=0;j<assets.length;j++){
+//        for(var j:uint=0;j<assets.length;j++){
+//
+//            if(assets[j][item.id]!= null){
+//                rating_index=j;
+//                break
+//            }
+//        }
+//        var _assets:Array=assets.splice(rating_index);
+//        _assets.shift();
+//        assets=assets.concat(_assets);
+//        if(!unreleased_assets){
+//            unreleased_assets=new Object();
+//        }
+//        unreleased_assets[dating]=assets;
 
-            if(assets[j][item.id]!= null){
-                rating_index=j;
-                break
-            }
-        }
-        var _assets:Array=assets.splice(rating_index);
-        _assets.shift();
-        assets=assets.concat(_assets);
-        if(!unreleased_assets){
-            unreleased_assets=new Object();
-        }
-        unreleased_assets[dating]=assets;
 
-
-        flox.save("unreleased_assets",unreleased_assets);
+        //flox.save("unreleased_assets",unreleased_assets);
 
 
         return item

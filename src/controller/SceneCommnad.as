@@ -256,7 +256,9 @@ public class SceneCommnad implements SceneInterface
         {
             //finish current part
             DebugTrace.msg("SceneCommand finished");
+
             if(scene=="Story"){
+                command.stopBackgroudSound();
                 doClearAll();
                 updateCurrentSwitch();
 
@@ -368,6 +370,7 @@ public class SceneCommnad implements SceneInterface
             switch(todo)
             {
                 case "remove":
+                    target=praseTwinFlameFormat(target);
                     if(target=="player") {
                         talkmask.dispose();
                         talkmask.removeFromParent(true);
@@ -381,15 +384,19 @@ public class SceneCommnad implements SceneInterface
                     }
                     break
                 case "display":
+                    target=praseTwinFlameFormat(target);
                     createCharacter(target,pos);
                     break
                 case "move":
+                    target=praseTwinFlameFormat(target);
                     movingCharacter(target,pos);
                     break
                 case "photo-on":
-                    createPhotoMessage(target);
+                case "twin-photo-on":
+                    createPhotoMessage(todo,target);
                     break
                 case "photo-off":
+                case "twin-photo-off":
                     onPhotoRemoved();
                     break
                 case "music-on":
@@ -446,18 +453,9 @@ public class SceneCommnad implements SceneInterface
     }
     private function createTalkField():void
     {
-        var first_name:String=flox.getSaveData("first_name");
-        var twinflame:String=flox.getSaveData("twinflame");
-        if(twinflame){
-            twinflame=twinflame.toLowerCase();
-        }
+
         talkfield=new MyTalkingDisplay();
-        var scentance:String=talks[talk_index];
-        scentance=scentance.split("<>").join(",");
-        scentance=scentance.split("player|").join("");
-        scentance=scentance.split("$$$").join(first_name);
-        scentance=scentance.split("@@@").join(twinflame);
-        talkfield.addTextField(scentance,onTalkingComplete);
+        talkfield.addTextField(talks[talk_index],onTalkingComplete);
         _target.addChild(talkfield);
         display_container.player=talkfield;
     }
@@ -505,14 +503,6 @@ public class SceneCommnad implements SceneInterface
     {
 
         DebugTrace.msg("SceneCommand.createCharacter :"+name);
-
-        if(name.indexOf("@@@")!=-1){
-            var twinflame:String=flox.getSaveData("twinflame");
-            if(twinflame){
-                twinflame=twinflame.toLowerCase();
-                name=name.split("@@@").join(twinflame);
-            }
-        }
 
         var npc:String="";
         var texture:Texture;
@@ -576,9 +566,11 @@ public class SceneCommnad implements SceneInterface
 
         Starling.juggler.remove(moving_tween);
     }
-    private function createPhotoMessage(target:String):void {
+    private function createPhotoMessage(todo:String,target:String):void {
         DebugTrace.msg("ChatCommand.createPhotoMessage");
-        photoframe = new PhotoMessage(target);
+
+
+        photoframe = new PhotoMessage(todo,target);
         photoframe.name = "photoframe";
         _target.addChild(photoframe);
 
@@ -1022,6 +1014,18 @@ public class SceneCommnad implements SceneInterface
         }
 
         showChat();
+    }
+    private function praseTwinFlameFormat(name:String):String{
+
+        if(name.indexOf("@@@")!=-1){
+
+            var twinflame:String=flox.getSaveData("twinflame");
+            if(twinflame){
+                twinflame=twinflame.toLowerCase();
+                name=name.split("@@@").join(twinflame);
+            }
+        }
+        return name;
     }
 
 }

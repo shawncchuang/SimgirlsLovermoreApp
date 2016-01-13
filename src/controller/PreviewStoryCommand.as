@@ -7,9 +7,12 @@ import com.greensock.loading.LoaderMax;
 import data.Config;
 import data.DataContainer;
 import events.GameEvent;
+import events.TopViewEvent;
 
 
 import flash.geom.Point;
+
+import starling.animation.DelayedCall;
 
 import starling.animation.Transitions;
 import starling.animation.Tween;
@@ -17,6 +20,7 @@ import starling.core.Starling;
 
 import starling.display.Image;
 import starling.display.Sprite;
+import starling.events.Event;
 import starling.events.Touch;
 import starling.events.TouchEvent;
 import starling.events.TouchPhase;
@@ -70,11 +74,16 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
     private var scene_container:Sprite;
     private var day:String;
     private var switchID:String="";
+    private var current_switch:String="";
     private var location:String="";
     private var part:Number=0;
 
     private var filter:FilterInterface=new FilterManager();
     private var bgSrc:String="";
+    public static var disable_story:Boolean=false;
+    private var delaycall:DelayedCall;
+
+
 
     public function set currentSwitch(id:String):void
     {
@@ -114,6 +123,18 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
             //loaderdata.LoaderDataHandle("",datingComCloudHandle)
         }
 
+        scene_sprite.addEventListener(TopViewEvent.REMOVE,doTopViewDispatch);
+
+    }
+    private function doTopViewDispatch(e:Event):void{
+        switch(e.data.removed)
+        {
+            case "Choice":
+                enableTouch();
+                break
+
+        }
+
     }
     private function datingComCloudHandle(data:Array):void{
 
@@ -134,8 +155,9 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
     {
         DebugTrace.msg("PreviewStoryCommand.addTouchArea");
 
-        Starling.current.stage.addEventListener(TouchEvent.TOUCH,onChatSceneTouched);
-
+        //Starling.current.stage.addEventListener(TouchEvent.TOUCH,onChatSceneTouched);
+        var mainstage:Sprite=ViewsContainer.MainScene;
+        mainstage.addEventListener(TouchEvent.TOUCH,onChatSceneTouched);
     }
 
     private function onChatSceneTouched(e:TouchEvent):void
@@ -153,7 +175,7 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
 
 
     }
-    public function onTouchedScene():void
+    private function onTouchedScene():void
     {
         talk_index++;
         end_index=talks.indexOf("END");
@@ -172,6 +194,7 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
         {
             //finish current part
             DebugTrace.msg("PreviewStoryCommand finished");
+            command.stopBackgroudSound();
             doClearAll();
             nextStoryPart();
             if(finishedcallback)
@@ -273,30 +296,36 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
                 }
 
             }
-            DebugTrace.msg("PreviewStoryCommand.commandHandle todo="+todo);
             switch(todo)
             {
                 case "remove":
+                    target=praseTwinFlameFormat(target);
                     if(target=="player") {
+                        talkmask.dispose();
                         talkmask.removeFromParent(true);
                         talkmask=null;
                     }
                     if(display_container[target]){
-                        display_container[target].removeFromParent(true);
-                        //_target.removeChild(display_container[target]);
+                        var _character:Image= display_container[target];
+                        _character.dispose();
+                        _character.removeFromParent(true);
                         display_container[target]=null;
                     }
                     break
                 case "display":
+                    target=praseTwinFlameFormat(target);
                     createCharacter(target,pos);
                     break
                 case "move":
+                    target=praseTwinFlameFormat(target);
                     movingCharacter(target,pos);
                     break
                 case "photo-on":
-                    createPhotoMessage(target);
+                case "twin-photo-on":
+                    createPhotoMessage(todo,target);
                     break
                 case "photo-off":
+                case "twin-photo-off":
                     onPhotoRemoved();
                     break
                 case "music-on":
@@ -357,10 +386,7 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
     private function createTalkField():void
     {
         talkfield=new MyTalkingDisplay();
-        var scentance:String=talks[talk_index];
-        scentance=scentance.split("<>").join(",");
-        scentance=scentance.split("player|").join("");
-        talkfield.addTextField(scentance,onTalkingComplete);
+        talkfield.addTextField(talks[talk_index],onTalkingComplete);
         _target.addChild(talkfield);
         display_container.player=talkfield;
     }
@@ -409,6 +435,7 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
         DebugTrace.msg("SceneCommand.createCharacter :"+name);
 
 
+
         var npc:String="";
         var texture:Texture;
         var target:String=name.split("_")[0];
@@ -444,7 +471,7 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
         display_container[name]=character;
 
 
-        var tween:Tween=new Tween(character,0.5,Transitions.EASE_OUT);
+        var tween:Tween=new Tween(character,0.5);
         tween.fadeTo(1);
         tween.onComplete=onCharacterDisplayed;
         Starling.juggler.add(tween);
@@ -471,9 +498,11 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
 
         Starling.juggler.remove(moving_tween);
     }
-    private function createPhotoMessage(target:String):void {
+    private function createPhotoMessage(todo:String,target:String):void {
         DebugTrace.msg("ChatCommand.createPhotoMessage");
-        photoframe = new PhotoMessage(target);
+
+
+        photoframe = new PhotoMessage(todo,target);
         photoframe.name = "photoframe";
         _target.addChild(photoframe);
 
@@ -489,25 +518,24 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
     private function displayVideo(src:String):void
     {
         //DebugTrace.msg("SceneCommand.displayVideo src:"+src);
-//        var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
-//        gameEvent._name="show_video";
-//        gameEvent.video=src;
-//        gameEvent.displayHandler();
-
-        var meidaPlayer:MediaInterface=new MediaCommand();
-        meidaPlayer.VideoPlayer(src,_target);
-
-
+        var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
+        gameEvent._name="show_video";
+        gameEvent.video=src;
+        gameEvent.displayHandler();
         command.stopBackgroudSound();
         disableAll();
     }
     public function createBackground(src:String):void
     {
         location=src;
-        var scene:Sprite=ViewsContainer.MainScene;
-        scene_container=scene.getChildByName("scene_container") as Sprite;
+//        var _src:String=null;
+//        if(DataContainer.currentScene=="Tarotreading" || scene=="Story") {
+//            _src=location;
+//        }
+        var main_scene:Sprite=ViewsContainer.MainScene;
+        scene_container=main_scene.getChildByName("scene_container") as Sprite;
         var drawmanager:DrawerInterface=new DrawManager();
-        bgSprite=drawmanager.drawBackgroundgFroPreview(src);
+        bgSprite=drawmanager.drawBackground(src);
         _target.addChild(bgSprite);
 
     }
@@ -543,7 +571,8 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
             if(src_index==-1 || scene.indexOf("Scene")!=-1)
             {
                 //no command cloud , incloud xxxxScene
-                if(src.indexOf("QA")!=-1 || src=="TarotCards") {
+
+                if(src.indexOf("QA")!=-1 || src=="TarotCards" || src=="twinflame") {
 
                     disableAll();
 
@@ -606,13 +635,15 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
     public function disableAll():void
     {
 
-        DebugTrace.msg("SceneCommand.disableAll hitArea");
+        DebugTrace.msg("PreviewStoryCommand.disableAll hitArea");
 
-        Starling.current.stage.removeEventListener(TouchEvent.TOUCH,onChatSceneTouched);
+
+        var mainstage:Sprite=ViewsContainer.MainScene;
+        mainstage.removeEventListeners();
     }
     public function enableTouch():void
     {
-        DebugTrace.msg("SceneCommand.enableTouch ");
+        DebugTrace.msg("PreviewStoryCommand.enableTouch ");
         //_target.addEventListener(TouchEvent.TOUCH,onChatSceneTouched);
         //NativeApplication.nativeApplication.addEventListener(MouseEvent.MOUSE_DOWN,onChatSceneTouched);
 
@@ -628,13 +659,111 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
     }
     public function switchGateway(type:String ,callback:Function=null):*
     {
+        var verify:Boolean=false;
+        var local_verify:Boolean=false;
+        var date_verify:Boolean=false;
+        var time_verify:Boolean=false;
+        var switch_date:String="";
+        var switch_time:String="";
 
-        var verify:Boolean=true;
-        var local_verify:Boolean=true;
-        var date_verify:Boolean=true;
-        var time_verify:Boolean=true;
+        var flox:FloxInterface=new FloxCommand();
+        current_switch=flox.getSaveData("current_switch");
+        switchID="";
+        if(current_switch.split("|")[1]=="on"){
+            switchID=current_switch.split("|")[0];
+        }
+        //switchID=flox.getSaveData("next_switch");
 
-        if(date_verify && time_verify && local_verify)
+        //DebugTrace.msg("SceneCommand.switch   Gateway switchID="+switchID);
+        //DebugTrace.msg("SceneCommand.switchGateway next_switch="+next_switch);
+
+        if(switchID!=""){
+            var switchs:Object=flox.getSyetemData("switchs");
+            scene=DataContainer.currentScene;
+            var value:Object=switchs[switchID];
+            var _scene:String=scene.split("Scene").join("").toLowerCase();
+            location=value.location;
+            var date:String=flox.getSaveData("date");
+            switch_date=value.date;
+            switch_time=String(value.time);
+
+        }
+
+
+        //------------Location------------------------------------------
+        if(location!="")
+        {
+            if(_scene==location)
+            {
+                local_verify=true;
+                var turn_switch:String=flox.getSaveData("current_switch").split("|")[1];
+                //trace("SceneCommand.switchGateway turn_switch="+turn_switch);
+            }
+        }
+        else
+        {
+            local_verify=true;
+        }
+        //if
+        //------------Date------------------------------------------
+        if(switch_date!="")
+        {
+            //should check date and time
+            var _date:String=date.split("|")[0];
+            var _day:Number=Number(_date.split(".")[1]);
+            var _month:String=_date.split(".")[2];
+            var switch_day:Number=Number(switch_date.split(".")[1]);
+            var switch_mon:String=switch_date.split(".")[2];
+            DebugTrace.msg("SceneCommand.switchGateway _day="+_day);
+            DebugTrace.msg("SceneCommand.switchGateway switch_day="+switch_day);
+            if(switch_day==Number(_day) && switch_mon==_month)
+            {
+
+                date_verify=true;
+            }
+
+        }
+        else
+        {
+            date_verify=true;
+        }
+        //if
+        //--------------Time----------------------------------------
+        if(switch_time!="")
+        {
+
+            var _time:Number=Number(date.split("|")[1]);
+
+            if(Number(switch_time)==_time)
+            {
+                time_verify=true;
+            }
+            //if
+        }
+        else
+        {
+            time_verify=true;
+        }
+        //if
+        //------------------------------------------------------
+        DebugTrace.msg("SceneCommand.switchGateway date_verify="+date_verify+",time_verify="+time_verify+
+                ",local_verify="+local_verify);
+
+
+        //disable story system-------------------------------
+        if(disable_story){
+            verify=false;
+            date_verify=false;
+            time_verify=false;
+            local_verify=false;
+            type="";
+        }
+
+        //----------------------------------------------
+
+
+
+        if(date_verify && time_verify && local_verify && switchID!="")
         {
             verify=true;
             ViewsContainer.gameinfo.visible=false;
@@ -715,6 +844,19 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
         }
 
         showChat();
+    }
+
+    private function praseTwinFlameFormat(name:String):String{
+
+        if(name.indexOf("@@@")!=-1){
+
+            var twinflame:String=DataContainer.TwinFlame;
+            if(twinflame){
+                twinflame=twinflame.toLowerCase();
+                name=name.split("@@@").join(twinflame);
+            }
+        }
+        return name;
     }
 
 }

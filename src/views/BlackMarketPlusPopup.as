@@ -232,7 +232,7 @@ public class BlackMarketPlusPopup extends Sprite {
             loves[character]=_se;
             flox.save("love",loves);
 
-            var skills=flox.getSaveData("skills");
+            var skills:Object=flox.getSaveData("skills");
             skills[character]=_skills;
             flox.save("skills",skills);
 

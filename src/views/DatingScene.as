@@ -122,8 +122,8 @@ public class DatingScene extends Scenes {
         mood = moodObj[dating];
 
         initLayout();
-        var customAssets:CusomAssets=new CusomAssets();
-        customAssets.checkRatingAssets();
+        //var customAssets:CusomAssets=new CusomAssets();
+        //customAssets.checkRatingAssets();
     }
 
     private function doUpdateDatingInfo(e:Event):void {

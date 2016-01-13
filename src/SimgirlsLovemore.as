@@ -4,6 +4,7 @@ import com.demonsters.debugger.MonsterDebugger;
 import com.gamua.flox.Player;
 import com.greensock.TweenMax;
 import com.greensock.loading.LoaderMax;
+import com.greensock.loading.LoaderMax;
 import com.greensock.loading.SWFLoader;
 
 import events.GameEvent;
@@ -96,7 +97,7 @@ public class SimgirlsLovemore extends MovieClip
 
 
 	private var manager:Boolean=false;
-	public static var previewStory:Boolean=false;
+	public static var previewStory:Boolean=true;
 
 	public static var verifyKey:String;
 	private var longinUI:MovieClip;
@@ -222,12 +223,14 @@ public class SimgirlsLovemore extends MovieClip
 			case "remove_waving":
 				try
 				{
-					LoaderMax.getLoader("waving").unload();
+					//LoaderMax.getLoader("waving").unload();
+					var queue:LoaderMax=ViewsContainer.loaderQueue;
+					queue.empty(true,true);
 
 				}
 				catch(e:Error)
 				{
-					DebugTrace.msg("SimgirlsLovemore.displayHandler remove_waving null waving");
+					DebugTrace.msg("SimgirlsLovemore.displayHandler waving Null");
 				}
 				break;
 			case "comcloud":
@@ -307,12 +310,12 @@ public class SimgirlsLovemore extends MovieClip
 				topview.removeChild(assetsform);
 				break;
 			case "battle":
-
+				command.stopSound("MapWaves");
 				battlescene=new BattleScene();
 				topview.addChild(battlescene);
 				break;
 			case "remove_battle":
-				var queue:LoaderMax=ViewsContainer.loaderQueue;
+				queue=ViewsContainer.loaderQueue;
 				queue.empty(true,true);
 				topview.removeChild(battlescene);
 				break;

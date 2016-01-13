@@ -60,6 +60,7 @@ package controller
 //			{
 //				name=name+attrs.gender;
 //			}
+
 			DebugTrace.msg("ChangeFormationScene.createAvatar name="+name);
 			var texture:Texture=Assets.getTexture(name+"Rdy");
 			var img:Image=new Image(texture);

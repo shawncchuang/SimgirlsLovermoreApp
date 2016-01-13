@@ -36,7 +36,8 @@ public class WordsSlide
 
 
 			juggler = Starling.juggler;
-			juggler.repeatCall(onSlideNext,0.008,sentence.length)
+			juggler.repeatCall(onSlideNext,0.008,sentence.length);
+
 
 		}
 		private function onSlideNext():void

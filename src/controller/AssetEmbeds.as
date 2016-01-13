@@ -892,7 +892,44 @@ public class AssetEmbeds
     [Embed(source="../../media/textures/characters/booses/tiger.png")]
     public static const npc046:Class;
 
+    [Embed(source="../../media/textures/characters/booses/primero2.png")]
+    public static const npc047:Class;
+    [Embed(source="../../media/textures/characters/booses/rufus1.png")]
+    public static const npc048:Class;
+    [Embed(source="../../media/textures/characters/booses/rufus2.png")]
+    public static const npc049:Class;
+    [Embed(source="../../media/textures/characters/booses/rufus3.png")]
+    public static const npc050:Class;
+    [Embed(source="../../media/textures/characters/booses/shinichi1.png")]
+    public static const npc051:Class;
+    [Embed(source="../../media/textures/characters/booses/simman1.png")]
+    public static const npc052:Class;
+    [Embed(source="../../media/textures/characters/booses/tiger1.png")]
+    public static const npc053:Class;
+    [Embed(source="../../media/textures/characters/booses/vodka1.png")]
+    public static const npc054:Class;
+    [Embed(source="../../media/textures/characters/booses/simman2.png")]
+    public static const npc055:Class;
 
+    [Embed(source="../../media/textures/characters/kiss/ceilkiss.png")]
+    public static const npc056:Class;
+    [Embed(source="../../media/textures/characters/kiss/deakiss.png")]
+    public static const npc057:Class;
+    [Embed(source="../../media/textures/characters/kiss/klairekiss.png")]
+    public static const npc058:Class;
+    [Embed(source="../../media/textures/characters/kiss/lenuskiss.png")]
+    public static const npc059:Class;
+    [Embed(source="../../media/textures/characters/kiss/sirenakiss.png")]
+    public static const npc060:Class;
+    [Embed(source="../../media/textures/characters/kiss/tomorukiss.png")]
+    public static const npc061:Class;
+
+    [Embed(source="../../media/textures/characters/booses/xenos1.png")]
+    public static const npc062:Class;
+
+
+    [Embed(source="../../media/textures/characters/styles/ceil/twin.png")]
+    public static const ceil_twin:Class;
     [Embed(source="../../media/textures/characters/styles/ceil/battle.png")]
     public static const ceil_battle:Class;
     [Embed(source="../../media/textures/characters/styles/ceil/casual1.png")]
@@ -932,7 +969,8 @@ public class AssetEmbeds
     [Embed(source="../../media/textures/characters/styles/ceil/night.png")]
     public static const ceil_night:Class;
 
-
+    [Embed(source="../../media/textures/characters/styles/dea/twin.png")]
+    public static const dea_twin:Class;
     [Embed(source="../../media/textures/characters/styles/dea/battle.png")]
     public static const dea_battle:Class;
     [Embed(source="../../media/textures/characters/styles/dea/casual1.png")]
@@ -973,6 +1011,8 @@ public class AssetEmbeds
     public static const dea_towel:Class;
 
 
+    [Embed(source="../../media/textures/characters/styles/klr/twin.png")]
+    public static const klr_twin:Class;
     [Embed(source="../../media/textures/characters/styles/klr/battle.png")]
     public static const klr_battle:Class;
     [Embed(source="../../media/textures/characters/styles/klr/casual1.png")]
@@ -1010,7 +1050,8 @@ public class AssetEmbeds
     [Embed(source="../../media/textures/characters/styles/klr/work.png")]
     public static const klr_work:Class;
 
-
+    [Embed(source="../../media/textures/characters/styles/lenus/twin.png")]
+    public static const lenus_twin:Class;
     [Embed(source="../../media/textures/characters/styles/lenus/battle.png")]
     public static const lenus_battle:Class;
     [Embed(source="../../media/textures/characters/styles/lenus/casual1.png")]
@@ -1040,9 +1081,10 @@ public class AssetEmbeds
     [Embed(source="../../media/textures/characters/styles/lenus/club.png")]
     public static const lenus_club:Class;
 
-
     [Embed(source="../../media/textures/characters/styles/sao/battle.png")]
     public static const sao_battle:Class;
+    [Embed(source="../../media/textures/characters/styles/sao/battle1.png")]
+    public static const sao_battle1:Class;
     [Embed(source="../../media/textures/characters/styles/sao/casual1.png")]
     public static const sao_casual1:Class;
     [Embed(source="../../media/textures/characters/styles/sao/dojo.png")]
@@ -1053,6 +1095,8 @@ public class AssetEmbeds
     public static const sao_swimsuit:Class;
 
 
+    [Embed(source="../../media/textures/characters/styles/sirena/twin.png")]
+    public static const sirena_twin:Class;
     [Embed(source="../../media/textures/characters/styles/sirena/battle.png")]
     public static const sirena_battle:Class;
     [Embed(source="../../media/textures/characters/styles/sirena/casual1.png")]
@@ -1095,7 +1139,8 @@ public class AssetEmbeds
     public static const sirena_night:Class;
 
 
-
+    [Embed(source="../../media/textures/characters/styles/tomoru/twin.png")]
+    public static const tomoru_twin:Class;
     [Embed(source="../../media/textures/characters/styles/tomoru/battle.png")]
     public static const tomoru_battle:Class;
     [Embed(source="../../media/textures/characters/styles/tomoru/casual1.png")]
@@ -1135,7 +1180,8 @@ public class AssetEmbeds
     [Embed(source="../../media/textures/characters/styles/tomoru/work.png")]
     public static const tomoru_work:Class;
 
-
+    [Embed(source="../../media/textures/characters/styles/zack/twin.png")]
+    public static const zack_twin:Class;
     [Embed(source="../../media/textures/characters/styles/zack/casual1.png")]
     public static const zack_casual1:Class;
     [Embed(source="../../media/textures/characters/styles/zack/casual2.png")]
@@ -1160,7 +1206,6 @@ public class AssetEmbeds
     public static const zack_swimsuit:Class;
     [Embed(source="../../media/textures/characters/styles/zack/club.png")]
     public static const zack_club:Class;
-
 
 
     /*------------------characters-------------------------------------------------*/

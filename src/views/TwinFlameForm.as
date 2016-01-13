@@ -10,6 +10,7 @@ import controller.SceneCommnad;
 import controller.SceneInterface;
 
 import data.Config;
+import data.DataContainer;
 
 import events.SceneEvent;
 
@@ -56,19 +57,16 @@ public class TwinFlameForm extends Sprite{
         twinflameMask=new Image(maskTexture);
         addChild(twinflameMask);
 
-        var _title:String="Please...";
+        var _title:String="";
         title=new TextField(1024,45,_title,font,20,0xFFFFFF);
         title.y=640;
         addChild(title);
 
 
         var characters:Array=Config.datingCharacters;
+        var fullnames:Array=Config.fullnameCharacters;
         for(var i:uint=0;i<characters.length;i++) {
             var name:String = characters[i];
-            var nameStr:String=name.split(name.charAt(0)).join("");
-            var fisrtChar:String=name.charAt(0).toUpperCase();
-            var nameformat:String=fisrtChar+nameStr;
-
             var ch:String=characters[i];
             var texture:Texture=Assets.getTexture(ch+"Facials");
             var xml:XML=Assets.getAtalsXML(ch+"FacialsXML");
@@ -77,10 +75,10 @@ public class TwinFlameForm extends Sprite{
             var img:Image=new Image(_texture);
             img.smoothing=TextureSmoothing.TRILINEAR;
             var btn:Button=new Button();
-            btn.name=nameformat;
+            btn.name=name;
             btn.defaultIcon=img;
             btn.iconPosition=Button.ICON_POSITION_TOP;
-            btn.label=nameformat;
+            btn.label=fullnames[i];
             btn.x = i * 85+230;
             btn.y = 680;
             btn.scaleX=0.35;
@@ -113,6 +111,8 @@ public class TwinFlameForm extends Sprite{
             if(!SimgirlsLovemore.previewStory){
 
                 flox.save("twinflame",target.name);
+            }else{
+                DataContainer.TwinFlame=target.name;
             }
             removeHandler();
 

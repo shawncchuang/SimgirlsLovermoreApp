@@ -1,10 +1,14 @@
 package views
 {
 	//import com.emibap.textureAtlas.DynamicAtlas;
-	
+
 	import controller.Assets;
-	
-	import model.WordsSlide;
+import controller.FloxCommand;
+import controller.FloxInterface;
+
+import data.DataContainer;
+
+import model.WordsSlide;
 	
 	import starling.animation.Transitions;
 	import starling.animation.Tween;
@@ -47,18 +51,42 @@ public class MyTalkingDisplay extends Sprite
 			
 			
 		}
-		public function addTextField(sentence:String,callback:Function=null):void
+		public function addTextField(sentance:String,callback:Function=null):void
 		{
 			//Starling.juggler.remove(tween);
 			addMask();
 			onTalkingComplete=callback;
+
+
+			var first_name:String="First Name";
+			var twinflame:String=null;
+
+			if(!SimgirlsLovemore.previewStory){
+
+				var flox:FloxInterface=new FloxCommand();
+				first_name=flox.getSaveData("first_name");
+				twinflame=flox.getSaveData("twinflame");
+			}else{
+				twinflame=DataContainer.TwinFlame;
+			}
+
+			if(twinflame){
+				twinflame=twinflame.toLowerCase();
+			}
+
+			sentance=sentance.split("<>").join(",");
+			sentance=sentance.split("player|").join("");
+			sentance=sentance.split("$$$").join(first_name);
+			sentance=sentance.split("@@@").join(twinflame);
+
+
 			subtitle=new TextField(785,120,"","SimImpact",24,0xFFFFFF);
 			subtitle.hAlign="center";
 			subtitle.autoScale=true;
 			subtitle.x=125;
 			subtitle.y=650;
 		    addChild(subtitle);
-		    new WordsSlide(this,subtitle,sentence);
+		    new WordsSlide(this,subtitle,sentance);
 			this.addEventListener(MyTalkingDisplay.TALKING_COMPLETE,onCompleteWordsSlide);
 		}
 		 

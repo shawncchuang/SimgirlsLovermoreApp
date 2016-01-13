@@ -630,7 +630,7 @@ public class DrawManager implements DrawerInterface
         DebugTrace.msg("DrawManager.drawBackground src="+src);
         //DebugTrace.msg("DrawManager.drawBackground  DataContainer.currentLabel="+DataContainer.currentLabel);
         var date:String="";
-        if(src=="HomePageScene"){
+        if(src=="HomePageScene" || SimgirlsLovemore.previewStory){
             var playerInfo:Object=Config.PlayerAttributes();
             date=playerInfo.date;
         }else{

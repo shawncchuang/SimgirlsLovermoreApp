@@ -61,6 +61,7 @@ public class DataContainer
     private static var player_fullname:Object;
     private static var styles_schedule:Object;
     private static var nextswitch:String;
+    private static var twinflame:String;
     public static function set AssetsId(ids:Array):void
     {
         assets_id=ids;
@@ -874,6 +875,12 @@ public class DataContainer
     public static function get NextSwitch():String{
 
        return  nextswitch;
+    }
+    public static function set TwinFlame(name:String):void{
+        twinflame=name;
+    }
+    public static function get TwinFlame():String{
+        return twinflame;
     }
 }
 }

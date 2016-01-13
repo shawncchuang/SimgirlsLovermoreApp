@@ -245,8 +245,9 @@ public class BlackMarketScene extends Scenes
 				type=e.data.removed;
 				gameEvent._name="clear_comcloud";
 				gameEvent.displayHandler();
-				flox.refreshPlayer(onRefreshComplete);
 
+				//flox.refreshPlayer(onRefreshComplete);
+				onRefreshComplete();
 				break
 			case "ani_complete":
 

@@ -21,11 +21,7 @@ package controller
 		public static const BattleDefeat:Class;
 		
 		[Embed(source="../../media/textures/music/foodchase.mp3")]
-		public static const FoodChase:Class;
-		
-		
-		[Embed(source="../../media/textures/music/mayhem.mp3")]
-		public static const Mayhem:Class;
+		public static const foodchase:Class;
 
 
 		[Embed(source="../../media/textures/music/characters/ceil.mp3")]
@@ -58,9 +54,6 @@ package controller
 		[Embed(source="../../media/textures/music/ironic.mp3")]
 		public static const ironic:Class;
 
-		[Embed(source="../../media/textures/music/yesdoit.mp3")]
-		public static const yesdoit:Class;
-
 		[Embed(source="../../media/textures/music/robotdance.mp3")]
 		public static const robotdance:Class;
 
@@ -72,6 +65,30 @@ package controller
 
 		[Embed(source="../../media/textures/music/clubmusic.mp3")]
 		public static const clubmusic:Class;
+
+		[Embed(source="../../media/textures/music/dance.mp3")]
+		public static const dance:Class;
+
+		[Embed(source="../../media/textures/music/danger.mp3")]
+		public static const danger:Class;
+
+		[Embed(source="../../media/textures/music/horror.mp3")]
+		public static const horror:Class;
+
+		[Embed(source="../../media/textures/music/bababa.mp3")]
+		public static const bababa:Class;
+
+		[Embed(source="../../media/textures/music/crazy.mp3")]
+		public static const crazy:Class;
+
+		[Embed(source="../../media/textures/music/gangster.mp3")]
+		public static const gangster:Class;
+
+		[Embed(source="../../media/textures/music/captainrising.mp3")]
+		public static const captainrising:Class;
+
+		[Embed(source="../../media/textures/music/precioustime.mp3")]
+		public static const precioustime:Class;
 
 	}
 }
