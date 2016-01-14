@@ -115,10 +115,11 @@ public class SaveandLoadList extends Sprite
     {
         var saverecord:Array=DataContainer.SaveRecord;
         empty_max=3-saverecord.length;
+
         var inGameProgress:Number=flox.getPlayerData("inGameProgress");
 
         DebugTrace.msg("SaveandLoadList.renderSavedbar saverecord:"+saverecord.length);
-        if(_type=="Arrive")
+        if(_type=="Load")
         {
             var title:String="Load Game";
         }
@@ -178,6 +179,10 @@ public class SaveandLoadList extends Sprite
         var saverecord:Array=DataContainer.SaveRecord;
         var recods:uint=saverecord.length;
         var emptybars:Array=new Array();
+        empty_max=1;
+        if(recods==3){
+            empty_max=0;
+        }
         for(var i:uint=0;i<empty_max;i++)
         {
             var empty_texture:Texture=Assets.getTexture("Empty");
@@ -224,7 +229,7 @@ public class SaveandLoadList extends Sprite
             save_new=false;
             current_saved=flox.getPlayerData("saved");
             DebugTrace.msg("SaveandLoadList.doSaveLoadListTouched target:"+target.name+" ; saved:"+current_saved);
-            if(_type=="Depart")
+            if(_type=="Save")
             {
                 //Do save
 
@@ -234,20 +239,37 @@ public class SaveandLoadList extends Sprite
 
                     _data=null;
                     progress=Number(selbar.split("saved").join(""));
-                    current_saved[progress-1]="saved"+progress;
+                    var index:Number=current_saved.indexOf(selbar);
+                    current_saved[index]=selbar;
                 }
                 //if
                 if(selbar.indexOf("emptybar")!=-1)
                 {
-                    DebugTrace.msg("Write into empty");
+
                     save_new=true;
+                    progress=Number(selbar.split("emptybar").join(""))+1;
 
-                    progress=current_saved.length+1;
-                    current_saved.push("saved"+progress);
 
+                    if(current_saved.indexOf(selbar)!=-1){
+                        index=current_saved.indexOf(selbar);
+                        current_saved[index]="saved"+progress;
+                    }else{
+
+                        if(current_saved.length-1 < progress){
+                            current_saved.push("saved"+progress);
+                        }else{
+                            current_saved[progress]="saved"+progress;
+                        }
+
+
+
+                    }
+                    //DebugTrace.msg("SaveandLoadList.doSaveLoadListTouched");
+                    //DebugTrace.msg("Write into empty progress="+progress);
 
                 }
 
+                DebugTrace.msg("Save progress="+progress);
                 displayConfirm();
             }
             else
@@ -266,21 +288,21 @@ public class SaveandLoadList extends Sprite
                 else
                 {
                     //load empty
-                    msg="Empty Data.Please create new game!!";
+                    msg="Empty Data.Please save game first!!";
                     displayLoadEmptyConfirm();
                 }
-
+                DebugTrace.msg("Load progress="+progress);
             }
             //if
 
-            target.removeEventListener(TouchEvent.TOUCH,doSaveLoadListTouched);
+            //target.removeEventListener(TouchEvent.TOUCH,doSaveLoadListTouched);
         }
         //if
     }
     private function onSavePlayerComplete():void
     {
 
-        if(_type=="Departures")
+        if(_type=="Save")
         {
             //var _data:Object=new Object();
             //_data.cash=uint(Math.random()*20000);
@@ -408,7 +430,7 @@ public class SaveandLoadList extends Sprite
         command.topviewDispatch(TopViewEvent.REMOVE,_data);
 
         //flox.savePlayer(playerData,onSavePlayerComplete);
-        if(_type=="Depart"){
+        if(_type=="Save"){
             //save game
 
             flox.savePlayerData("inGameProgress",progress);

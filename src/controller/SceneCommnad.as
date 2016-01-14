@@ -378,6 +378,7 @@ public class SceneCommnad implements SceneInterface
                     }
                     if(display_container[target]){
                         var _character:Image= display_container[target];
+                        Starling.juggler.removeTweens(_character);
                         _character.dispose();
                         _character.removeFromParent(true);
                         display_container[target]=null;
@@ -539,17 +540,13 @@ public class SceneCommnad implements SceneInterface
         display_container[name]=character;
 
 
-        var tween:Tween=new Tween(character,0.5);
+        var tween:Tween=new Tween(character,0.2);
         tween.fadeTo(1);
-        tween.onComplete=onCharacterDisplayed;
         Starling.juggler.add(tween);
 
 
     }
-    private function onCharacterDisplayed():void
-    {
-        Starling.juggler.removeTweens(character);
-    }
+
     public function movingCharacter(target:String,dir:String):void
     {
         DebugTrace.msg("ChatCommand.movingCharacter target:"+target+" ;dir:"+dir);
@@ -617,8 +614,8 @@ public class SceneCommnad implements SceneInterface
 
     }
     private function onFinishAnimated():void{
-        var queue:LoaderMax=ViewsContainer.loaderQueue;
-        queue.empty(true,true);
+//        var queue:LoaderMax=ViewsContainer.loaderQueue;
+//        queue.empty(true,true);
 
     }
 

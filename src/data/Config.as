@@ -95,7 +95,8 @@ public class Config
         "sirenakiss":"npc059",
         "tomorukiss":"npc060",
         "zackkiss":"npc061",
-        "xenos1":"npc062"
+        "xenos1":"npc062",
+        "sana1":"npc063"
     };
     //schedule [index+ current month]
     public static var scheduleIndex:Object={"lenus":88,"sirena":12,"dea":25,"sao":38,"klr":51,"tomoru":64,"ceil":77,"zack":38};

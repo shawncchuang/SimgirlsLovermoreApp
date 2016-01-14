@@ -923,10 +923,10 @@ public class AssetEmbeds
     public static const npc060:Class;
     [Embed(source="../../media/textures/characters/kiss/tomorukiss.png")]
     public static const npc061:Class;
-
     [Embed(source="../../media/textures/characters/booses/xenos1.png")]
     public static const npc062:Class;
-
+    [Embed(source="../../media/textures/characters/booses/sana1.png")]
+    public static const npc063:Class;
 
     [Embed(source="../../media/textures/characters/styles/ceil/twin.png")]
     public static const ceil_twin:Class;

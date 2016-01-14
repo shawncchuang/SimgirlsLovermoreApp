@@ -56,8 +56,8 @@ package views
 			var _data:Object=new Object();
 			switch(e.data.removed)
 			{
-				case "Depart":
-				case "Arrive":
+				case "Save":
+				case "Load":
 					saveloadlist=new SaveandLoadList(e.data.removed);
 					saveloadlist.x=Starling.current.stage.stageWidth/2;
 					saveloadlist.y=Starling.current.stage.stageHeight/2;

@@ -97,7 +97,7 @@ public class SimgirlsLovemore extends MovieClip
 
 
 	private var manager:Boolean=false;
-	public static var previewStory:Boolean=true;
+	public static var previewStory:Boolean=false;
 
 	public static var verifyKey:String;
 	private var longinUI:MovieClip;
@@ -490,7 +490,7 @@ public class SimgirlsLovemore extends MovieClip
 
 		var vp:Rectangle=new flash.geom.Rectangle(0, 0, 1024, 768);
 		_starling=new Starling(Game,stage,vp,null,"auto","auto");
-		_starling.showStats=true;
+		_starling.showStats=false;
 		Starling.current.nativeStage.frameRate = 30;
 		//_starling.enableErrorChecking=Capabilities.isDebugger;
 

@@ -29,6 +29,7 @@ import starling.textures.Texture;
 import starling.textures.TextureSmoothing;
 
 import utils.DebugTrace;
+import utils.ViewsContainer;
 
 
 public class MediaCommand implements MediaInterface
@@ -79,10 +80,14 @@ public class MediaCommand implements MediaInterface
         DebugTrace.msg("MediaCommmand.onLoaderComplete id="+_id);
         var swfloader:SWFLoader = LoaderMax.getLoader(_id);
 
-        if(swfloader.rawContent)
-        swfloader.rawContent.addEventListener(flash.events.Event.ENTER_FRAME, onActComplete);
+        if(swfloader.rawContent){
+            swfloader.rawContent.addEventListener(flash.events.Event.ENTER_FRAME, onActComplete);
+            swfloader.rawContent.addEventListener(flash.events.Event.REMOVED_FROM_STAGE,onLoaderRemoved);
+        }
+
 
     }
+
     private function onActComplete(e:flash.events.Event):void{
 
 
@@ -92,16 +97,40 @@ public class MediaCommand implements MediaInterface
            e.target.stop();
            //TweenMax.to(act,0.5,{alpha:0,onComplete:onCompleteSwfFadeOut})
            onCompleteSwfFadeOut();
+
        }
+
+    }
+    private function onLoaderRemoved(e:flash.events.Event):void{
+        e.target.removeEventListener(flash.events.Event.ENTER_FRAME, onActComplete);
+        e.target.removeEventListener(flash.events.Event.REMOVED_FROM_STAGE, onLoaderRemoved);
+        e.target.stop();
+        onCompleteSwfFadeOut();
 
     }
     private function onCompleteSwfFadeOut():void{
 
 
-        LoaderMax.getLoader(_id).unload();
 
-        Starling.current.nativeOverlay.removeChild(act);
-        onTransFormComplete();
+        try{
+//            var queue:LoaderMax=ViewsContainer.loaderQueue;
+//            queue.empty(true,true);
+
+            LoaderMax.getLoader(_id).unload();
+
+            Starling.current.nativeOverlay.removeChild(act);
+
+        }catch(error){
+            DebugTrace.msg("MediaCommand.onCompleteSwfFadeOut LoaderMax upload Null");
+        }
+
+        try {
+            onTransFormComplete();
+        }
+        catch(error){
+            DebugTrace.msg("MediaCommand.onCompleteSwfFadeOut,onTransFormComplete Null");
+        }
+
 
     }
 
