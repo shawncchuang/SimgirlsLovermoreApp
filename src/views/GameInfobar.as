@@ -130,7 +130,7 @@ public class GameInfobar extends Sprite
         this.addEventListener("REMOVE",onRemovedHandler);
         this.addEventListener("DISPLAY",onDisplayHandler);
         this.addEventListener("DRAW_PROFILE",onDrawProfile);
-        this.addEventListener("DISPLAY",onDisplayHandle);
+
         this.addEventListener("UPDATE_PROFILE",onUpdateProfile);
 
         this.dispatchEventWith("UPDATE_INFO");
@@ -152,7 +152,7 @@ public class GameInfobar extends Sprite
         player_icon.visible=true;
         //proTxt.visible=true;
 
-        var current_dating:String=flox.getSaveData("dating");
+        current_dating=flox.getSaveData("dating");
         if(current_dating!=""){
             dating_icon.visible=true;
         }
@@ -356,7 +356,7 @@ public class GameInfobar extends Sprite
         if(hover)
         {
 
-            var tween:Tween=new Tween(morebar,0.2,Transitions.EASE_OUT)
+            var tween:Tween=new Tween(morebar,0.2,Transitions.EASE_OUT);
             tween.animate("y",77);
             tween.fadeTo(1);
             Starling.juggler.add(tween);
@@ -387,7 +387,7 @@ public class GameInfobar extends Sprite
             //morebar.y=-217;
             morebar.visible=false;
             profileFadeout();
-            datingProfileFadeout();
+           // datingProfileFadeout();
             gameInfobarFadeout();
 
 
@@ -412,6 +412,16 @@ public class GameInfobar extends Sprite
     {
         DebugTrace.msg("GameInfobar.onDrawProfile");
         player_icon.visible=true;
+
+        current_dating=flox.getSaveData("dating");
+        if(current_dating!=""){
+            if(!dating_icon){
+                this.dispatchEventWith("UPDATE_DATING");
+            }else{
+                dating_icon.visible=true;
+            }
+
+        }
 //        try{
 //
 //            player_icon.removeFromParent(true);
@@ -484,24 +494,14 @@ public class GameInfobar extends Sprite
 
     private function profileFadeout():void
     {
-
+        DebugTrace.msg("GameInfobar.profileFadeout");
         current_dating=flox.getSaveData("dating");
         if(current_dating!=""){
-            dating_icon.removeFromParent(true);
+            dating_icon.visible=false;
 
         }
         player_icon.visible=false;
-        //player_icon.removeFromParent(true);
-//        var tween:Tween=new Tween(player_icon,0.3,Transitions.EASE_IN_OUT);
-//        tween.fadeTo(0);
-//        tween.onComplete=function():void{
-//            Starling.juggler.removeTweens(player_icon);
-//            player_icon.removeFromParent(true);
-//
-//
-//
-//        };
-//        Starling.juggler.add(tween);
+
 
     }
 
@@ -511,14 +511,7 @@ public class GameInfobar extends Sprite
         current_dating=flox.getSaveData("dating");
         if(current_dating!="") {
             dating_icon.removeFromParent(true);
-
-//            var tween:Tween = new Tween(dating_icon, 0.1, Transitions.EASE_IN_OUT);
-//            tween.fadeTo(0);
-//            tween.onComplete = function ():void{
-//                Starling.juggler.removeTweens(dating_icon);
-//                dating_icon.removeFromParent(true);
-//            };
-//            Starling.juggler.add(tween);
+            dating_icon=null;
 
         }
 
@@ -671,9 +664,12 @@ public class GameInfobar extends Sprite
     }
     private function onCancelDating(e:Event):void{
 
+        DebugTrace.msg("GamseIfnobar.onCancelDating");
 
         try{
             dating_icon.removeFromParent(true);
+
+            dating_icon=null;
         }catch(e:Error){
 
             DebugTrace.msg("GamseIfnobar.onCancelDating dating_icon=Null");

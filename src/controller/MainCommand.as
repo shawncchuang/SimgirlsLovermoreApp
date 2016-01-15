@@ -2321,10 +2321,10 @@ public class MainCommand implements MainInterface {
                 break
             case Keyboard.Q:
                 toScene="MainScene";
-                var datingnow:String=flox.getSaveData("dating");
-                if(datingnow==""){
-                    DataContainer.currentDating=null;
-                }
+//                var datingnow:String=flox.getSaveData("dating");
+//                if(datingnow==""){
+//                    DataContainer.currentDating=null;
+//                }
                 break
             case Keyboard.H:
                 DataContainer.shortcuts="Rest";

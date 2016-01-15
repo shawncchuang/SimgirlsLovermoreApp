@@ -142,7 +142,7 @@ public class SceneCommnad implements SceneInterface
 
         var library:Array=flox.getSyetemData("scenelibrary");
         talks=library[part_index];
-        //DebugTrace.msg("SceneCommand.datingComCloudHandle library["+part_index+"]:"+talks);
+        DebugTrace.msg("SceneCommand.datingComCloudHandle library["+part_index+"]:"+talks);
 
         var dating:String=flox.getSaveData("dating");
         DebugTrace.msg("SceneCommand.datingComCloudHandle dating="+dating);
@@ -180,7 +180,10 @@ public class SceneCommnad implements SceneInterface
             if(talks.indexOf("choice|ComCloud_R1_Start^Dating")!=-1){
                 rIndex=0;
                 _bg=talks[0];
-                talks.shift();
+                var datingIndex:Number=talks.indexOf("choice|ComCloud_R1_Start^Dating");
+                var _talks:Array=talks.splice(datingIndex);
+                _talks.shift();
+                talks=talks.concat(_talks);
 
                 for(var k:uint=0;k<talks.length;k++){
 
@@ -194,12 +197,26 @@ public class SceneCommnad implements SceneInterface
                         }
 
                     }
+
                 }
-                talks.unshift(_bg);
+
+//                if(talks.indexOf("choice|ComCloud_R2_Look^Around")!=-1){
+//                    var comStr:String="choice|ComCloud_R2_Look^Around";
+//                    var index:Number=talks.indexOf(comStr);
+//                    talks[index]=String(comStr.split("R2").join("R1"));
+//                }
+//
+//                if(talks.indexOf("choice|ComCloud_R3_^Leave")!=1){
+//                    comStr="choice|ComCloud_R3_^Leave";
+//                    index=talks.indexOf(comStr);
+//                    talks[index]=String(comStr.split("R3").join("R2"));
+//                }
 
             }
+
         }
-        //DebugTrace.msg("SceneCommand.datingHandle talks:"+talks);
+        library[part_index]=talks;
+        DebugTrace.msg("SceneCommand.datingHandle talks:"+talks);
 
 
     }
@@ -278,6 +295,7 @@ public class SceneCommnad implements SceneInterface
     private function showChat():void
     {
         DebugTrace.msg("SceneCommand.showChat talk_index="+talk_index);
+
         com_content=talks[talk_index];
         DebugTrace.msg("SceneCommand.showChat com_content:"+com_content);
         var comlists:Array=com_content.split("|");
@@ -530,11 +548,26 @@ public class SceneCommnad implements SceneInterface
             _ch_pos={"center":new Point(50.5,0),"left":new Point(0,0),"right":new Point(109,0)};
         }
 
+
         var pos:Point=new Point(_ch_pos[p].x,_ch_pos[p].y);
         character=new Image(texture);
         character.name=name;
         character.alpha=0;
-        character.x=pos.x;
+        switch(p){
+            case "center":
+
+                character.x=int(Starling.current.stage.stageWidth/2);
+                break
+            case "left":
+                character.x=character.width/4;
+                break
+            case "right":
+                character.x=int(Starling.current.stage.stageWidth-character.width/4);
+                break
+        }
+
+        ch_pos[p]=new Point(character.x,0);
+
         character.y=pos.y;
         _target.addChild(character);
         display_container[name]=character;

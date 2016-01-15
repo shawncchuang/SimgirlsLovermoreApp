@@ -461,27 +461,39 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
             _ch_pos={"center":new Point(50.5,0),"left":new Point(0,0),"right":new Point(109,0)};
         }
 
+
         var pos:Point=new Point(_ch_pos[p].x,_ch_pos[p].y);
         character=new Image(texture);
         character.name=name;
         character.alpha=0;
-        character.x=pos.x;
+        character.pivotX=int(character.width/2);
+        switch(p){
+           case "center":
+
+               character.x=int(Starling.current.stage.stageWidth/2);
+                break
+            case "left":
+                character.x=character.width/4;
+                break
+            case "right":
+                character.x=int(Starling.current.stage.stageWidth-character.width/4);
+                break
+        }
+
+        ch_pos[p]=new Point(character.x,0);
+
         character.y=pos.y;
         _target.addChild(character);
         display_container[name]=character;
 
 
-        var tween:Tween=new Tween(character,0.5);
+        var tween:Tween=new Tween(character,0.2);
         tween.fadeTo(1);
-        tween.onComplete=onCharacterDisplayed;
         Starling.juggler.add(tween);
 
 
     }
-    private function onCharacterDisplayed():void
-    {
-        Starling.juggler.removeTweens(character);
-    }
+
     public function movingCharacter(target:String,dir:String):void
     {
         DebugTrace.msg("ChatCommand.movingCharacter target:"+target+" ;dir:"+dir);

@@ -384,7 +384,7 @@ public class MenuScene extends Scenes
         if(click_type=="Cancel")
         {
             click_type=DataContainer.currentScene;
-            gameinfo.dispatchEventWith("UPDATE_DATING");
+            gameinfo.dispatchEventWith("UPDATE_PROFILE");
 
         }
 
