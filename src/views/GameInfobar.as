@@ -387,7 +387,7 @@ public class GameInfobar extends Sprite
             //morebar.y=-217;
             morebar.visible=false;
             profileFadeout();
-           // datingProfileFadeout();
+            // datingProfileFadeout();
             gameInfobarFadeout();
 
 
@@ -421,14 +421,17 @@ public class GameInfobar extends Sprite
                 dating_icon.visible=true;
             }
 
+        }else{
+            try{
+
+                dating_icon.removeFromParent(true);
+                dating_icon=null;
+            }catch(e:Error){
+                DebugTrace.msg("GameInfobar.onDrawProfile  dating_icon Null");
+            }
+
         }
-//        try{
-//
-//            player_icon.removeFromParent(true);
-//        }catch(e:Error){
-//            DebugTrace.msg("GameInfobar remove  player_icon Error");
-//        }
-//        drawProfile();
+
     }
     private function drawProfile():void
     {
@@ -596,7 +599,7 @@ public class GameInfobar extends Sprite
         if(attr=="Rest"){
             attr="FreeRest";
             if(currentscene=="HotelScene")
-            attr="PayRest";
+                attr="PayRest";
         }
 
 

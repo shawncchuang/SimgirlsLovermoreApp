@@ -307,6 +307,7 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
                     }
                     if(display_container[target]){
                         var _character:Image= display_container[target];
+                        Starling.juggler.removeTweens(_character);
                         _character.dispose();
                         _character.removeFromParent(true);
                         display_container[target]=null;
@@ -385,6 +386,7 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
     }
     private function createTalkField():void
     {
+
         talkfield=new MyTalkingDisplay();
         talkfield.addTextField(talks[talk_index],onTalkingComplete);
         _target.addChild(talkfield);
@@ -467,20 +469,7 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
         character.name=name;
         character.alpha=0;
         character.pivotX=int(character.width/2);
-        switch(p){
-           case "center":
-
-               character.x=int(Starling.current.stage.stageWidth/2);
-                break
-            case "left":
-                character.x=character.width/4;
-                break
-            case "right":
-                character.x=int(Starling.current.stage.stageWidth-character.width/4);
-                break
-        }
-
-        ch_pos[p]=new Point(character.x,0);
+        setupPosition(p);
 
         character.y=pos.y;
         _target.addChild(character);
@@ -493,13 +482,31 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
 
 
     }
+    private  function setupPosition(pos:String):void{
 
-    public function movingCharacter(target:String,dir:String):void
+        switch(pos){
+            case "center":
+
+                character.x=int(Starling.current.stage.stageWidth/2);
+                break
+            case "left":
+                character.x=int(character.width/2);
+                break
+            case "right":
+                character.x=Starling.current.stage.stageWidth-character.width/2;
+                break
+        }
+
+        ch_pos[pos]=new Point(character.x,0);
+    }
+
+    public function movingCharacter(target:String,pos:String):void
     {
-        DebugTrace.msg("ChatCommand.movingCharacter target:"+target+" ;dir:"+dir);
+        DebugTrace.msg("PreviewStoryCommand.movingCharacter target:"+target+" ;pos:"+pos);
+        setupPosition(pos);
         var current_ch:Image=display_container[target];
-        moving_tween=new Tween(current_ch,0.5,Transitions.EASE_OUT);
-        moving_tween.animate("x",ch_pos[dir].x);
+        moving_tween=new Tween(current_ch,1,Transitions.EASE_OUT);
+        moving_tween.animate("x",ch_pos[pos].x);
         moving_tween.onComplete=onMovingComplete;
         Starling.juggler.add(moving_tween);
 
