@@ -30,7 +30,9 @@ public class Config
     //zack don't show up in somewhere
     public static const characters:Array=["lenus","sirena","dea","sao","klr","tomoru","ceil"];
     public static const datingCharacters:Array=["lenus","sirena","dea","zack","klr","tomoru","ceil"];
-    public static const fullnameCharacters:Array=["Lenus","Sirena","Dea","Zack","Klair","Tomoru","Ceil"];
+    public static const fullnameCharacters:Array=["Lenus","Sirena","Dea","Zack","Klaire","Tomoru","Ceil"];
+    public static const fullnames={"lenus":"Lenus","sirena":"Sirena","dea":"Dea","zack":"Zack",
+        "klr":"Klaire","tomoru":"Tomoru","ceil":"Ceil"};
     public static const CommanderItems:Array=[ { "qty": 3, "id": "com0" },{ "qty": 3, "id": "com1" }, { "qty": 3, "id": "com2" }, { "qty": 3, "id": "com3" } ];
     public static const NPC:Object={"daz":"npc001",
         "policestation":"npc002",
@@ -90,11 +92,12 @@ public class Config
 
         "ceilkiss":"npc056",
         "deakiss":"npc057",
-        "klairekiss":"npc058",
+        "klrkiss":"npc058",
         "lenuskiss":"npc058",
         "sirenakiss":"npc059",
         "tomorukiss":"npc060",
         "zackkiss":"npc061",
+
         "xenos1":"npc062",
         "sana1":"npc063"
     };
@@ -186,12 +189,12 @@ public class Config
     }
 
     public static var CriminalRanking:Array=[{"rank":"S","se":3200,"rewards":32000},
-{"rank":"A","se":2400,"rewards":24000},
-{"rank":"B","se":1600,"rewards":16000},
-{"rank":"C","se":800,"rewards":8000},
-{"rank":"D","se":400,"rewards":4000},
-{"rank":"E","se":200,"rewards":2000},
-{"rank":"F","se":100,"rewards":1000}];
+        {"rank":"A","se":2400,"rewards":24000},
+        {"rank":"B","se":1600,"rewards":16000},
+        {"rank":"C","se":800,"rewards":8000},
+        {"rank":"D","se":400,"rewards":4000},
+        {"rank":"E","se":200,"rewards":2000},
+        {"rank":"F","se":100,"rewards":1000}];
 
     public static function set AccType(value:String):void
     {
@@ -326,10 +329,10 @@ public class Config
     }
     public static function get allScenes():Array{
         var scenes:Array=["Hotel","Airport","SSCCArena","Academy","SpiritTemple",
-                "Museum","PoliceStation","Casino","SportsBar","Nightclub",
-                "LovemoreMansion","ShoppingCentre","FitnessClub","Beach","Park",
-                "Cinema","Pier","Restaurant","HotSpring","ThemedPark",
-                "Bank","PrivateIsland","Garden","BlackMarket","ChangingRoom","CoffeeShop"];
+            "Museum","PoliceStation","Casino","SportsBar","Nightclub",
+            "LovemoreMansion","ShoppingCentre","FitnessClub","Beach","Park",
+            "Cinema","Pier","Restaurant","HotSpring","ThemedPark",
+            "Bank","PrivateIsland","Garden","BlackMarket","ChangingRoom","CoffeeShop"];
         return scenes;
 
     }
@@ -945,8 +948,23 @@ public class Config
                 }
             ],
             current_battle:defaultCurrentBattle(),
-            "photos":new Array()
+            "photos":new Array(),
+            //"lenus","sirena","dea","zack","klr","tomoru","ceil"
+            datingtwin:{
 
+                "dating partner":{
+                    id:"t001",
+                    enabled:true
+                },
+                "lover":{
+                    id:"t002",
+                    enabled:true
+                },
+                "spouse":{
+                    id:"t003",
+                    enabled:true
+                }
+            }
         }
 
         return playerInfo;
@@ -1242,6 +1260,7 @@ public class Config
         "qa-s006b":[10,-10]
 
     }
+
     public function Config()
     {
 

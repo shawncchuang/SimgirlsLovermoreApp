@@ -1,6 +1,8 @@
 package views
 {
+import data.Config;
 import data.StoryDAO;
+import data.TwinDAO;
 
 import flash.geom.Point;
 
@@ -67,6 +69,14 @@ public class CharacterBubble extends Sprite
 			case "Story":
 				var switchID:String=flox.getSaveData("current_switch").split("|")[0];
 				talks=StoryDAO.switchStory(switchID);
+				break
+			case "TwinStory":
+				var dating:String=DataContainer.currentDating;
+				var rel:Object=flox.getSaveData("rel");
+				var current_rel:String=rel[dating];
+				var datingtwin:Object=flox.getSaveData("datingtwin");
+				var id:String=datingtwin[current_rel].id;
+				talks=TwinDAO.switchTwinDAO(id);
 				break
 			case "StoryPreview":
 				library=DataContainer.previewStory;
@@ -175,8 +185,9 @@ public class CharacterBubble extends Sprite
 			re=String(re.split("$$$").join(first_name));
 		}
 		if(re.indexOf("@@@")!=-1){
+			var fullname:String=Config.fullnames[twinflame];
 
-			re=String(re.split("@@@").join(twinflame));
+			re=String(re.split("@@@").join(fullname));
 
 		}
 		//if

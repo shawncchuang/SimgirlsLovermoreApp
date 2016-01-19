@@ -465,6 +465,12 @@ public class SimgirlsLovemore extends MovieClip
 			else
 			{
 				_data.removed="newgame";
+
+
+				var playerAttr:Object=Config.PlayerAttributes();
+				flox.save("datingtwin",playerAttr.datingtwin);
+
+
 			}
 			command.topviewDispatch(TopViewEvent.REMOVE,_data);
 		}

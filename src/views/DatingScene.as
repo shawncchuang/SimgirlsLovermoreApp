@@ -19,6 +19,7 @@ import events.SceneEvent;
 import feathers.controls.ImageLoader;
 
 import flash.geom.Point;
+import flash.html.script.Package;
 import flash.media.SoundChannel;
 
 import model.CusomAssets;
@@ -370,6 +371,8 @@ public class DatingScene extends Scenes {
         var mood_value:String = String(reward_mood);
         if (reward_mood > 0) {
             mood_value = "+" + reward_mood;
+        }else{
+            mood_value = String(reward_mood);
         }
 
         var value_data:Object = new Object();
@@ -1005,7 +1008,7 @@ public class DatingScene extends Scenes {
 
             var cloud:Sprite = clouds[i];
             Starling.juggler.removeTweens(cloud);
-           var cloudMC:MovieClip=cloudlist[i];
+            var cloudMC:MovieClip=cloudlist[i];
             cloudMC.dispose();
             cloud.removeFromParent(true);
 
@@ -1385,7 +1388,7 @@ public class DatingScene extends Scenes {
     private function doChandedRelactionshipHandle(e:Event):void{
 
         DebugTrace.msg("DatingScene.doChandedRelactionshipHandle change_type="+e.data.change_type);
-         //raise, reduce
+        //raise, reduce
         var change_type:String=e.data.change_type;
 
 
@@ -1422,7 +1425,7 @@ public class DatingScene extends Scenes {
         tween.animate("alpha",0.7);
         tween.animate("alpha",1);
         if(change_type=="reduce")
-        tween.animate("color",0x00FFFF);
+            tween.animate("color",0x00FFFF);
         tween.onComplete=onTxtImageComplete;
         Starling.juggler.add(tween);
         function onTxtImageComplete():void{
@@ -1431,23 +1434,40 @@ public class DatingScene extends Scenes {
 
         var dating:String=DataContainer.currentDating;
         var rel:String=flox.getSaveData("rel")[dating];
-        DebugTrace.msg("DatingScene.doChandedRelactionshipHandle rel="+rel);
+        //DebugTrace.msg("DatingScene.doChandedRelactionshipHandle rel="+rel);
         if(change_type=="raise" && rel!="foe"){
             disabledSreenTouch();
 
             delayCall=new DelayedCall(onReadyShowPreciousPhoto,3);
             Starling.juggler.add(delayCall);
         }
+        else{
 
+            delayCall=new DelayedCall(onDowngradeRelationship,2);
+            Starling.juggler.add(delayCall);
+
+
+        }
+
+    }
+    private function onDowngradeRelationship():void{
+
+
+        Starling.juggler.remove(delayCall);
+        try{
+            heartView.removeFromParent(true);
+        }catch (e:Error){}
 
     }
 
     private function onReadyShowPreciousPhoto():void {
 
         Starling.juggler.remove(delayCall);
-        //DebugTrace.msg("DatingScene.onTimeOut relationshipChaned="+relationshipChaned);
 
-        heartView.removeFromParent(true);
+        try{
+            heartView.removeFromParent(true);
+        }catch (e:Error){}
+
         showupPreciousPhoto();
 
     }
@@ -1548,7 +1568,34 @@ public class DatingScene extends Scenes {
         imgloader.dispose();
         photo.removeFromParent(true);
         if(screenview)
-        screenview.removeFromParent(true);
+            screenview.removeFromParent(true);
+
+        startDatingTwinStory();
+
+    }
+    private function startDatingTwinStory():void{
+
+        var twinflame:String=flox.getSaveData("twinflame");
+        var dating:String=DataContainer.currentDating;
+        var rel:Object=flox.getSaveData("rel");
+        var current_rel:String=rel[dating];
+        var datingtwin:Object=flox.getSaveData("datingtwin");
+
+        if(twinflame==dating){
+            if(datingtwin[current_rel]){
+                var twinstory:Object=datingtwin[current_rel];
+                var enabled:Boolean=twinstory.enabled;
+                if(enabled){
+
+                    var id:String=twinstory.id;
+                    DataContainer.DatingTwinID=id;
+
+                    var _data:Object = new Object();
+                    _data.name="DatingTwinScene";
+                    command.sceneDispatch(SceneEvent.CHANGED, _data);
+                }
+            }
+        }
 
     }
     private function doNoneRelationshipHandle(e:Event):void{

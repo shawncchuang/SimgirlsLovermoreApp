@@ -938,7 +938,9 @@ public class MainCommand implements MainInterface {
         var playerlove:Number=loveObj.player;
         //var mood:Number = flox.getSaveData("mood")[dating];
         var pts:Number = Number(ptsObj[dating]);
-        pts = pts + Math.floor(rewards.mood / 5);
+        DebugTrace.msg("MianCommnand.updateRelationship rewards="+JSON.stringify(rewards));
+
+        pts += Math.floor(rewards.mood / 5);
 
 
 
@@ -1118,14 +1120,15 @@ public class MainCommand implements MainInterface {
             rewardNode.addNode();
             target.addChild(rewardNode);
 
-            var valueNum:Number=0;
-            if(value.indexOf("+")!=-1){
-                valueNum=Number(value.split("+").join(""));
+
+            if(value.indexOf("MOOD ")!=-1){
+                value=value.split("MOOD ").join("");
             }
             if(value.indexOf("+")!=-1){
-                valueNum=Number(value.split("MOOD +").join(""));
+                value=value.split("+").join("");
             }
-            rewards[attr]=valueNum;
+
+            rewards[attr]=Number(value);
 
         }
         //for
@@ -2384,7 +2387,7 @@ public class MainCommand implements MainInterface {
         var records:Array=new Array();
         var location:Array=new Array();
         var ranks:Array=new Array();
-        var rewards:Array=new Array();
+        var rewardslist:Array=new Array();
 
         for(var loc:String in Config.stagepoints){
             if(loc!="PrivateIsland")
@@ -2392,7 +2395,7 @@ public class MainCommand implements MainInterface {
         }
         for(var j:uint=0;j<ranking.length;j++){
             ranks.push(ranking[j].rank);
-            rewards.push(ranking[j].rewards);
+            rewardslist.push(ranking[j].rewards);
         }
 
         for(var i:uint=0;i<location.length;i++){
@@ -2401,7 +2404,7 @@ public class MainCommand implements MainInterface {
             criminial.location=location[i];
             var index:Number=Math.floor(Math.random()*ranks.length);
             criminial.rank=ranks[index];
-            criminial.rewards=rewards[index];
+            criminial.rewards=rewardslist[index];
             records.push(criminial);
         }
         //var flox:FloxInterface = new FloxCommand();

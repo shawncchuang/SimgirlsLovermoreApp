@@ -62,6 +62,7 @@ public class DataContainer
     private static var styles_schedule:Object;
     private static var nextswitch:String;
     private static var twinflame:String;
+    private static var datingtwinid:String;
     public static function set AssetsId(ids:Array):void
     {
         assets_id=ids;
@@ -881,6 +882,12 @@ public class DataContainer
     }
     public static function get TwinFlame():String{
         return twinflame;
+    }
+    public static function set DatingTwinID(id:String):void{
+        datingtwinid=id;
+    }
+    public static function get DatingTwinID():String{
+        return datingtwinid;
     }
 }
 }

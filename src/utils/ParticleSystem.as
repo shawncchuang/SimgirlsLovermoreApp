@@ -8,6 +8,7 @@ import controller.ParticleInterface;
 
 import starling.core.Starling;
 import starling.display.Sprite;
+import starling.events.Event;
 import starling.extensions.ColorArgb;
 import starling.extensions.PDParticleSystem;
 import starling.textures.Texture;
@@ -87,6 +88,13 @@ public class ParticleSystem implements ParticleInterface
 		ps.lifespanVariance=lifespanVariance;
 		Starling.juggler.add(ps);
 		_target.addChild(ps);
+		ps.addEventListener(Event.REMOVED_FROM_STAGE, onRemoveHandle);
+	}
+	private function onRemoveHandle(e:Event):void{
+
+        Starling.juggler.removeTweens(ps);
+
+
 	}
 }
 }

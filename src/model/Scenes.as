@@ -53,6 +53,7 @@ import views.CharacterDesignScene;
 import views.CinemaScene;
 import views.ContactsScene;
 import views.DatingScene;
+import views.DatingTwinScene;
 import views.FitnessClubScene;
 import views.FoundSomeScene;
 import views.GardenScene;
@@ -182,14 +183,15 @@ public class Scenes extends Sprite
         if(next_scene!="MenuScene" && next_scene!="ProfileScene" &&
                 next_scene!="SettingsScene" &&  next_scene!="ContactsScene" &&
                 next_scene!="CalendarScene" && next_scene!="PhotosScene" &&  next_scene!="PreciousPhotosScene" &&
-                next_scene!="BattleScene" && next_scene!="ChangeFormationScene")
+                next_scene!="BattleScene" && next_scene!="ChangeFormationScene" && next_scene!="DatingTwinScene")
         {
             DataContainer.currentLabel=next_scene;
         }
         if(next_scene!="FoundSomeScene" && next_scene!="DatingScene" &&
                 next_scene!="MenuScene" && next_scene!="ProfileScene" &&
                 next_scene!="SettingsScene" &&  next_scene!="ContactsScene" && next_scene!="MessagingScene" &&
-                next_scene!="CalendarScene" && next_scene!="PhotosScene" && next_scene!="PreciousPhotosScene" && next_scene!="ChangeClothesScene")
+                next_scene!="CalendarScene" && next_scene!="PhotosScene" && next_scene!="PreciousPhotosScene" &&
+                next_scene!="ChangeClothesScene" && next_scene!="DatingTwinScene")
         {
             DataContainer.currentScene=next_scene;
         }
@@ -416,6 +418,10 @@ public class Scenes extends Sprite
                 infobar=false;
                 current_scence=new MessagingScene();
                 break
+            case "DatingTwinScene":
+                infobar=false;
+                current_scence=new DatingTwinScene();
+                break
 
         }
         //switch
@@ -448,7 +454,8 @@ public class Scenes extends Sprite
         //var shortcutsScene:String=DataContainer.shortcutsScene;
         command.addShortcuts();
         if(next_scene.indexOf("Game")!=-1 || next_scene.indexOf("Battle")!=-1 ||
-                next_scene=="DatingScene" || next_scene.indexOf("ChangeFormation")!=-1 || next_scene=="Tarotreading"){
+                next_scene=="DatingScene" || next_scene.indexOf("ChangeFormation")!=-1 ||
+                next_scene=="Tarotreading" || next_scene=="DatingTwinScene"){
             //DebugTrace.msg("Scenes.changeSceneHandle addShortcuts shortcutsScene:"+shortcutsScene);
             command.removeShortcuts();
 

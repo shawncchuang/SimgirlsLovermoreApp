@@ -7,6 +7,7 @@ import com.greensock.loading.LoaderMax;
 import data.Config;
 import data.DataContainer;
 import data.StoryDAO;
+import data.TwinDAO;
 
 import events.GameEvent;
 import events.TopViewEvent;
@@ -268,9 +269,8 @@ public class SceneCommnad implements SceneInterface
             }
 
             showChat();
-        }
-        else
-        {
+        }else{
+
             //finish current part
             DebugTrace.msg("SceneCommand finished");
 
@@ -279,7 +279,14 @@ public class SceneCommnad implements SceneInterface
                 doClearAll();
                 updateCurrentSwitch();
 
-            }else{
+            }else if(scene=="TwinStory"){
+                command.stopBackgroudSound();
+                doClearAll();
+                current_switch=flox.getSaveData("current_switch");
+                switchID=current_switch;
+                onStoryComplete();
+            }
+            else{
                 disableAll();
             }
             if(onCompleteCallback){
@@ -287,9 +294,9 @@ public class SceneCommnad implements SceneInterface
                 onCompleteCallback();
             }
 
-
         }
-        //if
+
+
 
     }
     private function showChat():void
@@ -336,6 +343,9 @@ public class SceneCommnad implements SceneInterface
             case "choice":
                 addDisplayContainer(comlists[1]);
                 break
+            case "END":
+
+                break
         }
 
         if(scene.indexOf("Scene")==-1)
@@ -346,10 +356,12 @@ public class SceneCommnad implements SceneInterface
         }
 
     }
+
     private function commandHandle():void
     {
-        var commandsStr:String=com_content.split("#").toString();
-        var commands:Array=commandsStr.split(",");
+        //var commandsStr:String=com_content.split("#").toString();
+        //var commands:Array=commandsStr.split(",");
+        var commands:Array=com_content.split("#");
         for(var i:uint=0;i<commands.length;i++)
         {
             var actions:Array=commands[i].split("|");
@@ -385,10 +397,12 @@ public class SceneCommnad implements SceneInterface
                 }
 
             }
+            if(target)
+            target=praseTwinFlameFormat(target);
             switch(todo)
             {
                 case "remove":
-                    target=praseTwinFlameFormat(target);
+                    //target=praseTwinFlameFormat(target);
                     if(target=="player") {
                         talkmask.dispose();
                         talkmask.removeFromParent(true);
@@ -403,11 +417,11 @@ public class SceneCommnad implements SceneInterface
                     }
                     break
                 case "display":
-                    target=praseTwinFlameFormat(target);
+                    //target=praseTwinFlameFormat(target);
                     createCharacter(target,pos);
                     break
                 case "move":
-                    target=praseTwinFlameFormat(target);
+                    //target=praseTwinFlameFormat(target);
                     movingCharacter(target,pos);
                     break
                 case "photo-on":
@@ -526,23 +540,22 @@ public class SceneCommnad implements SceneInterface
         var npc:String="";
         var texture:Texture;
         var target:String=name.split("_")[0];
-        if(Config.allCharacters.indexOf(target)!=-1){
+        var style:String="";
+        if(Config.allCharacters.indexOf(target)!=-1) {
 
             //character
             //var stylesechdule:Object=DataContainer.styleSechedule;
             //DebugTrace.msg("SceneCommand.createCharacter, style="+stylesechdule.stringify(stylesechdule));
             //var style:String=stylesechdule[name];
-            var style:String=name;
-            texture=Assets.getTexture(style);
+            var style:String = name;
+
 
         }else{
 
             //NPC
             style=Config.NPC[name];
-            texture=Assets.getTexture(style);
-
         }
-
+        texture=Assets.getTexture(style);
         var _ch_pos:Object=ch_pos;
         if(style=="npc014"){
             _ch_pos={"center":new Point(50.5,0),"left":new Point(0,0),"right":new Point(109,0)};
@@ -743,8 +756,7 @@ public class SceneCommnad implements SceneInterface
 
         DebugTrace.msg("SceneCommand.disableAll hitArea");
 
-        //Starling.current.stage.removeEventListener(TouchEvent.TOUCH,onChatSceneTouched);
-        //Starling.current.stage.removeEventListeners();
+
         var mainstage:Sprite=ViewsContainer.MainScene;
         mainstage.removeEventListeners();
     }
@@ -871,6 +883,7 @@ public class SceneCommnad implements SceneInterface
         if(date_verify && time_verify && local_verify && switchID!="")
         {
             verify=true;
+           // ViewsContainer.gameinfo.visible=false;
 
             doClearAll();
             part=Number(switchID.split("s").join(""))-1;
@@ -1063,6 +1076,19 @@ public class SceneCommnad implements SceneInterface
         }
         return name;
     }
+    public function initDatingTwinStory(id:String):void{
+
+        talk_index=0;
+        scene="TwinStory";
+
+        display_container=new Object();
+
+        //part_index=part;
+
+        talks=TwinDAO.switchTwinDAO(id);
+
+    }
+
 
 }
 }

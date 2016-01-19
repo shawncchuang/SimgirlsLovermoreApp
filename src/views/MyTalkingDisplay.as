@@ -6,6 +6,8 @@ package views
 import controller.FloxCommand;
 import controller.FloxInterface;
 
+import data.Config;
+
 import data.DataContainer;
 
 import model.WordsSlide;
@@ -73,11 +75,11 @@ public class MyTalkingDisplay extends Sprite
 			if(twinflame){
 				twinflame=twinflame.toLowerCase();
 			}
-
+			var fullname:String=Config.fullnames[twinflame];
 			sentance=sentance.split("<>").join(",");
 			sentance=sentance.split("player|").join("");
 			sentance=sentance.split("$$$").join(first_name);
-			sentance=sentance.split("@@@").join(twinflame);
+			sentance=sentance.split("@@@").join(fullname);
 
 
 			subtitle=new TextField(785,120,"","SimImpact",24,0xFFFFFF);

@@ -201,7 +201,8 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
                 finishedcallback();
 
         }
-        //if
+
+
 
     }
     private function showChat():void
@@ -247,6 +248,9 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
             case "choice":
                 addDisplayContainer(comlists[1]);
                 break
+            case "END":
+
+                break
         }
 
         if(scene.indexOf("Scene")==-1)
@@ -257,10 +261,12 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
         }
 
     }
+
     private function commandHandle():void
     {
-        var commandsStr:String=com_content.split("#").toString();
-        var commands:Array=commandsStr.split(",");
+        //var commandsStr:String=com_content.split("#").toString();
+        //var commands:Array=commandsStr.split(",");
+        var commands:Array=com_content.split("#");
         for(var i:uint=0;i<commands.length;i++)
         {
             var actions:Array=commands[i].split("|");
@@ -296,10 +302,12 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
                 }
 
             }
+            if(target)
+            target=praseTwinFlameFormat(target);
             switch(todo)
             {
                 case "remove":
-                    target=praseTwinFlameFormat(target);
+                    //target=praseTwinFlameFormat(target);
                     if(target=="player") {
                         talkmask.dispose();
                         talkmask.removeFromParent(true);
@@ -314,11 +322,11 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
                     }
                     break
                 case "display":
-                    target=praseTwinFlameFormat(target);
+                    //target=praseTwinFlameFormat(target);
                     createCharacter(target,pos);
                     break
                 case "move":
-                    target=praseTwinFlameFormat(target);
+                    //target=praseTwinFlameFormat(target);
                     movingCharacter(target,pos);
                     break
                 case "photo-on":
@@ -393,7 +401,7 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
         display_container.player=talkfield;
     }
     private function onTalkingComplete():void{
-        DebugTrace.msg("SceneCommand.onTalkingComplete");
+        DebugTrace.msg("PreviewCommand.onTalkingComplete");
 
     }
     public function createBubble(comlists:Array):void
@@ -436,28 +444,25 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
 
         DebugTrace.msg("SceneCommand.createCharacter :"+name);
 
-
-
         var npc:String="";
         var texture:Texture;
         var target:String=name.split("_")[0];
-        if(Config.allCharacters.indexOf(target)!=-1){
+        var style:String="";
+        if(Config.allCharacters.indexOf(target)!=-1) {
 
             //character
             //var stylesechdule:Object=DataContainer.styleSechedule;
             //DebugTrace.msg("SceneCommand.createCharacter, style="+stylesechdule.stringify(stylesechdule));
             //var style:String=stylesechdule[name];
-            var style:String=name;
-            texture=Assets.getTexture(style);
+            var style:String = name;
+
 
         }else{
 
             //NPC
             style=Config.NPC[name];
-            texture=Assets.getTexture(style);
-
         }
-
+        texture=Assets.getTexture(style);
         var _ch_pos:Object=ch_pos;
         if(style=="npc014"){
             _ch_pos={"center":new Point(50.5,0),"left":new Point(0,0),"right":new Point(109,0)};
@@ -641,6 +646,7 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
         //for
         if(photoframe){
             photoframe.removeFromParent(true);
+            photoframe=null;
         }
         if(bgSprite){
             bgSprite.removeFromParent(true);
@@ -649,6 +655,7 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
         if(bubble)
         {
             bubble.removeFromParent(true);
+            bubble=null;
         }
     }
     public function disableAll():void
@@ -785,7 +792,7 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
         if(date_verify && time_verify && local_verify && switchID!="")
         {
             verify=true;
-            ViewsContainer.gameinfo.visible=false;
+            //ViewsContainer.gameinfo.visible=false;
 
             doClearAll();
             part=Number(switchID.split("s").join(""))-1;
@@ -793,7 +800,7 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
 
         }
 
-        DebugTrace.msg("SceneCommand.switchGateway return ->"+[verify,date_verify,time_verify,local_verify]);
+        DebugTrace.msg("PrewCommand.switchGateway return ->"+[verify,date_verify,time_verify,local_verify]);
         return new Array(verify,date_verify,time_verify,local_verify)
     }
     private var switchIDlist:Array;
@@ -813,7 +820,7 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
     }
     public function onStoryFinished():void
     {
-        DebugTrace.msg("SceneCommand.onStoryComplete");
+        DebugTrace.msg("PrewCommand.onStoryComplete");
     }
     private function nextStoryPart():void{
 
@@ -865,17 +872,21 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
         showChat();
     }
 
-    private function praseTwinFlameFormat(name:String):String{
+    private function praseTwinFlameFormat(target:String):String{
 
-        if(name.indexOf("@@@")!=-1){
-
-            var twinflame:String=DataContainer.TwinFlame;
-            if(twinflame){
-                twinflame=twinflame.toLowerCase();
-                name=name.split("@@@").join(twinflame);
-            }
+        var twinflame:String=DataContainer.TwinFlame;
+        if(!twinflame || twinflame==""){
+            twinflame="klr";
+            DataContainer.TwinFlame=twinflame;
         }
-        return name;
+
+        var result:String=target;
+        if(target.indexOf("@@@")!=-1){
+
+            twinflame=twinflame.toLowerCase();
+            result=target.split("@@@").join(twinflame);
+        }
+        return result;
     }
 
 }

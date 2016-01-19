@@ -58,6 +58,7 @@ package model
 		public var criminals:Array;
 		public var twinflame:String;
 		public var goodevail:Number;
+		public var datingtwin:Object;
 		public function SaveGame()
 		{
 	 
