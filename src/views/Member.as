@@ -22,6 +22,7 @@ package views
 		public var gender:String;
 		public var plus_speed:Number;
 		public var ett:MovieClip;
+		public var OnArmour:Boolean;
 		public function Member()
 		{
 			super();
@@ -48,7 +49,7 @@ package views
 			character=super.character;
 			membermc=super.membermc;
 			chname=super.ch_name;
-			 
+
 			DebugTrace.msg("Member.initPlayer id:"+super.id);
 			
 		}
@@ -60,6 +61,7 @@ package views
 			character=super.character;
 			membermc=super.membermc;
 			chname=super.ch_name;
+			OnArmour=super.OnArmour;
 			DebugTrace.msg("Member.initCpuPlayer id:"+super.id);
 			
 		}
@@ -176,7 +178,7 @@ package views
 		}
 		private function battleEndHandle(e:Event):void
 		{
-			var boss_index:Number=Config.bossModels.indexOf(chname)
+			var boss_index:Number=Config.bossModels.indexOf(chname);
 			if(boss_index==-1)
 			super.setupVictoryDace();
 		}
@@ -184,6 +186,10 @@ package views
 		{
 			gender=super.gender;
 			 
+		}
+		public function getOnArmour():Boolean{
+			OnArmour=super.OnArmour;
+			return OnArmour;
 		}
 	}
 }

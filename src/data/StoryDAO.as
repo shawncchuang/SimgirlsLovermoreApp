@@ -5,7 +5,7 @@ package data {
 public class StoryDAO {
     private static var access:Array=new Array();
     private static var container:Object={"s001":s001(),"s002":s002(),"s003":s003(),
-    "s004":s004(),"s005":s005(),"s006a":s006a(),"s006b":s006b()};
+        "s004":s004(),"s005":s005(),"s006a":s006a(),"s006b":s006b(),"s260":s260()};
     public static function switchStory(id:String):Array {
 
         access=container[id];
@@ -182,7 +182,7 @@ public class StoryDAO {
     }
 
     private static function s005():Array{
-        
+
         return [
             "com|bg_HotelScene",
             "com|display_sao_casual1_center",
@@ -232,7 +232,7 @@ public class StoryDAO {
         ]
     }
     private static function s006a():Array{
-        
+
         return [
             "com|bg_CasinoScene",
             "com|display_sao_casual1_center",
@@ -437,6 +437,21 @@ public class StoryDAO {
         ]
 
 
+    }
+    private static function s260():Array{
+        return [
+            "com|bg_SSCCArenaScene",
+            "com|display_arena_center",
+            "shC|Ladies and Gentlemen...",
+            "shC|Welcome to the finals of the Super Spirit Combat Championships!!",
+            "shC|Today! We will witness the best of the best SMA fighters from the tournament... ",
+            "shC|...battling for the Championship<> the ulitmate glory and honor of Shambala!",
+            "shC|Are you ready to get this started?",
+            "shC|I can't hear you... try again!",
+            "shC|Let's the final battle begins... ",
+            "shC|APOLLYON versus ZEPHON!!!!",
+            "END"
+        ]
     }
 
 }

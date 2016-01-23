@@ -570,7 +570,7 @@ public class DrawManager implements DrawerInterface
         //DebugTrace.msg("DrawManager.drawPieChart  picchartImg");
         //DebugTrace.obj(picchartImg);
     }
-    private var pieMax:Number=2500;
+    private var pieMax:Number=9999;
     public function updatePieChart(value:Number):void
     {
 

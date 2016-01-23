@@ -63,6 +63,8 @@ public class DataContainer
     private static var nextswitch:String;
     private static var twinflame:String;
     private static var datingtwinid:String;
+    private static var _enable:Boolean;
+
     public static function set AssetsId(ids:Array):void
     {
         assets_id=ids;
@@ -888,6 +890,16 @@ public class DataContainer
     }
     public static function get DatingTwinID():String{
         return datingtwinid;
+    }
+
+    public static function set Armour(enable:Boolean):void{
+        _enable=enable
+
+    }
+
+    public static function get Armour():Boolean{
+
+     return  _enable
     }
 }
 }

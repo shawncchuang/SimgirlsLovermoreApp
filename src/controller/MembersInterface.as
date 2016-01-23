@@ -5,6 +5,7 @@ package controller
 	
 	public interface MembersInterface
 	{
+
 		function init(scene:MovieClip):void
 		function initPlayerMember(clickPlayer:Function):void
 		function initCpuMember():void
@@ -31,6 +32,6 @@ package controller
 		function clearPlayerTarget():void
 		function getBattleOver():Boolean
 		function reseatCPUPower(name:String):void
-		 
+		function set BattleOver(type:Boolean):void
 	}
 }

@@ -10,6 +10,8 @@ import data.Config;
 
 import feathers.controls.Label;
 
+import fl.motion.Color;
+
 import flash.display.DisplayObject;
 import flash.display.MovieClip;
 import flash.events.Event;
@@ -103,8 +105,9 @@ public class Character extends MovieClip
     protected var heal_tint:MovieClip;
 
     private var boss_model:Boolean=false;
+    protected var OnArmour:Boolean=false;
 
-
+    private var arming=false;
     public function Character()
     {
 
@@ -152,7 +155,15 @@ public class Character extends MovieClip
                     if(_data[i]>maxSE)
                         _data[i]=maxSE;
                 }
+
+
                 power[i]=_data[i];
+//                if(OnArmour && power.id=="t12_0"){
+//                    //final boss
+//                    power.se=9999;
+//                    power.seMax=9999;
+//                }
+
             }
             //for
             if(power.shielded=="true")
@@ -183,6 +194,7 @@ public class Character extends MovieClip
                 }
                 //if
             }
+
 
 
             var seText:TextField=membermc.getChildByName("se") as TextField;
@@ -379,6 +391,7 @@ public class Character extends MovieClip
     public function initCpuPlayer(main_team:Array,index:Number):void
     {
 
+        OnArmour=false;
         var cpu_teams:Object=flox.getSyetemData("cpu_teams");
         var cpu_teams_saved:Object=flox.getSaveData("cpu_teams");
         membermc=new MovieClip();
@@ -400,17 +413,19 @@ public class Character extends MovieClip
             {
                 //boss model
                 characters=new Array();
-                var boss:Object={"gor":new GOR(),"fat":new FAT(),"tgr":new TGR()};
+                var boss:Object={"gor":new GOR(),"fat":new FAT(),"tgr":new TGR(),"rfs":new RFS()};
                 skillAni=character=boss[ch_name];
                 switch(ch_name)
                 {
                     case "gor":
                     case "tgr":
+                    case "rfs":
                         character.width=180;
                         character.height=180;
                         break
                 }
                 //switch
+
             }
             else
             {
@@ -744,7 +759,7 @@ public class Character extends MovieClip
                 var effect:MovieClip=membermc.getChildByName("effect") as MovieClip;
                 try
                 {
-                    effect.gotoAndStop(ready)
+                    effect.gotoAndStop(ready);
                     effect.visible=false;
                 }
                 catch(e:Error)
@@ -830,6 +845,7 @@ public class Character extends MovieClip
             {
                 status="";
                 act="ready";
+
             }
         }
         else
@@ -840,11 +856,17 @@ public class Character extends MovieClip
         }
         //if
         //DebugTrace.msg("Character.processAction  act="+ act);
-        if(power.se>0)
+
+
+        bossOnArmour(character);
+
+        if(power.se>0 ){
             processMember(act);
+        }
+
 
     }
-
+    private var actModel:MovieClip;
     protected function processMember(act:String=null):void
     {
         //play_power=BattleScene.play_power;
@@ -865,9 +887,9 @@ public class Character extends MovieClip
 
         character.alpha=1;
         updatelColorEffect(character,avatar);
-        var actModel:MovieClip;
         var actlabel:String="";
         actlabel=act;
+
         if(power.label!="")
         {
             //skill ready
@@ -929,6 +951,8 @@ public class Character extends MovieClip
                         actlabel=act;
                     }
                     //if
+
+
                 }
                 else
                 {
@@ -1169,10 +1193,39 @@ public class Character extends MovieClip
                     else
                     {
                         //boss
-                        actModel.gotoAndStop(actlabel);
+                        if(actlabel==Character.death && ch_name=="rfs"){
+
+                            actlabel="SPArmour";
+                            OnArmour=true;
+                            memberscom.BattleOver=true;
+                            DataContainer.Armour=OnArmour;
+                            actModel.gotoAndStop(actlabel);
+                            actModel.body.act.addEventListener(Event.ENTER_FRAME,doArmourPlaying);
+
+                        }else{
+
+                            actModel.gotoAndStop(actlabel);
+                        }
+
+                        function doArmourPlaying(e:Event):void{
+
+                            if(e.target.currentFrame==e.target.totalFrames)
+                            {
+
+                                e.target.removeEventListener(Event.ENTER_FRAME,doArmourPlaying);
+                                actModel.gotoAndStop(Character.ready);
+                                memberscom.BattleOver=false;
+                                bossOnArmour(actModel);
+                                processAction();
+
+                            }
+                        }
+
                     }
                 }
             }
+
+
         }
         //if
         var arrow:DisplayObject=membermc.getChildByName("arrow");
@@ -1210,6 +1263,9 @@ public class Character extends MovieClip
          DebugTrace.msg("Character.processMember Error");
          }
          //try*/
+
+        bossOnArmour(character);
+
     }
     private function updatelColorEffect(actModel:MovieClip,avatar:Object):void
     {
@@ -1518,7 +1574,7 @@ public class Character extends MovieClip
 
             else
             {
-                part_pack=gpart_pack
+                part_pack=gpart_pack;
                 gender="G";
                 _gender="Girl";
             }
@@ -1820,7 +1876,7 @@ public class Character extends MovieClip
     private function checkBossModel():Boolean
     {
         var b:Boolean=false;
-        var boss_index:Number=Config.bossModels.indexOf(ch_name)
+        var boss_index:Number=Config.bossModels.indexOf(ch_name);
         if(boss_index!=-1)
         {
             //boss model
@@ -1829,5 +1885,27 @@ public class Character extends MovieClip
 
         return b
     }
+
+    private function bossOnArmour(target:MovieClip):void{
+
+        if(OnArmour && power.id=="t12_0"){
+            //TweenMax.to( target.body.act , 0.5, {colorTransform:{tint:0x000000, tintAmount:0.5},onComplete:onCompleteArmour,onCompleteParams:[target.body.act]});
+            //var colorTransfrom:ColorTransform=target.body.act.transform.colorTransform;
+           // colorTransfrom.color=0x000000;
+
+            var color:Color=new Color();
+            color.setTint(0x000000,0.5);
+            try{
+                target.body.act.transform.colorTransform = color;
+            }catch (e:Error){
+                DebugTrace.msg("Character.bossOnArmour tint null");
+            }
+
+        }
+    }
+    private function onCompleteArmour(target:MovieClip):void{
+        //TweenMax.killTweensOf(target);
+    }
+
 }
 }

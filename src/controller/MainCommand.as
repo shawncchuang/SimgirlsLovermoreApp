@@ -942,12 +942,20 @@ public class MainCommand implements MainInterface {
 
         pts += Math.floor(rewards.mood / 5);
 
-
-
         if (pts > relMax) {
             pts = relMax;
         } else if (pts < -(relMax)) {
             pts = -(relMax);
+        }
+
+        var twinflame:String= flox.getSaveData("twinflame");
+        if(twinflame =="" || !twinflame){
+            var reStep:Object=flox.getSyetemData("relationship_level");
+            var closefriendMax:Number=reStep["closefriend-Max"];
+            if(pts>closefriendMax){
+                pts=ptsObj[dating];
+            }
+
         }
 
         ptsObj[dating] = pts;

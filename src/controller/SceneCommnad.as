@@ -10,6 +10,7 @@ import data.StoryDAO;
 import data.TwinDAO;
 
 import events.GameEvent;
+import events.SceneEvent;
 import events.TopViewEvent;
 
 
@@ -270,39 +271,48 @@ public class SceneCommnad implements SceneInterface
 
             showChat();
         }else{
-
+            command.addShortcuts();
             //finish current part
             DebugTrace.msg("SceneCommand finished");
+            var prv_talks:String= talks[end_index-1];
+            if(prv_talks.indexOf("APOLLYON versus ZEPHON")!=-1 ){
+                //Final Battle
+                DataContainer.battleType="final_battle";
+                var _data:Object=new Object();
+                _data.name="ChangeFormationScene";
+                command.sceneDispatch(SceneEvent.CHANGED,_data);
 
-            if(scene=="Story"){
-                command.stopBackgroudSound();
-                doClearAll();
-                updateCurrentSwitch();
+            }else{
 
-            }else if(scene=="TwinStory"){
-                command.stopBackgroudSound();
-                doClearAll();
-                current_switch=flox.getSaveData("current_switch");
-                switchID=current_switch;
-                onStoryComplete();
-            }
-            else{
-                disableAll();
-            }
-            if(onCompleteCallback){
+                if(scene=="Story"){
 
-                onCompleteCallback();
+                    command.stopBackgroudSound();
+                    doClearAll();
+                    updateCurrentSwitch();
+
+                }else if(scene=="TwinStory"){
+                    command.stopBackgroudSound();
+                    doClearAll();
+                    current_switch=flox.getSaveData("current_switch");
+                    switchID=current_switch;
+                    onStoryComplete();
+                }
+                else{
+                    disableAll();
+                }
+                if(onCompleteCallback){
+
+                    onCompleteCallback();
+                }
             }
 
         }
-
-
 
     }
     private function showChat():void
     {
         DebugTrace.msg("SceneCommand.showChat talk_index="+talk_index);
-
+        command.removeShortcuts();
         com_content=talks[talk_index];
         DebugTrace.msg("SceneCommand.showChat com_content:"+com_content);
         var comlists:Array=com_content.split("|");
@@ -791,7 +801,7 @@ public class SceneCommnad implements SceneInterface
         }
         //switchID=flox.getSaveData("next_switch");
 
-        //DebugTrace.msg("SceneCommand.switch   Gateway switchID="+switchID);
+        DebugTrace.msg("SceneCommand.switch   Gateway switchID="+switchID);
         //DebugTrace.msg("SceneCommand.switchGateway next_switch="+next_switch);
 
         if(switchID!=""){
@@ -810,7 +820,7 @@ public class SceneCommnad implements SceneInterface
         //------------Location------------------------------------------
         if(location!="")
         {
-            if(_scene==location)
+            if(_scene==location.toLowerCase())
             {
                 local_verify=true;
                 var turn_switch:String=flox.getSaveData("current_switch").split("|")[1];

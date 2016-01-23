@@ -357,9 +357,10 @@ public class Config
         "t7_0":"xns",
         "t8_0":"gor",
         "t10_0":"fat",
-        "t11_0":"fan"
+        "t11_0":"fan",
+        "t12_0":"rfs"
     };
-    public static var bossModels:Array=["gor","tgr","fat"];
+    public static var bossModels:Array=["gor","tgr","fat","rfs"];
     public static var ch_bossModels:Array=["mia","bdh","vdk","akr","chef","shn"];
     public static var bossSkill:Object={
         "gor":{
@@ -408,6 +409,39 @@ public class Config
                 "enemy":5,
                 "area":2
             }
+
+        },
+        "rfs":{
+            "pos":new Point(180,988),
+            "lv1":{
+                "skillID":"rfs_s_0",
+                "label":"Grabpunch",
+                "type":"hop",
+                "enemy":1,
+                "area":null
+            },
+            "lv2":{
+                "skillID":"rfs_s_1",
+                "label":"Uppercut",
+                "type":"",
+                "enemy":5,
+                "area":null
+            },
+            "lv3":{
+                "skillID":"rfs_s_2",
+                "label":"EnergyBall",
+                "type":"",
+                "enemy":5,
+                "area":null
+            },
+            "lv4":{
+                "skillID":"rfs_s_3",
+                "label":"SPArmour",
+                "type":"",
+                "enemy":0,
+                "area":null
+            }
+
 
         }
 
@@ -890,7 +924,16 @@ public class Config
                 t11_4 : {"seMax":500,"se":500} ,
                 t11_5 : {"seMax":500,"se":500} ,
                 t11_6 : {"seMax":500,"se":500} ,
-                t11_7 : {"seMax":500,"se":500}
+                t11_7 : {"seMax":500,"se":500} ,
+
+                t12_0 : {"seMax":"","se":8000} ,
+                t12_1 : {"seMax":0,"se":0} ,
+                t12_2 : {"seMax":0,"se":0} ,
+                t12_3 : {"seMax":0,"se":0} ,
+                t12_4 : {"seMax":0,"se":0} ,
+                t12_5 : {"seMax":0,"se":0} ,
+                t12_6 : {"seMax":0,"se":0} ,
+                t12_7 : {"seMax":0,"se":0}
             },
             "victory":{ "player":0, "sao": 0, "sirena": 0, "tomoru": 0, "ceil": 0, "dea": 0, "lenus": 0, "klr": 0 },
             "defeat":{"player":0, "sao": 0, "sirena": 0, "tomoru": 0, "ceil": 0, "dea": 0, "lenus": 0, "klr": 0},

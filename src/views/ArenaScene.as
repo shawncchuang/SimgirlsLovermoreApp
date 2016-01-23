@@ -61,21 +61,19 @@ import model.SaveGame;
 		private function init():void
 		{
 			
-			scencom.init("ArenaScene",speaker_sprite,24,onCallback);
+			scencom.init("ArenaScene",speaker_sprite,24,onStartStory);
 			scencom.start();
-			scencom.disableAll();
+
 		}
-		private function onCallback():void
+		private function onStartStory():void
 		{
-			/*var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
-			gameEvent._name="clear_comcloud";
-			gameEvent.displayHandler();
-			
-			
-			var _data:Object=new Object();
-			_data.name="BattleScene";
-			command.sceneDispatch(SceneEvent.CHANGED,_data);*/
-			
+
+			var switch_verifies:Array=scencom.switchGateway("SSCCArena");
+			if(switch_verifies[0]){
+				scencom.disableAll();
+				scencom.start();
+			}
+
 		}
 		private function onSceneTriggered(e:Event):void
 		{
@@ -147,6 +145,11 @@ import model.SaveGame;
 //                        var alert:AlertMessage=new AlertMessage(msg);
 //                        addChild(alert);
                     break
+				case "story_complete":
+
+
+
+					break
 				
 			}
 			

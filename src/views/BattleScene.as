@@ -471,6 +471,7 @@ public class BattleScene extends Sprite
 		}
 		//for
 
+
 		if(success)
 		{
 			focusHandle("default");
@@ -1785,6 +1786,7 @@ public class BattleScene extends Sprite
 					//Mind Control	
 					case "gor_s_1":
 					case "tgr_s_2":
+					case "rfs_s_2":
 						var chname:String=attack_member.chname;
 						if(chname!="badguy" && chname!="prml")
 						{
@@ -2024,6 +2026,7 @@ public class BattleScene extends Sprite
 								//cpu
 								movingX=movingX-offer;
 
+
 							}
 							//if
 							attack_member.character.body.addEventListener(Event.ENTER_FRAME,doHopping);
@@ -2090,8 +2093,15 @@ public class BattleScene extends Sprite
 						if(_body.currentFrameLabel=="moving")
 						{
 
+							if(attack_member.power.id=="t12_0"){
+								//final boss
+								attack_member.x=movingX;
+								attack_member.y=movingY;
+							}else{
+								TweenMax.to(attack_member,duration,{x:movingX,y:movingY});
+							}
 
-							TweenMax.to(attack_member,duration,{x:movingX,y:movingY});
+
 						}
 						//if
 						if(_body.currentFrame==_body.totalFrames)
@@ -2569,11 +2579,9 @@ public class BattleScene extends Sprite
 			despearBatttleTeam(1,member.name);
 
 
-
 			var battledata:BattleData=new BattleData();
 
 			var damage:Number=battledata.damageCaculator(member.power);
-
 
 			var battleEvt:BattleEvent=member.memberEvt;
 			//if(allpowers[attack_index].effect=="shield")
@@ -2935,8 +2943,6 @@ public class BattleScene extends Sprite
 		attack_index++;
 		var battleover:Boolean=memberscom.getBattleOver();
 		//DebugTrace.msg("BattleScene.doAttackCompleteHandle battleover:"+battleover);
-
-
 		if(!battleover)
 		{
 			DebugTrace.msg("BattleScene.onFinishAttack attack_index:"+attack_index+" ; allpowers max:"+allpowers.length);
@@ -3308,7 +3314,14 @@ public class BattleScene extends Sprite
 				//if
 
 			}
+			if(_target_member.chname=="rfs"){
+				var OnArmour:Boolean=_target_member.getOnArmour();
+				if(OnArmour){
+					predamage=0;
+				}
 
+			}
+			DebugTrace.msg("BattleScene.displayDamage OnArmour="+OnArmour);
 			//DebugTrace.msg("BattleScene.displayDamage effect:"+attack_power.effect);
 			DebugTrace.msg("BattleScene.displayDamage predamage:"+predamage);
 			if(_target_member.power.se>0)

@@ -4,6 +4,8 @@ package
 import com.demonsters.debugger.MonsterDebugger;
 
 import controller.Assets;
+import controller.CpuMembersCommand;
+import controller.CpuMembersInterface;
 import controller.DrawerInterface;
 import controller.FloxCommand;
 import controller.FloxInterface;
@@ -225,6 +227,9 @@ public class Game extends Sprite
 
 		command.setNowMood();
 		//command.initContextMenu();
+
+		var cpucom:CpuMembersInterface=new CpuMembersCommand();
+		cpucom.setupFinalBoss();
 
 
 		var _data:Object=new Object();

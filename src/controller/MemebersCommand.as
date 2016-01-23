@@ -138,6 +138,10 @@ public class MemebersCommand implements MembersInterface
         //all members
         return battleteam;
     }
+    public function set BattleOver(type:Boolean):void{
+
+        battleover=type;
+    }
     public function getBattleOver():Boolean
     {
         return battleover
@@ -284,6 +288,7 @@ public class MemebersCommand implements MembersInterface
             switch(boss)
             {
                 case "fat":
+                case "rfs":
                     pos.x=Config.bossSkill[boss].pos.x;
                     pos.y=Config.bossSkill[boss].pos.y;
                     break
@@ -380,19 +385,30 @@ public class MemebersCommand implements MembersInterface
     }
     private var battlealert:MovieClip;
     private var seObj:Object;
+    private var member:Member;
     public function checkTeamSurvive():void
     {
+        var command:MainInterface=new MainCommand();
+        var type:String=DataContainer.battleType;
         var cpu_gameover:Boolean=true;
         //var cpu_teams_saved:Object=flox.getSaveData("cpu_teams");
         var player_gameover:Boolean=true;
         seObj=flox.getSaveData("se");
-        var member:Member;
+
 
         var current_se:Number;
         for(var i:uint=0;i<cputeam.length;i++)
         {
             member=cputeam[i];
             //setxt= membermc.getChildByName("se") as TextField;
+            var OnArmour:Boolean=member.getOnArmour();
+            if(member.chname=="rfs" && OnArmour){
+                member.power.se=9999;
+                member.power.seMax=9999;
+                var cpu_teams:Object=flox.getSaveData("cpu_teams");
+                cpu_teams["t12_0"].seMax=9999;
+            }
+
             current_se=member.power.se;
             if(current_se>0)
             {
@@ -402,12 +418,13 @@ public class MemebersCommand implements MembersInterface
             //if
         }
         //for
+        DebugTrace.msg("BattleScene checkTeamSurvive cputeam power:"+JSON.stringify(member.power));
         var player_power:Array=new Array();
         for(var j:uint=0;j<playerteam.length;j++)
         {
             member=playerteam[j];
 
-            DebugTrace.msg("BattleScene checkTeamSurvive power:"+JSON.stringify(member.power));
+            //DebugTrace.msg("BattleScene checkTeamSurvive power:"+JSON.stringify(member.power));
             current_se=member.power.se;
 
             //current SE doesn't update to Flox when this's Beta Version.-------------------------
@@ -424,23 +441,53 @@ public class MemebersCommand implements MembersInterface
         }
         //for
         DataContainer.PlayerPower=player_power;
+        if(type=="final_battle"){
 
+            if(cpu_gameover){
+
+//                for(var i:uint=0;i<cputeam.length;i++) {
+//                    member = cputeam[i];
+//                    if( member.power.id=="t12_0")
+//                    {
+//                        member.power.se=9999;
+//                        cputeam[i]=member;
+//                        break
+//                    }
+//
+//                }
+               // member.character.gotoAndStop("SPArmour");
+               // member.character.body.act.addEventListener(Event.ENTER_FRAME,doActPlaying);
+            }
+            if(player_gameover){
+                battleover=true;
+                SoundMixer.stopAll();
+                TweenMax.killAll();
+                var _data:Object=new Object();
+                _data.name= "";
+                _data.from="battle";
+                //command.sceneDispatch(SceneEvent.CHANGED,_data);
+
+            }
+
+            cpu_gameover=false;
+            player_gameover=false;
+
+        }
 
         if(cpu_gameover ||  player_gameover)
         {
             //GameOver--------------------------------
             SoundMixer.stopAll();
 
-           // DebugTrace.msg("BattleScene checkTeamSurvive-------- Batttle Over seObj:"+JSON.stringify(seObj));
+            // DebugTrace.msg("BattleScene checkTeamSurvive-------- Batttle Over seObj:"+JSON.stringify(seObj));
             battleover=true;
 
 
             var battlescene:Sprite=ViewsContainer.battlescene;
             var replaybtn:MovieClip;
             var quitbtn:MovieClip;
-            var command:MainInterface=new MainCommand();
+
             var scene:String=DataContainer.currentScene;
-            var type:String=DataContainer.battleType;
 
             var evtObj:Object = new Object();
 
@@ -472,6 +519,8 @@ public class MemebersCommand implements MembersInterface
 
                 winner="cpu";
             }
+
+
             DataContainer.BattleWinner=winner;
             battlealert.x=-1718;
             battlealert.y=-455;
@@ -482,28 +531,17 @@ public class MemebersCommand implements MembersInterface
             quitbtn.buttonMode=true;
             battlescene.addChild(battlealert);
 
-            if(type!="random_battle" && type!="practice" && type!="story_battle"){
+            if(type!="random_battle" && type!="practice" && type!="story_battle" && type!="final_battle"){
                 var battleData:BattleData=new BattleData();
                 battleData.finishedBattle(winner,team_id);
             }
 
-
-            //ViewsContainer.BattleAlert=battlealert;
-
             startVictoryDace();
-
-            /* //Beta Version No honur bonus----------------------
-             TweenMax.to(battlealert,1,{alpha:1,delay:6});
-             replaybtn.addEventListener(MouseEvent.MOUSE_DOWN,doReplayHandle);
-             quitbtn.addEventListener(MouseEvent.MOUSE_DOWN,doQuitHandle);
-             //-------------------------------------------------
-             */
-
             // Battle honur bonus---------------------------------------
             replaybtn.visible=false;
             quitbtn.visible=false;
             TweenMax.to(battlealert,1,{alpha:1,delay:6,onComplete:onBattleAlertFadIn});
-            //-------------------------------------------------
+            //-------------------
 
 
             function onBattleAlertFadIn():void
@@ -520,11 +558,11 @@ public class MemebersCommand implements MembersInterface
                 if(cpu_gameover)
                 {
 
-                   var ranking:Array=flox.getSaveData("ranking");
+                    var ranking:Array=flox.getSaveData("ranking");
 
                     for(var i:uint=0;i< ranking.length;i++){
                         if(ranking[i].team_id == "player"){
-                           var win:Number= ranking[i].win;
+                            var win:Number= ranking[i].win;
                             win++;
                             ranking[i].win=win;
                             break
@@ -592,6 +630,19 @@ public class MemebersCommand implements MembersInterface
         //if
         //DataContainer.survivePlayer=playerteam;
     }
+//    private function doActPlaying(e:Event):void{
+//
+//
+//        if(e.target.currentFrame==e.target.totalFrames)
+//        {
+//            e.target.removeEventListener(Event.ENTER_FRAME,doActPlaying);
+//
+//            TweenMax.to( member.character, 0.5, {colorTransform:{tint:0x000000, tintAmount:0.6}});
+//
+//            member.character.gotoAndStop("RDY")
+//        }
+//
+//    }
     private function startVictoryDace():void
     {
 

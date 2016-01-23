@@ -126,6 +126,7 @@ public class MainScene extends Scenes
     {
 
         var swfloader:SWFLoader=LoaderMax.getLoader("waving") as SWFLoader;
+        if(swfloader)
         swfloader.content.visible=true;
 
         command.playSound("MapWaves",100);

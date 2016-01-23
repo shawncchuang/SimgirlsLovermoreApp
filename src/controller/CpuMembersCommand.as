@@ -22,8 +22,8 @@ import views.BattleScene;
 import views.Member;
 public class CpuMembersCommand implements CpuMembersInterface
 {
-    // teams 0-11 ;11(practice team)
-    private var teamsno:uint=12;
+    // teams id 0-12 ;(11:practice team , 12:final team)
+    private var teamsno:uint=13;
     // maxsium members in a team
     private var mem_perteam:uint=8;
     private var flox:FloxInterface=new FloxCommand();
@@ -71,8 +71,6 @@ public class CpuMembersCommand implements CpuMembersInterface
     {
 
 
-
-
         var cpu_teams:Object=flox.getSaveData("cpu_teams");
         var elements:Array=Config.elements;
         //setup  se,id,element
@@ -101,8 +99,31 @@ public class CpuMembersCommand implements CpuMembersInterface
         var savegame:SaveGame=FloxCommand.savegame;
         savegame.cpu_teams=cpu_teams;
         FloxCommand.savegame=savegame;
-    }
 
+    }
+    public function setupFinalBoss():void{
+
+        var teams:Object=flox.getSaveData("cpu_teams");
+        for(var j:uint=0;j<mem_perteam;j++){
+
+            var se:Number=8000;
+            if(j>0){
+                se=0;
+            }
+            var id:String="t12_"+j;
+            var member:Object=new Object();
+            member.id=id;
+            member.from="cpu";
+            member.target="";
+            member.se=se;
+            member.seMax=se;
+            member.ele="";
+            member.skillID="";
+            teams[id]=member;
+        }
+
+        flox.save("cpu_teams",teams);
+    }
     public  function setupBattleTeam():void
     {
         var membersEffect:Object=DataContainer.MembersEffect;
@@ -120,6 +141,7 @@ public class CpuMembersCommand implements CpuMembersInterface
         bossName=Config.bossName;
         var battleType:String=DataContainer.battleType;
         //DebugTrace.msg("CpuMembersCommand. battleType :"+battleType);
+        var se:Number=0;
         if(battleType=="schedule"){
 
             var batteData:BattleData=new BattleData();
@@ -132,11 +154,17 @@ public class CpuMembersCommand implements CpuMembersInterface
             if(cpuIndex==9)
                 cpuIndex=10;
 
+        }else if(battleType=="final_battle") {
+
+            cpuIndex=12;
+
+
+
         }else if(battleType=="practice" || battleType=="random_battle"){
             //var criminals:Object
             var ability:Object=command.criminalAbility();
             cpuIndex=11;
-            var se:Number=0;
+
            for(var j:uint=0;j<mem_perteam;j++){
 
                var id:String="t"+cpuIndex+"_"+j;
@@ -150,9 +178,9 @@ public class CpuMembersCommand implements CpuMembersInterface
                    }
                }else{
                    //practice
-                   if(id=="t11_0"){
+                   if(id=="t11_0") {
                        //leader
-                       se=Math.floor(love*0.8);
+                       se = Math.floor(love * 0.8);
                    }else{
                        se=Math.floor(love*0.5);
                    }
@@ -613,6 +641,21 @@ public class CpuMembersCommand implements CpuMembersInterface
                             level="lv3";
                         }
                         break
+                    case "rfs":
+                        if(jewel<=2)
+                        {
+                            level="lv1";
+                        }
+                        if(jewel>=3 && jewel<=4)
+                        {
+                            level="lv2";
+                        }
+                        if(jewel==5)
+                        {
+                            level="lv3";
+                        }
+
+                        break
                 }
 
                 power.skillID=bossSkill[power.ch_name][level].skillID;
@@ -635,7 +678,7 @@ public class CpuMembersCommand implements CpuMembersInterface
                 skillPower=Math.floor(Math.random()*100)+100;
             }
             power.power=skillPower;
-            trace("CPU power :",JSON.stringify(power));
+            //trace("CPU power :",JSON.stringify(power));
         }
         //if
         //power.id=id;
@@ -1283,6 +1326,12 @@ public class CpuMembersCommand implements CpuMembersInterface
             }
         }
         flox.save("cpu_teams",cpu_teams);
+
+    }
+    public function finalBossAmour():void{
+
+
+
 
     }
 

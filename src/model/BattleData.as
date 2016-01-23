@@ -601,10 +601,7 @@ public class BattleData
         {
             //final battle
 
-
-
         }
-
 
         var team_battle:Array=schedule[dayStr];
         //DebugTrace.msg("BattleData.checkBattleSchedule team_battle="+JSON.stringify(team_battle));

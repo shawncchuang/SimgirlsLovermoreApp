@@ -5,6 +5,7 @@ package controller
 	{
 		
 		function setupCPU():void
+		function setupFinalBoss():void
 		function setupBattleTeam():void
 		function setupSkillCard():void
 		function setupCpuTarget():void
