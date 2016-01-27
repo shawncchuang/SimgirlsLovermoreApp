@@ -95,7 +95,6 @@ public class SimgirlsLovemore extends MovieClip
 			embedAsCFF="false")]
 	public static const SimMyriadPro:String;
 
-
 	private var manager:Boolean=false;
 	public static var previewStory:Boolean=false;
 
@@ -128,6 +127,7 @@ public class SimgirlsLovemore extends MovieClip
 	private var battlescene:flash.display.Sprite;
 	private var blackmarketform:flash.display.Sprite;
 	private var minigamescene:flash.display.Sprite;
+
 	public function SimgirlsLovemore():void
 	{
 		//var paypal:PayPal=new PayPal();
@@ -143,6 +143,7 @@ public class SimgirlsLovemore extends MovieClip
 		DataContainer.battleDemo=false;
 		DataContainer.SaveRecord=new Array();
 		DataContainer.player=new Object();
+		DataContainer.restart=false;
 
 		var evt:GameEvent=new GameEvent();
 		evt.addEventListener(GameEvent.SHOWED,displayHandler);
@@ -170,7 +171,7 @@ public class SimgirlsLovemore extends MovieClip
 
 		successLogin=onLoginComplete;
 		failedLogin=onLoginFailed;
-		gameStart=onGameStart;
+		//gameStart=onGameStart;
 		//DebugTrace.msg("SimgirlsLovemore.verifyKey:"+Preloader.verifyKey);
 		var currentPlayer:CustomPlayer=Player.current as CustomPlayer;
 		DebugTrace.msg("player verify :"+currentPlayer.verify+" ; "+Main.verifyKey);
@@ -214,6 +215,10 @@ public class SimgirlsLovemore extends MovieClip
 		var scene:String=DataContainer.currentScene;
 		switch(e.target._name)
 		{
+			case "start-game":
+
+				onGameStart();
+				break;
 			case "waving":
 
 				var loaderReq:LoaderRequest=new LoaderRequest();
@@ -294,7 +299,7 @@ public class SimgirlsLovemore extends MovieClip
 				addChild(gametitle);
 
 				onLoginComplete();
-				break
+				break;
 			case "assets_form":
 			case "dating_assets_form":
 				//assetsform=new AssetsTileList(e.target._name);
@@ -338,7 +343,17 @@ public class SimgirlsLovemore extends MovieClip
 				queue=ViewsContainer.loaderQueue;
 				queue.empty(true,true);
 				topview.removeChild(minigamescene);
-				break
+				break;
+
+			case "restart-game":
+				DataContainer.restart=true;
+				gametitle=new BgGameTitle();
+				addChild(gametitle);
+
+				longinUI=new LoginPanel();
+				addChild(longinUI);
+
+				break;
 		}
 		//siwtch
 
@@ -472,7 +487,15 @@ public class SimgirlsLovemore extends MovieClip
 
 
 			}
-			command.topviewDispatch(TopViewEvent.REMOVE,_data);
+			if(DataContainer.restart){
+				//restart game
+				var gamescene:starling.display.Sprite=ViewsContainer.gameScene;
+				gamescene.dispatchEventWith("RESTART_GAME");
+
+			}else{
+				command.topviewDispatch(TopViewEvent.REMOVE,_data);
+			}
+
 		}
 		//if
 

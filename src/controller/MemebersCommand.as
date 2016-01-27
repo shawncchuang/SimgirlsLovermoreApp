@@ -455,17 +455,30 @@ public class MemebersCommand implements MembersInterface
 //                    }
 //
 //                }
-               // member.character.gotoAndStop("SPArmour");
-               // member.character.body.act.addEventListener(Event.ENTER_FRAME,doActPlaying);
+                // member.character.gotoAndStop("SPArmour");
+                // member.character.body.act.addEventListener(Event.ENTER_FRAME,doActPlaying);
             }
             if(player_gameover){
+                DataContainer.battleType="";
                 battleover=true;
                 SoundMixer.stopAll();
-                TweenMax.killAll();
-                var _data:Object=new Object();
-                _data.name= "";
-                _data.from="battle";
-                //command.sceneDispatch(SceneEvent.CHANGED,_data);
+
+                TweenMax.delayedCall(2,onFinalBattleComplete);
+
+
+                function onFinalBattleComplete():void{
+                    TweenMax.killAll();
+
+                    var gameEvt:GameEvent=SimgirlsLovemore.gameEvent;
+                    gameEvt._name="remove_battle";
+                    gameEvt.displayHandler();
+
+                    var _data:Object=new Object();
+                    _data.name= "SSCCArenaScene";
+                    _data.from="battle";
+                    command.sceneDispatch(SceneEvent.CHANGED,_data);
+                }
+
 
             }
 

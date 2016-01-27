@@ -93,10 +93,12 @@ public class Game extends Sprite
 		var scenes:Scenes=new Scenes();
 		scenes.setupEvent();
 
+        ViewsContainer.gameScene=this;
 		ViewsContainer.currentScene=this;
 		this.addEventListener(TopViewEvent.REMOVE,doTopViewDispatch);
-
 		this.addEventListener("PAY_CHECK",onPayCheck);
+        this.addEventListener("RESTART_GAME",onRestartGame);
+        this.addEventListener("LOAD_TO_RESTART",onLoadToRestart);
 
 		var assets:Assets=new Assets();
 		assets.initMusicAssetsManager();
@@ -179,9 +181,32 @@ public class Game extends Sprite
 		}
 		//switch
 	}
+    private function onRestartGame(e:Event):void{
+
+
+        if(loadgame)
+        {
+            initLoadScene();
+        }
+        else
+        {
+            initUI();
+            initMainScene();
+
+        }
+
+    }
+    private function onLoadToRestart(e:Event):void{
+        saveloadlist.removeFromParent(true);
+        bgImg.removeFromParent(true);
+        initUI();
+        initMainScene();
+    }
 
 	private function initLoadScene():void
 	{
+		DebugTrace.msg("Game.initLoadScene");
+
 		DataContainer.currentScene="HomePageScene";
 		var drawManager:DrawerInterface=new DrawManager();
 		bgImg=drawManager.drawBackground("HomePageScene");

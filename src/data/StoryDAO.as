@@ -5,7 +5,8 @@ package data {
 public class StoryDAO {
     private static var access:Array=new Array();
     private static var container:Object={"s001":s001(),"s002":s002(),"s003":s003(),
-        "s004":s004(),"s005":s005(),"s006a":s006a(),"s006b":s006b(),"s260":s260()};
+        "s004":s004(),"s005":s005(),"s006a":s006a(),"s006b":s006b(),
+        "s260":s260(),"s261":s261(),"s262":s262(),"s270":s270()};
     public static function switchStory(id:String):Array {
 
         access=container[id];
@@ -452,6 +453,123 @@ public class StoryDAO {
             "shC|APOLLYON versus ZEPHON!!!!",
             "END"
         ]
+    }
+
+    private static function s261():Array{
+        return ["com|bg_SSCCArenaScene","com|display_rufus2_center","spC|......","spC|I am...",
+            "shC|THE NEW BLACKSPEARS GENERAL!","player|Not yet...",
+            "com|move_rufus2_right#com|display_simman1_left","spR|SimMan?",
+            "spL|I am the last player of Team Apollyon. ","spR|Your name is not on the list.",
+            "spL|It is. I registered one minute before the game started. ",
+            "spL|Primero and I created the game rules together. I know the holes. ",
+            "spR|......","shR|Very well! ","spR|I am indestructible!","com|photo-on_FinalsStrike",
+            "com|swf-on_fxboom","player|Rufus punched SimMan in the stomach. ",
+            "player|!!!!!!","player|Where is your Spirit Energy<> SimMan? ",
+            "player|The simple attack almost killed SimMan on the spot. Rufus found that the man has almost no SE!",
+            "com|photo-off#com|remove_simman1_left","com|move_rufus2_center",
+            "shC|Are you fucking kidding me? ","player|The invincible Black Armor can stop almost all attacks from the outside<> but it also makes Rufus less alert to the environment at the same time...",
+            "com|photo-on_FinalsUp","player|Rufus looks up. He finally notices a massive ball of Water SE is floating in the mid air. ",
+            "player|SimMan had released all his SE from his body before stepping onto the stage... he left it in the air instead.",
+            "com|swf-on_fxzok","com|photo-off#com|photo-on_FinalsSpears",
+            "player|The massive amount of Spirit Energy in the air turned into 11 flying Energy Spears! ",
+            "com|photo-off#com|photo-on_FinalsKill","com|swf-on_fxzok",
+            "player|As if they're guided missiles<> the energy spears striked Rufus perfectly at the center of the forehead at the same time!",
+            "player|The ultra-concentrated energy finally pierced through his skull completely!",
+            "player|His brain was almost cut in half.","com|photo-off","com|remove_rufus2_center",
+            "com|display_simman1_center","spC|......","thC|I expected that it would take all my SE to attack at EXACTLY the same spot and the same time to cut through his armor. ",
+            "thC|However it is impossible to execute the plan precisely during a regular fight... ","thC|...hitting him completely off-guard is the only way. ",
+            "player|SimMan had actually executed the first strike the day before the game when Rufus was healing his son Zack. It left a small wound on Rufus's forehead. ",
+            "player|A very small amount of SimMan's SE was remained hidden in the wound<> and it was served as a target for the rest of his SE spears to hit at.",
+            "thC|You've been warned<> Rufus!","spC|......", "player|Suddenly<> SimMan's heart stops beating for 2 seconds. Rufus stands up again!",
+            "com|move_simman1_left#com|display_rufus1_right","shL|!!!!!!","spR|That was close<> SimMan! ",
+            "spR|You almost got me killed. ","spL|Amazing... ","spL|Now don't tell me there is no brain tissue in your head. ",
+            "spR|You did damage my brain. My old one. I just didn't tell you that I have a new brain implanted. ",
+            "com|photo-on_FinalsImplant","player|Some years ago I realized that my Spirit was gone. I tried many ways to retrieve my power. One way was an artificial brain implant. ",
+            "player|Inside my chest is my 2nd brain. It didn't give me the lost Spirit that I was looking for. But it did save my life this time. ",
+            "player|Unless you can destroy this one inside the chest as well... ","com|photo-off",
+            "spR|SimMan<> you are like the knife behind my back. You leave me no choice. ","shR|À la prochaine!",
+            "com|swf-on_fxbam","player|Rufus knocked SimMan out again. ","com|remove_simman1_left",
+            "spR|SimMan<> Primero<> and these kids as well... I don't care if they are the real Amagi...",
+            "spR|None of you will want to celebrate the revival of Blackspears anyway. ",
+            "com|display_zack_battle_left","shL|Wait! Father!","spL|You don't have to kill them! They are just stupid kids...",
+            "spR|Zack<> you are a disgrace to the Kriegs. Step aside or I will kill you first.","spL|......",
+            "shL|No! I can't let you kill them. ","shL|You're going crazy<> old man! ","com|swf-on_fxbam",
+            "player|Rufus knocked down Zack as well!","com|remove_zack_battle_left#com|move_rufus1_center","spC|What a shame!",
+            "player|On the other side of the stage<> $$$ is struggling to get up again...","player|(......)",
+            "player|(I am wondering if @@@ is doing alright.)","player|(Even the Master SimMan can't stop Rufus.)",
+            "player|(It's hopeless...)","player|(Wait! I can't give up. Rufus can kill me. But not @@@!)",
+            "player|(I won't let it happen!)","player|(I still have one last shot - À la prochaine!)",
+            "player|(I don't think I have enough SE to use the forbidden skill... but... I have to make it happen no matter what!)",
+            "END"]
+    }
+    public static function s262():Array{
+
+        return [
+                "com|bg_SSCCArenaScene",
+                "com|display_@@@_battle_center",
+                "spC|$$$... let me help... use my energy too. ",
+                "player|No<> @@@! You know the consequence... both of us will lose the Spirit of Love! ",
+                "player|I can do this by myself! Just let me try again! ",
+                "spC|......",
+                "spC|It is the same.",
+                "spC|If you can never feel love again...<>",
+                "thC|I don't need love in a World without yours. ",
+                "END"
+        ]
+
+    }
+    public static function s270():Array{
+
+        return ["com|bg_Sky","player|That day<> Rufus was finally defeated by the forbidden skill À la prochaine. ","player|Our Spirit of Love absorbed all his Dark Energy and disappeared together in the thin air.",
+            "player|The Apollyon won the SSCC Championship.","player|Sao and SimMan were sent to the Hospital.","player|Primero was also released. ","player|A few weeks later...",
+            "com|bg_PierScene","com|display_@@@_twin_center","spC|......","player|Will you ever come back to Shambala? ","spC|Hm... I don't think so. ","player|Well... I wish you all the best<> as always.",
+            "spC|Same here.","player|Give me a call or something...","spC|Nah... we had an agreement<> remember? We just split up and that's it.","spC|Forget everything in the past! That way we can both start a new life<> ok?",
+            "player|Okay...","spC|All the best<> $$$.","shC|Time to go! Goodbye!","com|twin-photo-on_Bye@@@","player|(So... that was the last time I saw @@@.)",
+            "player|(After losing our Spirit of Love<> both of us cannot feel or experience Love again.)","player|(The feeling is weird. All our memories are intact. We can still remember every little thing happened between us in the past year.)",
+            "player|(We just don't feel 'it' anymore.) ","player|(At the end @@@ decided to start fresh somewhere... we honestly thought it was a good idea.)","com|twin-photo-off",
+            "player|Another few weeks later<> Sao is fully recovered. He shielded us from Rufus's attack when we were casting the forbidden skill. ","player|SimMan is still in a coma however. ","com|bg_GardenScene",
+            "com|display_sao_casual1_center","spC|So you just let @@@ go? ","player|Yeah... what can I do? ","spC|You should at least ask for a phone number or something. ","player|You don't understand the feeling. ",
+            "spC|I don't.","spC|So... are you doing alright<> buddy?","player|(I honestly don't know. I am no longer interest in anything. I feel like a walking dead.) ",
+            "spC|Well! Just don't give up buddy. I am always on your side... except that one time... haha!","spC|Anyway<> what's your plan now? ","player|I just want to spend some time alone. ",
+            "spC|Okay! I will be sticking around. Just let me know!","com|remove_sao_casual1_center","player|Suddenly I want to visit that place again. ","com|bg_SkyNight","com|photo-on_DancePool#com|music-on_precioustime",
+            "player|I am not sure why I am here. ","player|Staring at the statue in the fountain<> I feel hopeful somehow.","player|My hand unconsciously reached into the side pocket of my battlesuit waist band. I found something.",
+            "com|photo-off#com|photo-on_EndingNecklace","player|Why the black crystal necklace is in my pocket?","player|It looks dark and dull. The Spirit of Love inside is gone. ","com|photo-off","com|display_mia_center","spC|You are lucky<> $$$...",
+            "player|Mia? What do you mean? ","spC|You really have no clue...","spC|Do you know why the necklace is in your pocket? ","player|How... wait. Can you read my mind?","spC|That's one of my abilities. Yes. I do can read minds from some people.",
+            "spC|To be exact<> when you're thinking your brain is sending out electromagnetic waves and I can interpret them.","spC|We can talk about that later. I think you need to know something about @@@.","com|photo-on_MiaAngel",
+            "player|That day<> before you two combined your SE to use the forbidden skill À la prochaine in the final SSCC battle... ","player|Knowing that both of you would lose the Spirit of Love forever<> @@@ had made a decision on the spot. ",
+            "com|photo-off#com|photo-on_LoveNecklace","player|At that time the black crystal was filled with the Spirit of Love from both of you.  ","player|@@@ ripped the pendant off and slipped it into your pocket<> when you were hugging each other. ","com|photo-off",
+            "spC|After the battle<> both of your had lost your spirits and became 'empty'.","spC|And you absorbed that super tiny portion of your Spirit of Love stored in the pendant!","spC|It seems that<> like a seed<> it is starting to grow inside you<> so that you can at least feel a bit of hope again. ",
+            "spC|It is a miracle indeed...","player|......","spC|@@@ chose to give the necklace to you so that you can have a chance to experience LOVE again. ","player|@@@... why? It was your necklace! I gave it to you!","player|Why didn't you tell me your plan? ",
+            "spC|@@@ can never feel love again. You two can never fall in love again anyway. ","spC|@@@ actually wants you to forget and move forward<> so that you will have another chance to be in love with someone else.",
+            "spC|I shouldn't have told you this. But it's so sad and I just can't help it.","player|Do you know where is @@@? Can you help me to find @@@?","spC|Unfortunately no. To tell you the truth<> I can only read from a source half a mile away at best. ",
+            "spC|Well... that's all I can tell you. Enjoy your evening! ","com|remove_mia_center","player|After that night I asked everyone<> but @@@ didn't leave any contact at all. ","player|Now I know the whole story. Logically<> I am supposed to go crazy and travel around the World to look for my lover or something. ",
+            "player|But to be frank<> I still don't have too much feelings. The Spirit of Love is growing inside me... but very slowly I guess. ","player|I also got some updates from the boys and girls.",
+            "com|end-photo-on_Ceil","player|Ceil went out with Dan at the SMA Academy at the end. ","player|They opened up a new pet store in the downtown area. ","com|end-photo-on_Sirena","player|Sirena continued her psychic business at the SimMan's House. ",
+            "player|She had quite a few boyfriends.","com|end-photo-on_Dea","player|Dea wanted to have more exotic experiences. ","player|She left the Temple and she planned to spend 2 years travelling aboard.","com|end-photo-on_Klaire",
+            "player|Klaire got a promotion and she became the Chief of Police!","player|It was her dream and she continued to kick asses in Shambala. ","com|end-photo-on_Tomoru","player|Tomoru joined a girl band. The girl can dance and she became quite popular. ",
+            "player|I even saw her live performance a couple times at the Arena!","com|end-photo-on_Lenus","player|Lenus went into filming. His first film was a big hit on the island.","player|He even won the best director award that year. ","com|end-photo-on_Zack",
+            "player|Zack took over his father's business and became the new King of the Underworld. ","player|Bad boy<> bad boy<> boys will be boys.","com|photo-on_Rufus","player|Rufus lost both his Spirit of Love and his Dark Energy. He became completely powerless but it also gave him peace. ",
+            "player|He became a guardian at the Temple and he continued to practice 'normal' martial arts with the other guardians. ","com|photo-on_Sao","player|Now that I've lost pretty much all SE<> Sao became the new Captain of Apollyon. ","player|He is busy recruiting new members for the next SSCC.",
+            "player|And finally<> SimMan wakes up from his long coma. ",
+            "com|photo-off",
+
+            "com|bg_Sewage","com|display_keir_right","spR|Why did you tell $$$<> my dear?","spR|We can just kill them. ",
+            "com|display_mia_left","spL|Psst. Killing the Amagi won't make a damn difference. ",
+            "spL|They defeated Lucifer. They killed Jesus. ","spL|But the MORNING STAR will keep coming back. ",
+            "spL|We want to keep the Amagi forever in the dark instead. ","spR|So what do we do now?","spL|We'll wait. ",
+            "spR|Fine! Just wake me up when you need to kill again.","com|bg_Blackspears",
+            "player|I arrived at the Blackspears secret HQ. ","com|display_primero1_center",
+            "spC|I've given SimMan an update about your situation. ","spC|SimMan thinks he may be able to help.",
+            "com|move_primero1_right","com|display_simman_left","spL|I don't want either of you turning into another Rufus Krieg. ",
+            "spL|After all<> I created À la prochaine and it led to all these troubles. ","spL|I will try my best to fix it.",
+            "spL|Pack your stuff. We will go search for the lost Spirit<> for you and @@@.","player|Where are we going?",
+            "spL|Pamir Mountains - the Roof of the World. ","com|photo-on_Simman","player|According to SimMan<> Pamir was once the home of the oldest Ancient Deities<> aka Heaven. ",
+            "player|They first discovered Spirit Energy there over 5000 years ago. ","player|Wait for me @@@...  ",
+            "player|We will find a way to love again. No matter how hard it is. I promise. ",
+            "END"]
+
+
+
     }
 
 }

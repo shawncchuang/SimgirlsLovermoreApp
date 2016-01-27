@@ -1,6 +1,8 @@
 package views
 {
-	import flash.display.MovieClip;
+import events.GameEvent;
+
+import flash.display.MovieClip;
 	import flash.events.MouseEvent;
 	
 	import controller.FloxCommand;
@@ -43,7 +45,12 @@ package views
 		{
 			Game.LoadGame=true;
 			
-			SimgirlsLovemore.gameStart();
+			//SimgirlsLovemore.gameStart();
+
+			var gameEvent:GameEvent = SimgirlsLovemore.gameEvent;
+			gameEvent._name = "start-game";
+			gameEvent.displayHandler();
+
 		}
 		private function doRollOverHandle(e:MouseEvent):void
 		{

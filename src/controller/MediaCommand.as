@@ -1,19 +1,18 @@
 package controller
 {
 
-import com.greensock.TweenMax;
 import com.greensock.events.LoaderEvent;
 import com.greensock.loading.LoaderMax;
 import com.greensock.loading.SWFLoader;
 
+import feathers.controls.ImageLoader;
+import feathers.media.VideoPlayer;
+
 import flash.display.BitmapData;
-import flash.display.DisplayObject;
-import flash.display.Sprite;
+import flash.display.StageDisplayState;
 import flash.events.NetStatusEvent;
-import flash.filesystem.File;
 import flash.geom.Point;
-import flash.geom.Rectangle;
-import flash.media.Video;
+
 import flash.net.NetConnection;
 import flash.net.NetStream;
 import flash.utils.Dictionary;
@@ -44,8 +43,9 @@ public class MediaCommand implements MediaInterface
     private var ns:NetStream;
 
     /*== Video Holder ==*/
-    private var video:Video;
+    private var player:VideoPlayer;
     private var videoImg:Image;
+    private var loader:ImageLoader;
 
     /*== Video Lists ==*/
     private var currentPath:String;
@@ -64,6 +64,7 @@ public class MediaCommand implements MediaInterface
     private var onTransFormComplete:Function;
 
     private var _target:*;
+    private var format:String;
 
     public function SWFPlayer(id:String,src:String,callback:Function):void{
 
@@ -134,7 +135,7 @@ public class MediaCommand implements MediaInterface
 
     }
 
-    public function VideoPlayer(src:String,target:*,size:Point=null, position:Point=null, fps:int = 30):void
+    public function PlayVideo(src:String,target:*,size:Point=null, position:Point=null, fps:int = 30,format:String="flv",callpack:Function=null):void
     {
         this.currentPath=src;
         this._target=target;
@@ -142,12 +143,16 @@ public class MediaCommand implements MediaInterface
         this.position = position;
         this.loop = loop;
         this.fps = fps;
-
+        this.format = format;
+        onFinished=callpack;
         bootstrap();
     }
 
     private function onVideoComplete(e:Event):void
     {
+
+        loader.dispose();
+        player.dispose();
         if(onFinished != null){
             onFinished();
         }
@@ -155,32 +160,37 @@ public class MediaCommand implements MediaInterface
 
     private function bootstrap():void
     {
-        nc = new NetConnection();
-        nc.connect(null); //local files
-
-        var file:File = File.applicationDirectory.resolvePath("video/"+ this.currentPath+".flv");
-        ns = new NetStream(nc);
-        ns.client = {
-            NetStatusEvent : onPlayStatus
-        };
-
-        ns.addEventListener(NetStatusEvent.NET_STATUS, onPlayStatus);
-        ns.play(file.url);
-
-        var texture:Texture = Texture.fromNetStream(ns, 1, function():void
-        {
-            this.videoImg=new Image(texture);
-            this._target.addChild(this.videoImg);
-        });
-//        var sw:Number=Starling.current.stage.stageWidth;
-//        var sh:Number=Starling.current.stage.stageHeight;
-//        video = new Video(size.x,size.y);
-//        video.x=position.x;
-//        video.y=position.y;
-//        video.attachNetStream(ns);
+//        nc = new NetConnection();
+//        nc.connect(null); //local files
 //
-//        Starling.current.nativeOverlay.addChild(video);
+//        var file:File = File.applicationDirectory.resolvePath("video/"+ this.currentPath+"."+this.format);
+//        ns = new NetStream(nc);
+//        ns.client = {
+//            NetStatusEvent : onPlayStatus
+//        };
+//
+//        ns.addEventListener(NetStatusEvent.NET_STATUS, onPlayStatus);
+//        ns.play(file.url);
+//
+//        var texture:Texture = Texture.fromNetStream(ns, 1, function():void
+//        {
+//
+//            this._target.addChild(new Image(texture));
+//        });
 
+        player=new VideoPlayer();
+        player.videoSource="video/"+ this.currentPath+"."+this.format;
+        //player.setSize( this.size.x, this.size.y );
+        //player.fullScreenDisplayState = StageDisplayState.FULL_SCREEN;
+        this._target.addChild(player);
+
+        loader=new ImageLoader();
+        player.addChild(loader);
+        player.addEventListener(Event.COMPLETE, onVideoComplete);
+        player.addEventListener( Event.READY, videoPlayer_readyHandler );
+    }
+    private function videoPlayer_readyHandler(e:Event):void{
+        loader.source = player.texture;
     }
 
     public function play(path:String, loop:Boolean = true, callback:Function = null):void
@@ -201,7 +211,7 @@ public class MediaCommand implements MediaInterface
     public function stop(cleanup:Boolean = false):void
     {
         ns.close();
-        Starling.current.nativeOverlay.removeChild(video);
+        //Starling.current.nativeOverlay.removeChild(video);
         /*
          onVideoComplete(null);
          removeEventListener(Event.ENTER_FRAME, onFrame);
@@ -228,7 +238,8 @@ public class MediaCommand implements MediaInterface
             stop(true);
             this.videoImg.dispose();
             this.videoImg.removeFromParent(true);
-            //onFinished();
+            if(onFinished)
+            onFinished();
 
 
         }

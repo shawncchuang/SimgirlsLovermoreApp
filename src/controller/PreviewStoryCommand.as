@@ -454,7 +454,7 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
             //var stylesechdule:Object=DataContainer.styleSechedule;
             //DebugTrace.msg("SceneCommand.createCharacter, style="+stylesechdule.stringify(stylesechdule));
             //var style:String=stylesechdule[name];
-            var style:String = name;
+            style = name;
 
 
         }else{

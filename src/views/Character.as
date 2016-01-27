@@ -107,7 +107,6 @@ public class Character extends MovieClip
     private var boss_model:Boolean=false;
     protected var OnArmour:Boolean=false;
 
-    private var arming=false;
     public function Character()
     {
 

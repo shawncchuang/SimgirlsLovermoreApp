@@ -64,6 +64,7 @@ public class DataContainer
     private static var twinflame:String;
     private static var datingtwinid:String;
     private static var _enable:Boolean;
+    private static var restart_game:Boolean;
 
     public static function set AssetsId(ids:Array):void
     {
@@ -900,6 +901,12 @@ public class DataContainer
     public static function get Armour():Boolean{
 
      return  _enable
+    }
+    public static function set restart(enable:Boolean):void{
+        restart_game=enable;
+    }
+    public static function get restart():Boolean{
+        return restart_game;
     }
 }
 }

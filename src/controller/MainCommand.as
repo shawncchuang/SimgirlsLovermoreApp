@@ -1323,8 +1323,8 @@ public class MainCommand implements MainInterface {
         gameEvent._name = "clear_comcloud";
         gameEvent.displayHandler();
 
-        var mediacom:MediaInterface = new MediaCommand();
-        mediacom.VideoPlayer("rest-animated",ViewsContainer.currentScene, new Point(1024, 250), new Point(0, 260));
+        //var mediacom:MediaInterface = new MediaCommand();
+        //mediacom.PlayVideo("rest-animated",ViewsContainer.currentScene, new Point(1024, 250), new Point(0, 260));
         //mediacom.play("video/rest-animated.flv", false, onFinishAnimated);
 
         var restObj:Object = sysCommad.Stay;

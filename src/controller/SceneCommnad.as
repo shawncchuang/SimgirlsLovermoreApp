@@ -278,6 +278,7 @@ public class SceneCommnad implements SceneInterface
             if(prv_talks.indexOf("APOLLYON versus ZEPHON")!=-1 ){
                 //Final Battle
                 DataContainer.battleType="final_battle";
+                updateCurrentSwitch();
                 var _data:Object=new Object();
                 _data.name="ChangeFormationScene";
                 command.sceneDispatch(SceneEvent.CHANGED,_data);
@@ -331,12 +332,21 @@ public class SceneCommnad implements SceneInterface
             talkfield=null;
         }
 
+
         switch(todo)
         {
             case "player":
                 creartePlayerChat();
                 break
             case "com":
+                var com:String=comlists[1];
+                var twinflame:String=flox.getSaveData("twinflame");
+                var fullname:String=Config.fullnames[twinflame];
+                if(com.indexOf("end-photo-on")!=-1 && com.indexOf(fullname)!=-1){
+                    talk_index+=3;
+                    showChat();
+                    return
+                }
                 commandHandle();
                 break
             case "spC":
@@ -436,6 +446,7 @@ public class SceneCommnad implements SceneInterface
                     break
                 case "photo-on":
                 case "twin-photo-on":
+                case "end-photo-on":
                     createPhotoMessage(todo,target);
                     break
                 case "photo-off":
@@ -557,7 +568,7 @@ public class SceneCommnad implements SceneInterface
             //var stylesechdule:Object=DataContainer.styleSechedule;
             //DebugTrace.msg("SceneCommand.createCharacter, style="+stylesechdule.stringify(stylesechdule));
             //var style:String=stylesechdule[name];
-            var style:String = name;
+            style = name;
 
 
         }else{
@@ -964,6 +975,7 @@ public class SceneCommnad implements SceneInterface
 
             switchID=current_switch;
 
+
             onStoryComplete();
 
         }else{
@@ -989,10 +1001,14 @@ public class SceneCommnad implements SceneInterface
         Starling.juggler.remove(delaycall);
         disableAll();
 
-        var current_scene:Sprite=ViewsContainer.currentScene;
-        var _data:Object=new Object();
-        _data.removed="story_complete";
-        current_scene.dispatchEventWith(TopViewEvent.REMOVE,false,_data);
+        var battleType:String=DataContainer.battleType;
+        if(battleType!="final_battle"){
+            var current_scene:Sprite=ViewsContainer.currentScene;
+            var _data:Object=new Object();
+            _data.removed="story_complete";
+            current_scene.dispatchEventWith(TopViewEvent.REMOVE,false,_data);
+        }
+
     }
     private var switchIDlist:Array;
     public function initStory(finshed:Function=null):void

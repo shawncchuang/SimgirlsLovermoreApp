@@ -10,8 +10,10 @@ package utils
 	import flash.display.Stage;
 	
 	import controller.FloxManagerController;
-	
-	import starling.display.Sprite;
+
+import starling.display.Sprite;
+
+import starling.display.Sprite;
 	
 	
 	
@@ -47,6 +49,7 @@ package utils
 		private static var player_profile:Sprite;
 		private static var current_clouds:Array;
 		private static var scene_countainer:Sprite;
+		private static var game_scene:Sprite;
 
 		public static function set GameStage(st:Stage):void
 		{
@@ -299,6 +302,14 @@ package utils
 		}
 		public static function get SceneContainer():Sprite{
 			return scene_countainer
+		}
+		public static function set gameScene(view:Sprite):void{
+			game_scene=view;
+
+		}
+		public static function get gameScene():Sprite{
+			return game_scene;
+
 		}
 	}
 }
