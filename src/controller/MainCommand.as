@@ -2539,7 +2539,23 @@ public class MainCommand implements MainInterface {
 
         }
     }
+    public function checkRanking():Number{
+        var rank:Number=0;
+        var flox:FloxInterface=new FloxCommand();
+        var ranking:Array=flox.getSaveData("ranking");
+        ranking=ranking.sortOn("win",Array.NUMERIC,Array.DESCENDING);
+        DebugTrace.msg("MainCommand.checkTanking ranking="+ranking);
 
+        for(var i:uint=0;i<ranking.length;i++){
+            var team:Object=ranking[i];
+            if(team.team_id == "player"){
+                rank=(i+1);
+                break
+            }
+        }
+        return rank
+
+    }
 
 }
 }

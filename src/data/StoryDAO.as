@@ -6,7 +6,7 @@ public class StoryDAO {
     private static var access:Array=new Array();
     private static var container:Object={"s001":s001(),"s002":s002(),"s003":s003(),
         "s004":s004(),"s005":s005(),"s006a":s006a(),"s006b":s006b(),
-        "s260":s260(),"s261":s261(),"s262":s262(),"s270":s270()};
+        "s260":s260(),"s261":s261(),"s262":s262(),"s270":s270(),"s280":s280()};
     public static function switchStory(id:String):Array {
 
         access=container[id];
@@ -568,9 +568,23 @@ public class StoryDAO {
             "player|We will find a way to love again. No matter how hard it is. I promise. ",
             "END"]
 
-
-
     }
+    public static function s280():Array{
 
+        return [
+                "com|bg_Sky#com|music-on_horror",
+                "player|Our mission failed.",
+                "player|At the end<> Rufus and his team Zephon won the SSCC.",
+                "com|photo-on_BadEnding",
+                "player|Rufus Krieg became the new Blackspears General. ",
+                "player|Both SimMan and Primero were killed. Our team and other anti-war Blackspears members were sent to the concentration camp.",
+                "player|A year later<> Blackspears attacked Moscow<> Russia<> the last communist state in the World.",
+                "player|Washington<> D.C. was accused of orchestrating the attack behind the scene. ",
+                "player|Russia gave up its permanent membership in the United Nations Security Council the next year and invaded Georgia<> Turkey and Ukraine.",
+                "player|Finally<> the stage was set for the World War III.",
+                "player|GAME OVER",
+                "END"
+        ]
+    }
 }
 }

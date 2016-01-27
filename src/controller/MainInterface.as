@@ -63,6 +63,7 @@ public interface MainInterface
 
     function initContextMenu():void
     function checkCaptainAdjustData():void
+    function checkRanking():Number
 
 }
 }

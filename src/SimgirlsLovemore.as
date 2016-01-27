@@ -171,7 +171,7 @@ public class SimgirlsLovemore extends MovieClip
 
 		successLogin=onLoginComplete;
 		failedLogin=onLoginFailed;
-		//gameStart=onGameStart;
+		gameStart=onGameStart;
 		//DebugTrace.msg("SimgirlsLovemore.verifyKey:"+Preloader.verifyKey);
 		var currentPlayer:CustomPlayer=Player.current as CustomPlayer;
 		DebugTrace.msg("player verify :"+currentPlayer.verify+" ; "+Main.verifyKey);

@@ -473,10 +473,18 @@ public class MemebersCommand implements MembersInterface
                     gameEvt._name="remove_battle";
                     gameEvt.displayHandler();
 
+                    var armour:Boolean=DataContainer.Armour;
+                    if(!armour){
+                        flox.save("current_switch","s280|on");
+                    }
+
+
                     var _data:Object=new Object();
                     _data.name= "SSCCArenaScene";
                     _data.from="battle";
                     command.sceneDispatch(SceneEvent.CHANGED,_data);
+
+
                 }
 
 
@@ -568,20 +576,36 @@ public class MemebersCommand implements MembersInterface
                 TweenMax.killAll();
                 var command:MainInterface=new MainCommand();
                 command.stopBackgroudSound();
+                var battle_type:String=DataContainer.battleType;
+
+                if(battle_type=="schedule"){
+                    var rank:Number=command.checkRanking();
+                    var dateStr:String=flox.getSaveData("date");
+                    var day:String=dateStr.split(".")[1];
+                    var month:String=dateStr.split(".")[2];
+                    var today:String=month+"_"+day;
+                    var battleDays:Array=Config.battleDays;
+                    if(rank>2 && today==battleDays[battleDays.length-1]){
+                        //the last battle
+                        flox.save("current_switch","s280|on");
+                    }
+
+                }
+
                 if(cpu_gameover)
                 {
 
-                    var ranking:Array=flox.getSaveData("ranking");
-
-                    for(var i:uint=0;i< ranking.length;i++){
-                        if(ranking[i].team_id == "player"){
-                            var win:Number= ranking[i].win;
-                            win++;
-                            ranking[i].win=win;
-                            break
-                        }
-                    }
-                    flox.save("ranking",ranking);
+//                    var ranking:Array=flox.getSaveData("ranking");
+//
+//                    for(var i:uint=0;i< ranking.length;i++){
+//                        if(ranking[i].team_id == "player"){
+//                            var win:Number= ranking[i].win;
+//                            win++;
+//                            ranking[i].win=win;
+//                            break
+//                        }
+//                    }
+//                    flox.save("ranking",ranking);
 
 
                     var battleEvt:BattleEvent=BattleScene.battleEvt;
@@ -596,9 +620,7 @@ public class MemebersCommand implements MembersInterface
                     gameEvt.displayHandler();
 
                     var scene:String=DataContainer.BatttleScene;
-                    var battle_type:String=DataContainer.battleType;
-
-                    DebugTrace.msg("MembersCommand.memberCommand battle_type="+battle_type+" ,scene="+scene);
+//                    DebugTrace.msg("MembersCommand.memberCommand battle_type="+battle_type+" ,scene="+scene);
                     if(battle_type=="schedule")
                     {
 

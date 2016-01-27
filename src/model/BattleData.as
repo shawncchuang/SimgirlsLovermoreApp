@@ -663,6 +663,13 @@ public class BattleData
                 var battle_date:Number=Number(battleDays[n].split("_")[1]);
                 var scheduleMonthIndex:Number=monthsList.indexOf(battle_month);
 
+                if(month==battle_month){
+                    //Sep
+                    if(Number(date)>battle_date){
+                        pastIndex++;
+                    }
+
+                }
                 if(currentMonthIndex>8 || currentMonthIndex==0){
                     //after Sep and Jan
 
