@@ -14,7 +14,7 @@ import flash.media.SoundMixer;
 import flash.text.TextField;
 import flash.text.TextFieldAutoSize;
 import flash.text.TextFormat;
-import flash.ui.Mouse;
+
 
 import data.Config;
 import data.DataContainer;
@@ -25,6 +25,9 @@ import events.SceneEvent;
 
 import model.BattleData;
 import model.SaveGame;
+
+import starling.animation.DelayedCall;
+import starling.core.Starling;
 
 import utils.DebugTrace;
 import utils.ViewsContainer;
@@ -60,6 +63,7 @@ public class MemebersCommand implements MembersInterface
     private var battleover:Boolean=false;
     private var hurtplayer:Array=new Array();
     public static var battleEvt:BattleEvent;
+    private var delaycall:DelayedCall;
     public function init(scene:MovieClip):void
     {
         battlescene=scene;
@@ -441,6 +445,43 @@ public class MemebersCommand implements MembersInterface
         }
         //for
         DataContainer.PlayerPower=player_power;
+
+        if(type=="story_battle_s023"){
+
+            if(cpu_gameover){
+
+                flox.save("current_switch","s024|on");
+            }
+            if(player_gameover){
+
+                flox.save("current_switch","s9999|on");
+            }
+            if(cpu_gameover || player_gameover){
+                DataContainer.battleType="";
+                delaycall=new DelayedCall(onBattleCompleteS023,1);
+                Starling.juggler.add(delaycall);
+            }
+
+            function onBattleCompleteS023():void{
+
+                Starling.juggler.remove(delaycall);
+
+                var gameEvt:GameEvent=SimgirlsLovemore.gameEvent;
+                gameEvt._name="remove_battle";
+                gameEvt.displayHandler();
+
+                var _data:Object=new Object();
+                _data.name= "RestaurantScene";
+                _data.from="battle";
+                command.sceneDispatch(SceneEvent.CHANGED,_data);
+            }
+
+
+            cpu_gameover=false;
+            player_gameover=false;
+        }
+
+
         if(type=="final_battle"){
 
             if(cpu_gameover){
@@ -463,11 +504,13 @@ public class MemebersCommand implements MembersInterface
                 battleover=true;
                 SoundMixer.stopAll();
 
-                TweenMax.delayedCall(2,onFinalBattleComplete);
+                delaycall=new DelayedCall(onFinalBattleComplete,1);
+                Starling.juggler.add(delaycall);
+
 
 
                 function onFinalBattleComplete():void{
-                    TweenMax.killAll();
+                    Starling.juggler.remove(delaycall);
 
                     var gameEvt:GameEvent=SimgirlsLovemore.gameEvent;
                     gameEvt._name="remove_battle";
@@ -475,7 +518,7 @@ public class MemebersCommand implements MembersInterface
 
                     var armour:Boolean=DataContainer.Armour;
                     if(!armour){
-                        flox.save("current_switch","s280|on");
+                        flox.save("current_switch","s9999|on");
                     }
 
 
@@ -552,7 +595,7 @@ public class MemebersCommand implements MembersInterface
             quitbtn.buttonMode=true;
             battlescene.addChild(battlealert);
 
-            if(type!="random_battle" && type!="practice" && type!="story_battle" && type!="final_battle"){
+            if(type!="random_battle" && type!="practice" && type.indexOf("story_battle")==-1 && type!="final_battle"){
                 var battleData:BattleData=new BattleData();
                 battleData.finishedBattle(winner,team_id);
             }
@@ -587,7 +630,7 @@ public class MemebersCommand implements MembersInterface
                     var battleDays:Array=Config.battleDays;
                     if(rank>2 && today==battleDays[battleDays.length-1]){
                         //the last battle
-                        flox.save("current_switch","s280|on");
+                        flox.save("current_switch","s9999|on");
                     }
 
                 }

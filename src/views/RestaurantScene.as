@@ -32,7 +32,7 @@ package views
 		private var command:MainInterface=new MainCommand();
 		private var button:Button;
 		private var scencom:SceneInterface=new SceneCommnad();
-		private var floxcom:FloxInterface=new FloxCommand();
+		private var flox:FloxInterface=new FloxCommand();
 		
 	 
 		public function RestaurantScene()
@@ -51,13 +51,17 @@ package views
 		private function init():void
 		{
 			
-			scencom.init("RestaurantScene",speaker_sprite,62,onCallback);
+			scencom.init("RestaurantScene",speaker_sprite,62,onStartStory);
 			scencom.start();
-			//scencom.disableAll();
+
 		}
-		private function onCallback():void
+		private function onStartStory():void
 		{
-			
+			var switch_verifies:Array=scencom.switchGateway("Restaurant");
+			if(switch_verifies[0]){
+				scencom.disableAll();
+				scencom.start();
+			}
 		}
 		private function onSceneTriggered(e:Event):void
 		{
@@ -72,7 +76,7 @@ package views
 			
 			
 		}
-		private function doTopViewDispatch(e:TopViewEvent):void
+		private function doTopViewDispatch(e:Event):void
 		{
 			DebugTrace.msg("RestaurantScene.doTopViewDispatch removed:"+e.data.removed);
 			var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
@@ -87,10 +91,26 @@ package views
 					_data.name="MainScene";
 					command.sceneDispatch(SceneEvent.CHANGED,_data);
 					break
-				case "":
-					
-					
-			 
+				case "story_complete":
+					var current_switch:String=flox.getSaveData("current_switch");
+					if(current_switch=="s024|off"){
+
+						this.removeFromParent(true);
+						var _data:Object=new Object();
+						_data.name= "MainScene";
+						_data.from="battle";
+						command.sceneDispatch(SceneEvent.CHANGED,_data);
+
+					}
+					if(current_switch=="s9999|off"){
+
+						this.removeFromParent(true);
+						var gameEvent:GameEvent = SimgirlsLovemore.gameEvent;
+						gameEvent._name = "restart-game";
+						gameEvent.displayHandler();
+
+					}
+
 					break
 				case "ani_complete":
 				 

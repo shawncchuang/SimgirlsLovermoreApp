@@ -949,6 +949,7 @@ public class MainCommand implements MainInterface {
         }
 
         var twinflame:String= flox.getSaveData("twinflame");
+        //ahter owning twinflame could raise relationship
         if(twinflame =="" || !twinflame){
             var reStep:Object=flox.getSyetemData("relationship_level");
             var closefriendMax:Number=reStep["closefriend-Max"];

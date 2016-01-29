@@ -273,6 +273,7 @@ public class SceneCommnad implements SceneInterface
         }else{
             command.addShortcuts();
             //finish current part
+            var current_switch:String=flox.getSaveData("current_switch");
             DebugTrace.msg("SceneCommand finished");
             var prv_talks:String= talks[end_index-1];
             if(prv_talks.indexOf("APOLLYON versus ZEPHON")!=-1 ){
@@ -282,6 +283,15 @@ public class SceneCommnad implements SceneInterface
                 var _data:Object=new Object();
                 _data.name="ChangeFormationScene";
                 command.sceneDispatch(SceneEvent.CHANGED,_data);
+
+            }else if(prv_talks.indexOf("GGRRRRRRR! I will eat you all!")!=-1 ){
+                //s023fat boss
+                DataContainer.battleType="story_battle_s023";
+                updateCurrentSwitch();
+                _data=new Object();
+                _data.name="ChangeFormationScene";
+                command.sceneDispatch(SceneEvent.CHANGED,_data);
+
 
             }else{
 
@@ -1002,12 +1012,13 @@ public class SceneCommnad implements SceneInterface
         disableAll();
 
         var battleType:String=DataContainer.battleType;
-        if(battleType!="final_battle"){
+        if(battleType!="final_battle" && battleType!="story_battle_s023"){
             var current_scene:Sprite=ViewsContainer.currentScene;
             var _data:Object=new Object();
             _data.removed="story_complete";
             current_scene.dispatchEventWith(TopViewEvent.REMOVE,false,_data);
         }
+
 
     }
     private var switchIDlist:Array;
