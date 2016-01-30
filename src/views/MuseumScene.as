@@ -67,7 +67,7 @@ import starling.animation.Tween;
 		{
 			
 
-			var switch_verifies:Array=scencom.switchGateway("MuseumScene");
+			var switch_verifies:Array=scencom.switchGateway("Museum");
 			DebugTrace.msg("MuseumScene.onStartStory switch_verifies="+switch_verifies[0]);
 			if(switch_verifies[0]){
 				scencom.disableAll();

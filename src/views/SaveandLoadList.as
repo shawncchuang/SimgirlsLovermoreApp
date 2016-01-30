@@ -59,7 +59,8 @@ public class SaveandLoadList extends Sprite
         DebugTrace.msg("SaveandLoadList type:"+type);
 
 
-        var current_saved:Array=flox.getPlayerData("saved");
+       // var current_saved:Array=flox.getPlayerData("saved");
+        var current_saved:Array=FloxCommand.savedIds;
         DebugTrace.msg("SaveandLoadList current_saved:"+current_saved);
         if(current_saved.length>0)
         {
@@ -147,7 +148,6 @@ public class SaveandLoadList extends Sprite
             var empty_texture:Texture=Assets.getTexture("Empty");
             var emptyImg:Image=new Image(empty_texture);
             emptybar.addChild(emptyImg);
-
             var name_txt:TextField=new TextField(70,emptyImg.height,saverecord[i].first_name+"\n"+saverecord[i].last_name,font,18,0xFFFFFF);
             name_txt.autoScale=true;
             emptybar.addChild(name_txt);
@@ -227,7 +227,7 @@ public class SaveandLoadList extends Sprite
             var selbar:String=target.name;
             _data=new Object();
             save_new=false;
-            current_saved=flox.getPlayerData("saved");
+            //current_saved=flox.getPlayerData("saved");
             DebugTrace.msg("SaveandLoadList.doSaveLoadListTouched target:"+target.name+" ; saved:"+current_saved);
             if(_type=="Save")
             {
@@ -238,9 +238,9 @@ public class SaveandLoadList extends Sprite
                     DebugTrace.msg("Rewrite Saved");
 
                     _data=null;
-                    progress=Number(selbar.split("saved").join(""));
-                    var index:Number=current_saved.indexOf(selbar);
-                    current_saved[index]=selbar;
+                    progress=Number(selbar.split("backupsaved")[1]);
+                   //var index:Number=current_saved.indexOf(selbar);
+                    //current_saved[progress-1]=selbar;
                 }
                 //if
                 if(selbar.indexOf("emptybar")!=-1)
@@ -249,27 +249,26 @@ public class SaveandLoadList extends Sprite
                     save_new=true;
                     progress=Number(selbar.split("emptybar").join(""))+1;
 
-
-                    if(current_saved.indexOf(selbar)!=-1){
-                        index=current_saved.indexOf(selbar);
-                        current_saved[index]="saved"+progress;
-                    }else{
-
-                        if(current_saved.length-1 < progress){
-                            current_saved.push("saved"+progress);
-                        }else{
-                            current_saved[progress]="saved"+progress;
-                        }
-
-
-
-                    }
+//
+//                    if(current_saved.indexOf(selbar)!=-1){
+//                        index=current_saved.indexOf(selbar);
+//                        current_saved[index]="saved"+progress;
+//                    }else{
+//
+//                        if(current_saved.length-1 < progress){
+//                            current_saved.push("saved"+progress);
+//                        }else{
+//                            current_saved[progress]="saved"+progress;
+//                        }
+//
+//
+//
+//                    }
                     //DebugTrace.msg("SaveandLoadList.doSaveLoadListTouched");
                     //DebugTrace.msg("Write into empty progress="+progress);
 
                 }
 
-                DebugTrace.msg("Save progress="+progress);
                 displayConfirm();
             }
             else
@@ -280,7 +279,7 @@ public class SaveandLoadList extends Sprite
 
                     DebugTrace.msg("Do  load for saved");
 
-                    progress=Number(selbar.split("saved").join(""));
+                    progress=Number(selbar.split("backupsaved")[1]);
 
                     msg="Are you sure?";
                     displayConfirm();
@@ -434,7 +433,7 @@ public class SaveandLoadList extends Sprite
             //save game
 
             flox.savePlayerData("inGameProgress",progress);
-            flox.savePlayerData("saved",current_saved);
+            //flox.savePlayerData("saved",current_saved);
             flox.syncSaved(onSynsComplete);
 
         }else{

@@ -166,7 +166,7 @@ public class ArenaScene extends Scenes
 							command.removeShortcuts();
 
 							var mediaplayer:MediaInterface=new MediaCommand();
-							mediaplayer.PlayVideo("End001",player,new Point(1024,768),null,30,"f4v",onEnd001VideoComplete);
+							mediaplayer.PlayVideo("End001",player,new Point(1024,768),null,30,"mp4",onEnd001VideoComplete);
 
 						}
 						if(current_switch=="s262|off"){
@@ -184,7 +184,7 @@ public class ArenaScene extends Scenes
 						}
 
 
-						if(current_switch=="s280|off"){
+						if(current_switch=="s9999|off"){
 
 							this.removeFromParent(true);
 							var gameEvent:GameEvent = SimgirlsLovemore.gameEvent;

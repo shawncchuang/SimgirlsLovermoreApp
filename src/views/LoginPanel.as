@@ -86,11 +86,6 @@ package views
 			
 			praseNowType();
 
-
-			
-
-			
-		 
 		}
 		 
 		private function doBackSignin(e:MouseEvent):void

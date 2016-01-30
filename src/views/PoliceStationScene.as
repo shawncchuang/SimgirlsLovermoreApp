@@ -52,13 +52,17 @@ package views
 		private function init():void
 		{
 			
-			scencom.init("PoliceStationScene",speaker_sprite,30,onCallback);
+			scencom.init("PoliceStationScene",speaker_sprite,30,onStartStory);
 			scencom.start();
-			scencom.disableAll();
+
 		}
-		private function onCallback():void
+		private function onStartStory():void
 		{
-			
+			var switch_verifies:Array=scencom.switchGateway("PoliceStation");
+			if(switch_verifies[0]){
+				scencom.disableAll();
+				scencom.start();
+			}
 		}
 		private function onSceneTriggered(e:Event):void
 		{
@@ -73,7 +77,7 @@ package views
 			
 			
 		}
-		private function doTopViewDispatch(e:TopViewEvent):void
+		private function doTopViewDispatch(e:Event):void
 		{
 			DebugTrace.msg("PoliceStationScene.doTopViewDispatch removed:"+e.data.removed);
 			var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
@@ -94,17 +98,19 @@ package views
 
 					huntcriminalform=new HuntCriminalsForm();
 					addChild(huntcriminalform);
-					
 			 
 					break
 				case "ani_complete":
-				 
-					
 					var value_data:Object=new Object();
 					value_data.attr="honor";
 					value_data.values="+10";
 					command.displayUpdateValue(this,value_data);
 					init();
+					break
+				case "story_complete":
+                    _data.name= "PoliceStationScene";
+                    _data.from="story";
+                    command.sceneDispatch(SceneEvent.CHANGED,_data);
 					break
 				
 			}

@@ -57,23 +57,22 @@ import model.SaveGame;
 		private function init():void
 		{
 			
-			scencom.init("ShoppingCentreScene",speaker_sprite,36,onCallback);
+			scencom.init("ShoppingCentreScene",speaker_sprite,36,onStartStory);
 			scencom.start();
-			scencom.disableAll();
 
 
         }
-		private function onCallback():void
+		private function onStartStory():void
 		{
 
-            var getfrom:String=DataContainer.shoppingFrom;
-            DebugTrace.msg("ShoppingCentreScene.onCallback getfrom:"+getfrom);
-//           if(getfrom=="main"){
-//               var _data:Object=new Object();
-//               _data.removed="Buy";
-//               this.dispatchEventWith(TopViewEvent.REMOVE,false,_data);
-//           }
+			var switch_verifies:Array=scencom.switchGateway("ShoppingCentre");
+			DebugTrace.msg("HotelScene.onStartStory switch_verifies="+switch_verifies);
+			if(switch_verifies[0]){
 
+				scencom.disableAll();
+				scencom.start();
+
+			}
 			
 		}
 		private function onSceneTriggered(e:Event):void
@@ -127,7 +126,12 @@ import model.SaveGame;
 					command.displayUpdateValue(this,value_data);
 					init();
 					break
-				
+				case "story_complete":
+
+					_data.name= "ShoppingCentreScene";
+					_data.from="story";
+					command.sceneDispatch(SceneEvent.CHANGED,_data);
+					break
 			}
 			
 		}

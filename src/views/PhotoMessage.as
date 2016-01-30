@@ -4,6 +4,8 @@ import controller.Assets;
 import controller.FloxCommand;
 import controller.FloxInterface;
 
+import data.Config;
+
 import data.DataContainer;
 
 import feathers.controls.ImageLoader;
@@ -58,7 +60,8 @@ public class PhotoMessage extends Sprite
 
 			}
 			if(twinflame){
-				target=target.split("@@@").join(twinflame);
+				var fullname:String=Config.fullnames[twinflame];
+				target=target.split("@@@").join(fullname);
 			}
 		}
 

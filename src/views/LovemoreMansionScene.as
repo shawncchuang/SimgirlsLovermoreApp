@@ -51,13 +51,17 @@ package views
 		private function init():void
 		{
 			
-			scencom.init("LovemoreMansionScene",speaker_sprite,34,onCallback);
+			scencom.init("LovemoreMansionScene",speaker_sprite,34,onStartStory);
 			scencom.start();
-			scencom.disableAll();
+
 		}
-		private function onCallback():void
+		private function onStartStory():void
 		{
-			
+			var switch_verifies:Array=scencom.switchGateway("LovemoreMansion");
+			if(switch_verifies[0]){
+				scencom.disableAll();
+				scencom.start();
+			}
 		}
 		private function onSceneTriggered(e:Event):void
 		{
@@ -72,7 +76,7 @@ package views
 			
 			
 		}
-		private function doTopViewDispatch(e:TopViewEvent):void
+		private function doTopViewDispatch(e:Event):void
 		{
 			DebugTrace.msg("LovemoreMansionScene.doTopViewDispatch removed:"+e.data.removed);
 			var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
@@ -102,6 +106,12 @@ package views
 					value_data.values="+10";
 					command.displayUpdateValue(this,value_data);
 					init();
+					break
+				case "story_complete":
+
+					_data.name= "LovemoreMansionScene";
+					_data.from="story";
+					command.sceneDispatch(SceneEvent.CHANGED,_data);
 					break
 				
 			}

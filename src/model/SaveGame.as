@@ -10,8 +10,7 @@ package model
 		private var _ap:Number;
 		private var _cash:Number;
 		private var _date:String;
-		
-		
+
 		public var status:String;
 		public var first_name:String;
 		public var last_name:String;

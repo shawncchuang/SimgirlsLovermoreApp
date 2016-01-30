@@ -51,13 +51,17 @@ package views
 		private function init():void
 		{
 			
-			scencom.init("TempleScene",speaker_sprite,28,onCallback);
+			scencom.init("SpiritTempleScene",speaker_sprite,28,onStartStory);
 			scencom.start();
-			scencom.disableAll();
+
 		}
-		private function onCallback():void
+		private function onStartStory():void
 		{
-			
+			var switch_verifies:Array=scencom.switchGateway("SpiritTempleScene");
+			if(switch_verifies[0]){
+				scencom.disableAll();
+				scencom.start();
+			}
 		}
 		private function onSceneTriggered(e:Event):void
 		{
@@ -102,6 +106,11 @@ package views
 					break
 				case "ani_complete_clear_character":
 					command.clearCopyPixel();
+					break
+				case "story_complete":
+					_data.name= "SpiritTempleScene";
+					_data.from="story";
+					command.sceneDispatch(SceneEvent.CHANGED,_data);
 					break
 			}
 			

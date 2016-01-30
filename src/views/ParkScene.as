@@ -97,8 +97,12 @@ public class ParkScene extends Scenes
             case "ani_complete":
 
                 command.showCommandValues(this,"FreeRest");
+                break
+            case "story_complete":
 
-
+                _data.name= "ParkScene";
+                _data.from="story";
+                command.sceneDispatch(SceneEvent.CHANGED,_data);
                 break
         }
 

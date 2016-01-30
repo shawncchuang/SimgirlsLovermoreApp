@@ -158,7 +158,7 @@ public class CpuMembersCommand implements CpuMembersInterface
 
             cpuIndex=12;
 
-        }else if(battleType=="story_battle_s127"){
+        }else if(battleType=="story_battle_s023"){
             cpuIndex=10;
 
         }else if(battleType=="practice" || battleType=="random_battle"){

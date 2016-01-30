@@ -52,13 +52,17 @@ import events.GameEvent;
 		private function init():void
 		{
 
-			scencom.init("AcademyScene",speaker_sprite,26,onCallback);
+			scencom.init("AcademyScene",speaker_sprite,26,onStartStory);
 			scencom.start();
-			scencom.disableAll();
+
 		}
-		private function onCallback():void
+		private function onStartStory():void
 		{
-			
+			var switch_verifies:Array=scencom.switchGateway("Academy");
+			if(switch_verifies[0]){
+				scencom.disableAll();
+				scencom.start();
+			}
 		}
 		private function onSceneTriggered(e:Event):void
 		{
@@ -73,7 +77,7 @@ import events.GameEvent;
 			
 			
 		}
-		private function doTopViewDispatch(e:TopViewEvent):void
+		private function doTopViewDispatch(e:Event):void
 		{
 			DebugTrace.msg("AcademyScene.doTopViewDispatch removed:"+e.data.removed);
 			var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
@@ -115,6 +119,11 @@ import events.GameEvent;
 //					value_data.values="+10";
 //					command.displayUpdateValue(this,value_data);
 					init();
+					break
+				case "story_complete":
+                    _data.name= "AcademyScene";
+                    _data.from="story";
+                    command.sceneDispatch(SceneEvent.CHANGED,_data);
 					break
 				
 			}

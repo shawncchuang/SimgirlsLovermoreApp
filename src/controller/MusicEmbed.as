@@ -24,8 +24,11 @@ package controller
 		public static const foodchase:Class;
 
 
+        [Embed(source="../../media/textures/music/characters/sao.mp3")]
+        public static const saoMusic:Class;
+
 		[Embed(source="../../media/textures/music/characters/ceil.mp3")]
-		public static const ceilMusic:Class;
+		public static const ceiMusic:Class;
 
 		[Embed(source="../../media/textures/music/characters/dea.mp3")]
 		public static const deaMusic:Class;
@@ -89,6 +92,9 @@ package controller
 
 		[Embed(source="../../media/textures/music/precioustime.mp3")]
 		public static const precioustime:Class;
+
+		[Embed(source="../../media/textures/music/revival.mp3")]
+		public static const revival:Class;
 
 	}
 }
