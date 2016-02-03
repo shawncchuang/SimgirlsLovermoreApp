@@ -649,7 +649,10 @@ public class MainCommand implements MainInterface {
         //if
         var dateIndex:Object = {"date": _date - 1, "month": month_index};
         DataContainer.currentDateIndex = dateIndex;
+        var __date:Date=new Date(_year,month_index,_date);
+        _data_index=__date.getDay();
         var new_date:String = Days[_data_index] + "." + _date + "." + _month + "." + _year + "|" + timeNum;
+
         DebugTrace.msg("MainCommand.dateManager  new_date:" + new_date+" , overday:"+overday);
         var _data:Object = new Object();
         _data.date = new_date;
@@ -2119,8 +2122,10 @@ public class MainCommand implements MainInterface {
         var current_scene:String=DataContainer.currentScene.split("Scene").join("");
         var allChacters:Array=Config.datingCharacters;
         var dating:String=flox.getSaveData("dating");
-
         var chlist:Array=new Array();
+        var dateStr:String=flox.getSaveData("date").split("|")[0];
+        var _date:Number=Number(dateStr.split(".")[1]);
+        var _month:String=dateStr.split(".")[2];
         if(!arrived){
             arrived=new Array();
         }
@@ -2152,13 +2157,21 @@ public class MainCommand implements MainInterface {
 
                         var likes:Number = Number(_scenelikes.likes);
                         var scene:String = String(_scenelikes.name);
-                        var chlikes:Object;
+                        var chlikes:Object=new Object();
+
+
+                        if(_month=="Jul" && character=="tomoru"){
+                            if(_date>=2 && _date<=4){
+
+                                likes=0;
+                            }
+
+                        }
                         switch(type){
                             case "all_scene":
                                 if (likes > 0) {
                                     // the most like
 
-                                    chlikes = new Object();
                                     chlikes.name = character;
                                     chlikes.value = likes;
                                     chlikes.location=scene;
@@ -2168,7 +2181,7 @@ public class MainCommand implements MainInterface {
                             default :
                                 if (scene == current_scene && likes > 0) {
                                     // most like
-                                    chlikes = new Object();
+
                                     chlikes.name = character;
                                     chlikes.value = likes;
                                     chlikes.location=scene;
@@ -2179,8 +2192,7 @@ public class MainCommand implements MainInterface {
                                 //if
                                 break
 
-                        }
-                        //switch
+                        }    //switch
 
                     }
                 }

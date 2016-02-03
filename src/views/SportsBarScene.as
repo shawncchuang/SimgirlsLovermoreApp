@@ -32,7 +32,7 @@ package views
 		private var command:MainInterface=new MainCommand();
 		private var button:Button;
 		private var scencom:SceneInterface=new SceneCommnad();
-		private var floxcom:FloxInterface=new FloxCommand();
+		private var flox:FloxInterface=new FloxCommand();
 		
 	 
 		public function SportsBarScene()
@@ -80,7 +80,6 @@ package views
 		{
 			DebugTrace.msg("SportBarScene.doTopViewDispatch removed:"+e.data.removed);
 			var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
-			var savegame:SaveGame=FloxCommand.savegame;
 			var _data:Object=new Object();
 		
 			switch(e.data.removed)
@@ -101,13 +100,40 @@ package views
 					init();
 					break
 				case "story_complete":
-                    _data.name= "SportsBarScene";
-                    _data.from="story";
-                    command.sceneDispatch(SceneEvent.CHANGED,_data);
+						onStoryComplete();
+
 					break
 				
 			}
 			
+		}
+		private function onStoryComplete():void{
+
+
+			var _data:Object=new Object();
+			var current_switch:String=flox.getSaveData("current_switch");
+			DebugTrace.msg("SportsBarScene.onStoryComplete switchID="+current_switch);
+			switch(current_switch){
+
+				case "s034|on":
+					_data.name= "MainScene";
+					_data.from="story";
+					command.sceneDispatch(SceneEvent.CHANGED,_data);
+					break
+				case "s034|off":
+					_data.name= "MainScene";
+					_data.from="story";
+					command.sceneDispatch(SceneEvent.CHANGED,_data);
+					break;
+				default:
+					_data.name= "SportsBarScene";
+					_data.from="story";
+					command.sceneDispatch(SceneEvent.CHANGED,_data);
+					break
+
+			}
+
+
 		}
 		 
 		private function onClosedAlert():void

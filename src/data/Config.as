@@ -133,7 +133,7 @@ public class Config
     {
         var scheduls:Dictionary=new Dictionary();
 
-        scheduls[battleDays[0]]= ["p|0", "2|1", "4|3", "5|6", "7|8"];
+        scheduls[battleDays[0]]=["p|0", "2|1", "4|3", "5|6", "7|8"];
         scheduls[battleDays[1]]=["p|1", "0|2", "3|5", "4|7", "8|6"];
         scheduls[battleDays[2]]=["p|3", "4|0", "1|7", "6|2", "8|5"];
         scheduls[battleDays[3]]=["p|2", "0|1", "6|3", "7|5", "4|8"];

@@ -64,8 +64,8 @@ public class SaveandLoadList extends Sprite
         DebugTrace.msg("SaveandLoadList current_saved:"+current_saved);
         if(current_saved.length>0)
         {
-            FloxCommand.onLoadComplete=onLoadCompleteToInit;
-            flox.loadBackupsaved();
+            //FloxCommand.onLoadComplete=onLoadCompleteToInit;
+            flox.loadBackupsaved(onLoadCompleteToInit);
 
             addBuffer()
         }

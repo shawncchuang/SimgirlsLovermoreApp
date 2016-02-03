@@ -33,7 +33,7 @@ package views
 		private var speaker_sprite:Sprite;
 		private var command:MainInterface=new MainCommand();
 		private var button:Button;
-		private var scencom:SceneInterface=new SceneCommnad();
+		private var scenecom:SceneInterface=new SceneCommnad();
 		private var flox:FloxInterface=new FloxCommand();
 		private var payAP:Number;
 	   // private var income:Number;
@@ -52,14 +52,20 @@ package views
 		}
 		private function init():void
 		{
-			
-			scencom.init("ThemedParkScene",speaker_sprite,46,onCallback);
-			scencom.start();
-			scencom.disableAll();
+
+			scenecom.init("ThemedParkScene",speaker_sprite,46,onStartStory);
+			scenecom.start();
+
 		}
-		private function onCallback():void
+		private function onStartStory():void
 		{
-			
+			var switch_verifies:Array=scenecom.switchGateway("ThemedParkScene");
+			DebugTrace.msg("ThemedParkScene.onStartStory switch_verifies="+switch_verifies);
+			if(switch_verifies[0]) {
+
+				scenecom.disableAll();
+				scenecom.start();
+			}
 		}
 		private function onSceneTriggered(e:Event):void
 		{
@@ -79,7 +85,6 @@ package views
 		{
 			DebugTrace.msg("ThemedParkScene.doTopViewDispatch removed:"+e.data.removed);
 			var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
-			var savegame:SaveGame=FloxCommand.savegame;
 			var _data:Object=new Object();
 		
 			switch(e.data.removed)
@@ -103,11 +108,28 @@ package views
 				case "ani_complete_clear_character":
 					command.clearCopyPixel();
 					break
+				case "story_complete":
+					onStoryComplete();
+					break
 			}
 			
 		}
 
+		private function onStoryComplete():void {
 
+			var _data:Object = new Object();
+			var current_switch:String = flox.getSaveData("current_switch");
+			DebugTrace.msg("ThemedParkWork.onStoryComplete switchID=" + current_switch);
+
+			switch (current_switch) {
+
+				default:
+					_data.name= "ThemedParkScene";
+					_data.from="story";
+					command.sceneDispatch(SceneEvent.CHANGED,_data);
+					break
+			}
+		}
 		private function onClearComplete():void
 		{
 			Starling.juggler.removeTweens(this);

@@ -82,7 +82,7 @@ package views
 			var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
 			var savegame:SaveGame=FloxCommand.savegame;
 			var _data:Object=new Object();
-		
+			var gameEvent:GameEvent = SimgirlsLovemore.gameEvent;
 			switch(e.data.removed)
 			{
 				case "Leave":
@@ -105,7 +105,7 @@ package views
 					if(current_switch=="s9999|off"){
 
 						this.removeFromParent(true);
-						var gameEvent:GameEvent = SimgirlsLovemore.gameEvent;
+
 						gameEvent._name = "restart-game";
 						gameEvent.displayHandler();
 

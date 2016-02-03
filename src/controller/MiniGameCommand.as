@@ -47,7 +47,7 @@ public class MiniGameCommand implements MiniGameInterface
 	private var focus_square:MovieClip;
 	private var gameStage:MovieClip;
 	private var game:String="";
-	private var playerSrc:Object={"tracing_Male":"../swf/MINI_n_bike.swf",
+	private var playerSrc:Object={"tracing_Male":"../swf/MINI_n_bike.swf","tracing_Female":"../swf/MINI_n_bike.swf",
 		"training_Male":"../swf/B_mini.swf",
 		"training_Female":"../swf/G_mini.swf"};
 	private var enemySrc:Object={"tracing":"../swf/MINI_b_bike.swf",
@@ -70,6 +70,7 @@ public class MiniGameCommand implements MiniGameInterface
 	private var player_sch:SoundChannel=new SoundChannel();
 	private var mace_sch:SoundChannel=new SoundChannel();
 	private var robospeak:SoundChannel=new SoundChannel();
+	private var game_result:String="";
 	public function init(stage:MovieClip,type:String):void
 	{
 
@@ -227,7 +228,7 @@ public class MiniGameCommand implements MiniGameInterface
 
 		var swfloader:SWFLoader = LoaderMax.getLoader("player");
 		player=swfloader.getSWFChild("bike") as MovieClip;
-		player.x=Starling.current.stage.stageWidth-player.width
+		player.x=Starling.current.stage.stageWidth-player.width;
 		player.y=768/2;
 		PPoX=player.x;
 		PPoY=player.y;
@@ -493,8 +494,8 @@ public class MiniGameCommand implements MiniGameInterface
 			TweenMax.killTweensOf(enemy);
 
 			enemy.act.gotoAndStop("mace_start");
-			enemy.act.body.gotoAndStop(1);
-			enemy.act.body.guy.gotoAndStop(1);
+			//enemy.act.body.gotoAndStop(1);
+			//enemy.act.body.guy.gotoAndStop(1);
 
 			enemy.act.body.gotoAndPlay(2);
 			enemy.act.body.guy.gotoAndPlay(2);
@@ -653,8 +654,11 @@ public class MiniGameCommand implements MiniGameInterface
 		DebugTrace.msg("MiniGameCommand.gameComplete");
 		status="stop";
 		TweenMax.killAll(true);
+		TweenMax.killDelayedCallsTo(doAddedEnergyBall);
 		if(game=="tracing")
 		{
+			timer.stop();
+			timer.removeEventListener(TimerEvent.TIMER,doAddedEnergyBall);
 			enemy.act.gotoAndStop("idle");
 			tryStopSoundEffect(enemy_sch);
 			tryStopSoundEffect(player_sch);
@@ -695,12 +699,10 @@ public class MiniGameCommand implements MiniGameInterface
 		TweenMax.killDelayedCallsTo(onFailHandle);
 		TweenMax.killTweensOf(player);
 		TweenMax.killTweensOf(enemy);
-
+		game_result="defeat";
 		if(game=="tracing")
 		{
 			gameStage.removeChild(bikeExpl);
-			//enemy_sch.stop();
-			//player_sch.stop();
 		}
 		command.playBackgroudSound("BattleDefeat");
 
@@ -714,7 +716,7 @@ public class MiniGameCommand implements MiniGameInterface
 
 
 		var evtObj:Object=new Object();
-		evtObj[goScene]="defeat";
+		evtObj[goScene]=game_result;
 		submitEvent(evtObj);
 	}
 
@@ -724,9 +726,6 @@ public class MiniGameCommand implements MiniGameInterface
 		if(game=="tracing")
 		{
 			command.playSound("RaceCarDriveBy");
-			//enemy_sch.stop();
-			//player_sch.stop();
-
 		}
 
 		TweenMax.to(player,1,{x:1200});
@@ -734,6 +733,7 @@ public class MiniGameCommand implements MiniGameInterface
 	}
 	private function victoryHandle():void
 	{
+		game_result="victory";
 
 		TweenMax.killTweensOf(player);
 		TweenMax.killTweensOf(enemy);
@@ -811,11 +811,29 @@ public class MiniGameCommand implements MiniGameInterface
 		var gameEvt:GameEvent=SimgirlsLovemore.gameEvent;
 		gameEvt._name="remove_mini_game";
 		gameEvt.displayHandler();
-
 		var _data:Object=new Object();
-		_data.name="SpiritTempleScene";
-		_data.from="minigame";
-		command.sceneDispatch(SceneEvent.CHANGED,_data);
+		if(game=="tracing"){
+			var current_switch:String=flox.getSaveData("current_switch");
+			if(game_result=="victory"){
+				if(current_switch=="s042|off"){flox.save("current_switch","s042b|on");}
+
+			}else{
+				//game over
+				flox.save("current_switch","s9999|on");
+			}
+			_data.name="CasinoScene";
+			_data.from="minigame";
+			command.sceneDispatch(SceneEvent.CHANGED,_data);
+
+	    }else{
+
+			//mediate game
+			_data.name="SpiritTempleScene";
+			_data.from="minigame";
+			command.sceneDispatch(SceneEvent.CHANGED,_data);
+
+		}
+
 
 	}
 	private function onGetScore(e:Event):void

@@ -29,7 +29,7 @@ public class TwinDAO {
             "com|bg_Carpark","com|display_sao_casual1_center#com|music-off_tomoruMusic",
             "spC|DAMN IT! FUCK! WHY?","spC|I was going to give this to you<> @@@!",
             "player|Sao ripped his necklace off the neck and threw it on the ground<> hard enough to crack the pendant open.",
-            "com|swf-on_fxbam","com|photo-on_KissAna#com|music-on_horror","player|A misty hologram of Sao's mother<> Ana<> rose from the pendant.",
+            "com|swf-on_fxbam","com|photo-on_KissAna#com|music-on_horror","player|A misty hologram of Sao's mother<> Annabeth<> rose from the pendant.",
             "player|Sao<> it's mom. I'm guessing that you are old enough to understand this message.","player|Your father's real name was Rayden Black. ",
             "com|photo-off#com|photo-on_MiaSimMan","player|Many years ago<> I was training under a Martial Arts Master called SimMan in Shambala. ",
             "player|SimMan had 3 other students: your father Rayden<> Rufus Krieg<> and an asshole called Primero Lovemore!","com|photo-off#com|photo-on_KissRayden",

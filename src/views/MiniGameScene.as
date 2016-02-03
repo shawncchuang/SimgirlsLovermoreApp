@@ -334,6 +334,8 @@ import flash.desktop.NativeApplication;
 				miniGameEvt.onCompleteHandle();
 				
 				miniGameEvt.onVictory();
+
+
 			}
 			//if
 		}
@@ -370,8 +372,7 @@ import flash.desktop.NativeApplication;
             }
             seObj.player=current_se;
 			flox.save("se",seObj);
-		
-			
+
 		}
 		private function onUpdateSE(e:Event):void
 		{

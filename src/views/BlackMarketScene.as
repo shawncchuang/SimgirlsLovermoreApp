@@ -48,7 +48,7 @@ public class BlackMarketScene extends Scenes
 	private var speaker_sprite:Sprite;
 	private var command:MainInterface=new MainCommand();
 	private var button:Button;
-	private var scencom:SceneInterface=new SceneCommnad();
+	private var scenecom:SceneInterface=new SceneCommnad();
 	private var flox:FloxInterface=new FloxCommand();
 	private var panelbase:Sprite;
 	private var panellist:Image;
@@ -79,9 +79,8 @@ public class BlackMarketScene extends Scenes
 	{
 
 
-		scencom.init("BlackStoreScene",speaker_sprite,58,onCallback);
-		scencom.start();
-		scencom.disableAll();
+		scenecom.init("BlackStoreScene",speaker_sprite,58,onStartStory);
+		scenecom.start();
 
 
 		this.addEventListener("UPDATE_DESC",doUpdateDESC);
@@ -89,6 +88,19 @@ public class BlackMarketScene extends Scenes
 		this.addEventListener("CONSUME_BLACKMARKET_ITEM",doConsumeItem);
 
 	}
+	private function onStartStory():void
+	{
+
+		var switch_verifies:Array=scenecom.switchGateway("BlackMarketScene");
+		DebugTrace.msg("BlackMarketScene.onStartStory switch_verifies="+switch_verifies);
+		if(switch_verifies[0]) {
+
+			scenecom.disableAll();
+			scenecom.start();
+		}
+
+	}
+
 
 	private function doBuyItem(e:Event):void{
 
@@ -220,10 +232,6 @@ public class BlackMarketScene extends Scenes
 		command.sceneDispatch(SceneEvent.CHANGED,_data);
 
 	}
-	private function onCallback():void
-	{
-
-	}
 
 	private function doTopViewDispatch(e:Event):void
 	{
@@ -252,9 +260,30 @@ public class BlackMarketScene extends Scenes
 			case "ani_complete":
 
 				break
+			case "story_complete":
+				onStoryComplete();
+
+				break
+
 
 		}
 
+	}
+	private function onStoryComplete():void {
+
+		var _data:Object = new Object();
+		var current_switch:String = flox.getSaveData("current_switch");
+		DebugTrace.msg("BlackStoreScene.onStoryComplete switchID=" + current_switch);
+
+		switch (current_switch) {
+
+			default:
+				_data.name= "BlackMarketScene";
+				_data.from="story";
+				command.sceneDispatch(SceneEvent.CHANGED,_data);
+				break
+
+		}
 	}
 	private function onRefreshComplete():void
 	{

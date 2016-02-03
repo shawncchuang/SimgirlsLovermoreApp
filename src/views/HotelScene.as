@@ -78,9 +78,6 @@ public class HotelScene extends Scenes
         scenecom.init("HotelScene",speaker_sprite,6,onStartStory);
         scenecom.start();
 
-
-
-
     }
     private function onStartStory():void
     {
@@ -111,31 +108,38 @@ public class HotelScene extends Scenes
     {
         DebugTrace.msg("HotelScene.onStoryComplete");
         var _data:Object=new Object();
-        var switchID:String=flox.getSaveData("current_switch").split("|")[0];
-        DebugTrace.msg("HotelScene.onStoryComplete switchID="+switchID);
-        if(switchID=="s006b"){
-            //over next day
+        var current_switch:String=flox.getSaveData("current_switch");
+        DebugTrace.msg("HotelScene.onStoryComplete switchID="+current_switch);
 
-            var date:String=flox.getSaveData("date").split("|")[0];
-            var day:Number=Number(date.split(".")[1]);
-            day++;
-            var next_date:String="Mon."+day+".Jun.2033|12";
-            flox.save("date",next_date);
+        switch(current_switch){
+            case "s006b|off":
+
+                //over next day
 
 
-            _data.name="MainScene";
-            _data.from="story";
-            command.sceneDispatch(SceneEvent.CHANGED,_data);
-
-            command.updateInfo();
-
-        }else{
+                var switchs:Object=flox.getSyetemData("switchs");
+                var switchID:String=current_switch.split("|")[0];
+                var nextSwitch:String=switchs[switchID].result.on;
+                var nextDay:String=switchs[nextSwitch].date+"|12";
+                flox.save("date",nextDay);
 
 
-            _data.name= "HotelScene";
-            _data.from="story";
-            command.sceneDispatch(SceneEvent.CHANGED,_data);
+                _data.name="MainScene";
+                _data.from="story";
+                command.sceneDispatch(SceneEvent.CHANGED,_data);
 
+                command.updateInfo();
+                break;
+            case "s044|on":
+                _data.name= "MainScene";
+                _data.from="story";
+                command.sceneDispatch(SceneEvent.CHANGED,_data);
+                break
+            default:
+                _data.name= "HotelScene";
+                _data.from="story";
+                command.sceneDispatch(SceneEvent.CHANGED,_data);
+                break
         }
 
     }

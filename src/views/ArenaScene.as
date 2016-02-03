@@ -159,26 +159,26 @@ public class ArenaScene extends Scenes
 				addChild(player);
 				var twinflame:String=flox.getSaveData("twinflame");
 				var fullname:String=Config.fullnames[twinflame];
-
+				var mediaplayer:MediaInterface=new MediaCommand();
 
 						if(current_switch=="s261|off"){
 							//s261 off-> s262 on
 							command.removeShortcuts();
 
-							var mediaplayer:MediaInterface=new MediaCommand();
+
 							mediaplayer.PlayVideo("End001",player,new Point(1024,768),null,30,"mp4",onEnd001VideoComplete);
 
 						}
 						if(current_switch=="s262|off"){
 							//s262 off
 
-							var mediaplayer:MediaInterface=new MediaCommand();
+
 							mediaplayer.PlayVideo("End003/"+fullname,player,new Point(1024,768),null,30,"mp4",onEnd003VideoComplete);
 
 						}
 						if(current_switch=="s270|off"){
 
-							var mediaplayer:MediaInterface=new MediaCommand();
+
 							mediaplayer.PlayVideo("End005/"+fullname,player,new Point(1024,768),null,30,"mp4",onEnd005VideoComplete);
 
 						}

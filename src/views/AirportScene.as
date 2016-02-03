@@ -68,7 +68,7 @@ package views
 					gameEvent._name="clear_comcloud";
 					gameEvent.displayHandler();
 					break
-				 
+
 				case "back":
 					tweenCtrl(0,onFadeOutComplete);
 					break

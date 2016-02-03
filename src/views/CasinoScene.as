@@ -31,8 +31,8 @@ package views
 		private var speaker_sprite:Sprite;
 		private var command:MainInterface=new MainCommand();
 		private var button:Button;
-		private var scencom:SceneInterface=new SceneCommnad();
-		private var floxcom:FloxInterface=new FloxCommand();
+		private var scenecom:SceneInterface=new SceneCommnad();
+		private var flox:FloxInterface=new FloxCommand();
 		
 	 
 		public function CasinoScene()
@@ -50,18 +50,18 @@ package views
 		}
 		private function init():void
 		{
-			
-			scencom.init("CasinoScene",speaker_sprite,32,onStartStory);
-			scencom.start();
+
+			scenecom.init("CasinoScene",speaker_sprite,32,onStartStory);
+			scenecom.start();
 
 		}
 		private function onStartStory():void
 		{
-			var switch_verifies:Array=scencom.switchGateway("CasinoScene");
+			var switch_verifies:Array=scenecom.switchGateway("CasinoScene");
 			DebugTrace.msg("CasinoScene.onStartStory switch_verifies="+switch_verifies[0]);
 			if(switch_verifies[0]){
-				scencom.disableAll();
-				scencom.start();
+				scenecom.disableAll();
+				scenecom.start();
 			}
 		}
 		private function onSceneTriggered(e:Event):void
@@ -81,7 +81,6 @@ package views
 		{
 			DebugTrace.msg("CasinoScene.doTopViewDispatch removed:"+e.data.removed);
 			var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
-			var savegame:SaveGame=FloxCommand.savegame;
 			var _data:Object=new Object();
 		
 			switch(e.data.removed)
@@ -108,13 +107,39 @@ package views
 					break
 				case "story_complete":
 
-					_data.name= "CasinoScene";
-					_data.from="story";
-					command.sceneDispatch(SceneEvent.CHANGED,_data);
+						onStoryComplete();
+
 					break
 				
 			}
 			
+		}
+		private function onStoryComplete():void{
+			var _data:Object=new Object();
+			var current_switch:String=flox.getSaveData("current_switch");
+			switch (current_switch){
+				case "s042|off":
+
+					_data.name="TraceGame";
+					command.sceneDispatch(SceneEvent.CHANGED,_data);
+
+					break
+				case "s9999|off":
+					this.removeFromParent(true);
+					var gameEvent:GameEvent = SimgirlsLovemore.gameEvent;
+					gameEvent._name = "restart-game";
+					gameEvent.displayHandler();
+					break
+				default:
+
+					_data.name= "CasinoScene";
+					_data.from="story";
+					command.sceneDispatch(SceneEvent.CHANGED,_data);
+
+					break
+
+			}
+
 		}
 		 
 		private function onClosedAlert():void

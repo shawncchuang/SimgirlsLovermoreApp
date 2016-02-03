@@ -32,7 +32,7 @@ package views
 		private var command:MainInterface=new MainCommand();
 		private var button:Button;
 		private var scencom:SceneInterface=new SceneCommnad();
-		private var floxcom:FloxInterface=new FloxCommand();
+		private var flox:FloxInterface=new FloxCommand();
 		private var skillstore:Sprite;
 	 
 		public function LovemoreMansionScene()
@@ -109,14 +109,32 @@ package views
 					break
 				case "story_complete":
 
-					_data.name= "LovemoreMansionScene";
-					_data.from="story";
-					command.sceneDispatch(SceneEvent.CHANGED,_data);
+						onStoryComplete();
+
 					break
 				
 			}
 			
 		}
+
+		private function onStoryComplete():void{
+			var _data:Object=new Object();
+			var current_switch:String=flox.getSaveData("current_switch");
+			switch (current_switch){
+
+				case "s046|off":
+
+
+					break
+				default:
+					_data.name= "LovemoreMansionScene";
+					_data.from="story";
+					command.sceneDispatch(SceneEvent.CHANGED,_data);
+					break
+			}
+
+
+	}
 		 
 		private function onClosedAlert():void
 		{

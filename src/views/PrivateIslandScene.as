@@ -31,8 +31,8 @@ package views
 		private var speaker_sprite:Sprite;
 		private var command:MainInterface=new MainCommand();
 		private var button:Button;
-		private var scencom:SceneInterface=new SceneCommnad();
-		private var floxcom:FloxInterface=new FloxCommand();
+		private var scenecom:SceneInterface=new SceneCommnad();
+		private var flox:FloxInterface=new FloxCommand();
 		
 	 
 		public function PrivateIslandScene()
@@ -50,14 +50,21 @@ package views
 		}
 		private function init():void
 		{
-			
-			scencom.init("PrivateIslandScene",speaker_sprite,54,onCallback);
-			scencom.start();
-			scencom.disableAll();
+
+			scenecom.init("PrivateIslandScene",speaker_sprite,54,onStartStory);
+			scenecom.start();
+
 		}
-		private function onCallback():void
+		private function onStartStory():void
 		{
-			
+			var switch_verifies:Array=scenecom.switchGateway("PrivateIsland");
+			DebugTrace.msg("PrivateIslandScene.onStartStory switch_verifies="+switch_verifies);
+			if(switch_verifies[0]){
+
+				scenecom.disableAll();
+				scenecom.start();
+
+			}
 		}
 		private function onSceneTriggered(e:Event):void
 		{
@@ -72,7 +79,7 @@ package views
 			
 			
 		}
-		private function doTopViewDispatch(e:TopViewEvent):void
+		private function doTopViewDispatch(e:Event):void
 		{
 			DebugTrace.msg("PrivateIslandScene.doTopViewDispatch removed:"+e.data.removed);
 			var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
@@ -101,9 +108,47 @@ package views
 					command.displayUpdateValue(this,value_data);
 					init();
 					break
+
+				case "story_complete":
+						onStoryComplete();
+
+					break
 				
 			}
 			
+		}
+		private function onStoryComplete():void{
+
+			var _data:Object=new Object();
+			var current_switch:String=flox.getSaveData("current_switch");
+			DebugTrace.msg("PrivateIslandScene.onStoryComplete switchID="+current_switch);
+
+			switch(current_switch){
+				case "s037|on":
+
+
+					var switchs:Object=flox.getSyetemData("switchs");
+					var switchID:String=current_switch.split("|")[0];
+					var nextSwitch:String=switchs[switchID].result.on;
+					var nextDay:String=switchs[nextSwitch].date+"|12";
+					flox.save("date",nextDay);
+
+
+					_data.name="MainScene";
+					_data.from="story";
+					command.sceneDispatch(SceneEvent.CHANGED,_data);
+
+					command.updateInfo();
+					break
+				default:
+					_data.name= "PrivateIslandScene";
+					_data.from="story";
+					command.sceneDispatch(SceneEvent.CHANGED,_data);
+					break
+			}
+
+
+
 		}
 		 
 		private function onClosedAlert():void
