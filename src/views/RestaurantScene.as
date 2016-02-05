@@ -9,8 +9,10 @@ package views
 	import controller.MainInterface;
 	import controller.SceneCommnad;
 	import controller.SceneInterface;
-	
-	import events.GameEvent;
+
+import data.DataContainer;
+
+import events.GameEvent;
 	import events.SceneEvent;
 	import events.TopViewEvent;
 	
@@ -80,7 +82,7 @@ package views
 		{
 			DebugTrace.msg("RestaurantScene.doTopViewDispatch removed:"+e.data.removed);
 			var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
-			var savegame:SaveGame=FloxCommand.savegame;
+
 			var _data:Object=new Object();
 			var gameEvent:GameEvent = SimgirlsLovemore.gameEvent;
 			switch(e.data.removed)
@@ -92,30 +94,8 @@ package views
 					command.sceneDispatch(SceneEvent.CHANGED,_data);
 					break
 				case "story_complete":
-					var current_switch:String=flox.getSaveData("current_switch");
-//					if(current_switch=="s024|off"){
-//
-//						this.removeFromParent(true);
-//						var _data:Object=new Object();
-//						_data.name= "MainScene";
-//						_data.from="battle";
-//						command.sceneDispatch(SceneEvent.CHANGED,_data);
-//
-//					}
-					if(current_switch=="s9999|off"){
 
-						this.removeFromParent(true);
-
-						gameEvent._name = "restart-game";
-						gameEvent.displayHandler();
-
-					}else{
-
-						_data.name= "RestaurantScene";
-						_data.from="story";
-						command.sceneDispatch(SceneEvent.CHANGED,_data);
-
-					}
+						onStoryComplete();
 
 					break
 				case "ani_complete":
@@ -130,6 +110,36 @@ package views
 				
 			}
 			
+		}
+		private function onStoryComplete():void{
+			var current_switch:String=flox.getSaveData("current_switch");
+			var _data:Object=new Object();
+			var gameEvent:GameEvent = SimgirlsLovemore.gameEvent;
+
+			switch (current_switch){
+
+				case "s024|off":
+					DataContainer.battleType="story_battle_s023";
+
+					_data=new Object();
+					_data.name="ChangeFormationScene";
+					command.sceneDispatch(SceneEvent.CHANGED,_data);
+
+					break;
+				case "s9999|off":
+					this.removeFromParent(true);
+
+					gameEvent._name = "restart-game";
+					gameEvent.displayHandler();
+					break;
+
+				default:
+					_data.name= "RestaurantScene";
+					_data.from="story";
+					command.sceneDispatch(SceneEvent.CHANGED,_data);
+					break
+			}
+
 		}
 		 
 		private function onClosedAlert():void

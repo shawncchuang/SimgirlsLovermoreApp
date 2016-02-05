@@ -175,7 +175,7 @@ public class Character extends MovieClip
                     {
                         case "a":
                             effShield=new A_Shield_Effect();
-                            break
+                            break;
                         case "w":
                             effShield=new W_Shield_Effect();
                             break
@@ -392,7 +392,7 @@ public class Character extends MovieClip
 
         OnArmour=false;
         var cpu_teams:Object=flox.getSyetemData("cpu_teams");
-        var cpu_teams_saved:Object=flox.getSaveData("cpu_teams");
+        //var cpu_teams_saved:Object=flox.getSaveData("cpu_teams");
         membermc=new MovieClip();
         id=main_team[index].id;
         ch_name=main_team[index].ch_name;
@@ -412,18 +412,59 @@ public class Character extends MovieClip
             {
                 //boss model
                 characters=new Array();
-                var boss:Object={"gor":new GOR(),"fat":new FAT(),"tgr":new TGR(),"rfs":new RFS()};
-                skillAni=character=boss[ch_name];
+                //var boss:Object={"gor":new GOR(),"fat":new FAT(),"tgr":new TGR(),"rfs":new RFS(),"rvn":new RVN()};
+                //skillAni=character=boss[ch_name];
+                if(ch_name=="gor")
+                    character=new GOR();
+                if(ch_name=="fat")
+                    character=new FAT();
+                if(ch_name=="tgr")
+                    character=new TGR();
+                if(ch_name=="rfs")
+                    character=new RFS();
+                if(ch_name=="rvn")
+                    character=new RVN();
+                skillAni=character;
                 switch(ch_name)
                 {
                     case "gor":
                     case "tgr":
-                    case "rfs":
                         character.width=180;
                         character.height=180;
+                        break;
+                    case "rfs":
+                    case "rvn":
+                        character.width=150;
+                        character.height=150;
                         break
                 }
-                //switch
+
+
+                /*
+                var bossMC:MovieClip=new MovieClip();
+                var bossName:String=ch_name.toLocaleUpperCase();
+                var loaderReq:LoaderRequest=new LoaderRequest();
+                loaderReq.setLoaderQueue("boss","../swf/"+bossName+".swf",bossMC,onCharacterComplete);
+
+                function onCharacterComplete():void{
+                    var swfloader:SWFLoader = LoaderMax.getLoader("boss");
+                    skillAni=character=swfloader.getSWFChild("ani") as MovieClip;
+                    switch(ch_name)
+                    {
+                        case "gor":
+                        case "tgr":
+                            character.width=180;
+                            character.height=180;
+                            break;
+                        case "rfs":
+                        case "rvn":
+                            character.width=150;
+                            character.height=150;
+                            break
+                    }
+                    initCharacter();
+                }
+                */
 
             }
             else
@@ -443,6 +484,7 @@ public class Character extends MovieClip
 
                 }
                 //if
+
             }
             //if
 
@@ -480,9 +522,9 @@ public class Character extends MovieClip
 
         }
         //if
-        character.name=id;
-        //-------------------------------------------------------
 
+        var cpu_teams_saved:Object=flox.getSaveData("cpu_teams");
+        character.name=id;
         var effect:MovieClip=new Effect();
         effect.name="effect";
         membermc.addChild(effect);
@@ -504,9 +546,9 @@ public class Character extends MovieClip
         addChild(membermc);
 
 
-
-
     }
+
+
     /*
      public function initBoss(info:Object,index:Number):void
      {
@@ -1194,15 +1236,18 @@ public class Character extends MovieClip
                         //boss
                         if(actlabel==Character.death && ch_name=="rfs"){
 
-                            actlabel="SPArmour";
-                            OnArmour=true;
-                            memberscom.BattleOver=true;
-                            DataContainer.Armour=OnArmour;
-                            actModel.gotoAndStop(actlabel);
-                            actModel.body.act.addEventListener(Event.ENTER_FRAME,doArmourPlaying);
+
+                                actlabel="SPArmour";
+                                OnArmour=true;
+                                memberscom.BattleOver=true;
+                                DataContainer.Armour=OnArmour;
+                                actModel.gotoAndStop(actlabel);
+                                actModel.body.act.addEventListener(Event.ENTER_FRAME,doArmourPlaying);
+
 
                         }else{
 
+                            if(ch_name!="rvn")
                             actModel.gotoAndStop(actlabel);
                         }
 
@@ -1262,7 +1307,7 @@ public class Character extends MovieClip
          DebugTrace.msg("Character.processMember Error");
          }
          //try*/
-
+        if(ch_name=="rfs")
         bossOnArmour(character);
 
     }
@@ -1890,7 +1935,7 @@ public class Character extends MovieClip
         if(OnArmour && power.id=="t12_0"){
             //TweenMax.to( target.body.act , 0.5, {colorTransform:{tint:0x000000, tintAmount:0.5},onComplete:onCompleteArmour,onCompleteParams:[target.body.act]});
             //var colorTransfrom:ColorTransform=target.body.act.transform.colorTransform;
-           // colorTransfrom.color=0x000000;
+            // colorTransfrom.color=0x000000;
 
             var color:Color=new Color();
             color.setTint(0x000000,0.5);

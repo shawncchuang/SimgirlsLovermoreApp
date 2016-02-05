@@ -22,8 +22,8 @@ import views.BattleScene;
 import views.Member;
 public class CpuMembersCommand implements CpuMembersInterface
 {
-    // teams id 0-12 ;(11:practice team , 12:final team)
-    private var teamsno:uint=13;
+    // teams id 0-13 ;(10:fat , 11:practice team , 12:refus , 13:rvn)
+    private var teamsno:uint=14;
     // maxsium members in a team
     private var mem_perteam:uint=8;
     private var flox:FloxInterface=new FloxCommand();
@@ -80,13 +80,18 @@ public class CpuMembersCommand implements CpuMembersInterface
             for(var j:uint=0;j<mem_perteam;j++)
             {
                 var id:String="t"+i+"_"+j;
+                var cpu_team:Object=cpu_teams[id];
+                if(!cpu_team){
+                    var playerObj:Object=Config.PlayerAttributes();
+                    cpu_team=playerObj.cpu_teams[id];
+                }
 
                 var member:Object=new Object();
                 member.id=id;
                 member.from="cpu";
                 member.target="";
-                member.se=cpu_teams[id].se;
-                member.seMax=cpu_teams[id].seMax;
+                member.se=cpu_team.se;
+                member.seMax=cpu_team.seMax;
                 member.ele=elements[uint(Math.random()*elements.length)];
                 member.skillID="";
                 cpu_teams[id]=member;
@@ -161,39 +166,42 @@ public class CpuMembersCommand implements CpuMembersInterface
         }else if(battleType=="story_battle_s023"){
             cpuIndex=10;
 
+        }else if(battleType=="story_battle_s046"){
+            cpuIndex=13;
+
         }else if(battleType=="practice" || battleType=="random_battle"){
             //var criminals:Object
             var ability:Object=command.criminalAbility();
             cpuIndex=11;
 
-           for(var j:uint=0;j<mem_perteam;j++){
+            for(var j:uint=0;j<mem_perteam;j++){
 
-               var id:String="t"+cpuIndex+"_"+j;
+                var id:String="t"+cpuIndex+"_"+j;
 
-               if(battleType=="random_battle"){
-                   if(id=="t11_0"){
-                       //leader
-                       se=ability.se;
-                   }else{
-                       se=ability.se;
-                   }
-               }else{
-                   //practice
-                   if(id=="t11_0") {
-                       //leader
-                       se = Math.floor(love * 0.8);
-                   }else{
-                       se=Math.floor(love*0.5);
-                   }
+                if(battleType=="random_battle"){
+                    if(id=="t11_0"){
+                        //leader
+                        se=ability.se;
+                    }else{
+                        se=ability.se;
+                    }
+                }else{
+                    //practice
+                    if(id=="t11_0") {
+                        //leader
+                        se = Math.floor(love * 0.8);
+                    }else{
+                        se=Math.floor(love*0.5);
+                    }
 
-               }
+                }
 
-               teams[id].se=se;
-               teams[id].seMax=se;
+                teams[id].se=se;
+                teams[id].seMax=se;
 
-           }
+            }
             DebugTrace.msg("CpuMembersCommand. setupBattleTeam teams:"+JSON.stringify(teams));
-           flox.save("cpu_teams",teams);
+            flox.save("cpu_teams",teams);
 
         }
         else
@@ -624,10 +632,10 @@ public class CpuMembersCommand implements CpuMembersInterface
                         {
                             level="lv2";
                         }
-                        break
+                        break;
                     case "fat":
                         level="lv1";
-                        break
+                        break;
                     case "tgr":
                         if(jewel<=2)
                         {
@@ -641,7 +649,7 @@ public class CpuMembersCommand implements CpuMembersInterface
                         {
                             level="lv3";
                         }
-                        break
+                        break;
                     case "rfs":
                         if(jewel<=2)
                         {
@@ -655,7 +663,18 @@ public class CpuMembersCommand implements CpuMembersInterface
                         {
                             level="lv3";
                         }
+                        break;
+                    case "rvn":
+                        if(jewel<=3)
+                        {
+                            level="lv1";
+                        }else
+                        {
+                            level="lv2";
+                        }
 
+                        break;
+                    case "":
                         break
                 }
 
@@ -1022,7 +1041,7 @@ public class CpuMembersCommand implements CpuMembersInterface
         var cputeam:Array=memberscom.getCpuTeam();
         for(var i:uint=0;i<cputeam.length;i++)
         {
-            var cpu_power:Object=cputeam[i].power
+            var cpu_power:Object=cputeam[i].power;
             if(combats.indexOf(cpu_power.combat)!=-1)
             {
                 _combats.push(cpu_power.combat);
@@ -1056,7 +1075,7 @@ public class CpuMembersCommand implements CpuMembersInterface
 
                 var ran:Number=Math.floor(Math.random()*skillarea.length);
                 var combat:Number=skillarea[ran];
-                var target:String;
+                var target:String="";
                 var targetlist:Array=new Array();
                 DebugTrace.msg("CpuMembersCommand.setupCpuTarget effect: "+cpu_power.effect);
 
@@ -1156,7 +1175,7 @@ public class CpuMembersCommand implements CpuMembersInterface
                     //if
                 }
                 else
-                {
+                {//n3
                     if(cpu_power.skillID=="n3")
                     {
                         target=cpu_power.id;
@@ -1188,11 +1207,11 @@ public class CpuMembersCommand implements CpuMembersInterface
                 else
                 {
                     var player_team:Array=memberscom.getPlayerTeam();
-                    if(cpu_power.skillID.indexOf("n")==-1)
+                    var skilllID:String=cpu_power.skillID;
+                    if(skilllID.charAt(0)!="n")
                     {
                         //skill isn't neutral
                         var __targetlist:Array=new Array();
-
 
                         for(var p:uint=0;p<player_team.length;p++)
                         {
@@ -1201,7 +1220,8 @@ public class CpuMembersCommand implements CpuMembersInterface
                             if(targetlist.indexOf(player_power.combat)!=-1)
                             {
 
-                                var _id:Number=Number(player_power.id.split("player").join(""));
+                                var playerID:String=player_power.id;
+                                var _id:Number=Number(playerID.split("player").join(""));
 
                                 __targetlist.push(_id);
                             }
@@ -1209,10 +1229,17 @@ public class CpuMembersCommand implements CpuMembersInterface
                         }
                         //for
 
-                        ran=Math.floor(Math.random()*__targetlist.length);
-                        targetlist=__targetlist;
 
-                        target="player"+targetlist[ran];
+                        targetlist=new Array();
+                        for(var v:uint=0;v<__targetlist.length;v++){
+                            targetlist.push(__targetlist[v]);
+                        }
+
+                        if(targetlist.length>0){
+                            //ran=Math.floor(Math.random()*__targetlist.length);
+                            target="player"+targetlist[0];
+                        }
+
                     }
                     //if
                 }

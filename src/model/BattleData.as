@@ -40,7 +40,7 @@ public class BattleData
             1:[3,4,5],
             2:[0,1,2,3,4,5]
         }
-        if(skillID.indexOf("n")!=-1)
+        if(skillID.charAt(0)=="n")
         {
             //assist
             if(from=="player")
@@ -439,8 +439,16 @@ public class BattleData
                 }
                 //if
                 break
-            default:
+            case "rvn_s_1":
                 for(var t:uint=0;t<skillarea.length;t++)
+                {
+                      targetArea.push(skillarea[t]);
+                }
+                //for
+
+                break
+            default:
+                for(t=0;t<skillarea.length;t++)
                 {
                     if(t<3)
                     {

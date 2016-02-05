@@ -109,5 +109,6 @@ package events
 		{
 			dispatchEvent(new Event(BattleEvent.END));
 		}
+
 	}
 }

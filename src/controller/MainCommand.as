@@ -526,11 +526,15 @@ public class MainCommand implements MainInterface {
 
         if(bgsound_channel)
         {
-            bgSoundTween=new TweenMax(bgsound_channel,1,{volume:0,onComplete:stopBgSound});
+            bgSoundTween=new TweenMax(bgsound_channel,0.5,{volume:0,onComplete:stopBgSound});
         }
         function stopBgSound():void{
+            try{
+                bgsound_channel.stop();
+            }
+            catch (e:Error){};
             TweenMax.killTweensOf(bgSoundTween);
-            bgsound_channel.stop();
+
         }
 
     }

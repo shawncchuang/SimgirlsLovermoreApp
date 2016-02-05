@@ -434,7 +434,7 @@ public class ChangeFormationScene extends Scenes
             else
             {
                 //success added to combat zone
-                Starling.juggler.removeTweens(per_combat_tile)
+                Starling.juggler.removeTweens(per_combat_tile);
 
 
                 avatarTween.moveTo(combatpos[combat_index].x-20,combatpos[combat_index].y-40+20);
@@ -633,11 +633,8 @@ public class ChangeFormationScene extends Scenes
         var _data:Object=new Object();
         if(target.name=="confirm")
         {
-            DebugTrace.obj("combat_zone :"+combat_zone.length);
-            /*for(var i:uint=0;i<combat_zone.length;i++)
-             {
-             DebugTrace.obj("combat_zone :"+JSON.stringify(combat_zone[i]));
-             }*/
+            DebugTrace.obj("ChangeFormationScene doFinished combat_zone :"+JSON.stringify(combat_zone));
+
             checkTeamMaxium();
 
             if(teamSum>=1 && teamSum<=5)

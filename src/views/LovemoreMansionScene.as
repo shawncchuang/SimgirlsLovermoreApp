@@ -9,8 +9,10 @@ package views
 	import controller.MainInterface;
 	import controller.SceneCommnad;
 	import controller.SceneInterface;
-	
-	import events.GameEvent;
+
+import data.DataContainer;
+
+import events.GameEvent;
 	import events.SceneEvent;
 	import events.TopViewEvent;
 	
@@ -120,11 +122,27 @@ package views
 		private function onStoryComplete():void{
 			var _data:Object=new Object();
 			var current_switch:String=flox.getSaveData("current_switch");
+
+			DebugTrace.msg("LovemoreMansionScene.onStoryComplete current_switch:"+current_switch);
 			switch (current_switch){
 
 				case "s046|off":
 
+					DataContainer.battleType="story_battle_s046";
+					_data=new Object();
+					_data.name="ChangeFormationScene";
+					command.sceneDispatch(SceneEvent.CHANGED,_data);
 
+					break
+				case "s047|on":
+					_data.name= "MainScene";
+					_data.from="story";
+					command.sceneDispatch(SceneEvent.CHANGED,_data);
+					break
+				case "s9999|off":
+					var gameEvent:GameEvent = SimgirlsLovemore.gameEvent;
+					gameEvent._name = "restart-game";
+					gameEvent.displayHandler();
 					break
 				default:
 					_data.name= "LovemoreMansionScene";

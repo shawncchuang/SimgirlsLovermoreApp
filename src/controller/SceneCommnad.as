@@ -274,7 +274,7 @@ public class SceneCommnad implements SceneInterface
             command.addShortcuts();
             //finish current part
             var current_switch:String=flox.getSaveData("current_switch");
-            DebugTrace.msg("SceneCommand finished");
+            DebugTrace.msg("SceneCommand.onTouchedScene [END] current_switch="+current_switch);
             var prv_talks:String= talks[end_index-1];
             if(prv_talks.indexOf("APOLLYON versus ZEPHON")!=-1 ){
                 //Final Battle
@@ -284,16 +284,18 @@ public class SceneCommnad implements SceneInterface
                 _data.name="ChangeFormationScene";
                 command.sceneDispatch(SceneEvent.CHANGED,_data);
 
-            }else if(prv_talks.indexOf("GGRRRRRRR! I will eat you all!")!=-1 ){
-                //s023fat boss
-                DataContainer.battleType="story_battle_s023";
-                updateCurrentSwitch();
-                _data=new Object();
-                _data.name="ChangeFormationScene";
-                command.sceneDispatch(SceneEvent.CHANGED,_data);
-
-
             }else{
+
+//             if(prv_talks.indexOf("GGRRRRRRR! I will eat you all!")!=-1 ){
+//                    //s023fat boss
+//                    DataContainer.battleType="story_battle_s023";
+//                    updateCurrentSwitch();
+//                    _data=new Object();
+//                    _data.name="ChangeFormationScene";
+//                    command.sceneDispatch(SceneEvent.CHANGED,_data);
+//
+//
+//                }
 
                 if(scene=="Story"){
 
@@ -428,7 +430,7 @@ public class SceneCommnad implements SceneInterface
 
             }
             if(target)
-            target=praseTwinFlameFormat(target);
+                target=praseTwinFlameFormat(target);
             switch(todo)
             {
                 case "remove":
@@ -914,7 +916,7 @@ public class SceneCommnad implements SceneInterface
         if(date_verify && time_verify && local_verify && switchID!="")
         {
             verify=true;
-           // ViewsContainer.gameinfo.visible=false;
+            // ViewsContainer.gameinfo.visible=false;
 
             doClearAll();
             part=Number(switchID.split("s").join(""))-1;
@@ -1012,7 +1014,8 @@ public class SceneCommnad implements SceneInterface
         disableAll();
 
         var battleType:String=DataContainer.battleType;
-        if(battleType!="final_battle" && battleType!="story_battle_s023"){
+        //if(battleType!="final_battle" && battleType!="story_battle_s023"){
+        if(battleType!="final_battle"){
             var current_scene:Sprite=ViewsContainer.currentScene;
             var _data:Object=new Object();
             _data.removed="story_complete";

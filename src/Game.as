@@ -254,6 +254,7 @@ public class Game extends Sprite
 		//command.initContextMenu();
 
 		var cpucom:CpuMembersInterface=new CpuMembersCommand();
+		cpucom.setupCPU();
 		cpucom.setupFinalBoss();
 
 

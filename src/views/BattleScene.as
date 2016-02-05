@@ -156,10 +156,10 @@ public class BattleScene extends Sprite
 		evt.addEventListener(BattleEvent.BONUS,onStartBonusGame);
 		evt.addEventListener(BattleEvent.CPU_COMMANDER,onCPUCommaderItems);
 		evt.addEventListener(BattleEvent.PLAYER_CONTROLER,doDefinePlayerControler);
+		evt.addEventListener(BattleEvent.END,battleEndHandle);
 		battleEvt=evt;
 
 		current_skillPts=flox.getSaveData("skillPts");
-		//current_skillPts=Config.getSkillPts;
 		init();
 
 		ViewsContainer.battlescene=this;
@@ -1732,13 +1732,15 @@ public class BattleScene extends Sprite
 			//function
 			if(allpowers[attack_index].target!="")
 			{
-				var target_id:String=allpowers[attack_index].target;
-				//DebugTrace.msg("BattleScene.startBattle target_id:"+target_id);
-				target_member=battleteam[target_id];
-				movingY=target_member.y;
+				var target_id:String="";
+
 
 				if(from=="player")
 				{
+					target_id=allpowers[attack_index].target;
+					target_member=battleteam[target_id];
+					movingY=target_member.y;
+
 					memberWH=150;
 					if(allpowers[attack_index].ch_name=="fat")
 					{
@@ -1752,10 +1754,12 @@ public class BattleScene extends Sprite
 				else
 				{
 					var targetlist:Array=allpowers[attack_index].targetlist;
-					if(targetlist.length>1)
-					{
-						target_id=getTargetID(target_id,targetlist);
-					}
+					target_id=allpowers[attack_index].target;
+//					if(targetlist.length>1)
+//					{
+//
+//						target_id=getTargetID(target_id,targetlist);
+//					}
 					//if
 					//DebugTrace.msg("BattleScene.startBattle target_id:"+target_id);
 					target_member=battleteam[target_id];
@@ -1786,12 +1790,14 @@ public class BattleScene extends Sprite
 					//Mind Control	
 					case "gor_s_1":
 					case "tgr_s_2":
-					case "rfs_s_2":
+					case "rfs_s_1":
 						var chname:String=attack_member.chname;
 						if(chname!="badguy" && chname!="prml")
 						{
 							sp=true;
 							showupSPAni(act);
+						}else if(skillID=="rfs_s_1"){
+							doAttachAction(act);
 						}
 						else
 						{
@@ -2512,7 +2518,6 @@ public class BattleScene extends Sprite
 		function hitHandle():void
 		{
 			var battleteam:Object=memberscom.getBattleTeam();
-			var targetIDlist:Array=new Array();
 			targetlist=getTargetList();
 			var targetIDsHit:Array=getRangeTargetList(targetlist,attack_member.power.from);
 			DebugTrace.msg("BattleScene.hitHandle targetIDsHit:"+targetIDsHit);
@@ -2520,25 +2525,27 @@ public class BattleScene extends Sprite
 
 			for(var k:uint=0;k<targetIDsHit.length;k++)
 			{
-
-
 				var _target_member:Member=battleteam[targetIDsHit[k]];
 				var reflect:Boolean=false;
-				if(_target_member.power.reincarnation=="true")
-				{
-					reflect=true;
+				if(_target_member.power){
+
+					if(_target_member.power.reincarnation=="true")
+					{
+						reflect=true;
+					}
+
+					if(_target_member.power.se>0 && !reflect)
+					{
+						var battleEvt:BattleEvent=_target_member.memberEvt;
+						battleEvt.act="hit";
+						battleEvt.updateMemberAct();
+
+						battleEvt.hitHandle();
+
+					}
+					//if
 				}
 
-				if(_target_member.power.se>0 && !reflect)
-				{
-					var battleEvt:BattleEvent=_target_member.memberEvt;
-					battleEvt.act="hit";
-					battleEvt.updateMemberAct();
-
-					battleEvt.hitHandle();
-
-				}
-				//if
 
 			}
 			//for
@@ -2815,18 +2822,23 @@ public class BattleScene extends Sprite
 			//if
 		}
 		//if
-		//TweenMax.delayedCall(delaySec,onAttackComplete,[type]);
+		TweenMax.delayedCall(1,doNexActionHandler,[type]);
 
-		var timer:Timer=new Timer(delaySec*1000,1);
-		timer.addEventListener(TimerEvent.TIMER_COMPLETE,onTimeout);
-		timer.start();
-		function onTimeout(e:TimerEvent):void
-		{
-			timer.stop();
-			e.target.removeEventListener(TimerEvent.TIMER_COMPLETE,onTimeout);
-			onAttackComplete(type)
-		}
 
+//		var timer:Timer=new Timer(delaySec*1000,1);
+//		timer.addEventListener(TimerEvent.TIMER_COMPLETE,onTimeout);
+//		timer.start();
+//		function onTimeout(e:TimerEvent):void
+//		{
+//			timer.stop();
+//			e.target.removeEventListener(TimerEvent.TIMER_COMPLETE,onTimeout);
+//			onAttackComplete(type)
+//		}
+
+	}
+	private function doNexActionHandler(type:String):void{
+		TweenMax.killDelayedCallsTo(doNexActionHandler);
+		onAttackComplete(type)
 	}
 	private function changeFromation(member:Member):void
 	{
@@ -3209,7 +3221,7 @@ public class BattleScene extends Sprite
 
 			if(allpowers[j])
 			{
-				if(allpowers[j].id==attack_member.name)
+				if(allpowers[j].id==attack_member.power.id)
 				{
 					attack_power=allpowers[j];
 					if(attack_power.targetlist)
@@ -4260,6 +4272,10 @@ public class BattleScene extends Sprite
 
 		TweenMax.killChildTweensOf(target);
 
+	}
+	private function battleEndHandle(e:Event):void{
+		TweenMax.killAll();
+		TweenMax.killDelayedCallsTo(doNexActionHandler);
 	}
 }
 }

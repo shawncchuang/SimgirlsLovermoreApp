@@ -164,7 +164,7 @@ public class MemebersCommand implements MembersInterface
         for(var j:uint=0;j<formation.length;j++)
         {
             var formationStr:String=JSON.stringify(formation[j]);
-            DebugTrace.msg("MemebersCommand.initPlayerMember formation["+j+"]:"+formationStr);
+            //DebugTrace.msg("MemebersCommand.initPlayerMember formation["+j+"]:"+formationStr);
 
             if(formation[j])
             {
@@ -177,7 +177,7 @@ public class MemebersCommand implements MembersInterface
                 member.initPlayer(j);
                 power.se=seObj[formation[j].name];
                 power.seMax=seObj[formation[j].name];
-                power.id=member.name;
+                power.id="player"+formation[j].combat;
                 power.speeded="false";
                 power.shielded="false";
                 power.skillID="";
@@ -293,9 +293,10 @@ public class MemebersCommand implements MembersInterface
             {
                 case "fat":
                 case "rfs":
+                case "rvn":
                     pos.x=Config.bossSkill[boss].pos.x;
                     pos.y=Config.bossSkill[boss].pos.y;
-                    break
+                    break;
                 default:
                     pos.x=new_cpupos[i].x;
                     pos.y=new_cpupos[i].y;
@@ -446,23 +447,43 @@ public class MemebersCommand implements MembersInterface
         //for
         DataContainer.PlayerPower=player_power;
 
-        if(type=="story_battle_s023"){
+        if(type.indexOf("story_battle")!=-1){
 
+            //story_battle_s023,story_battle_s046
+
+            var storyId:String="";
+            var toScene:String="";
+            switch(type){
+                case "story_battle_s023":
+                    storyId="s024|on";
+                    toScene="RestaurantScene";
+                    break;
+                case "story_battle_s046":
+                    storyId="s046b|on";
+                    toScene="LovemoreMansionScene";
+                    break
+
+            }
             if(cpu_gameover){
 
-                flox.save("current_switch","s024|on");
+                flox.save("current_switch",storyId);
             }
+
             if(player_gameover){
 
                 flox.save("current_switch","s9999|on");
             }
+
             if(cpu_gameover || player_gameover){
+                command.stopBackgroudSound();
                 DataContainer.battleType="";
-                delaycall=new DelayedCall(onBattleCompleteS023,1);
+                delaycall=new DelayedCall(onBattleComplete,1,[toScene]);
                 Starling.juggler.add(delaycall);
+
+               BattleScene.battleEvt.battleEndHandle();
             }
 
-            function onBattleCompleteS023():void{
+            function onBattleComplete(toScene:String):void{
 
                 Starling.juggler.remove(delaycall);
 
@@ -471,7 +492,7 @@ public class MemebersCommand implements MembersInterface
                 gameEvt.displayHandler();
 
                 var _data:Object=new Object();
-                _data.name= "RestaurantScene";
+                _data.name= toScene;
                 _data.from="battle";
                 command.sceneDispatch(SceneEvent.CHANGED,_data);
             }
@@ -541,8 +562,10 @@ public class MemebersCommand implements MembersInterface
         if(cpu_gameover ||  player_gameover)
         {
             //GameOver--------------------------------
-            SoundMixer.stopAll();
+            BattleScene.battleEvt.battleEndHandle();
 
+            SoundMixer.stopAll();
+            command.stopBackgroudSound();
             // DebugTrace.msg("BattleScene checkTeamSurvive-------- Batttle Over seObj:"+JSON.stringify(seObj));
             battleover=true;
 

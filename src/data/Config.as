@@ -341,9 +341,10 @@ public class Config
         "t8_0":"gor",
         "t10_0":"fat",
         "t11_0":"fan",
-        "t12_0":"rfs"
+        "t12_0":"rfs",
+        "t13_0":"rvn"
     };
-    public static var bossModels:Array=["gor","tgr","fat","rfs"];
+    public static var bossModels:Array=["gor","tgr","fat","rfs","rvn"];
     public static var ch_bossModels:Array=["mia","bdh","vdk","akr","chef","shn"];
     public static var bossSkill:Object={
         "gor":{
@@ -424,9 +425,25 @@ public class Config
                 "enemy":0,
                 "area":null
             }
-
-
+        },
+        "rvn":{
+            "pos":new Point(170,988),
+            "lv1":{
+                "skillID":"f1",
+                "label":"ATK",
+                "type":"",
+                "enemy":2,
+                "area":2
+            },
+            "lv2":{
+                "skillID":"rvn_s_1",
+                "label":"MultiATK",
+                "type":"",
+                "enemy":5,
+                "area":null
+            }
         }
+
 
     }
     public static function PlayerAttributes():Object
@@ -916,7 +933,16 @@ public class Config
                 t12_4 : {"seMax":0,"se":0} ,
                 t12_5 : {"seMax":0,"se":0} ,
                 t12_6 : {"seMax":0,"se":0} ,
-                t12_7 : {"seMax":0,"se":0}
+                t12_7 : {"seMax":0,"se":0} ,
+
+                t13_0 : {"seMax":2000,"se":2000} ,
+                t13_1 : {"seMax":0,"se":0} ,
+                t13_2 : {"seMax":0,"se":0} ,
+                t13_3 : {"seMax":0,"se":0} ,
+                t13_4 : {"seMax":0,"se":0} ,
+                t13_5 : {"seMax":0,"se":0} ,
+                t13_6 : {"seMax":0,"se":0} ,
+                t13_7 : {"seMax":0,"se":0}
             },
             "victory":{ "player":0, "sao": 0, "sirena": 0, "tomoru": 0, "ceil": 0, "dea": 0, "lenus": 0, "klr": 0 },
             "defeat":{"player":0, "sao": 0, "sirena": 0, "tomoru": 0, "ceil": 0, "dea": 0, "lenus": 0, "klr": 0},

@@ -13,7 +13,7 @@ package views
 	import events.GameEvent;
 	import events.SceneEvent;
 	import events.TopViewEvent;
-	
+
 	import model.SaveGame;
 	import model.Scenes;
 	
@@ -32,7 +32,7 @@ package views
 		private var command:MainInterface=new MainCommand();
 		private var button:Button;
 		private var scencom:SceneInterface=new SceneCommnad();
-		private var floxcom:FloxInterface=new FloxCommand();
+		private var flox:FloxInterface=new FloxCommand();
 		
 	 
 		public function HotSpringScene()
@@ -51,13 +51,17 @@ package views
 		private function init():void
 		{
 			
-			scencom.init("HotSpringScene",speaker_sprite,48,onCallback);
+			scencom.init("HotSpringScene",speaker_sprite,48,onStartStory);
 			scencom.start();
-			scencom.disableAll();
+
 		}
-		private function onCallback():void
+		private function onStartStory():void
 		{
-			
+			var switch_verifies:Array=scencom.switchGateway("HotSpring");
+			if(switch_verifies[0]){
+				scencom.disableAll();
+				scencom.start();
+			}
 		}
 		private function onSceneTriggered(e:Event):void
 		{
@@ -72,7 +76,7 @@ package views
 			
 			
 		}
-		private function doTopViewDispatch(e:TopViewEvent):void
+		private function doTopViewDispatch(e:Event):void
 		{
 			DebugTrace.msg("HotSpringScene.doTopViewDispatch removed:"+e.data.removed);
 			var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
@@ -101,11 +105,30 @@ package views
 					command.displayUpdateValue(this,value_data);
 					init();
 					break
-				
+				case "story_complete":
+
+					onStoryComplete();
+
+					break
 			}
 			
 		}
-		 
+		private function onStoryComplete():void{
+
+			var _data:Object=new Object();
+			var current_switch:String=flox.getSaveData("current_switch");
+
+			DebugTrace.msg("HotSpringScene.onStoryComplete current_switch:"+current_switch);
+			switch (current_switch){
+
+				default:
+					_data.name= "HotSpringScene";
+					_data.from="story";
+					command.sceneDispatch(SceneEvent.CHANGED,_data);
+					break
+			}
+
+		}
 		private function onClosedAlert():void
 		{
 			var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
