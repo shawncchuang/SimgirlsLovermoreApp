@@ -4,6 +4,7 @@
 package data {
 public class StoryDAO {
     private static var access:Array=new Array();
+
     private static const container:Object={"s001":s001(),"s002":s002(),"s003":s003(),"s004":s004(),
         "s005":s005(),"s006a":s006a(),"s006b":s006b(),"s007":s007(),"s008":s008(),"s009":s009(),"s010":s010(),
         "s011":s011(), "s012":s012(),"s013":s013(),"s014":s014(),"s015":s015(),
@@ -15,7 +16,10 @@ public class StoryDAO {
         "s041":s041(),"s042":s042(),"s042b":s042b(),"s043":s043(),"s044":s044(),"s045":s045(),
         "s046":s046(),"s046b":s046b(),"s047":s047(),"s048":s048(),"s049":s049(),"s050":s050(),
         "s051":s051(),"s052":s052(),
+        "s080":s080(),"s081":s081(),"s082":s082(),"s083":s083(),
         "s260":s260(),"s261":s261(),"s262":s262(),"s270":s270(),"s9999":s9999()};
+
+
     public static function switchStory(id:String):Array {
 
         access=container[id];
@@ -836,6 +840,27 @@ public class StoryDAO {
 
     }
 
+
+    private static function s080():Array{
+
+        return ["com|bg_Carpark","com|display_sportsbar_center","shC|King!","shC|We have a visitor!","com|remove_sportsbar_center","com|display_tiger_left#com|display_beach_right","shR|Hey! Can't you see we are kind of busy?","shR|Get the fuck out!","spL|Easy<> babe! My boys don't usually shit their pants like this. ","spL|Is it Vodka or Shinichi? ","com|remove_tiger_left#com|remove_beach_right","com|display_sportsbar_center","spC|Both...","com|remove_sportsbar_center#com|photo-on_KingArrival#com|music-on_Mayhem","player|The old man can still ride!","player|A huge red-haired man showed up with Vodka in one hand and Shinichi in another. ","player|Rufus Krieg!? What do you mean?","player|I am here to set up the new order for the Shambala's underworld. In the past hour I took over the Mafia and the Yakuza. You're the last man standing<> Bloody King! ","com|photo-off","com|display_tiger_center","spC|Any other option? ","com|move_tiger_left#com|display_rufus1_right#com|music-off","spR|You know me.","shL|Very well!","com|swf-on_fxzok","com|remove_tiger_left#com|display_tiger1_left#com|music-on_danger","spL|They said you've mastered a new form of SE. Show me!","spR|I'm not planning to use any SE to fight a beast. ","spR|Let's have a good old physical fight!","thL|......","shL|Ha-ha-ha! You're a mad man<> Rufus!","spL|Without SE you are just a normal human being. ","player|Like Fatman and Tyren<> Bloody King is also a product of Blackspears DNA engineering program. ","player|His DNA is blended perfectly with the DNA of a Polar Bear and a Siberian Tiger!","player|He has the wit of a veteran human fighter<> the strength of a polar bear and the agility of a siberian tiger combined!","player|231 cm. 179 kg. When it comes to physical fight<> Bloody King is simply the strongest living creature on the planet! ","shL|I will rip you apart right here!","com|photo-on_KingPaw#com|swf-on_fxzok","player|Bloody King took the first move. One big slash and his claw cut deep into Rufus's steal-like muscles. ","player|Use your Spirit Energy<> Rufus! I won't look down on you!","player|Bloody King continues to attack rampantly. He secretly wished that Rufus would keep his promise. The man is known as the Red-haired Devil for a reason. ","com|photo-off#com|photo-on_KingBear#com|swf-on_fxzok","player|Rufus is losing a lot of blood. He is not using any SE however. ","player|Bloody King gives him a huge bear hug to finish him off!","player|You are one tough motherfucker Rufus! You've made your choice. A wrong one. Goodbye!","com|photo-off#com|photo-on_KingCigar#com|swf-on_fxzok","player|GGYYAAHHH!!","player|Rufus is burning his enemy's eye with his cigar!","player|There are still more works to do...","com|photo-off#com|photo-on_KingMoves#com|swf-on_fxbam","player|One quick jab in the throat! Two palm strikes!","player|Rufus finally got out of King's huge arms. ","com|swf-on_fxbam","player|One more kick in the knee! Bloody King is losing his balance...","com|photo-off#com|photo-on_KingUpper#com|swf-on_fxboom","player|I WIN!","player|Rufus finishes it off with a merciless uppercut at the chin!","player|The 400-pound Frankenstein was KO'd by a human warrior within 3 minutes!","com|photo-off#com|photo-on_KingDefeat","player|Rufus pulls out a new cigar and closes his eyes for a moment... ","player|From now on<> I am the new King of the Underworld!","player|Rufus enjoyed the fight. He did lose his SE once and he fought the old war without using any SE for a few years. ","player|He knew that if he had used his super powers<> the fight would have ended in 3 seconds. ","player|And there would be no fun.","com|music-off","END"]
+    }
+
+    public static function s081():Array{
+
+        return ["com|bg_Sky","com|display_rufus_left#com|display_zack_casual1_right#com|music-on_gangster","spR|Father!","spL|The SSCC is coming. I want you to be the new Captain of Zephon. ","shR|What!!?? No way! I can't...","spR|......","spR|I don't understand...","com|photo-on_RufusLight","player|Rufus gave his son a cigar. He lit it up for him with his energy. ","player|It has an unique dark aura. It is not fire<> water<> earth<> air or neutral... ","player|Zack's heart is pumping like a piston in his chest.","com|photo-off#com|photo-on_RufusSmoke","player|Rufus: Shut up.","player|You are a man. Now act like one.","player|Zack: ......","player|Ok! I will do it. I won't let you down.","com|photo-off","spR|By the way<> what is that dark energy<> father?","spL|I will make you understand<> but you will need to go through hell to earn it. ","spR|......","player|At that time<> a woman showed up. ","spL|Zack<> go for a walk. ","spR|Sure!","com|remove_zack_casual1_right#com|music-off","com|display_restaurant_right","shR|Rufus!","spL|Tian Ross.","spR|I know your plan. It's time to stop.","spR|Why would you want to destroy our hard-earned peace again?","com|photo-on_RufusTian","player|I know your secrets<> Rufus!","player|......","player|When we had sex that night<> I couldn't feel it. You had lost your Spirit completely...","player|You can't love anyone including yourself!","com|photo-off","spL|......","spL|Is that all you want to say?","spL|Don't make me kill you<> Tian Ross. ","spL|I don't want to see you again.","END"]
+    }
+
+    public static function  s082():Array{
+
+        return ["com|bg_BeachScene","com|display_mansion_center#com|music-on_bababa","spC|Finally my humans are taking me to the beach!","spC|No worry. Lenus gave me a hardware upgrade and Humpty 2.0 is now waterproof.","spC|I am still too heavy to swim<> however.","player|......","spC|By the way<> thanks for getting me back online again.","spC|The girls were talking and they wanted a little pre-tournament fun. ","spC|Get changed. They are waiting. ","com|remove_mansion_center","com|photo-on_BeachGirls","player|All the ladies are present in their finest suits.","player|Hey $$$<> help us to take a picture please? ","player|My pleasure!","player|We had a great Lovemore family day on the beach. ","com|music-off","END"]
+
+    }
+
+    public static function  s083():Array{
+        return ["com|bg_SSCCArenaScene#com|music-on_liberty","com|display_dea_work_center","spC|Ladies and Gentlemen. Welcome to the opening ceremony of 2033 Super Spirit Combats Championships!","spC|These games are held in the spirit of friendship<> to highlight powers that exist out of the five Spirit Elements.","spC|Fire<> Water<> Air<> Earth and Neutral!","spC|These competitors are not just strong men and women. Not just studious academics. Not just disciples of SMA. ","spC|The mind<> spirit<> and the body must be strong.","spC|And to celebrate this union of human power with the planet we call home<> athletes from all four corners of the globe are here.","spC|The first game will begin on this coming TUESDAY NIGHT...","player|From now on there will be a SSCC game on every Tuesday Night except in December. The game days are marked on your CALENDAR.","player|Winning one game will earn the team one point. ","player|There will be 18 games in total and only the top two teams will enter the finals on the last day of February 2034.","spC|Now please sit back for the parade of athletes! ","com|remove_dea_work_center","com|display_sao_battle_center","spC|Let's go<> $$$! We need to get to the top two spots. ","spC|If that Rufus Krieg wins the tournament<> we'll all be in trouble. ","com|move_sao_battle_left#com|display_zack_battle_right","spR|Make sure you stay in step<> Yankee.","spL|What gives you the right to say that to me?","spR|As you can see<> I am Captain of Team Zephon. We will wipe you off the map.","spL|Pfft! We'll see about that. ","com|music-off","END"]
+    }
+
     public static function s262():Array{
 
         return [
@@ -903,6 +928,7 @@ public class StoryDAO {
             "END"]
 
     }
+
     public static function s9999():Array{
         //simple Game Over
         return [

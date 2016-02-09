@@ -82,9 +82,8 @@ import events.GameEvent;
 		{
 			DebugTrace.msg("RestaurantScene.doTopViewDispatch removed:"+e.data.removed);
 			var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
-
 			var _data:Object=new Object();
-			var gameEvent:GameEvent = SimgirlsLovemore.gameEvent;
+
 			switch(e.data.removed)
 			{
 				case "Leave":

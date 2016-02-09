@@ -5,7 +5,7 @@ package data {
 public class TwinDAO {
     private static var access:Array=new Array();
     private static var container:Object={"t001":t001(),"t002":t002()};
-    public static function switchTwinDAO(id:String) {
+    public static function switchTwinDAO(id:String):Array {
 
         access=container[id];
         return access;

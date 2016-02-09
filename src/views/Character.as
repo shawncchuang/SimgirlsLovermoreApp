@@ -1240,6 +1240,7 @@ public class Character extends MovieClip
                                 actlabel="SPArmour";
                                 OnArmour=true;
                                 memberscom.BattleOver=true;
+                                memberscom.ShotDownPower();
                                 DataContainer.Armour=OnArmour;
                                 actModel.gotoAndStop(actlabel);
                                 actModel.body.act.addEventListener(Event.ENTER_FRAME,doArmourPlaying);
@@ -1371,6 +1372,14 @@ public class Character extends MovieClip
                     TweenMax.to(actModel.body.act.body,0, {colorTransform:{tint:colorPkg.body, tintAmount:colorPkg.body_tint},onComplete:onColorTFComplete,onCompleteParams:[actModel.body.act.body]});
 
 
+            }
+            if(power.id=="t3_0"){
+                //shn Tint Hair color
+                TweenMax.to(actModel.body.act.shn,0, {colorTransform:{tint:0x666666, tintAmount:0.9},onComplete:onColorTFComplete,onCompleteParams:[actModel.body.act.shn]});
+            }
+            if(power.name=="lenus"){
+              //lenus Tint Hair color
+                TweenMax.to(actModel.body.act.lenus,0, {colorTransform:{tint:0xCC9900, tintAmount:0.55},onComplete:onColorTFComplete,onCompleteParams:[actModel.body.act.shn]});
             }
         }
         //if

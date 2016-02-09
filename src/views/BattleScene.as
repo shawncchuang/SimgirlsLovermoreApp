@@ -1791,6 +1791,7 @@ public class BattleScene extends Sprite
 					case "gor_s_1":
 					case "tgr_s_2":
 					case "rfs_s_1":
+					case "rfs_s_2":
 						var chname:String=attack_member.chname;
 						if(chname!="badguy" && chname!="prml")
 						{
@@ -1843,7 +1844,11 @@ public class BattleScene extends Sprite
 		if(!sp)
 		{
 			//if(attack_member.power.ch_name!="fat")
+
+
 			doAttachAction(act);
+
+
 		}
 
 	}
@@ -1913,6 +1918,7 @@ public class BattleScene extends Sprite
 		LoaderMax.getLoader("spbg").unload();
 		removeChild(spAni);
 		shakingBackground();
+
 		doAttachAction(act);
 	}
 
@@ -2896,7 +2902,7 @@ public class BattleScene extends Sprite
 
 				var _member:Member=survive_members[k];
 
-				var posX:Number=new_poslist[k].x
+				var posX:Number=new_poslist[k].x;
 				var posY:Number=new_poslist[k].y;
 				_member.power.combat=new_poslist[k].combat;
 				_member.updatePower(_member.power);

@@ -96,5 +96,16 @@ package controller
 		[Embed(source="../../media/textures/music/revival.mp3")]
 		public static const revival:Class;
 
+		[Embed(source="../../media/textures/music/fatmanbattle.mp3")]
+		public static const fatmanbattle:Class;
+
+		[Embed(source="../../media/textures/music/powermetal.mp3")]
+		public static const powermetal:Class;
+
+		[Embed(source="../../media/textures/music/rufusbattle.mp3")]
+		public static const rufusbattle:Class;
+
+		[Embed(source="../../media/textures/music/sexy.mp3")]
+		public static const sexy:Class;
 	}
 }

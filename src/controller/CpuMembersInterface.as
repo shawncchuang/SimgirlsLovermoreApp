@@ -20,5 +20,6 @@ package controller
 		function healSetUp():void
 		function nextRound():void
         function upgradeCpu():void
+		function reseatPower():void
 	}
 }

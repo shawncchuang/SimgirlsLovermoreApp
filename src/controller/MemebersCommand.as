@@ -104,6 +104,21 @@ public class MemebersCommand implements MembersInterface
         cpucom.setupSkillCard();
         cpucom.setupCpuTarget();
     }
+
+    public function ShotDownPower():void{
+
+        cpucom.reseatPower();
+
+        for(var i:uint=0;i<playerteam.length;i++) {
+            var player_power:Object = playerteam[i].power;
+            player_power.skillID="";
+            player_power.target="";
+            player_power.targetlist=null;
+        }
+
+    }
+
+
     public function setPlayerIndex(index:uint):void
     {
         player_index=index;
@@ -173,6 +188,7 @@ public class MemebersCommand implements MembersInterface
                 var power:Object=new Object();
                 power=formation[j];
                 var member:Member=new Member();
+                member.name="player"+formation[j].combat;
                 //member.mouseChildren=false;
                 member.initPlayer(j);
                 power.se=seObj[formation[j].name];
@@ -471,6 +487,7 @@ public class MemebersCommand implements MembersInterface
 
             if(player_gameover){
 
+
                 flox.save("current_switch","s9999|on");
             }
 
@@ -480,7 +497,7 @@ public class MemebersCommand implements MembersInterface
                 delaycall=new DelayedCall(onBattleComplete,1,[toScene]);
                 Starling.juggler.add(delaycall);
 
-               BattleScene.battleEvt.battleEndHandle();
+                BattleScene.battleEvt.battleEndHandle();
             }
 
             function onBattleComplete(toScene:String):void{
@@ -504,7 +521,7 @@ public class MemebersCommand implements MembersInterface
 
 
         if(type=="final_battle"){
-
+            BattleScene.battleEvt.battleEndHandle();
             if(cpu_gameover){
 
 //                for(var i:uint=0;i<cputeam.length;i++) {

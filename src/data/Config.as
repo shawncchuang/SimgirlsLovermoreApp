@@ -31,7 +31,7 @@ public class Config
     public static const characters:Array=["lenus","sirena","dea","sao","klr","tomoru","ceil"];
     public static const datingCharacters:Array=["lenus","sirena","dea","zack","klr","tomoru","ceil"];
     public static const fullnameCharacters:Array=["Lenus","Sirena","Dea","Zack","Klaire","Tomoru","Ceil"];
-    public static const fullnames={"lenus":"Lenus","sirena":"Sirena","dea":"Dea","zack":"Zack",
+    public static const fullnames:Object={"lenus":"Lenus","sirena":"Sirena","dea":"Dea","zack":"Zack",
         "klr":"Klaire","tomoru":"Tomoru","ceil":"Ceil"};
     public static const CommanderItems:Array=[ { "qty": 3, "id": "com0" },{ "qty": 3, "id": "com1" }, { "qty": 3, "id": "com2" }, { "qty": 3, "id": "com3" } ];
     public static const NPC:Object={"daz":"npc001",
@@ -232,13 +232,13 @@ public class Config
         },
         "t3":
         {
-            "acc":0x3C74B6,
+            "acc":0x0000CC,
             "acc_tint":0.5,
-            "body":0x36435A,
+            "body":0x6666FF,
             "body_tint":0.5,
             "skin":null,
             "skin_tint":null,
-            "member":[0x36435A,0x3C74B6],
+            "member":[0x6666FF,0x0000CC],
             "member_tint":[0.5,0.5]
         },
         "t4":
@@ -329,6 +329,7 @@ public class Config
         };
         return points;
     }
+    //t9_0 pratice
     public static var bossName:Object={
         "t0_0":"chef",
         "t1_0":"vdk",
@@ -908,7 +909,7 @@ public class Config
                 t9_6 : {"seMax":"","se":100} ,
                 t9_7 : {"seMax":"","se":100},
 
-                t10_0 :{"seMax":1500,"se":1500},
+                t10_0 :{"seMax":1000,"se":1000},
                 t10_1 : {"seMax":0,"se":0},
                 t10_2 : {"seMax":0,"se":0},
                 t10_3 : {"seMax":0,"se":0},

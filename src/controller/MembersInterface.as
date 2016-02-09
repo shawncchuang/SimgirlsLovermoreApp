@@ -13,6 +13,7 @@ package controller
 		function setPlayerIndex(index:uint):void
 		function choiceTarget(setupTarget:Function,overTarget:Function,outTraget:Function):void
 		function reseatCpuTeam(setupTarget:Function,overTarget:Function,outTraget:Function):void
+		function ShotDownPower():void
 		function playerReadyPickupCard(id:String):void
 		function checkTeamSurvive():void
 		function getPlayerTeam():Array

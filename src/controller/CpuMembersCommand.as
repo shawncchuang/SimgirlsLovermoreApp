@@ -1362,6 +1362,14 @@ public class CpuMembersCommand implements CpuMembersInterface
 
 
     }
+    public function reseatPower():void{
+        for(var i:uint=0;i<cputeam.length;i++) {
+            var cpu_power:Object = cputeam[i].power;
+            cpu_power.skillID="";
+            cpu_power.target="";
+            cpu_power.targetlist=null;
+        }
+    }
 
 }
 }

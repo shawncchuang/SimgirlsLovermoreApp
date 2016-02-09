@@ -673,7 +673,6 @@ public class MainCommand implements MainInterface {
             var battleData:BattleData=new BattleData();
             battleData.checkBattleSchedule("BattleRanking","cpu_team");
 
-
         }
 
         if (comType == "Rest") {
@@ -721,7 +720,7 @@ public class MainCommand implements MainInterface {
             //if
         }
         //if
-        if (_month == "Oct") {
+        if (_month == "Nov" && _date==2) {
             //season 2 upgrade cpu team se
 
             var cpucom:CpuMembersInterface = new CpuMembersCommand();
@@ -947,7 +946,7 @@ public class MainCommand implements MainInterface {
         var pts:Number = Number(ptsObj[dating]);
         DebugTrace.msg("MianCommnand.updateRelationship rewards="+JSON.stringify(rewards));
 
-        pts += Math.floor(rewards.mood / 5);
+        pts += Math.floor(rewards.mood / 15);
 
         if (pts > relMax) {
             pts = relMax;
@@ -2353,11 +2352,11 @@ public class MainCommand implements MainInterface {
 //                if(datingnow==""){
 //                    DataContainer.currentDating=null;
 //                }
-                break
+                break;
             case Keyboard.H:
                 DataContainer.shortcuts="Rest";
                 toScene="HotelScene";
-                break
+                break;
             case Keyboard.B:
                 DataContainer.shortcuts="Rest";
                 toScene="BeachScene";
