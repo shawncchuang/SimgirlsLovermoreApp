@@ -67,6 +67,7 @@ public class BeachScene extends Scenes
 
         var switch_verifies:Array=scenecom.switchGateway("BeachScene");
         DebugTrace.msg("Beach.init switch_verifies="+switch_verifies);
+        //var battle_verfiy:Boolean=switch_verifies[switch_verifies.length-1];
         if(switch_verifies[0])
         {
 
@@ -79,7 +80,10 @@ public class BeachScene extends Scenes
                 _data.removed=DataContainer.shortcuts;
                 command.topviewDispatch(TopViewEvent.REMOVE,_data);
                 DataContainer.shortcuts="";
+
             }
+
+
         }
 
     }

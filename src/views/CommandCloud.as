@@ -162,9 +162,10 @@ public class CommandCloud extends Sprite
 
                 var switch_verifies:Array=scenecom.switchGateway("Rest");
                 DebugTrace.msg("CommandCloud.doClickComCloud switch_verify="+switch_verifies);
-                if(!switch_verifies[0])
+                var battle_verfiy:Boolean=switch_verifies[switch_verifies.length-1];
+                if(!switch_verifies[0] && battle_verfiy)
                 {
-                    //no story yet
+                    //no story yet && no battle day
                     onCloudClicked();
 
 
@@ -175,6 +176,11 @@ public class CommandCloud extends Sprite
                     if(values && values.hints!="") {
 
                         var alert:Sprite = new AlertMessage(values.hints);
+                        Starling.current.stage.addChild(alert);
+                    }
+                    if(!battle_verfiy){
+                        var hints:String="You need to go to battle!";
+                        alert = new AlertMessage(hints);
                         Starling.current.stage.addChild(alert);
                     }
 

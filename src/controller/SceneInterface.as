@@ -24,5 +24,6 @@ package controller
 		function onStoryFinished():void
 		function createAnimateEffect(src:String):void
 		function initDatingTwinStory(id:String):void
+
 	}
 }

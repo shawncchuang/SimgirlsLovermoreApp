@@ -912,8 +912,8 @@ public class SceneCommnad implements SceneInterface
         //----------------------------------------------
 
 
-
-        if(date_verify && time_verify && local_verify && switchID!="")
+        var battle_verify:Boolean=verifyRankingBattle();
+        if(date_verify && time_verify && local_verify && switchID!="" && battle_verify)
         {
             verify=true;
             // ViewsContainer.gameinfo.visible=false;
@@ -949,7 +949,8 @@ public class SceneCommnad implements SceneInterface
             }
 
         }
-        if(switchID==""){
+
+        if(switchID=="" || ! battle_verify){
             verify=false;
             date_verify=false;
             time_verify=false;
@@ -957,8 +958,31 @@ public class SceneCommnad implements SceneInterface
             type="";
         }
 
-        DebugTrace.msg("SceneCommand.switchGateway return ->"+[verify,date_verify,time_verify,local_verify]);
-        return new Array(verify,date_verify,time_verify,local_verify)
+
+        DebugTrace.msg("SceneCommand.switchGateway return ->"+[verify,date_verify,time_verify,local_verify,battle_verify]);
+        return new Array(verify,date_verify,time_verify,local_verify,battle_verify)
+    }
+    private function verifyRankingBattle():Boolean{
+
+        var verify:Boolean=true;
+        var battleDays:Array=Config.battleDays;
+        var current_battle:Object=flox.getSaveData("current_battle");
+        var date:String=flox.getSaveData("date");
+        var _date:String=date.split("|")[0];
+        var _day:Number=Number(_date.split(".")[1]);
+        var _month:String=_date.split(".")[2];
+        var current_date:String=_month+"_"+_day;
+
+        if(battleDays.indexOf(current_date)!=-1){
+
+            var resultlist:Array=current_battle[current_date];
+            var battle_result:String=resultlist.toString();
+            if(battle_result=="0|0,0|0,0|0,0|0,0|0"){
+                verify=false;
+            }
+        }
+
+        return verify;
     }
     private var turn_on_id:String="";
     private function updateCurrentSwitch():void

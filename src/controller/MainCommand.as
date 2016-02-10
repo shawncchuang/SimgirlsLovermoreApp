@@ -2365,14 +2365,15 @@ public class MainCommand implements MainInterface {
         }
         var scenecom:SceneInterface=new SceneCommnad();
         var switch_verifies:Array=scenecom.switchGateway("Rest");
+        var battle_verify:Boolean=switch_verifies[switch_verifies.length-1];
         var playStroy:Boolean=true;
         if(DataContainer.shortcuts=="Rest"){
             playStroy=switch_verifies[0];
         }else{
             playStroy=false;
         }
-        if(!playStroy){
-            //no story yet
+        if(!playStroy && battle_verify){
+            //no story yet , no battle
 
             if(toScene!="" && shortcutsScene!=toScene && shortcutsScene.indexOf("Game")==-1){
                 DebugTrace.msg("MainCommand.doShortcuts  toScene="+toScene+" , shortcutsScene="+shortcutsScene);
@@ -2398,6 +2399,12 @@ public class MainCommand implements MainInterface {
                 var alert:Sprite = new AlertMessage(values.hints);
                 Starling.current.stage.addChild(alert);
 
+            }
+            if(!battle_verify){
+
+                var hints:String="You need to go to battle!";
+                alert = new AlertMessage(hints);
+                Starling.current.stage.addChild(alert);
             }
 
         }
