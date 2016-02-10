@@ -928,6 +928,15 @@ public class AssetEmbeds
     [Embed(source="../../media/textures/characters/booses/sana1.png")]
     public static const npc063:Class;
 
+    [Embed(source="../../media/textures/npc/npc064.png")]
+    public static const npc064:Class;
+    [Embed(source="../../media/textures/npc/npc065.png")]
+    public static const npc065:Class;
+    [Embed(source="../../media/textures/npc/npc066.png")]
+    public static const npc066:Class;
+    [Embed(source="../../media/textures/npc/npc067.png")]
+    public static const npc067:Class;
+
     [Embed(source="../../media/textures/characters/styles/ceil/twin.png")]
     public static const ceil_twin:Class;
     [Embed(source="../../media/textures/characters/styles/ceil/battle.png")]

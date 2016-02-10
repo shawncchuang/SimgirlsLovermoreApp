@@ -179,7 +179,7 @@ public class CommandCloud extends Sprite
                         Starling.current.stage.addChild(alert);
                     }
                     if(!battle_verfiy){
-                        var hints:String="You need to go to battle!";
+                        var hints:String="There is a SSCC game today at the Arena.";
                         alert = new AlertMessage(hints);
                         Starling.current.stage.addChild(alert);
                     }

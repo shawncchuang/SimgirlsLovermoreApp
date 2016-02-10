@@ -1765,6 +1765,7 @@ public class BattleScene extends Sprite
 					target_member=battleteam[target_id];
 					//DebugTrace.msg("BattleScene.startBattle target:"+target);
 					movingX=target_member.x-memberWH*2;
+					movingY=target_member.y;
 					direction=1;
 				}
 				//if
@@ -1804,7 +1805,7 @@ public class BattleScene extends Sprite
 						{
 							shakingBackground();
 						}
-						break
+						break;
 					case "com0":
 						//cpu commander change foramation
 						act="STOP";
@@ -1975,15 +1976,10 @@ public class BattleScene extends Sprite
 			}
 			else
 			{
-				//except
+
 				if(effect=="regenerate" || effect=="heal")
 				{
-					//TweenMax.to(attack_member,0.5,{onComplete:doAttackHandle});
-
-					//attack_member.updateStatus(effect);
-
 					doAttackHandle();
-
 				}
 				else
 				{
@@ -2068,36 +2064,7 @@ public class BattleScene extends Sprite
 						doAttackHandle();
 					}
 
-					/*		function doTpHandle(e:Event):void
-					 {
 
-					 movingX=440;
-					 movingY=980;
-
-					 if(e.target.currentFrame==25)
-					 {
-
-					 if(attack_member.name.indexOf("player")!=-1)
-					 {
-					 //player
-					 movingX=movingX-memberWH;
-
-
-					 }
-					 else
-					 {
-					 //cpu
-					 movingX=movingX+memberWH;
-
-					 }
-					 //if
-					 //TweenMax.to(attack_member,duration,{x:Math.floor(_movingX),y:movingY,onComplete:doAttackHandle});
-					 attackTweenHandler(attack_member,duration,{x:Math.floor(movingX),y:movingY,onComplete:doAttackHandle});
-					 }
-					 //if
-					 }
-
-					 */
 					function doHopping(e:Event):void
 					{
 						//DebugTrace.msg("------------------------------>>>>currentFrameLabel="+attack_member.skillAni.body.currentFrameLabel);
@@ -2120,9 +2087,7 @@ public class BattleScene extends Sprite
 						{
 							attack_member.character.body.removeEventListener(Event.ENTER_FRAME,doHopping);
 
-
-							//TweenMax.to(attack_member,duration,{x:_movingX,y:movingY});
-							attackTweenHandler(attack_member,duration,{x:movingX,y:movingY});
+							attackTweenHandler(attack_member,duration,{x:Math.floor(movingX),y:Math.floor(movingY)});
 							doAttackHandle();
 
 						}
@@ -2388,11 +2353,12 @@ public class BattleScene extends Sprite
 		{
 			DebugTrace.msg("BattleScene.doActPlaying Effect Null");
 		}
+		var endF:Number=0;
 		switch(attack_member.power.skillID)
 		{
 			case "e1":
-				var endF:Number=attack_member.skillAni.body.act.totalFrames;
-				TweenMax.to(battlescene,endF,{y:-100,useFrame:true});
+				//var endF:Number=attack_member.skillAni.body.act.totalFrames;
+				//TweenMax.to(battlescene,endF,{y:-100,useFrame:true});
 				break;
 			case "e3":
 				if(	attack_member.skillAni.body.act.currentFrame==290)
@@ -2459,7 +2425,7 @@ public class BattleScene extends Sprite
 						}
 						//switch
 						attack_member.x=_movingX;
-						attack_member.y=movingY;
+						//attack_member.y=movingY;
 
 					}
 					else
@@ -2477,39 +2443,42 @@ public class BattleScene extends Sprite
 
 		}
 		//switch
-		var hitframes:Array=new Array();
 
-		switch(attack_member.power.skillID)
-		{
-			case "a1":
-				hitframes=[24];
-				break;
-			case "a2":
-				hitframes=[21, 24, 27, 30, 34, 37, 40, 43, 51, 54, 57, 60, 66, 72, 76, 81];
-				break;
-			case "f0":
-				hitframes=[27];
-				break;
-			case "f1":
-				hitframes=[44];
-				break;
-			case "f2":
-				hitframes=[67, 78, 98];
-				break;
-			case "w2":
-				hitframes=[38,51];
-				break;
-			case "e1":
-				hitframes=[9, 32, 38, 44, 50, 56, 82];
-				break;
-			case "e2":
-				hitframes=[58,63,78];
-				break
-		}
-		//switch
+
+
 		if(attack_member.power.effect!="regenerate" && attack_member.power.effect!="heal" &&
 				attack_member.power.effect!="mind_ctrl" && attack_member.power.effect!="shield")
 		{
+			var hitframes:Array=new Array();
+			switch(attack_member.power.skillID)
+			{
+				case "a1":
+					hitframes=[24];
+					break;
+				case "a2":
+					hitframes=[21, 24, 27, 30, 34, 37, 40, 43, 51, 54, 57, 60, 66, 72, 76, 81];
+					break;
+				case "f0":
+					hitframes=[27];
+					break;
+				case "f1":
+					hitframes=[44];
+					break;
+				case "f2":
+					hitframes=[67, 78, 98];
+					break;
+				case "w2":
+					hitframes=[38,51];
+					break;
+				case "e1":
+					hitframes=[9, 32, 38, 44, 50, 56, 82];
+					break;
+				case "e2":
+					hitframes=[58,63,78];
+					break
+			}
+			//switch
+
 			if(hitframes.length>0)
 			{
 				if(e.target.currentFrame==hitframes[hitT])

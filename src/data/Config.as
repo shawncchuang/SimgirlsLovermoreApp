@@ -99,7 +99,12 @@ public class Config
         "zackkiss":"npc061",
 
         "xenos1":"npc062",
-        "sana1":"npc063"
+        "sana1":"npc063",
+        "akira1":"npc064",
+        "akira2":"npc065",
+        "restaurant1":"npc066",
+        "restaurant2":"npc067"
+
     };
     //schedule [index+ current month]
     public static var scheduleIndex:Object={"lenus":88,"sirena":12,"dea":25,"sao":38,"klr":51,"tomoru":64,"ceil":77,"zack":38};
@@ -819,7 +824,7 @@ public class Config
             ],
             "cpu_teams":
             {
-                t0_0 : {"seMax":500,"se":500} ,
+                t0_0 : {"seMax":1000,"se":1000} ,
                 t0_1 : {"seMax":500,"se":500} ,
                 t0_2 : {"seMax":500,"se":500} ,
                 t0_3 : {"seMax":500,"se":500} ,
@@ -828,7 +833,7 @@ public class Config
                 t0_6 : {"seMax":500,"se":500} ,
                 t0_7 : {"seMax":500,"se":500} ,
 
-                t1_0 : {"seMax":500,"se":500} ,
+                t1_0 : {"seMax":1000,"se":1000} ,
                 t1_1 : {"seMax":500,"se":500} ,
                 t1_2 : {"seMax":500,"se":500} ,
                 t1_3 : {"seMax":500,"se":500} ,
@@ -837,7 +842,7 @@ public class Config
                 t1_6 : {"seMax":500,"se":500} ,
                 t1_7 : {"seMax":500,"se":500} ,
 
-                t2_0 : {"seMax":500,"se":500} ,
+                t2_0 : {"seMax":1000,"se":1000} ,
                 t2_1 : {"seMax":500,"se":500} ,
                 t2_2 : {"seMax":500,"se":500} ,
                 t2_3 : {"seMax":500,"se":500} ,
@@ -846,7 +851,7 @@ public class Config
                 t2_6 : {"seMax":500,"se":500} ,
                 t2_7 : {"seMax":500,"se":500} ,
 
-                t3_0 : {"seMax":550,"se":550},
+                t3_0 : {"seMax":1100,"se":1100},
                 t3_1 : {"seMax":550,"se":550} ,
                 t3_2 : {"seMax":550,"se":550} ,
                 t3_3 : {"seMax":550,"se":550} ,
@@ -855,7 +860,7 @@ public class Config
                 t3_6 : {"seMax":550,"se":550} ,
                 t3_7 : {"seMax":550,"se":550} ,
 
-                t4_0 : {"seMax":600,"se":600} ,
+                t4_0 : {"seMax":1200,"se":1200} ,
                 t4_1 : {"seMax":600,"se":600} ,
                 t4_2 : {"seMax":600,"se":600} ,
                 t4_3 : {"seMax":600,"se":600} ,
@@ -864,7 +869,7 @@ public class Config
                 t4_6 : {"seMax":600,"se":600} ,
                 t4_7 : {"seMax":600,"se":600} ,
 
-                t5_0 : {"seMax":650,"se":650} ,
+                t5_0 : {"seMax":1350,"se":1350} ,
                 t5_1 : {"seMax":650,"se":650} ,
                 t5_2 : {"seMax":650,"se":650} ,
                 t5_3 : {"seMax":650,"se":650} ,
@@ -873,7 +878,7 @@ public class Config
                 t5_6 : {"seMax":650,"se":650} ,
                 t5_7 : {"seMax":650,"se":650} ,
 
-                t6_0 : {"seMax":700,"se":700} ,
+                t6_0 : {"seMax":1400,"se":1400} ,
                 t6_1 : {"seMax":700,"se":700} ,
                 t6_2 : {"seMax":700,"se":700} ,
                 t6_3 : {"seMax":700,"se":700} ,
@@ -882,7 +887,7 @@ public class Config
                 t6_6 : {"seMax":700,"se":700} ,
                 t6_7 : {"seMax":700,"se":700} ,
 
-                t7_0 : {"seMax":750,"se":750} ,
+                t7_0 : {"seMax":1500,"se":1500} ,
                 t7_1 : {"seMax":750,"se":750} ,
                 t7_2 : {"seMax":750,"se":750} ,
                 t7_3 : {"seMax":750,"se":750} ,
@@ -891,7 +896,7 @@ public class Config
                 t7_6 : {"seMax":750,"se":750} ,
                 t7_7 : {"seMax":750,"se":750} ,
 
-                t8_0 : {"seMax":1100,"se":1100} ,
+                t8_0 : {"seMax":2200,"se":2200} ,
                 t8_1 : {"seMax":1100,"se":1100} ,
                 t8_2 : {"seMax":1100,"se":1100} ,
                 t8_3 : {"seMax":1100,"se":1100} ,
@@ -927,7 +932,7 @@ public class Config
                 t11_6 : {"seMax":500,"se":500} ,
                 t11_7 : {"seMax":500,"se":500} ,
 
-                t12_0 : {"seMax":"","se":8000} ,
+                t12_0 : {"seMax":"","se":9999} ,
                 t12_1 : {"seMax":0,"se":0} ,
                 t12_2 : {"seMax":0,"se":0} ,
                 t12_3 : {"seMax":0,"se":0} ,
@@ -1047,10 +1052,10 @@ public class Config
 
         "foe-Max":-1,
         "acquaintance-Min":0,
-        "acquaintance-Max":76,
-        "friend-Min":77,
-        "friend-Max":332,
-        "closefriend-Min":333,
+        "acquaintance-Max":32,
+        "friend-Min":33,
+        "friend-Max":165,
+        "closefriend-Min":166,
         "closefriend-Max":776,
         "datingpartner-Min":777,
         "datingpartner-Max":1665,

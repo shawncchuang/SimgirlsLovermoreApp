@@ -440,31 +440,6 @@ public class Character extends MovieClip
                 }
 
 
-                /*
-                var bossMC:MovieClip=new MovieClip();
-                var bossName:String=ch_name.toLocaleUpperCase();
-                var loaderReq:LoaderRequest=new LoaderRequest();
-                loaderReq.setLoaderQueue("boss","../swf/"+bossName+".swf",bossMC,onCharacterComplete);
-
-                function onCharacterComplete():void{
-                    var swfloader:SWFLoader = LoaderMax.getLoader("boss");
-                    skillAni=character=swfloader.getSWFChild("ani") as MovieClip;
-                    switch(ch_name)
-                    {
-                        case "gor":
-                        case "tgr":
-                            character.width=180;
-                            character.height=180;
-                            break;
-                        case "rfs":
-                        case "rvn":
-                            character.width=150;
-                            character.height=150;
-                            break
-                    }
-                    initCharacter();
-                }
-                */
 
             }
             else
@@ -1687,18 +1662,23 @@ public class Character extends MovieClip
         {
             content.scaleX=-1;
         }
+        if(ele!=""){
+            ele= ele.toUpperCase()+"_";
+        }
 
-        skillAni.gotoAndStop(ele.toUpperCase()+"_RDY");
+        skillAni.gotoAndStop(ele+"RDY");
 
-        processMember(ele.toUpperCase()+"_RDY");
+        processMember(ele+"RDY");
 
     }
     private function reasetSkillAni():void
     {
 
-
-        skillAni.gotoAndStop(ele.toUpperCase()+"_RDY");
-        processMember(ele.toUpperCase()+"_RDY");
+        if(ele!=""){
+            ele= ele.charAt(0).toUpperCase()+"_";
+        }
+        skillAni.gotoAndStop(ele+"RDY");
+        processMember(ele+"RDY");
 
     }
     public function setupVictoryDace():void

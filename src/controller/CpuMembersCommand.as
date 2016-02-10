@@ -586,14 +586,14 @@ public class CpuMembersCommand implements CpuMembersInterface
             var update_power:Boolean=false;
             var skillLv:Number=Number(power.skillID.charAt(1));
 
-            if(power.id=="t0_0" || power.id=="t2_0")
+            if(power.id=="t7_0" || power.id=="t4_0")
             {
                 //xns:combo skill ,mia:mind control
 
                 if(skillLv==3)
                 {
 
-                    if(power.id=="t2_0")
+                    if(power.id=="t4_0")
                     {
                         var sID:String="s1";
                     }

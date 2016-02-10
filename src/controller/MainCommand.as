@@ -1369,6 +1369,7 @@ public class MainCommand implements MainInterface {
 
         var savegame:SaveGame = new SaveGame();
         var flox:FloxInterface = new FloxCommand();
+        var dating:String = flox.getSaveData("dating");
         var comObj:Object = flox.getSyetemData("command");
 
         var cash_pay:Number = comObj.Train.values.cash;
@@ -1385,6 +1386,12 @@ public class MainCommand implements MainInterface {
         //DebugTrace.msg("MainCommand.doLearn sysCommand="+JSON.stringify(sysCommand));
 
         var reward_img:Number = minImg + Math.floor(Math.random() * (maxImg - minImg)) + 1;
+
+        if(dating!=""){
+
+            imageObj[dating] +=reward_img*3;
+            reward_img=reward_img*1.5;
+        }
 
         imageObj.player += reward_img;
         _data.image = imageObj;
@@ -1474,6 +1481,7 @@ public class MainCommand implements MainInterface {
 
         var flox:FloxInterface = new FloxCommand();
         var sysCommand:Object = flox.getSyetemData("command");
+        var dating:String = flox.getSaveData("dating");
         var valuesInt:String = sysCommand.Research.values.int;
         var cash_pay:Number = sysCommand.Research.values.cash;
         DebugTrace.msg("MainCommand.doLearn cash_pay=" + cash_pay);
@@ -1487,6 +1495,10 @@ public class MainCommand implements MainInterface {
 
         var reward_int:Number = minInt + Math.floor(Math.random() * (maxInt - minInt)) + 1;
         // cash += cash_pay;
+        if(dating!=""){
+            intObj[dating]+=reward_int*3;
+            reward_int=reward_int*1.5;
+        }
         intObj.player += reward_int;
 
         flox.save("int", intObj);
@@ -2402,7 +2414,7 @@ public class MainCommand implements MainInterface {
             }
             if(!battle_verify){
 
-                var hints:String="You need to go to battle!";
+                var hints:String="There is a SSCC game today at the Arena.";
                 alert = new AlertMessage(hints);
                 Starling.current.stage.addChild(alert);
             }

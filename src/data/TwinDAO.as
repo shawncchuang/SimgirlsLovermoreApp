@@ -4,7 +4,7 @@
 package data {
 public class TwinDAO {
     private static var access:Array=new Array();
-    private static var container:Object={"t001":t001(),"t002":t002()};
+    private static var container:Object={"t001":t001(),"t002":t002(),"t003":t003()};
     public static function switchTwinDAO(id:String):Array {
 
         access=container[id];
@@ -47,6 +47,11 @@ public class TwinDAO {
 
     }
     private static function t002():Array{
+        return ["com|bg_BlackMarketScene","com|display_sao_casual1_center","spC|Hey buddy<> I want you to meet my new friends. Come here.","com|photo-on_CheatCouple","player|This is Bunny and Jim. ","player|Why don't we have a wild party tonight? The four of us... ","player|......","com|photo-off","spC|Oh come on<> $$$! Just chill for an hour or so! ","com|remove_sao_casual1_center#com|bg_HotelScene","player|At the end we went back to Sao's hotel room. Everyone got drunk except me. ","com|photo-on_CheatPhoto","player|Bunny and Jim started making out in front of us. ","player|Sao: Let's join them!",
+            "player|choice1: No! What're you talking about? I can't betray @@@!","player|choice2: Have fun guys... I will go for a walk. ","com|photo-off#com|display_sao_casual1_center","thC|......","spC|Fine! Later!","END"]
+
+    }
+    private static function t003():Array{
 
         return ["com|bg_RestaurantScene#com|music-on_precioustime",
             "com|display_@@@_twin_center","spC|Hey... thanks for surprise. I am so not prepared.",
