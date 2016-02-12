@@ -9,6 +9,7 @@ import com.greensock.loading.SWFLoader;
 import com.shortybmc.data.parser.CSV;
 
 import data.Config;
+import data.StoryDAO;
 
 import flash.desktop.NativeApplication;
 
@@ -2434,7 +2435,7 @@ public class MainCommand implements MainInterface {
 
         for(var loc:String in Config.stagepoints){
             if(loc!="PrivateIsland")
-                location.push(loc)
+                location.push(loc);
         }
         for(var j:uint=0;j<ranking.length;j++){
             ranks.push(ranking[j].rank);
@@ -2589,6 +2590,44 @@ public class MainCommand implements MainInterface {
             }
         }
         return rank
+
+    }
+
+    public function checkSceneEnable(scene:String):Boolean{
+
+
+        var enabled:Boolean=false;
+        var flox:FloxInterface=new FloxCommand();
+        var current_switch:String=flox.getSaveData("current_switch");
+        var switchID:String=current_switch.split("|")[0];
+        var enableObj:Object={"AcademyScene":"s009","SpiritTempleScene":"s010","LovemoreMansionScene":"s007","PoliceStationScene":"s013"};
+        var storyID:String=enableObj[scene];
+
+        if(storyID){
+
+            var storyIDs:Array = new Array();
+            var swiths:Object=StoryDAO.container;
+            for(var id:String in swiths){
+                storyIDs.push(id);
+            }
+            storyIDs.sort();
+
+            //DebugTrace.msg("MainCommand.checkSceneEnable storyIDs="+JSON.stringify(storyIDs));
+            var enabledIndex:Number=storyIDs.indexOf(storyID);
+            var currentIndex:Number=storyIDs.indexOf(switchID);
+
+           // DebugTrace.msg("MainCommand.checkSceneEnable enabledIndex="+enabledIndex);
+            //DebugTrace.msg("MainCommand.checkSceneEnable currentIndex="+currentIndex);
+
+            if(currentIndex>=enabledIndex){
+                enabled=true;
+            }
+        }else{
+            enabled=true;
+        }
+
+        return enabled;
+
 
     }
 

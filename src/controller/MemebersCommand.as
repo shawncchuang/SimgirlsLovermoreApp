@@ -4,6 +4,8 @@ import com.greensock.TweenMax;
 import com.greensock.easing.Cubic;
 import com.greensock.easing.Expo;
 
+import data.StoryDAO;
+
 import flash.desktop.NativeApplication;
 import flash.display.MovieClip;
 import flash.display.Sprite;
@@ -493,7 +495,7 @@ public class MemebersCommand implements MembersInterface
 
             if(cpu_gameover || player_gameover){
                 command.stopBackgroudSound();
-                DataContainer.battleType="";
+
                 delaycall=new DelayedCall(onBattleComplete,1,[toScene]);
                 Starling.juggler.add(delaycall);
 
@@ -512,6 +514,7 @@ public class MemebersCommand implements MembersInterface
                 _data.name= toScene;
                 _data.from="battle";
                 command.sceneDispatch(SceneEvent.CHANGED,_data);
+                DataContainer.battleType="";
             }
 
 

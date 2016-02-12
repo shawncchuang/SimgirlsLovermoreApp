@@ -469,7 +469,7 @@ public class Scenes extends Sprite
             case "battle":
             case "minigame":
             case "dating":
-            case "story":
+          //  case "story":
                 command.addShortcuts();
                 break
 

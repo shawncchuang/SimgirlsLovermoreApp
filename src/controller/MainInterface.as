@@ -65,5 +65,7 @@ public interface MainInterface
     function checkCaptainAdjustData():void
     function checkRanking():Number
 
+    function checkSceneEnable(scene:String):Boolean
+
 }
 }

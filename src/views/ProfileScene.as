@@ -342,6 +342,10 @@ public class ProfileScene extends Scenes
         var imgStr:String=String(savedata.image[character]);
 
 
+        if(rel=="spouse"){
+            rel="soulmate";
+        }
+
         if(character!="player"){
 
             status=DataContainer.getFacialMood(character);

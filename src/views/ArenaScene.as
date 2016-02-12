@@ -186,6 +186,9 @@ public class ArenaScene extends Scenes
             case "s270|off":
                 mediaplayer.PlayVideo("End005/"+fullname,player,new Point(1024,768),null,30,"mp4",onEnd005VideoComplete);
                 break;
+            case "s1418|off":
+                mediaplayer.PlayVideo("prms_rfs",player,new Point(1024,768),null,30,"mp4",onS1418Complete);
+                break
             case "s9999|off":
                 this.removeFromParent(true);
 
@@ -254,6 +257,17 @@ public class ArenaScene extends Scenes
         gameEvent._name = "restart-game";
         gameEvent.displayHandler();
 
+
+    }
+
+    private function onS1418Complete():void{
+
+        player.removeFromParent(true);
+        flox.save("current_switch","s1418b|on");
+
+        var _data:Object=new Object();
+        _data.name= "SSCCArenaScene";
+        command.sceneDispatch(SceneEvent.CHANGED,_data);
 
     }
 

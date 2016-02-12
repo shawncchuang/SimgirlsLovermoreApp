@@ -1,5 +1,12 @@
 package views
 {
+import com.greensock.loading.LoaderMax;
+import com.greensock.loading.SWFLoader;
+
+import controller.FloxCommand;
+
+import controller.FloxInterface;
+
 import flash.geom.Point;
 
 import controller.Assets;
@@ -72,6 +79,9 @@ public class AlertMessage extends Sprite
 
         DebugTrace.msg("AlertMessage.onEnableHandle");
         this.addEventListener(TouchEvent.TOUCH,doCancelHandler);
+
+
+
     }
     private function initScreenType():void{
 
@@ -174,12 +184,16 @@ public class AlertMessage extends Sprite
         tween.onComplete=onAlertMessageFadeIn;
         Starling.juggler.add(tween);
 
+        //waving=Starling.current.nativeOverlay.getChildByName("waving") as MovieClip;
+
+        var wavesloader:SWFLoader=LoaderMax.getLoader("waving") as SWFLoader;
+        if(wavesloader)
+            wavesloader.content.visible=false;
     }
     private function onAlertMessageFadeIn():void
     {
         //btn.visible=true;
         Starling.juggler.removeTweens(comfirm);
-
 
 
 
@@ -191,7 +205,13 @@ public class AlertMessage extends Sprite
         //var BEGAN:Touch=e.getTouch(target,TouchPhase.BEGAN);
         //removeChild(comfirm);
 
-
+        var flox:FloxInterface=new FloxCommand();
+        var current_scene:String=flox.getSaveData("current_scene");
+        if(current_scene=="MainScene"){
+            var wavesloader:SWFLoader=LoaderMax.getLoader("waving") as SWFLoader;
+            if(wavesloader)
+                wavesloader.content.visible=true;
+        }
         try{
 
             this.removeFromParent(true);

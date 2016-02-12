@@ -61,7 +61,7 @@ public class CommandCloud extends Sprite
 //    TweenPlugin.activate([TransformAroundCenterPlugin]);
 
     private var delcall:DelayedCall;
-    private var ran_battle_rate:Number=10;
+    private var ran_battle_rate:Number=100;
 
     private var cloud:Sprite;
     private var cloudMC:MovieClip;
@@ -400,16 +400,22 @@ public class CommandCloud extends Sprite
             var battledata:BattleData=new BattleData();
             //var ranbattle:Boolean=battledata.checkSurvivor();
             var perbattle:Number=Math.floor(Math.random()*100)+1;
-            DebugTrace.msg("CommandCloud.checkSceneCommand perbattle="+perbattle);
-            if(perbattle<=ran_battle_rate){
-                //could random battle
 
+            var enabled:Boolean=command.checkSceneEnable("PoliceStationScene");
+            if(enabled){
+                //scene enabled
+                if(perbattle<=ran_battle_rate){
+                    //could random battle
 
-                DataContainer.battleType="random_battle";
-                command.removeShortcuts();
-                command.consumeHandle("RandomBattle");
+                    DataContainer.battleType="random_battle";
+                    command.removeShortcuts();
+                    command.consumeHandle("RandomBattle");
 
+                }else{
 
+                    _data.name="FoundSomeScene";
+                    command.sceneDispatch(SceneEvent.CHANGED,_data);
+                }
             }else{
 
                 _data.name="FoundSomeScene";

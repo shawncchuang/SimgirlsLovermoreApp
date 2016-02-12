@@ -499,6 +499,9 @@ public class DatingScene extends Scenes {
 
         var dating:String = DataContainer.currentDating;
         var rel:String = flox.getSaveData("rel")[dating];
+        if(rel=="spouse"){
+            rel="soulmate";
+        }
         var relationship:TextField = new TextField(210, 34, rel.toUpperCase(), font, 30, 0xffffff);
         relationship.hAlign = "center";
         relationship.hAlign = "center";

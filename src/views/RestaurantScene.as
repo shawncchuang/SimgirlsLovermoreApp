@@ -117,7 +117,7 @@ import events.GameEvent;
 
 			switch (current_switch){
 
-				case "s024|off":
+				case "s023|off":
 					DataContainer.battleType="story_battle_s023";
 
 					_data=new Object();

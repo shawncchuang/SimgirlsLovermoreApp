@@ -224,7 +224,7 @@ public class SceneCommnad implements SceneInterface
     }
     public function start():void
     {
-
+        command.removeShortcuts();
         if(scene!="CharacterDesignScene")
             addTouchArea();
         showChat();
@@ -271,7 +271,7 @@ public class SceneCommnad implements SceneInterface
 
             showChat();
         }else{
-            command.addShortcuts();
+
             //finish current part
             var current_switch:String=flox.getSaveData("current_switch");
             DebugTrace.msg("SceneCommand.onTouchedScene [END] current_switch="+current_switch);
@@ -286,16 +286,6 @@ public class SceneCommnad implements SceneInterface
 
             }else{
 
-//             if(prv_talks.indexOf("GGRRRRRRR! I will eat you all!")!=-1 ){
-//                    //s023fat boss
-//                    DataContainer.battleType="story_battle_s023";
-//                    updateCurrentSwitch();
-//                    _data=new Object();
-//                    _data.name="ChangeFormationScene";
-//                    command.sceneDispatch(SceneEvent.CHANGED,_data);
-//
-//
-//                }
 
                 if(scene=="Story"){
 
@@ -325,7 +315,7 @@ public class SceneCommnad implements SceneInterface
     private function showChat():void
     {
         DebugTrace.msg("SceneCommand.showChat talk_index="+talk_index);
-        command.removeShortcuts();
+
         com_content=talks[talk_index];
         DebugTrace.msg("SceneCommand.showChat com_content:"+com_content);
         var comlists:Array=com_content.split("|");
@@ -651,7 +641,6 @@ public class SceneCommnad implements SceneInterface
     private function createPhotoMessage(todo:String,target:String):void {
         DebugTrace.msg("ChatCommand.createPhotoMessage");
 
-
         photoframe = new PhotoMessage(todo,target);
         photoframe.name = "photoframe";
         _target.addChild(photoframe);
@@ -667,13 +656,36 @@ public class SceneCommnad implements SceneInterface
     }
     private function displayVideo(src:String):void
     {
-        //DebugTrace.msg("SceneCommand.displayVideo src:"+src);
-        var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
-        gameEvent._name="show_video";
-        gameEvent.video=src;
-        gameEvent.displayHandler();
+
+//        var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
+//        gameEvent._name="show_video";
+//        gameEvent.video=src;
+//        gameEvent.displayHandler();
         command.stopBackgroudSound();
         disableAll();
+
+        var mediaplayer:MediaInterface=new MediaCommand();
+        mediaplayer.PlayVideo(src,_target,new Point(1024,768),null,30,"mp4",onVideoComplete);
+
+    }
+    private function onVideoComplete():void{
+
+
+        var current_scene:String=DataContainer.currentScene;
+        if(current_scene == "Tarotreading" || current_scene == "AirplaneScene"){
+            var _data:Object=new Object();
+            if(current_scene=="Tarotreading"){
+                _data.name="AirplaneScene";
+            }else if(current_scene=="AirplaneScene"){
+                _data.name="MainScene";
+            }
+            command.sceneDispatch(SceneEvent.CHANGED,_data);
+        }else{
+            addTouchArea();
+            talk_index++;
+            showChat();
+        }
+
     }
     public function createBackground(src:String):void
     {

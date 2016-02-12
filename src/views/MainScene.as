@@ -125,9 +125,9 @@ public class MainScene extends Scenes
     private function initWaving():void
     {
 
-        var swfloader:SWFLoader=LoaderMax.getLoader("waving") as SWFLoader;
-        if(swfloader)
-        swfloader.content.visible=true;
+        var wavesloader:SWFLoader=LoaderMax.getLoader("waving") as SWFLoader;
+        if(wavesloader)
+            wavesloader.content.visible=true;
 
         command.playSound("MapWaves",100);
 
@@ -382,7 +382,16 @@ public class MainScene extends Scenes
                     break
 
             }
-            changeScene(target,openDay,openNight,time,msg);
+            var enabled:Boolean=command.checkSceneEnable(target);
+            if(enabled){
+                changeScene(target,openDay,openNight,time,msg);
+            }else{
+                msg="This place is not open to tourists.";
+                var alert:Sprite=new AlertMessage(msg);
+                Starling.current.stage.addChild(alert);
+
+            }
+
 
         }
         if(touch)

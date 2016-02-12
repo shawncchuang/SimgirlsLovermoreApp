@@ -58,21 +58,14 @@ public class SaveandLoadList extends Sprite
         DataContainer.SaveRecord=new Array();
         DebugTrace.msg("SaveandLoadList type:"+type);
 
-
-       // var current_saved:Array=flox.getPlayerData("saved");
-        var current_saved:Array=FloxCommand.savedIds;
-        DebugTrace.msg("SaveandLoadList current_saved:"+current_saved);
-        if(current_saved.length>0)
-        {
-            //FloxCommand.onLoadComplete=onLoadCompleteToInit;
-            flox.loadBackupsaved(onLoadCompleteToInit);
-
-            addBuffer()
-        }
-        else
-        {
+        var savedEnities:Array=DataContainer.SaveRecord;
+        if(savedEnities.length>0){
             init();
+        }else{
+            flox.loadBackupsaved(onLoadCompleteToInit);
+            addBuffer();
         }
+
 
     }
 
@@ -317,7 +310,6 @@ public class SaveandLoadList extends Sprite
     private function onSavedComplete():void
     {
         DebugTrace.msg("SaveandLoadList.onSavedComplete");
-        DataContainer.SaveRecord=new Array();
         FloxCommand.onLoadComplete=onLoadComplete;
         flox.loadBackupsavedEntities();
     }
@@ -375,9 +367,7 @@ public class SaveandLoadList extends Sprite
     }
     private function doCloseTouched(e:Event):void
     {
-        //var target:Sprite=e.currentTarget as Sprite;
-        //var BEGAN:Touch = e.getTouch(target, TouchPhase.BEGAN);
-        DataContainer.SaveRecord=new Array();
+
         var _data:Object=new Object();
         _data.removed="back";
         command.topviewDispatch(TopViewEvent.REMOVE,_data);
@@ -386,8 +376,6 @@ public class SaveandLoadList extends Sprite
         if(gameinfo){
             gameinfo.dispatchEventWith("DISPLAY");
         }
-
-
 
     }
     private function displayConfirm():void
