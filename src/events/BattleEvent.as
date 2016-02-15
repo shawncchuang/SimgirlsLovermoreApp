@@ -24,6 +24,7 @@ package events
 		public static var CPU_COMMANDER:String="cpu_commander";
 		public static var PLAYER_CONTROLER:String="player_controler";
 		public static var END:String="end";
+		public static var DISABLED_ACT:String="disabled_act";
 		public var member:MovieClip;
 		public var effect:String;
 		public var member_name:String;
@@ -108,6 +109,10 @@ package events
 		public function battleEndHandle():void
 		{
 			dispatchEvent(new Event(BattleEvent.END));
+		}
+		public function disabledActionHandle():void
+		{
+			dispatchEvent(new Event(BattleEvent.DISABLED_ACT));
 		}
 
 	}

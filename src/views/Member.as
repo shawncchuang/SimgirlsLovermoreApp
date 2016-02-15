@@ -39,6 +39,7 @@ package views
 			evt.addEventListener(BattleEvent.COMPLETE_ACT,actComplete);
 			evt.addEventListener(BattleEvent.HIT,hitHandle);
 			evt.addEventListener(BattleEvent.END,battleEndHandle);
+			evt.addEventListener(BattleEvent.DISABLED_ACT,disabledActionHandle);
 			memberEvt=evt;
 		}
 		override public function initPlayer(index:Number):void
@@ -150,18 +151,17 @@ package views
 		{
 			return super.plus_speed;
 		}
-		public function setupSkillAni():void
+		override public function setupSkillAni():void
 		{
 			super.setupSkillAni();
 			skillAni=super.skillAni;
 		}
 		public function getSkillAni():void
 		{
-		 
 			
 			skillAni=super.skillAni;
 		}
-		public function removeSkillAni():void
+		override public function removeSkillAni():void
 		{
 			super.removeSkillAni();
 		}
@@ -190,6 +190,10 @@ package views
 		public function getOnArmour():Boolean{
 			OnArmour=super.OnArmour;
 			return OnArmour;
+		}
+		private function disabledActionHandle(e:Event):void{
+
+			super.stopActionHandle();
 		}
 	}
 }

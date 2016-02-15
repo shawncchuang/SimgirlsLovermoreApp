@@ -9,8 +9,10 @@ package views
 	import controller.MainInterface;
 	import controller.SceneCommnad;
 	import controller.SceneInterface;
-	
-	import events.GameEvent;
+
+import data.DataContainer;
+
+import events.GameEvent;
 	import events.SceneEvent;
 	import events.TopViewEvent;
 	
@@ -121,9 +123,18 @@ package views
 
 			var _data:Object=new Object();
 			var current_switch:String=flox.getSaveData("current_switch");
+			var gameEvent:GameEvent = SimgirlsLovemore.gameEvent;
 			DebugTrace.msg("PrivateIslandScene.onStoryComplete switchID="+current_switch);
 
 			switch(current_switch){
+				case "s036|off":
+					DataContainer.battleType="story_battle_s036";
+
+					_data=new Object();
+					_data.name="ChangeFormationScene";
+					command.sceneDispatch(SceneEvent.CHANGED,_data);
+
+					break;
 				case "s037|on":
 
 
@@ -139,7 +150,13 @@ package views
 					command.sceneDispatch(SceneEvent.CHANGED,_data);
 
 					command.updateInfo();
-					break
+					break;
+				case "s9999|off":
+					this.removeFromParent(true);
+
+					gameEvent._name = "restart-game";
+					gameEvent.displayHandler();
+					break;
 				default:
 					_data.name= "PrivateIslandScene";
 					_data.from="story";

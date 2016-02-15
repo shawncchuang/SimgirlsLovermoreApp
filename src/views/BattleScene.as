@@ -1793,12 +1793,13 @@ public class BattleScene extends Sprite
 					case "tgr_s_2":
 					case "rfs_s_1":
 					case "rfs_s_2":
+					case "nhk_s_2":
 						var chname:String=attack_member.chname;
 						if(chname!="badguy" && chname!="prml")
 						{
 							sp=true;
 							showupSPAni(act);
-						}else if(skillID=="rfs_s_1"){
+						}else if(skillID=="rfs_s_1" || skillID=="nhk_s_2"){
 							doAttachAction(act);
 						}
 						else
@@ -2005,19 +2006,21 @@ public class BattleScene extends Sprite
 							{
 								case "a1":
 									offer=60;
-									break
+									break;
 								case "a2":
 									offer=90;
-									break
+									break;
 								case "e0":
 									offer=200;
-									break
+									break;
 								case "f0":
+								case "nhk_s_0":
 									offer=280;
-									break
+									break;
 								case "f1":
+								case "nhk_s_1":
 									offer=225;
-									break
+									break;
 								case "e1":
 									offer=10;
 									break
@@ -2038,7 +2041,7 @@ public class BattleScene extends Sprite
 							}
 							//if
 							attack_member.character.body.addEventListener(Event.ENTER_FRAME,doHopping);
-							break
+							break;
 						case "m_hop":
 							partnertEvt=attack_member.memberEvt;
 							partnertEvt.act="hop";

@@ -9,8 +9,10 @@ package views
 	import controller.MainInterface;
 	import controller.SceneCommnad;
 	import controller.SceneInterface;
-	
-	import events.GameEvent;
+
+import data.DataContainer;
+
+import events.GameEvent;
 	import events.SceneEvent;
 	import events.TopViewEvent;
 	
@@ -112,24 +114,32 @@ package views
 
 			var _data:Object=new Object();
 			var current_switch:String=flox.getSaveData("current_switch");
+			var gameEvent:GameEvent = SimgirlsLovemore.gameEvent;
 			DebugTrace.msg("SportsBarScene.onStoryComplete switchID="+current_switch);
 			switch(current_switch){
-
-				case "s034|on":
-					_data.name= "MainScene";
-					_data.from="story";
+				case "s033|off":
+					DataContainer.battleType="story_battle_s033";
+					_data=new Object();
+					_data.name="ChangeFormationScene";
 					command.sceneDispatch(SceneEvent.CHANGED,_data);
-					break
+					break;
+
 				case "s034|off":
 					_data.name= "MainScene";
 					_data.from="story";
 					command.sceneDispatch(SceneEvent.CHANGED,_data);
 					break;
+				case "s9999|off":
+					this.removeFromParent(true);
+
+					gameEvent._name = "restart-game";
+					gameEvent.displayHandler();
+					break;
 				default:
 					_data.name= "SportsBarScene";
 					_data.from="story";
 					command.sceneDispatch(SceneEvent.CHANGED,_data);
-					break
+					break;
 
 			}
 

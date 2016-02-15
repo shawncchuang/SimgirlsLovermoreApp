@@ -1058,6 +1058,8 @@ public class AssetEmbeds
     public static const klr_wedding:Class;
     [Embed(source="../../media/textures/characters/styles/klr/work.png")]
     public static const klr_work:Class;
+    [Embed(source="../../media/textures/characters/styles/klr/extra1.png")]
+    public static const klr_extra1:Class;
 
     [Embed(source="../../media/textures/characters/styles/lenus/twin.png")]
     public static const lenus_twin:Class;

@@ -424,6 +424,8 @@ public class Character extends MovieClip
                     character=new RFS();
                 if(ch_name=="rvn")
                     character=new RVN();
+                if(ch_name=="nhk")
+                    character=new NHK();
                 skillAni=character;
                 switch(ch_name)
                 {
@@ -434,6 +436,7 @@ public class Character extends MovieClip
                         break;
                     case "rfs":
                     case "rvn":
+                    case "nhk":
                         character.width=150;
                         character.height=150;
                         break
@@ -917,7 +920,10 @@ public class Character extends MovieClip
                 if(!boss_model)
                 {
                     var swfloader:SWFLoader = LoaderMax.getLoader(name);
-                    skillAni=swfloader.getSWFChild(_gender) as MovieClip;
+                    if(swfloader){
+                        skillAni=swfloader.getSWFChild(_gender) as MovieClip;
+                    }
+
                 }
 
                 try
@@ -1612,7 +1618,7 @@ public class Character extends MovieClip
 
 
     }
-    protected function setupSkillAni():void
+    public function setupSkillAni():void
     {
 
         if(!boss_model)
@@ -1793,7 +1799,7 @@ public class Character extends MovieClip
         skillAni.body.act.acc.gotoAndStop(1);
         skillAni.body.act.body.gotoAndStop(1);
     }
-    protected function removeSkillAni():void
+    public function removeSkillAni():void
     {
 
         if(power.shielded=="true")
@@ -1938,6 +1944,12 @@ public class Character extends MovieClip
     }
     private function onCompleteArmour(target:MovieClip):void{
         //TweenMax.killTweensOf(target);
+    }
+
+    public function stopActionHandle():void{
+
+        character.body.act.removeEventListener(Event.ENTER_FRAME,onActComplete);
+        membermc.visible=false;
     }
 
 }

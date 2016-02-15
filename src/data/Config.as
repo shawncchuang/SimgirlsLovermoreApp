@@ -215,13 +215,13 @@ public class Config
         },
         "t1":
         {
-            "acc":0x3F5134,
+            "acc":0x972517,
             "acc_tint":0.5,
-            "body":0x8FAB6E,
+            "body":0xF56B33,
             "body_tint":0.9,
             "skin":null,
             "skin_tint":null,
-            "member":[0x8FAB6E,0x3F5134],
+            "member":[0xF56B33,0x972517],
             "member_tint":[0.5,0.5]
         },
         "t2":
@@ -334,7 +334,6 @@ public class Config
         };
         return points;
     }
-    //t9_0 pratice
     public static var bossName:Object={
         "t0_0":"chef",
         "t1_0":"vdk",
@@ -345,12 +344,15 @@ public class Config
         "t6_0":"bdh",
         "t7_0":"xns",
         "t8_0":"gor",
+        "t9_0":"practice",
         "t10_0":"fat",
         "t11_0":"fan",
         "t12_0":"rfs",
-        "t13_0":"rvn"
+        "t13_0":"rvn",
+        "t14_0":"nhk",
+        "t15_0":"gor"
     };
-    public static var bossModels:Array=["gor","tgr","fat","rfs","rvn"];
+    public static var bossModels:Array=["gor","tgr","fat","rfs","rvn","nhk"];
     public static var ch_bossModels:Array=["mia","bdh","vdk","akr","chef","shn"];
     public static var bossSkill:Object={
         "gor":{
@@ -447,6 +449,30 @@ public class Config
                 "type":"",
                 "enemy":5,
                 "area":null
+            }
+        },
+        "nhk":{
+            "pos":new Point(170,988),
+            "lv1":{
+                "skillID":"nhk_s_0",
+                "label":"FKick",
+                "type":"hop",
+                "enemy":1,
+                "area":0
+            },
+            "lv2":{
+                "skillID":"nhk_s_1",
+                "label":"FDrillKick",
+                "type":"hop",
+                "enemy":2,
+                "area":2
+            },
+            "lv3":{
+                "skillID":"nhk_s_2",
+                "label":"SP",
+                "type":"",
+                "enemy":4,
+                "area":2
             }
         }
 
@@ -948,7 +974,26 @@ public class Config
                 t13_4 : {"seMax":0,"se":0} ,
                 t13_5 : {"seMax":0,"se":0} ,
                 t13_6 : {"seMax":0,"se":0} ,
-                t13_7 : {"seMax":0,"se":0}
+                t13_7 : {"seMax":0,"se":0},
+
+                t14_0 : {"seMax":1500,"se":1500} ,
+                t14_1 : {"seMax":0,"se":0} ,
+                t14_2 : {"seMax":0,"se":0} ,
+                t14_3 : {"seMax":0,"se":0} ,
+                t14_4 : {"seMax":0,"se":0} ,
+                t14_5 : {"seMax":0,"se":0} ,
+                t14_6 : {"seMax":0,"se":0} ,
+                t14_7 : {"seMax":0,"se":0} ,
+
+
+                t15_0 : {"seMax":1500,"se":1500} ,
+                t15_1 : {"seMax":0,"se":0} ,
+                t15_2 : {"seMax":0,"se":0} ,
+                t15_3 : {"seMax":0,"se":0} ,
+                t15_4 : {"seMax":0,"se":0} ,
+                t15_5 : {"seMax":0,"se":0} ,
+                t15_6 : {"seMax":0,"se":0} ,
+                t15_7 : {"seMax":0,"se":0}
             },
             "victory":{ "player":0, "sao": 0, "sirena": 0, "tomoru": 0, "ceil": 0, "dea": 0, "lenus": 0, "klr": 0 },
             "defeat":{"player":0, "sao": 0, "sirena": 0, "tomoru": 0, "ceil": 0, "dea": 0, "lenus": 0, "klr": 0},

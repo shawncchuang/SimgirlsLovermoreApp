@@ -35,6 +35,7 @@ import utils.DebugTrace;
 import utils.ViewsContainer;
 
 import views.BattleScene;
+import views.Character;
 import views.Member;
 import views.VictoryBonus;
 
@@ -467,14 +468,20 @@ public class MemebersCommand implements MembersInterface
 
         if(type.indexOf("story_battle")!=-1){
 
-            //story_battle_s023,story_battle_s046
-
             var storyId:String="";
             var toScene:String="";
             switch(type){
                 case "story_battle_s023":
                     storyId="s024|on";
                     toScene="RestaurantScene";
+                    break;
+                case "story_battle_s033":
+                    storyId="s034|on";
+                    toScene="SportsBarScene";
+                    break;
+                case "story_battle_s036":
+                    storyId="s036b|on";
+                    toScene="PrivateIslandScene";
                     break;
                 case "story_battle_s046":
                     storyId="s046b|on";
@@ -495,11 +502,25 @@ public class MemebersCommand implements MembersInterface
 
             if(cpu_gameover || player_gameover){
                 command.stopBackgroudSound();
+                BattleScene.battleEvt.battleEndHandle();
+
+                var battleEvt:BattleEvent;
+                for(i=0;i<cputeam.length;i++) {
+                    member = cputeam[i];
+                    battleEvt=member.memberEvt;
+                    battleEvt.disabledActionHandle();
+                }
+                for( j=0;j<playerteam.length;j++) {
+                    member = playerteam[j];
+                    battleEvt=member.memberEvt;
+                    battleEvt.disabledActionHandle();
+                }
+
 
                 delaycall=new DelayedCall(onBattleComplete,1,[toScene]);
                 Starling.juggler.add(delaycall);
 
-                BattleScene.battleEvt.battleEndHandle();
+
             }
 
             function onBattleComplete(toScene:String):void{
@@ -509,6 +530,7 @@ public class MemebersCommand implements MembersInterface
                 var gameEvt:GameEvent=SimgirlsLovemore.gameEvent;
                 gameEvt._name="remove_battle";
                 gameEvt.displayHandler();
+
 
                 var _data:Object=new Object();
                 _data.name= toScene;
@@ -573,6 +595,8 @@ public class MemebersCommand implements MembersInterface
 
 
             }
+
+
 
             cpu_gameover=false;
             player_gameover=false;
