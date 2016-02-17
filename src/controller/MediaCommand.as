@@ -91,8 +91,12 @@ public class MediaCommand implements MediaInterface
 
     private function onActComplete(e:flash.events.Event):void{
 
+        var totalframes:Number=e.target.totalFrames;
+                if(_id=="battletutorial"){
+                    totalframes=e.target.totalFrames-106;
+                }
 
-       if(e.target.currentFrame==e.target.totalFrames){
+       if(e.target.currentFrame==totalframes){
 
            e.target.removeEventListener(flash.events.Event.ENTER_FRAME, onActComplete);
            e.target.stop();

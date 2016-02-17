@@ -3,12 +3,15 @@ package views
 import events.GameEvent;
 
 import flash.display.MovieClip;
-	import flash.events.MouseEvent;
+import flash.events.Event;
+import flash.events.MouseEvent;
 	
 	import controller.FloxCommand;
 	import controller.FloxInterface;
 
-	public class GameStartPanel extends MovieClip
+import utils.DebugTrace;
+
+public class GameStartPanel extends MovieClip
 	{
 		private var panel:MovieClip;
 		private var flox:FloxInterface=new FloxCommand();
@@ -32,13 +35,16 @@ import flash.display.MovieClip;
 			panel.load_game.addEventListener(MouseEvent.CLICK,doLoadGameHandle);
 			panel.load_game.addEventListener(MouseEvent.ROLL_OVER,doRollOverHandle);
 			panel.load_game.addEventListener(MouseEvent.ROLL_OUT,doRollOutHandle);
-			addChild(panel)
+			addChild(panel);
+
+			this.addEventListener(Event.REMOVED_FROM_STAGE, onRemovedHandler);
 		}
 		private function doNewGame(e:MouseEvent):void
 		{
-			
+            addLoadingAni();
 			Game.LoadGame=false;
 			flox.setupSaveGame();
+
 			
 		}
 		private function doLoadGameHandle(e:MouseEvent):void
@@ -59,6 +65,21 @@ import flash.display.MovieClip;
 		private function doRollOutHandle(e:MouseEvent):void
 		{
 			e.target.gotoAndStop(1);
+		}
+
+		private var buffer:MovieClip;
+		private function addLoadingAni():void
+		{
+
+			buffer=new LoadingAni();
+			addChild(buffer);
+		}
+
+		private function onRemovedHandler(e:Event):void{
+
+            DebugTrace.msg("GameStartPanel.onRemovedHandler");
+			if(buffer)
+				removeChild(buffer);
 		}
 	}
 }

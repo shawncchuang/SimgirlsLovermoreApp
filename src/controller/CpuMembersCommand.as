@@ -422,9 +422,7 @@ public class CpuMembersCommand implements CpuMembersInterface
         if(ran<atkper)
         {
             //check match
-
             checkSkillMatch();
-
         }
         else
         {
@@ -440,7 +438,6 @@ public class CpuMembersCommand implements CpuMembersInterface
             //if
 
             checkNextSkillChance();
-
 
         }
         //if
@@ -1102,7 +1099,7 @@ public class CpuMembersCommand implements CpuMembersInterface
                 var combat:Number=skillarea[ran];
                 var target:String="";
                 var targetlist:Array=new Array();
-                DebugTrace.msg("CpuMembersCommand.setupCpuTarget effect: "+cpu_power.effect);
+                //DebugTrace.msg("CpuMembersCommand.setupCpuTarget effect: "+cpu_power.effect);
 
                 if(cpu_power.effect=="regenerate")
                 {
@@ -1155,7 +1152,7 @@ public class CpuMembersCommand implements CpuMembersInterface
 
                         }
                         //if
-                        DebugTrace.msg("CpuMembersCommand.setupCpuTarget combatlist: "+combatlist);
+                        //DebugTrace.msg("CpuMembersCommand.setupCpuTarget combatlist: "+combatlist);
                         var healarea:Array=new Array();
 
                         for(var k:uint=0;k<cputeam.length;k++)
@@ -1216,8 +1213,8 @@ public class CpuMembersCommand implements CpuMembersInterface
                 }
                 //if
                 //------->target's combate
-                DebugTrace.msg("CpuMembersCommand.setupCpuTarget targetlist: "+targetlist);
-                DebugTrace.msg("CpuMembersCommand.setupCpuTarget target: "+target);
+                //DebugTrace.msg("CpuMembersCommand.setupCpuTarget targetlist: "+targetlist);
+                //DebugTrace.msg("CpuMembersCommand.setupCpuTarget target: "+target);
                 if(cpu_power.se==0)
                 {
                     targetlist=new Array();
@@ -1242,20 +1239,17 @@ public class CpuMembersCommand implements CpuMembersInterface
                         for(var p:uint=0;p<player_team.length;p++)
                         {
                             var player_power:Object=player_team[p].power;
-                            DebugTrace.msg("CpuMembersCommand.setupCpuTarget player_team["+p+"].power="+JSON.stringify(player_power));
-                            //if(targetlist.indexOf(player_power.combat)!=-1)
-                            if(targetlist.indexOf(player_power.id)==-1)
+                            //DebugTrace.msg("CpuMembersCommand.setupCpuTarget player_team["+p+"].power="+JSON.stringify(player_power));
+                            var playerID:String=player_power.id;
+                            var _id:Number=Number(playerID.split("player").join(""));
+                            if(targetlist.indexOf(_id)!=-1)
                             {
-
-                                var playerID:String=player_power.id;
-                                var _id:Number=Number(playerID.split("player").join(""));
-
+                                //target should be in player team
                                 __targetlist.push(_id);
                             }
                             //if
                         }
                         //for
-
 
                         targetlist=new Array();
                         for(var v:uint=0;v<__targetlist.length;v++){
@@ -1273,7 +1267,8 @@ public class CpuMembersCommand implements CpuMembersInterface
                 //if
                 //--------->target's id
                 //DebugTrace.msg("CpuMembersCommand.setupCpuTarget -- targetlist: "+targetlist);
-                //	DebugTrace.msg("CpuMembersCommand.setupCpuTarget -- target: "+target);
+                //DebugTrace.msg("CpuMembersCommand.setupCpuTarget -- target: "+target);
+                //DebugTrace.msg("CpuMembersCommand.setupCpuTarget -- cpu_power: "+JSON.stringify(cpu_power));
                 cpu_power.targetlist=targetlist;
                 cpu_power.target=target;
                 if(cpu_power.status!="dizzy")

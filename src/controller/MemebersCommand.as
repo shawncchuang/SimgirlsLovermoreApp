@@ -160,11 +160,11 @@ public class MemebersCommand implements MembersInterface
         //all members
         return battleteam;
     }
-    public function set BattleOver(type:Boolean):void{
+    public  function set BattleOver(type:Boolean):void{
 
         battleover=type;
     }
-    public function getBattleOver():Boolean
+    public function get getBattleOver():Boolean
     {
         return battleover
     }
@@ -501,6 +501,7 @@ public class MemebersCommand implements MembersInterface
             }
 
             if(cpu_gameover || player_gameover){
+                battleover=true;
                 command.stopBackgroudSound();
                 BattleScene.battleEvt.battleEndHandle();
 
@@ -546,21 +547,10 @@ public class MemebersCommand implements MembersInterface
 
 
         if(type=="final_battle"){
+
             BattleScene.battleEvt.battleEndHandle();
             if(cpu_gameover){
-
-//                for(var i:uint=0;i<cputeam.length;i++) {
-//                    member = cputeam[i];
-//                    if( member.power.id=="t12_0")
-//                    {
-//                        member.power.se=9999;
-//                        cputeam[i]=member;
-//                        break
-//                    }
-//
-//                }
-                // member.character.gotoAndStop("SPArmour");
-                // member.character.body.act.addEventListener(Event.ENTER_FRAME,doActPlaying);
+                battleover=true;
             }
             if(player_gameover){
                 DataContainer.battleType="";

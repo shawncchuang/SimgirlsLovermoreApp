@@ -112,6 +112,10 @@ import events.GameEvent;
 
 					
 					break
+				case "BattleTutorial":
+					command.PlayBattleTutorial();
+
+					break
 				case "ani_complete":
 					
 //					var value_data:Object=new Object();

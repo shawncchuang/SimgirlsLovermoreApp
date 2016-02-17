@@ -514,11 +514,15 @@ public class MainCommand implements MainInterface {
         //DebugTrace.msg("playBackgroudSound:"+src);
         //var assets:Assets=new Assets();
         //assets.initMusicAssetsManager(src);
+
         var mute:Boolean = SoundController.Mute;
-        if(!mute){
+        if(mute){
+            st=new SoundTransform(0,0);
+        }else{
+            st=new SoundTransform(0.5,0);
+        }
             bgsound_channel = Assets.MusicManager.playSound(src, 0, 1000, st);
 
-        }
 
     }
     private var bgSoundTween:TweenMax;
@@ -555,8 +559,10 @@ public class MainCommand implements MainInterface {
 
     public function stopSound(name:String):void {
 
-        if(sound_channel)
+        if(sound_channel){
             sound_channel.stop();
+        }
+
     }
 
     public function verifySwitch():Boolean {
@@ -1542,6 +1548,19 @@ public class MainCommand implements MainInterface {
 
     }
 
+    public function PlayBattleTutorial():void{
+
+        comType = "BattleTutorial";
+        var gameEvent:GameEvent = SimgirlsLovemore.gameEvent;
+        gameEvent._name = "clear_comcloud";
+        gameEvent.displayHandler();
+
+        var scene:String = DataContainer.currentScene;
+        var mediacom:MediaInterface = new MediaCommand();
+        mediacom.SWFPlayer("battletutorial", "../swf/BattleTutorial.swf", onFinishAnimated);
+
+    }
+
     // private var sysValues:Object;
     private function initCommnadValues(attr:String, values:Object):void {
 
@@ -1822,6 +1841,7 @@ public class MainCommand implements MainInterface {
 
         var queue:LoaderMax=ViewsContainer.loaderQueue;
         queue.empty(true,true);
+
         try {
             Starling.current.nativeOverlay.removeChild(playerBitmap);
         }
@@ -1968,6 +1988,8 @@ public class MainCommand implements MainInterface {
 
             return false;
         }
+
+
         var payAP:Number = sysCommand[com].ap;
         if (sysCommand[com].values) {
             payCash = sysCommand[com].values.cash;

@@ -1,7 +1,8 @@
 package views
 {
 	import flash.display.MovieClip;
-	import flash.events.MouseEvent;
+import flash.events.Event;
+import flash.events.MouseEvent;
 	import flash.net.SharedObject;
 	
 	import controller.FloxCommand;
@@ -9,8 +10,11 @@ package views
 	import controller.MainCommand;
 	
 	import services.LoaderRequest;
-	
-	import utils.DebugTrace;
+
+import starling.core.Starling;
+import starling.display.Sprite;
+
+import utils.DebugTrace;
 
 	public class LoginPanel extends MovieClip
 	{
@@ -83,7 +87,8 @@ package views
 			preorder_submit.addEventListener(MouseEvent.ROLL_OVER,doMouseOverHandle);
 			preorder_submit.addEventListener(MouseEvent.ROLL_OUT,doMouseOutHandle);
 			
-			
+			this.addEventListener(Event.REMOVED_FROM_STAGE, onRemovedHandler);
+
 			praseNowType();
 
 		}
@@ -145,6 +150,7 @@ package views
 			type=e.target.name;
 			 
 			//flox.signupAccount(panel.account.text,panel.pswd.text);
+			addLoadingAni();
 			praseNowType();
 		}
 		private function doBackPreOrder(e:MouseEvent):void
@@ -218,6 +224,21 @@ package views
 				panel.preorder_signin_ui.account.text=so_email;
 			}
 
+		}
+		private var buffer:MovieClip;
+		private function addLoadingAni():void
+		{
+
+
+			buffer=new LoadingAni();
+			addChild(buffer);
+		}
+
+		private function onRemovedHandler(e:Event):void{
+
+
+            if(buffer)
+			removeChild(buffer);
 		}
 	}
 }

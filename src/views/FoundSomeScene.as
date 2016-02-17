@@ -242,7 +242,8 @@ public class FoundSomeScene extends Scenes
 				var sprite:Sprite=new Sprite();
 				sprite.name=name;
 				sprite.useHandCursor=true;
-				sprite.x=index*100+90;
+				//sprite.x=index*100+90;
+				sprite.x=924-(index*100);
 				sprite.y=200;
 				sprite.scaleX=0.1;
 				sprite.scaleY=0.1;
@@ -276,7 +277,8 @@ public class FoundSomeScene extends Scenes
 		var sprite:Sprite=new Sprite();
 		sprite.name=npcID;
 		sprite.useHandCursor=true;
-		sprite.x=index*100+90;
+		//sprite.x=index*100+90;
+		sprite.x=924-(index*100);
 		sprite.y=200;
 		sprite.scaleX=0.1;
 		sprite.scaleY=0.1;

@@ -61,7 +61,7 @@ public class CommandCloud extends Sprite
 //    TweenPlugin.activate([TransformAroundCenterPlugin]);
 
     private var delcall:DelayedCall;
-    private var ran_battle_rate:Number=100;
+    private var ran_battle_rate:Number=10;
 
     private var cloud:Sprite;
     private var cloudMC:MovieClip;
@@ -229,6 +229,7 @@ public class CommandCloud extends Sprite
                         }
 
                         break;
+
                     default :
                         success=command.consumeHandle(com);
                         if(com=="LookAround"){

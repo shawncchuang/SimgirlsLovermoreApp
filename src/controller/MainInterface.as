@@ -41,6 +41,7 @@ public interface MainInterface
     function doWork():void
     function doLearn():void
     function doMeditate():void
+    function PlayBattleTutorial():void
     function drawPlayer(target:Sprite,avatar:Object=null):Sprite
     function drawCharacter(target:Sprite,style:String):Image
     function copyPlayerAndCharacter():void

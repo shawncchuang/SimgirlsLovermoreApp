@@ -113,7 +113,7 @@ import flash.net.URLRequest;
 		public function setLoaderQueue(id:String,src:String,target:*,callback:Function=null):void
 		{
 			var autoplay:Boolean=false;
-            if(id=="transform"){
+            if(id=="transform" || id=="battletutorial"){
                 autoplay=true;
             }
 			var queue:LoaderMax = new LoaderMax({name:"mainQueue", onProgress:progressHandler, onComplete:callback, onError:errorHandler});

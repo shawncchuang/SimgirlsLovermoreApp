@@ -384,7 +384,7 @@ public class GameInfobar extends Sprite
         if(began){
 
             Starling.juggler.removeTweens(morebar);
-            //morebar.y=-217;
+
             morebar.visible=false;
             profileFadeout();
             // datingProfileFadeout();
@@ -687,6 +687,7 @@ public class GameInfobar extends Sprite
     }
     private function onDisplayHandler(e:Event):void{
         this.visible=true;
+        morebar.visible=true;
     }
 
     private function gameInfobarFadeout():void{

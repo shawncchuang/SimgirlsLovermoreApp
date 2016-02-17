@@ -31,7 +31,7 @@ package controller
 		function removePlayerMemberListener(clickPlayer:Function):void
 		function addPlayerMemberListener(clickPlayer:Function):void
 		function clearPlayerTarget():void
-		function getBattleOver():Boolean
+		function get getBattleOver():Boolean
 		function reseatCPUPower(name:String):void
 		function set BattleOver(type:Boolean):void
 	}

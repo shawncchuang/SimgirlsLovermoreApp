@@ -1948,8 +1948,12 @@ public class Character extends MovieClip
 
     public function stopActionHandle():void{
 
-        character.body.act.removeEventListener(Event.ENTER_FRAME,onActComplete);
-        membermc.visible=false;
+        try{
+            character.body.act.removeEventListener(Event.ENTER_FRAME,onActComplete);
+            character.body.gotoAndStop(1);
+        }catch (e:Error){}
+
+
     }
 
 }

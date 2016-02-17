@@ -55,6 +55,8 @@ import model.SaveGame;
 
 import services.LoaderRequest;
 
+import starling.animation.DelayedCall;
+
 import starling.core.Starling;
 
 import utils.DebugTrace;
@@ -139,6 +141,7 @@ public class BattleScene extends Sprite
 	private var current_skillPts:Object=new Object();
 	private var battle_type:String;
 	private var commanderSkill:Boolean=true;
+
 	public function BattleScene()
 	{
 
@@ -342,11 +345,24 @@ public class BattleScene extends Sprite
 		//var stageID:Number=Math.floor(Math.random()*background.mc.totalFrames)+1;
 		//trace("BattleScene.onStageBGComplete battle_type=",battle_type);
 		var stageID:Number=1;
+
 		switch(battle_type){
 
 			case "practice":
 				stageID=2;
-				break
+				break;
+            case "story_battle_s023":
+            case "story_battle_s033":
+                    //fat , gor
+                stageID=4;
+                break;
+            case "story_battle_s036":
+                    //nhk
+                stageID=5;
+                break;
+            case "story_battle_s046":
+                stageID=6;
+                break;
 			case "random_battle":
 				var currentlabel:String=DataContainer.currentLabel;
 				DebugTrace.msg("BattleScene.onStageBGComplete currentLabel="+currentlabel);
@@ -1334,7 +1350,7 @@ public class BattleScene extends Sprite
 	private function removeDisplayAttackArea():void
 	{
 		cputeam=memberscom.getCpuTeam();
-		for(var i:uint;i<cputeam.length;i++)
+		for(var i:uint=0;i<cputeam.length;i++)
 		{
 			TweenMax.to(cputeam[i],0.1,{ tint:null,onComplete:onRemoveTintComplete,onCompleteParams:[cputeam[i]]});
 
@@ -1843,13 +1859,15 @@ public class BattleScene extends Sprite
 		DebugTrace.msg("------------------------------------------------------act="+act);
 		DebugTrace.msg("------------------------------------------------------skillID="+attack_member.power.skillID);
 
+
 		if(!sp)
 		{
-			//if(attack_member.power.ch_name!="fat")
-
-
+            var battleover:Boolean=memberscom.getBattleOver;
+            if(battleover){
+                act="PASS";
+            }
+            DebugTrace.msg("BattleScene.startBattle battleover:"+battleover);
 			doAttachAction(act);
-
 
 		}
 
@@ -2800,18 +2818,9 @@ public class BattleScene extends Sprite
 			//if
 		}
 		//if
+
 		TweenMax.delayedCall(1,doNexActionHandler,[type]);
 
-
-//		var timer:Timer=new Timer(delaySec*1000,1);
-//		timer.addEventListener(TimerEvent.TIMER_COMPLETE,onTimeout);
-//		timer.start();
-//		function onTimeout(e:TimerEvent):void
-//		{
-//			timer.stop();
-//			e.target.removeEventListener(TimerEvent.TIMER_COMPLETE,onTimeout);
-//			onAttackComplete(type)
-//		}
 
 	}
 	private function doNexActionHandler(type:String):void{
@@ -2931,8 +2940,8 @@ public class BattleScene extends Sprite
 		//TweenMax.killAll(true);
 		memberscom.checkTeamSurvive();
 		attack_index++;
-		var battleover:Boolean=memberscom.getBattleOver();
-		//DebugTrace.msg("BattleScene.doAttackCompleteHandle battleover:"+battleover);
+		var battleover:Boolean=memberscom.getBattleOver;
+		DebugTrace.msg("BattleScene.doAttackCompleteHandle battleover:"+battleover);
 		if(!battleover)
 		{
 			DebugTrace.msg("BattleScene.onFinishAttack attack_index:"+attack_index+" ; allpowers max:"+allpowers.length);
@@ -4252,8 +4261,10 @@ public class BattleScene extends Sprite
 
 	}
 	private function battleEndHandle(e:Event):void{
+
 		TweenMax.killAll();
 		TweenMax.killDelayedCallsTo(doNexActionHandler);
+
 	}
 }
 }
