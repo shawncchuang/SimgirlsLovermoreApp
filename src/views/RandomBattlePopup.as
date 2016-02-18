@@ -3,6 +3,8 @@
  */
 package views {
 import controller.Assets;
+import controller.FloxCommand;
+import controller.FloxInterface;
 import controller.MainCommand;
 import controller.MainInterface;
 
@@ -36,6 +38,7 @@ public class RandomBattlePopup extends Sprite {
     private var popup:Sprite;
     private var font:String="SimMyriadPro";
     private var command:MainInterface=new MainCommand();
+
     public function RandomBattlePopup() {
     }
     public function init():void{
@@ -60,8 +63,12 @@ public class RandomBattlePopup extends Sprite {
         okBtn.labelFactory =  getItTextRender;
         okBtn.addEventListener(Event.TRIGGERED, fightHandler);
 
+
+        var flox:FloxInterface=new FloxCommand();
+        var sysCommand:Object = flox.getSyetemData("command");
+        var avoid:Number=sysCommand.RunAwayRandomBattle.values.cash;
         var cancelBtn:Button=new Button();
-        cancelBtn.label="Pay Pizzo $100";
+        cancelBtn.label="Pay Pizzo $"+avoid;
         cancelBtn.x=220;
         cancelBtn.y=145;
         cancelBtn.setSize(100,40);

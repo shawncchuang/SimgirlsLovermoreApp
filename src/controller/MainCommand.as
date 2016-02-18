@@ -288,35 +288,40 @@ public class MainCommand implements MainInterface {
     }
     public function showSaveError(attr:String,data:*,msg:String):void{
 
-        var popup:PopupManager=new PopupManager();
-        popup.attr=attr;
-        popup.data=data;
-        popup.msg=msg;
-        popup.init();
+        if(!DataContainer.popupMessage){
 
+            var popup:PopupManager=new PopupManager();
+            popup.attr=attr;
+            popup.data=data;
+            popup.msg=msg;
+            popup.init();
+        }
 
     }
 
     public static function addAlertMsg(msg:String):void {
 
-        var format:TextFormat = new TextFormat();
-        format.size = 20;
-        format.align = "center";
-        format.font = "SimFutura";
-        var topview:flash.display.MovieClip = SimgirlsLovemore.topview;
-        alertmsg = new AlertMsgUI();
-        alertmsg.name = "alert";
-        alertmsg.msg.embedFonts = true;
-        alertmsg.msg.defaultTextFormat = format;
-        alertmsg.confirm.buttonMode = true;
-        alertmsg.cancelbtn.visible=false;
-        alertmsg.mouseChildren = false;
-        alertmsg.addEventListener(MouseEvent.MOUSE_DOWN, doColseAlertmsg);
-        //alertmsg.cancelbtn.addEventListener(MouseEvent.CLICK,doColseAlertmsg);
-        alertmsg.x = 1024 / 2;
-        alertmsg.y = 768 / 2;
-        alertmsg.msg.text = msg;
-        topview.addChild(alertmsg);
+        if(alertmsg){
+            var format:TextFormat = new TextFormat();
+            format.size = 20;
+            format.align = "center";
+            format.font = "SimFutura";
+            var topview:flash.display.MovieClip = SimgirlsLovemore.topview;
+            alertmsg = new AlertMsgUI();
+            alertmsg.name = "alert";
+            alertmsg.msg.embedFonts = true;
+            alertmsg.msg.defaultTextFormat = format;
+            alertmsg.confirm.buttonMode = true;
+            alertmsg.cancelbtn.visible=false;
+            alertmsg.mouseChildren = false;
+            alertmsg.addEventListener(MouseEvent.MOUSE_DOWN, doColseAlertmsg);
+            //alertmsg.cancelbtn.addEventListener(MouseEvent.CLICK,doColseAlertmsg);
+            alertmsg.x = 1024 / 2;
+            alertmsg.y = 768 / 2;
+            alertmsg.msg.text = msg;
+            topview.addChild(alertmsg);
+        }
+
 
         //var command:MainInterface=new MainCommand();
         //command.playSound("ErrorSound");
@@ -385,6 +390,7 @@ public class MainCommand implements MainInterface {
         // var _alert:flash.display.MovieClip=e.target as flash.display.MovieClip;
         var _alert:flash.display.MovieClip = topview.getChildByName("alert") as flash.display.MovieClip;
         topview.removeChild(_alert);
+        alertmsg=null;
     }
 
     public static function initPreOrderAccount():void {
@@ -978,7 +984,7 @@ public class MainCommand implements MainInterface {
         //playerlove+=(Math.floor(pts/5));
         //love player:80% ,dating target:100% , other characters:55%
         var adjust:Number=Number((((Math.random()*3))/100).toFixed(2));
-        var loveReward:Number=Math.floor(pts/5);
+        var loveReward:Number=Math.floor(rewards.mood /5);
         var CloveReward:Number=Math.floor(loveReward*(0.55+adjust));
         var PloveReward:Number=Math.floor(loveReward*(0.8+adjust));
         love+=loveReward;

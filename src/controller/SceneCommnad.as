@@ -273,7 +273,7 @@ public class SceneCommnad implements SceneInterface
         }else{
 
             //finish current part
-            var current_switch:String=flox.getSaveData("current_switch");
+            current_switch=flox.getSaveData("current_switch");
             DebugTrace.msg("SceneCommand.onTouchedScene [END] current_switch="+current_switch);
             var prv_talks:String= talks[end_index-1];
             if(prv_talks.indexOf("APOLLYON versus ZEPHON")!=-1 ){
@@ -296,7 +296,7 @@ public class SceneCommnad implements SceneInterface
                 }else if(scene=="TwinStory"){
                     command.stopBackgroudSound();
                     doClearAll();
-                    current_switch=flox.getSaveData("current_switch");
+                    //current_switch=flox.getSaveData("current_switch");
                     switchID=current_switch;
                     onStoryComplete();
                 }

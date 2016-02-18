@@ -538,8 +538,6 @@ public class Scenes extends Sprite
         //DebugTrace.msg("Scenes.onFadeoutComplete:"+scene_container.numChildren);
         if(scenebg)
         {
-
-
             scenebg.removeFromParent(true);
             scenebg=null;
         }

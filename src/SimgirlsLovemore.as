@@ -144,6 +144,7 @@ public class SimgirlsLovemore extends MovieClip
 		DataContainer.SaveRecord=new Array();
 		DataContainer.player=new Object();
 		DataContainer.restart=false;
+		DataContainer.popupMessage=false;
 
 		var evt:GameEvent=new GameEvent();
 		evt.addEventListener(GameEvent.SHOWED,displayHandler);

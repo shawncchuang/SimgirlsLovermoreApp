@@ -74,7 +74,8 @@ public class DatingTwinScene extends Scenes{
         DebugTrace.msg("DatingTwinScene.onFinishedStory dating="+dating+" ; " +
                 "datingtwin="+JSON.stringify(datingtwin));
         var _data:Object = new Object();
-        _data.name = DataContainer.currentLabel;
+        //_data.name = DataContainer.currentLabel;
+        _data.name ="MainScene";
         command.sceneDispatch(SceneEvent.CHANGED, _data);
 
 

@@ -921,6 +921,10 @@ public class AssetEmbeds
     public static const npc059:Class;
     [Embed(source="../../media/textures/characters/kiss/sirenakiss.png")]
     public static const npc060:Class;
+    [Embed(source="../../media/textures/characters/kiss/zackkiss.png")]
+    public static const npc068:Class;
+
+
     [Embed(source="../../media/textures/characters/kiss/tomorukiss.png")]
     public static const npc061:Class;
     [Embed(source="../../media/textures/characters/booses/xenos1.png")]
@@ -999,7 +1003,7 @@ public class AssetEmbeds
     [Embed(source="../../media/textures/characters/styles/dea/night.png")]
     public static const dea_night:Class;
     [Embed(source="../../media/textures/characters/styles/dea/party1.png")]
-    public static const dea_party1:Class;
+    public static const dea_party:Class;
     [Embed(source="../../media/textures/characters/styles/dea/party2.png")]
     public static const dea_party2:Class;
     [Embed(source="../../media/textures/characters/styles/dea/pj.png")]

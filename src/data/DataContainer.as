@@ -66,6 +66,7 @@ public class DataContainer
     private static var _enable:Boolean;
     private static var restart_game:Boolean;
 
+    private static var popup:Boolean;
     public static function set AssetsId(ids:Array):void
     {
         assets_id=ids;
@@ -907,6 +908,12 @@ public class DataContainer
     }
     public static function get restart():Boolean{
         return restart_game;
+    }
+    public static function set popupMessage(re:Boolean):void{
+        popup=re;
+    }
+    public static function get popupMessage():Boolean{
+        return popup;
     }
 }
 }

@@ -6,6 +6,8 @@ import controller.Assets;
 import controller.FloxCommand;
 import controller.FloxInterface;
 
+import data.DataContainer;
+
 import feathers.controls.Button;
 import feathers.controls.text.TextFieldTextRenderer;
 import feathers.core.ITextRenderer;
@@ -24,7 +26,7 @@ import utils.DebugTrace;
 
 public class PopupManager extends Sprite{
 
-    private var popup:Sprite;
+    private var popup:Sprite=null;
     private var font:String="SimMyriadPro";
     public var attr:String;
     public var data:*;
@@ -32,6 +34,7 @@ public class PopupManager extends Sprite{
     private var flox:FloxInterface=new FloxCommand();
 
     public function init():void {
+
 
 
         popup=new Sprite();
@@ -57,7 +60,11 @@ public class PopupManager extends Sprite{
         popup.addChild(msgTxt);
         popup.addChild(tryagain);
 
+
         PopUpManager.addPopUp(popup,true);
+
+        DataContainer.popupMessage=true;
+
 
 
     }
@@ -66,6 +73,7 @@ public class PopupManager extends Sprite{
 
         //flox.save(this.attr,this.data);
         PopUpManager.removePopUp(popup,true);
+        DataContainer.popupMessage=false;
 
     }
     private function getItTextRender():ITextRenderer{
@@ -74,5 +82,6 @@ public class PopupManager extends Sprite{
         textRenderer.embedFonts = true;
         return textRenderer;
     }
+
 }
 }

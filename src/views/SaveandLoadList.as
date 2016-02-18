@@ -55,13 +55,14 @@ public class SaveandLoadList extends Sprite
     {
 
         _type=type;
-        DataContainer.SaveRecord=new Array();
-        DebugTrace.msg("SaveandLoadList type:"+type);
 
         var savedEnities:Array=DataContainer.SaveRecord;
         if(savedEnities.length>0){
+            DebugTrace.msg("SaveandLoadList type:"+JSON.stringify(savedEnities));
             init();
+
         }else{
+            DataContainer.SaveRecord=new Array();
             flox.loadBackupsaved(onLoadCompleteToInit);
             addBuffer();
         }
@@ -232,8 +233,7 @@ public class SaveandLoadList extends Sprite
 
                     _data=null;
                     progress=Number(selbar.split("backupsaved")[1]);
-                   //var index:Number=current_saved.indexOf(selbar);
-                    //current_saved[progress-1]=selbar;
+
                 }
                 //if
                 if(selbar.indexOf("emptybar")!=-1)
@@ -242,23 +242,7 @@ public class SaveandLoadList extends Sprite
                     save_new=true;
                     progress=Number(selbar.split("emptybar").join(""))+1;
 
-//
-//                    if(current_saved.indexOf(selbar)!=-1){
-//                        index=current_saved.indexOf(selbar);
-//                        current_saved[index]="saved"+progress;
-//                    }else{
-//
-//                        if(current_saved.length-1 < progress){
-//                            current_saved.push("saved"+progress);
-//                        }else{
-//                            current_saved[progress]="saved"+progress;
-//                        }
-//
-//
-//
-//                    }
-                    //DebugTrace.msg("SaveandLoadList.doSaveLoadListTouched");
-                    //DebugTrace.msg("Write into empty progress="+progress);
+
 
                 }
 
@@ -448,6 +432,9 @@ public class SaveandLoadList extends Sprite
         var _data:Object=new Object();
         _data.removed="loadtoStart";
         command.topviewDispatch(TopViewEvent.REMOVE,_data);
+
+       DataContainer.SaveRecord=new Array();
+        flox.loadBackupsaved();
 
     }
     private function onSynsBackupSavedComplete(result:*=null):void{

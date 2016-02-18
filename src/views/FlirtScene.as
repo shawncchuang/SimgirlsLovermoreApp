@@ -14,6 +14,8 @@ import events.SceneEvent;
 
 import flash.geom.Point;
 
+import starling.animation.DelayedCall;
+
 import starling.animation.Transitions;
 
 import starling.animation.Tween;
@@ -53,6 +55,7 @@ public class FlirtScene extends Sprite{
     private var selType:String;
     private var tweenlist:Array=new Array();
     private var cards:Array=new Array();
+    private var delayCall:DelayedCall;
     public function FlirtScene() {
 
         initDatingCard();
@@ -191,7 +194,7 @@ public class FlirtScene extends Sprite{
         //cancel button
 
 
-        command.addedCancelButton(this,doCancelHandler,new Point(970,55));
+        //command.addedCancelButton(this,doCancelHandler,new Point(970,55));
 
 
     }
@@ -262,12 +265,14 @@ public class FlirtScene extends Sprite{
 
         }
 
-
+        delayCall=new DelayedCall(doCancelHandler,3);
+        Starling.juggler.add(delayCall);
 
     }
 
     private function doCancelHandler():void
     {
+        Starling.juggler.remove(delayCall);
         clearTweens();
         var _data:Object=new Object();
         _data.name=DataContainer.currentLabel;

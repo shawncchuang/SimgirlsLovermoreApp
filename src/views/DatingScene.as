@@ -420,7 +420,7 @@ public class DatingScene extends Scenes {
         playerloveTxt.text = String(player_love);
         chloveTxt.text = String(ch_love);
 
-        var reward_mood:Number = Math.floor(ch_love / 2);
+        var reward_mood:Number = Math.floor(_love / 2);
         mood = moodObj[dating];
         mood += reward_mood;
         moodObj[dating] = mood;
@@ -1548,7 +1548,7 @@ public class DatingScene extends Scenes {
         //photoMusic=command.playSound(dating+"Music");
 
 
-        delayCall=new DelayedCall(onShowFinished,20);
+        delayCall=new DelayedCall(onShowFinished,10);
         Starling.juggler.add(delayCall);
 
     }
