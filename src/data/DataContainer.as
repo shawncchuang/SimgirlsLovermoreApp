@@ -67,6 +67,7 @@ public class DataContainer
     private static var restart_game:Boolean;
 
     private static var popup:Boolean;
+    private static var ending_replay:Boolean;
     public static function set AssetsId(ids:Array):void
     {
         assets_id=ids;
@@ -914,6 +915,13 @@ public class DataContainer
     }
     public static function get popupMessage():Boolean{
         return popup;
+    }
+
+    public static function set EndingReplay(bool:Boolean):void{
+        ending_replay=bool;
+    }
+    public static function get EndingReplay():Boolean{
+        return ending_replay;
     }
 }
 }

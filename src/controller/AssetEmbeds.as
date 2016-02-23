@@ -464,6 +464,10 @@ public class AssetEmbeds
     public static const SkillPtsValueIcon:Class;
 
 
+    [Embed(source="../../media/textures/icons/danger.png")]
+    public static const DangerSign:Class;
+
+
     [Embed(source="../../assets/images/items/art.jpg")]
     public static const Art:Class;
 

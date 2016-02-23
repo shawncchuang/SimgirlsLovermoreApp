@@ -15,7 +15,10 @@ import feathers.core.PopUpManager;
 
 import flash.text.TextFormat;
 
+import starling.core.Starling;
+
 import starling.display.Image;
+import starling.display.Quad;
 import starling.display.Sprite;
 import starling.events.Event;
 import starling.text.TextField;
@@ -39,29 +42,36 @@ public class PopupManager extends Sprite{
 
         popup=new Sprite();
 
-        var bgTexture:Texture=Assets.getTexture("PopupBg");
-        var bg:Image=new Image(bgTexture);
+//        var bgTexture:Texture=Assets.getTexture("PopupBg");
+//        var bg:Image=new Image(bgTexture);
 
-        var msgTxt:TextField=new TextField(370,80,msg,font,16,0,false);
-        msgTxt.x=15;
-        msgTxt.y=30;
+
+        var bg:Quad = new Quad( 400, 80, 0x000000 );
+
+        var msgTxt:TextField=new TextField(400,80,msg,font,30,0xFFFFFF,false);
+        msgTxt.autoScale=true;
+//        msgTxt.x=15;
+//        msgTxt.y=30;
+
+//        var tryagain:Button=new Button();
+//        tryagain.label="Click Here & Try Again";
+//        tryagain.setSize(200,40);
+//        tryagain.x=bg.width/2-100;
+//        tryagain.y=145;
+//        tryagain.labelFactory =  getItTextRender;
 
         var tryagain:Button=new Button();
-        tryagain.label="Click Here & Try Again";
-        tryagain.setSize(200,40);
-        tryagain.x=bg.width/2-100;
-        tryagain.y=145;
-        //tryagain.defaultIcon
-        //tryagain.downIcon
-        tryagain.labelFactory =  getItTextRender;
+        tryagain.setSize(400, 80);
         tryagain.addEventListener(Event.TRIGGERED, doTryAgainHandler);
 
+        popup.x=Starling.current.stage.stageWidth-bg.width-5;
+        popup.y=Starling.current.stage.stageHeight-bg.height-5;
         popup.addChild(bg);
         popup.addChild(msgTxt);
         popup.addChild(tryagain);
 
 
-        PopUpManager.addPopUp(popup,true);
+        PopUpManager.addPopUp(popup,false,false);
 
         DataContainer.popupMessage=true;
 

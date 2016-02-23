@@ -310,6 +310,7 @@ public class MemebersCommand implements MembersInterface
             var pos:Point=new Point();
             switch(boss)
             {
+                case "gor":
                 case "fat":
                 case "rfs":
                 case "rvn":

@@ -50,7 +50,7 @@ public class KissScene extends Sprite
     private var cancelbtn:Button;
     private var command:MainInterface=new MainCommand();
     private var character:Image;
-    private var delay:DelayedCall;
+    private var delaycall:DelayedCall;
     public function KissScene()
     {
 
@@ -123,10 +123,12 @@ public class KissScene extends Sprite
         timer=new Timer(1000,playtimes);
         timer.addEventListener(TimerEvent.TIMER_COMPLETE,onTimeOut);
         timer.start();
+
         var tween:Tween=new Tween(this,1);
-        tween.repeatCount=1000;
+        tween.repeatDelay=0.5;
+        tween.repeatCount=20;
         tween.onUpdate=doShowHearts;
-        //tween.onComplete=onTimeout;
+        //tween.onComplete=doShowHearts;
         Starling.juggler.add(tween);
     }
     private function doShowHearts():void
@@ -165,11 +167,11 @@ public class KissScene extends Sprite
         var base_sprite:Sprite=ViewsContainer.baseSprite;
         base_sprite.dispatchEventWith(DatingScene.COMMIT,false,_data);
 
-        delay=new DelayedCall(onUpdateComplete,1);
-        Starling.juggler.add(delay);
+        delaycall=new DelayedCall(onUpdateComplete,1);
+        Starling.juggler.add(delaycall);
     }
     private function onUpdateComplete():void{
-        Starling.juggler.remove(delay);
+        Starling.juggler.remove(delaycall);
         initCancelHandle();
     }
     private function initBubble():void
@@ -214,7 +216,7 @@ public class KissScene extends Sprite
     }
     private function clearHeartView():void
     {
-
+        Starling.juggler.remove(delaycall);
         Starling.juggler.removeTweens(this);
         heartView.removeFromParent(true);
 

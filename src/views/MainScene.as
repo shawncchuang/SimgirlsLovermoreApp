@@ -29,6 +29,7 @@ import data.Config;
 import events.SceneEvent;
 
 import flash.media.SoundChannel;
+import flash.system.System;
 
 import model.SaveGame;
 import model.Scenes;
@@ -89,7 +90,11 @@ public class MainScene extends Scenes
         sceneDelay=new DelayedCall(onSceneComplete,0.5);
         Starling.juggler.add(sceneDelay);
 
+        var freeMemory:Number=Number((System.freeMemory/ Math.pow(1024,2)).toFixed(2));
+        var totalMemory:Number=Math.floor(System.totalMemory/Math.pow(1024,2));
 
+        DebugTrace.msg("MainScene freeMemory:"+freeMemory+" MB");
+        DebugTrace.msg("MainScene totalMemory:"+totalMemory+" MB");
 
     }
     private function onSceneComplete():void{
@@ -304,8 +309,6 @@ public class MainScene extends Scenes
          var atlas:TextureAtlas = new TextureAtlas(texture, xml);
          */
 
-
-
         var textureClass:Class=AssetEmbeds;
 
         var texture:Texture=Assets.getTexture("SignsSheet");
@@ -319,11 +322,22 @@ public class MainScene extends Scenes
             var signTexture:Texture = atlas.getTexture(p);
             var signImg:Image=new Image(signTexture);
             signImg.useHandCursor=true;
-            signImg.name=p
+            signImg.name=p;
             signImg.x=stagepoints[p][0]-signImg.width/2;
             signImg.y=stagepoints[p][1]-signImg.height;
             signImg.addEventListener(TouchEvent.TOUCH,doTouchSign);
             container.addChild(signImg);
+        }
+
+        var dangersRe:Object=checkDangerSign();
+        if(dangersRe.enabled){
+
+            var dangerTexture:Texture= Assets.getTexture("DangerSign");
+            var dangerImg:Image = new Image(dangerTexture);
+            dangerImg.x=dangersRe.pos.x;
+            dangerImg.y=dangersRe.pos.y-Math.floor(signImg.height/2);
+            container.addChild(dangerImg);
+
         }
 
 
@@ -533,6 +547,28 @@ public class MainScene extends Scenes
     private function onAlertClosedCallback():void{
 
         waving.visible=true;
+
+    }
+    private function checkDangerSign():Object{
+
+        var re:Object={"enabled":false,pos:new Point()};
+        var dangersScenes:Object=Config.dangersScenes;
+        var flox:FloxInterface=new FloxCommand();
+        var current_switch:String=flox.getSaveData("current_switch");
+        var switchID:String=current_switch.split("|")[0];
+        var switchs:Object=flox.getSyetemData("switchs");
+        var dangerDate:String=switchs[switchID].date+"|"+switchs[switchID].time;
+        var current_date:String=flox.getSaveData("date");
+        if(dangersScenes[current_switch] && current_date==dangerDate){
+
+            var loc:String=dangersScenes[current_switch];
+            var points:Object=Config.stagepoints;
+            var pos:Array=points[loc];
+            re.enabled=true;
+            re.pos=new Point(pos[0],pos[1]);
+        }
+
+        return re;
 
     }
 

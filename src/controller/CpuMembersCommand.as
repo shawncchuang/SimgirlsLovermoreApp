@@ -200,11 +200,11 @@ public class CpuMembersCommand implements CpuMembersInterface
                         }
                     }else{
                         //practice
-                        if(id=="t11_0") {
+                        if(id=="t9_0") {
                             //leader
-                            se = Math.floor(love * 0.8);
+                            se = Math.floor(love * 0.7);
                         }else{
-                            se=Math.floor(love*0.5);
+                            se=Math.floor(love*0.4);
                         }
 
                     }

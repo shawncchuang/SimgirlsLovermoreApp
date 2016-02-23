@@ -87,7 +87,7 @@ package controller
 		{
 			//sound=src;
 			sound_manager=new AssetManager();
-			sound_manager.verbose=true
+			sound_manager.verbose=true;
 			sound_manager.enqueue(SoundEmbed);
 			sound_manager.loadQueue(onLoadedSoundEnquese);
 			
@@ -105,7 +105,7 @@ package controller
 			//music=src;
 			music_manager=new AssetManager();
 			
-			music_manager.verbose=true
+			music_manager.verbose=true;
 			music_manager.enqueue(MusicEmbed);
 			music_manager.loadQueue(onLoadedMusicEnquese);
 			

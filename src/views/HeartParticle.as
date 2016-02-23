@@ -9,8 +9,10 @@ package views
 	import controller.ParticleInterface;
 	
 	import model.SaveGame;
-	
-	import starling.animation.Transitions;
+
+import starling.animation.DelayedCall;
+
+import starling.animation.Transitions;
 	import starling.animation.Tween;
 	import starling.core.Starling;
 	import starling.display.Image;
@@ -38,6 +40,7 @@ package views
 		private var _target:Sprite;
 		private var loveTxt:TextField;
 		private var loveSprite:Sprite;
+		private var delaycall:DelayedCall;
 		public function HeartParticle()
 		{
 			var lv:uint=uint(Math.random()*4)+1;
@@ -75,40 +78,44 @@ package views
 			//DebugTrace.msg("HeartParticle posX:"+posX+" ; posY:"+posY);
 			tween.animate("x",posX);
 			tween.animate("y",posY);
-			tween.onComplete=onHeartStaied
+			tween.onComplete=onHeartStaied;
 			Starling.juggler.add(tween);
 			heart.addEventListener(TouchEvent.TOUCH,doTouchedHeart);
 		}
 		private function onHeartStaied():void
 		{
 			Starling.juggler.removeTweens(heart);
-			
-			
-			calcelTween=new Tween(heart,0.5);
-			calcelTween.delay=0.5;
-			calcelTween.onComplete=onReadyCanceled;
-			Starling.juggler.add(calcelTween);
+
+//			var filter:FilterInterface=new FilterManager();
+//			filter.setSource(heartImg);
+//			filter.changeColor(0x999999);
+
+//			calcelTween=new Tween(heart,1.5);
+//			calcelTween.onComplete=onHeartCanceled;
+//			Starling.juggler.add(calcelTween);
+
+			delaycall=new DelayedCall(onHeartCanceled,0.5);
+			Starling.juggler.add(delaycall);
 			
 		}
 	 
 		private function onReadyCanceled():void
 		{
 		    
-			var filter:FilterInterface=new FilterManager();
-			filter.setSource(heartImg);
-			filter.changeColor(0x999999);
-			
-			calcelTween=new Tween(heart,0.2);
-			calcelTween.animate("alpha",0);
-			calcelTween.onComplete=onHeartCanceled
-			Starling.juggler.add(calcelTween);
+//			var filter:FilterInterface=new FilterManager();
+//			filter.setSource(heartImg);
+//			filter.changeColor(0x999999);
+
+//			calcelTween=new Tween(heart,0.2);
+//			calcelTween.animate("alpha",0);
+//			calcelTween.onComplete=onHeartCanceled;
+//			Starling.juggler.add(calcelTween);
 			
 		}
 		private function onHeartCanceled():void
 		{
-			
-			
-			Starling.juggler.removeTweens(heart);
+			Starling.juggler.remove(delaycall);
+			//Starling.juggler.removeTweens(heart);
 			heart.removeEventListener(TouchEvent.TOUCH,doTouchedHeart);
 			heart.removeFromParent(true);
 		}

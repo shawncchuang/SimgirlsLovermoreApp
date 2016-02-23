@@ -13,6 +13,7 @@ import controller.SceneCommnad;
 import controller.SceneInterface;
 
 import data.Config;
+import data.DataContainer;
 
 import events.GameEvent;
 import events.SceneEvent;
@@ -50,6 +51,7 @@ public class ArenaScene extends Scenes
     private var reInt:Number;
     private var raningScene:MovieClip;
     private var player:Sprite;
+
     public function ArenaScene()
     {
         /*var pointbgTexture:Texture=Assets.getTexture("PointsBg");
@@ -99,7 +101,6 @@ public class ArenaScene extends Scenes
     {
         DebugTrace.msg("ArenaScene.doTopViewDispatch removed:"+e.data.removed);
         var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
-        var savegame:SaveGame=FloxCommand.savegame;
         var _data:Object=new Object();
         var gameinfo:Sprite=ViewsContainer.gameinfo;
         var evtObj:Object = new Object();
@@ -167,9 +168,6 @@ public class ArenaScene extends Scenes
     private function onStoryComplete():void{
 
         var current_switch:String=flox.getSaveData("current_switch");
-        var twinflame:String=flox.getSaveData("twinflame");
-        var fullname:String=Config.fullnames[twinflame];
-        var mediaplayer:MediaInterface=new MediaCommand();
         var gameEvent:GameEvent = SimgirlsLovemore.gameEvent;
 
         DebugTrace.msg("ArenaScene.doTopViewDispatch story_complete current_switch="+current_switch);
@@ -178,17 +176,18 @@ public class ArenaScene extends Scenes
             case "s261|off":
                 //s261 off-> s262 on
                 command.removeShortcuts();
-                mediaplayer.PlayVideo("End001",player,new Point(1024,768),null,30,"mp4",onEnd001VideoComplete);
+                videoPlayerhandler("End001",onEnd001VideoComplete);
                 break;
             case "s262|off":
-                mediaplayer.PlayVideo("End003/"+fullname,player,new Point(1024,768),null,30,"mp4",onEnd003VideoComplete);
+                videoPlayerhandler("End003",onEnd003VideoComplete);
                 break;
             case "s270|off":
-                mediaplayer.PlayVideo("End005/"+fullname,player,new Point(1024,768),null,30,"mp4",onEnd005VideoComplete);
+                DataContainer.EndingReplay=true;
+                videoPlayerhandler("End002",onReplayEnd002VideoComplete);
                 break;
             case "s1418|off":
-                mediaplayer.PlayVideo("prms_rfs",player,new Point(1024,768),null,30,"mp4",onS1418Complete);
-                break
+                videoPlayerhandler("prms_rfs",onS1418Complete);
+                break;
             case "s9999|off":
                 this.removeFromParent(true);
 
@@ -209,14 +208,7 @@ public class ArenaScene extends Scenes
 
         DebugTrace.msg("ArenaScene.onEnd001VideoComplete");
 
-
-        var twinflame:String=flox.getSaveData("twinflame");
-        var fullname:String=Config.fullnames[twinflame];
-
-        var mediaplayer:MediaInterface=new MediaCommand();
-        mediaplayer.PlayVideo("End002/"+fullname,player,new Point(1024,768),null,30,"mp4",onEnd002VideoComplete);
-
-
+        videoPlayerhandler("End002",onEnd002VideoComplete);
     }
     private function onEnd002VideoComplete():void{
 
@@ -235,8 +227,17 @@ public class ArenaScene extends Scenes
 
         DebugTrace.msg("ArenaScene.onEnd003VideoComplete");
 
-        var mediaplayer:MediaInterface=new MediaCommand();
-        mediaplayer.PlayVideo("End004",player,new Point(1024,768),null,30,"mp4",onEnd004VideoComplete);
+
+        if(!DataContainer.EndingReplay){
+
+            videoPlayerhandler("End004",onEnd004VideoComplete);
+
+        }else{
+
+            videoPlayerhandler("End005",onEnd005VideoComplete);
+
+        }
+
     }
     private function onEnd004VideoComplete():void{
 
@@ -249,15 +250,27 @@ public class ArenaScene extends Scenes
         command.sceneDispatch(SceneEvent.CHANGED,_data);
 
     }
+
+    private function onReplayEnd002VideoComplete():void{
+
+
+        DebugTrace.msg("ArenaScene.onEnd002VideoComplete");
+        player.removeFromParent(true);
+        Starling.juggler.removeTweens(this);
+
+        flox.save("current_switch","s262|on");
+        var _data:Object=new Object();
+        _data.name= "SSCCArenaScene";
+        command.sceneDispatch(SceneEvent.CHANGED,_data);
+
+    }
+
+
     private function onEnd005VideoComplete():void{
-
-
         this.removeFromParent(true);
         var gameEvent:GameEvent = SimgirlsLovemore.gameEvent;
         gameEvent._name = "restart-game";
         gameEvent.displayHandler();
-
-
     }
 
     private function onS1418Complete():void{
@@ -289,5 +302,23 @@ public class ArenaScene extends Scenes
         _data.name= "MainScene";
         command.sceneDispatch(SceneEvent.CHANGED,_data);
     }
+    private function videoPlayerhandler(src:String,callback:Function):void{
+
+
+        var twinflame:String=flox.getSaveData("twinflame");
+        var fullname:String=Config.fullnames[twinflame];
+        var mediaplayer:MediaInterface=new MediaCommand();
+        if(src=="End002" || src=="End003" || src=="End005"){
+            var _src:String=src+"/"+fullname;
+        }else{
+            _src=src;
+
+        }
+        DebugTrace.msg("ArenaScene.videoPlayerhandler _src="+_src);
+
+        mediaplayer.PlayVideo(_src,player,new Point(1024,768),null,30,"mp4",callback);
+
+    }
+
 }
 }

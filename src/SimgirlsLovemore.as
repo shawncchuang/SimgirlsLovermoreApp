@@ -544,6 +544,7 @@ public class SimgirlsLovemore extends MovieClip
 		this.stage.removeEventListener(flash.events.Event.ACTIVATE, stage_activeHadnler);
 		_starling.start();
 		mapActivedHander("active");
+
 	}
 	private function mapActivedHander(status:String):void{
 
@@ -565,6 +566,8 @@ public class SimgirlsLovemore extends MovieClip
 	{
 		removeEventListener(flash.events.Event.ADDED_TO_STAGE, onAddedToStage);
 		start();
+
+
 	}
 	private function onContextCreated(e:starling.events.Event):void
 	{

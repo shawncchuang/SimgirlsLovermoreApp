@@ -376,7 +376,7 @@ public class ChatScene extends Sprite
                 var datingScene:Sprite=ViewsContainer.baseSprite;
                 datingScene.dispatchEventWith(DatingScene.COMMIT,false,_data);
 
-                break
+                break;
             case "1,1,1":
                 // item 100~-100
 

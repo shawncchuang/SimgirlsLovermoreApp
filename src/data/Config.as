@@ -356,6 +356,7 @@ public class Config
     public static var ch_bossModels:Array=["mia","bdh","vdk","akr","chef","shn"];
     public static var bossSkill:Object={
         "gor":{
+            "pos":new Point(180,988),
             "lv1":{"skillID":"gor_s_0",
                 "label":"GrabPunch",
                 "type":"hop",
@@ -1363,6 +1364,9 @@ public class Config
         "qa-s006b":[10,-10]
 
     }
+
+    public static  var dangersScenes:Object={"s023|on":"Restaurant","s033|on":"SportsBar","s036|on":"PrivateIsland","s042|on":"Casino",
+        "s046|on":"LovemoreMansion","s260|on":"SSCCArena"};
 
     public function Config()
     {

@@ -86,8 +86,8 @@ public class SceneCommnad implements SceneInterface
     private var bgSrc:String="";
     public static var disable_story:Boolean=false;
     private var delaycall:DelayedCall;
-
-
+    private var XAltImag:Image=null;
+    private var storyverify:Array=new Array();
 
     public function set currentSwitch(id:String):void
     {
@@ -225,10 +225,66 @@ public class SceneCommnad implements SceneInterface
     public function start():void
     {
         command.removeShortcuts();
-        if(scene!="CharacterDesignScene")
-            addTouchArea();
-        showChat();
+
+        if(scene!="CharacterDesignScene"){
+            showChat();
+
+            var comcloud:Boolean=chechComCloudIn();
+            var boss:Boolean=checkBossIn();
+            if(storyverify[0] && !comcloud && !XAltImag && !boss){
+                addSkipButton();
+            }
+
+        }
+
+        addTouchArea();
     }
+    private function chechComCloudIn():Boolean{
+
+        var comcloud:Boolean=false;
+        for(var i:uint=0;i<talks.length;i++){
+
+            if(talks[i].indexOf("ComCould")!=-1){
+                comcloud=true;
+                break
+            }
+        }
+        return comcloud;
+    }
+    private function checkBossIn():Boolean{
+        var boss:Boolean=false;
+        var current_switch:String=flox.getSaveData("current_switch");
+        var dangersScenes:Object=Config.dangersScenes;
+        if(dangersScenes[current_switch]){
+            boss=true;
+        }
+        return boss;
+    }
+
+    private function addSkipButton():void{
+
+        var texture:Texture=Assets.getTexture("XAltUp");
+        XAltImag=new Image(texture);
+        XAltImag.x=Starling.current.stage.stageWidth-XAltImag.width-5;
+        XAltImag.y=5;
+        XAltImag.addEventListener(TouchEvent.TOUCH,onSkipTouched);
+        Starling.current.stage.addChild(XAltImag);
+
+    }
+    private function onSkipTouched(e:TouchEvent):void{
+        var BEGAN:Touch = e.getTouch( Starling.current.stage, TouchPhase.BEGAN);
+        if(BEGAN){
+
+
+            var mainstage:Sprite=ViewsContainer.MainScene;
+            mainstage.removeEventListener(TouchEvent.TOUCH,onChatSceneTouched);
+
+            talk_index=talks.indexOf("END")-1;
+            onTouchedScene();
+        }
+
+    }
+
     public function addTouchArea():void
     {
         DebugTrace.msg("SceneCommand.addTouchArea");
@@ -236,19 +292,17 @@ public class SceneCommnad implements SceneInterface
         //Starling.current.stage.addEventListener(TouchEvent.TOUCH,onChatSceneTouched);
         var mainstage:Sprite=ViewsContainer.MainScene;
         mainstage.addEventListener(TouchEvent.TOUCH,onChatSceneTouched);
+
     }
 
     private function onChatSceneTouched(e:TouchEvent):void
     {
-
 
         var BEGAN:Touch = e.getTouch( Starling.current.stage, TouchPhase.BEGAN);
         // var HOVER:Touch = e.getTouch( Starling.current.stage, TouchPhase.HOVER);
         if(BEGAN && BEGAN.target.name !="previousbtn")
         {
             DebugTrace.msg("SceneCommand.onChatSceneTouched talk_index:"+talk_index);
-
-
             onTouchedScene();
         }
 
@@ -273,6 +327,12 @@ public class SceneCommnad implements SceneInterface
         }else{
 
             //finish current part
+
+            try{
+                XAltImag.removeEventListeners();
+                XAltImag.removeFromParent(true);
+            } catch(e:Error){}
+
             current_switch=flox.getSaveData("current_switch");
             DebugTrace.msg("SceneCommand.onTouchedScene [END] current_switch="+current_switch);
             var prv_talks:String= talks[end_index-1];
@@ -801,6 +861,11 @@ public class SceneCommnad implements SceneInterface
 
         DebugTrace.msg("SceneCommand.disableAll hitArea");
 
+        try{
+            XAltImag.removeEventListeners();
+            XAltImag.removeFromParent(true);
+        }catch (e:Error){}
+
 
         var mainstage:Sprite=ViewsContainer.MainScene;
         mainstage.removeEventListeners();
@@ -970,9 +1035,10 @@ public class SceneCommnad implements SceneInterface
             type="";
         }
 
+        storyverify=new Array(verify,date_verify,time_verify,local_verify,battle_verify);
+        DebugTrace.msg("SceneCommand.switchGateway storyverify ->"+storyverify);
 
-        DebugTrace.msg("SceneCommand.switchGateway return ->"+[verify,date_verify,time_verify,local_verify,battle_verify]);
-        return new Array(verify,date_verify,time_verify,local_verify,battle_verify)
+        return storyverify;
     }
     private function verifyRankingBattle():Boolean{
 

@@ -520,7 +520,7 @@ public class MainCommand implements MainInterface {
         //DebugTrace.msg("playBackgroudSound:"+src);
         //var assets:Assets=new Assets();
         //assets.initMusicAssetsManager(src);
-
+        bgsound_channel=new SoundChannel();
         var mute:Boolean = SoundController.Mute;
         if(mute){
             st=new SoundTransform(0,0);
@@ -983,10 +983,10 @@ public class MainCommand implements MainInterface {
         //love+=(Math.floor(pts/5));
         //playerlove+=(Math.floor(pts/5));
         //love player:80% ,dating target:100% , other characters:55%
-        var adjust:Number=Number((((Math.random()*3))/100).toFixed(2));
-        var loveReward:Number=Math.floor(rewards.mood /5);
-        var CloveReward:Number=Math.floor(loveReward*(0.55+adjust));
-        var PloveReward:Number=Math.floor(loveReward*(0.8+adjust));
+        var adjust:Number=Math.floor(Math.random()*3);
+        var loveReward:Number=Math.floor(rewards.mood /35);
+        var CloveReward:Number=Math.floor(loveReward);
+        var PloveReward:Number=Math.floor(loveReward);
         love+=loveReward;
         playerlove+=PloveReward;
 

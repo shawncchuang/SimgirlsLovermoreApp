@@ -21,6 +21,7 @@ import events.SceneEvent;
 import events.TopViewEvent;
 
 import flash.display.StageQuality;
+import flash.system.System;
 
 import flash.ui.ContextMenu;
 
@@ -79,7 +80,6 @@ public class Game extends Sprite
 		Starling.current.nativeStage.quality=StageQuality.LOW;
 
 		MonsterDebugger.initialize(this);
-
 		//Starling.current.stage.stageWidth=1024;
 		//Starling.current.stage.stageHeight=768;
 
