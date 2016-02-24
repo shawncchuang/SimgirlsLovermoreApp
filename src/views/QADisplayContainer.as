@@ -33,7 +33,15 @@ import flash.display.MovieClip;
 			"nickname":"nickname",
 			"airplane-phonenumber":"phonenumber",
 			"battle-s003-1":"Yes&No",
-			"qa-s006b":"s006b"
+			"qa-s006b":"s006b",
+			"qa-s008":"s008",
+			"qa-s010":"s010",
+			"qa-s025":"s025",
+			"qa-s034-1":"s034-1",
+			"qa-s034-2":"s034-2",
+			"qa-s050":"s050",
+			"qa-s1427-1-1":"s1427-1-1",
+			"qa-s1427-1-2":"s1427-1-2"
 		}
 		public function QADisplayContainer(label:String,callback:Function=null)
 		{
@@ -53,10 +61,13 @@ import flash.display.MovieClip;
 			{
 				case "nickname":
 					templete.submit.addEventListener(MouseEvent.CLICK,doNickNameSubmit);
-					break
-
-				case "airplane-phonenumber":
-				case "qa-s006b":
+					break;
+				default:
+//				case "airplane-phonenumber":
+//				case "qa-s006b":
+//				case "qa-s008":
+//				case "qa-s010":
+//				case "qa-s025":
 						for(var i:uint=0;i<2;i++){
 							var target:MovieClip=templete["btn"+(i+1)];
 							target.buttonMode=true;

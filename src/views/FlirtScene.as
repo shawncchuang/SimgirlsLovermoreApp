@@ -211,7 +211,7 @@ public class FlirtScene extends Sprite{
         var value_data:Object=new Object();
         var love:Object=new Object();
         if(selType==dating_card){
-            reward*=3;
+            //reward*=3;
             switch (dating_card){
                 case "love":
 

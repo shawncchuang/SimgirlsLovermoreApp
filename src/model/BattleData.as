@@ -784,7 +784,7 @@ public class BattleData
         //DebugTrace.msg("BattleData.checkBattleResult win_wadge1="+win_wadge1+" ; win_wadge2="+win_wadge2);
         var team1_rate:Number=Number((team1SE*(1+win_wadge1/100)).toFixed(2));
         var team2_rate:Number=Number((team2SE*(1+win_wadge2/100)).toFixed(2));
-        DebugTrace.msg("BattleData.checkBattleResult team1_rate="+team1_rate+" ; team2_rate="+team2_rate);
+        //DebugTrace.msg("BattleData.checkBattleResult team1_rate="+team1_rate+" ; team2_rate="+team2_rate);
         if(team1_rate>team2_rate){
 
             win_index=0;

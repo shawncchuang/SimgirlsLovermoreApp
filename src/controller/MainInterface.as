@@ -67,6 +67,7 @@ public interface MainInterface
     function checkRanking():Number
 
     function checkSceneEnable(scene:String):Boolean
+    function checkMemory():void
 
 }
 }

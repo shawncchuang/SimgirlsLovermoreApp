@@ -924,6 +924,7 @@ public class Character extends MovieClip
                         skillAni=swfloader.getSWFChild(_gender) as MovieClip;
                     }
 
+
                 }
 
                 try
@@ -1641,7 +1642,9 @@ public class Character extends MovieClip
             {
                 //speciale super skill
                 skillSWf=gender+power.skillID;
-
+            }
+            if(ch_name=="xns" && power.skillID=="s0"){
+                skillSWf=gender+power.skillID+"SP";
             }
 
             DebugTrace.msg("Character.setupSkillAni skillSWf="+skillSWf+", name="+name);
@@ -1670,6 +1673,9 @@ public class Character extends MovieClip
         }
         if(ele!=""){
             ele= ele.toUpperCase()+"_";
+        }
+        if(power.skillID=="s0"){
+            ele="S_";
         }
 
         skillAni.gotoAndStop(ele+"RDY");

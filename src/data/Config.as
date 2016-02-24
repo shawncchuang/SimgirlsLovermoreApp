@@ -176,13 +176,13 @@ public class Config
 
     }
 
-    public static var CriminalRanking:Array=[{"rank":"S","se":3200,"rewards":32000},
-        {"rank":"A","se":2400,"rewards":24000},
-        {"rank":"B","se":1600,"rewards":16000},
-        {"rank":"C","se":800,"rewards":8000},
-        {"rank":"D","se":400,"rewards":4000},
-        {"rank":"E","se":200,"rewards":2000},
-        {"rank":"F","se":100,"rewards":1000}];
+    public static var CriminalRanking:Array=[{"rank":"S","se":3200,"rewards":6500},
+        {"rank":"A","se":2400,"rewards":4900},
+        {"rank":"B","se":1600,"rewards":3300},
+        {"rank":"C","se":800,"rewards":1700},
+        {"rank":"D","se":400,"rewards":900},
+        {"rank":"E","se":200,"rewards":500},
+        {"rank":"F","se":100,"rewards":300}];
 
     public static function set AccType(value:String):void
     {
@@ -1361,8 +1361,15 @@ public class Config
     public static var goodevails:Object={
 
         "airplane-phonenumber":[-10,10],
-        "qa-s006b":[10,-10]
-
+        "qa-s006b":[10,-10],
+        "qa-s008":[10,-10],
+        "qa-s010":[10,-10],
+        "qa-s025":[-10,10],
+        "qa-s034-1":[-10,10],
+        "qa-s034-2":[-10,10],
+        "qa-s050":[10,-10],
+        "qa-s1427-1-1":[10,-10],
+        "qa-s1427-1-2":[-10,10]
     }
 
     public static  var dangersScenes:Object={"s023|on":"Restaurant","s033|on":"SportsBar","s036|on":"PrivateIsland","s042|on":"Casino",

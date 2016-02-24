@@ -32,6 +32,7 @@ import flash.media.Sound;
 import flash.media.SoundChannel;
 import flash.media.SoundTransform;
 import flash.net.URLRequest;
+import flash.system.System;
 import flash.text.TextField;
 import flash.text.TextFormat;
 
@@ -540,10 +541,7 @@ public class MainCommand implements MainInterface {
             bgSoundTween=new TweenMax(bgsound_channel,0.5,{volume:0,onComplete:stopBgSound});
         }
         function stopBgSound():void{
-            try{
-                bgsound_channel.stop();
-            }
-            catch (e:Error){};
+
             TweenMax.killTweensOf(bgSoundTween);
 
         }
@@ -1453,13 +1451,13 @@ public class MainCommand implements MainInterface {
         var rate:Number = 1+Number(((Math.floor(Math.random() * 100)+1) / 100).toFixed(2));
         switch (scene) {
             case "NightclubScene":
-                income = Math.floor(image / 2 * rate);
+                income = Math.floor((image / 2 * rate) * 0.3);
                 break
             case "BankScene":
-                income = Math.floor(int / 1.5 * rate);
+                income = Math.floor((int / 1.5 * rate) * 0.3);
                 break
             case "ThemedParkScene":
-                income = 200+Math.floor(love / 2 * rate);
+                income = 200+Math.floor((love / 2 * rate) * 0.3);
                 break
         }
         //income*=2;
@@ -2658,6 +2656,29 @@ public class MainCommand implements MainInterface {
 
 
     }
+
+    public function checkMemory():void{
+
+        System.gc();
+        var freeMemory:Number=Number((System.freeMemory/ Math.pow(1024,2)).toFixed(2));
+        var totalMemory:Number=Math.floor(System.totalMemory/Math.pow(1024,2));
+
+        DebugTrace.msg("MainCommmand.checkMemory freeMemory:"+freeMemory+" MB");
+        DebugTrace.msg("MainCommmand.checkMemory totalMemory:"+totalMemory+" MB");
+
+
+        if(!DataContainer.popupMessage && freeMemory<5){
+
+            var msg:String="Warning! The Free Memory of the application is running critically low.\nPlease save your progress and restart the application.";
+
+            var popup:PopupManager=new PopupManager();
+            popup.attr="memory";
+            popup.msg=msg;
+            popup.init();
+        }
+
+    }
+
 
 }
 }

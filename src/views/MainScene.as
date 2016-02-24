@@ -90,11 +90,7 @@ public class MainScene extends Scenes
         sceneDelay=new DelayedCall(onSceneComplete,0.5);
         Starling.juggler.add(sceneDelay);
 
-        var freeMemory:Number=Number((System.freeMemory/ Math.pow(1024,2)).toFixed(2));
-        var totalMemory:Number=Math.floor(System.totalMemory/Math.pow(1024,2));
-
-        DebugTrace.msg("MainScene freeMemory:"+freeMemory+" MB");
-        DebugTrace.msg("MainScene totalMemory:"+totalMemory+" MB");
+        command.checkMemory();
 
     }
     private function onSceneComplete():void{
@@ -571,7 +567,6 @@ public class MainScene extends Scenes
         return re;
 
     }
-
 
 }
 }

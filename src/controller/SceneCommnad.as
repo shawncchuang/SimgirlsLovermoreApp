@@ -225,9 +225,8 @@ public class SceneCommnad implements SceneInterface
     public function start():void
     {
         command.removeShortcuts();
-
+        showChat();
         if(scene!="CharacterDesignScene"){
-            showChat();
 
             var comcloud:Boolean=chechComCloudIn();
             var boss:Boolean=checkBossIn();
