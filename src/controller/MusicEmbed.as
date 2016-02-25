@@ -28,7 +28,7 @@ package controller
         public static const saoMusic:Class;
 
 		[Embed(source="../../media/textures/music/characters/ceil.mp3")]
-		public static const ceiMusic:Class;
+		public static const ceilMusic:Class;
 
 		[Embed(source="../../media/textures/music/characters/dea.mp3")]
 		public static const deaMusic:Class;

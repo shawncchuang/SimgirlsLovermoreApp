@@ -234,10 +234,10 @@ public class Character extends MovieClip
 
         ch_name=formation[index].name;
         membermc=new MovieClip();
-        var player_id:String="player"+formation[index].combat;
-        id=player_id;
-        membermc.name=id;
-        membersEffect[player_id]="";
+        var playerId:String="player"+formation[index].combat;
+        id=playerId;
+        membermc.name=playerId;
+        membersEffect[playerId]="";
         gender=flox.getSaveData("avatar").gender;
         if(ch_name=="player")
         {

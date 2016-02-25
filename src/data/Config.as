@@ -176,13 +176,13 @@ public class Config
 
     }
 
-    public static var CriminalRanking:Array=[{"rank":"S","se":3200,"rewards":6500},
-        {"rank":"A","se":2400,"rewards":4900},
-        {"rank":"B","se":1600,"rewards":3300},
-        {"rank":"C","se":800,"rewards":1700},
-        {"rank":"D","se":400,"rewards":900},
-        {"rank":"E","se":200,"rewards":500},
-        {"rank":"F","se":100,"rewards":300}];
+    public static var CriminalRanking:Array=[{"rank":"S","se":3200,"rewards":6700},
+        {"rank":"A","se":2400,"rewards":5100},
+        {"rank":"B","se":1600,"rewards":3500},
+        {"rank":"C","se":800,"rewards":1900},
+        {"rank":"D","se":400,"rewards":1100},
+        {"rank":"E","se":200,"rewards":700},
+        {"rank":"F","se":100,"rewards":500}];
 
     public static function set AccType(value:String):void
     {
@@ -539,68 +539,68 @@ public class Config
             },
             "command_dating":{
                 lenus:{
-                    "Kiss":2,
+                    "Kiss":1,
                     "Flirt":4,
-                    "TakePhoto":2,
+                    "TakePhoto":1,
                     "Chat":6,
                     "Date":1,
-                    "Give":2
+                    "Give":1
                 },
                 sirena:{
-                    "Kiss":2,
+                    "Kiss":1,
                     "Flirt":4,
-                    "TakePhoto":2,
+                    "TakePhoto":1,
                     "Chat":6,
                     "Date":1,
-                    "Give":2
+                    "Give":1
                 },
                 dea:{
-                    "Kiss":2,
+                    "Kiss":1,
                     "Flirt":4,
-                    "TakePhoto":2,
+                    "TakePhoto":1,
                     "Chat":6,
                     "Date":1,
-                    "Give":2
+                    "Give":1
                 },
                 zack:{
-                    "Kiss":2,
+                    "Kiss":1,
                     "Flirt":4,
-                    "TakePhoto":2,
+                    "TakePhoto":1,
                     "Chat":6,
                     "Date":1,
-                    "Give":2
+                    "Give":1
                 },
                 sao:{
-                    "Kiss":2,
+                    "Kiss":1,
                     "Flirt":4,
-                    "TakePhoto":2,
+                    "TakePhoto":1,
                     "Chat":6,
                     "Date":1,
-                    "Give":2
+                    "Give":1
                 },
                 klr:{
-                    "Kiss":2,
+                    "Kiss":1,
                     "Flirt":4,
-                    "TakePhoto":2,
+                    "TakePhoto":1,
                     "Chat":6,
                     "Date":1,
-                    "Give":2
+                    "Give":1
                 },
                 tomoru:{
-                    "Kiss":2,
+                    "Kiss":1,
                     "Flirt":4,
-                    "TakePhoto":2,
+                    "TakePhoto":1,
                     "Chat":6,
                     "Date":1,
-                    "Give":2
+                    "Give":1
                 },
                 ceil:{
-                    "Kiss":2,
+                    "Kiss":1,
                     "Flirt":4,
-                    "TakePhoto":2,
+                    "TakePhoto":1,
                     "Chat":6,
                     "Date":1,
-                    "Give":2
+                    "Give":1
                 }
             },
             "owned_assets":{

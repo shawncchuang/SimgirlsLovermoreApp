@@ -38,7 +38,7 @@ public class TakePhotos extends Sprite{
     private var flox:FloxInterface=new FloxCommand();
     private var command:MainInterface=new MainCommand();
     private var style:String;
-
+    private var cancelImg:Image;
     public function TakePhotos() {
 
 
@@ -71,7 +71,7 @@ public class TakePhotos extends Sprite{
     {
         //cancel button
 
-        command.addedCancelButton(this,doCancelAssetesForm);
+        cancelImg=command.addedCancelButton(this,doCancelAssetesForm);
 
     }
     private function doCancelAssetesForm():void
@@ -119,7 +119,7 @@ public class TakePhotos extends Sprite{
 
     private function updateReward():void{
 
-
+        cancelImg.removeFromParent(true);
 
         var dating:String=DataContainer.currentDating;
         var moodObj:Object=flox.getSaveData("mood");
@@ -143,7 +143,7 @@ public class TakePhotos extends Sprite{
         rewardData.attr="mood";
         rewardData.values= "MOOD "+_mood;
         command.displayUpdateValue(this,rewardData);
-        command.updateRelationship();
+        //command.updateRelationship();
 
 
         var _data:Object=new Object();

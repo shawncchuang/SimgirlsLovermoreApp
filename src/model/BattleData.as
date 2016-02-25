@@ -32,6 +32,7 @@ public class BattleData
     public static function rangeMatrix(power:Object):Array
     {
         var matrix:Array=new Array();
+        surviveCombats=new Array();
         from=power.from;
         var skillID:String=power.skillID;
         var area:Number=power.area;
@@ -40,7 +41,7 @@ public class BattleData
             1:[3,4,5],
             2:[0,1,2,3,4,5]
         }
-        if(skillID.charAt(0)=="n")
+        if(skillID=="n0" || skillID=="n1" || skillID=="n2" || skillID=="n3")
         {
             //assist
             if(from=="player")
@@ -127,6 +128,7 @@ public class BattleData
         }
         //for
         //matrix=areaMatrix[aera];
+        DebugTrace.msg("BattleData.rangeMatrix matrix:"+JSON.stringify(matrix));
         return matrix
     }
     /*public function skillCard(member:Member,skill:Object):Object
@@ -502,11 +504,12 @@ public class BattleData
         for(var j:uint=0;j<playerteam.length;j++)
         {
 
-            var power:Object=playerteam[j].power
+            var power:Object=playerteam[j].power;
             //DebugTrace.msg("BattleData.checkPlayerSurvive playerteam["+j+"]="+JSON.stringify(power));
             if(power.se>0)
             {
-                surviveCombats.push(power.combat)
+
+                surviveCombats.push(power.combat);
             }
             //if
         }

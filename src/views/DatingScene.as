@@ -98,7 +98,7 @@ public class DatingScene extends Scenes {
     private var talkingAlert:Sprite;
     private var takephoto:Sprite=null;
     private var cloudlist:Array;
-
+    private var cancelImg:Image;
     public function DatingScene() {
 
         base_sprite = new Sprite();
@@ -246,7 +246,10 @@ public class DatingScene extends Scenes {
 
                 startPaticles();
                 drawcom.updatePieChart(e.data.mood);
-                //command.updateRelationship();
+
+                delayCall=new DelayedCall(doCallUpdateRelationship,2);
+                Starling.juggler.add(delayCall);
+
                 break;
             case "Kiss":
 
@@ -264,6 +267,11 @@ public class DatingScene extends Scenes {
         }
 
     }
+    private function doCallUpdateRelationship():void{
+
+        Starling.juggler.remove(delayCall);
+        command.updateRelationship();
+    }
 
     private function mainProfileTransForm():void {
 
@@ -280,8 +288,8 @@ public class DatingScene extends Scenes {
 
     private function updateAssetsForm():void {
 
+        cancelImg.removeFromParent(true);
         panelbase.removeFromParent(true);
-
         excerptbox.removeFromParent(true);
         addExcertbox();
 
@@ -315,7 +323,7 @@ public class DatingScene extends Scenes {
         //gameEvent.displayHandler();
 
         //added cancel button
-        command.addedCancelButton(this, doCancelAssetesForm);
+        cancelImg= command.addedCancelButton(this, doCancelAssetesForm);
 
 
     }
@@ -329,6 +337,7 @@ public class DatingScene extends Scenes {
     }
 
     private function doCancelAssetesForm():void {
+
 
         excerptbox.removeFromParent(true);
         panelbase.removeFromParent(true);
@@ -1282,14 +1291,10 @@ public class DatingScene extends Scenes {
             case "TakePhoto":
                 limitRel = relationship_level["friend-Min"];
                 limitMood = mood_level["pleased-Min"];
-                //relPass=true;
-                //moodPass=true;
                 break;
             case "Date":
                 limitRel = relationship_level["closefriend-Min"];
                 limitMood = mood_level["delighted-Min"];
-                //relPass=true;
-                //moodPass=true;
                 break;
             case "Kiss":
                 limitRel = relationship_level["datingpartner-Min"];
@@ -1321,6 +1326,8 @@ public class DatingScene extends Scenes {
             }
 
         }
+        //************
+        //moodPass = true;
 
         var attr:Object = new Object();
         attr.x = 640;
@@ -1443,10 +1450,9 @@ public class DatingScene extends Scenes {
 
             delayCall=new DelayedCall(onReadyShowPreciousPhoto,3);
             Starling.juggler.add(delayCall);
-        }
-        else{
+        }else{
 
-            delayCall=new DelayedCall(onDowngradeRelationship,2);
+            delayCall=new DelayedCall(onDowngradeRelationship,3);
             Starling.juggler.add(delayCall);
 
 
@@ -1460,6 +1466,9 @@ public class DatingScene extends Scenes {
         try{
             heartView.removeFromParent(true);
         }catch (e:Error){}
+
+        this.dispatchEventWith(DatingScene.NONE_RELATIONSHIP);
+
 
     }
 
@@ -1573,6 +1582,8 @@ public class DatingScene extends Scenes {
         if(screenview)
             screenview.removeFromParent(true);
 
+        this.dispatchEventWith(DatingScene.NONE_RELATIONSHIP);
+
         startDatingTwinStory();
 
     }
@@ -1602,7 +1613,20 @@ public class DatingScene extends Scenes {
 
     }
     private function doNoneRelationshipHandle(e:Event):void{
-        screenview.removeFromParent(true);
+
+        try{
+            screenview.removeFromParent(true);
+        }catch(e:Error){}
+
+
+        if(com=="TakeFlirtReward" || com=="TakePhotosReward" || com=="SendGift"){
+
+            var _data:Object=new Object();
+            _data.name=DataContainer.currentLabel;
+            command.sceneDispatch(SceneEvent.CHANGED,_data);
+        }
+
+
     }
     private var screenview:Quad;
     private function disabledSreenTouch():void{

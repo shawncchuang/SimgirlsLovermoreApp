@@ -68,6 +68,7 @@ public class DataContainer
 
     private static var popup:Boolean;
     private static var ending_replay:Boolean;
+    private static var rewardsObj:Object;
     public static function set AssetsId(ids:Array):void
     {
         assets_id=ids;
@@ -922,6 +923,13 @@ public class DataContainer
     }
     public static function get EndingReplay():Boolean{
         return ending_replay;
+    }
+
+    public static function set rewards(re:Object):void{
+        rewardsObj=re;
+    }
+    public static function get rewards():Object{
+        return rewardsObj;
     }
 }
 }

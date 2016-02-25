@@ -1,6 +1,5 @@
 package controller {
 
-import com.greensock.TimelineLite;
 import com.greensock.TweenLite;
 import com.greensock.TweenMax;
 import com.greensock.events.LoaderEvent;
@@ -8,18 +7,9 @@ import com.greensock.loading.LoaderMax;
 import com.greensock.loading.SWFLoader;
 import com.shortybmc.data.parser.CSV;
 
-import data.Config;
 import data.StoryDAO;
-
-import flash.desktop.NativeApplication;
-
-
-
 import flash.display.Bitmap;
-import flash.display.BitmapData;
 import flash.display.MovieClip;
-import flash.display.Stage;
-import flash.display.StageQuality;
 
 import flash.desktop.NativeApplication;
 import flash.events.ContextMenuEvent;
@@ -27,41 +17,29 @@ import flash.events.Event;
 import flash.events.MouseEvent;
 import flash.geom.Point;
 import flash.geom.Rectangle;
-import flash.globalization.CurrencyFormatter;
-import flash.media.Sound;
 import flash.media.SoundChannel;
 import flash.media.SoundTransform;
 import flash.net.URLRequest;
 import flash.system.System;
-import flash.text.TextField;
 import flash.text.TextFormat;
-
-import controller.Assets;
+import flash.ui.ContextMenu;
+import flash.ui.ContextMenuItem;
+import flash.display.StageQuality;
+import flash.ui.Keyboard;
 
 import data.Config;
 import data.DataContainer;
-
 import events.GameEvent;
 import events.SceneEvent;
 import events.TopViewEvent;
 
-import flash.ui.ContextMenu;
-import flash.ui.ContextMenuItem;
-import flash.display.StageQuality;
-import flash.display.Stage;
-import flash.ui.Keyboard;
+
 
 import model.BattleData;
-
 import model.SaveGame;
-import model.SystemData;
-
 import services.LoaderRequest;
 
 import starling.animation.DelayedCall;
-
-import starling.animation.Juggler;
-
 import starling.animation.Transitions;
 import starling.animation.Tween;
 import starling.core.Starling;
@@ -72,20 +50,14 @@ import starling.events.KeyboardEvent;
 import starling.events.Touch;
 import starling.events.TouchEvent;
 import starling.events.TouchPhase;
-
 import starling.textures.Texture;
-import starling.utils.AssetManager;
 
-import starling.utils.Color;
 
 import utils.DebugTrace;
 import utils.DrawManager;
-
 import utils.ViewsContainer;
-
 import views.AlertMessage;
 import views.CommandCloud;
-
 import views.FloxManagerView;
 import views.DatingScene;
 import views.PopupManager;
@@ -105,7 +77,7 @@ public class MainCommand implements MainInterface {
     private var schedule_csv:CSV;
     private var main_story:CSV;
     private var loading:flash.display.MovieClip;
-    private static var bgsound_channel:SoundChannel;
+    private static var bgsound_channel:SoundChannel=new SoundChannel();
     private var sound_channel:SoundChannel;
     private var switch_verify:Boolean = false;
     //private var fliter:FilterInterface=new FilterManager();
@@ -278,14 +250,8 @@ public class MainCommand implements MainInterface {
     private function doColseAttention(e:MouseEvent):void {
 
 
-        //TweenMax.to(e.target,0.5,{alpha:0,onComplete:onAttentionFadout});
         LoaderMax.getLoader("attention").unload();
 
-
-        function onAttentionFadout():void {
-            LoaderMax.getLoader("attention").unload();
-
-        }
     }
     public function showSaveError(attr:String,data:*,msg:String):void{
 
@@ -521,7 +487,7 @@ public class MainCommand implements MainInterface {
         //DebugTrace.msg("playBackgroudSound:"+src);
         //var assets:Assets=new Assets();
         //assets.initMusicAssetsManager(src);
-        bgsound_channel=new SoundChannel();
+        //bgsound_channel=new SoundChannel();
         var mute:Boolean = SoundController.Mute;
         if(mute){
             st=new SoundTransform(0,0);
@@ -541,6 +507,7 @@ public class MainCommand implements MainInterface {
             bgSoundTween=new TweenMax(bgsound_channel,0.5,{volume:0,onComplete:stopBgSound});
         }
         function stopBgSound():void{
+
 
             TweenMax.killTweensOf(bgSoundTween);
 
@@ -955,6 +922,8 @@ public class MainCommand implements MainInterface {
         var playerlove:Number=loveObj.player;
         //var mood:Number = flox.getSaveData("mood")[dating];
         var pts:Number = Number(ptsObj[dating]);
+
+        rewards=DataContainer.rewards;
         DebugTrace.msg("MianCommnand.updateRelationship rewards="+JSON.stringify(rewards));
 
         pts += Math.floor(rewards.mood / 15);
@@ -1039,6 +1008,7 @@ public class MainCommand implements MainInterface {
 
 
         var rel:String = DataContainer.getRelationship(pts, dating);
+        var datingScene:Sprite=ViewsContainer.baseSprite;
         if(relObj[dating]!=rel){
             //relationship changed
 
@@ -1055,16 +1025,16 @@ public class MainCommand implements MainInterface {
                 //raise
                 _data.change_type="raise";
             }
-            var datingScene:Sprite=ViewsContainer.baseSprite;
+
             if(oldLv != currentLv){
 
                 datingScene.dispatchEventWith(DatingScene.CHANGED_RELATIONSHIP,false,_data);
             }else{
                 datingScene.dispatchEventWith(DatingScene.NONE_RELATIONSHIP);
-                //var current_scene:Sprite=ViewsContainer.currentScene;
-                //current_scene.dispatchEventWith("ALERT_ENABLE_TOUCHSCREEN");
             }
 
+        }else{
+            datingScene.dispatchEventWith(DatingScene.NONE_RELATIONSHIP);
         }
 
 
@@ -1158,6 +1128,7 @@ public class MainCommand implements MainInterface {
 
         }
         //for
+        DataContainer.rewards=rewards;
 
     }
 
@@ -2659,7 +2630,7 @@ public class MainCommand implements MainInterface {
 
     public function checkMemory():void{
 
-        System.gc();
+
         var freeMemory:Number=Number((System.freeMemory/ Math.pow(1024,2)).toFixed(2));
         var totalMemory:Number=Math.floor(System.totalMemory/Math.pow(1024,2));
 
@@ -2667,7 +2638,7 @@ public class MainCommand implements MainInterface {
         DebugTrace.msg("MainCommmand.checkMemory totalMemory:"+totalMemory+" MB");
 
 
-        if(!DataContainer.popupMessage && freeMemory<5){
+        if(!DataContainer.popupMessage && freeMemory<3){
 
             var msg:String="Warning! The Free Memory of the application is running critically low.\nPlease save your progress and restart the application.";
 

@@ -191,21 +191,23 @@ public class MemebersCommand implements MembersInterface
                 var power:Object=new Object();
                 power=formation[j];
                 var member:Member=new Member();
-                member.name="player"+formation[j].combat;
+                var id:String="player"+formation[j].combat;
+                //member.name=id;
                 //member.mouseChildren=false;
                 member.initPlayer(j);
                 power.se=seObj[formation[j].name];
                 power.seMax=seObj[formation[j].name];
-                power.id="player"+formation[j].combat;
+                power.id=id;
                 power.speeded="false";
                 power.shielded="false";
                 power.skillID="";
+                power.from="player";
                 power.reincarnation="false";
                 member.updatePower(power);
                 member.x=playerpos[j].x+member.width;
                 member.y=playerpos[j].y+40;
                 battlescene.addChild(member);
-                battleteam[member.name]=member;
+                battleteam[id]=member;
                 playerteam.push(member);
                 var battleEvt:BattleEvent=member.memberEvt;
                 battleEvt.act="ready";
@@ -503,7 +505,6 @@ public class MemebersCommand implements MembersInterface
 
             if(cpu_gameover || player_gameover){
                 battleover=true;
-                command.stopBackgroudSound();
                 BattleScene.battleEvt.battleEndHandle();
 
                 var battleEvt:BattleEvent;
@@ -519,7 +520,7 @@ public class MemebersCommand implements MembersInterface
                 }
 
 
-                delaycall=new DelayedCall(onBattleComplete,1,[toScene]);
+                delaycall=new DelayedCall(onBattleComplete,2,[toScene]);
                 Starling.juggler.add(delaycall);
 
 
@@ -527,6 +528,7 @@ public class MemebersCommand implements MembersInterface
 
             function onBattleComplete(toScene:String):void{
 
+                command.stopBackgroudSound();
                 Starling.juggler.remove(delaycall);
 
                 var gameEvt:GameEvent=SimgirlsLovemore.gameEvent;

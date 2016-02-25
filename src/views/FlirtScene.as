@@ -112,7 +112,7 @@ public class FlirtScene extends Sprite{
             cards.push(card);
             var tween:Tween=new Tween(card,0.4,Transitions.EASE_IN_OUT);
             tween.animate("x",posX);
-            tween.delay=(i*0.4);
+            tween.delay=(i*0.2);
             Starling.juggler.add(tween);
             card.useHandCursor=true;
             card.addEventListener(TouchEvent.TOUCH, onTouchCardHandle);
@@ -231,7 +231,7 @@ public class FlirtScene extends Sprite{
                     value_data.values= rewardStr+",MOOD +"+reward;
                     command.displayUpdateValue(this,value_data);
 
-                    break
+                    break;
 
                 default:
                     love=null;
@@ -244,7 +244,7 @@ public class FlirtScene extends Sprite{
                     command.displayUpdateValue(this,value_data);
                     break
             }
-            command.updateRelationship();
+
 
             var _data:Object=new Object();
             _data.com="TakeFlirtReward";
@@ -252,22 +252,22 @@ public class FlirtScene extends Sprite{
             _data.love=love;
             var base_sprite:Sprite=ViewsContainer.baseSprite;
             base_sprite.dispatchEventWith(DatingScene.COMMIT,false,_data);
+
+            //command.updateRelationship();
+
+            delayCall=new DelayedCall(doClearTweenHandler,3);
+            Starling.juggler.add(delayCall);
         }else{
 
-//            love=null;
-//
-//            moodObj[dating]+=reward;
-//            flox.save("mood",moodObj);
-//
-//            value_data.attr="mood";
-//            value_data.values= "MOOD +"+reward;
-//            command.displayUpdateValue(this,value_data);
+            delayCall=new DelayedCall(doCancelHandler,3);
+            Starling.juggler.add(delayCall);
 
         }
 
-        delayCall=new DelayedCall(doCancelHandler,3);
-        Starling.juggler.add(delayCall);
-
+    }
+    private function doClearTweenHandler():void{
+        Starling.juggler.remove(delayCall);
+        clearTweens();
     }
 
     private function doCancelHandler():void

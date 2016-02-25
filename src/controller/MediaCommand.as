@@ -101,6 +101,7 @@ public class MediaCommand implements MediaInterface
            e.target.removeEventListener(flash.events.Event.ENTER_FRAME, onActComplete);
            e.target.stop();
            //TweenMax.to(act,0.5,{alpha:0,onComplete:onCompleteSwfFadeOut})
+
            onCompleteSwfFadeOut();
 
        }
@@ -110,16 +111,21 @@ public class MediaCommand implements MediaInterface
         e.target.removeEventListener(flash.events.Event.ENTER_FRAME, onActComplete);
         e.target.removeEventListener(flash.events.Event.REMOVED_FROM_STAGE, onLoaderRemoved);
         e.target.stop();
-        onCompleteSwfFadeOut();
+        try{
+
+            LoaderMax.getLoader(_id).unload();
+
+            Starling.current.nativeOverlay.removeChild(act);
+
+        }catch(error){
+            DebugTrace.msg("MediaCommand.onCompleteSwfFadeOut LoaderMax upload Null");
+        }
 
     }
     private function onCompleteSwfFadeOut():void{
 
 
-
         try{
-//            var queue:LoaderMax=ViewsContainer.loaderQueue;
-//            queue.empty(true,true);
 
             LoaderMax.getLoader(_id).unload();
 

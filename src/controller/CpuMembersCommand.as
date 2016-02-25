@@ -1079,7 +1079,7 @@ public class CpuMembersCommand implements CpuMembersInterface
 
         var battledata:BattleData=new BattleData();
         player_team=battledata.checkPlayerTeam();
-        var survivePlayer:Array=BattleData.checkPlayerSurvive();
+        //var survivePlayer:Array=BattleData.checkPlayerSurvive();
         //var _targetlist:Array=new Array();
         var memberscom:MembersInterface=new MemebersCommand();
         var cputeam:Array=memberscom.getCpuTeam();
