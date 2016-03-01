@@ -911,8 +911,7 @@ public class MainCommand implements MainInterface {
     public function updateRelationship():void {
 
         var relMax:Number = 9999;
-        var loveMax:Number=9999;
-
+        var datingScene:Sprite=ViewsContainer.baseSprite;
         var flox:FloxInterface = new FloxCommand();
         var dating:String = DataContainer.currentDating;
         var relObj:Object = flox.getSaveData("rel");
@@ -944,9 +943,57 @@ public class MainCommand implements MainInterface {
             }
 
         }
-
         ptsObj[dating] = pts;
+        flox.save("pts",ptsObj);
 
+        datingBonus(loveObj);
+
+        var rel:String = DataContainer.getRelationship(pts, dating);
+        var oldRel:String=relObj[dating];
+
+        relObj[dating] = rel;
+        flox.save("rel",relObj);
+
+        if(oldRel!=rel){
+            //relationship changed
+
+            var oldLv:Number= Config.relHierarchy.indexOf(oldRel);
+            var currentLv:Number=Config.relHierarchy.indexOf(rel);
+            DebugTrace.msg("MainCommand.updateRelationship changed oldLv="+oldLv+", currentLv="+currentLv);
+            var _data:Object=new Object();
+            if(oldLv>currentLv){
+                //reduce
+                _data.change_type="reduce";
+
+            }
+            if(oldLv<currentLv){
+                //raise
+                _data.change_type="raise";
+            }
+
+            if(oldLv != currentLv){
+
+                datingScene.dispatchEventWith(DatingScene.CHANGED_RELATIONSHIP,false,_data);
+            }else{
+                datingScene.dispatchEventWith(DatingScene.NONE_RELATIONSHIP);
+            }
+
+        }else{
+            datingScene.dispatchEventWith(DatingScene.NONE_RELATIONSHIP);
+        }
+
+
+        // DebugTrace.msg("MainCommand.updateRelationship _data="+JSON.stringify(_data));
+
+
+    }
+    private function datingBonus(loveObj:Object):void{
+
+        var flox:FloxInterface = new FloxCommand();
+        var loveMax:Number=9999;
+        var dating:String = DataContainer.currentDating;
+        var love:Number=loveObj[dating];
+        var playerlove:Number=loveObj.player;
         //love+=(Math.floor(pts/5));
         //playerlove+=(Math.floor(pts/5));
         //love player:80% ,dating target:100% , other characters:55%
@@ -995,59 +1042,12 @@ public class MainCommand implements MainInterface {
             }
         }
 
-        //DebugTrace.msg("MainCommand.updateRelationship pts=" + JSON.stringify(ptsObj));
-        //DebugTrace.msg("MainCommand.updateRelationship love=" + JSON.stringify(loveObj));
 
 
-//        if(love<seObj[dating]){
-//            seObj[dating]=loveObj[dating];
-//        }
-//        if(playerlove<seObj.player){
-//            seObj.player=loveObj.player;
-//        }
-
-
-        var rel:String = DataContainer.getRelationship(pts, dating);
-        var datingScene:Sprite=ViewsContainer.baseSprite;
-        if(relObj[dating]!=rel){
-            //relationship changed
-
-            var oldLv:Number= Config.relHierarchy.indexOf(relObj[dating]);
-            var currentLv:Number=Config.relHierarchy.indexOf(rel);
-            DebugTrace.msg("MainCommand.updateRelationship changed oldLv="+oldLv+", currentLv="+currentLv);
-            var _data:Object=new Object();
-            if(oldLv>currentLv){
-                //reduce
-                _data.change_type="reduce";
-
-            }
-            if(oldLv<currentLv){
-                //raise
-                _data.change_type="raise";
-            }
-
-            if(oldLv != currentLv){
-
-                datingScene.dispatchEventWith(DatingScene.CHANGED_RELATIONSHIP,false,_data);
-            }else{
-                datingScene.dispatchEventWith(DatingScene.NONE_RELATIONSHIP);
-            }
-
-        }else{
-            datingScene.dispatchEventWith(DatingScene.NONE_RELATIONSHIP);
-        }
-
-
-        relObj[dating] = rel;
-
-        _data = new Object();
-        _data.rel = relObj;
-        _data.pts = ptsObj;
+        var _data:Object = new Object();
         _data.love= loveObj;
         _data.se=seObj;
         flox.updateSavegame(_data);
-        // DebugTrace.msg("MainCommand.updateRelationship _data="+JSON.stringify(_data));
-
 
     }
 
@@ -1128,7 +1128,7 @@ public class MainCommand implements MainInterface {
 
         }
         //for
-        DataContainer.rewards=rewards;
+        //DataContainer.rewards=rewards;
 
     }
 
@@ -1372,7 +1372,7 @@ public class MainCommand implements MainInterface {
         if(dating!=""){
 
             imageObj[dating] +=reward_img*3;
-            reward_img=reward_img*1.5;
+            reward_img=Math.floor(reward_img*1.5);
         }
 
         imageObj.player += reward_img;
@@ -1380,7 +1380,7 @@ public class MainCommand implements MainInterface {
 
         rewards = new Object();
         rewards.image = reward_img;
-        rewards.cash = cash_pay;
+        //rewards.cash = cash_pay;
 
         //cash += cash_pay;
         //flox.save("cash", cash);
@@ -1419,16 +1419,16 @@ public class MainCommand implements MainInterface {
         var love:Number=flox.getSaveData("love").player;
 
         var income:Number = 0;
-        var rate:Number = 1+Number(((Math.floor(Math.random() * 100)+1) / 100).toFixed(2));
+        var rate: Number = Number(((Math.floor(Math.random() * 100) + 1) / 100));
         switch (scene) {
             case "NightclubScene":
-                income = Math.floor((image / 2 * rate) * 0.3);
+                income = Math.floor((image / 2 * (rate+1)) * 0.3);
                 break
             case "BankScene":
-                income = Math.floor((int / 1.5 * rate) * 0.3);
+                income = Math.floor((int / 1.5 * (rate+1)) * 0.3);
                 break
             case "ThemedParkScene":
-                income = 200+Math.floor((love / 2 * rate) * 0.3);
+                income = 200+Math.floor((love / 2 * (rate+1)) * 0.3);
                 break
         }
         //income*=2;
@@ -1479,7 +1479,7 @@ public class MainCommand implements MainInterface {
         // cash += cash_pay;
         if(dating!=""){
             intObj[dating]+=reward_int*3;
-            reward_int=reward_int*1.5;
+            reward_int=Math.floor(reward_int*1.5);
         }
         intObj.player += reward_int;
 
@@ -1488,7 +1488,7 @@ public class MainCommand implements MainInterface {
 
         rewards = new Object();
         rewards.int = reward_int;
-        rewards.cash = cash_pay;
+        //rewards.cash = cash_pay;
 
         var gameinfo:Sprite = ViewsContainer.gameinfo;
         gameinfo.dispatchEventWith("UPDATE_INFO");
@@ -1593,7 +1593,7 @@ public class MainCommand implements MainInterface {
 
         if(attr=="FreeRest"){
 
-            resetdely=new DelayedCall(onRestTimeOut,1.5);
+            resetdely=new DelayedCall(onRestTimeOut,2);
             Starling.juggler.add(resetdely);
 
         }
@@ -2174,7 +2174,7 @@ public class MainCommand implements MainInterface {
 
 
                         if(_month=="Jul" && character=="tomoru"){
-                            if(_date>=2 && _date<=4){
+                            if(_date>=13 && _date<=15){
 
                                 likes=0;
                             }
@@ -2640,7 +2640,7 @@ public class MainCommand implements MainInterface {
 
         if(!DataContainer.popupMessage && freeMemory<3){
 
-            var msg:String="Warning! The Free Memory of the application is running critically low.\nPlease save your progress and restart the application.";
+            var msg:String="Free memory is running low. If the game is experiencing significant slowdowns please save your progress and restart the game.";
 
             var popup:PopupManager=new PopupManager();
             popup.attr="memory";

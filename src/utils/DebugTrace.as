@@ -12,7 +12,6 @@ public class DebugTrace
 			//var flox:FloxInterface=new FloxCommand();
 			//flox.showlog(value);
 
-
 			//MonsterDebugger.trace(ViewsContainer.MainStage,value);
 
 		}

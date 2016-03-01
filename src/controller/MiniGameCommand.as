@@ -551,7 +551,7 @@ public class MiniGameCommand implements MiniGameInterface
 
 			TweenMax.killDelayedCallsTo(onStopMessing);
 			enemy.act.gotoAndStop("mace_stop");
-			mace_sch.stop();
+			tryStopSoundEffect(mace_sch);
 
 			enemy.act.body.addEventListener(Event.ENTER_FRAME,onStopBodyEnterFrame);
 
@@ -816,14 +816,17 @@ public class MiniGameCommand implements MiniGameInterface
 			var current_switch:String=flox.getSaveData("current_switch");
 			if(game_result=="victory"){
 				if(current_switch=="s042|off"){flox.save("current_switch","s042b|on");}
-
+				_data.name="CasinoScene";
+				_data.from="minigame";
+				command.sceneDispatch(SceneEvent.CHANGED,_data);
 			}else{
 				//game over
-				flox.save("current_switch","s9999|on");
+				//flox.save("current_switch","s9999|on");
+
+				_data.name="TraceGame";
+				command.sceneDispatch(SceneEvent.CHANGED,_data);
+
 			}
-			_data.name="CasinoScene";
-			_data.from="minigame";
-			command.sceneDispatch(SceneEvent.CHANGED,_data);
 
 	    }else{
 

@@ -104,10 +104,13 @@ import starling.animation.Tween;
 					command.sceneDispatch(SceneEvent.CHANGED,_data);
 					break;
 				case "Research":
-
-                    command.doLearn();
-
-					break
+						delayCall=new DelayedCall(delayDoResearch,1.5);
+						Starling.juggler.add(delayCall);
+						function delayDoResearch():void{
+							Starling.juggler.remove(delayCall);
+							command.doLearn();
+						}
+					break;
 				case "ani_complete":
 
 

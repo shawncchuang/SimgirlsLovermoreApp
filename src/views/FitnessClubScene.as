@@ -17,6 +17,8 @@ import events.TopViewEvent;
 import model.SaveGame;
 import model.Scenes;
 
+import starling.animation.DelayedCall;
+
 import starling.animation.Tween;
 import starling.core.Starling;
 import starling.display.Button;
@@ -38,6 +40,7 @@ public class FitnessClubScene extends Scenes
     private var cash_pay:Number;
     //image return 5-10;
     private var image_re:Number;
+    private var delayCall:DelayedCall;
     public function FitnessClubScene()
     {
         /*var pointbgTexture:Texture=Assets.getTexture("PointsBg");
@@ -89,16 +92,22 @@ public class FitnessClubScene extends Scenes
                 gameEvent.displayHandler();
                 _data.name="MainScene";
                 command.sceneDispatch(SceneEvent.CHANGED,_data);
-                break
+                break;
             case "Train":
-                command.doTrain();
+                delayCall=new DelayedCall(delayDoTrain,1.5);
+                Starling.juggler.add(delayCall);
 
-                break
+            function delayDoTrain():void {
+                Starling.juggler.remove(delayCall);
+                command.doTrain();
+            }
+
+                break;
             case "ani_complete":
 
                 command.showCommandValues(this,"Research",e.data.rewards);
                 init();
-                break
+                break;
             case "ani_complete_clear_character":
                 command.clearCopyPixel();
                 break

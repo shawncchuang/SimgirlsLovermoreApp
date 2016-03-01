@@ -630,12 +630,13 @@ public class CpuMembersCommand implements CpuMembersInterface
                 var bossSkill:Object=Config.bossSkill;
                 var boss:String=power.ch_name;
                 var jewel:Number=Number(power.jewel.split("|")[0]);
+                var level:String="";
                 switch(boss)
                 {
                     case "gor":
                         if(jewel<=2)
                         {
-                            var level:String="lv1";
+                            level="lv1";
                         }
                         else
                         {
@@ -650,12 +651,9 @@ public class CpuMembersCommand implements CpuMembersInterface
                         if(jewel<=2)
                         {
                             level="lv1";
-                        }
-                        if(jewel>=3 && jewel<=4)
-                        {
+                        }else if(jewel==3){
                             level="lv2";
-                        }
-                        if(jewel==5)
+                        }else
                         {
                             level="lv3";
                         }
@@ -664,18 +662,16 @@ public class CpuMembersCommand implements CpuMembersInterface
                         if(jewel<=2)
                         {
                             level="lv1";
-                        }
-                        if(jewel>=3 && jewel<=4)
+                        }else if(jewel==3)
                         {
                             level="lv2";
-                        }
-                        if(jewel==5)
+                        }else
                         {
                             level="lv3";
                         }
                         break;
                     case "rvn":
-                        if(jewel<=3)
+                        if(jewel<=2)
                         {
                             level="lv1";
                         }else
@@ -685,15 +681,12 @@ public class CpuMembersCommand implements CpuMembersInterface
 
                         break;
                     case "nhk":
-                        if(jewel==2)
+                        if(jewel<=2)
                         {
                             level="lv1";
-                        }
-                        if(jewel==3)
-                        {
-                            level="lv2";
-                        }
-                        if(jewel>=4 && jewel<=5)
+                        }else if(jewel==3) {
+                            level = "lv2";
+                        }else
                         {
                             level="lv3";
                         }

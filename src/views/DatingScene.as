@@ -181,10 +181,9 @@ public class DatingScene extends Scenes {
             case "Give":
                 initAssetsForm();
 
-                break
+                break;
             case "Leave":
                 datingTopic.visible = false;
-
 
                 var _data:Object = new Object();
                 _data.name = DataContainer.currentScene;
@@ -231,7 +230,6 @@ public class DatingScene extends Scenes {
             case "TakePhoto":
 
                 character.removeFromParent(true);
-
                 actTransform("../swf/photos.swf",onPhotosActComplete);
 
                 break;
@@ -242,7 +240,6 @@ public class DatingScene extends Scenes {
                     playerloveTxt.text = String(e.data.love.player);
                     chloveTxt.text = String(e.data.love.dating);
                 }
-
 
                 startPaticles();
                 drawcom.updatePieChart(e.data.mood);
@@ -259,6 +256,7 @@ public class DatingScene extends Scenes {
                 break;
             case "Reward_Mood":
                 reward_mood = e.data.mood;
+
                 updateMood();
 
                 break
@@ -370,10 +368,13 @@ public class DatingScene extends Scenes {
         var dating:String = DataContainer.currentDating;
         var moodObj:Object = flox.getSaveData("mood");
         //DebugTrace.msg("DatingScene.updateMood mood data:" + JSON.stringify(moodObj));
-        mood = moodObj[dating];
-        mood = mood + reward_mood;
+        mood = moodObj[dating] + reward_mood;
         moodObj[dating] = mood;
         flox.save("mood", moodObj);
+
+        var rewards:Object=new Object();
+        rewards.mood=reward_mood;
+        DataContainer.rewards=rewards;
 
         drawcom.updatePieChart(mood);
 
@@ -389,9 +390,14 @@ public class DatingScene extends Scenes {
         value_data.values = "MOOD " + mood_value;
         command.displayUpdateValue(this, value_data);
 
-        command.updateRelationship();
 
+        delayCall= new DelayedCall(doUpdateRelationship,2);
+        Starling.juggler.add(delayCall);
 
+        function doUpdateRelationship():void{
+            Starling.juggler.remove(delayCall);
+            command.updateRelationship();
+        }
 
     }
 
@@ -1122,6 +1128,7 @@ public class DatingScene extends Scenes {
             //lose dating
             chats = talking.n;
             dateBubble();
+            command.addedCancelButton(this, doCancelDating);
         }
         //if
 
@@ -1132,7 +1139,7 @@ public class DatingScene extends Scenes {
         var index:Number = Math.floor(Math.random() * chats.length);
         chat = chats[index];
         initBubble();
-        command.addedCancelButton(this, doCancelDating);
+
 
     }
 
@@ -1260,6 +1267,7 @@ public class DatingScene extends Scenes {
         _data.values = "MOOD +" + reward_mood;
         //command.displayUpdateValue(this, _data);
 
+        command.addedCancelButton(this, doCancelDating);
 
     }
 
@@ -1273,7 +1281,8 @@ public class DatingScene extends Scenes {
         var dating:String = DataContainer.currentDating;
         var relationship_level:Object=flox.getSyetemData("relationship_level");
         var mood_level:Object=flox.getSyetemData("mood_level");
-        var pts:Number = flox.getSaveData("pts")[dating];
+        var ptsObj:Object=flox.getSaveData("pts");
+        var pts:Number = ptsObj[dating];
         DebugTrace.msg("DatingScene.specificChecking com=" + com + " , mood=" + mood + " , pts=" + pts);
         switch (com) {
             case "Chat":
@@ -1594,7 +1603,7 @@ public class DatingScene extends Scenes {
         var rel:Object=flox.getSaveData("rel");
         var current_rel:String=rel[dating];
         var datingtwin:Object=flox.getSaveData("datingtwin");
-
+        var _data:Object = new Object();
         if(twinflame==dating){
             if(datingtwin[current_rel]){
                 var twinstory:Object=datingtwin[current_rel];
@@ -1604,11 +1613,16 @@ public class DatingScene extends Scenes {
                     var id:String=twinstory.id;
                     DataContainer.DatingTwinID=id;
 
-                    var _data:Object = new Object();
+
                     _data.name="DatingTwinScene";
                     command.sceneDispatch(SceneEvent.CHANGED, _data);
                 }
             }
+        }else{
+
+            _data.name="DatingScene";
+            command.sceneDispatch(SceneEvent.CHANGED, _data);
+
         }
 
     }
@@ -1619,12 +1633,12 @@ public class DatingScene extends Scenes {
         }catch(e:Error){}
 
 
-        if(com=="TakeFlirtReward" || com=="TakePhotosReward" || com=="SendGift"){
+        //if(com=="TakeFlirtReward" || com=="TakePhotosReward" || com=="SendGift" || com=="Reward_Mood"){
 
             var _data:Object=new Object();
             _data.name=DataContainer.currentLabel;
             command.sceneDispatch(SceneEvent.CHANGED,_data);
-        }
+        //}
 
 
     }

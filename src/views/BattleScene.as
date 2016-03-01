@@ -1544,7 +1544,7 @@ public class BattleScene extends Sprite
 		//hptsbar.y=367;
 		menubg.y=450;
 		profile.alpha=0;
-		TweenMax.to(starttab.btn,0.5,{y:709});
+
 		TweenMax.to(battlescene,1,{y:stageDeY,onComplete:onSceneAlready});
 		TweenMax.to(menuscene,1,{y:354});
 
@@ -1557,7 +1557,7 @@ public class BattleScene extends Sprite
 
 		fighting=false;
 		starttab.wall.visible=false;
-
+		TweenMax.to(starttab.btn,2,{y:709});
 
 
 		memberscom.nextRound();

@@ -101,7 +101,7 @@ public class ChatScene extends Sprite
     private function setResult(re:Number):void
     {
         result=re;
-        var _relist:Array=new Array(0,1,2);
+        var _relist:Array=[0,1,2];
 
         for(var i:uint=0;i<bingoMax;i++)
         {
@@ -112,7 +112,7 @@ public class ChatScene extends Sprite
             }
             else
             {
-                var index:Number=uint(Math.random()*_relist.length);
+                var index:Number=Math.floor(Math.random()*_relist.length);
                 relist.push(_relist[index]);
                 var new_relist:Array=_relist.splice(index);
                 new_relist.shift();
@@ -409,7 +409,8 @@ public class ChatScene extends Sprite
             default:
                 //no bingo talking
                 var trashtalkings:Array=flox.getSyetemData("trashtalking");
-                sentence=trashtalkings[Math.floor(Math.random()*trashtalkings.length)];
+                var talkingIndex:Number=Math.floor(Math.random()*trashtalkings.length);
+                sentence=trashtalkings[talkingIndex];
 
                 break
         }
@@ -438,7 +439,7 @@ public class ChatScene extends Sprite
         chatTxt.y=110;
         addChild(chatTxt);
 
-        initCancelHandle();
+        //initCancelHandle();
 
     }
     private function praseSceneRating(ratinglv:Number):String
@@ -459,26 +460,9 @@ public class ChatScene extends Sprite
         }
         //for
         sceneslist.sortOn("likes",Array.NUMERIC);
-        /*for(var i:uint=0;i<sceneslist.length;i++)
-         {
-         DebugTrace.msg("ChatScene.praseSceneRating sceneslikes:"+JSON.stringify(sceneslist[i]));
 
-         }
-         //for*/
         var scene_index:uint=uint(sceneslist.length*ratinglv/100)-1;
-        /*for(scene in datinglikes)
-         {
 
-         var like:Number=Number(datinglikes[scene]);
-         if(like<=ratinglv+50 && like>=ratinglv-50)
-         {
-         DebugTrace.msg("ChatScene.praseSceneRating scene:"+scene+" ; like:"+like);
-         sceneslist.push(scene);
-         }
-         //if
-         }
-         //for
-         var scene_index:Number=uint(Math.random()*sceneslist.length);*/
         DebugTrace.msg("ChatScene.praseSceneRating scene_index:"+scene_index);
         scene=sceneslist[scene_index].scene;
         return scene
@@ -527,8 +511,6 @@ public class ChatScene extends Sprite
     private function initCancelHandle():void
     {
         //cancel button
-
-
 
         alert = new AlertMessage("", doCancelHandler,"screen_type");
         addChild(alert);
