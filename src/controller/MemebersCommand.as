@@ -430,10 +430,10 @@ public class MemebersCommand implements MembersInterface
             //setxt= membermc.getChildByName("se") as TextField;
             var OnArmour:Boolean=member.getOnArmour();
             if(member.chname=="rfs" && OnArmour){
-                member.power.se=9999;
-                member.power.seMax=9999;
+                member.power.se=99999;
+                member.power.seMax=99999;
                 var cpu_teams:Object=flox.getSaveData("cpu_teams");
-                cpu_teams["t12_0"].seMax=9999;
+                cpu_teams["t12_0"].seMax=99999;
             }
 
             current_se=member.power.se;

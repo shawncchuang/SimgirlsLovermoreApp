@@ -939,7 +939,7 @@ public class MainCommand implements MainInterface {
             var reStep:Object=flox.getSyetemData("relationship_level");
             var closefriendMax:Number=reStep["closefriend-Max"];
             if(pts>closefriendMax){
-                pts=ptsObj[dating];
+                pts=closefriendMax;
             }
 
         }
@@ -1057,7 +1057,7 @@ public class MainCommand implements MainInterface {
         // var pst:Number = flox.getSaveData("pts")[dating];
         var price:Number = sysAssets[item_id].price;
         var rating:Number = searchAssetRating(item_id);
-        var mood:Number = Math.floor(price * Number((rating / 100).toFixed(2))) * 4;
+        var mood:Number = 100+Math.floor((300+(price/2)) * rating / 100);
         DebugTrace.msg("MainCommand.moodCalculator item_id="+item_id+", mood=" + mood + ", price=" + price + ", rating=" + rating);
 
         return mood
@@ -1283,16 +1283,7 @@ public class MainCommand implements MainInterface {
 
         flox.save("ap", ap);
         onFinishAnimated();
-//        if (time == 12) {
-//
-//            onFinishAnimated();
-//
-//        } else {
-//            //over date animation
-//            var mediacom:MediaInterface = new MediaCommand();
-//            mediacom.SWFPlayer("transform", "../swf/sleep.swf", onFinishAnimated);
-//
-//        }
+
 
         var evtObj:Object = new Object();
         var scene:String = DataContainer.currentScene;

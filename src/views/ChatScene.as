@@ -10,6 +10,8 @@ import data.DataContainer;
 
 import events.SceneEvent;
 
+import starling.animation.DelayedCall;
+
 import starling.animation.Transitions;
 import starling.animation.Tween;
 import starling.core.Starling;
@@ -48,6 +50,7 @@ public class ChatScene extends Sprite
 //    private var clickmouse:Sprite;
 //    private var quad:Quad;
     private var alert:Sprite;
+    private var delaycall:DelayedCall;
     public function ChatScene()
     {
         initBingo();
@@ -346,12 +349,13 @@ public class ChatScene extends Sprite
             chatDataAttr="chat_"+dating+"_loc";
         }
         var chat:Object=flox.getSyetemData(chatDataAttr);
-
+        var datingScene:Sprite=ViewsContainer.baseSprite;
+        var _data:Object=new Object();
+        //Chat Formula
         switch(relist.toString())
         {
             case "0,0,0":
                 //mood reward
-
                 var moodObj:Object=flox.getSaveData("mood");
                 var ptsObj:Object=flox.getSaveData("pts");
                 var pts:Number=ptsObj[dating];
@@ -370,10 +374,9 @@ public class ChatScene extends Sprite
                 var _int:Number=flox.getSaveData("int").player;
                 var _img:Number=flox.getSaveData("image").player;
                 var reward:Number=Math.floor((_int+_img)/24);
-                var _data:Object=new Object();
+
                 _data.com="Reward_Mood";
                 _data.mood=reward;
-                var datingScene:Sprite=ViewsContainer.baseSprite;
                 datingScene.dispatchEventWith(DatingScene.COMMIT,false,_data);
 
                 break;
@@ -390,10 +393,10 @@ public class ChatScene extends Sprite
                 ratingLv=DataContainer.assetsRatingLevel(rating);
                 assets=systemAssets[item_id];
                 //DebugTrace.msg("ChatScene.onChatWithPlayer assets:"+JSON.stringify(assets));
-
                 sentence=seretchat[ratingLv];
                 sentence=sentence.split("^brand").join(assets.brand);
                 sentence=sentence.split("^item").join(assets.name);
+                nothinghHappenHandler();
                 break
             case "2,2,2":
                 //secrets
@@ -405,18 +408,20 @@ public class ChatScene extends Sprite
                 var secretsQ:String=sysSecrets[id].q;
                 var ans:String=dating_secrets[index].ans;
                 sentence=secretsQ.split("|~|").join(ans);
+
+                nothinghHappenHandler();
                 break
             default:
                 //no bingo talking
                 var trashtalkings:Array=flox.getSyetemData("trashtalking");
                 var talkingIndex:Number=Math.floor(Math.random()*trashtalkings.length);
                 sentence=trashtalkings[talkingIndex];
-
+                nothinghHappenHandler();
                 break
         }
         //switch
 
-        DebugTrace.msg("ChatScene.onChatWhithPlayer sentence:"+sentence);
+        DebugTrace.msg("ChatScene.onChatWithPlayer sentence:"+sentence);
         bubble.scaleX=0;
         bubble.scaleY=0;
         bubble.alpha=0;
@@ -439,7 +444,10 @@ public class ChatScene extends Sprite
         chatTxt.y=110;
         addChild(chatTxt);
 
-        //initCancelHandle();
+    }
+    private function nothinghHappenHandler():void{
+
+        initCancelHandle();
 
     }
     private function praseSceneRating(ratinglv:Number):String
@@ -476,35 +484,9 @@ public class ChatScene extends Sprite
         var dating:String=DataContainer.currentDating;
         var assets:Array=assets_rating[dating];
 
-//        if(assets.length<1){
-//            unreleased_assets=assets_rating;
-//            assets=unreleased_assets[dating];
-//        }
-
-
         var item_index:Number=Math.floor(Math.random()*assets.length);
         item=assets[item_index];
         DebugTrace.msg("ChatScnen.praseItemRating  item="+JSON.stringify(item));
-//        var rating_index:Number=0;
-
-//        for(var j:uint=0;j<assets.length;j++){
-//
-//            if(assets[j][item.id]!= null){
-//                rating_index=j;
-//                break
-//            }
-//        }
-//        var _assets:Array=assets.splice(rating_index);
-//        _assets.shift();
-//        assets=assets.concat(_assets);
-//        if(!unreleased_assets){
-//            unreleased_assets=new Object();
-//        }
-//        unreleased_assets[dating]=assets;
-
-
-        //flox.save("unreleased_assets",unreleased_assets);
-
 
         return item
     }
@@ -521,6 +503,7 @@ public class ChatScene extends Sprite
 
         alert.removeFromParent(true);
         displayBingo(false,false,false);
+
         Starling.juggler.removeTweens(bingo);
 
         var _data:Object=new Object();
@@ -544,6 +527,8 @@ public class ChatScene extends Sprite
 
         Starling.juggler.removeTweens(bingo);
         Starling.juggler.removeTweens(bubble);
+        bubble.removeFromParent(true);
+        bingo.removeFromParent(true);
 
     }
 

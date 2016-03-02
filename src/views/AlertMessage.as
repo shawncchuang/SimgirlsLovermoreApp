@@ -100,6 +100,7 @@ public class AlertMessage extends Sprite
         clickmouse.x=973;
         clickmouse.y=704;
         addChild(clickmouse);
+        this.useHandCursor=true;
         this.addEventListener(TouchEvent.TOUCH,doCancelHandler);
 
 

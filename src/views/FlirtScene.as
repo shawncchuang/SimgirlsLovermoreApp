@@ -207,15 +207,16 @@ public class FlirtScene extends Sprite{
         var loveObj:Object=flox.getSaveData("love");
         var imgObj:Object=flox.getSaveData("image");
         var image:Number=imgObj.player;
-        var reward:Number=Math.floor(image/2);
+        var reward_mood:Number=Math.floor(image/3);
         var value_data:Object=new Object();
         var love:Object=new Object();
+        //Flirt Formula
         if(selType==dating_card){
             //reward*=3;
             switch (dating_card){
                 case "love":
 
-                    var reward_love:Number=Math.floor(reward/5);
+                    var reward_love:Number=Math.floor(reward_mood/20);
                     loveObj.player+=reward_love;
                     loveObj[dating]+=reward_love;
                     flox.save("love",loveObj);
@@ -223,12 +224,12 @@ public class FlirtScene extends Sprite{
                     love.player= loveObj.player;
                     love.dating= loveObj[dating];
 
-                    moodObj[dating]+=reward;
+                    moodObj[dating]+=reward_mood;
                     flox.save("mood",moodObj);
 
                     var rewardStr:String="+"+reward_love;
                     value_data.attr="love,mood";
-                    value_data.values= rewardStr+",MOOD +"+reward;
+                    value_data.values= rewardStr+",MOOD +"+reward_mood;
                     command.displayUpdateValue(this,value_data);
 
                     break;
@@ -236,24 +237,27 @@ public class FlirtScene extends Sprite{
                 default:
                     love=null;
 
-                    moodObj[dating]+=reward;
+                    moodObj[dating]+=reward_mood;
                     flox.save("mood",moodObj);
 
                     value_data.attr="mood";
-                    value_data.values= "MOOD +"+reward;
+                    value_data.values= "MOOD +"+reward_mood;
                     command.displayUpdateValue(this,value_data);
                     break
             }
 
+            var rewards:Object=new Object();
+            rewards.mood=reward_mood;
+            rewards.love=reward_love;
+            DataContainer.rewards=rewards;
 
             var _data:Object=new Object();
             _data.com="TakeFlirtReward";
             _data.mood= moodObj[dating];
             _data.love=love;
+
             var base_sprite:Sprite=ViewsContainer.baseSprite;
             base_sprite.dispatchEventWith(DatingScene.COMMIT,false,_data);
-
-            //command.updateRelationship();
 
             delayCall=new DelayedCall(doClearTweenHandler,3);
             Starling.juggler.add(delayCall);

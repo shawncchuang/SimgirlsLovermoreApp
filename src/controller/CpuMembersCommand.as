@@ -116,9 +116,9 @@ public class CpuMembersCommand implements CpuMembersInterface
     public function setupFinalBoss():void{
 
         var teams:Object=flox.getSaveData("cpu_teams");
+        var attrs:Object=Config.PlayerAttributes();
         for(var j:uint=0;j<mem_perteam;j++){
-
-            var se:Number=8000;
+            var se:Number=attrs.cpu_teams["t12_0"].seMax;
             if(j>0){
                 se=0;
             }
@@ -712,7 +712,7 @@ public class CpuMembersCommand implements CpuMembersInterface
                 //shield skill
                 skillPower=Math.floor(Math.random()*100)+100;
             }
-            power.power=skillPower;
+            power.power=Math.floor(skillPower/3);
             //trace("CPU power :",JSON.stringify(power));
         }
         //if
@@ -1371,12 +1371,7 @@ public class CpuMembersCommand implements CpuMembersInterface
         flox.save("cpu_teams",cpu_teams);
 
     }
-    public function finalBossAmour():void{
 
-
-
-
-    }
     public function reseatPower():void{
         for(var i:uint=0;i<cputeam.length;i++) {
             var cpu_power:Object = cputeam[i].power;

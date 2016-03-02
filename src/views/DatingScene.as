@@ -125,6 +125,7 @@ public class DatingScene extends Scenes {
         initLayout();
         //var customAssets:CusomAssets=new CusomAssets();
         //customAssets.checkRatingAssets();
+        twinflameWarning();
     }
 
     private function doUpdateDatingInfo(e:Event):void {
@@ -138,7 +139,7 @@ public class DatingScene extends Scenes {
         panelbase.removeFromParent(true);
         excerptbox.removeFromParent(true);
 
-        chat = "Sorry, I can't accept it.We are not that close...";
+        chat = "Sorry, I can't accept it. We are not that close...";
         initBubble();
 
 
@@ -258,9 +259,7 @@ public class DatingScene extends Scenes {
                 reward_mood = e.data.mood;
 
                 updateMood();
-
                 break
-
 
         }
 
@@ -417,10 +416,9 @@ public class DatingScene extends Scenes {
 
     private function updateLovefromKiss():void {
         startPaticles();
+        //Kiss Formula
 
         var dating:String = DataContainer.currentDating;
-
-
         var loveObj:Object = flox.getSaveData("love");
         var moodObj:Object = flox.getSaveData("mood");
 
@@ -435,7 +433,10 @@ public class DatingScene extends Scenes {
         playerloveTxt.text = String(player_love);
         chloveTxt.text = String(ch_love);
 
-        var reward_mood:Number = Math.floor(_love / 2);
+        //var reward_mood:Number = Math.floor(_love / 2);
+        var _int:Number=flox.getSaveData("int").player;
+        var _img:Number=flox.getSaveData("image").player;
+        var reward_mood:Number=Math.floor((_int+_img)/6);
         mood = moodObj[dating];
         mood += reward_mood;
         moodObj[dating] = mood;
@@ -453,11 +454,18 @@ public class DatingScene extends Scenes {
         DebugTrace.msg("DatingScene.updateLovefromKiss reward_mood:"+reward_mood);
         drawcom.updatePieChart(mood);
 
+        var _data:Object=new Object();
+        _data.mood=reward_mood;
+        _data.love=reward_love;
+        DataContainer.rewards=_data;
+
         var value_data:Object = new Object();
         value_data.attr = "love,mood";
         value_data.values = reward_love + ",MOOD +" + reward_mood;
         command.displayUpdateValue(this, value_data);
-        command.updateRelationship();
+
+        delayCall=new DelayedCall(doCallUpdateRelationship,2);
+        Starling.juggler.add(delayCall);
 
 
     }
@@ -1240,7 +1248,7 @@ public class DatingScene extends Scenes {
 
     private function onGiftActComplete():void {
 
-
+        //Gift Formula
         var rating:Number = command.searchAssetRating(item_id);
         chat = DataContainer.getGiftResponse(rating);
         initBubble();
@@ -1373,9 +1381,8 @@ public class DatingScene extends Scenes {
     private function bubbleFadeoutHandle():void {
 
         var tween:Tween = new Tween(bubble, 0.5, Transitions.EASE_IN_OUT);
-        tween.delay = 2;
+        tween.delay = 3;
         tween.scaleTo(0);
-        tween.fadeTo(0);
         tween.moveTo(mainProfile.x, mainProfile.y);
         tween.onComplete = onBubbleFadeoutComplete;
         Starling.juggler.add(tween);
@@ -1635,9 +1642,9 @@ public class DatingScene extends Scenes {
 
         //if(com=="TakeFlirtReward" || com=="TakePhotosReward" || com=="SendGift" || com=="Reward_Mood"){
 
-            var _data:Object=new Object();
-            _data.name=DataContainer.currentLabel;
-            command.sceneDispatch(SceneEvent.CHANGED,_data);
+        var _data:Object=new Object();
+        _data.name=DataContainer.currentLabel;
+        command.sceneDispatch(SceneEvent.CHANGED,_data);
         //}
 
 
@@ -1666,6 +1673,25 @@ public class DatingScene extends Scenes {
 
         character.removeFromParent(true);
         mainProfile.removeFromParent(true);
+
+    }
+    private function twinflameWarning():void{
+        var attr:Object = new Object();
+        attr.x = 640;
+        attr.y = 132;
+
+        var relLv:Object=flox.getSyetemData("relationship_level");
+        var twinflame:String=flox.getSaveData("twinflame");
+        var dating:String=DataContainer.currentDating;
+        var ptsObj:Object=flox.getSaveData("pts");
+        var pts:Number=ptsObj[dating];
+
+        if (!bubble && !twinflame && pts==relLv["closefriend-Max"]) {
+            chat = "I'm not looking to date anyone right now \n" +
+                    "(a special event is required to further improve relationship).";
+            initBubble(attr);
+            bubbleFadeoutHandle();
+        }
 
 
     }

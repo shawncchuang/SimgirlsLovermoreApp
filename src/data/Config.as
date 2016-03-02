@@ -941,7 +941,7 @@ public class Config
                 t9_6 : {"seMax":"","se":100} ,
                 t9_7 : {"seMax":"","se":100},
 
-                t10_0 :{"seMax":1000,"se":1000},
+                t10_0 :{"seMax":2000,"se":2000},
                 t10_1 : {"seMax":0,"se":0},
                 t10_2 : {"seMax":0,"se":0},
                 t10_3 : {"seMax":0,"se":0},
@@ -959,7 +959,7 @@ public class Config
                 t11_6 : {"seMax":500,"se":500} ,
                 t11_7 : {"seMax":500,"se":500} ,
 
-                t12_0 : {"seMax":"","se":9999} ,
+                t12_0 : {"seMax":30000,"se":30000} ,
                 t12_1 : {"seMax":0,"se":0} ,
                 t12_2 : {"seMax":0,"se":0} ,
                 t12_3 : {"seMax":0,"se":0} ,
@@ -968,7 +968,7 @@ public class Config
                 t12_6 : {"seMax":0,"se":0} ,
                 t12_7 : {"seMax":0,"se":0} ,
 
-                t13_0 : {"seMax":2000,"se":2000} ,
+                t13_0 : {"seMax":4000,"se":4000} ,
                 t13_1 : {"seMax":0,"se":0} ,
                 t13_2 : {"seMax":0,"se":0} ,
                 t13_3 : {"seMax":0,"se":0} ,
@@ -977,7 +977,7 @@ public class Config
                 t13_6 : {"seMax":0,"se":0} ,
                 t13_7 : {"seMax":0,"se":0},
 
-                t14_0 : {"seMax":1500,"se":1500} ,
+                t14_0 : {"seMax":3000,"se":3000} ,
                 t14_1 : {"seMax":0,"se":0} ,
                 t14_2 : {"seMax":0,"se":0} ,
                 t14_3 : {"seMax":0,"se":0} ,
@@ -987,7 +987,7 @@ public class Config
                 t14_7 : {"seMax":0,"se":0} ,
 
 
-                t15_0 : {"seMax":1500,"se":1500} ,
+                t15_0 : {"seMax":3000,"se":3000} ,
                 t15_1 : {"seMax":0,"se":0} ,
                 t15_2 : {"seMax":0,"se":0} ,
                 t15_3 : {"seMax":0,"se":0} ,
