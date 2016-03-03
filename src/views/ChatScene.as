@@ -10,6 +10,8 @@ import data.DataContainer;
 
 import events.SceneEvent;
 
+import flash.geom.Rectangle;
+
 import starling.animation.DelayedCall;
 
 import starling.animation.Transitions;
@@ -17,9 +19,6 @@ import starling.animation.Tween;
 import starling.core.Starling;
 
 import starling.display.Image;
-
-import starling.display.ScrollImage;
-
 import starling.display.Sprite;
 import starling.events.Event;
 
@@ -182,23 +181,22 @@ public class ChatScene extends Sprite
         items_texture=Assets.getTexture("BingoItems");
         for(var i:uint=0;i<bingoMax;i++)
         {
-            var bingomotion:ScrollImage=new ScrollImage(motionTexture);
+
+            var bingomotion:Sprite=new Sprite();
+            var bingomotionImg:Image=new Image(motionTexture);
+            bingomotion.addChild(bingomotionImg);
             bingomotion.name="motion"+i;
-            bingomotion.x=i*bingomotion.width;
-            bingomotion.clipMaskTop=0;
-            bingomotion.clipMaskLeft=0;
-            bingomotion.clipMaskBottom=100;
-            bingomotion.clipMaskRight=100;
+            bingomotion.x=i*bingomotionImg.width;
+            bingomotion.clipRect=new flash.geom.Rectangle(0,0,100,100);
             bingomotion.visible=false;
 
-
-            var bingoitems:ScrollImage=new ScrollImage(items_texture);
+            var bingoitems:Sprite=new Sprite();
+            var bingoitemsImg:Image=new Image(items_texture);
+            bingoitems.addChild(bingoitemsImg);
             bingoitems.name="bingo"+i;
             bingoitems.x=i*bingoitems.width;
-            bingoitems.clipMaskTop=0;
-            bingoitems.clipMaskLeft=0;
-            bingoitems.clipMaskBottom=100;
-            bingoitems.clipMaskRight=100;
+            bingoitems.clipRect=new flash.geom.Rectangle(0,0,100,100);
+            bingoitems.visible=false;
 
             bingo.addChild(bingoitems);
             bingo.addChild(bingomotion);
@@ -221,7 +219,8 @@ public class ChatScene extends Sprite
     {
 
 
-        var target:ScrollImage=e.currentTarget as ScrollImage;
+        //var target:ScrollImage=e.currentTarget as ScrollImage;
+        var target:Sprite=e.currentTarget as Sprite;
         top+=speed;
         bottom+=speed;
         target.y=-(top);
@@ -229,16 +228,16 @@ public class ChatScene extends Sprite
 
         if(bottom>300)
         {
-            top=0
+            top=0;
             bottom=100;
             target.y=0;
 
         }
         //if
-        //DebugTrace.msg("ChatScene.doBingoStart bottom:"+bottom);
-        target.clipMaskTop=top;
-        target.clipMaskBottom=bottom;
 
+        //target.clipMaskTop=top;
+        //target.clipMaskBottom=bottom;
+        target.clipRect=new flash.geom.Rectangle(0,top,100,100);
 
 
 
@@ -295,8 +294,8 @@ public class ChatScene extends Sprite
 
         for(var i:uint=0;i<bingoMax;i++)
         {
-            var _bingoitems:ScrollImage=bingo.getChildByName("bingo"+i) as ScrollImage;
-            var _bingomotion:ScrollImage=bingo.getChildByName("motion"+i) as ScrollImage;
+            var _bingoitems:Sprite=bingo.getChildByName("bingo"+i) as Sprite;
+            var _bingomotion:Sprite=bingo.getChildByName("motion"+i) as Sprite;
 
             _bingoitems.visible=_bingo;
             _bingomotion.visible=_motion;
@@ -305,15 +304,12 @@ public class ChatScene extends Sprite
             {
 
                 _bingoitems.y=0;
-                _bingoitems.clipMaskTop=0;
-                _bingoitems.clipMaskBottom=100;
+                _bingoitems.clipRect=new flash.geom.Rectangle(0,0,100,100);
             }
             if(!enterframe)
             {
                 _bingoitems.y=-(relist[i]*100);
-                _bingoitems.clipMaskTop=relist[i]*100;
-                _bingoitems.clipMaskBottom=relist[i]*100+100;
-
+                _bingoitems.clipRect=new flash.geom.Rectangle(0,relist[i]*100,100,100);
                 _bingoitems.removeEventListener(Event.ENTER_FRAME,doBingoStart);
                 _bingomotion.removeEventListener(Event.ENTER_FRAME,doBingoStart);
 

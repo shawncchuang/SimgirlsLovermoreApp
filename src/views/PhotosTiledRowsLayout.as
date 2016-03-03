@@ -96,7 +96,6 @@ public class PhotosTiledRowsLayout extends PanelScreen{
                     photoType="Lock";
                 }
 
-
                 for(var k:uint=0;k<amount;k++){
 
                     var photos:Object=new Object();
@@ -109,7 +108,6 @@ public class PhotosTiledRowsLayout extends PanelScreen{
                 }
 
             }
-
 
         }
 

@@ -14,8 +14,9 @@ package views
 	import starling.animation.Tween;
 	import starling.core.Starling;
 	import starling.display.Sprite;
-	
-	import utils.DebugTrace;
+import starling.events.Event;
+
+import utils.DebugTrace;
 	import utils.ViewsContainer;
 	
 	
@@ -49,7 +50,7 @@ package views
 			
 			
 		}
-		private function doTopViewDispatch(e:TopViewEvent):void
+		private function doTopViewDispatch(e:Event):void
 		{
 			DebugTrace.msg("AirportScene.doTopViewDispatch removed:"+e.data.removed);
 			var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
@@ -61,17 +62,18 @@ package views
 					saveloadlist=new SaveandLoadList(e.data.removed);
 					saveloadlist.x=Starling.current.stage.stageWidth/2;
 					saveloadlist.y=Starling.current.stage.stageHeight/2;
-					saveloadlist.alpha=0;
+					//saveloadlist.alpha=0;
 					addChild(saveloadlist);
-					tweenCtrl(1,onFadeInComplete);
+					//tweenCtrl(1,onFadeInComplete);
 					
 					gameEvent._name="clear_comcloud";
 					gameEvent.displayHandler();
-					break
+					break;
 
 				case "back":
-					tweenCtrl(0,onFadeOutComplete);
-					break
+					//tweenCtrl(0,onFadeOutComplete);
+					onFadeOutComplete();
+					break;
 				case "loadtoStart":
 					removeChild(saveloadlist);
 
@@ -81,7 +83,7 @@ package views
 
 					_data.name="MainScene";
 					command.sceneDispatch(SceneEvent.CHANGED,_data);
-					break
+					break;
 				case "Leave":
 					gameEvent._name="clear_comcloud";
 					gameEvent.displayHandler();
@@ -95,7 +97,7 @@ package views
 		{
 			
 			var tween:Tween=new Tween(saveloadlist,0.5);
-			tween.animate("alpha",value);
+			tween.fadeTo(value);
 			tween.onComplete=onTweenComplete;
 			Starling.juggler.add(tween);
 		}
