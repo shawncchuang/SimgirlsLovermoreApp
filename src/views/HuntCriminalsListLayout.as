@@ -56,17 +56,20 @@ public class HuntCriminalsListLayout extends PanelScreen{
             var criminal:Object=criminalsData[i];
             var itemRender:Sprite=new Sprite();
 
-            var locationTxt:TextField=new TextField(180,30,criminal.location,font,24,0x333333,true);
+            var locationTxt:TextField=new TextField(180,30,criminal.location);
+            locationTxt.format.setTo(font,24,0x333333);
             locationTxt.autoScale=true;
             locationTxt.x=10;
             itemRender.addChild(locationTxt);
 
-            var rankingTxt:TextField=new TextField(180,30,criminal.rank,font,24,0x333333,true);
+            var rankingTxt:TextField=new TextField(180,30,criminal.rank);
+            rankingTxt.format.setTo(font,24,0x333333);
             rankingTxt.x=locationTxt.x+locationTxt.width;
             itemRender.addChild(rankingTxt);
 
             var fRewards:String=DataContainer.currencyFormat(criminal.rewards);
-            var rewards:TextField=new TextField(180,30,fRewards,"SimNeogreyMedium",24,0x333333,true);
+            var rewards:TextField=new TextField(180,30,fRewards);
+            rewards.format.setTo("SimNeogreyMedium",24,0x333333);
             rewards.autoScale=true;
             rewards.x=rankingTxt.x+rankingTxt.width;
             itemRender.addChild(rewards);

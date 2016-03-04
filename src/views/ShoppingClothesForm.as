@@ -106,9 +106,8 @@ public class ShoppingClothesForm extends Sprite {
     {
 
 
-        var txt:TextField=new TextField(rec.width,rec.height,"",font,format.size,format.color);
-        txt.hAlign="left";
-        txt.vAlign="center";
+        var txt:TextField=new TextField(rec.width,rec.height,"");
+        txt.format.setTo(font,format.size,format.color,"left");
         txt.autoSize=TextFieldAutoSize.LEFT;
         txt.x=rec.x;
         txt.y=rec.y;

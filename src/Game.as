@@ -306,16 +306,13 @@ public class Game extends Sprite
 		var bgImg:Image=new Image(bgTexture);
 
 		var msg:String="GameOver";
-		var msgTxt:TextField=new TextField(1024,270,msg,"SimNeogreyMedium",20,0xFFFFFF);
+		var msgTxt:TextField=new TextField(1024,270,msg);
+		msgTxt.format.setTo("SimNeogreyMedium",20,0xFFFFFF);
 		msgTxt.y=200;
-		msgTxt.vAlign="center";
-		msgTxt.hAlign="center";
 
 		var btnTexture:Texture=Assets.getTexture("OptionBg");
 		var paybtn:Button=new Button(btnTexture,"Buy Now");
-		paybtn.fontName="SimNeogreyMedium";
-		paybtn.fontSize=30;
-		paybtn.fontColor=0xFFFFFF;
+		paybtn.textFormat.setTo("SimNeogreyMedium",30,0xFFFFFF);
 		paybtn.x=336;
 		paybtn.y=430;
 		paybtn.addEventListener(Event.TRIGGERED,doPayCheckout);

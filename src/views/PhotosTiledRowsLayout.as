@@ -13,9 +13,6 @@ import feathers.controls.PanelScreen;
 import feathers.layout.TiledRowsLayout;
 
 import starling.display.Image;
-
-import starling.display.Quad;
-import starling.display.Sprite;
 import starling.display.Sprite;
 import starling.events.Event;
 import starling.events.Touch;
@@ -136,7 +133,7 @@ public class PhotosTiledRowsLayout extends PanelScreen{
             var imgloader:ImageLoader=new ImageLoader();
             imgloader.x=9;
             imgloader.y=38;
-            imgloader.snapToPixels=true;
+            imgloader.pixelSnapping=true;
             //imgloader.delayTesxtureCreation = true;
             imgloader.source=domainPath+photofile+".png";
             preSprite.addChild(imgloader);

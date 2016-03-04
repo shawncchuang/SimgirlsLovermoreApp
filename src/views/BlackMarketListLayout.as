@@ -131,24 +131,22 @@ public class BlackMarketListLayout extends PanelScreen {
             var quad:Quad = new Quad(550, renderH, 0xffffff);
             itemRender.addChild(quad);
 
-            var nameHeader:TextField = new TextField(50, 16, "Name:", font, 12, 0x333333, true);
+            var nameHeader:TextField = new TextField(50, 16, "Name:");
             nameHeader.x =  10;
-            nameHeader.hAlign = "left";
+            nameHeader.format.setTo(font,12,0x333333,"left");
             itemRender.addChild(nameHeader);
 
-            var nametTxt:TextField = new TextField(120, renderH, item.name, font, 20, 0, false);
-            nametTxt.x = nameHeader.x;
-            nametTxt.hAlign = "left";
-            nametTxt.vAlign = "center";
+            var nameTxt:TextField = new TextField(120, renderH, item.name);
+            nameTxt.x = nameHeader.x;
+            nameTxt.format.setTo(font,20,0x000000,"left");
 
-            var priceHeader:TextField = new TextField(100, 16, "Price:", font, 12, 0x333333, true);
+            var priceHeader:TextField = new TextField(100, 16, "Price:");
             priceHeader.x = 265;
-            priceHeader.hAlign = "left";
+            priceHeader.format.setTo(font,12,0x333333,"left");
 
-            var priceTxt:TextField = new TextField(100, renderH, item.price, font, 20, 0, false);
+            var priceTxt:TextField = new TextField(100, renderH, item.price);
             priceTxt.x = priceHeader.x;
-            priceTxt.hAlign = "left";
-            priceTxt.vAlign = "center";
+            priceTxt.format.setTo(font,20,0x000000,"left");
 
             var renderBtn:Button = new Button();
             renderBtn.x = priceTxt.x + 120;
@@ -167,7 +165,7 @@ public class BlackMarketListLayout extends PanelScreen {
             }
 
             //itemRender.addChild(itemImg);
-            itemRender.addChild(nametTxt);
+            itemRender.addChild(nameTxt);
             if(type=="Buy")
             {
                 itemRender.addChild(priceHeader);
@@ -285,9 +283,10 @@ public class BlackMarketListLayout extends PanelScreen {
         var bgTexture:Texture=Assets.getTexture("PopupBg");
         popup=new Sprite();
         var bg:Image=new Image(bgTexture);
-        var msgTxt:TextField=new TextField(370,80,msg,font,16,0,false);
+        var msgTxt:TextField=new TextField(370,80,msg);
         msgTxt.x=15;
         msgTxt.y=30;
+        msgTxt.format.setTo(font,16,0);
 
         var okBtn:Button=new Button();
         okBtn.label="OK";

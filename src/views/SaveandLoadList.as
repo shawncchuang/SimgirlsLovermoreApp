@@ -122,10 +122,10 @@ public class SaveandLoadList extends Sprite
         {
             title="Save Game";
         }
-        var title_txt:TextField=new TextField(panel.width,35,"< "+title+" >",font,20,0xFFFFFF);
+        var title_txt:TextField=new TextField(panel.width,35,"< "+title+" >");
         title_txt.x=-(panel.width/2);
         title_txt.y=-(panel.height/2)+title_txt.height;
-        title_txt.vAlign="center";
+        title_txt.format.setTo(font,20,0xFFFFFF);
         panel.addChild(title_txt);
 
         for(var i:uint=0;i<saverecord.length;i++)
@@ -142,15 +142,15 @@ public class SaveandLoadList extends Sprite
             var empty_texture:Texture=Assets.getTexture("Empty");
             var emptyImg:Image=new Image(empty_texture);
             emptybar.addChild(emptyImg);
-            var name_txt:TextField=new TextField(70,emptyImg.height,saverecord[i].first_name+"\n"+saverecord[i].last_name,font,18,0xFFFFFF);
+            var name_txt:TextField=new TextField(70,emptyImg.height,saverecord[i].first_name+"\n"+saverecord[i].last_name);
+            name_txt.format.setTo(font,18,0xFFFFFF);
             name_txt.autoScale=true;
             emptybar.addChild(name_txt);
            //   var peogress:Number=Number(saverecord[i].id.split("saved").join(""));
             var _date:String=saverecord[i].date.split("|")[0];
             var info_data:String="No."+(i+1)+", "+_date+"\n"+saverecord[i].cash+"\nAP "+saverecord[i].ap+"/"+saverecord[i].ap_max;
-            var info_txt:TextField=new TextField(emptyImg.width-50,emptyImg.height,info_data,font,16,0xFFFFFF);
-            info_txt.hAlign="right";
-            info_txt.vAlign="center";
+            var info_txt:TextField=new TextField(emptyImg.width-50,emptyImg.height,info_data);
+            info_txt.format.setTo(font,16,0xFFFFFF,"right");
             emptybar.addChild(info_txt);
 
             //DebugTrace.msg("SaveandLoadList.renderSavedbar info_data:"+info_data)
@@ -185,8 +185,8 @@ public class SaveandLoadList extends Sprite
             progressbar.push(emptybar);
 
             var emptyImg:Image=new Image(empty_texture);
-            var txt:TextField=new TextField(emptyImg.width,emptyImg.height,"Empty",font,20,0xFFFFFF);
-            txt.hAlign="center";
+            var txt:TextField=new TextField(emptyImg.width,emptyImg.height,"Empty");
+            txt.format.setTo(font,20,0xFFFFFF);
             emptybar.x=emptypos[i+recods].x;
             emptybar.y=emptypos[i+recods].y;
             emptybar.addChild(emptyImg);
@@ -374,8 +374,8 @@ public class SaveandLoadList extends Sprite
         //comfirm.pivotY=bgImg.height/2;
         comfirm.addChild(bgImg);
         msg="Are you sure?";
-        var txt:TextField=new TextField(bgImg.width,70,msg,font,20,0xFFFFFF);
-        txt.hAlign="center";
+        var txt:TextField=new TextField(bgImg.width,70,msg);
+        txt.format.setTo(font,20,0xFFFFFF);
         txt.pivotX=bgImg.width/2;
         txt.y=-50;
 
@@ -460,8 +460,8 @@ public class SaveandLoadList extends Sprite
         //comfirm.pivotY=bgImg.height/2;
         comfirm.addChild(bgImg);
 
-        var txt:TextField=new TextField(bgImg.width,70,msg,font,20,0xFFFFFF);
-        txt.hAlign="center";
+        var txt:TextField=new TextField(bgImg.width,70,msg);
+        txt.format.setTo(font,20,0xFFFFFF);
         txt.pivotX=bgImg.width/2;
         txt.y=-50;
 

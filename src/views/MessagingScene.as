@@ -40,7 +40,6 @@ public class MessagingScene extends Sprite{
 
         base_sprite=new Sprite();
         addChild(base_sprite);
-        base_sprite.flatten();
 
         initailizeLayoutHandler();
 
@@ -74,8 +73,8 @@ public class MessagingScene extends Sprite{
         massaging.addChild(panelBg);
 
         var str:String="Bonus gift for you! \n Download Simgirls 7.0 here:";
-        var message:TextField=new TextField(panelBg.width,80,str,font,20);
-        //message.hAlign="left";
+        var message:TextField=new TextField(panelBg.width,80,str);
+        message.format.setTo(font,20);
         message.y=10;
         massaging.addChild(message);
 

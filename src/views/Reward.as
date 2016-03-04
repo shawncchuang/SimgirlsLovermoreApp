@@ -51,10 +51,9 @@ public class Reward extends Sprite{
 
         reward=new Sprite();
 
-        var rewardTxt:TextField=new TextField(100,60,String(value),font,40,0xFFFFFF,true);
+        var rewardTxt:TextField=new TextField(100,60,String(value));
         rewardTxt.autoSize=TextFieldAutoSize.BOTH_DIRECTIONS;
-        rewardTxt.hAlign="left";
-        rewardTxt.vAlign="top";
+        rewardTxt.format.setTo(font,40,0xFFFFFF,"left");
         reward.addChild(rewardTxt);
         if(type!="mood"){
 

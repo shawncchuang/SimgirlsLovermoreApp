@@ -2,7 +2,7 @@
  * Created by shawn on 2014-08-11.
  */
 package views {
-import controller.AssetEmbeds;
+
 import controller.Assets;
 import controller.FloxCommand;
 import controller.FloxInterface;
@@ -12,21 +12,15 @@ import data.DataContainer;
 
 
 import feathers.controls.List;
-import feathers.data.ListCollection;
+
 import feathers.controls.PanelScreen;
-import feathers.controls.renderers.BaseDefaultItemRenderer;
-import feathers.layout.AnchorLayout;
-import feathers.layout.AnchorLayoutData;
+
 import feathers.layout.TiledRowsLayout;
 import feathers.controls.ScrollContainer;
-import feathers.layout.TiledColumnsLayout;
 import feathers.layout.VerticalLayout;
 import feathers.events.FeathersEventType;
 
 import flash.geom.Point;
-
-import starling.display.Button;
-
 import starling.display.Image;
 
 import starling.display.Sprite;
@@ -151,46 +145,44 @@ public class AssetsTiledLayout extends PanelScreen{
             var quad:Quad = new Quad(530, renderH, 0xffffff);
             itemRender.addChild(quad);
 
-            var nameHeader:TextField=new TextField(50,16,"Name:",font,12,0x333333,true);
+
+            var nameHeader:TextField=new TextField(50,16,"Name:");
             nameHeader.x=itemImg.width+10;
-            nameHeader.hAlign="left";
-            itemRender.addChild(nameHeader);
+            nameHeader.format.setTo(font,12,0x333333,"left");
 
-            var nametTxt:TextField=new TextField(100,renderH,item.name,font,20,0,false);
+
+            var nametTxt:TextField=new TextField(100,renderH,item.name);
             nametTxt.x=nameHeader.x;
-            nametTxt.hAlign="left";
-            nametTxt.vAlign="center";
+            nametTxt.format.setTo(font,20,0x000000,"left");
 
 
-            var brandHeader:TextField=new TextField(50,16,"Brand:",font,12,0x333333,true);
+            var brandHeader:TextField=new TextField(50,16,"Brand:");
             brandHeader.x=220;
-            brandHeader.hAlign="left";
+            brandHeader.format.setTo(font,12,0x333333,"left");
             itemRender.addChild(brandHeader);
-            var brandTxt:TextField=new TextField(100,renderH,item.brand,font,20,0,false);
+            var brandTxt:TextField=new TextField(100,renderH,item.brand);
             brandTxt.x=brandHeader.x;
-            brandTxt.hAlign="left";
-            brandTxt.vAlign="center";
+            brandTxt.format.setTo(font,20,0x000000,"left");
 
 
-            var expirHeader:TextField=new TextField(80,16,"Expiration:",font,12,0x333333,true);
+            var expirHeader:TextField=new TextField(80,16,"Expiration:");
             expirHeader.x=340;
-            expirHeader.hAlign="left";
+            expirHeader.format.setTo(font,12,0x333333,"left");
             itemRender.addChild(expirHeader);
-            var expirTxt:TextField=new TextField(80,renderH,item.expiration,font,20,0,false);
+
+            var expirTxt:TextField=new TextField(80,renderH,item.expiration);
             expirTxt.x=expirHeader.x;
-            expirTxt.vAlign="center";
-            expirTxt.hAlign="left";
+            expirTxt.format.setTo(font,20,0x000000,"left");
 
 
-            var qtyHeader:TextField=new TextField(50,16,"Qty:",font,12,0x333333,true);
+            var qtyHeader:TextField=new TextField(50,16,"Qty:");
             qtyHeader.x=450;
-            qtyHeader.hAlign="left";
-            itemRender.addChild(qtyHeader);
-            var qtyTxt:TextField=new TextField(30,renderH,item.qty,font,20,0,false);
-            qtyTxt.x=qtyHeader.x;
-            qtyTxt.vAlign="center";
-            qtyTxt.hAlign="left";
+            qtyHeader.format.setTo(font,12,0x333333,"left");
 
+            itemRender.addChild(qtyHeader);
+            var qtyTxt:TextField=new TextField(30,renderH,item.qty);
+            qtyTxt.x=qtyHeader.x;
+            qtyTxt.format.setTo(font,20,0x000000,"left");
 
 
             var btnTexture:Texture=Assets.getTexture("CheckAltUp");
@@ -202,6 +194,7 @@ public class AssetsTiledLayout extends PanelScreen{
             sendImg.y=Math.floor((renderH-sendImg.height)/2);
 
 
+            itemRender.addChild(nameHeader);
             itemRender.addChild(itemImg);
             itemRender.addChild(nametTxt);
             itemRender.addChild(brandTxt);

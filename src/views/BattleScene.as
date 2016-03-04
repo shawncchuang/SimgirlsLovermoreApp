@@ -1794,7 +1794,6 @@ public class BattleScene extends Sprite
 					//Kamikaze Flame
 					case "a3":
 					//Dragon Dance
-
 					case "n3":
 					//Reincarnation
 					case "w3":

@@ -84,8 +84,8 @@ public class ChangeClothesScene extends Scenes {
         addChild(quad);
 
         var title:String="Change Clothes";
-        var titleTxt:TextField=new TextField(300,45,title,font,30,0xFFFFFF);
-        titleTxt.hAlign="left";
+        var titleTxt:TextField=new TextField(300,45,title);
+        titleTxt.format.setTo(font,30,0xFFFFFFF,"left");
         titleTxt.x=10;
         titleTxt.y=21;
         addChild(titleTxt);
@@ -214,9 +214,10 @@ public class ChangeClothesScene extends Scenes {
         icons.y=195;
         addChild(icons);
         var styleID:Number= Number(upperstyles[upperstyleIndex])+1;
-        upperStyleTxt=new TextField(160,35,"Style "+styleID,font,30,0xFFFFFF,true);
+        upperStyleTxt=new TextField(160,35,"Style "+styleID);
         upperStyleTxt.x=88;
         upperStyleTxt.y=350;
+        upperStyleTxt.format.setTo(font,30,0xFFFFFF);
         addChild(upperStyleTxt);
 
         var arrowleft:Button=new Button(getTexture("ArrowAlt"));
@@ -278,9 +279,10 @@ public class ChangeClothesScene extends Scenes {
 
 
         var styleID:Number=Number(lowerstyles[lowerstyleIndex])+1;
-        lowerStyleTxt=new TextField(160,35,"Style "+styleID,font,30,0xFFFFFF,true);
+        lowerStyleTxt=new TextField(160,35,"Style "+styleID);
         lowerStyleTxt.x=753;
         lowerStyleTxt.y=350;
+        lowerStyleTxt.format.setTo(font,30,0xFFFFFF);
         addChild(lowerStyleTxt);
 
         var arrowleft:Button=new Button(getTexture("ArrowAlt"));

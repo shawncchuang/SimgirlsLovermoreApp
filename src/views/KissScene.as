@@ -179,7 +179,6 @@ public class KissScene extends Sprite
 
         var bubbleTextue:Texture=Assets.getTexture("Bubble");
         bubble=new Image(bubbleTextue);
-        bubble.smoothing=TextureSmoothing.TRILINEAR;
         bubble.pivotX=bubble.width/2;
         bubble.pivotY=bubble.height/2;
         bubble.x=768;
@@ -187,8 +186,8 @@ public class KissScene extends Sprite
         bubble.scaleX=-1;
         addChild(bubble);
         var chat:String="Bye.";
-        var chatTxt:TextField=new TextField(255,190,chat,"SimFutura",20,0x000000);
-        chatTxt.hAlign="center";
+        var chatTxt:TextField=new TextField(255,190,chat);
+        chatTxt.format.setTo("SimFutura",20,0x000000);
         chatTxt.x=634;
         chatTxt.y=110;
         addChild(chatTxt);

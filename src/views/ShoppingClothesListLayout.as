@@ -18,6 +18,7 @@ import flash.geom.Rectangle;
 import starling.display.Button;
 
 import starling.display.Image;
+import starling.display.Quad;
 import starling.display.Sprite;
 
 import starling.events.Event;
@@ -114,7 +115,10 @@ public class ShoppingClothesListLayout extends Sprite {
         itemSprite.scaleY = scale;
         if(itemSprite.height>220){
 
-            itemSprite.clipRect=new flash.geom.Rectangle(-(itemSprite.pivotX/2),-(itemSprite.pivotY/2),itemSprite.width*2,440);
+            //itemSprite.clipRect=new flash.geom.Rectangle(-(itemSprite.pivotX/2),-(itemSprite.pivotY/2),itemSprite.width*2,440);
+            itemSprite.mask=new Quad(itemSprite.width*2,440);
+            itemSprite.mask.x=-(itemSprite.pivotX/2);
+            itemSprite.mask.y=-(itemSprite.pivotY/2);
         }
 
         addChild(itemSprite);
@@ -124,7 +128,8 @@ public class ShoppingClothesListLayout extends Sprite {
 
     private function initItemInfo():void {
 
-        itemname = new TextField(245, 30, current_item.name, font, 25, 0x4A4A4A, true);
+        itemname = new TextField(245, 30, current_item.name);
+        itemname.format.setTo(font, 25, 0x4A4A4A);
         itemname.pivotX = itemname.width / 2;
         itemname.x = 611 / 2;
         itemname.y = 94;
@@ -136,15 +141,16 @@ public class ShoppingClothesListLayout extends Sprite {
         dollaSign.y = 82;
 
         var priceStr:String = DataContainer.currencyFormat(current_item.price);
-        price = new TextField(140, 43, priceStr, "SimNeogreyMedium", 36, 0x4A4A4A, true);
-        price.hAlign = "right";
+        price = new TextField(140, 43, priceStr);
+        price.format.setTo("SimNeogreyMedium", 36, 0x4A4A4A);
         price.x = dollaSign.x + dollaSign.width;
         price.y = 86;
         price.autoSize = TextFieldAutoSize.HORIZONTAL;
 
 
         var current:String = (itemIndex + 1) + " / " + items.length;
-        numbers = new TextField(200, 24, current, "SimNeogreyMedium", 20, 0x97CAF3, true);
+        numbers = new TextField(200, 24, current);
+        numbers.format.setTo("SimNeogreyMedium", 20, 0x97CAF3);
         numbers.pivotX = numbers.width / 2;
         numbers.x = 611 / 2;
         numbers.y = 389;

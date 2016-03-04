@@ -27,6 +27,7 @@ import starling.display.Image;
 
 import starling.display.Image;
 import starling.display.MovieClip;
+import starling.display.Quad;
 import starling.display.Sprite;
 import starling.events.Event;
 import starling.textures.Texture;
@@ -311,7 +312,8 @@ public class CharacterDesignScene extends Scenes
 
         if(gender=="Male")
         {
-            hairdemo.clipRect=new flash.geom.Rectangle(0,0,153,163);
+            //hairdemo.clipRect=new flash.geom.Rectangle(0,0,153,163);
+            hairdemo.mask=new Quad(153,163);
             hairdemo.x=100;
             hairdemo.y=276;
             hairImg.width=130;
@@ -319,7 +321,8 @@ public class CharacterDesignScene extends Scenes
 
         }else
         {
-            hairdemo.clipRect=new flash.geom.Rectangle(0,0,153,153);
+            //hairdemo.clipRect=new flash.geom.Rectangle(0,0,153,153);
+            hairdemo.mask=new Quad(153,153);
             hairdemo.x=77;
             hairdemo.y=286;
 

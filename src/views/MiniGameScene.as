@@ -103,13 +103,19 @@ import flash.desktop.NativeApplication;
 			addChild(skyBg);
 			
 			
-			bgTexture=Texture.fromBitmap(new TraceGameRoad(),true,false,1,"bgra",true);
-            //bgTexture=Texture.fromAtfData(new TraceGameRoad(),1,true,null,true);
+			//bgTexture=Texture.fromBitmap(new TraceGameRoad(),true,false,1,"bgra",true);
+			bgTexture=Texture.fromBitmap(new TraceGameRoad(),true,false,1,"bgra");
 			bgImg=new Image(bgTexture);
 			bgImg.width <<=1;
-			bgImg.setTexCoords(1, new Point(2, 0));
-			bgImg.setTexCoords(2, new Point(0, 1));
-			bgImg.setTexCoords(3, new Point(2, 1));
+//			bgImg.setTexCoords(1, new Point(2, 0));
+//			bgImg.setTexCoords(2, new Point(0, 1));
+//			bgImg.setTexCoords(3, new Point(2, 1));
+
+			bgImg.setTexCoords(1, 2, 0);
+			bgImg.setTexCoords(2, 0, 1);
+			bgImg.setTexCoords(3, 2, 1);
+
+
 			addChild(bgImg);
 			this.addEventListener((EnterFrameEvent.ENTER_FRAME), gameBgLoop);
 
@@ -117,14 +123,19 @@ import flash.desktop.NativeApplication;
 		private function initTrainingBackGround():void
 		{
 			
-			bgTexture=Texture.fromBitmap(new TrainingGameBG(),true,false,1,"bgra",true);
-            //bgTexture=Texture.fromAtfData(new TrainingGameBG(),1,true,null,true);
+			//bgTexture=Texture.fromBitmap(new TrainingGameBG(),true,false,1,"bgra",true);
+			bgTexture=Texture.fromBitmap(new TrainingGameBG(),true,false,1,"bgra");
 
 			bgImg=new Image(bgTexture);
 			bgImg.width <<=1;
-			bgImg.setTexCoords(1, new Point(2, 0));
-			bgImg.setTexCoords(2, new Point(0, 1));
-			bgImg.setTexCoords(3, new Point(2, 1));
+//			bgImg.setTexCoords(1, new Point(2, 0));
+//			bgImg.setTexCoords(2, new Point(0, 1));
+//			bgImg.setTexCoords(3, new Point(2, 1));
+
+			bgImg.setTexCoords(1, 2, 0);
+			bgImg.setTexCoords(2, 0, 1);
+			bgImg.setTexCoords(3, 2, 1);
+
 			addChild(bgImg);
 			this.addEventListener((EnterFrameEvent.ENTER_FRAME), gameBgLoop);
 
@@ -301,7 +312,8 @@ import flash.desktop.NativeApplication;
 				
 				var se:Object=flox.getSaveData("se");
 				current_se=se.player;
-				seTxt=new TextField(120,60,timeStr,"SimNeogreyMedium",30,color);
+				seTxt=new TextField(120,60,timeStr);
+				seTxt.format.setTo("SimNeogreyMedium",30,color);
 				seTxt.autoSize=TextFieldAutoSize.BOTH_DIRECTIONS;
 				seTxt.x=20;
 				seTxt.text="SE : "+current_se;
@@ -309,7 +321,8 @@ import flash.desktop.NativeApplication;
 				
 				
 			}
-			timeTxt=new TextField(120,60,timeStr,"SimNeogreyMedium",30,color);
+			timeTxt=new TextField(120,60,timeStr);
+			timeTxt.format.setTo("SimNeogreyMedium",30,color);
 			timeTxt.autoSize=TextFieldAutoSize.BOTH_DIRECTIONS;
 			timeTxt.x=Starling.current.stage.stageWidth-timeTxt.width;
 			addChild(timeTxt);

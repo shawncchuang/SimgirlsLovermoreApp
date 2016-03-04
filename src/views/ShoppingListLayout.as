@@ -10,17 +10,16 @@ import controller.MainInterface;
 import data.DataContainer;
 
 import feathers.controls.Button;
-import feathers.controls.Label;
+
 
 import feathers.controls.NumericStepper;
 
 import feathers.controls.PanelScreen;
 import feathers.controls.ScrollContainer;
-import feathers.controls.TextInput;
+
 import feathers.events.FeathersEventType;
 import feathers.layout.TiledRowsLayout;
 import feathers.layout.VerticalLayout;
-import feathers.text.BitmapFontTextFormat;
 
 
 import starling.display.Image;
@@ -170,79 +169,75 @@ public class ShoppingListLayout extends PanelScreen {
             var quad:Quad = new Quad(550, renderH, 0xffffff);
             itemRender.addChild(quad);
 
-            var nameHeader:TextField=new TextField(50,16,"Name:",font,12,0x333333,true);
+            var nameHeader:TextField=new TextField(50,16,"Name:");
+            nameHeader.format.setTo(font,12,0x333333,"left");
             nameHeader.x=itemImg.width+10;
-            nameHeader.hAlign="left";
             itemRender.addChild(nameHeader);
 
-            var nametTxt:TextField=new TextField(100,renderH,item.name,font,18,0,false);
+            var nametTxt:TextField=new TextField(100,renderH,item.name);
+            nametTxt.format.setTo(font,18,0,"left");
             nametTxt.autoScale=true;
             nametTxt.x=nameHeader.x;
-            nametTxt.hAlign="left";
-            nametTxt.vAlign="center";
 
-            var brandHeader:TextField=new TextField(50,16,"Brand:",font,12,0x333333,true);
+            var brandHeader:TextField=new TextField(50,16,"Brand:");
+            brandHeader.format.setTo(font,12,0x333333,"left");
             brandHeader.x=210;
-            brandHeader.hAlign="left";
             itemRender.addChild(brandHeader);
 
 
-            var brandTxt:TextField=new TextField(80,renderH,item.brand,font,18,0,false);
+            var brandTxt:TextField=new TextField(80,renderH,item.brand);
+            brandTxt.format.setTo(font,18,0,"left");
             brandTxt.autoScale=true;
             brandTxt.x=brandHeader.x;
-            brandTxt.hAlign="left";
-            brandTxt.vAlign="center";
 
-
-            var priceHeader:TextField=new TextField(80,16,"Price:",font,12,0x333333,true);
+            var priceHeader:TextField=new TextField(80,16,"Price:");
+            priceHeader.format.setTo(font,12,0x333333,"left");
             priceHeader.x=290;
-            priceHeader.hAlign="left";
             itemRender.addChild(priceHeader);
             var _price:String=DataContainer.currencyFormat(item.price);
-            var priceTxt:TextField=new TextField(90,renderH,_price,"SimNeogreyMedium",16,0,true);
+            var priceTxt:TextField=new TextField(90,renderH,_price);
+            priceTxt.format.setTo("SimNeogreyMedium",16,0,"left");
             priceTxt.autoScale=true;
             priceTxt.x=priceHeader.x;
-            priceTxt.vAlign="center";
-            priceTxt.hAlign="left";
 
 
-//            var qtyHeader:TextField=new TextField(40,16,"Qty:",font,12,0x333333,true);
-//            qtyHeader.x=380;
-//            qtyHeader.hAlign="left";
-//            itemRender.addChild(qtyHeader);
-//            var qtyStepper:NumericStepper = new NumericStepper();
-//            qtyStepper.buttonLayoutMode = NumericStepper.BUTTON_LAYOUT_MODE_SPLIT_HORIZONTAL;
-//            var incrementTexture:Texture = Assets.getTexture("IncrementButton");
-//            var decrementTexture:Texture = Assets.getTexture("DecrementButton");
-//            qtyStepper.incrementButtonProperties.defaultSkin = new Image(incrementTexture);
-//            qtyStepper.decrementButtonProperties.defaultSkin = new Image(decrementTexture);
-//            qtyStepper.textInputFactory = function():TextInput
-//            {
-//                var input:TextInput = new TextInput();
-//                //skin the text input here
-//                //input.backgroundSkin = new Scale9Image( backgroundTextures )
-//                input.verticalAlign =  TextInput.VERTICAL_ALIGN_MIDDLE;
-//                input.isEditable = false;
-//                input.padding=12;
-//                input.setSize(40,30);
-//                input.textEditorProperties.fontSize = 18;
-//
-//                return input;
-//            }
-//
-//            qtyStepper.x=qtyHeader.x;
-//            qtyStepper.y=qtyHeader.y+20;
-//            qtyStepper.width=140;
-//            qtyStepper.height=30;
-//            qtyStepper.minimum = 1;
-//            qtyStepper.maximum = 99;
-//            qtyStepper.step = 1;
-//            qtyStepper.value = 1;
-//            qtyStepper.scaleX = 0.8;
-//            qtyStepper.scaleY = 0.8;
-//            steppers.push(qtyStepper);
-//            qtyStepper.addEventListener( Event.CHANGE, onStepperChangeHandler);
+/* Quantity
+            var qtyHeader:TextField=new TextField(40,16,"Qty:",font,12,0x333333,true);
+            qtyHeader.x=380;
+            qtyHeader.hAlign="left";
+            itemRender.addChild(qtyHeader);
+            var qtyStepper:NumericStepper = new NumericStepper();
+            qtyStepper.buttonLayoutMode = NumericStepper.BUTTON_LAYOUT_MODE_SPLIT_HORIZONTAL;
+            var incrementTexture:Texture = Assets.getTexture("IncrementButton");
+            var decrementTexture:Texture = Assets.getTexture("DecrementButton");
+            qtyStepper.incrementButtonProperties.defaultSkin = new Image(incrementTexture);
+            qtyStepper.decrementButtonProperties.defaultSkin = new Image(decrementTexture);
+            qtyStepper.textInputFactory = function():TextInput
+            {
+                var input:TextInput = new TextInput();
+                //skin the text input here
+                //input.backgroundSkin = new Scale9Image( backgroundTextures )
+                input.verticalAlign =  TextInput.VERTICAL_ALIGN_MIDDLE;
+                input.isEditable = false;
+                input.padding=12;
+                input.setSize(40,30);
+                input.textEditorProperties.fontSize = 18;
 
+                return input;
+            }
+            qtyStepper.x=qtyHeader.x;
+            qtyStepper.y=qtyHeader.y+20;
+            qtyStepper.width=140;
+            qtyStepper.height=30;
+            qtyStepper.minimum = 1;
+            qtyStepper.maximum = 99;
+            qtyStepper.step = 1;
+            qtyStepper.value = 1;
+            qtyStepper.scaleX = 0.8;
+            qtyStepper.scaleY = 0.8;
+            steppers.push(qtyStepper);
+            qtyStepper.addEventListener( Event.CHANGE, onStepperChangeHandler);
+*/
             var buyBtn:Button=new Button();
             buyBtn.x=priceTxt.x+120;
             buyBtn.y=20;

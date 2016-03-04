@@ -82,8 +82,8 @@ public class MyTalkingDisplay extends Sprite
 			sentance=sentance.split("@@@").join(fullname);
 
 
-			subtitle=new TextField(785,120,"","SimImpact",24,0xFFFFFF);
-			subtitle.hAlign="center";
+			subtitle=new TextField(785,120,"");
+			subtitle.format.setTo("SimImpact",24,0xFFFFFF);
 			subtitle.autoScale=true;
 			subtitle.x=125;
 			subtitle.y=650;

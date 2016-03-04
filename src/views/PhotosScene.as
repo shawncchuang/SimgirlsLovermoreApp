@@ -103,11 +103,10 @@ public class PhotosScene extends Sprite {
         photoField.y=190;
         addChild(photoField);
 
-        pages=new TextField(pfTexture.width,50,"",font,20,0x000000);
+        pages=new TextField(pfTexture.width,50,"");
+        pages.format.setTo(font,20);
         pages.x=205;
         pages.y=645;
-        pages.vAlign="center";
-        pages.hAlign="center";
         addChild(pages);
 
         var emptyTexture:Texture=Assets.getTexture("IconTrashEmpty");
@@ -285,7 +284,8 @@ public class PhotosScene extends Sprite {
             var style:String = pic.character.style;
             command.drawCharacter(photo, style);
 
-            photo.clipRect=new Rectangle(0,0,1024,768);
+            //photo.clipRect=new Rectangle(0,0,1024,768);
+            photo.mask=new Quad(1024,768);
             photo.scaleX=0.56;
             photo.scaleY=0.56;
             //photo.width=rec.width;

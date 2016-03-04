@@ -525,9 +525,9 @@ public class DatingScene extends Scenes {
         if(rel=="spouse"){
             rel="soulmate";
         }
-        var relationship:TextField = new TextField(210, 34, rel.toUpperCase(), font, 30, 0xffffff);
-        relationship.hAlign = "center";
-        relationship.hAlign = "center";
+        var relationship:TextField = new TextField(210, 34, rel.toUpperCase());
+        relationship.format.setTo(font, 30, 0xffffff);
+
         relactionInfo.addChild(relationship);
 
 
@@ -536,9 +536,8 @@ public class DatingScene extends Scenes {
         quad2.y = 36;
         relactionInfo.addChild(quad2);
         var pts:String = String(flox.getSaveData("pts")[dating]);
-        var ptsTxt:TextField = new TextField(210, 34, pts, font, 30, 0x373535);
-        ptsTxt.vAlign = "center";
-        ptsTxt.hAlign = "center";
+        var ptsTxt:TextField = new TextField(210, 34, pts);
+        ptsTxt.format.setTo(font, 30, 0x373535);
         ptsTxt.x = 5;
         ptsTxt.y = 35;
         relactionInfo.addChild(ptsTxt);
@@ -550,7 +549,6 @@ public class DatingScene extends Scenes {
         mainProfile.y = 190;
 
         var moodCircle:Image = new Image(getTexture("EnergyPieChartBg"));
-        moodCircle.smoothing = TextureSmoothing.TRILINEAR;
         moodCircle.pivotX = moodCircle.width / 2;
         moodCircle.pivotY = moodCircle.height / 2;
         mainProfile.addChild(moodCircle);
@@ -566,9 +564,8 @@ public class DatingScene extends Scenes {
         apPanel = new Sprite();
         apPanel.x = 750;
         apPanel.y = -20;
-        apTxt = new TextField(87, 50, "", font, 25, 0x373535);
-        apTxt.vAlign = "center";
-        apTxt.hAlign = "left";
+        apTxt = new TextField(87, 50, "");
+        apTxt.format.setTo(font, 25, 0x373535,"left");
         apTxt.autoSize = TextFieldAutoSize.HORIZONTAL;
         apTxt.x = 87;
         apTxt.y = 37;
@@ -657,22 +654,22 @@ public class DatingScene extends Scenes {
 
         var loveObj:Object = flox.getSaveData("love");
 
-        playerloveTxt = new TextField(120, 55, loveObj.player, font, 40, 0xFFFFFF);
-        playerloveTxt.vAlign = "center";
+        playerloveTxt = new TextField(120, 55, loveObj.player);
+        playerloveTxt.format.setTo(font, 40, 0xFFFFFF);
         playerloveTxt.x = 290;
         playerloveTxt.y = 54;
         datingTopic.addChild(playerloveTxt);
 
-        var ch_love_txt:TextField = new TextField(55, 55, dating + "\nLove", font, 18, 0xFFFFFF);
-        ch_love_txt.vAlign = "center";
-        ch_love_txt.hAlign = "center";
+        var ch_love_txt:TextField = new TextField(55, 55, dating + "\nLove");
+        ch_love_txt.format.setTo(font, 18, 0xFFFFFF);
         ch_love_txt.autoSize = TextFieldAutoSize.HORIZONTAL;
         ch_love_txt.x = 420;
         ch_love_txt.y = 54;
         datingTopic.addChild(ch_love_txt);
 
 
-        chloveTxt = new TextField(120, 55, loveObj[dating], font, 40, 0xFFFFFF);
+        chloveTxt = new TextField(120, 55, loveObj[dating]);
+        chloveTxt.format.setTo(font, 40, 0xFFFFFF);
         chloveTxt.x = 500;
         chloveTxt.y = 54;
         datingTopic.addChild(chloveTxt);
@@ -733,13 +730,11 @@ public class DatingScene extends Scenes {
                 src = "Take\nPhoto";
             }
 
-            var cloudTxt:TextField = new TextField(cloudMC.width, cloudMC.height, src, font, 25, 0x66CCFF);
+            var cloudTxt:TextField = new TextField(cloudMC.width, cloudMC.height, src);
             cloudTxt.name = "txt";
-
+            cloudTxt.format.setTo(font, 25, 0x66CCFF);
             cloudTxt.pivotX = cloudTxt.width / 2;
             cloudTxt.pivotY = cloudTxt.height / 2;
-            cloudTxt.vAlign = "center";
-            cloudTxt.hAlign = "center";
             cloud.addChild(cloudTxt);
 
             cloud.scaleX = 0.1;
@@ -755,10 +750,9 @@ public class DatingScene extends Scenes {
                 var dating:String = DataContainer.currentDating;
                 var comTimes:Number = command_dating[dating][src];
 
-                var comTimesTxt:TextField = new TextField(40, 24, "x" + comTimes, font, 18, 0xffffff);
+                var comTimesTxt:TextField = new TextField(40, 24, "x" + comTimes);
                 comTimesTxt.name = "times";
-                comTimesTxt.vAlign = "center";
-                comTimesTxt.hAlign = "center";
+                comTimesTxt.format.setTo(font, 18, 0xffffff);
                 comTimesTxt.autoSize = TextFieldAutoSize.HORIZONTAL;
                 comTimesTxt.pivotX = comTimesTxt.width / 2;
                 comTimesTxt.y = 20;
@@ -1160,7 +1154,6 @@ public class DatingScene extends Scenes {
 
         bubble = new Sprite();
         var bubbleImg:Image = new Image(texture);
-        bubbleImg.smoothing = TextureSmoothing.TRILINEAR;
         bubbleImg.pivotX = bubbleImg.width / 2;
         bubbleImg.pivotY = bubbleImg.height / 2;
         bubbleImg.scaleX = -1;
@@ -1197,11 +1190,8 @@ public class DatingScene extends Scenes {
 
         Starling.juggler.remove(bubbleTwwen);
 
-        chatTxt = new TextField(245, 145, chat, font, 20, 0x000000);
-        chatTxt.hAlign = "left";
-        chatTxt.vAlign = "center";
-        //chatTxt.x=634;
-        //chatTxt.y=110;
+        chatTxt = new TextField(245, 145, chat);
+        chatTxt.format.setTo( font, 20, 0x000000,"left");
         chatTxt.x = -120;
         chatTxt.y = -88;
         bubble.addChild(chatTxt);
@@ -1461,7 +1451,7 @@ public class DatingScene extends Scenes {
         var dating:String=DataContainer.currentDating;
         var rel:String=flox.getSaveData("rel")[dating];
         //DebugTrace.msg("DatingScene.doChandedRelactionshipHandle rel="+rel);
-        if(change_type=="raise" && rel!="foe"){
+        if(change_type=="raise" && rel!="acquaintance"){
             disabledSreenTouch();
 
             delayCall=new DelayedCall(onReadyShowPreciousPhoto,3);
@@ -1538,9 +1528,9 @@ public class DatingScene extends Scenes {
         var msg:String="Relationship level goes up!\n" +
                 "View new photo(s) in your Precious Moments Collection!\n" +
                 "Check his/her current location in your Contacts!";
-        var txt:TextField=new TextField(stageW,60,msg,font,18,0xFFFFFF);
+        var txt:TextField=new TextField(stageW,60,msg);
+        txt.format.setTo(font,18,0xFFFFFF);
         txt.autoScale=true;
-        txt.vAlign="center";
         txt.y=stageH-txt.height;
         photo.addChild(txt);
 

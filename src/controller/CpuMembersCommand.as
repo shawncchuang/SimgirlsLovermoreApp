@@ -673,10 +673,10 @@ public class CpuMembersCommand implements CpuMembersInterface
                     case "rvn":
                         if(jewel<=2)
                         {
-                            level="lv1";
+                            level="lv2";
                         }else
                         {
-                            level="lv2";
+                            level="lv3";
                         }
 
                         break;
@@ -712,7 +712,7 @@ public class CpuMembersCommand implements CpuMembersInterface
                 //shield skill
                 skillPower=Math.floor(Math.random()*100)+100;
             }
-            power.power=Math.floor(skillPower/3);
+            power.power=Math.floor(skillPower/2);
             //trace("CPU power :",JSON.stringify(power));
         }
         //if

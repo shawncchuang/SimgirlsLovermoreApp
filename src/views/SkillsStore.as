@@ -21,7 +21,8 @@ import flash.geom.Point;
 	import starling.display.Button;
 	import starling.display.Image;
 	import starling.display.MovieClip;
-	import starling.display.Sprite;
+import starling.display.Quad;
+import starling.display.Sprite;
 	import starling.events.Event;
 
 	import starling.events.TouchEvent;
@@ -116,7 +117,8 @@ import flash.geom.Point;
 
             //other character
             chmodel=new Sprite();
-            chmodel.clipRect=new Rectangle(0,0,356,540);
+            //chmodel.clipRect=new Rectangle(0,0,356,540);
+			chmodel.mask=new Quad(356,540);
             chmodel.x=5;
             chmodel.y=120;
             addChild(chmodel);
@@ -148,8 +150,8 @@ import flash.geom.Point;
 
 
             var skillPts:Object=flox.getSaveData("skillPts");
-			sptsTxt=new TextField(70,24,String(skillPts[character]),font,20);
-			sptsTxt.vAlign="center";
+			sptsTxt=new TextField(70,24,String(skillPts[character]));
+			sptsTxt.format.setTo(font,20);
 			sptsTxt.x=198;
 			sptsTxt.y=62;
             skills.addChild(sptsTxt);

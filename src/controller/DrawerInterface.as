@@ -19,7 +19,7 @@ import starling.display.Sprite;
 		function getBitmapdata():BitmapData
 		function setBitmapPorperties(obj:Object):void
 
-		function copyAsBitmapData(sprite:DisplayObject,rec:Rectangle=null,point:Point=null):BitmapData;
+//		function copyAsBitmapData(sprite:DisplayObject,rec:Rectangle=null,point:Point=null):BitmapData;
 		function drawCharacter(basemodel:Sprite=null,attr:Object=null):void
 		function updateBaseModel(target:String,avatar:Object=null):void
 //		function updateModelColor(type:String,rgb:Object):void

@@ -335,10 +335,10 @@ public class BlackMarketScene extends Scenes
 		var bgTexture:Texture=Assets.getTexture("ExcerptBox");
 		var bg:Image=new Image(bgTexture);
 
-		descTxt=new TextField(270,255,"",font,20,0xFFFFFF,false);
+		descTxt=new TextField(270,255,"");
 		descTxt.x=15;
 		descTxt.y=24;
-		descTxt.hAlign="left";
+		descTxt.format.setTo(font,20,0xFFFFFF,"left");
 		desc.addChild(bg);
 		desc.addChild(descTxt);
 		desc.visible=false;
@@ -364,8 +364,8 @@ public class BlackMarketScene extends Scenes
 	private function addTextField(target:Sprite,rec:Rectangle,format:Object):TextField
 	{
 
-		var txt:TextField=new TextField(rec.width,rec.height,"",font,format.size,format.color);
-		txt.hAlign="left";
+		var txt:TextField=new TextField(rec.width,rec.height,"");
+		txt.format.setTo(font,format.size,format.color,"left");
 		txt.autoSize=TextFieldAutoSize.LEFT;
 		txt.x=rec.x;
 		txt.y=rec.y;

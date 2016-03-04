@@ -91,8 +91,10 @@ public class AlertMessage extends Sprite
         quad.alpha=0;
         addChild(quad);
 
-        var txt:TextField=new TextField(1024,80,msg,font,20,0xFFFFFF);
-        txt.hAlign="center";
+
+        var txt:TextField=new TextField(1024,80,msg);
+        txt.format.setTo(font, 20);
+        txt.format.color=0xFFFFFF;
         txt.x=-512;
         txt.y=290;
 
@@ -136,8 +138,9 @@ public class AlertMessage extends Sprite
         comfirm.addChild(alertframe);
 
 
-        var txt:TextField=new TextField(1024,80,msg,font,20,0xFFFFFF);
-        txt.hAlign="center";
+        var txt:TextField=new TextField(1024,80,msg);
+        txt.format.setTo(font,20);
+        txt.format.color=0xFFFFFF;
         txt.x=-512;
         txt.y=290;
         comfirm.addChild(txt);
@@ -167,8 +170,9 @@ public class AlertMessage extends Sprite
 
 
 
-        var txt:TextField=new TextField(1024,80,msg,font,20,0xFFFFFF);
-        txt.hAlign="center";
+        var txt:TextField=new TextField(1024,80,msg);
+        txt.format.setTo(font,20);
+        txt.format.color=0xFFFFFF;
         txt.x=-512;
         txt.y=290;
 

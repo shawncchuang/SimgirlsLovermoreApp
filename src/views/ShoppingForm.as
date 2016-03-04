@@ -24,6 +24,7 @@ import starling.core.Starling;
 import starling.display.Button;
 
 import starling.display.Image;
+import starling.display.Quad;
 import starling.display.Sprite;
 
 import starling.display.Sprite;
@@ -117,8 +118,8 @@ public class ShoppingForm extends Sprite{
     {
 
         shoppinglist=new ShoppingListLayout();
-        shoppinglist.clipRect=new Rectangle(0,0,550,320);
-
+        //shoppinglist.clipRect=new Rectangle(0,0,550,320);
+        shoppinglist.mask=new Quad(550,320);
         shoppinglist.cate=cate;
         shoppinglist.sort=sort;
         shoppinglist.sort_index=sort_index;
@@ -246,9 +247,8 @@ public class ShoppingForm extends Sprite{
     {
 
 
-        var txt:TextField=new TextField(rec.width,rec.height,"",font,format.size,format.color);
-        txt.hAlign="left";
-        txt.vAlign="center";
+        var txt:TextField=new TextField(rec.width,rec.height,"");
+        txt.format.setTo(font,format.size,format.color,"left");
         txt.autoSize=TextFieldAutoSize.LEFT;
         txt.x=rec.x;
         txt.y=rec.y;

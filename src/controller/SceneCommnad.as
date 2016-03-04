@@ -230,7 +230,8 @@ public class SceneCommnad implements SceneInterface
 
             var comcloud:Boolean=chechComCloudIn();
             var boss:Boolean=checkBossIn();
-            if(storyverify[0] && !comcloud && !XAltImag && !boss){
+            var twinflameSel:Boolean=checkTwinflame();
+            if(storyverify[0] && !comcloud && !XAltImag && !boss && !twinflameSel){
                 addSkipButton();
             }
 
@@ -258,6 +259,15 @@ public class SceneCommnad implements SceneInterface
             boss=true;
         }
         return boss;
+    }
+    private function checkTwinflame():Boolean{
+        var twinflame:Boolean=false;
+        var current_switch:String=flox.getSaveData("current_switch");
+        var current_switchID:String=current_switch.split("|")[0];
+       if(current_switchID=="s051"){
+           twinflame=true;
+       }
+        return twinflame;
     }
 
     private function addSkipButton():void{
@@ -698,7 +708,7 @@ public class SceneCommnad implements SceneInterface
         Starling.juggler.remove(moving_tween);
     }
     private function createPhotoMessage(todo:String,target:String):void {
-        DebugTrace.msg("ChatCommand.createPhotoMessage");
+        DebugTrace.msg("SceneCommand.createPhotoMessage");
 
         photoframe = new PhotoMessage(todo,target);
         photoframe.name = "photoframe";

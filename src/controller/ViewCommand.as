@@ -16,6 +16,7 @@ import starling.display.Button;
 
 import starling.display.Image;
 import starling.display.MovieClip;
+import starling.display.Quad;
 import starling.display.Sprite;
 import starling.events.Event;
 import starling.events.Touch;
@@ -62,7 +63,8 @@ public class ViewCommand  implements ViewInterface{
         drawcom.updateBaseModel("Features");
         target.x=params.pos.x;
         target.y=params.pos.y;
-        target.clipRect=params.clipRect;
+        //target.clipRect=params.clipRect;
+        target.mask=new Quad(params.clipRect.width,params.clipRect.height);
 
     }
     private var _cate:String="";
@@ -106,7 +108,10 @@ public class ViewCommand  implements ViewInterface{
 
         player_icon.x=180;
         target.addChild(player_icon);
-        player_icon.clipRect=new Rectangle(-55,-(player_icon.height/2),player_icon.width,player_icon.height);
+        //player_icon.clipRect=new Rectangle(-55,-(player_icon.height/2),player_icon.width,player_icon.height);
+        player_icon.mask=new Quad(player_icon.width,player_icon.height);
+        player_icon.mask.x=-55;
+        player_icon.mask.y=-(player_icon.height/2);
         player_icon.addEventListener(TouchEvent.TOUCH,onTouchCharaterIcon);
         icons.push(player_icon);
 
@@ -121,7 +126,6 @@ public class ViewCommand  implements ViewInterface{
             var enabled:Boolean=false;
 
             var icon:Sprite=new Sprite();
-            icon.flatten();
             icon.name=characters[i];
             icon.useHandCursor=enabled;
             icon.x=i*100+280;
@@ -137,7 +141,6 @@ public class ViewCommand  implements ViewInterface{
 
                 var texture:Texture=Assets.getTexture(enable_ch);
                 var img:Image=new Image(texture);
-                img.smoothing=TextureSmoothing.TRILINEAR;
                 img.pivotX=img.width/2;
                 img.pivotY=img.height/2;
                 img.scaleX=0.45;

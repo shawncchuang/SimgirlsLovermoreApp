@@ -27,18 +27,16 @@ import starling.animation.Transitions;
 import starling.animation.Tween;
 import starling.core.Starling;
 import starling.display.Image;
+import starling.display.Quad;
 import starling.display.Sprite;
 import starling.events.Event;
 import starling.events.Touch;
 import starling.events.TouchEvent;
 import starling.events.TouchPhase;
-import starling.extensions.pixelmask.PixelMaskDisplayObject;
 import starling.text.TextField;
 import starling.text.TextFieldAutoSize;
 import starling.textures.Texture;
 import starling.textures.TextureSmoothing;
-import starling.utils.HAlign;
-import starling.utils.VAlign;
 
 import utils.DebugTrace;
 import utils.DrawManager;
@@ -48,7 +46,7 @@ public class GameInfobar extends Sprite
 {
     private var numbersfont:String="SimNeogreyMedium";
     private var font:String="SimMyriadPro";
-    private var fonColor:int=0x373535;
+    private var fontColor:int=0x373535;
     private var attrlist:Array;
     private var valuelist:Array;
     private var flox:FloxInterface=new FloxCommand();
@@ -205,9 +203,8 @@ public class GameInfobar extends Sprite
 
         var show_date:String=String(datelist.toString().split(",").join("."));
         //DebugTrace.msg("GameInfobar.showDate show_date:"+show_date)
-        dateTxt=new TextField(200,40,show_date,numbersfont,22,fonColor);
-        dateTxt.hAlign="left";
-        dateTxt.vAlign="center";
+        dateTxt=new TextField(200,40,show_date);
+        dateTxt.format.setTo(numbersfont,22,fontColor,"left");
         dateTxt.x=335;
         dateTxt.y=ypos;
         infoDataView.addChild(dateTxt);
@@ -216,9 +213,8 @@ public class GameInfobar extends Sprite
     {
         var cash:Number=flox.getSaveData("cash");
         var cashStr:String=String(cash);
-        cashTxt=new TextField(170,40,cashStr,numbersfont,22,fonColor);
-        cashTxt.hAlign="left";
-        cashTxt.vAlign="center";
+        cashTxt=new TextField(170,40,cashStr);
+        cashTxt.format.setTo(numbersfont,22,fontColor,"left");
         cashTxt.x=572;
         cashTxt.y=ypos;
         infoDataView.addChild(cashTxt);
@@ -232,9 +228,8 @@ public class GameInfobar extends Sprite
         var ap_max:Number=flox.getSaveData("ap_max");
         var cashStr:String=String(ap);
         var value:String=cashStr+"/"+ap_max;
-        apTxt=new TextField(200,40,value,numbersfont,22,fonColor);
-        apTxt.hAlign="left";
-        apTxt.vAlign="center";
+        apTxt=new TextField(200,40,value);
+        apTxt.format.setTo(numbersfont,22,fontColor,"left");
         apTxt.autoSize=TextFieldAutoSize.HORIZONTAL;
         apTxt.x=800;
         apTxt.y=ypos;
@@ -247,9 +242,8 @@ public class GameInfobar extends Sprite
         var honorStr:String=String(honor.play);
 
 
-        honorTxt=new TextField(morebar.width,40,honorStr,numbersfont,18,0xFFFFFF);
-        honorTxt.vAlign="center";
-        honorTxt.hAlign="center";
+        honorTxt=new TextField(morebar.width,40,honorStr);
+        honorTxt.format.setTo(numbersfont,18,0xFFFFFF);
         honorTxt.y=60;
         morebar.addChild(honorTxt);
     }
@@ -258,9 +252,8 @@ public class GameInfobar extends Sprite
         var love:Object=flox.getSaveData("love");
         var loveStr:String=String(love.player);
 
-        loveTxt=new TextField(morebar.width,40,loveStr,numbersfont,18,0xFFFFFF);
-        loveTxt.vAlign="center";
-        loveTxt.hAlign="center";
+        loveTxt=new TextField(morebar.width,40,loveStr);
+        loveTxt.format.setTo(numbersfont,18,0xFFFFFF);
         loveTxt.y=130;
         morebar.addChild(loveTxt);
     }
@@ -271,9 +264,8 @@ public class GameInfobar extends Sprite
         var intStr:String=String(intObj.player);
 
 
-        intTxt=new TextField(morebar.width,40,intStr,numbersfont,18,0xFFFFFF);
-        intTxt.vAlign="center";
-        intTxt.hAlign="center";
+        intTxt=new TextField(morebar.width,40,intStr);
+        intTxt.format.setTo(numbersfont,18,0xFFFFFF);
         intTxt.y=200;
         morebar.addChild(intTxt);
     }
@@ -284,9 +276,8 @@ public class GameInfobar extends Sprite
         var image:Object=flox.getSaveData("image");
         var imageStr:String=String(image.player);
 
-        imageTxt=new TextField(morebar.width,40,imageStr,numbersfont,18,0xFFFFFF);
-        imageTxt.vAlign="center";
-        imageTxt.hAlign="center";
+        imageTxt=new TextField(morebar.width,40,imageStr);
+        imageTxt.format.setTo(numbersfont,18,0xFFFFFF);
         imageTxt.y=270;
         morebar.addChild(imageTxt);
 
@@ -299,13 +290,11 @@ public class GameInfobar extends Sprite
 
         var day_texture:Texture=Assets.getTexture("DaySign");
         dayImg=new Image(day_texture);
-        dayImg.smoothing=TextureSmoothing.TRILINEAR;
         dayImg.x=__x;
         dayImg.y=__y;
 
         var night_texture:Texture=Assets.getTexture("NightSign");
         nightImg=new Image(night_texture);
-        nightImg.smoothing=TextureSmoothing.TRILINEAR;
         nightImg.x=__x;
         nightImg.y=__y;
 
@@ -337,7 +326,8 @@ public class GameInfobar extends Sprite
         morebar.y=-217;
         var barTexture:Texture=Assets.getTexture("MorebarIcon");
         var barImg:Image=new Image(barTexture);
-        morebar.clipRect=new Rectangle(0,0,86,menuIcon.height+barImg.height);
+        //morebar.clipRect=new Rectangle(0,0,86,menuIcon.height+barImg.height);
+        morebar.mask=new Quad(86,menuIcon.height+barImg.height);
         morebar.addChild(barImg);
 
 
@@ -528,9 +518,8 @@ public class GameInfobar extends Sprite
         var comdir:Image=new Image(comdirTexture);
         comDirView.addChild(comdir);
         var msg:String="";
-        comDirTxt=new TextField(455,comdir.height,msg,"SimMyriadPro",18);
-        comDirTxt.vAlign=VAlign.CENTER;
-        comDirTxt.hAlign=HAlign.LEFT;
+        comDirTxt=new TextField(455,comdir.height,msg);
+        comDirTxt.format.setTo("SimMyriadPro",18,0,"left");
         comDirTxt.x=12;
         comDirView.addChild(comDirTxt);
         comDirView.visible=false;
@@ -543,9 +532,8 @@ public class GameInfobar extends Sprite
         comDirView.addChild(apIcon);
 
 
-        payApTxt=new TextField(70,comdir.height,"",numbersfont,25,0xFF0000);
-        payApTxt.vAlign=VAlign.CENTER;
-        payApTxt.hAlign=HAlign.CENTER;
+        payApTxt=new TextField(70,comdir.height,"");
+        payApTxt.format.setTo(numbersfont,25,0xFF0000);
         payApTxt.x=550;
         comDirView.addChild(payApTxt);
 

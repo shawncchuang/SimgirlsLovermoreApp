@@ -83,7 +83,7 @@ public class ParticleSystem implements ParticleInterface
 		//ps.startColor=ColorArgb.fromRgb(_color);
 		//ps.endColor=ColorArgb.fromRgb(_color);
 		ps.speed=300;
-		ps.maxNumParticles=maxNum;
+		ps.capacity=maxNum;
 		ps.lifespan=lifespan;
 		ps.lifespanVariance=lifespanVariance;
 		Starling.juggler.add(ps);

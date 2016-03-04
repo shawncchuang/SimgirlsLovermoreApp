@@ -30,11 +30,9 @@ package views
 			var texture:Texture=Assets.getTexture("ExcerptBox");
 			excerptbox=new Image(texture);
 			
-			excerptTxt=new TextField(290,290,"",Config.ExcerptFornt,20,0xFFFFFF);
+			excerptTxt=new TextField(290,290,"");
+			excerptTxt.format.setTo(Config.ExcerptFornt,20,0xFFFFFF,"left");
 			excerptTxt.x=8;
-			//excerptTxt.y=5;
-			excerptTxt.hAlign="left";
-			excerptTxt.vAlign="center";
 			this.addChild(excerptbox);
 			this.addChild(excerptTxt);
 			this.addEventListener("UPDATE",onUpdateExcerpt);

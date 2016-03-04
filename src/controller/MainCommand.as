@@ -1054,10 +1054,9 @@ public class MainCommand implements MainInterface {
     public function moodCalculator(item_id:String, dating:String):Number {
         var flox:FloxInterface = new FloxCommand();
         var sysAssets:Object = flox.getSyetemData("assets");
-        // var pst:Number = flox.getSaveData("pts")[dating];
         var price:Number = sysAssets[item_id].price;
         var rating:Number = searchAssetRating(item_id);
-        var mood:Number = 100+Math.floor((300+(price/2)) * rating / 100);
+        var mood:Number = 100+Math.floor((400+(price/2)) * rating / 100);
         DebugTrace.msg("MainCommand.moodCalculator item_id="+item_id+", mood=" + mood + ", price=" + price + ", rating=" + rating);
 
         return mood
@@ -2629,15 +2628,15 @@ public class MainCommand implements MainInterface {
         DebugTrace.msg("MainCommmand.checkMemory totalMemory:"+totalMemory+" MB");
 
 
-        if(!DataContainer.popupMessage && freeMemory<3){
-
-            var msg:String="Free memory is running low. If the game is experiencing significant slowdowns please save your progress and restart the game.";
-
-            var popup:PopupManager=new PopupManager();
-            popup.attr="memory";
-            popup.msg=msg;
-            popup.init();
-        }
+//        if(!DataContainer.popupMessage && freeMemory<2 && totalMemory>0){
+//
+//            var msg:String="Free memory is running low. If the game is experiencing significant slowdowns please save your progress and restart the game.";
+//
+//            var popup:PopupManager=new PopupManager();
+//            popup.attr="memory";
+//            popup.msg=msg;
+//            popup.init();
+//        }
 
     }
 

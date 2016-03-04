@@ -109,13 +109,11 @@ public class CommandCloud extends Sprite
         cloud.addChild(cloudMC);
         Starling.juggler.add(cloudMC);
 
-        cloudTxt=new TextField(cloudMC.width, cloudMC.height-5,_label,"SimImpact",25,0x66CCFF);
-
+        cloudTxt=new TextField(cloudMC.width, cloudMC.height-5,_label);
+        cloudTxt.format.setTo("SimImpact",25,0x66CCFF);
         cloudTxt.name="txt";
         cloudTxt.pivotX = cloudTxt.width / 2;
         cloudTxt.pivotY = cloudTxt.height / 2;
-        cloudTxt.vAlign = "center";
-        cloudTxt.hAlign = "center";
         cloudTxt.autoScale=true;
         cloud.addChild(cloudTxt);
 

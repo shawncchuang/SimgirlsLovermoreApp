@@ -60,9 +60,10 @@ public class BlackMarketPlusPopup extends Sprite {
         var bgTexture:Texture=Assets.getTexture("PopupBg");
         var bg:Image=new Image(bgTexture);
         font=BlackMarketListLayout.font;
-        var msgTxt:TextField=new TextField(370,80,msg,font,16,0,false);
+        var msgTxt:TextField=new TextField(370,80,msg);
         msgTxt.x=15;
         msgTxt.y=30;
+        msgTxt.format.setTo(font,16);
         popup.addEventListener("TouchedIcon",onTouchCharaterIcon);
 
 

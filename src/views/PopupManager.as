@@ -34,7 +34,7 @@ public class PopupManager extends Sprite{
     public var attr:String;
     public var data:*;
     public var msg:String;
-    private var flox:FloxInterface=new FloxCommand();
+
 
     public function init():void {
 
@@ -48,7 +48,8 @@ public class PopupManager extends Sprite{
 
         var bg:Quad = new Quad( 400, 80, 0x000000 );
 
-        var msgTxt:TextField=new TextField(400,80,msg,font,30,0xFFFFFF,false);
+        var msgTxt:TextField=new TextField(400,80,msg);
+        msgTxt.format.setTo(font,20,0xFFFFFF);
         msgTxt.autoScale=true;
 //        msgTxt.x=15;
 //        msgTxt.y=30;

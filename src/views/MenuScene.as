@@ -193,7 +193,6 @@ public class MenuScene extends Scenes
             var texture:Texture=Assets.getTexture("Icon"+iconsname[i]);
             //DebugTrace.msg("MenuScene.initFadeinIcons icon name:"+"Icon"+iconsname[i])
             var iconimg:Image=new Image(texture);
-            iconimg.smoothing=TextureSmoothing.TRILINEAR;
             iconimg.name=iconsname[i];
             iconimg.useHandCursor=true;
             iconimg.pivotX=iconimg.width/2;
@@ -206,10 +205,10 @@ public class MenuScene extends Scenes
             addChild(iconimg);
             iconsimg.push(iconimg);
 
-            var textlabel:TextField=new TextField(200,40,labelsName[i],font,35,0x292929,false);
+            var textlabel:TextField=new TextField(200,40,labelsName[i]);
+            textlabel.format.setTo(font,35,0x292929,"left");
             textlabel.alpha=0;
             textlabel.autoSize=TextFieldAutoSize.HORIZONTAL;
-            textlabel.hAlign="left";
             textlabel.x=iconsLabel[i].x;
             textlabel.y=iconsLabel[i].y;
             addChild(textlabel);
@@ -421,7 +420,8 @@ public class MenuScene extends Scenes
         shilfies.y=570;
         shilfies.scaleX=0.2;
         shilfies.scaleY=0.2;
-        var shTxt:TextField=new TextField(100,40,"Selfies",font,30,0x292929,false);
+        var shTxt:TextField=new TextField(100,40,"Selfies");
+        shTxt.format.setTo(font,30,0x292929);
         shTxt.pivotX=shTxt.width/2;
         shTxt.name="Label-"+shilfies.name;
         shTxt.x=shilfies.x;
@@ -443,7 +443,8 @@ public class MenuScene extends Scenes
         precioursmoments.scaleX=0.2;
         precioursmoments.scaleY=0.2;
 
-        var pmTxt:TextField=new TextField(300,40,"Precious Moments",font,30,0x292929,false);
+        var pmTxt:TextField=new TextField(300,40,"Precious Moments");
+        pmTxt.format.setTo(font,30,0x292929);
         pmTxt.pivotX=pmTxt.width/2;
         pmTxt.name="Label-"+precioursmoments.name;
         pmTxt.x=precioursmoments.x;

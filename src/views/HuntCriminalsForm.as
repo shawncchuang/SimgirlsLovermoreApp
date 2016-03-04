@@ -11,6 +11,7 @@ import events.SceneEvent;
 import flash.geom.Rectangle;
 
 import starling.display.Image;
+import starling.display.Quad;
 
 import starling.display.Sprite;
 import starling.events.Event;
@@ -63,7 +64,8 @@ public class HuntCriminalsForm extends Sprite{
     private function initHuntCriminalsLayout():void{
 
         huntcriminalslsit=new HuntCriminalsListLayout();
-        huntcriminalslsit.clipRect=new Rectangle(0,0,550,355);
+        //huntcriminalslsit.clipRect=new Rectangle(0,0,550,355);
+        huntcriminalslsit.mask=new Quad(550,355);
         huntcriminalslsit.x=32;
         huntcriminalslsit.y=72;
         panelbase.addChild(huntcriminalslsit);

@@ -120,7 +120,8 @@ public class MenuTemplate extends Sprite{
         title.pivotY=title.height/2;
         titlebar.addChild(title);
 
-        var title_txt:TextField=new TextField(95,40,this.label,this.font,35,0x292929,false);
+        var title_txt:TextField=new TextField(95,40,this.label);
+        title_txt.format.setTo(this.font,35,0x292929);
         title_txt.autoSize=TextFieldAutoSize.HORIZONTAL;
         title_txt.x=245;
         title_txt.y=-20;
@@ -241,7 +242,6 @@ public class MenuTemplate extends Sprite{
         var mmTextAltas:TextureAtlas=new TextureAtlas(mmTexture,xml);
 
         mini_menu=new Sprite();
-        mini_menu.flatten();
         mini_menu.x=930.5;
         mini_menu.y=79.5;
         var bg:Image=new Image(mmTextAltas.getTexture(this.cate.toLowerCase()));

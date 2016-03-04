@@ -19,6 +19,7 @@ import starling.animation.Tween;
 import starling.core.Starling;
 
 import starling.display.Button;
+import starling.display.Quad;
 import starling.display.Sprite;
 import starling.events.Touch;
 import starling.events.TouchEvent;
@@ -88,7 +89,8 @@ public class AssetsForm extends Sprite
 
 
         assetsform=new AssetsTiledLayout();
-        assetsform.clipRect=new Rectangle(0,0,530,310);
+        //assetsform.clipRect=new Rectangle(0,0,530,310);
+        assetsform.mask=new Quad(530,310);
         assetsform.type=type;
         assetsform.chname=chname;
         assetsform.cate=cate;
@@ -214,9 +216,12 @@ public class AssetsForm extends Sprite
     {
 
 
-        var txt:TextField=new TextField(rec.width,rec.height,"",font,format.size,format.color);
-        txt.hAlign="left";
-        txt.vAlign="center";
+        var txt:TextField=new TextField(rec.width,rec.height,"");
+        txt.format.horizontalAlign="left";
+        txt.format.setTo(font, format.size);
+        txt.format.color=format.color;
+        //txt.hAlign="left";
+        //txt.vAlign="center";
         txt.autoSize=TextFieldAutoSize.LEFT;
         txt.x=rec.x;
         txt.y=rec.y;

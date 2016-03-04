@@ -153,8 +153,8 @@ public class CharacterBubble extends Sprite
 		}
 		//DebugTrace.msg("addBubbleTxt: "+talks[talk_index]);
 
-		bubbletext=new TextField(200,200,"","SimImpact",22,0x000000);
-		bubbletext.hAlign="center";
+		bubbletext=new TextField(200,200,"");
+		bubbletext.format.setTo("SimImpact",22);
 		bubbletext.autoScale=true;
 		bubbletext.text=sentence.split("<>").join(",");
 		bubbletext.pivotX=bubbletext.width/2+20*diraction;

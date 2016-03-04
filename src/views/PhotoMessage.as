@@ -61,7 +61,7 @@ public class PhotoMessage extends Sprite
 			}
 			if(twinflame){
 				var fullname:String=Config.fullnames[twinflame];
-				target=target.split("@@@").join(fullname);
+				target="Kiss"+fullname;
 			}
 		}
 

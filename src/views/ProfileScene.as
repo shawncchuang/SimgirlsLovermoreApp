@@ -29,6 +29,7 @@ import model.Scenes;
 import starling.display.Button;
 import starling.display.Image;
 import starling.display.MovieClip;
+import starling.display.Quad;
 import starling.display.Sprite;
 import starling.events.Event;
 
@@ -315,9 +316,8 @@ public class ProfileScene extends Scenes
     private function addTextField(target:Sprite,rec:Rectangle,format:Object):TextField
     {
 
-        var txt:TextField=new TextField(rec.width,rec.height,"",font,format.size,format.color);
-        txt.hAlign="left";
-        txt.vAlign="center";
+        var txt:TextField=new TextField(rec.width,rec.height,"");
+        txt.format.setTo(font,format.size,format.color,"left");
         txt.autoSize=TextFieldAutoSize.HORIZONTAL;
         txt.x=rec.x;
         txt.y=rec.y;
@@ -488,8 +488,8 @@ public class ProfileScene extends Scenes
         //if
 
         var skillPts:Object=flox.getSaveData("skillPts");
-        var spTxt:TextField=new TextField(70,24,String(skillPts[character]),font,20);
-        spTxt.vAlign="center";
+        var spTxt:TextField=new TextField(70,24,String(skillPts[character]));
+        spTxt.format.setTo(font,20);
         spTxt.x=198;
         spTxt.y=62;
         skills.addChild(spTxt);
@@ -516,7 +516,6 @@ public class ProfileScene extends Scenes
 
 
         cardlist=new CardsList();
-        cardlist.flatten();
         cardlist.character=character;
         cardlist.from="profile";
         cardlist.cate=cate;
@@ -531,14 +530,13 @@ public class ProfileScene extends Scenes
     {
 
 
-
         basemodel=new Sprite();
         addChild(basemodel);
 
-
         //other character
         chmodel=new Sprite();
-        chmodel.clipRect=new Rectangle(0,0,356,540);
+        //chmodel.clipRect=new Rectangle(0,0,356,540);
+        chmodel.mask=new Quad(356,540);
         chmodel.x=5;
         chmodel.y=120;
         addChild(chmodel);

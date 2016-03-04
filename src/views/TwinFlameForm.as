@@ -58,7 +58,8 @@ public class TwinFlameForm extends Sprite{
         addChild(twinflameMask);
 
         var _title:String="";
-        title=new TextField(1024,45,_title,font,20,0xFFFFFF);
+        title=new TextField(1024,45,_title);
+        title.format.setTo(font,20,0xFFFFFF);
         title.y=640;
         addChild(title);
 
@@ -73,7 +74,6 @@ public class TwinFlameForm extends Sprite{
             var atlas:TextureAtlas=new TextureAtlas(texture,xml);
             var _texture:Texture=atlas.getTexture(ch+"-pleased1");
             var img:Image=new Image(_texture);
-            img.smoothing=TextureSmoothing.TRILINEAR;
             var btn:Button=new Button();
             btn.name=name;
             btn.defaultIcon=img;

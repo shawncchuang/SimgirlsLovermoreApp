@@ -17,7 +17,8 @@ import starling.display.Sprite;
 import starling.events.Event;
 import starling.filters.BlurFilter;
 	import starling.filters.ColorMatrixFilter;
-	import starling.utils.Color;
+import starling.filters.DropShadowFilter;
+import starling.utils.Color;
 	
 	import utils.DebugTrace;
 
@@ -114,7 +115,7 @@ import starling.filters.BlurFilter;
 		public function setShadow(src:Sprite):void
 		{
 			shadow=src;
-			var dropShadow:BlurFilter = BlurFilter.createDropShadow();
+			var dropShadow:DropShadowFilter = new DropShadowFilter();
 			shadow.filter = dropShadow;
 			shadow.addEventListener(Event.REMOVED_FROM_STAGE, onRevmovedShadow);
 		}

@@ -176,13 +176,13 @@ public class Config
 
     }
 
-    public static var CriminalRanking:Array=[{"rank":"S","se":3200,"rewards":6700},
-        {"rank":"A","se":2400,"rewards":5100},
-        {"rank":"B","se":1600,"rewards":3500},
-        {"rank":"C","se":800,"rewards":1900},
-        {"rank":"D","se":400,"rewards":1100},
-        {"rank":"E","se":200,"rewards":700},
-        {"rank":"F","se":100,"rewards":500}];
+    public static var CriminalRanking:Array=[{"rank":"S","se":3200,"rewards":1850},
+        {"rank":"A","se":2400,"rewards":1450},
+        {"rank":"B","se":1600,"rewards":1050},
+        {"rank":"C","se":800,"rewards":650},
+        {"rank":"D","se":400,"rewards":450},
+        {"rank":"E","se":200,"rewards":350},
+        {"rank":"F","se":100,"rewards":250}];
 
     public static function set AccType(value:String):void
     {
@@ -437,15 +437,15 @@ public class Config
         },
         "rvn":{
             "pos":new Point(170,988),
-            "lv1":{
-                "skillID":"f1",
+            "lv2":{
+                "skillID":"rvn_s_1",
                 "label":"ATK",
                 "type":"",
                 "enemy":2,
                 "area":2
             },
-            "lv2":{
-                "skillID":"rvn_s_1",
+            "lv3":{
+                "skillID":"rvn_s_2",
                 "label":"MultiATK",
                 "type":"",
                 "enemy":5,
@@ -1368,6 +1368,7 @@ public class Config
         "qa-s034-1":[-10,10],
         "qa-s034-2":[-10,10],
         "qa-s050":[10,-10],
+        "qa-s051":[-10,10],
         "qa-s1427-1-1":[10,-10],
         "qa-s1427-1-2":[-10,10]
     }

@@ -48,12 +48,10 @@ public class RandomBattlePopup extends Sprite {
         var bgTexture:Texture=Assets.getTexture("PopupBg");
         var bg:Image=new Image(bgTexture);
 
-        var msgTxt:TextField=new TextField(370,80,msg,font,16,0,false);
+        var msgTxt:TextField=new TextField(370,80,msg);
+        msgTxt.format.setTo(font,16);
         msgTxt.x=15;
         msgTxt.y=30;
-
-
-
 
         var okBtn:Button=new Button();
         okBtn.label="Fight";

@@ -67,7 +67,6 @@ public class FlirtScene extends Sprite{
     {
         var texture:Texture=Assets.getTexture("BubbleThink");
         bubble=new Image(texture);
-        bubble.smoothing=TextureSmoothing.TRILINEAR;
         bubble.pivotX=bubble.width/2;
         bubble.pivotY=bubble.height/2;
 
@@ -77,9 +76,8 @@ public class FlirtScene extends Sprite{
         bubble.scaleX=-1;
         addChild(bubble);
 
-        chatTxt=new TextField(245,145,"",font,20,0x000000);
-        chatTxt.hAlign="left";
-        chatTxt.vAlign="center";
+        chatTxt=new TextField(245,145,"");
+        chatTxt.format.setTo(font,20,0x000000,"left");
         chatTxt.x=648;
         chatTxt.y=123;
         addChild(chatTxt);

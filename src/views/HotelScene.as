@@ -287,9 +287,7 @@ public class HotelScene extends Scenes
                 txt=value+" Days";
             }
             var btn:Button=new Button(btnTexture,txt);
-            btn.fontName="Neogrey Medium";
-            btn.fontColor=0xFFFFFF;
-            btn.fontSize=25;
+            button.textFormat.setTo("Neogrey Medium",25,0xFFFFFF);
             btn.name="day"+value;
             btn.x=347;
             btn.y=159+i*100;

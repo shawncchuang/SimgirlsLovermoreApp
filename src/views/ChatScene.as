@@ -19,6 +19,7 @@ import starling.animation.Tween;
 import starling.core.Starling;
 
 import starling.display.Image;
+import starling.display.Quad;
 import starling.display.Sprite;
 import starling.events.Event;
 
@@ -150,7 +151,6 @@ public class ChatScene extends Sprite
         var texture:Texture=Assets.getTexture("BubbleThink");
         //bubbleSprite=new Sprite();
         bubble=new Image(texture);
-        bubble.smoothing=TextureSmoothing.TRILINEAR;
         bubble.pivotX=bubble.width/2;
         bubble.pivotY=bubble.height/2;
 
@@ -187,7 +187,8 @@ public class ChatScene extends Sprite
             bingomotion.addChild(bingomotionImg);
             bingomotion.name="motion"+i;
             bingomotion.x=i*bingomotionImg.width;
-            bingomotion.clipRect=new flash.geom.Rectangle(0,0,100,100);
+            //bingomotion.clipRect=new flash.geom.Rectangle(0,0,100,100);
+            bingomotion.mask=new Quad(100,100);
             bingomotion.visible=false;
 
             var bingoitems:Sprite=new Sprite();
@@ -195,7 +196,8 @@ public class ChatScene extends Sprite
             bingoitems.addChild(bingoitemsImg);
             bingoitems.name="bingo"+i;
             bingoitems.x=i*bingoitems.width;
-            bingoitems.clipRect=new flash.geom.Rectangle(0,0,100,100);
+            //bingoitems.clipRect=new flash.geom.Rectangle(0,0,100,100);
+            bingoitems.mask=new Quad(100,100);
             bingoitems.visible=false;
 
             bingo.addChild(bingoitems);
@@ -235,11 +237,10 @@ public class ChatScene extends Sprite
         }
         //if
 
-        //target.clipMaskTop=top;
-        //target.clipMaskBottom=bottom;
-        target.clipRect=new flash.geom.Rectangle(0,top,100,100);
 
-
+        //target.clipRect=new flash.geom.Rectangle(0,top,100,100);
+        target.mask=new Quad(100,100);
+        target.mask.y=top;
 
     }
     private function onRepeatBingoMoving():void
@@ -304,12 +305,15 @@ public class ChatScene extends Sprite
             {
 
                 _bingoitems.y=0;
-                _bingoitems.clipRect=new flash.geom.Rectangle(0,0,100,100);
+                //_bingoitems.clipRect=new flash.geom.Rectangle(0,0,100,100);
+                _bingoitems.mask=new Quad(100,100);
             }
             if(!enterframe)
             {
                 _bingoitems.y=-(relist[i]*100);
-                _bingoitems.clipRect=new flash.geom.Rectangle(0,relist[i]*100,100,100);
+                //_bingoitems.clipRect=new flash.geom.Rectangle(0,relist[i]*100,100,100);
+                _bingoitems.mask=new Quad(100,100);
+                _bingoitems.mask.y=relist[i]*100;
                 _bingoitems.removeEventListener(Event.ENTER_FRAME,doBingoStart);
                 _bingomotion.removeEventListener(Event.ENTER_FRAME,doBingoStart);
 
@@ -434,8 +438,8 @@ public class ChatScene extends Sprite
     {
         Starling.juggler.removeTweens(bubble);
 
-        var chatTxt:TextField=new TextField(255,190,sentence,"SimImpact",20,0x000000);
-        chatTxt.hAlign="left";
+        var chatTxt:TextField=new TextField(255,190,sentence);
+        chatTxt.format.setTo("SimImpact",20,0x000000,"left");
         chatTxt.x=634;
         chatTxt.y=110;
         addChild(chatTxt);

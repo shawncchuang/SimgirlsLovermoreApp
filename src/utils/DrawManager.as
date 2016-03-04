@@ -27,7 +27,7 @@ import dragonBones.factorys.StarlingFactory;
 
 import model.SaveGame;
 
-import starling.core.RenderSupport;
+//import starling.core.RenderSupport;
 import starling.core.Starling;
 import starling.display.Canvas;
 import starling.display.DisplayObject;
@@ -42,7 +42,7 @@ import starling.textures.Texture;
 import starling.textures.TextureAtlas;
 import starling.textures.TextureSmoothing;
 import starling.utils.Color;
-import starling.utils.VertexData;
+//import starling.utils.VertexData;
 
 import utils.DebugTrace;
 
@@ -111,7 +111,7 @@ public class DrawManager implements DrawerInterface
         porperties=obj
 
     }
-
+/*
     public function copyAsBitmapData(sprite:DisplayObject,rec:Rectangle=null,point:Point=null):BitmapData
     {
 
@@ -150,7 +150,7 @@ public class DrawManager implements DrawerInterface
 
 
     }
-
+*/
     public function drawCharacter(model:Sprite=null,attr:Object=null):void
     {
         basemodel=model;
@@ -218,7 +218,6 @@ public class DrawManager implements DrawerInterface
                 hairAtlas = new TextureAtlas(texture, xml);
                 var atlas_texture:Texture=hairAtlas.getTexture("hair"+hairIndex);
                 hair=new Image(atlas_texture);
-                hair.smoothing=TextureSmoothing.TRILINEAR;
                 hair.name=target;
                 hair.x=pos.x;
                 hair.y=pos.y;
@@ -228,13 +227,11 @@ public class DrawManager implements DrawerInterface
                 break
             case "HairStyle":
                 var hairTexture:Texture=hairAtlas.getTexture("hair"+hairIndex);
-                hair.smoothing=TextureSmoothing.TRILINEAR;
                 hair.texture=hairTexture;
                 break
             case "Eyes":
                 var eyes_texture:Texture=Assets.getTexture(gender+"Eyes");
                 eyes=new Image(eyes_texture);
-                eyes.smoothing=TextureSmoothing.TRILINEAR;
                 eyes.name=target;
                 eyes.x=pos.x;
                 eyes.y=pos.y;
@@ -248,7 +245,6 @@ public class DrawManager implements DrawerInterface
                 pantsAtlas=new TextureAtlas(pants_texture, xml);
                 atlas_texture=pantsAtlas.getTexture("pants"+pantsIndex);
                 pants=new Image(atlas_texture);
-                pants.smoothing=TextureSmoothing.TRILINEAR;
                 _color=lowercolor;
                 pants.color=Color.rgb(Color.getRed(_color),Color.getGreen(_color),Color.getBlue(_color));
                 pants.name=target;
@@ -266,7 +262,6 @@ public class DrawManager implements DrawerInterface
                 clothesAtlas=new TextureAtlas(clothes_texture, xml);
                 atlas_texture=clothesAtlas.getTexture("clothes"+clothesIndex);
                 clothes=new Image(atlas_texture);
-                clothes.smoothing=TextureSmoothing.TRILINEAR;
                 _color=uppercolor;
                 clothes.color=Color.rgb(Color.getRed(_color),Color.getGreen(_color),Color.getBlue(_color));
                 clothes.name=target;
@@ -284,7 +279,6 @@ public class DrawManager implements DrawerInterface
                 featureAtlas = new TextureAtlas(features_texture, xml);
                 var featureTexture:Texture=featureAtlas.getTexture("features"+featuresIndex);
                 features=new Image(featureTexture);
-                features.smoothing=TextureSmoothing.TRILINEAR;
                 features.name=target;
                 features.x=pos.x;
                 features.y=pos.y;
@@ -439,7 +433,6 @@ public class DrawManager implements DrawerInterface
         mc.stop();
         mc.useHandCursor=true;
         mc.name=ch.toLowerCase();
-        mc.smoothing=TextureSmoothing.TRILINEAR;
         mc.pivotX=mc.width/2;
         mc.pivotY=mc.height/2;
         mc.scaleX=scale;
@@ -458,7 +451,6 @@ public class DrawManager implements DrawerInterface
         var img:Image=new Image(npc_texture);
         img.useHandCursor=true;
         img.name=id;
-        img.smoothing=TextureSmoothing.TRILINEAR;
         img.pivotX=img.width/2;
         img.pivotY=img.height/2;
         img.scaleX=scale;

@@ -252,10 +252,10 @@ public class CardsList extends Sprite
         locksprite.addChild(skillptsicon);
 
 
-        var spend_spts:TextField=new TextField(50,28,"","SimNeogreyMedium",20,0x000000,true);
+        var spend_spts:TextField=new TextField(50,28,"");
         spend_spts.x=110;
         spend_spts.y=-4;
-        spend_spts.hAlign="center";
+        spend_spts.format.setTo("SimNeogreyMedium",20);
         var rate:Number=20;
         if(character=="player")
         {

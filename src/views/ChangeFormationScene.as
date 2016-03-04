@@ -136,8 +136,8 @@ public class ChangeFormationScene extends Scenes
 //        Starling.juggler.add(tween);
 
         var sum_firststr:String="Drag and drop one to five soldiers to the combat zone";
-        var sum_first:TextField=new TextField(650,40,sum_firststr,"SimNeogreyMedium",18,0xFFFD38);
-        sum_first.hAlign="left";
+        var sum_first:TextField=new TextField(650,40,sum_firststr);
+        sum_first.format.setTo("SimNeogreyMedium",18,0xFFFD38,"left");
         layout_sprite.addChild(sum_first);
 
 

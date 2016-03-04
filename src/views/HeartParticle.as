@@ -51,8 +51,6 @@ import starling.animation.Transitions;
 			
 			var heartTexture:Texture=Assets.getTexture("HeartLv"+lv);
 			heartImg=new Image(heartTexture);
-			
-			heartImg.smoothing=TextureSmoothing.TRILINEAR;
 			heartImg.pivotX=heartImg.width/2;
 			heartImg.pivotY=heartImg.height/2;
 			var scale:Number=1+(0.5*(lv-1));
@@ -157,7 +155,8 @@ import starling.animation.Transitions;
 			 
 			}
             loveSprite=new Sprite();
-			loveTxt=new TextField(200,40,loveStr,"SimNeogreyMedium",30,0xFAF182);
+			loveTxt=new TextField(200,40,loveStr);
+			loveTxt.format.setTo("SimNeogreyMedium",30,0xFAF182);
 			loveTxt.pivotX=loveTxt.width/2;
 			loveTxt.pivotY=loveTxt.height/2;
 			//loveTxt.x=_target.x;

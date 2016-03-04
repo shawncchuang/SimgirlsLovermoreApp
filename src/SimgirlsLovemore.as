@@ -517,7 +517,6 @@ public class SimgirlsLovemore extends MovieClip
 		//stage.align = StageAlign.TOP_LEFT;
 
 		//Starling.multitouchEnabled = true; // useful on mobile devices
-		Starling.handleLostContext = true; // required on Windows and Android, needs more memory
 
 		var vp:Rectangle=new flash.geom.Rectangle(0, 0, 1024, 768);
 		_starling=new Starling(Game,stage,vp,null,"auto","auto");

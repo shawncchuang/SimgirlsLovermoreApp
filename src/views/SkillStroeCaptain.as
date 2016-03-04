@@ -112,17 +112,11 @@ public class SkillStroeCaptain extends Sprite {
         panelbase.addChild(skills);
 
         var skillPts:Object = flox.getSaveData("skillPts");
-        sptsTxt = new TextField(70, 24, String(skillPts.player), font, 20);
-        sptsTxt.vAlign = "center";
+        sptsTxt = new TextField(70, 24, String(skillPts.player));
+        sptsTxt.format.setTo(font, 20);
         sptsTxt.x = 198;
         sptsTxt.y = 62;
         skills.addChild(sptsTxt);
-
-//        skillexcbox=new ExcerptBox();
-//        skillexcbox.x=-345;
-//        skillexcbox.y=113;
-//        skills.addChild(skillexcbox);
-//        ViewsContainer.SkillExcerptBox=skillexcbox;
 
         skillItems = flox.getSyetemData("commander_items");
 
@@ -141,27 +135,24 @@ public class SkillStroeCaptain extends Sprite {
             var quad:Quad = new Quad(530, renderH, 0xffffff);
             itemRender.addChild(quad);
 
-            var nameHeader:TextField = new TextField(50, 16, "Name:", font, 12, 0x333333, true);
+            var nameHeader:TextField = new TextField(50, 16, "Name:");
+            nameHeader.format.setTo(font, 12, 0x333333,"left");
             nameHeader.x = itemImg.width + 10;
-            nameHeader.hAlign = "left";
             itemRender.addChild(nameHeader);
 
-            var nametTxt:TextField = new TextField(100, renderH, skillItems[id].label, font, 20, 0, false);
+            var nametTxt:TextField = new TextField(100, renderH, skillItems[id].label);
+            nametTxt.format.setTo(font, 20, 0,"left");
             nametTxt.x = nameHeader.x;
-            nametTxt.hAlign = "left";
-            nametTxt.vAlign = "center";
 
-
-            var priceHeader:TextField = new TextField(80, 16, "Skill Points:", font, 12, 0x333333, true);
+            var priceHeader:TextField = new TextField(80, 16, "Skill Points:");
+            priceHeader.format.setTo(font, 12, 0x333333,"left");
             priceHeader.x = 290;
-            priceHeader.hAlign = "left";
             itemRender.addChild(priceHeader);
             var _price:String = skillItems[id].pts;
-            var priceTxt:TextField = new TextField(90, renderH, _price, "SimNeogreyMedium", 16, 0, true);
+            var priceTxt:TextField = new TextField(90, renderH, _price);
+            priceTxt.format.setTo("SimNeogreyMedium", 16, 0,"left");
             priceTxt.autoScale = true;
             priceTxt.x = priceHeader.x;
-            priceTxt.vAlign = "center";
-            priceTxt.hAlign = "left";
 
             var buyBtn:Button = new Button();
             buyBtn.x = priceTxt.x + 120;
