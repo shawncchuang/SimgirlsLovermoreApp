@@ -15,6 +15,8 @@ import controller.MainInterface;
 
 import data.DataContainer;
 
+import starling.animation.Juggler;
+
 import starling.animation.Transitions;
 import starling.animation.Tween;
 import starling.core.Starling;
@@ -41,6 +43,7 @@ public class CharacterBubble extends Sprite
 	private var diraction:Number=1;
 	private var texture_name:String;
 	private var onBubbleComplete:Function;
+	private var tweenID:uint=0;
 	public function CharacterBubble(type:String,index:uint,part:uint,point:Point,dir:Number,callback:Function=null)
 	{
 
@@ -121,13 +124,16 @@ public class CharacterBubble extends Sprite
 		bubble.scaleX=0.2*diraction;
 		bubble.scaleY=0.2;
 		addChild(bubble);
-		var tween:Tween=new Tween(bubble,0.5,Transitions.EASE_OUT_ELASTIC);
-		tween.animate("scaleX",1*diraction);
-		tween.animate("scaleY",1);
-		tween.onComplete=onBubbleDisplayed;
-		Starling.juggler.add(tween);
 
 
+//		var tween:Tween=new Tween(bubble,0.5,Transitions.EASE_OUT_ELASTIC);
+//		tween.animate("scaleX",1*diraction);
+//		tween.animate("scaleY",1);
+//		tween.onComplete=onBubbleDisplayed;
+//		Starling.juggler.add(tween);
+
+		var juggler:Juggler=Starling.juggler;
+		tweenID=juggler.tween(bubble,0.5,{scaleX:1*diraction,scaleY:1,onComplete:onBubbleDisplayed,transition:Transitions.EASE_OUT_ELASTIC});
 
 
 	}
@@ -135,7 +141,8 @@ public class CharacterBubble extends Sprite
 	{
 		if(onBubbleComplete)
 			onBubbleComplete();
-		Starling.juggler.removeTweens(bubble);
+		//Starling.juggler.removeTweens(bubble);
+	    Starling.juggler.removeByID(tweenID);
 		addBubbleTxt();
 	}
 	private function addBubbleTxt():void
@@ -157,11 +164,11 @@ public class CharacterBubble extends Sprite
 		bubbletext.format.setTo("SimImpact",22);
 		bubbletext.autoScale=true;
 		bubbletext.text=sentence.split("<>").join(",");
-		bubbletext.pivotX=bubbletext.width/2+20*diraction;
-		var pioveY:Number=bubbletext.height/2+15;
+		bubbletext.pivotX=Math.floor(bubbletext.width/2+20*diraction);
+		var pioveY:Number=Math.floor(bubbletext.height/2+15);
 		if(texture_name=="BubbleThink" || texture_name=="BubbleShout")
 		{
-			pioveY=bubbletext.height/2+45;
+			pioveY=Math.floor(bubbletext.height/2+45);
 		}
 		bubbletext.pivotY=pioveY;
 

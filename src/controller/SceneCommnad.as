@@ -1088,7 +1088,6 @@ public class SceneCommnad implements SceneInterface
             {
                 current_switch=turn_off_id+"|off";
 
-
             }
             if(turn_on_id!="")
             {
@@ -1098,8 +1097,6 @@ public class SceneCommnad implements SceneInterface
             }
 
             switchID=current_switch;
-
-
             onStoryComplete();
 
         }else{
@@ -1174,7 +1171,6 @@ public class SceneCommnad implements SceneInterface
         display_container=new Object();
         part_index++;
         var previewStory:Array=DataContainer.previewStory;
-
         if(part_index>previewStory.length-1){
 
             part_index=0;
@@ -1194,18 +1190,14 @@ public class SceneCommnad implements SceneInterface
             bubble=null;
         }
         var previewStory:Array=DataContainer.previewStory;
-        if(talk_index<0){
-            talk_index=0;
+        if(talk_index<0) {
+            talk_index = 0;
             part_index--;
-            if(part_index<0){
-                part_index=0;
+            if (part_index < 0) {
+                part_index = 0;
             }
 
         }
-//        talks=new Array();
-//        for(var i:uint=0;i<previewStory[part_index].length;i++){
-//            talks.push(previewStory[part_index][i])
-//        }
         talks=previewStory[part_index];
         //DebugTrace.msg("PreviewStroyCoommand.prevStoryStep talks["+talk_index+"]="+talks[talk_index]);
 

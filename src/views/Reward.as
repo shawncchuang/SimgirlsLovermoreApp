@@ -4,6 +4,8 @@
 package views {
 import controller.Assets;
 
+import starling.animation.Juggler;
+
 import starling.animation.Transitions;
 
 import starling.animation.Tween;
@@ -31,6 +33,7 @@ public class Reward extends Sprite{
     private var stageCW:Number;
     private var stageCH:Number;
     private var fliter:FilterManager=new FilterManager();
+    private var tweenID:uint=0;
 
     private var textures:Object={
         "ap":"ApIcon",
@@ -73,25 +76,33 @@ public class Reward extends Sprite{
         }
         reward.pivotX=reward.width/2;
         reward.pivotY=reward.height/2;
-
+        reward.scale=0.8;
         addChild(reward);
 
         fliter.setShadow(reward);
 
 
-        var tween:Tween=new Tween(reward,1,Transitions.EASE_OUT_BACK);
-        tween.delay=index*0.4;
-        tween.animate("y",reward.y-50);
-        tween.animate("scaleX",1.2);
-        tween.animate("scaleY",1.2);
-        tween.onComplete=onRewardFadeOut;
-        Starling.juggler.add(tween);
+
+//
+//        var tween:Tween=new Tween(reward,1,Transitions.EASE_OUT_BACK);
+//        tween.delay=index*0.4;
+//        tween.animate("y",reward.y-50);
+//        tween.animate("scaleX",1.2);
+//        tween.animate("scaleY",1.2);
+//        tween.onComplete=onRewardFadeOut;
+//        Starling.juggler.add(tween);
+
+        var juggler:Juggler=Starling.juggler;
+        tweenID=juggler.tween(reward,1,{delay:index*0.4,y:reward.y-80,scale:1.5,transition:Transitions.EASE_OUT_BACK,onComplete:onRewardFadeOut});
+
 
     }
 
     private function onRewardFadeOut():void{
 
-        Starling.juggler.removeTweens(reward);
+        //Starling.juggler.removeTweens(reward);
+        var juggler:Juggler=Starling.juggler;
+        juggler.removeByID(tweenID);
         reward.dispose();
         reward.removeFromParent(true);
 

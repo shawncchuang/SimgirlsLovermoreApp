@@ -66,6 +66,7 @@ public class CommandCloud extends Sprite
     private var cloud:Sprite;
     private var cloudMC:MovieClip;
     private var cloudAltas:TextureAtlas;
+    private var delayID:uint;
     public function CommandCloud(src:String):void{
         //L1_^Departures
         var p:String=src.split("_")[0];
@@ -282,18 +283,17 @@ public class CommandCloud extends Sprite
 
         }else{
 
-
+            delayID=Starling.juggler.delayCall(onPaidAPComplete,1);
             //delcall=new DelayedCall(onPaidAPComplete,0.5);
             //Starling.juggler.add(delcall);
-            doCloudCommandHandler();
+
         }
 
 
     }
     private function onPaidAPComplete():void{
 
-
-        Starling.juggler.remove(delcall);
+        Starling.juggler.removeByID(delayID);
         doCloudCommandHandler();
     }
     private function doOverComCloud():void

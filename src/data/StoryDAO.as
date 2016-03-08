@@ -542,7 +542,7 @@ public class StoryDAO {
             "spL|Meh...","spR|The good news is: if you do encounter the powerful ones<> you can always pay a pizzo instead of fighting them. ",
             "shL|Wait a sec... how to tell if they have high or low SE levels? ","spR|It is impossible for newbies to read SE levels. It requires a lot of experience.",
             "spR|Besides<> good spiriters always know how to hide their SE levels! ","spR|We do have a Criminal Rankings Report updated each morning here at the Police Station. ",
-            "spR|If you are serious about Bounty Hunting<> check it out every morning. ","player|It seems that Bounty Hunting is also an efficient way to earn money as well as get us prepared for the coming SSCC. ",
+            "spR|If you are serious about Bounty Hunting<> check it out every morning. ","player|It seems that Bounty Hunting is also an efficient way to earn money as well as get us prepared for the coming SSCC. ", "com|photo-on_TutorialPractice", "player|After that day, Sao and I spent most of the time learning the secrets of Spirit Energy and SMA. ", "player|Time flies like a banana. A few months later... ",
             "com|music-off_klrMusic",
             "END"]
 

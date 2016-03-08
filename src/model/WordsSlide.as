@@ -20,6 +20,7 @@ public class WordsSlide
 		private var tween:Tween;
 		private var onCompleteSentance:Function;
 		private var juggler:Juggler;
+	    private  var tweedID:uint=0;
 		public function WordsSlide(target:Sprite,txtf:TextField,txt:String,callback:Function=null):void
 		{
 			_target=target;
@@ -32,17 +33,14 @@ public class WordsSlide
 		}
 		private function startSlide():void
 		{
-			
-
 
 			juggler = Starling.juggler;
-			juggler.repeatCall(onSlideNext,0.008,sentence.length);
-
+			tweedID=juggler.repeatCall(onSlideNext,0.008,sentence.length);
 
 		}
 		private function onSlideNext():void
 		{
-			//juggler.removeTweens(onSlideNext);
+			//DebugTrace.msg("WordSlide.onSlideNext tweemIDs="+JSON.stringify(tweedID));
 			var current_txt:String=sentence.charAt(index);
 			txtfield.text+=current_txt;
 
@@ -54,7 +52,8 @@ public class WordsSlide
 			else
 			{
 
-				juggler.removeTweens(onSlideNext);
+				//juggler.removeTweens(onSlideNext);
+				Starling.juggler.removeByID(tweedID);
 				_target.dispatchEventWith(MyTalkingDisplay.TALKING_COMPLETE);
 			}
 			//if

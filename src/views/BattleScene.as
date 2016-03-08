@@ -4212,8 +4212,8 @@ public class BattleScene extends Sprite
 			skillPts[ch_name]=pts;
 			current_skillPts[ch_name]=pts;
 
-			DebugTrace.msg("BattleScene.recordSkillPts  current_skillPts:" +JSON.stringify(skillPts));
-			DebugTrace.msg("BattleScene.recordSkillPts  skillPts:" +JSON.stringify(skillPts));
+			//DebugTrace.msg("BattleScene.recordSkillPts  current_skillPts:" +JSON.stringify(skillPts));
+			//DebugTrace.msg("BattleScene.recordSkillPts  skillPts:" +JSON.stringify(skillPts));
 
 			flox.save("skillPts",skillPts);
 
@@ -4230,6 +4230,8 @@ public class BattleScene extends Sprite
 		TweenMax.killAll();
 		TweenMax.killDelayedCallsTo(doNexActionHandler);
 
+		var loaderQueue:LoaderMax= ViewsContainer.loaderQueue;
+		loaderQueue.empty(true,true);
 
 	}
 }

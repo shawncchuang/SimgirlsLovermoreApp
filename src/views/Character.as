@@ -791,15 +791,11 @@ public class Character extends MovieClip
             //if
         }
 
-        if(effShield){
-            removeChild(effShield);
-            effShield=null;
-        }
-/*
+
+
         try
         {
             //DebugTrace.msg("Character.updateRound remove effShield name="+power.name+" , effShield="+effShield.name);
-
             removeChild(effShield);
             effShield=null;
         }
@@ -808,7 +804,7 @@ public class Character extends MovieClip
             DebugTrace.msg("Character.updateRound  effShield = NULL ");
         }
 
-*/
+
         power.shielded="false";
         power.target="";
         power.targetlist=new Array();
