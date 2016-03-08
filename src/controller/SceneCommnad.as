@@ -1036,7 +1036,7 @@ public class SceneCommnad implements SceneInterface
 
         }
 
-        if(switchID=="" || ! battle_verify){
+        if(switchID=="" || !battle_verify){
             verify=false;
             date_verify=false;
             time_verify=false;
@@ -1063,8 +1063,9 @@ public class SceneCommnad implements SceneInterface
         if(battleDays.indexOf(current_date)!=-1){
 
             var resultlist:Array=current_battle[current_date];
-            var battle_result:String=resultlist.toString();
-            if(battle_result=="0|0,0|0,0|0,0|0,0|0"){
+           // var battle_result:String=resultlist.toString();
+            if(resultlist[0]=="0|0"){
+                //didn't battle yet
                 verify=false;
             }
         }

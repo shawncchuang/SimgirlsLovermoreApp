@@ -75,7 +75,7 @@ package views
 			var itemsID:Number=Math.floor(Math.random()*3)+2;
 			if(game=="tracing")
 			{
-				var superMax:Number=60
+				var superMax:Number=60;
 			}
 			else
 			{

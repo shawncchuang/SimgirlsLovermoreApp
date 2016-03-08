@@ -3,6 +3,7 @@ package controller
 import com.greensock.TweenMax;
 import com.greensock.events.LoaderEvent;
 import com.greensock.loading.LoaderMax;
+import com.greensock.loading.LoaderMax;
 import com.greensock.loading.SWFLoader;
 
 import data.DataContainer;
@@ -71,6 +72,7 @@ public class MiniGameCommand implements MiniGameInterface
 	private var mace_sch:SoundChannel=new SoundChannel();
 	private var robospeak:SoundChannel=new SoundChannel();
 	private var game_result:String="";
+	private var loaderReq:LoaderRequest;
 	public function init(stage:MovieClip,type:String):void
 	{
 
@@ -186,7 +188,7 @@ public class MiniGameCommand implements MiniGameInterface
 			if(game=="tracing")
 			{
 				weapon.EnergyBalls();
-
+				command.playSound("FuturisticGun");
 				weapon.x=580;
 				weapon.y=65;
 			}
@@ -446,8 +448,8 @@ public class MiniGameCommand implements MiniGameInterface
 	{
 
 		var st:SoundTransform=new SoundTransform(1,0.1);
-
 		command.playSound("Explostion",0,st);
+
 		bikeExpl=new BikeExpl();
 		if(game=="tracing")
 		{
@@ -653,13 +655,14 @@ public class MiniGameCommand implements MiniGameInterface
 
 		DebugTrace.msg("MiniGameCommand.gameComplete");
 		status="stop";
-		TweenMax.killAll(true);
+		TweenMax.killAll();
 		TweenMax.killDelayedCallsTo(doAddedEnergyBall);
 		if(game=="tracing")
 		{
 			timer.stop();
 			timer.removeEventListener(TimerEvent.TIMER,doAddedEnergyBall);
 			enemy.act.gotoAndStop("idle");
+
 			tryStopSoundEffect(enemy_sch);
 			tryStopSoundEffect(player_sch);
 			tryStopSoundEffect(mace_sch);
@@ -691,6 +694,8 @@ public class MiniGameCommand implements MiniGameInterface
 		catch(e:Error){}
 		player.removeEventListener(Event.ENTER_FRAME,onPlayerMoving);
 
+		var loderQueue:LoaderMax=ViewsContainer.loaderQueue;
+		loderQueue.unload();
 	}
 	private var gameAlert:MovieClip;
 
@@ -756,23 +761,28 @@ public class MiniGameCommand implements MiniGameInterface
 	private function setupCompleteAlertCtrl():void
 	{
 
-		var enemyloader:SWFLoader = LoaderMax.getLoader("enemy");
-		var playerloader:SWFLoader=LoaderMax.getLoader("player");
+//		var enemyloader:SWFLoader = LoaderMax.getLoader("enemy");
+//		var playerloader:SWFLoader=LoaderMax.getLoader("player");
 
-		var root_enemy:DisplayObject=enemyloader.content;
-		var root_player:DisplayObject=playerloader.content;
-
-		player.act.gotoAndStop(1);
-		gameStage.removeChild(root_enemy);
-		gameStage.removeChild(root_player);
+//		var root_enemy:DisplayObject=enemyloader.content;
+//		var root_player:DisplayObject=playerloader.content;
+//		player.act.gotoAndStop(1);
+//		gameStage.removeChild(root_enemy);
+//		gameStage.removeChild(root_player);
 
 		var replaybtn:MovieClip=gameAlert.animc.replaybtn;
 		var quitbtn:MovieClip=gameAlert.animc.quitbtn;
 		replaybtn.buttonMode=true;
 		quitbtn.buttonMode=true;
-		replaybtn.visible=false;
 		//replaybtn.addEventListener(MouseEvent.MOUSE_DOWN,doReplayHandle);
-		quitbtn.addEventListener(MouseEvent.MOUSE_DOWN,doQuitHandle);
+		if(game=="tracing" && game_result=="defeat"){
+			quitbtn.visible=false;
+			replaybtn.addEventListener(MouseEvent.MOUSE_DOWN,doQuitHandle);
+		}else{
+			replaybtn.visible=false;
+			quitbtn.addEventListener(MouseEvent.MOUSE_DOWN,doQuitHandle);
+		}
+
 
 	}
 
@@ -823,12 +833,13 @@ public class MiniGameCommand implements MiniGameInterface
 				//game over
 				//flox.save("current_switch","s9999|on");
 
+
 				_data.name="TraceGame";
 				command.sceneDispatch(SceneEvent.CHANGED,_data);
 
 			}
 
-	    }else{
+		}else{
 
 			//mediate game
 			_data.name="SpiritTempleScene";

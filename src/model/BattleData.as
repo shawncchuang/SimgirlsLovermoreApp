@@ -626,8 +626,6 @@ public class BattleData
 
                 if(type == "BattleResult"){
                     checkBattleResult(i,target,dayStr,key,team_battle[i].split("|")[1]);
-
-
                 }
 
             }
@@ -658,75 +656,35 @@ public class BattleData
 
         var battleDays:Array=Config.battleDays;
         var monthsList:Array= Config.Monthslist;
-        if(type == "BattleRanking" || type=="TimeTravelBattleRanking"){
+        if(type == "BattleRanking" || type=="CpuBattleRanking"){
 
-            if(type=="TimeTravelBattleRanking"){
-                //uesd timemachine reset current_battle
-                var defaultCurrentBattle:Object=Config.defaultCurrentBattle();
-                flox.save("current_battle",defaultCurrentBattle);
-            }
+//            if(type=="TimeTravelBattleRanking"){
+//                //uesd timemachine reset current_battle
+//                var defaultCurrentBattle:Object=Config.defaultCurrentBattle();
+//                flox.save("current_battle",defaultCurrentBattle);
+//            }
 
-            var pastIndex:Number=0;
-            var currentMonthIndex:Number=monthsList.indexOf(month);
-            for(var n:uint=0;n<battleDays.length;n++){
-                //Jan,Feb....Nov
-                var battle_month:String=battleDays[n].split("_")[0];
-                var battle_date:Number=Number(battleDays[n].split("_")[1]);
-                var scheduleMonthIndex:Number=monthsList.indexOf(battle_month);
+            var today:String=month+"_"+date;
+            var pastIndex:Number=battleDays.indexOf(today);
 
-                if(month==battle_month){
-                    //Sep
-                    if(Number(date)>battle_date){
-                        pastIndex++;
-                    }
-
-                }
-                if(currentMonthIndex>8 || currentMonthIndex==0){
-                    //after Sep and Jan
-
-                    if(currentMonthIndex>=scheduleMonthIndex){
-                        pastIndex++;
-
-                        if(currentMonthIndex==scheduleMonthIndex){
-
-                            if(Number(date)<battle_date){
-                                pastIndex--;
-                                break;
-                            }
-                        }
-                    }else{
-
-                        pastIndex--;
-                        break;
-
-                    }
-
-
-
-                }
-
-            }
-            //DebugTrace.msg("BattleData.checkBattleResult pastIndex="+pastIndex);
-            if(pastIndex>0){
+            if(pastIndex!=-1){
                 var current_battle:Object=flox.getSaveData("current_battle");
-                for(var k:uint=0;k<pastIndex;k++){
-                    var battleDay:String=battleDays[k];
+                //for(var k:uint=0;k<pastIndex;k++){
+                    var battleDay:String=battleDays[pastIndex];
                     team_battle=schedule[battleDay];
                     battled=current_battle[battleDay];
-                    for(var m:uint = 0; m < team_battle.length; m++) {
+                    for(var m:uint = 1; m < team_battle.length; m++) {
                         //DebugTrace.msg("BattleData.checkBattleResult team_battle[m]="+team_battle[m]);
-                        if(battled[m]=="0|0" || type=="TimeTravelBattleRanking"){
-                            //did not battle yet
+                        if(battled[m]=="0|0" || type=="CpuBattleRanking"){
+                            //did not battle yet ,except player
                             var team1ID:String = team_battle[m].split("|")[0];
-                            if(team1ID!="p"){
-                                //not included player
-                                var team2ID:String = team_battle[m].split("|")[1];
-                                checkBattleResult(m, target, battleDay, team1ID, team2ID);
-                            }
+                            var team2ID:String = team_battle[m].split("|")[1];
+                            checkBattleResult(m, target, battleDay, team1ID, team2ID);
+
                         }
 
                     }
-                }
+                //}
 
 
             }

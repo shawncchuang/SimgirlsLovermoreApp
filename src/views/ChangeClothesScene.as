@@ -390,17 +390,18 @@ public class ChangeClothesScene extends Scenes {
         switch(tap){
             case "confirm":
 
-                _data.name="ChangingRoomScene";
-                command.sceneDispatch(SceneEvent.CHANGED,_data);
+                var contanstAvatar:Object=DataContainer.contanstAvatar;
+                flox.save("avatar",contanstAvatar,onSaveChanfedComplete);
+                DebugTrace.msg("ChangeClothesScence contanstAvatar="+JSON.stringify(contanstAvatar));
 
-                break
+                break;
             case "cancel":
 //                var current_avatar:Object=flox.getSaveData("avatar");
 //                DebugTrace.msg("ChangeClothesScence current="+JSON.stringify(current_avatar));
-//
-                var contanstAvatar:Object=DataContainer.contanstAvatar;
-//                DebugTrace.msg("ChangeClothesScence contanstAvatar="+JSON.stringify(contanstAvatar));
-                flox.save("avatar",contanstAvatar,onSaveChanfedComplete);
+
+                _data.name="ChangingRoomScene";
+                command.sceneDispatch(SceneEvent.CHANGED,_data);
+
                 break
 
         }

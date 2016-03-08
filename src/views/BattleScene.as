@@ -8,25 +8,18 @@ import com.greensock.easing.Quart;
 import com.greensock.easing.Quint;
 import com.greensock.events.LoaderEvent;
 import com.greensock.loading.LoaderMax;
-import com.greensock.loading.LoaderMax;
 import com.greensock.loading.SWFLoader;
 import com.greensock.plugins.FrameLabelPlugin;
 import com.greensock.plugins.FramePlugin;
 import com.greensock.plugins.TweenPlugin;
 import com.greensock.text.SplitTextField;
 
-import fl.controls.Button;
-
 import flash.display.MovieClip;
 import flash.display.Sprite;
-import flash.display.Stage;
-import flash.display.StageQuality;
 import flash.events.Event;
 import flash.events.MouseEvent;
 import flash.events.TimerEvent;
-import flash.filesystem.File;
 import flash.geom.Point;
-import flash.net.FileFilter;
 import flash.text.AntiAliasType;
 import flash.text.TextField;
 import flash.text.TextFieldAutoSize;
@@ -51,12 +44,7 @@ import events.GameEvent;
 import events.SceneEvent;
 
 import model.BattleData;
-import model.SaveGame;
-
 import services.LoaderRequest;
-
-import starling.animation.DelayedCall;
-
 import starling.core.Starling;
 
 import utils.DebugTrace;
@@ -1771,18 +1759,13 @@ public class BattleScene extends Sprite
 				{
 					var targetlist:Array=allpowers[attack_index].targetlist;
 					target_id=allpowers[attack_index].target;
-//					if(targetlist.length>1)
-//					{
-//
-//						target_id=getTargetID(target_id,targetlist);
-//					}
-					//if
+
 					//DebugTrace.msg("BattleScene.startBattle target_id:"+target_id);
 					target_member=battleteam[target_id];
 					//DebugTrace.msg("BattleScene.startBattle target:"+target);
 					movingX=target_member.x-memberWH*2;
 					movingY=target_member.y;
-					direction=1;
+
 				}
 				//if
 				var skillID:String=attack_member.power.skillID;
@@ -2117,7 +2100,7 @@ public class BattleScene extends Sprite
 					//fun
 					function doHoppingToCenter():void
 					{
-						var _body:MovieClip=attack_member.character.body;
+						//var _body:MovieClip=attack_member.character.body;
 						var target:String=attack_member.power.target;
 						var battleteam:Object=memberscom.getBattleTeam();
 						var target_combat:Number=battleteam[target].power.combat;
@@ -2568,7 +2551,6 @@ public class BattleScene extends Sprite
 
 		if(e.target.currentFrame==e.target.totalFrames)
 		{
-
 			e.target.removeEventListener(Event.ENTER_FRAME,doActPlaying);
 			var reincarnation:Boolean=false;
 			var battleteam:Object=memberscom.getBattleTeam();
@@ -2678,7 +2660,6 @@ public class BattleScene extends Sprite
 					else
 					{
 
-
 						displayDamage(damage);
 					}
 					//if
@@ -2694,6 +2675,7 @@ public class BattleScene extends Sprite
 			atkPower.target="";
 			atkPower.targetlist=new Array();
 			attack_member.updatePower(atkPower);
+
 
 			TweenMax.to(attack_member,0.2,{alpha:0,onComplete:onBeforeAttackComplete,onCompleteParams:[start_pos,attack_member,damage,reincarnation]});
 
@@ -2774,17 +2756,6 @@ public class BattleScene extends Sprite
 		DebugTrace.msg("BattleScene.doAttackCompleteHandle-------"+member.name+" ,reflect="+reflect);
 		//TweenMax.killTweensOf(member);
 
-
-		if(attack_member.name.indexOf("player")!=-1)
-		{
-			var members:Array=memberscom.getPlayerTeam();
-
-		}
-		else
-		{
-			members=memberscom.getCpuTeam();
-		}
-
 		var memberEvt:BattleEvent=member.memberEvt;
 		memberEvt.processAction();
 
@@ -2817,7 +2788,6 @@ public class BattleScene extends Sprite
 			//if
 		}
 		//if
-
 		TweenMax.delayedCall(1,doNexActionHandler,[type]);
 
 
@@ -2929,7 +2899,7 @@ public class BattleScene extends Sprite
 	private function onAttackComplete(type:String):void
 	{
 		DebugTrace.msg("BattleScene.onAttackComplete type="+type);
-		TweenMax.killDelayedCallsTo(onAttackComplete);
+		//TweenMax.killDelayedCallsTo(onAttackComplete);
 		var seText:TextField=attack_member.membermc.getChildByName("se") as TextField;
 		seText.visible=true;
 		onFinishAttack();
@@ -2956,11 +2926,7 @@ public class BattleScene extends Sprite
 				DebugTrace.msg("BattleScene.onFinishAttack restartRound--------------");
 				TweenMax.killAll();
 
-				//focusHandle("default");
 				restartRound();
-
-				//TweenMax.delayedCall(1,updateFocus);
-
 
 			}
 			//if
@@ -4263,6 +4229,7 @@ public class BattleScene extends Sprite
 
 		TweenMax.killAll();
 		TweenMax.killDelayedCallsTo(doNexActionHandler);
+
 
 	}
 }

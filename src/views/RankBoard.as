@@ -40,7 +40,7 @@ public class RankBoard extends MovieClip{
     private function initLayout():void{
 
         var service:LoaderRequest=new LoaderRequest();
-        service.setLoaderQueue("rank","../swf/scoreboard.swf",this,onRankBoardComplete)
+        service.setLoaderQueue("rank","../swf/scoreboard.swf",this,onRankBoardComplete);
 
 
     }

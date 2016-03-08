@@ -90,7 +90,7 @@ public class MainScene extends Scenes
         sceneDelay=new DelayedCall(onSceneComplete,0.5);
         Starling.juggler.add(sceneDelay);
 
-        command.checkMemory();
+
 
     }
     private function onSceneComplete():void{

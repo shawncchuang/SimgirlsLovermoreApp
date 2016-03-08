@@ -494,7 +494,7 @@ public class MainCommand implements MainInterface {
         }else{
             st=new SoundTransform(0.5,0);
         }
-            bgsound_channel = Assets.MusicManager.playSound(src, 0, 1000, st);
+        bgsound_channel = Assets.MusicManager.playSound(src, 0, 1000, st);
 
 
     }
@@ -648,9 +648,6 @@ public class MainCommand implements MainInterface {
             submitDailyReport();
             initCriminalsRecord();
             initDailyUpgrade();
-            var battleData:BattleData=new BattleData();
-            battleData.checkBattleSchedule("BattleRanking","cpu_team");
-
         }
 
         if (comType == "Rest") {
@@ -660,6 +657,11 @@ public class MainCommand implements MainInterface {
             _data.removed = "ani_complete";
             scene.dispatchEventWith(TopViewEvent.REMOVE, false, _data);
             comType = "";
+
+            if(timeNum==24){
+                var battleData:BattleData=new BattleData();
+                battleData.checkBattleSchedule("CpuBattleRanking","cpu_team");
+            }
 
         }
 
@@ -2393,18 +2395,19 @@ public class MainCommand implements MainInterface {
             var switchID:String=flox.getSaveData("current_switch").split("|")[0];
             var switchs:Object=flox.getSyetemData("switchs");
             var values:Object=switchs[switchID];
-            if(values && values.hints!="") {
-
-
-                var alert:Sprite = new AlertMessage(values.hints);
-                Starling.current.stage.addChild(alert);
-
-            }
+            var alert:Sprite = new AlertMessage(values.hints);
             if(!battle_verify){
-
                 var hints:String="There is a SSCC game today at the Arena.";
                 alert = new AlertMessage(hints);
                 Starling.current.stage.addChild(alert);
+            }else{
+
+                if(values && values.hints!="") {
+
+                    Starling.current.stage.addChild(alert);
+
+                }
+
             }
 
         }
@@ -2603,7 +2606,7 @@ public class MainCommand implements MainInterface {
             var enabledIndex:Number=storyIDs.indexOf(storyID);
             var currentIndex:Number=storyIDs.indexOf(switchID);
 
-           // DebugTrace.msg("MainCommand.checkSceneEnable enabledIndex="+enabledIndex);
+            // DebugTrace.msg("MainCommand.checkSceneEnable enabledIndex="+enabledIndex);
             //DebugTrace.msg("MainCommand.checkSceneEnable currentIndex="+currentIndex);
 
             if(currentIndex>=enabledIndex){
@@ -2621,22 +2624,32 @@ public class MainCommand implements MainInterface {
     public function checkMemory():void{
 
 
-        var freeMemory:Number=Number((System.freeMemory/ Math.pow(1024,2)).toFixed(2));
-        var totalMemory:Number=Math.floor(System.totalMemory/Math.pow(1024,2));
-
-        DebugTrace.msg("MainCommmand.checkMemory freeMemory:"+freeMemory+" MB");
-        DebugTrace.msg("MainCommmand.checkMemory totalMemory:"+totalMemory+" MB");
 
 
-//        if(!DataContainer.popupMessage && freeMemory<2 && totalMemory>0){
-//
-//            var msg:String="Free memory is running low. If the game is experiencing significant slowdowns please save your progress and restart the game.";
-//
-//            var popup:PopupManager=new PopupManager();
-//            popup.attr="memory";
-//            popup.msg=msg;
-//            popup.init();
-//        }
+        var tweenID:uint=Starling.juggler.repeatCall(StartCheck,300,100);
+
+        function StartCheck():void{
+
+            var freeMemory:Number=Number((System.freeMemory/ Math.pow(1024,2)).toFixed(2));
+            var totalMemory:Number=Math.floor(System.totalMemory/Math.pow(1024,2));
+
+            DebugTrace.msg("MainCommmand.checkMemory freeMemory:"+freeMemory+" MB");
+            DebugTrace.msg("MainCommmand.checkMemory totalMemory:"+totalMemory+" MB");
+
+            if(!DataContainer.popupMessage && freeMemory<5 && totalMemory>100){
+
+                var msg:String="Free memory is running low. If the game is experiencing significant slowdowns please save your progress and restart the game.";
+
+                var popup:PopupManager=new PopupManager();
+                popup.attr="memory";
+                popup.msg=msg;
+                popup.init();
+            }
+
+        }
+
+
+
 
     }
 

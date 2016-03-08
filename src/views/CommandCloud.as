@@ -171,15 +171,15 @@ public class CommandCloud extends Sprite
                     var switchID:String=flox.getSaveData("current_switch").split("|")[0];
                     var switchs:Object=flox.getSyetemData("switchs");
                     var values:Object=switchs[switchID];
-                    if(values && values.hints!="") {
-
-                        var alert:Sprite = new AlertMessage(values.hints);
-                        Starling.current.stage.addChild(alert);
-                    }
+                    var alert:Sprite = new AlertMessage(values.hints);
                     if(!battle_verfiy){
                         var hints:String="There is a SSCC game today at the Arena.";
                         alert = new AlertMessage(hints);
                         Starling.current.stage.addChild(alert);
+                    }else{
+                        if(values && values.hints!="") {
+                            Starling.current.stage.addChild(alert);
+                        }
                     }
 
                 }

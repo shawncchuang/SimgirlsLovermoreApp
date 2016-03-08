@@ -790,9 +790,12 @@ public class Character extends MovieClip
             }
             //if
         }
-        //if
-        //if
-        //effShield=getChildByName("shield_"+name) as MovieClip;
+
+        if(effShield){
+            removeChild(effShield);
+            effShield=null;
+        }
+/*
         try
         {
             //DebugTrace.msg("Character.updateRound remove effShield name="+power.name+" , effShield="+effShield.name);
@@ -802,10 +805,10 @@ public class Character extends MovieClip
         }
         catch(e:Error)
         {
-            DebugTrace.msg("Character.updateRound remove effShield Error");
+            DebugTrace.msg("Character.updateRound  effShield = NULL ");
         }
-        //try
 
+*/
         power.shielded="false";
         power.target="";
         power.targetlist=new Array();
@@ -944,7 +947,7 @@ public class Character extends MovieClip
                 {
 
                     character.visible=true;
-                    character.alpha=1;
+                    //character.alpha=1;
 
                     try
                     {
@@ -1167,8 +1170,8 @@ public class Character extends MovieClip
                 {
                     actModel.body.act.playera.visible=true;
                     actModel.body.act.playerb.visible=true;
-                    actModel.body.act.playera.play();
-                    actModel.body.act.playerb.play();
+                    //actModel.body.act.playera.play();
+                    //actModel.body.act.playerb.play();
                 }
             }
             else
@@ -1176,7 +1179,7 @@ public class Character extends MovieClip
                 if(actModel)
                 {
                     actModel.body.act[ch_name].visible=true;
-                    actModel.body.act[ch_name].play();
+                    //actModel.body.act[ch_name].play();
                 }
             }
             //if

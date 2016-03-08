@@ -8,7 +8,8 @@ import flash.desktop.NativeApplication;
 	import flash.events.KeyboardEvent;
 	import flash.events.TimerEvent;
 	import flash.geom.Point;
-	import flash.ui.Keyboard;
+import flash.geom.Rectangle;
+import flash.ui.Keyboard;
 	import flash.utils.Timer;
 	
 	import controller.Assets;
@@ -101,23 +102,17 @@ import flash.desktop.NativeApplication;
             //var bgTedture:Texture=Texture.fromAtfData(new TraceGameBG());
 			var skyBg:Image=new Image(skyTexture);
 			addChild(skyBg);
-			
-			
-			//bgTexture=Texture.fromBitmap(new TraceGameRoad(),true,false,1,"bgra",true);
+
 			bgTexture=Texture.fromBitmap(new TraceGameRoad(),true,false,1,"bgra");
 			bgImg=new Image(bgTexture);
 			bgImg.width <<=1;
-//			bgImg.setTexCoords(1, new Point(2, 0));
-//			bgImg.setTexCoords(2, new Point(0, 1));
-//			bgImg.setTexCoords(3, new Point(2, 1));
-
-			bgImg.setTexCoords(1, 2, 0);
-			bgImg.setTexCoords(2, 0, 1);
-			bgImg.setTexCoords(3, 2, 1);
-
+//			bgImg.setTexCoords(1, 2, 0);
+//			bgImg.setTexCoords(2, 0, 1);
+//			bgImg.setTexCoords(3, 2, 1);
+			bgImg.tileGrid =  new flash.geom.Rectangle(0,0,bgTexture.width,bgTexture.height);
 
 			addChild(bgImg);
-			this.addEventListener((EnterFrameEvent.ENTER_FRAME), gameBgLoop);
+			this.addEventListener(EnterFrameEvent.ENTER_FRAME, gameBgLoop);
 
 		}
 		private function initTrainingBackGround():void
@@ -125,26 +120,22 @@ import flash.desktop.NativeApplication;
 			
 			//bgTexture=Texture.fromBitmap(new TrainingGameBG(),true,false,1,"bgra",true);
 			bgTexture=Texture.fromBitmap(new TrainingGameBG(),true,false,1,"bgra");
-
 			bgImg=new Image(bgTexture);
 			bgImg.width <<=1;
-//			bgImg.setTexCoords(1, new Point(2, 0));
-//			bgImg.setTexCoords(2, new Point(0, 1));
-//			bgImg.setTexCoords(3, new Point(2, 1));
-
-			bgImg.setTexCoords(1, 2, 0);
-			bgImg.setTexCoords(2, 0, 1);
-			bgImg.setTexCoords(3, 2, 1);
+//			bgImg.setTexCoords(1, 2, 0);
+//			bgImg.setTexCoords(2, 0, 1);
+//			bgImg.setTexCoords(3, 2, 1);
+			bgImg.tileGrid =  new flash.geom.Rectangle(0,0,bgTexture.width,bgTexture.height);
 
 			addChild(bgImg);
-			this.addEventListener((EnterFrameEvent.ENTER_FRAME), gameBgLoop);
+			this.addEventListener(EnterFrameEvent.ENTER_FRAME, gameBgLoop);
 
 			
 		}
 		private function gameBgLoop(e:EnterFrameEvent):void
 		{
 			//bgImg.x=(bgImg.x>-bgImg.width/2)?bgImg.x-10:0;
-			var speed:Number=Number((bgImg.width/50).toFixed(2));
+			var speed:Number=(bgImg.width/50);
 			if(bgImg.x>-bgImg.width/2)
 			{
 				bgImg.x-=speed;
@@ -153,7 +144,7 @@ import flash.desktop.NativeApplication;
 			{
 				bgImg.x=0;
 			}
-			//if
+
 			
 		}
 		private var kbgImg:Image;

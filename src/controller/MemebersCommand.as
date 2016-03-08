@@ -3,6 +3,7 @@ package controller
 import com.greensock.TweenMax;
 import com.greensock.easing.Cubic;
 import com.greensock.easing.Expo;
+import com.greensock.loading.LoaderMax;
 
 import data.StoryDAO;
 
@@ -531,6 +532,9 @@ public class MemebersCommand implements MembersInterface
                 command.stopBackgroudSound();
                 Starling.juggler.remove(delaycall);
 
+                var loaderQueue:LoaderMax=ViewsContainer.loaderQueue;
+                loaderQueue.unload();
+
                 var gameEvt:GameEvent=SimgirlsLovemore.gameEvent;
                 gameEvt._name="remove_battle";
                 gameEvt.displayHandler();
@@ -571,6 +575,9 @@ public class MemebersCommand implements MembersInterface
                     var gameEvt:GameEvent=SimgirlsLovemore.gameEvent;
                     gameEvt._name="remove_battle";
                     gameEvt.displayHandler();
+
+                    var loaderQueue:LoaderMax=ViewsContainer.loaderQueue;
+                    loaderQueue.unload();
 
                     var armour:Boolean=DataContainer.Armour;
                     if(!armour){
@@ -748,6 +755,9 @@ public class MemebersCommand implements MembersInterface
 
 
                     }
+
+                    var loaderQueue:LoaderMax=ViewsContainer.loaderQueue;
+                    loaderQueue.unload();
 
                     var _data:Object=new Object();
                     _data.name= scene;

@@ -521,7 +521,7 @@ public class SimgirlsLovemore extends MovieClip
 		var vp:Rectangle=new flash.geom.Rectangle(0, 0, 1024, 768);
 		_starling=new Starling(Game,stage,vp,null,"auto","auto");
 		_starling.showStats=false;
-		Starling.current.nativeStage.frameRate = 30;
+		Starling.current.nativeStage.frameRate = 24;
 		//_starling.enableErrorChecking=Capabilities.isDebugger;
 
 		_starling.start();

@@ -82,5 +82,8 @@ package controller
 		[Embed(source="../../media/textures/sound/main map waves.mp3")]
 		public static const MapWaves:Class;
 
+		//futuristic gun
+		[Embed(source="../../media/textures/sound/futuristic gun.mp3")]
+		public static const FuturisticGun:Class;
 	}
 }

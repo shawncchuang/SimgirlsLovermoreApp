@@ -138,7 +138,7 @@ public class Scenes extends Sprite
         scene=ViewsContainer.MainScene;
         next_scene=e.data.name;
         from=e.data.from;
-        flox.save("current_scene",next_scene);
+        //flox.save("current_scene",next_scene);
 
         clearSceneHandle();
 

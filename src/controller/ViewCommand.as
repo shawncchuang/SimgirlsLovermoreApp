@@ -64,6 +64,7 @@ public class ViewCommand  implements ViewInterface{
         target.x=params.pos.x;
         target.y=params.pos.y;
         //target.clipRect=params.clipRect;
+        if(params.clipRect)
         target.mask=new Quad(params.clipRect.width,params.clipRect.height);
 
     }
