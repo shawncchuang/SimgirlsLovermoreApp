@@ -48,23 +48,11 @@ public class PhotoMessage extends Sprite
 
 		onPhotoComplete=callback;
 		DebugTrace.msg("PhotoMessage  target="+target);
-		var twinflame:String;
-		if(todo=="twin-photo-on"){
-			if(!SimgirlsLovemore.previewStory){
 
-				twinflame=flox.getSaveData("twinflame").toLowerCase();
-
-			}else{
-
-				twinflame=DataContainer.TwinFlame;
-
-			}
-			if(twinflame){
-				var fullname:String=Config.fullnames[twinflame];
-				target="Kiss"+fullname;
-			}
-		}
-
+        if(target.indexOf("klr")!=-1){
+            var fullname:String=Config.fullnames["klr"];
+            target=target.split("klr").join(fullname);
+        }
 		photosloader=new ImageLoader();
 		photosloader.alpha=0;
 		photosloader.width=Starling.current.stage.stageWidth;

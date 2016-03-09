@@ -120,12 +120,18 @@ public class Config
     //boss battle
     public static var gameEndDay:String="Feb_28";
 
-    //battle schedule 2033 Tuesday
+    /*
     public static var battleDays:Array=[
         "Sep_6","Sep_13","Sep_20","Sep_27",
         "Oct_4","Oct_11","Oct_18","Oct_25",
         "Nov_1","Nov_8","Nov_15","Nov_22","Nov_29",
         "Jan_3","Jan_10","Jan_17","Jan_24","Jan_31"
+    ];
+    */
+    public static var battleDays:Array=[
+        "Jan_1","Jan_8","Jan_15","Jan_22",
+        "Jan_29", "Feb_5","Feb_12","Feb_19",
+        "Feb_26"
     ];
 
     public static var daynightScene:Array=["Main","Beach","Park","Pier","LovemoreMansion"
@@ -147,8 +153,8 @@ public class Config
         scheduls[battleDays[5]]= ["p|5", "2|7", "1|3", "6|4", "8|0"];
         scheduls[battleDays[6]]=["p|4", "7|6", "5|0", "2|3", "1|8"];
         scheduls[battleDays[7]]=["p|7", "0|3", "4|5", "6|1", "2|8"];
-
         scheduls[battleDays[8]]=["p|8", "0|6", "5|2", "1|4", "3|7"];
+       /*
         scheduls[battleDays[9]]= ["p|0", "2|1", "4|3", "5|6", "7|8"];
         scheduls[battleDays[10]]=["p|1", "0|2", "3|5", "4|7", "8|6"];
         scheduls[battleDays[11]]=["p|3", "4|0", "1|7", "6|2", "8|5"];
@@ -159,7 +165,7 @@ public class Config
         scheduls[battleDays[15]]=["p|4", "7|6", "5|0", "2|3", "1|8"];
         scheduls[battleDays[16]]=["p|7", "0|3", "4|5", "6|1", "2|8"];
         scheduls[battleDays[17]]=["p|8", "0|6", "5|2", "1|4", "3|7"];
-
+        */
 
         return scheduls
     }
@@ -176,13 +182,13 @@ public class Config
 
     }
 
-    public static var CriminalRanking:Array=[{"rank":"S","se":3200,"rewards":1850},
-        {"rank":"A","se":2400,"rewards":1450},
-        {"rank":"B","se":1600,"rewards":1050},
-        {"rank":"C","se":800,"rewards":650},
-        {"rank":"D","se":400,"rewards":450},
-        {"rank":"E","se":200,"rewards":350},
-        {"rank":"F","se":100,"rewards":250}];
+    public static var CriminalRanking:Array=[{"rank":"S","se":7000,"rewards":1600},
+        {"rank":"A","se":5000,"rewards":1300},
+        {"rank":"B","se":3500,"rewards":1000},
+        {"rank":"C","se":2000,"rewards":800},
+        {"rank":"D","se":1000,"rewards":600},
+        {"rank":"E","se":500,"rewards":450},
+        {"rank":"F","se":200,"rewards":300}];
 
     public static function set AccType(value:String):void
     {
@@ -646,11 +652,11 @@ public class Config
                 lenus: 0,
                 sirena: 0,
                 dea: 0,
-                sao: 776,
+                sao: 700,
                 klr: 0,
                 tomoru: 0,
                 ceil: 0,
-                zack: 0
+                zack: -100
             },
             "mood":{
                 lenus: 0,
@@ -851,86 +857,86 @@ public class Config
             ],
             "cpu_teams":
             {
-                t0_0 : {"seMax":1000,"se":1000} ,
-                t0_1 : {"seMax":500,"se":500} ,
-                t0_2 : {"seMax":500,"se":500} ,
-                t0_3 : {"seMax":500,"se":500} ,
-                t0_4 : {"seMax":500,"se":500} ,
-                t0_5 : {"seMax":500,"se":500} ,
-                t0_6 : {"seMax":500,"se":500} ,
-                t0_7 : {"seMax":500,"se":500} ,
+                t0_0 : {"seMax":3000,"se":3000} ,
+                t0_1 : {"seMax":1500,"se":1500} ,
+                t0_2 : {"seMax":1500,"se":1500} ,
+                t0_3 : {"seMax":1500,"se":1500} ,
+                t0_4 : {"seMax":1500,"se":1500} ,
+                t0_5 : {"seMax":1500,"se":1500} ,
+                t0_6 : {"seMax":1500,"se":1500} ,
+                t0_7 : {"seMax":1500,"se":1500} ,
 
-                t1_0 : {"seMax":1000,"se":1000} ,
-                t1_1 : {"seMax":500,"se":500} ,
-                t1_2 : {"seMax":500,"se":500} ,
-                t1_3 : {"seMax":500,"se":500} ,
-                t1_4 : {"seMax":500,"se":500} ,
-                t1_5 : {"seMax":500,"se":500} ,
-                t1_6 : {"seMax":500,"se":500} ,
-                t1_7 : {"seMax":500,"se":500} ,
+                t1_0 : {"seMax":4500,"se":4500} ,
+                t1_1 : {"seMax":2250,"se":2250} ,
+                t1_2 : {"seMax":2250,"se":2250} ,
+                t1_3 : {"seMax":2250,"se":2250} ,
+                t1_4 : {"seMax":2250,"se":2250} ,
+                t1_5 : {"seMax":2250,"se":2250} ,
+                t1_6 : {"seMax":2250,"se":2250} ,
+                t1_7 : {"seMax":2250,"se":2250} ,
 
-                t2_0 : {"seMax":1000,"se":1000} ,
-                t2_1 : {"seMax":500,"se":500} ,
-                t2_2 : {"seMax":500,"se":500} ,
-                t2_3 : {"seMax":500,"se":500} ,
-                t2_4 : {"seMax":500,"se":500} ,
-                t2_5 : {"seMax":500,"se":500} ,
-                t2_6 : {"seMax":500,"se":500} ,
-                t2_7 : {"seMax":500,"se":500} ,
+                t2_0 : {"seMax":6000,"se":6000} ,
+                t2_1 : {"seMax":3000,"se":3000} ,
+                t2_2 : {"seMax":3000,"se":3000} ,
+                t2_3 : {"seMax":3000,"se":3000} ,
+                t2_4 : {"seMax":3000,"se":3000} ,
+                t2_5 : {"seMax":3000,"se":3000} ,
+                t2_6 : {"seMax":3000,"se":3000} ,
+                t2_7 : {"seMax":3000,"se":3000} ,
 
-                t3_0 : {"seMax":1100,"se":1100},
-                t3_1 : {"seMax":550,"se":550} ,
-                t3_2 : {"seMax":550,"se":550} ,
-                t3_3 : {"seMax":550,"se":550} ,
-                t3_4 : {"seMax":550,"se":550} ,
-                t3_5 : {"seMax":550,"se":550} ,
-                t3_6 : {"seMax":550,"se":550} ,
-                t3_7 : {"seMax":550,"se":550} ,
+                t3_0 : {"seMax":7500,"se":7500},
+                t3_1 : {"seMax":3750,"se":3750} ,
+                t3_2 : {"seMax":3750,"se":3750} ,
+                t3_3 : {"seMax":3750,"se":3750} ,
+                t3_4 : {"seMax":3750,"se":3750} ,
+                t3_5 : {"seMax":3750,"se":3750} ,
+                t3_6 : {"seMax":3750,"se":3750} ,
+                t3_7 : {"seMax":3750,"se":3750} ,
 
-                t4_0 : {"seMax":1200,"se":1200} ,
-                t4_1 : {"seMax":600,"se":600} ,
-                t4_2 : {"seMax":600,"se":600} ,
-                t4_3 : {"seMax":600,"se":600} ,
-                t4_4 : {"seMax":600,"se":600} ,
-                t4_5 : {"seMax":600,"se":600} ,
-                t4_6 : {"seMax":600,"se":600} ,
-                t4_7 : {"seMax":600,"se":600} ,
+                t4_0 : {"seMax":9000,"se":9000} ,
+                t4_1 : {"seMax":4500,"se":4500} ,
+                t4_2 : {"seMax":4500,"se":4500} ,
+                t4_3 : {"seMax":4500,"se":4500} ,
+                t4_4 : {"seMax":4500,"se":4500} ,
+                t4_5 : {"seMax":4500,"se":4500} ,
+                t4_6 : {"seMax":4500,"se":4500} ,
+                t4_7 : {"seMax":4500,"se":4500} ,
 
-                t5_0 : {"seMax":1350,"se":1350} ,
-                t5_1 : {"seMax":650,"se":650} ,
-                t5_2 : {"seMax":650,"se":650} ,
-                t5_3 : {"seMax":650,"se":650} ,
-                t5_4 : {"seMax":650,"se":650} ,
-                t5_5 : {"seMax":650,"se":650} ,
-                t5_6 : {"seMax":650,"se":650} ,
-                t5_7 : {"seMax":650,"se":650} ,
+                t5_0 : {"seMax":11000,"se":11000} ,
+                t5_1 : {"seMax":5500,"se":5500} ,
+                t5_2 : {"seMax":5500,"se":5500} ,
+                t5_3 : {"seMax":5500,"se":5500} ,
+                t5_4 : {"seMax":5500,"se":5500} ,
+                t5_5 : {"seMax":5500,"se":5500} ,
+                t5_6 : {"seMax":5500,"se":5500} ,
+                t5_7 : {"seMax":5500,"se":5500} ,
 
-                t6_0 : {"seMax":1400,"se":1400} ,
-                t6_1 : {"seMax":700,"se":700} ,
-                t6_2 : {"seMax":700,"se":700} ,
-                t6_3 : {"seMax":700,"se":700} ,
-                t6_4 : {"seMax":700,"se":700} ,
-                t6_5 : {"seMax":700,"se":700} ,
-                t6_6 : {"seMax":700,"se":700} ,
-                t6_7 : {"seMax":700,"se":700} ,
+                t6_0 : {"seMax":13000,"se":13000} ,
+                t6_1 : {"seMax":6500,"se":6500} ,
+                t6_2 : {"seMax":6500,"se":6500} ,
+                t6_3 : {"seMax":6500,"se":6500} ,
+                t6_4 : {"seMax":6500,"se":6500} ,
+                t6_5 : {"seMax":6500,"se":6500} ,
+                t6_6 : {"seMax":6500,"se":6500} ,
+                t6_7 : {"seMax":6500,"se":6500} ,
 
-                t7_0 : {"seMax":1500,"se":1500} ,
-                t7_1 : {"seMax":750,"se":750} ,
-                t7_2 : {"seMax":750,"se":750} ,
-                t7_3 : {"seMax":750,"se":750} ,
-                t7_4 : {"seMax":750,"se":750} ,
-                t7_5 : {"seMax":750,"se":750} ,
-                t7_6 : {"seMax":750,"se":750} ,
-                t7_7 : {"seMax":750,"se":750} ,
+                t7_0 : {"seMax":15000,"se":15000} ,
+                t7_1 : {"seMax":7500,"se":7500} ,
+                t7_2 : {"seMax":7500,"se":7500} ,
+                t7_3 : {"seMax":7500,"se":7500} ,
+                t7_4 : {"seMax":7500,"se":7500} ,
+                t7_5 : {"seMax":7500,"se":7500} ,
+                t7_6 : {"seMax":7500,"se":7500} ,
+                t7_7 : {"seMax":7500,"se":7500} ,
 
-                t8_0 : {"seMax":2200,"se":2200} ,
-                t8_1 : {"seMax":1100,"se":1100} ,
-                t8_2 : {"seMax":1100,"se":1100} ,
-                t8_3 : {"seMax":1100,"se":1100} ,
-                t8_4 : {"seMax":1100,"se":1100} ,
-                t8_5 : {"seMax":1100,"se":1100} ,
-                t8_6 : {"seMax":1100,"se":1100} ,
-                t8_7 : {"seMax":1100,"se":1100} ,
+                t8_0 : {"seMax":17000,"se":17000} ,
+                t8_1 : {"seMax":8500,"se":8500} ,
+                t8_2 : {"seMax":8500,"se":8500} ,
+                t8_3 : {"seMax":8500,"se":8500} ,
+                t8_4 : {"seMax":8500,"se":8500} ,
+                t8_5 : {"seMax":8500,"se":8500} ,
+                t8_6 : {"seMax":8500,"se":8500} ,
+                t8_7 : {"seMax":8500,"se":8500} ,
 
                 t9_0 : {"seMax":"","se":100} ,
                 t9_1 : {"seMax":"","se":100} ,
@@ -941,7 +947,7 @@ public class Config
                 t9_6 : {"seMax":"","se":100} ,
                 t9_7 : {"seMax":"","se":100},
 
-                t10_0 :{"seMax":2000,"se":2000},
+                t10_0 :{"seMax":1800,"se":1800},
                 t10_1 : {"seMax":0,"se":0},
                 t10_2 : {"seMax":0,"se":0},
                 t10_3 : {"seMax":0,"se":0},
@@ -959,7 +965,7 @@ public class Config
                 t11_6 : {"seMax":500,"se":500} ,
                 t11_7 : {"seMax":500,"se":500} ,
 
-                t12_0 : {"seMax":30000,"se":30000} ,
+                t12_0 : {"seMax":38000,"se":38000} ,
                 t12_1 : {"seMax":0,"se":0} ,
                 t12_2 : {"seMax":0,"se":0} ,
                 t12_3 : {"seMax":0,"se":0} ,
@@ -968,7 +974,7 @@ public class Config
                 t12_6 : {"seMax":0,"se":0} ,
                 t12_7 : {"seMax":0,"se":0} ,
 
-                t13_0 : {"seMax":4000,"se":4000} ,
+                t13_0 : {"seMax":6000,"se":6000} ,
                 t13_1 : {"seMax":0,"se":0} ,
                 t13_2 : {"seMax":0,"se":0} ,
                 t13_3 : {"seMax":0,"se":0} ,
@@ -1007,7 +1013,7 @@ public class Config
                 "ceil": 0,
                 "dea": 0,
                 "lenus": 0,
-                "klr": 00
+                "klr": 0
             },
             "ranking":[
                 {"team_id":"player",
@@ -1104,10 +1110,10 @@ public class Config
         "closefriend-Min":166,
         "closefriend-Max":776,
         "datingpartner-Min":777,
-        "datingpartner-Max":1665,
-        "lover-Min":1666,
-        "lover-Max":3332,
-        "spouse-Min":3333
+        "datingpartner-Max":2221,
+        "lover-Min":2222,
+        "lover-Max":6665,
+        "spouse-Min":6666
 
     }
     public static var moodStep:Object={
@@ -1122,12 +1128,12 @@ public class Config
         "calm-Min":-110,
         "calm-Max":110,
         "pleased-Min":111,
-        "pleased-Max":332,
-        "delighted-Min":333,
-        "delighted-Max":776,
-        "smitten-Min":777,
-        "smitten-Max":1665,
-        "loved-Min":1666
+        "pleased-Max":443,
+        "delighted-Min":444,
+        "delighted-Max":998,
+        "smitten-Min":999,
+        "smitten-Max":2221,
+        "loved-Min":2222
 
     }
     public  static var ratingStep:Object={
@@ -1136,10 +1142,10 @@ public class Config
 
         "hate-Max":-51,
         "hate-Min":-100,
-        "dislike-Max":-1,
+        "dislike-Max":0,
         "dislike-Min":-50,
         "normal-Max":29,
-        "normal-Min":0,
+        "normal-Min":1,
         "like-Min":30,
         "like-Max":64,
         "love-Min":65,
@@ -1365,6 +1371,7 @@ public class Config
         "qa-s008":[10,-10],
         "qa-s010":[10,-10],
         "qa-s025":[-10,10],
+        "qa-s033":[10,-10],
         "qa-s034-1":[-10,10],
         "qa-s034-2":[-10,10],
         "qa-s050":[10,-10],

@@ -110,30 +110,33 @@ public class HotelScene extends Scenes
         var _data:Object=new Object();
         var current_switch:String=flox.getSaveData("current_switch");
         DebugTrace.msg("HotelScene.onStoryComplete switchID="+current_switch);
-
+        var switchs:Object=flox.getSyetemData("switchs");
+        var switchID:String=current_switch.split("|")[0];
+        var nextSwitch:String=switchs[switchID].result.on;
         switch(current_switch){
             case "s006b|off":
 
                 //over next day
-
-
-                var switchs:Object=flox.getSyetemData("switchs");
-                var switchID:String=current_switch.split("|")[0];
-                var nextSwitch:String=switchs[switchID].result.on;
                 var nextDay:String=switchs[nextSwitch].date+"|12";
                 flox.save("date",nextDay);
-
-
                 _data.name="MainScene";
                 _data.from="story";
                 command.sceneDispatch(SceneEvent.CHANGED,_data);
-
                 command.updateInfo();
                 break;
             case "s044|on":
                 _data.name= "MainScene";
                 _data.from="story";
                 command.sceneDispatch(SceneEvent.CHANGED,_data);
+                break
+            case "s013|on":
+                // jump to Nov
+                var swtichToDay:String=switchs[nextSwitch].date+"|12";
+                flox.save("date",swtichToDay);
+                _data.name="MainScene";
+                _data.from="story";
+                command.sceneDispatch(SceneEvent.CHANGED,_data);
+                command.updateInfo();
                 break
             default:
                 _data.name= "HotelScene";
@@ -143,6 +146,7 @@ public class HotelScene extends Scenes
         }
 
     }
+
     private function onSceneTriggered(e:Event):void
     {
 

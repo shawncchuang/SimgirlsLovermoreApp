@@ -399,8 +399,8 @@ public class CommandCloud extends Sprite
             var battledata:BattleData=new BattleData();
             //var ranbattle:Boolean=battledata.checkSurvivor();
             var perbattle:Number=Math.floor(Math.random()*100)+1;
-
             var enabled:Boolean=command.checkSceneEnable("PoliceStationScene");
+
             if(enabled){
                 //scene enabled
                 if(perbattle<=ran_battle_rate){

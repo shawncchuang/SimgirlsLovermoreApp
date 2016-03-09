@@ -1362,9 +1362,8 @@ public class MainCommand implements MainInterface {
         var reward_img:Number = minImg + Math.floor(Math.random() * (maxImg - minImg)) + 1;
 
         if(dating!=""){
-
-            imageObj[dating] +=reward_img*3;
-            reward_img=Math.floor(reward_img*1.5);
+            reward_img=Math.floor(reward_img*1.7);
+            imageObj[dating] += reward_img;
         }
 
         imageObj.player += reward_img;
@@ -1409,6 +1408,7 @@ public class MainCommand implements MainInterface {
         var image:Number = flox.getSaveData("image").player;
         var int:Number = flox.getSaveData("int").player;
         var love:Number=flox.getSaveData("love").player;
+        var dating:String = flox.getSaveData("dating");
 
         var income:Number = 0;
         var rate: Number = Number(((Math.floor(Math.random() * 100) + 1) / 100));
@@ -1423,7 +1423,10 @@ public class MainCommand implements MainInterface {
                 income = 200+Math.floor((love / 2 * (rate+1)) * 0.3);
                 break
         }
-        //income*=2;
+        //income*=1.7;
+        if(dating!=""){
+            income = Math.floor(income*1.7);
+        }
         cash += income;
         flox.save("cash", cash);
 
@@ -1470,8 +1473,8 @@ public class MainCommand implements MainInterface {
         var reward_int:Number = minInt + Math.floor(Math.random() * (maxInt - minInt)) + 1;
         // cash += cash_pay;
         if(dating!=""){
-            intObj[dating]+=reward_int*3;
-            reward_int=Math.floor(reward_int*1.5);
+            reward_int=Math.floor(reward_int*1.7);
+            intObj[dating]+=reward_int;
         }
         intObj.player += reward_int;
 
@@ -1930,7 +1933,7 @@ public class MainCommand implements MainInterface {
         if(com=="NoSurvivor" || com=="NoSurvivor_Normal"){
             //random battle
             var alertType:String="nobutton_type";
-            msg = "No one in the team has SE to fight. Pay Pizzo $100.";
+            msg = "No one in the team has SE to fight. Pay Pizzo $50.";
             if(com=="NoSurvivor_Normal"){
                 //battle , pratice
                 alertType="button_type";
@@ -2165,8 +2168,8 @@ public class MainCommand implements MainInterface {
                         var chlikes:Object=new Object();
 
 
-                        if(_month=="Jul" && character=="tomoru"){
-                            if(_date>=13 && _date<=15){
+                        if(_month=="Dec" && character=="tomoru"){
+                            if(_date>=2 && _date<=4){
 
                                 likes=0;
                             }
@@ -2589,6 +2592,9 @@ public class MainCommand implements MainInterface {
         var enabled:Boolean=false;
         var flox:FloxInterface=new FloxCommand();
         var current_switch:String=flox.getSaveData("current_switch");
+        var today:String=flox.getSaveData("date");
+        var dayStr:String=today.split("|")[0];
+        var month:String=dayStr.split(".")[2];
         var switchID:String=current_switch.split("|")[0];
         var enableObj:Object={"AcademyScene":"s009","SpiritTempleScene":"s010","LovemoreMansionScene":"s007","PoliceStationScene":"s013"};
         var storyID:String=enableObj[scene];
@@ -2611,10 +2617,28 @@ public class MainCommand implements MainInterface {
 
             if(currentIndex>=enabledIndex){
                 enabled=true;
+                if(scene=="PoliceStationScene"){
+                    switch(month){
+                        case "Nov":
+                        case "Dec":
+                        case "Jan":
+                        case "Feb":
+                            enabled=true;
+                            break;
+                        default:
+                            //no random battle before Dec.2034
+                            enabled=false;
+                            break
+                    }
+                }
+
             }
+
         }else{
             enabled=true;
         }
+
+
 
         return enabled;
 
@@ -2622,8 +2646,6 @@ public class MainCommand implements MainInterface {
     }
 
     public function checkMemory():void{
-
-
 
 
         var tweenID:uint=Starling.juggler.repeatCall(StartCheck,300,100);

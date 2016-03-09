@@ -317,8 +317,14 @@ public class MemebersCommand implements MembersInterface
                 case "fat":
                 case "rfs":
                 case "rvn":
-                    pos.x=Config.bossSkill[boss].pos.x;
-                    pos.y=Config.bossSkill[boss].pos.y;
+                    if(boss=="gor" && cpu_team[i].id=="t15_1"){
+                        pos.x=new_cpupos[i].x;
+                        pos.y=new_cpupos[i].y;
+                    }else{
+                        pos.x=Config.bossSkill[boss].pos.x;
+                        pos.y=Config.bossSkill[boss].pos.y;
+                    }
+
                     break;
                 default:
                     pos.x=new_cpupos[i].x;
