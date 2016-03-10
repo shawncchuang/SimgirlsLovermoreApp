@@ -363,12 +363,15 @@ public class Config
     public static var bossSkill:Object={
         "gor":{
             "pos":new Point(180,988),
-            "lv1":{"skillID":"gor_s_0",
+            "lv1":{
+                "skillID":"gor_s_0",
                 "label":"GrabPunch",
                 "type":"hop",
                 "enemy":1,
-                "area":2},
-            "lv2":{"skillID":"gor_s_1",
+                "area":2
+            },
+            "lv2":{
+                "skillID":"gor_s_1",
                 "label":"MultiPunch",
                 "type":"m_hop",
                 "enemy":3,
@@ -656,7 +659,7 @@ public class Config
                 klr: 0,
                 tomoru: 0,
                 ceil: 0,
-                zack: -100
+                zack: -300
             },
             "mood":{
                 lenus: 0,
@@ -947,7 +950,7 @@ public class Config
                 t9_6 : {"seMax":"","se":100} ,
                 t9_7 : {"seMax":"","se":100},
 
-                t10_0 :{"seMax":1800,"se":1800},
+                t10_0 :{"seMax":1200,"se":1200},
                 t10_1 : {"seMax":0,"se":0},
                 t10_2 : {"seMax":0,"se":0},
                 t10_3 : {"seMax":0,"se":0},

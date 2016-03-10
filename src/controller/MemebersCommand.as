@@ -317,7 +317,7 @@ public class MemebersCommand implements MembersInterface
                 case "fat":
                 case "rfs":
                 case "rvn":
-                    if(boss=="gor" && cpu_team[i].id=="t15_1"){
+                    if(boss=="gor" && cpu_team[i].id=="t8_0"){
                         pos.x=new_cpupos[i].x;
                         pos.y=new_cpupos[i].y;
                     }else{

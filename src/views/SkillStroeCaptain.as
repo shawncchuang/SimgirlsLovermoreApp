@@ -187,7 +187,7 @@ public class SkillStroeCaptain extends Sprite {
 
 
         if(current_pts>=pts){
-            var scene:Sprite = ViewsContainer.MainScene;
+
             var value_data:Object = new Object();
             value_data.attr = "skillPts";
             value_data.values =  String(pts*-1);
@@ -222,10 +222,20 @@ public class SkillStroeCaptain extends Sprite {
         var target:Sprite=e.currentTarget as Sprite;
         var hover:Touch=e.getTouch(target,TouchPhase.HOVER);
         var began:Touch=e.getTouch(target,TouchPhase.BEGAN);
+        var _data:Object=new Object();
+        var scene:Sprite=ViewsContainer.currentScene;
         if(hover)
         {
             current_item=target.name;
             //DebugTrace.msg( "ShoppingListLayout.onTouchedHoverItem current_item="+current_item);
+
+            _data._visible=true;
+            _data.desc=skillItems[current_item].desc;
+            scene.dispatchEventWith("UPDATE_DESC",false,_data);
+        }else{
+            _data._visible = false;
+            scene.dispatchEventWith("UPDATE_DESC", false, _data);
+
         }
 
     }

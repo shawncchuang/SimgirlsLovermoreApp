@@ -274,9 +274,10 @@ public class BlackMarketScene extends Scenes
 		var _data:Object = new Object();
 		var current_switch:String = flox.getSaveData("current_switch");
 		DebugTrace.msg("BlackStoreScene.onStoryComplete switchID=" + current_switch);
-
+        var gameEvent:GameEvent = SimgirlsLovemore.gameEvent;
 		switch (current_switch) {
 
+ 
 			default:
 				_data.name= "BlackMarketScene";
 				_data.from="story";

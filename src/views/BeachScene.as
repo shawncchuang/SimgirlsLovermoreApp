@@ -128,14 +128,34 @@ public class BeachScene extends Scenes
                 break
             case "story_complete":
 
-                _data.name="BeachScene";
-                _data.from="story";
-                command.sceneDispatch(SceneEvent.CHANGED,_data);
+                onStoryComplete();
+
                 break
         }
 
     }
+    private function onStoryComplete():void {
 
+        var _data:Object = new Object();
+        var current_switch:String = flox.getSaveData("current_switch");
+        DebugTrace.msg("BlackStoreScene.onStoryComplete switchID=" + current_switch);
+        var gameEvent:GameEvent = SimgirlsLovemore.gameEvent;
+        switch (current_switch) {
+
+            case "s9999|off":
+                this.removeFromParent(true);
+                gameEvent._name = "restart-game";
+                gameEvent.displayHandler();
+                break;
+            default:
+                _data.name="BeachScene";
+                _data.from="story";
+                command.sceneDispatch(SceneEvent.CHANGED,_data);
+                break
+
+        }
+
+    }
     private function onClosedAlert():void
     {
         var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;

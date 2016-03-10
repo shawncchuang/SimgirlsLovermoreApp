@@ -131,13 +131,19 @@ public class HotelScene extends Scenes
                 break
             case "s013|on":
                 // jump to Nov
-                var swtichToDay:String=switchs[nextSwitch].date+"|12";
-                flox.save("date",swtichToDay);
+                var switchToDay:String="Tue.1.Nov.2033|12";
+                flox.save("date",switchToDay);
                 _data.name="MainScene";
                 _data.from="story";
                 command.sceneDispatch(SceneEvent.CHANGED,_data);
                 command.updateInfo();
                 break
+            case "s9999|off":
+                this.removeFromParent(true);
+                var gameEvent:GameEvent = SimgirlsLovemore.gameEvent;
+                gameEvent._name = "restart-game";
+                gameEvent.displayHandler();
+                break;
             default:
                 _data.name= "HotelScene";
                 _data.from="story";

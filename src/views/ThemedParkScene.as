@@ -122,7 +122,12 @@ package views
 			DebugTrace.msg("ThemedParkWork.onStoryComplete switchID=" + current_switch);
 
 			switch (current_switch) {
-
+				case "s9999|off":
+					this.removeFromParent(true);
+					var gameEvent:GameEvent = SimgirlsLovemore.gameEvent;
+					gameEvent._name = "restart-game";
+					gameEvent.displayHandler();
+					break;
 				default:
 					_data.name= "ThemedParkScene";
 					_data.from="story";

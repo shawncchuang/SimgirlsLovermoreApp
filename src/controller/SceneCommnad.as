@@ -999,6 +999,10 @@ public class SceneCommnad implements SceneInterface
 
 
         var battle_verify:Boolean=verifyRankingBattle();
+        if(!battle_verify && switchID=="s083"){
+            //first ranking battle
+            battle_verify=true;
+        }
         if(date_verify && time_verify && local_verify && switchID!="" && battle_verify)
         {
             verify=true;

@@ -72,11 +72,11 @@ public class MessagingScene extends Sprite{
         var panelBg:Image=new Image(Assets.getTexture("ContactsPanelBg"));
         massaging.addChild(panelBg);
 
-        var str:String="Bonus gift for you! \n Download Simgirls 7.0 here:";
+        var str:String="Bonus gift! \n Download Simgirls 7.0 here:";
         var message:TextField=new TextField(panelBg.width,80,str);
         message.format.setTo(font,20);
         message.y=10;
-        massaging.addChild(message);
+
 
         var btn:Button=new Button();
         btn.useHandCursor=true;
@@ -86,8 +86,22 @@ public class MessagingScene extends Sprite{
         btn.y=message.y+message.height+5;
         btn.labelFactory =  getItTextRender;
         btn.addEventListener(Event.TRIGGERED, doClickDownload);
+
+
+        var str1:String="My Main Mission in Shambala: \n1. Stay alive. Get prepared before the dangerous days marked on the calendar.\n" +
+                "2. Reach the highest relationship level (soulmate) with my destined lover (twin flame) before the Valentine's Day.\n" +
+                "3. Enter the SSCC Final. The SSCC will start in Nov 2033. The top two teams with more wins will enter the final at the end of Feb 2034.";
+        var message1:TextField=new TextField(panelBg.width-20,200,str1);
+        message1.format.setTo(font,16,0,"left");
+        message1.x=10;
+        message1.y=btn.y+btn.height+50;
+
         massaging.addChild(btn);
+        massaging.addChild(message);
+        massaging.addChild(message1);
         addChild(massaging);
+
+
 
     }
     private function doClickDownload(e:Event):void{

@@ -663,6 +663,15 @@ public class MainCommand implements MainInterface {
                 battleData.checkBattleSchedule("CpuBattleRanking","cpu_team");
             }
 
+            var current_switch:String=flox.getSaveData("current_switch");
+            if(current_switch=="s1427_1|on"){
+                checkFinalRankingBattle();
+            }
+            if(new_date=="Tue.14.Feb.2034|12"){
+
+                checkTwinFlamePts();
+            }
+
         }
 
 
@@ -1334,9 +1343,6 @@ public class MainCommand implements MainInterface {
         gameEvent.displayHandler();
 
 
-        //var mediacom:MediaInterface=new MediaCommand();
-        ///mediacom.VideoPlayer(new Point(1024,250),new Point(0,260))
-        //mediacom.play("video/training-animated.flv",false,onFinishAnimated);
         var mediacom:MediaInterface = new MediaCommand();
         mediacom.SWFPlayer("transform", "../swf/workout.swf", onFinishAnimated);
 
@@ -1362,7 +1368,7 @@ public class MainCommand implements MainInterface {
         var reward_img:Number = minImg + Math.floor(Math.random() * (maxImg - minImg)) + 1;
 
         if(dating!=""){
-            reward_img=Math.floor(reward_img*1.7);
+            reward_img=Math.floor(reward_img*1.2);
             imageObj[dating] += reward_img;
         }
 
@@ -1423,9 +1429,8 @@ public class MainCommand implements MainInterface {
                 income = 200+Math.floor((love / 2 * (rate+1)) * 0.3);
                 break
         }
-        //income*=1.7;
         if(dating!=""){
-            income = Math.floor(income*1.7);
+            income = Math.floor(income*1.5);
         }
         cash += income;
         flox.save("cash", cash);
@@ -2493,15 +2498,15 @@ public class MainCommand implements MainInterface {
         var imgRate:Object=Config.imgRate;
         for(var ch:String in ch_cash){
             if(ch!="player")
-                ch_cash[ch]+=cashRate[ch];
+                ch_cash[ch]+=Math.floor(cashRate[ch]/2);
         }
         for(ch in intObj) {
             if(ch!="player")
-                intObj[ch]+=intRate[ch];
+                intObj[ch]+=Math.floor(intRate[ch]/2);
         }
         for(ch in imgObj){
             if(ch!="player")
-                imgObj[ch]+=imgRate[ch];
+                imgObj[ch]+=Math.floor(imgRate[ch]/2);
         }
         flox.save("ch_cash",ch_cash);
         flox.save("int",intObj);
@@ -2644,7 +2649,42 @@ public class MainCommand implements MainInterface {
 
 
     }
+    private function checkFinalRankingBattle():void{
 
+        var flox:FloxInterface=new FloxCommand();
+        var command:MainInterface=new MainCommand();
+        var ranking:Array=flox.getSaveData("ranking");
+        ranking=ranking.sortOn("win",Array.NUMERIC,Array.DESCENDING);
+        var winIndex:uint=0;
+        for(var i:uint=0;i<ranking.length;i++){
+            var rankInfo:Object=ranking[i];
+            if(rankInfo.team_id =="player"){
+                winIndex=i;
+            }
+        }
+        if(winIndex<ranking.length-2){
+            //not top 2, game over
+            flox.save("current_switch","s9999|on");
+
+
+        }
+
+
+    }
+    private function checkTwinFlamePts():void{
+
+        var flox:FloxInterface=new FloxCommand();
+        var relLv:Object=flox.getSyetemData("relationship_level");
+        var twinflame:String=flox.getSaveData("twinflame");
+        var ptsObj:Object=flox.getSaveData("pts");
+        var pts:Number=ptsObj[twinflame];
+        if(pts<=relLv["spouse-Min"]){
+            flox.save("current_switch","s9999|on");
+
+        }
+
+
+    }
     public function checkMemory():void{
 
 
@@ -2670,11 +2710,7 @@ public class MainCommand implements MainInterface {
 
         }
 
-
-
-
     }
-
 
 }
 }

@@ -56,6 +56,7 @@ public class FlirtScene extends Sprite{
     private var tweenlist:Array=new Array();
     private var cards:Array=new Array();
     private var delayCall:DelayedCall;
+    private var tweenID:uint=0;
     public function FlirtScene() {
 
         initDatingCard();
@@ -166,10 +167,13 @@ public class FlirtScene extends Sprite{
             if(i!=index){
 
                 var card:Image=this.getChildByName("card"+i) as Image;
-                var cardTween:Tween=new Tween(card,0.5,Transitions.EASE_IN_OUT);
-                cardTween.animate("x",cardX);
-                Starling.juggler.add(cardTween);
-                tweenlist.push(cardTween);
+//                var cardTween:Tween=new Tween(card,0.5,Transitions.EASE_IN_OUT);
+//                cardTween.animate("x",cardX);
+//                Starling.juggler.add(cardTween);
+//                tweenlist.push(cardTween);
+                var tweenID:uint= Starling.juggler.tween(card,0.5,{x:cardX,transition:Transitions.EASE_IN_OUT});
+                tweenlist.push(tweenID);
+
             }
 
         }
@@ -257,24 +261,22 @@ public class FlirtScene extends Sprite{
             var base_sprite:Sprite=ViewsContainer.baseSprite;
             base_sprite.dispatchEventWith(DatingScene.COMMIT,false,_data);
 
-            delayCall=new DelayedCall(doClearTweenHandler,3);
-            Starling.juggler.add(delayCall);
-        }else{
+            tweenID=Starling.juggler.delayCall(doClearTweenHandler,3);
 
-            delayCall=new DelayedCall(doCancelHandler,3);
-            Starling.juggler.add(delayCall);
+        }else{
+            tweenID=Starling.juggler.delayCall(doCancelHandler,1);
 
         }
 
     }
     private function doClearTweenHandler():void{
-        Starling.juggler.remove(delayCall);
+
         clearTweens();
     }
 
     private function doCancelHandler():void
     {
-        Starling.juggler.remove(delayCall);
+
         clearTweens();
         var _data:Object=new Object();
         _data.name=DataContainer.currentLabel;
@@ -284,8 +286,10 @@ public class FlirtScene extends Sprite{
     }
     private function clearTweens():void{
 
+        Starling.juggler.removeByID(tweenID);
         for(var i:uint=0;i<tweenlist.length;i++){
-            Starling.juggler.remove(tweenlist[i]);
+           //Starling.juggler.remove(tweenlist[i]);
+            Starling.juggler.removeByID(tweenlist[i]);
         }
 
     }
