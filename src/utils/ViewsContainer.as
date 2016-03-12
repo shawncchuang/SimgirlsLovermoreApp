@@ -50,7 +50,6 @@ import starling.display.Sprite;
 		private static var current_clouds:Array;
 		private static var scene_countainer:Sprite;
 		private static var game_scene:Sprite;
-
 		public static function set GameStage(st:Stage):void
 		{
 			game_st=st;	

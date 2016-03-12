@@ -124,17 +124,19 @@ import starling.display.Sprite;
             addChild(chmodel);
 
 
-
-            var params:Object=new Object();
+			var params:Object=new Object();
 			var gender:String=flox.getSaveData("avatar").gender;
 			var _point:Point=new Point(54,180);
+			var rec:Rectangle=new Rectangle(0,-30,276,510);
 			if(gender=="Female"){
-				_point=new Point(64,227);
+				_point=new Point(64,240);
+				rec=new Rectangle(0,-50,276,510);
 			}
-            params.pos=_point;
-            params.clipRect=new Rectangle(0,-30,276,500);
-            viewcom.fullSizeCharacter(basemodel,params);
-
+			basemodel.x=_point.x;
+			basemodel.y=_point.y;
+			params.pos=_point;
+			params.clipRect=rec;
+			viewcom.fullSizeCharacter(basemodel,params);
 
         }
 		private function initSkillsData():void

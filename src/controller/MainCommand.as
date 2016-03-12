@@ -71,7 +71,7 @@ public class MainCommand implements MainInterface {
 
 
     private var item:flash.display.MovieClip;
-    private static var alertmsg:flash.display.MovieClip;
+    private static var alertmsg:flash.display.MovieClip=null;
     private static var csv:CSV;
     private var ch_talk_csv:CSV;
     private var schedule_csv:CSV;
@@ -268,7 +268,8 @@ public class MainCommand implements MainInterface {
 
     public static function addAlertMsg(msg:String):void {
 
-        if(alertmsg){
+        DebugTrace.msg("MainCommand.addAlertMsg msg="+msg);
+        //if(alertmsg){
             var format:TextFormat = new TextFormat();
             format.size = 20;
             format.align = "center";
@@ -280,14 +281,14 @@ public class MainCommand implements MainInterface {
             alertmsg.msg.defaultTextFormat = format;
             alertmsg.confirm.buttonMode = true;
             alertmsg.cancelbtn.visible=false;
-            alertmsg.mouseChildren = false;
-            alertmsg.addEventListener(MouseEvent.MOUSE_DOWN, doColseAlertmsg);
-            //alertmsg.cancelbtn.addEventListener(MouseEvent.CLICK,doColseAlertmsg);
+            //alertmsg.mouseChildren = false;
+            alertmsg.confirm.addEventListener(MouseEvent.MOUSE_DOWN, doColseAlertmsg);
             alertmsg.x = 1024 / 2;
             alertmsg.y = 768 / 2;
             alertmsg.msg.text = msg;
             topview.addChild(alertmsg);
-        }
+
+       // }
 
 
         //var command:MainInterface=new MainCommand();
@@ -354,10 +355,12 @@ public class MainCommand implements MainInterface {
 
     private static function doColseAlertmsg(e:MouseEvent):void {
         var topview:flash.display.MovieClip = SimgirlsLovemore.topview;
-        // var _alert:flash.display.MovieClip=e.target as flash.display.MovieClip;
         var _alert:flash.display.MovieClip = topview.getChildByName("alert") as flash.display.MovieClip;
-        topview.removeChild(_alert);
-        alertmsg=null;
+        try{
+            topview.removeChild(_alert);
+            alertmsg=null;
+        }catch (e:Error){}
+
     }
 
     public static function initPreOrderAccount():void {
@@ -396,7 +399,6 @@ public class MainCommand implements MainInterface {
         ch_talk_csv = new CSV();
         ch_talk_csv.addEventListener(Event.COMPLETE, onChTalkLibrary);
         ch_talk_csv.load(new URLRequest('csv/scenelibrary.csv'));
-
 
     }
 

@@ -712,7 +712,19 @@ public class CpuMembersCommand implements CpuMembersInterface
                 //shield skill
                 skillPower=Math.floor(Math.random()*100)+100;
             }
-            power.power=Math.floor(skillPower/2);
+            var chModelBossIndex:Number= Config.ch_bossModels.indexOf(power.ch_name);
+            if(boss_index!=-1 || chModelBossIndex!=-1)
+            {
+                //boss
+                var reduce:Number=2;
+                if(power.ch_name=="fat"){
+                    reduce=5;
+                }
+                power.power=Math.floor(skillPower/reduce);
+            }else{
+                power.power=Math.floor(skillPower);
+            }
+
             //trace("CPU power :",JSON.stringify(power));
         }
         //if

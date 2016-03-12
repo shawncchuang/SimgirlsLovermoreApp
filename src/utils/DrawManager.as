@@ -523,7 +523,7 @@ public class DrawManager implements DrawerInterface
         var attr:String=gender+"_"+part;
         var pos:Object={
             "Male_Hair":new Point(69,-30),
-            "Female_Hair":new Point(44,-21),
+            "Female_Hair":new Point(44.4,-39),
             "Male_HairStyle":new Point(223,-33),
             "Female_HairStyle":new Point(54,-39),
             "Male_Eyes":new Point(112,70),

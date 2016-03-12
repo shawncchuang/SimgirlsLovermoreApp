@@ -745,10 +745,9 @@ public class MiniGameCommand implements MiniGameInterface
 
 		command.playBackgroudSound("BattleVictory");
 		gameAlert=new VictoryAlert();
-		gameStage.addChild(gameAlert);
 		gameAlert.x=-1718;
 		gameAlert.y=-455;
-
+		gameStage.addChild(gameAlert);
 
 		setupCompleteAlertCtrl();
 
@@ -780,7 +779,9 @@ public class MiniGameCommand implements MiniGameInterface
 			replaybtn.addEventListener(MouseEvent.MOUSE_DOWN,doQuitHandle);
 		}else{
 			replaybtn.visible=false;
-			quitbtn.addEventListener(MouseEvent.MOUSE_DOWN,doQuitHandle);
+			quitbtn.visible=false;
+			TweenMax.delayedCall(2,doQuit);
+			//quitbtn.addEventListener(MouseEvent.MOUSE_DOWN,doQuitHandle);
 		}
 
 
@@ -813,11 +814,15 @@ public class MiniGameCommand implements MiniGameInterface
 	private function doQuitHandle(e:MouseEvent):void
 	{
 
-
+		e.target.addEventListener(MouseEvent.MOUSE_DOWN,doQuitHandle);
 		DebugTrace.msg("MiniGameCommnad.doQuitHandle");
+		doQuit();
+
+
+	}
+	private function doQuit():void{
+		TweenMax.killDelayedCallsTo(doQuit);
 		command.stopBackgroudSound();
-
-
 		var gameEvt:GameEvent=SimgirlsLovemore.gameEvent;
 		gameEvt._name="remove_mini_game";
 		gameEvt.displayHandler();
@@ -825,14 +830,14 @@ public class MiniGameCommand implements MiniGameInterface
 		if(game=="tracing"){
 			var current_switch:String=flox.getSaveData("current_switch");
 			if(game_result=="victory"){
-				if(current_switch=="s042|off"){flox.save("current_switch","s042b|on");}
+				if(current_switch=="s042|off"){
+					flox.save("current_switch","s042b|on");
+				}
 				_data.name="CasinoScene";
-				_data.from="minigame";
 				command.sceneDispatch(SceneEvent.CHANGED,_data);
 			}else{
 				//game over
 				//flox.save("current_switch","s9999|on");
-
 
 				_data.name="TraceGame";
 				command.sceneDispatch(SceneEvent.CHANGED,_data);
@@ -847,7 +852,6 @@ public class MiniGameCommand implements MiniGameInterface
 			command.sceneDispatch(SceneEvent.CHANGED,_data);
 
 		}
-
 
 	}
 	private function onGetScore(e:Event):void

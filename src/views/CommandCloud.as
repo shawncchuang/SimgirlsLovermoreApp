@@ -349,6 +349,13 @@ public class CommandCloud extends Sprite
 
 
         if(de_label=="StartDating"){
+
+            var flox:FloxInterface=new FloxCommand();
+            var dating:String=flox.getSaveData("dating");
+            if(dating){
+                DataContainer.currentDating=dating;
+            }
+
             _data.from="CommandCloud";
             _data.name="DatingScene";
             command.sceneDispatch(SceneEvent.CHANGED,_data);
@@ -365,6 +372,8 @@ public class CommandCloud extends Sprite
                     checkSceneCommand();
 
                 }else{
+
+
                     _data.removed=de_label;
                     command.topviewDispatch(TopViewEvent.REMOVE,_data);
                 }
@@ -388,7 +397,6 @@ public class CommandCloud extends Sprite
         var currentScene:String=DataContainer.currentScene;
         var scene_index:Number=currentlable.indexOf("Scene");
         var looking_index:Number=_label.indexOf("Look");
-        var start_dating:Number=_label.indexOf("Dating");
         DebugTrace.msg("CommandCloud.checkSceneCommand currentlable:"+currentlable+" ; currentScene:"+currentScene);
 
         var sussess:Boolean=false;
@@ -424,6 +432,7 @@ public class CommandCloud extends Sprite
 
 
         }
+
 
     }
     private function onClosedRandomFightAlert():void{

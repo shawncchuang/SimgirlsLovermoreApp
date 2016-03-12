@@ -312,8 +312,8 @@ public class CharacterDesignScene extends Scenes
 
         if(gender=="Male")
         {
-            //hairdemo.clipRect=new flash.geom.Rectangle(0,0,153,163);
-            hairdemo.mask=new Quad(153,163);
+
+            hairdemo.mask=new Quad(130,167);
             hairdemo.x=100;
             hairdemo.y=276;
             hairImg.width=130;
@@ -321,21 +321,10 @@ public class CharacterDesignScene extends Scenes
 
         }else
         {
-            //hairdemo.clipRect=new flash.geom.Rectangle(0,0,153,153);
-            hairdemo.mask=new Quad(153,153);
+
+            hairdemo.mask=new Quad(180,167);
             hairdemo.x=77;
-            hairdemo.y=286;
-
-//            var copy_sprite:Sprite=new Sprite();
-//            copy_sprite.addChild(hairImg);
-
-//            var properties:Object=new Object();
-//            properties.transparent=true;
-//            properties.bgcolor=0x000000;
-//            drawcom.setBitmapPorperties(properties);
-
-           //copy_sprite.removeFromParent();
-
+            hairdemo.y=273;
 
         }
         hairdemo.addChild(hairImg);

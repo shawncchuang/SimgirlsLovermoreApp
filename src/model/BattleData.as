@@ -178,7 +178,7 @@ public class BattleData
         //var extra_power:Number=Math.floor(power/10);
         //var extra:Number=extra_power-Math.floor(Math.random()*(extra_power*2));
         var extra:Number=0;
-        skill_power=skill_power+power+extra;
+        skill_power=(skill_power*2)+power+extra;
         if(skill_power==0)
         {
             skill_power=de_power

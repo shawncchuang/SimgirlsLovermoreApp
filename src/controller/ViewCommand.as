@@ -61,11 +61,15 @@ public class ViewCommand  implements ViewInterface{
         drawcom.updateBaseModel("Clothes");
         drawcom.updateBaseModel("Hair");
         drawcom.updateBaseModel("Features");
-        target.x=params.pos.x;
-        target.y=params.pos.y;
+        //target.x=params.pos.x;
+        //target.y=params.pos.y;
         //target.clipRect=params.clipRect;
-        if(params.clipRect)
-        target.mask=new Quad(params.clipRect.width,params.clipRect.height);
+        if(params.clipRect){
+            target.mask=new Quad(params.clipRect.width,params.clipRect.height);
+            target.mask.x=params.clipRect.x;
+            target.mask.y=params.clipRect.y;
+        }
+
 
     }
     private var _cate:String="";

@@ -529,13 +529,12 @@ public class ProfileScene extends Scenes
     private function initBaseModel():void
     {
 
-
+        //player
         basemodel=new Sprite();
         addChild(basemodel);
 
         //other character
         chmodel=new Sprite();
-        //chmodel.clipRect=new Rectangle(0,0,356,540);
         chmodel.mask=new Quad(356,540);
         chmodel.x=5;
         chmodel.y=120;
@@ -545,11 +544,15 @@ public class ProfileScene extends Scenes
         var params:Object=new Object();
         var gender:String=flox.getSaveData("avatar").gender;
         var _point:Point=new Point(54,180);
+        var rec:Rectangle=new Rectangle(0,-30,276,510);
         if(gender=="Female"){
-            _point=new Point(64,227);
+            _point=new Point(64,240);
+            rec=new Rectangle(0,-50,276,510);
         }
+        basemodel.x=_point.x;
+        basemodel.y=_point.y;
         params.pos=_point;
-        params.clipRect=new Rectangle(0,-30,276,500);
+        params.clipRect=rec;
         viewcom.fullSizeCharacter(basemodel,params);
 
 

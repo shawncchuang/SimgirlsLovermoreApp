@@ -1,16 +1,1 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<TextureAtlas imagePath="femalehairstyle.png">
-	<!-- Created with Adobe Flash Professional version 15.0.1.179 -->
-	<!-- http://www.adobe.com/products/flash.html -->
-	<SubTexture name="hair0" x="0" y="0" width="176" height="211" pivotX="0" pivotY="0"/>
-	<SubTexture name="hair1" x="176" y="0" width="176" height="211"/>
-	<SubTexture name="hair2" x="352" y="0" width="176" height="211"/>
-	<SubTexture name="hair3" x="528" y="0" width="176" height="211"/>
-	<SubTexture name="hair4" x="704" y="0" width="176" height="211"/>
-	<SubTexture name="hair5" x="0" y="211" width="176" height="211"/>
-	<SubTexture name="hair6" x="176" y="211" width="176" height="211"/>
-	<SubTexture name="hair7" x="352" y="211" width="176" height="211"/>
-	<SubTexture name="hair8" x="528" y="211" width="176" height="211"/>
-	<SubTexture name="hair9" x="704" y="211" width="176" height="211"/>
-	<SubTexture name="hair10" x="0" y="422" width="176" height="211"/>
-</TextureAtlas>
+﻿<?xml version="1.0" encoding="utf-8"?><TextureAtlas imagePath="femalehairstyle.png">	<!-- Created with Adobe Animate version 15.1.0.210 -->	<!-- http://www.adobe.com/products/animate.html -->	<SubTexture name="hair0" x="0" y="0" width="176" height="231" pivotX="0" pivotY="0"/>	<SubTexture name="hair1" x="176" y="0" width="176" height="231"/>	<SubTexture name="hair2" x="352" y="0" width="176" height="231"/>	<SubTexture name="hair3" x="528" y="0" width="176" height="231"/>	<SubTexture name="hair4" x="704" y="0" width="176" height="231"/>	<SubTexture name="hair5" x="0" y="231" width="176" height="231"/>	<SubTexture name="hair6" x="176" y="231" width="176" height="231"/>	<SubTexture name="hair7" x="352" y="231" width="176" height="231"/>	<SubTexture name="hair8" x="528" y="231" width="176" height="231"/>	<SubTexture name="hair9" x="704" y="231" width="176" height="231"/>	<SubTexture name="hair10" x="0" y="462" width="176" height="231"/></TextureAtlas>

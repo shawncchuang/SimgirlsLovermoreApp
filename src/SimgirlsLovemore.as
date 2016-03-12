@@ -163,7 +163,6 @@ public class SimgirlsLovemore extends MovieClip
 		addChild(mc);
 		topview=mc;
 
-
 		//var filters:MovieClip=new MovieClip();
 		//addChild(filters);
 		//filtesContainer=filters;

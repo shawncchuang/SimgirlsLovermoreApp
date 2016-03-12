@@ -139,12 +139,16 @@ public class TakePhotos extends Sprite{
         if(reward_mood>=0){
             _mood="+"+_mood;
         }
+
         var rewardData:Object=new Object();
         rewardData.attr="mood";
         rewardData.values= "MOOD "+_mood;
         command.displayUpdateValue(this,rewardData);
-        //command.updateRelationship();
 
+
+        var rewards:Object=new Object();
+        rewards.mood=reward_mood;
+        DataContainer.rewards=rewards;
 
         var _data:Object=new Object();
         _data.com="TakePhotosReward";

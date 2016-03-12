@@ -99,6 +99,7 @@ public class DatingScene extends Scenes {
     private var takephoto:Sprite=null;
     private var cloudlist:Array;
     private var cancelImg:Image;
+    private var tweenID:uint=0;
     public function DatingScene() {
 
         base_sprite = new Sprite();
@@ -246,7 +247,7 @@ public class DatingScene extends Scenes {
                 drawcom.updatePieChart(e.data.mood);
 
                 delayCall=new DelayedCall(doCallUpdateRelationship,2);
-                Starling.juggler.add(delayCall);
+               Starling.juggler.add(delayCall);
 
                 break;
             case "Kiss":
@@ -602,18 +603,16 @@ public class DatingScene extends Scenes {
 
     private function initCharacter():void {
 
-
-
         var dating:String = DataContainer.currentDating;
         var styleSechedule:Object=DataContainer.styleSchedule;
         var style:String = styleSechedule[dating];
 
-        var datingSuit:String=DataContainer.DatingSuit;
-        if(datingSuit!=""){
-            style=datingSuit;
-        }else{
-            DataContainer.DatingSuit=style;
-        }
+//        var datingSuit:String=DataContainer.DatingSuit;
+//        if(datingSuit!=""){
+//            style=datingSuit;
+//        }else{
+//            DataContainer.DatingSuit=style;
+//        }
 
         //DebugTrace.msg("DatingScene.initCharacter datingSuit="+datingSuit);
         //DebugTrace.msg("DatingScene.initCharacter dating="+dating);
@@ -629,12 +628,14 @@ public class DatingScene extends Scenes {
         character.scaleY=1.2;
         addChild(character);
 
-        var tween:Tween = new Tween(character, 0.5, Transitions.EASE_IN_OUT);
-        tween.fadeTo(1);
-        tween.onComplete=onCharaacterComplete;
-        Starling.juggler.add(tween);
+        tweenID=Starling.juggler.tween(character, 0.5,{transition:Transitions.EASE_IN_OUT,alpha:1,onComplete:onCharaacterComplete});
+//        var tween:Tween = new Tween(character, 0.5, Transitions.EASE_IN_OUT);
+//        tween.fadeTo(1);
+//        tween.onComplete=onCharaacterComplete;
+//        Starling.juggler.add(tween);
         function onCharaacterComplete():void{
-            Starling.juggler.removeTweens(character);
+            //Starling.juggler.removeTweens(character);
+            Starling.juggler.removeByID(tweenID);
         }
 
     }
@@ -1085,11 +1086,13 @@ public class DatingScene extends Scenes {
         var dating:String = DataContainer.currentDating;
         var relObj:Object = flox.getSaveData("rel");
         var moodObj:Object = flox.getSaveData("mood");
-        var pts:Number = flox.getSaveData("pts");
+        var pts:Object = flox.getSaveData("pts");
         var mood:Number = Number(moodObj[dating]);
         var honorObj:Object = flox.getSaveData("honor");
+        var loveObj:Object=flox.getSaveData("love");
         var honor:Number = honorObj[dating];
         var rel:String = relObj[dating];
+        var love:Number=loveObj.player;
 
         DebugTrace.msg("DatingScene.confirmDating dating:" + dating);
         DebugTrace.msg("DatingScene.confirmDating mood:" + mood + " ;rel:" + rel);
@@ -1115,13 +1118,14 @@ public class DatingScene extends Scenes {
             var _data:Object = new Object();
             _data.dating = dating;
             gameinfo.dispatchEventWith("UPDATE_DATING", false, _data);
+            DataContainer.currentDating=dating;
 
-            reward_mood = Math.floor(honor / 4);
-            mood += reward_mood;
-            moodObj[dating] = mood;
-            flox.save("mood", moodObj);
+            reward_mood = Math.floor(love / 10);
+//            mood += reward_mood;
+//            moodObj[dating] = mood;
+//            flox.save("mood", moodObj);
+
             dateBubble();
-
             actTransform("../swf/date.swf", onDateActComplete);
 
 
@@ -1222,18 +1226,16 @@ public class DatingScene extends Scenes {
         actSrc = src;
         actCallBack = callback;
 
-        delayCall= new DelayedCall(onDelayTimeOut,1);
-        Starling.juggler.add(delayCall);
+        tweenID= Starling.juggler.delayCall(onTransformDelayTimeOut,1);
+
     }
 
-    private function onDelayTimeOut():void {
+    private function onTransformDelayTimeOut():void {
 
-        Starling.juggler.remove(delayCall);
+        Starling.juggler.removeByID(tweenID);
 
         var mediaReq:MediaInterface = new MediaCommand();
         mediaReq.SWFPlayer("transform", actSrc, actCallBack);
-
-
     }
 
     private function onGiftActComplete():void {
@@ -1257,15 +1259,15 @@ public class DatingScene extends Scenes {
 
         DebugTrace.msg("DatingScene.onDateActComplete reward_mood=" + reward_mood);
         bubble.removeFromParent(true);
-        drawcom.updatePieChart(mood);
 
+        updateMood();
 
-        var _data:Object = new Object();
-        _data.attr = "mood";
-        _data.values = "MOOD +" + reward_mood;
-        //command.displayUpdateValue(this, _data);
-
-        command.addedCancelButton(this, doCancelDating);
+        //drawcom.updatePieChart(mood);
+//        var _data:Object = new Object();
+//        _data.attr = "mood";
+//        _data.values = "MOOD +" + reward_mood;
+//        command.displayUpdateValue(this, _data);
+        //command.addedCancelButton(this, doCancelDating);
 
     }
 
@@ -1310,10 +1312,10 @@ public class DatingScene extends Scenes {
             case "Leave":
                 relPass = true;
                 moodPass = true;
-                var datingnow:String=flox.getSaveData("dating");
-                if(datingnow==""){
-                    DataContainer.currentDating=null;
-                }
+//                var datingnow:String=flox.getSaveData("dating");
+//                if(datingnow==""){
+//                    DataContainer.currentDating=null;
+//                }
 
                 break
 

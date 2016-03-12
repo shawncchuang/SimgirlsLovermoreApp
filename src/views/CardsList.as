@@ -356,10 +356,10 @@ public class CardsList extends Sprite
                 skilllist.sort(Array.CASEINSENSITIVE);
                 skills[character][cate]=skilllist.toString();
 
-               // flox.save("skills",skills,onSaveSkillsComplete);
-                flox.save("skills",skills);
-                flox.save("skillPts",skillPts,onSavedSkillPts);
 
+                flox.save("skills",skills);
+                flox.save("skillPts",skillPts);
+                onSavedSkillPts();
             }
             else
             {
@@ -372,12 +372,7 @@ public class CardsList extends Sprite
         }
 
     }
-    private function onSaveSkillsComplete():void
-    {
-        DebugTrace.msg("CardsList.onTouchlockSkill  onSaveSkillsComplete");
-        flox.save("skillPts",skillPts,onSavedSkillPts);
 
-    }
     private function onSavedSkillPts():void
     {
         DebugTrace.msg("CardsList.onTouchlockSkill  onSavedSkillPts");
