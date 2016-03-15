@@ -540,7 +540,7 @@ public class Character extends MovieClip
     {
         status=type;
     }
-    private var dizzy_round:Number=0;
+    private var dizzy_round:Number=2;
     public function updateDamage(effect:String,damage:Number):void
     {
         //DebugTrace.msg("Character.updateDamage id:"+name+"; effect="+ effect+"; status="+status);
@@ -615,7 +615,6 @@ public class Character extends MovieClip
                         //cpu
 
                         var index:Number=0;
-                        dizzy_round=Math.floor((Math.random()*3))+4;
                         //var time:Number=Math.floor((Math.random()*30))+20;
                         DebugTrace.msg("Character.updateDamage dizzy_round="+dizzy_round);
 
@@ -718,7 +717,7 @@ public class Character extends MovieClip
             {
                 case "dizzy":
                     round++;
-                    if(round==4)
+                    if(round==dizzy_round)
                     {
                         removeClickTap();
                     }

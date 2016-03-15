@@ -34,13 +34,14 @@ public interface MainInterface
     function addedCancelButton(target:Sprite,callback:Function,pos:Point=null):Image
 
     function initSchedule():void
-    function doRest(free:Boolean):void
+    function doRest(free:Boolean,from:String=""):void
     function showCommandValues(target:Sprite,attr:String,value:Object=null):void
     function doStay(days:Number):void
     function doTrain():void
     function doWork():void
     function doLearn():void
     function doMeditate():void
+    function doRelax():void
     function PlayBattleTutorial():void
     function drawPlayer(target:Sprite,avatar:Object=null):Sprite
     function drawCharacter(target:Sprite,style:String):Image

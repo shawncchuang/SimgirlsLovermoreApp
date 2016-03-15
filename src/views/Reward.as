@@ -73,6 +73,8 @@ public class Reward extends Sprite{
                 icon.y=(rewardTxt.height-icon.height)/2;
             }
 
+        }else{
+            rewardTxt.width=400;
         }
         reward.pivotX=reward.width/2;
         reward.pivotY=reward.height/2;

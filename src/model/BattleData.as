@@ -761,6 +761,16 @@ public class BattleData
             win_team=team2;
             lose_team=team1;
         }
+        if(team1=="8"){
+            ///gor & zack
+            win_team=team1;
+            lose_team=team2;
+            win_index=0;
+        }else if (team2=="8"){
+            win_team=team2;
+            lose_team=team1;
+            win_index=1;
+        }
 
         if(win_team=="p")
         {

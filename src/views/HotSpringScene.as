@@ -33,7 +33,7 @@ package views
 		private var button:Button;
 		private var scencom:SceneInterface=new SceneCommnad();
 		private var flox:FloxInterface=new FloxCommand();
-		
+		private var tweenID:uint=0;
 	 
 		public function HotSpringScene()
 		{
@@ -91,14 +91,13 @@ package views
 					_data.name="MainScene";
 					command.sceneDispatch(SceneEvent.CHANGED,_data);
 					break
-				case "":
-					
-					
-			 
+				case "Relax":
+						command.doRelax();
+
+
 					break
 				case "ani_complete":
-				 
-					
+
 					var value_data:Object=new Object();
 					value_data.attr="honor";
 					value_data.values="+10";
@@ -106,9 +105,7 @@ package views
 					init();
 					break
 				case "story_complete":
-
 					onStoryComplete();
-
 					break
 			}
 			

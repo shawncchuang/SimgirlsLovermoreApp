@@ -83,7 +83,7 @@ public class MediaCommand implements MediaInterface
 
         if(swfloader.rawContent){
             swfloader.rawContent.addEventListener(flash.events.Event.ENTER_FRAME, onActComplete);
-            swfloader.rawContent.addEventListener(flash.events.Event.REMOVED_FROM_STAGE,onLoaderRemoved);
+            //swfloader.rawContent.addEventListener(flash.events.Event.REMOVED_FROM_STAGE,onLoaderRemoved);
         }
 
 
@@ -134,14 +134,7 @@ public class MediaCommand implements MediaInterface
         }catch(error){
             DebugTrace.msg("MediaCommand.onCompleteSwfFadeOut LoaderMax upload Null");
         }
-
-        try {
-            onTransFormComplete();
-        }
-        catch(error){
-            DebugTrace.msg("MediaCommand.onCompleteSwfFadeOut,onTransFormComplete Null");
-        }
-
+        onTransFormComplete();
 
     }
 

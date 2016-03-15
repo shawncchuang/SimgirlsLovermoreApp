@@ -636,11 +636,11 @@ public class CpuMembersCommand implements CpuMembersInterface
                     case "gor":
                         if(jewel<=2)
                         {
-                            level="lv1";
+                            level="lv2";
                         }
                         else
                         {
-                            level="lv2";
+                            level="lv3";
                         }
                         break;
                     case "fat":

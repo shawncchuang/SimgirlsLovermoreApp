@@ -26,12 +26,12 @@ package views
 			super();
 			super.tap_name=name;
 			super.init();
-			init();
+			start();
 			
 			
 		}
 		
-		private function init():void
+		private function start():void
 		{
 			//DebugTrace.msg("DizzyTapView.onClickDizzyTap type="+ super.name+" ,name:"+this.name);
 			

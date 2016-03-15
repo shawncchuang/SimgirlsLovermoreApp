@@ -90,7 +90,7 @@ public class MessagingScene extends Sprite{
 
         var str1:String="My Main Mission in Shambala: \n1. Stay alive. Get prepared before the dangerous days marked on the calendar.\n" +
                 "2. Reach the highest relationship level (soulmate) with my destined lover (twin flame) before the Valentine's Day.\n" +
-                "3. Enter the SSCC Final. The SSCC will start in Nov 2033. The top two teams with more wins will enter the final at the end of Feb 2034.";
+                "3. Enter the SSCC Final. The SSCC will start in Jan 2034. The top two teams with most wins will enter the final at the end of Feb 2034.";
         var message1:TextField=new TextField(panelBg.width-20,200,str1);
         message1.format.setTo(font,16,0,"left");
         message1.x=10;

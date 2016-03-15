@@ -86,9 +86,7 @@ public class KissScene extends Sprite
 
         if(lv==4)
         {
-
             love-=10;
-
         }
         else
         {

@@ -9,6 +9,7 @@ public class Config
     public static var permision:String="black!@spears#$";
     public static var deadline:Number=20;
     public static var payCoinURL:String="http://localhost:8888/simgilrs/dgpayment/index.php?cate=coin&authkey=";
+    //public static var payCoinURL:String="http://blackspears.com/black-market.html";
     public static var payGameURL:String="http://localhost:8888/simgilrs/payment/index.php?cate=game&authkey=";
     private static var points:Object=new Object();
     private static var playerInfo:Object=new Object();
@@ -146,12 +147,11 @@ public class Config
 
         scheduls[battleDays[0]]=["p|0", "2|1", "4|3", "5|6", "7|8"];
         scheduls[battleDays[1]]=["p|1", "0|2", "3|5", "4|7", "8|6"];
-        scheduls[battleDays[2]]=["p|3", "4|0", "1|7", "6|2", "8|5"];
-        scheduls[battleDays[3]]=["p|2", "0|1", "6|3", "7|5", "4|8"];
-
-        scheduls[battleDays[4]]= ["p|6", "7|0", "5|1", "2|4", "8|3"];
-        scheduls[battleDays[5]]= ["p|5", "2|7", "1|3", "6|4", "8|0"];
-        scheduls[battleDays[6]]=["p|4", "7|6", "5|0", "2|3", "1|8"];
+        scheduls[battleDays[2]]=["p|2", "0|1", "6|3", "7|5", "4|8"];
+        scheduls[battleDays[3]]=["p|3", "4|0", "1|7", "6|2", "8|5"];
+        scheduls[battleDays[4]]=["p|4", "7|6", "5|0", "2|3", "1|8"];
+        scheduls[battleDays[5]]=["p|5", "2|7", "1|3", "6|4", "8|0"];
+        scheduls[battleDays[6]]=["p|6", "7|0", "5|1", "2|4", "8|3"];
         scheduls[battleDays[7]]=["p|7", "0|3", "4|5", "6|1", "2|8"];
         scheduls[battleDays[8]]=["p|8", "0|6", "5|2", "1|4", "3|7"];
        /*
@@ -363,14 +363,14 @@ public class Config
     public static var bossSkill:Object={
         "gor":{
             "pos":new Point(180,988),
-            "lv1":{
+            "lv2":{
                 "skillID":"gor_s_0",
                 "label":"GrabPunch",
                 "type":"hop",
                 "enemy":1,
                 "area":2
             },
-            "lv2":{
+            "lv3":{
                 "skillID":"gor_s_1",
                 "label":"MultiPunch",
                 "type":"m_hop",
@@ -684,7 +684,7 @@ public class Config
                 ceil: 0
             },
             "image":{
-                player:100,
+                player:200,
                 lenus: 120,
                 sirena:357,
                 dea: 160,
@@ -696,7 +696,7 @@ public class Config
             },
             "wealth":0,
             "int":{
-                player:100,
+                player:200,
                 lenus: 360,
                 sirena:153,
                 dea: 379,
@@ -708,26 +708,26 @@ public class Config
             },
             "love":{
                 //love==Max se
-                player:100,
-                lenus: 100,
-                sirena:100,
-                dea: 100,
-                sao: 100,
-                klr: 100,
-                tomoru: 100,
-                zack: 0,
-                ceil: 100
+                player:200,
+                lenus: 200,
+                sirena:200,
+                dea: 200,
+                sao: 200,
+                klr: 200,
+                tomoru: 200,
+                zack: 200,
+                ceil: 200
             },
             "se":{
-                lenus: 100,
-                sirena: 100,
-                dea: 100,
-                sao: 100,
-                klr: 100,
-                tomoru: 100,
-                ceil: 100,
-                zack: 0,
-                player:100
+                lenus: 200,
+                sirena: 200,
+                dea: 200,
+                sao: 200,
+                klr: 200,
+                tomoru: 200,
+                ceil: 200,
+                zack: 200,
+                player:200
             },
             "s_ele":"air",
             "skills":
@@ -1111,22 +1111,22 @@ public class Config
         "friend-Min":33,
         "friend-Max":165,
         "closefriend-Min":166,
-        "closefriend-Max":776,
-        "datingpartner-Min":777,
-        "datingpartner-Max":2221,
-        "lover-Min":2222,
+        "closefriend-Max":999,
+        "datingpartner-Min":1000,
+        "datingpartner-Max":3332,
+        "lover-Min":3333,
         "lover-Max":6665,
         "spouse-Min":6666
 
     }
     public static var moodStep:Object={
 
-        "sickened-Max":-1666,
-        "depressed-Min":-1665,
-        "depressed-Max":-777,
-        "annoyed-Min":-776,
-        "annoyed-Max":-333,
-        "bored-Min":-332,
+        "sickened-Max":-2222,
+        "depressed-Min":-2221,
+        "depressed-Max":-999,
+        "annoyed-Min":-998,
+        "annoyed-Max":-444,
+        "bored-Min":-443,
         "bored-Max":-111,
         "calm-Min":-110,
         "calm-Max":110,

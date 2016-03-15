@@ -33,8 +33,7 @@ package views
 		private var button:Button;
 		private var scenecom:SceneInterface=new SceneCommnad();
 		private var flox:FloxInterface=new FloxCommand();
-
-
+		private var attr:String="";
 		public function PierScene()
 		{
 			/*var pointbgTexture:Texture=Assets.getTexture("PointsBg");
@@ -95,14 +94,17 @@ package views
 					command.sceneDispatch(SceneEvent.CHANGED,_data);
 					break
 				case "Rest":
-
+					attr="FreeRest";
 					command.doRest(true);
 
 					break
+				case "Sail":
+					attr="Sail";
+					command.doRest(false,"Sail");
+					break
 				case "ani_complete":
 
-
-					command.showCommandValues(this,"FreeRest");
+					command.showCommandValues(this,attr);
 					init();
 					break
 				case "story_complete":

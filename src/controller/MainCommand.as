@@ -840,20 +840,31 @@ public class MainCommand implements MainInterface {
     }
 
     public function setNowMood():void {
-        //mood -1666 ~ 1666 ,daily -222 ~ 222
-
 
         var flox:FloxInterface = new FloxCommand();
         var moods:Object = flox.getSaveData("mood");
-        var ran:Number = 222;
-        for (var m:String in moods) {
-
-            var today_Mood:Number = uint(Math.random() * (ran * 2)) + 1 - ran;
-            moods[m] = today_Mood;
-
+        var rel:Object=flox.getSaveData("rel");
+        var maintainDecline:Object = {"close friend":-111,"dating partner":-222,"lover":-333,"spouse":-333};
+        for(var _name:String in rel){
+            switch(rel[_name]){
+                case "close friend":
+                case "dating partner":
+                case "lover":
+                case "spouse":
+                        var uptoMood:Number=Math.abs(maintainDecline[rel[_name]])*2;
+                        if(moods[_name]>uptoMood){
+                            moods[_name]=uptoMood;
+                        }else{
+                            moods[_name]+=maintainDecline[rel[_name]];
+                        }
+                    break
+            }
+            if(moods[_name]<-9999){
+                moods[_name]=-9999;
+            }
         }
+        //DebugTrace.msg("MainCommand.serNowMood="+JSON.stringify(moods));
         flox.save("mood", moods);
-
 
 
     }
@@ -1069,7 +1080,7 @@ public class MainCommand implements MainInterface {
         var sysAssets:Object = flox.getSyetemData("assets");
         var price:Number = sysAssets[item_id].price;
         var rating:Number = searchAssetRating(item_id);
-        var mood:Number = 100+Math.floor((400+(price/2)) * rating / 100);
+        var mood:Number = 100+Math.floor((300+price) * rating / 100);
         DebugTrace.msg("MainCommand.moodCalculator item_id="+item_id+", mood=" + mood + ", price=" + price + ", rating=" + rating);
 
         return mood
@@ -1129,7 +1140,7 @@ public class MainCommand implements MainInterface {
             target.addChild(rewardNode);
 
 
-            if(value.indexOf("MOOD ")!=-1){
+            if(value.indexOf("MOOD")!=-1 || value.indexOf("mood")!=-1){
                 value=value.split("MOOD ").join("");
             }
             if(value.indexOf("+")!=-1){
@@ -1257,7 +1268,7 @@ public class MainCommand implements MainInterface {
 
     private var comType:String = "";
 
-    public function doRest(free:Boolean):void {
+    public function doRest(free:Boolean,from:String=""):void {
         comType = "Rest";
         var flox:FloxInterface = new FloxCommand();
         var command:MainInterface = new MainCommand();
@@ -1278,8 +1289,14 @@ public class MainCommand implements MainInterface {
         }
         else {
 
-            restObj = sysCommad.PayRest;
-
+            switch(from){
+                case "Sail":
+                    restObj = sysCommad[from];
+                    break;
+                default:
+                    restObj = sysCommad.PayRest;
+                    break
+            }
             cash += restObj.values.cash;
 
             flox.save("cash", cash);
@@ -1370,7 +1387,7 @@ public class MainCommand implements MainInterface {
         var reward_img:Number = minImg + Math.floor(Math.random() * (maxImg - minImg)) + 1;
 
         if(dating!=""){
-            reward_img=Math.floor(reward_img*1.2);
+            reward_img=Math.floor(reward_img*1.8);
             imageObj[dating] += reward_img;
         }
 
@@ -1419,20 +1436,20 @@ public class MainCommand implements MainInterface {
         var dating:String = flox.getSaveData("dating");
 
         var income:Number = 0;
-        var rate: Number = Number(((Math.floor(Math.random() * 100) + 1) / 100));
+        var rate: Number = Number(((Math.floor(Math.random() * 30) + 1) / 100));
         switch (scene) {
             case "NightclubScene":
-                income = Math.floor((image / 2 * (rate+1)) * 0.3);
+                income = 20+Math.floor(image / 7.5 * (rate+1));
                 break
             case "BankScene":
-                income = Math.floor((int / 1.5 * (rate+1)) * 0.3);
+                income = 25+Math.floor(int / 5 * (rate+1));
                 break
             case "ThemedParkScene":
-                income = 200+Math.floor((love / 2 * (rate+1)) * 0.3);
+                income = 200+Math.floor(love / 15 * (rate+1));
                 break
         }
         if(dating!=""){
-            income = Math.floor(income*1.5);
+            income = Math.floor(income*1.8);
         }
         cash += income;
         flox.save("cash", cash);
@@ -1480,7 +1497,7 @@ public class MainCommand implements MainInterface {
         var reward_int:Number = minInt + Math.floor(Math.random() * (maxInt - minInt)) + 1;
         // cash += cash_pay;
         if(dating!=""){
-            reward_int=Math.floor(reward_int*1.7);
+            reward_int=Math.floor(reward_int*1.8);
             intObj[dating]+=reward_int;
         }
         intObj.player += reward_int;
@@ -1524,7 +1541,26 @@ public class MainCommand implements MainInterface {
         sceneDispatch(SceneEvent.CHANGED, _data);
 
     }
+    private var tweenID:uint=0;
+    public function doRelax():void{
 
+        var flox:FloxInterface=new FloxCommand();
+        var moods:Object=flox.getSaveData("mood");
+        for(var _name:String in moods){
+            moods[_name]=0;
+        }
+        flox.save("mood",moods);
+
+        tweenID = Starling.juggler.delayCall(onRelaxComplete,1);
+        function onRelaxComplete():void{
+            Starling.juggler.removeByID(tweenID);
+
+            var _data:Object = new Object();
+            _data.name = "HotSpringScene";
+            sceneDispatch(SceneEvent.CHANGED, _data);
+        }
+
+    }
     public function PlayBattleTutorial():void{
 
         comType = "BattleTutorial";
@@ -1580,8 +1616,7 @@ public class MainCommand implements MainInterface {
             attrlist.push(i);
             if (rewards[i] > 0) {
                 var valueStr:String = "+" + rewards[i];
-            }
-            else {
+            }else {
                 valueStr = String(rewards[i]);
             }
             valueslist.push(valueStr);
@@ -2030,6 +2065,8 @@ public class MainCommand implements MainInterface {
         }
 
 
+
+
         if (pass_ap && pass_cash && pass_se) {
             var value_data:Object = new Object();
             var attrArr:Array=new Array();
@@ -2052,6 +2089,13 @@ public class MainCommand implements MainInterface {
                 valuesArr.push(cash_pay);
 
             }
+            try{
+                var mood:Number=sysCommand[com].values.mood;
+                attrArr.push("mood");
+                valuesArr.push("MOOD = "+mood);
+            }catch (e:Error){}
+
+
             if(attrArr.length>0){
                 var command:MainInterface = new MainCommand();
                 value_data.attr = attrArr.toString();

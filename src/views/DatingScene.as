@@ -100,6 +100,7 @@ public class DatingScene extends Scenes {
     private var cloudlist:Array;
     private var cancelImg:Image;
     private var tweenID:uint=0;
+    private var mediacom:MediaInterface = new MediaCommand();
     public function DatingScene() {
 
         base_sprite = new Sprite();
@@ -422,6 +423,7 @@ public class DatingScene extends Scenes {
         var dating:String = DataContainer.currentDating;
         var loveObj:Object = flox.getSaveData("love");
         var moodObj:Object = flox.getSaveData("mood");
+        var love:Number=loveObj.player;
 
         player_love = loveObj.player;
         ch_love = loveObj[dating];
@@ -434,10 +436,9 @@ public class DatingScene extends Scenes {
         playerloveTxt.text = String(player_love);
         chloveTxt.text = String(ch_love);
 
-        //var reward_mood:Number = Math.floor(_love / 2);
         var _int:Number=flox.getSaveData("int").player;
         var _img:Number=flox.getSaveData("image").player;
-        var reward_mood:Number=Math.floor((_int+_img)/6);
+        var reward_mood:Number=Math.floor(love/6);
         mood = moodObj[dating];
         mood += reward_mood;
         moodObj[dating] = mood;
@@ -607,12 +608,12 @@ public class DatingScene extends Scenes {
         var styleSechedule:Object=DataContainer.styleSchedule;
         var style:String = styleSechedule[dating];
 
-//        var datingSuit:String=DataContainer.DatingSuit;
-//        if(datingSuit!=""){
-//            style=datingSuit;
-//        }else{
-//            DataContainer.DatingSuit=style;
-//        }
+        var datingSuit:String=DataContainer.DatingSuit;
+        if(datingSuit!=""){
+            style=datingSuit;
+        }else{
+            DataContainer.DatingSuit=style;
+        }
 
         //DebugTrace.msg("DatingScene.initCharacter datingSuit="+datingSuit);
         //DebugTrace.msg("DatingScene.initCharacter dating="+dating);
@@ -846,7 +847,7 @@ public class DatingScene extends Scenes {
 
                             gameInfo = ViewsContainer.gameinfo;
                             gameInfo.dispatchEventWith("UPDATE_INFO");
-
+                            DataContainer.DatingSuit="";
                             clickedCloudHandle();
 
                         } else {
@@ -1120,13 +1121,13 @@ public class DatingScene extends Scenes {
             gameinfo.dispatchEventWith("UPDATE_DATING", false, _data);
             DataContainer.currentDating=dating;
 
-            reward_mood = Math.floor(love / 10);
+            reward_mood = Math.floor(love / 18);
 //            mood += reward_mood;
 //            moodObj[dating] = mood;
 //            flox.save("mood", moodObj);
 
             dateBubble();
-            actTransform("../swf/date.swf", onDateActComplete);
+            actTransform("../swf/date.swf",onDateActComplete);
 
 
         }
@@ -1234,8 +1235,8 @@ public class DatingScene extends Scenes {
 
         Starling.juggler.removeByID(tweenID);
 
-        var mediaReq:MediaInterface = new MediaCommand();
-        mediaReq.SWFPlayer("transform", actSrc, actCallBack);
+        mediacom.SWFPlayer("transform", actSrc, actCallBack);
+
     }
 
     private function onGiftActComplete():void {
@@ -1307,7 +1308,7 @@ public class DatingScene extends Scenes {
                 break;
             case "Kiss":
                 limitRel = relationship_level["datingpartner-Min"];
-                limitMood = mood_level["smitten-Min"];
+                limitMood = mood_level["loved-Min"];
                 break;
             case "Leave":
                 relPass = true;
