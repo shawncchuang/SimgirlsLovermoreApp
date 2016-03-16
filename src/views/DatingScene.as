@@ -1303,7 +1303,7 @@ public class DatingScene extends Scenes {
                 limitMood = mood_level["pleased-Min"];
                 break;
             case "Date":
-                limitRel = relationship_level["closefriend-Min"];
+                limitRel = relationship_level["datingpartner-Min"];
                 limitMood = mood_level["delighted-Min"];
                 break;
             case "Kiss":

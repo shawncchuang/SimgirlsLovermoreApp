@@ -1133,10 +1133,10 @@ public class Config
         "pleased-Min":111,
         "pleased-Max":443,
         "delighted-Min":444,
-        "delighted-Max":998,
-        "smitten-Min":999,
-        "smitten-Max":2221,
-        "loved-Min":2222
+        "delighted-Max":1110,
+        "smitten-Min":1111,
+        "smitten-Max":3332,
+        "loved-Min":3333
 
     }
     public  static var ratingStep:Object={

@@ -215,13 +215,13 @@ public class HotelScene extends Scenes
                 break
             case "restart":
                 init();
-                break
+                break;
             case "ani_complete_clear_character":
                 command.clearCopyPixel();
-                break
+                break;
             case "story_complete":
                 onStoryComplete();
-                break
+                break;
             case "Choice":
                 //scenecom.enableTouch();
                 break

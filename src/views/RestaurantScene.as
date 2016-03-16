@@ -91,7 +91,10 @@ import events.GameEvent;
 					gameEvent.displayHandler();
 					_data.name="MainScene";
 					command.sceneDispatch(SceneEvent.CHANGED,_data);
-					break
+					break;
+				case "Dine":
+						command.doDine();
+					break;
 				case "story_complete":
 
 						onStoryComplete();

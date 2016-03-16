@@ -1303,7 +1303,7 @@ public class MainCommand implements MainInterface {
         }
         //if
 
-        var rewardAP:Number = restObj.ap;
+        var rewardAP:Number = restObj.values.ap;
 
         ap += rewardAP;
         if (ap > apMax) {
@@ -1556,7 +1556,150 @@ public class MainCommand implements MainInterface {
             Starling.juggler.removeByID(tweenID);
 
             var _data:Object = new Object();
-            _data.name = "HotSpringScene";
+            _data.name = DataContainer.currentScene;
+            sceneDispatch(SceneEvent.CHANGED, _data);
+        }
+
+    }
+    public function doThink():void{
+        var flox:FloxInterface=new FloxCommand();
+        var dating:String=flox.getSaveData("dating");
+        var intObj:Object=flox.getSaveData("int");
+        var moods:Object=flox.getSaveData("mood");
+        var commands:Object=flox.getSyetemData("command");
+        rewards = new Object();
+        rewards.int = commands["Think"].values.int;
+        if(dating!=""){
+            var reward_mood:Number=Math.floor((intObj.player+intObj[dating])/12);
+            rewards.mood=reward_mood;
+            moods[dating]+=reward_mood;
+            intObj[dating]+=rewards.int;
+            flox.save("mood",moods);
+
+        }
+        intObj.player+=rewards.int;
+        flox.save("int",intObj);
+
+        var scene:Sprite = ViewsContainer.currentScene;
+        showCommandValues(scene,"Think",rewards);
+
+        var gameinfo:Sprite = ViewsContainer.gameinfo;
+        gameinfo.dispatchEventWith("UPDATE_INFO");
+
+        tweenID = Starling.juggler.delayCall(onThinkComplete,1);
+        function onThinkComplete():void{
+            Starling.juggler.removeByID(tweenID);
+
+            var _data:Object = new Object();
+            _data.name = DataContainer.currentScene;
+            sceneDispatch(SceneEvent.CHANGED, _data);
+        }
+
+    }
+
+    public function doWatchMovies():void{
+        var flox:FloxInterface=new FloxCommand();
+        var dating:String=flox.getSaveData("dating");
+        var intObj:Object=flox.getSaveData("int");
+        var moods:Object=flox.getSaveData("mood");
+        var commands:Object=flox.getSyetemData("command");
+        rewards = new Object();
+        rewards.int = commands["WatchMovies"].values.int;
+
+        if(dating!=""){
+            var reward_mood:Number=Math.floor((intObj.player+intObj[dating])/16);
+            rewards.mood=reward_mood;
+            moods[dating]+=reward_mood;
+            intObj[dating]+=rewards.int;
+            flox.save("mood",moods);
+
+        }
+        intObj.player+=rewards.int;
+        flox.save("int",intObj);
+
+        var scene:Sprite = ViewsContainer.currentScene;
+        showCommandValues(scene,"WatchMovies",rewards);
+
+        var gameinfo:Sprite = ViewsContainer.gameinfo;
+        gameinfo.dispatchEventWith("UPDATE_INFO");
+
+        tweenID = Starling.juggler.delayCall(onThinkComplete,1);
+        function onThinkComplete():void{
+            Starling.juggler.removeByID(tweenID);
+
+            var _data:Object = new Object();
+            _data.name = DataContainer.currentScene;
+            sceneDispatch(SceneEvent.CHANGED, _data);
+        }
+    }
+
+    public function doDrink():void{
+        var flox:FloxInterface=new FloxCommand();
+        var dating:String=flox.getSaveData("dating");
+        var imgObj:Object=flox.getSaveData("image");
+        var moods:Object=flox.getSaveData("mood");
+        var commands:Object=flox.getSyetemData("command");
+        rewards = new Object();
+        rewards.image = commands["Drink"].values.image;
+
+        if(dating!=""){
+            var reward_mood:Number=Math.floor((imgObj.player+imgObj[dating])/16);
+            rewards.mood=reward_mood;
+            moods[dating]+=reward_mood;
+            imgObj[dating]+=rewards.image;
+            flox.save("mood",moods);
+
+        }
+        imgObj.player+=rewards.image;
+        flox.save("image",imgObj);
+
+        var scene:Sprite = ViewsContainer.currentScene;
+        showCommandValues(scene,"Drink",rewards);
+
+        var gameinfo:Sprite = ViewsContainer.gameinfo;
+        gameinfo.dispatchEventWith("UPDATE_INFO");
+
+        tweenID = Starling.juggler.delayCall(onThinkComplete,1);
+        function onThinkComplete():void{
+            Starling.juggler.removeByID(tweenID);
+
+            var _data:Object = new Object();
+            _data.name = DataContainer.currentScene;
+            sceneDispatch(SceneEvent.CHANGED, _data);
+        }
+    }
+
+    public function doDine():void{
+        var flox:FloxInterface=new FloxCommand();
+        var dating:String=flox.getSaveData("dating");
+        var imgObj:Object=flox.getSaveData("image");
+        var moods:Object=flox.getSaveData("mood");
+        var commands:Object=flox.getSyetemData("command");
+        rewards = new Object();
+        rewards.image = commands["Dine"].values.image;
+        if(dating!=""){
+            var reward_mood:Number=Math.floor((imgObj.player+imgObj[dating])/12);
+            rewards.mood=reward_mood;
+            moods[dating]+=reward_mood;
+            imgObj[dating]+=rewards.image;
+            flox.save("mood",moods);
+
+        }
+        imgObj.player+=rewards.image;
+        flox.save("image",imgObj);
+
+        var scene:Sprite = ViewsContainer.currentScene;
+        showCommandValues(scene,"Dine",rewards);
+
+        var gameinfo:Sprite = ViewsContainer.gameinfo;
+        gameinfo.dispatchEventWith("UPDATE_INFO");
+
+        tweenID = Starling.juggler.delayCall(onThinkComplete,1);
+        function onThinkComplete():void{
+            Starling.juggler.removeByID(tweenID);
+
+            var _data:Object = new Object();
+            _data.name = DataContainer.currentScene;
             sceneDispatch(SceneEvent.CHANGED, _data);
         }
 
@@ -1612,14 +1755,21 @@ public class MainCommand implements MainInterface {
             rewards = sysCommad[attr].values;
         }
 
-        for (var i:String in rewards) {
-            attrlist.push(i);
-            if (rewards[i] > 0) {
-                var valueStr:String = "+" + rewards[i];
+        for (var cate:String in rewards) {
+
+            if (rewards[cate] > 0) {
+                attrlist.push(cate);
+                var valueStr:String = "";
+                if(cate=="mood"){
+                    valueStr="MOOD +"+rewards[cate];
+                }else{
+                    valueStr="+"+rewards[cate];
+                }
+                valueslist.push(valueStr);
             }else {
-                valueStr = String(rewards[i]);
+                //valueStr = String(rewards[i]);
             }
-            valueslist.push(valueStr);
+
 
         }
         //for
@@ -1890,7 +2040,7 @@ public class MainCommand implements MainInterface {
             sceneDispatch(SceneEvent.CHANGED, _data);
         } else {
 
-            if (comType != "Rest") {
+            if (comType != "Rest" && comType != "Sail") {
 
                 var scene:Sprite = ViewsContainer.currentScene;
                 _data.rewards = rewards;
@@ -2090,9 +2240,12 @@ public class MainCommand implements MainInterface {
 
             }
             try{
-                var mood:Number=sysCommand[com].values.mood;
-                attrArr.push("mood");
-                valuesArr.push("MOOD = "+mood);
+                var mood:*=sysCommand[com].values.mood;
+                if(mood!=undefined){
+                    attrArr.push("mood");
+                    valuesArr.push("MOOD = "+mood);
+                }
+
             }catch (e:Error){}
 
 

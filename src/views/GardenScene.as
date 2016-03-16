@@ -87,6 +87,9 @@ package views
 					_data.name="MainScene";
 					command.sceneDispatch(SceneEvent.CHANGED,_data);
 					break
+				case "Think":
+						command.doThink();
+					break
 				case "Rest":
 					
 					command.doRest(true);

@@ -434,6 +434,7 @@ public class CpuMembersCommand implements CpuMembersInterface
                 //no any skills chance
                 //DebugTrace.msg("CpuMembersCommand.checkSkillChance : No Any Chance Check around gems_req="+gems_req);
                 gems_req++;
+
             }
             //if
 

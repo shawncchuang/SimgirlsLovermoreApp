@@ -132,7 +132,7 @@ public class GameInfobar extends Sprite
         this.addEventListener("UPDATE_PROFILE",onUpdateProfile);
 
         this.dispatchEventWith("UPDATE_INFO");
-        this.dispatchEventWith("UPDATE_DATING");
+        //this.dispatchEventWith("UPDATE_DATING");
 
     }
     private function showBackground():void
@@ -191,6 +191,10 @@ public class GameInfobar extends Sprite
 
         //var progress:Number=flox.getPlayerData("inGameProgress");
         //proTxt.text="No."+progress;
+        current_dating=flox.getSaveData("dating");
+        if(current_dating!=""){
+            this.dispatchEventWith("UPDATE_DATING");
+        }
 
     }
 
@@ -379,9 +383,6 @@ public class GameInfobar extends Sprite
             profileFadeout();
             // datingProfileFadeout();
             gameInfobarFadeout();
-
-
-
 
             var currentScene:String=DataContainer.currentScene;
             var main_index:Number=currentScene.indexOf("MainScene");
@@ -643,6 +644,10 @@ public class GameInfobar extends Sprite
         current_dating=flox.getSaveData("dating");
         if(current_dating!="")
         {
+            try{
+                dating_icon.removeFromParent(true);
+            }catch(e:Error){}
+
             DataContainer.currentDating=current_dating;
             dating_icon=new Sprite();
             dating_icon.x=158;

@@ -86,15 +86,11 @@ package views
 					gameEvent.displayHandler();
 					_data.name="MainScene";
 					command.sceneDispatch(SceneEvent.CHANGED,_data);
-					break
-				case "":
-					
-					
-			 
-					break
+					break;
+				case "WatchMovies":
+					command.doWatchMovies();
+					break;
 				case "ani_complete":
-				 
-					
 					var value_data:Object=new Object();
 					value_data.attr="honor";
 					value_data.values="+10";

@@ -92,12 +92,12 @@ package views
 					gameEvent.displayHandler();
 					_data.name="MainScene";
 					command.sceneDispatch(SceneEvent.CHANGED,_data);
-					break
+					break;
 				case "Rest":
 					attr="FreeRest";
 					command.doRest(true);
 
-					break
+					break;
 				case "Sail":
 					attr="Sail";
 					command.doRest(false,"Sail");
@@ -106,7 +106,7 @@ package views
 
 					command.showCommandValues(this,attr);
 					init();
-					break
+					break;
 				case "story_complete":
 					onStoryComplete();
 

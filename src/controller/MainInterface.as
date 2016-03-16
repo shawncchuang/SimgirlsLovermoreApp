@@ -42,6 +42,10 @@ public interface MainInterface
     function doLearn():void
     function doMeditate():void
     function doRelax():void
+    function doThink():void
+    function doWatchMovies():void
+    function doDrink():void
+    function doDine():void
     function PlayBattleTutorial():void
     function drawPlayer(target:Sprite,avatar:Object=null):Sprite
     function drawCharacter(target:Sprite,style:String):Image
