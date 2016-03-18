@@ -176,7 +176,7 @@ public class BattleScene extends Sprite
 	private function onStartBonusGame(e:Event):void
 	{
 
-		if(battle_type=="random_battle"){
+		if(battle_type=="random_battle" || battle_type=="schedule"){
 
 
 			var victorybounse:Sprite=new VictoryBonus();
@@ -1793,7 +1793,7 @@ public class BattleScene extends Sprite
 					case "rfs_s_2":
 					case "nhk_s_2":
 						var chname:String=attack_member.chname;
-						if(chname!="badguy" && chname!="prml")
+						if(chname!="badguy" && chname!="prml" && chname!="fan")
 						{
 							sp=true;
 							showupSPAni(act);
@@ -2826,7 +2826,7 @@ public class BattleScene extends Sprite
 		var survive_members:Array=new Array();
 		for(var i:uint=0;i<members.length;i++)
 		{
-			DebugTrace.msg("BattleScene.chageFromation  members["+i+"]:"+JSON.stringify(members[i].power));
+			//DebugTrace.msg("BattleScene.chageFromation  members["+i+"]:"+JSON.stringify(members[i].power));
 			if(members[i].power.se>0)
 			{
 				survive_members.push(members[i]);
@@ -2856,10 +2856,10 @@ public class BattleScene extends Sprite
 				var posY:Number=new_poslist[k].y;
 				_member.power.combat=new_poslist[k].combat;
 				_member.updatePower(_member.power);
-				//_member.x=posX;
-				//_member.y=posY;
-				//TweenMax.to(_member,0.5,{x:posX,y:posY,ease:Expo.easeOut});
-				TweenMax.to(_member,0.2,{x:posX,y:posY,onComplete:onCompleteFromation,onCompleteParams:[_member]});
+				_member.x=posX;
+				_member.y=posY;
+				initTeamPos();
+				//TweenMax.to(_member,0.2,{x:posX,y:posY,onComplete:onCompleteFromation,onCompleteParams:[_member]});
 
 			}
 			//for

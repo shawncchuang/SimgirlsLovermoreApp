@@ -504,7 +504,7 @@ public class FoundSomeScene extends Scenes
 	}
 	private function initNPCRewards():void{
 		var rewardslist:Array=["image","int","cash"];
-		//image 20-30 , int 20-30 , cash 50-100
+		//image 5-15 , int 5-15 , cash 50-100
 
 		var attr:String="";
 		var rate:Number=Math.floor(Math.random()*100)+1;
@@ -518,10 +518,10 @@ public class FoundSomeScene extends Scenes
 		switch(attr){
 			case "image":
 			case "int":
-				reward=Math.floor(Math.random()*11)+20;
+				reward=Math.ceil(Math.random()*10)+5;
 				break
 			case "cash":
-				reward=Math.floor(Math.random()*51)+50;
+				reward=Math.ceil(Math.random()*50)+50;
 				break
 		}
 

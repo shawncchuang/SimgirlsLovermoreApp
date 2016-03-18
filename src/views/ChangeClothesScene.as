@@ -197,6 +197,7 @@ public class ChangeClothesScene extends Scenes {
             drawcom.updateBaseModel("Pants");
             drawcom.updateBaseModel("Clothes");
             drawcom.updateBaseModel("Hair");
+
         }
 
     }

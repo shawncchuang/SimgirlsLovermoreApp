@@ -37,11 +37,11 @@ public class CpuMembersCommand implements CpuMembersInterface
     //private var combinTeam:String="t0";
     private var cpuIndex:Number=0;
     private var gems_req:Number=0;
+    private var gemsMax:Number=9;
     //Attack
-    //private var atkPers:Array=[15,15,40,75,50];
-    //private var atkPers:Array=[15,15,40,75,30];
-    private var atkPers:Array=[10,15,30,60,30];
-    private var atklist:Array=["f3,a3,w3,e3","f2,e2","f1,a1,w1,e1","f0,a1,w1,e0","a0,w0"];
+    private var atkPers:Array=[10,20,20,25];
+    private var _atkPers:Array=[20,60,50,0];
+    private var atklist:Array=["a0,w0","f0,a1,w1,e0,f1,e1","a2,w2,f2,e2","f3,a3,w3,e3"];
     //Healing
     //SE current lv_gems requirement
     private var se_lv:String="0";
@@ -377,7 +377,7 @@ public class CpuMembersCommand implements CpuMembersInterface
         //for
 
     }
-    private var sIndex:Number=0;
+    private var sIndex:Number=-1;
     private var skillIDs:Array;
     private var match:Boolean=false;
     private var atk_index:Number=0;
@@ -402,45 +402,54 @@ public class CpuMembersCommand implements CpuMembersInterface
     private var  atkskills:Array;
     private  function checkSkillChance():void
     {
-        //skill chance
-
-        atk_index=0;
+        //atk_index=0;
         getMemberSkills();
         //DebugTrace.msg("CpuMembersCommand.checkSkillChance atk_index="+atk_index+" ; gems_req="+gems_req+" ; sIndex="+sIndex);
-        var atkper:Number=atkPers[sIndex];
+        var index:Number=Number(member_id.split("_")[1]);
+        if(index==0){
+            var atkper:Number=atkPers[sIndex];
+        }
+        else{
+            //not leader
+            atkper=_atkPers[sIndex];
+        }
+
         var ran:Number=Math.floor(Math.random()*100);
         //DebugTrace.msg("CpuMembersCommand.checkSkillChance ran="+ran+" <-> atkper="+atkper);
 
-        var squskill:Array=new Array();
         atkskills=atklist[sIndex].split(",");
-        var battledata:BattleData=new BattleData();
-        atkskills=battledata.shuffleHandle(atkskills);
 
         //DebugTrace.msg("CpuMembersCommand.checkSkillChance skillIDs="+skillIDs);
-        //DebugTrace.msg("CpuMembersCommand.checkSkillChance atkskills="+atkskills);
-
-        if(ran<atkper)
-        {
-            //check match
-            checkSkillMatch();
-        }
-        else
-        {
-            //no chance , check next skill
-            //DebugTrace.msg("CpuMembersCommand.checkSkillChance : No Chance --> Next Skill ; sIndex="+sIndex);
-
-            if(sIndex==atkPers.length-1)
+        var member:Member=getMember(member_id);
+        if(member.power.se>0 && member.power.skillID=="" && member.status!="dizzy"){
+            if(ran<atkper)
             {
-                //no any skills chance
-                //DebugTrace.msg("CpuMembersCommand.checkSkillChance : No Any Chance Check around gems_req="+gems_req);
-                gems_req++;
+                //check match
+                DebugTrace.msg("CpuMembersCommand.checkSkillChance atkskills="+atkskills);
+                checkSkillMatch();
+            }
+            else
+            {
+                //no chance , check next skill
+                //DebugTrace.msg("CpuMembersCommand.checkSkillChance : No Chance --> Next Skill ; sIndex="+sIndex);
+
+                if(sIndex==atkPers.length-1)
+                {
+                    //no any skills chance for this round
+                    //DebugTrace.msg("CpuMembersCommand.checkSkillChance : No Any Chance Check around gems_req="+gems_req);
+                    gems_req++;
+
+                }
+                //if
+
+                checkNextSkillChance();
 
             }
-            //if
-
-            checkNextSkillChance();
-
+        }else{
+            checkNextAttacker();
         }
+
+
         //if
 
     }
@@ -468,17 +477,16 @@ public class CpuMembersCommand implements CpuMembersInterface
                 var current_req:Number=Number(skillsSys[skillID].jewel.split("|")[0]);
                 var _gems_req:Number=gems_req+current_req;
 
-                if(_gems_req<7 && member.power.skillID=="" && member.power.se>0 && member.status!="dizzy")
+                if(_gems_req<=gemsMax)
                 {
 
                     //gems are enough && not set up skill yet --> set up current skill , check next skill
                     match=true;
-                    gems_req+=current_req;
-
+                    //gems_req+=current_req;
+                    gems_req=_gems_req;
 
                     createPower(skillID,member);
-
-                    checkNextSkillChance();
+                    checkNextAttacker();
                     break
                 }
                 //if
@@ -487,27 +495,26 @@ public class CpuMembersCommand implements CpuMembersInterface
         }
         //for
         //DebugTrace.msg("CpuMembersCommand.checkSkillMatch: match="+match);
-        if(!match)
+        if(!match && gems_req<gemsMax)
         {
-            //current member didn't match skill	--> check next member;
+            //check next skill pool
+            checkNextSkillChance();
 
-            atk_index++;
-            if(atk_index<cputeam.length)
-            {
-                //check next member
-                getMemberSkills();
-                checkSkillMatch();
-            }
-            else
-            {
-                //check all members already  -->check next skill
-
-                checkNextSkillChance();
-            }
-            //if
         }
-        //if
 
+    }
+    private function checkNextAttacker():void{
+
+        atk_index++;
+        if(atk_index<cputeam.length)
+        {
+            //check next member
+            getMemberSkills();
+
+            sIndex=-1;
+            checkNextSkillChance();
+
+        }
 
     }
     private function checkNextSkillChance():void
@@ -887,9 +894,10 @@ public class CpuMembersCommand implements CpuMembersInterface
         var boss_power:Object=getBossPower(boss_id);
         var boss_se:Number=boss_power.se;
         var boss_seMax:Number=boss_power.seMax;
-        var seper:Number=Math.floor(Number((boss_se/boss_seMax).toFixed(2))*100);
+        var seper:Number=Math.floor((boss_se/boss_seMax)*100);
         var gems_reqs:Array=["1","2","3","5"];
-        var lvP:Array=[80,55,30,0];
+        var lvP:Array=[60,40,20,0];
+
         if(seper<100 && seper>=lvP[0])
         {
             se_lv="0";
@@ -902,9 +910,11 @@ public class CpuMembersCommand implements CpuMembersInterface
         {
             se_lv="2";
         }
-        else if(seper<lvP[2] && seper>=lvP[3])
+        else if(seper<lvP[2] && seper>lvP[3])
         {
             se_lv="3";
+        }else if(seper==lvP[3]){
+            se_lv="1";
         }
         //DebugTrace.msg("CpuMembersCommand.assistHandle gems_req="+gems_req);
         var attr_index:Number=0;
@@ -948,7 +958,7 @@ public class CpuMembersCommand implements CpuMembersInterface
 
             var jewel:String=now_gems_req+"|n";
             var skillID:String="";
-            if(_gems_req<7)
+            if(_gems_req<gemsMax)
             {
                 for(var skill_id:String in skillsys)
                 {

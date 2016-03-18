@@ -10,8 +10,10 @@ package views
 	import com.greensock.plugins.TransformAroundCenterPlugin;
 	import com.greensock.plugins.TransformAroundPointPlugin;
 	import com.greensock.plugins.TweenPlugin;
-	
-	import flash.display.MovieClip;
+
+import data.Config;
+
+import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
@@ -163,20 +165,7 @@ import utils.DebugTrace;
 			{
 				DebugTrace.msg("VictoryBonus.createNewStar Stop Bonus ---> score="+score);
 
-                honors=flox.getSaveData("honor");
 
-				//var player_power:Array=DataContainer.PlayerPower;
-                var player_power:Array=memberscom.getPlayerTeam();
-				for(var i:uint=0;i<player_power.length;i++)
-				{
-					//DebugTrace.msg("VictoryBonus.createNewStar power="+JSON.stringify(player_power[i]));
-
-					var _name:String=player_power[i].chname;
-					honors[_name]+=score;
-					
-				}
-				//for
-                flox.save("honor",honors);
 
 				
 				var format:TextFormat=new TextFormat();
@@ -217,9 +206,29 @@ import utils.DebugTrace;
 		private function doConfirmHandle(e:MouseEvent):void
 		{
 
-
+			bunosAlert.confirm.removeEventListener(MouseEvent.MOUSE_DOWN,doConfirmHandle);
+			saveBonusHonor();
 			onBonusFadeout();
 			
+		}
+		private function saveBonusHonor():void{
+
+			var characters:Array=Config.characters;
+			var honors:Object=flox.getSaveData("honor");
+			var memberpower:Array=memberscom.getPlayerTeam();
+			for(var i:uint=0;i<memberpower.length;i++)
+			{
+				//DebugTrace.msg("VictoryBonus.createNewStar power="+JSON.stringify(player_power[i]));
+
+				var _name:String=memberpower[i].chname;
+				if(characters.indexOf(_name)!=-1 || _name=="player"){
+					var honor:Number = honors[_name];
+					honor += score_num;
+					honors[_name] = honor;
+				}
+			}
+			//for
+			flox.save("honor",honors);
 		}
 		private function onBonusFadeout():void
 		{
@@ -236,7 +245,7 @@ import utils.DebugTrace;
 			
 		    var battleType:String=DataContainer.battleType;
             var scene:String=DataContainer.BatttleScene;
-            if(battleType=="sechedule"){
+            if(battleType=="schedule"){
 
                 scene="SSCCArenaScene";
 
@@ -256,11 +265,13 @@ import utils.DebugTrace;
 
             }
 
+
 			var command:MainInterface=new MainCommand();	
 			var _data:Object=new Object();
 			_data.name= scene;
-			command.sceneDispatch(SceneEvent.CHANGED,_data);
 			command.updateInfo();
+			command.sceneDispatch(SceneEvent.CHANGED,_data);
+
 
 
 

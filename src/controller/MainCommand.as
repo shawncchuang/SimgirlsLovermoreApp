@@ -1704,6 +1704,32 @@ public class MainCommand implements MainInterface {
         }
 
     }
+    public function doPlayGamble():void{
+
+        var flox:FloxInterface=new FloxCommand();
+        var cash:Number=flox.getSaveData("cash");
+        var commands:Object=flox.getSyetemData("command");
+        var rewardCash:Number=Math.ceil(Math.random()*1000);
+        rewards = new Object();
+        rewards.cash=rewardCash;
+        cash+=rewardCash;
+        flox.save("cash",cash);
+        var scene:Sprite = ViewsContainer.currentScene;
+        showCommandValues(scene,"PlayGamble",rewards);
+
+        var gameinfo:Sprite = ViewsContainer.gameinfo;
+        gameinfo.dispatchEventWith("UPDATE_INFO");
+
+        tweenID = Starling.juggler.delayCall(onThinkComplete,1);
+        function onThinkComplete():void{
+            Starling.juggler.removeByID(tweenID);
+
+            var _data:Object = new Object();
+            _data.name = DataContainer.currentScene;
+            sceneDispatch(SceneEvent.CHANGED, _data);
+        }
+
+    }
     public function PlayBattleTutorial():void{
 
         comType = "BattleTutorial";
@@ -2150,7 +2176,6 @@ public class MainCommand implements MainInterface {
 
             return false;
         }
-
 
         var payAP:Number = sysCommand[com].ap;
         if (sysCommand[com].values) {

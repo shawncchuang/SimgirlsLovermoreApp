@@ -156,7 +156,7 @@ public class CommandCloud extends Sprite
             var flox:FloxInterface=new FloxCommand();
             //var turn_switch:String=flox.getSaveData("current_switch").split("|")[1];
             DebugTrace.msg("CommandCloud.doClickComCloud com="+com);
-            if(com=="Rest" || com=="Stay")
+            if(com=="Rest" || com=="Stay" || com=="Sail")
             {
 
                 var switch_verifies:Array=scenecom.switchGateway("Rest");
@@ -165,6 +165,11 @@ public class CommandCloud extends Sprite
                 if(!switch_verifies[0] && battle_verfiy)
                 {
                     //no story yet && no battle day
+                    var consum_verfiy:Boolean=true;
+                    if(com=="Sail"){
+                        consum_verfiy=command.consumeHandle(com);
+                    }
+                    if(consum_verfiy)
                     onCloudClicked();
 
 

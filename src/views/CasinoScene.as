@@ -90,12 +90,10 @@ package views
 					gameEvent.displayHandler();
 					_data.name="MainScene";
 					command.sceneDispatch(SceneEvent.CHANGED,_data);
-					break
-				case "":
-					
-					
-			 
-					break
+					break;
+				case "Play":
+						command.doPlayGamble();
+					break;
 				case "ani_complete":
 				 
 					

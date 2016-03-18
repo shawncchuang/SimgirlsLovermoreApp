@@ -540,7 +540,7 @@ public class Character extends MovieClip
     {
         status=type;
     }
-    private var dizzy_round:Number=2;
+    private var dizzy_round:Number=3;
     public function updateDamage(effect:String,damage:Number):void
     {
         //DebugTrace.msg("Character.updateDamage id:"+name+"; effect="+ effect+"; status="+status);

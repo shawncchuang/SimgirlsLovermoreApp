@@ -62,6 +62,7 @@ public class ShoppingClothesListLayout extends Sprite {
         initSwitchController();
         initBuyHandler();
 
+        updateItemInfo();
         this.addEventListener(Event.REMOVED_FROM_STAGE,onRemovedHandler);
     }
 
@@ -86,11 +87,13 @@ public class ShoppingClothesListLayout extends Sprite {
 
         var posY:Number=460 / 2;
         var scale:Number=0.7;
+        var height:Number=440;
         if (cate == "upperbody") {
             var _cate:String = "Clothes";
             if(gender=="Female"){
                 posY+=50;
                 scale=0.6;
+                height=600;
             }
             if(gender=="Male" && _cate=="Clothes"){
                 posY+=20;
@@ -109,14 +112,14 @@ public class ShoppingClothesListLayout extends Sprite {
         itemSprite.addChild(itemImg);
         itemSprite.pivotX = itemSprite.width / 2;
         itemSprite.pivotY = itemSprite.height / 2;
-        itemSprite.x = 611 / 2;
+        itemSprite.x = 611 / 2+20;
         itemSprite.y = posY;
         itemSprite.scaleX = scale;
         itemSprite.scaleY = scale;
         if(itemSprite.height>220){
 
             //itemSprite.clipRect=new flash.geom.Rectangle(-(itemSprite.pivotX/2),-(itemSprite.pivotY/2),itemSprite.width*2,440);
-            itemSprite.mask=new Quad(itemSprite.width*2,440);
+            itemSprite.mask=new Quad(itemSprite.width*2,height);
             itemSprite.mask.x=-(itemSprite.pivotX/2);
             itemSprite.mask.y=-(itemSprite.pivotY/2);
         }
@@ -128,25 +131,25 @@ public class ShoppingClothesListLayout extends Sprite {
 
     private function initItemInfo():void {
 
-        itemname = new TextField(245, 30, current_item.name);
-        itemname.format.setTo(font, 25, 0x4A4A4A);
-        itemname.pivotX = itemname.width / 2;
-        itemname.x = 611 / 2;
+        itemname = new TextField(100, 30, current_item.name);
+        itemname.format.setTo(font, 25, 0x4A4A4A,"left");
+       // itemname.pivotX = itemname.width / 2;
+        itemname.x = 45;
         itemname.y = 94;
 
 
+        /*
         var signTexture:Texture = Assets.getTexture("DollarSign");
         var dollaSign:Image = new Image(signTexture);
         dollaSign.x = 460;
         dollaSign.y = 82;
-
         var priceStr:String = DataContainer.currencyFormat(current_item.price);
-        price = new TextField(140, 43, priceStr);
-        price.format.setTo("SimNeogreyMedium", 36, 0x4A4A4A);
+        price = new TextField(120, 43, priceStr);
+        price.format.setTo("SimNeogreyMedium", 32, 0x4A4A4A);
         price.x = dollaSign.x + dollaSign.width;
         price.y = 86;
         price.autoSize = TextFieldAutoSize.HORIZONTAL;
-
+        */
 
         var current:String = (itemIndex + 1) + " / " + items.length;
         numbers = new TextField(200, 24, current);
@@ -156,9 +159,9 @@ public class ShoppingClothesListLayout extends Sprite {
         numbers.y = 389;
 
         addChild(itemname);
-        addChild(price);
         addChild(numbers);
-        addChild(dollaSign);
+        //addChild(price);
+        //addChild(dollaSign);
     }
     private function initCateHandler():void{
 
@@ -197,8 +200,6 @@ public class ShoppingClothesListLayout extends Sprite {
 
         initItems();
         updateItemInfo();
-
-
 
 
     }
@@ -268,11 +269,12 @@ public class ShoppingClothesListLayout extends Sprite {
         current_item = items[itemIndex];
         itemname.text = current_item.name;
         var priceStr:String = DataContainer.currencyFormat(current_item.price);
-        price.text = priceStr;
+        //price.text = priceStr;
         numbers.text = (itemIndex + 1) + " / " + itemMax;
 
         itemSprite.removeFromParent(true);
         initItemImage();
+        updatePrice();
 
     }
 
@@ -286,7 +288,7 @@ public class ShoppingClothesListLayout extends Sprite {
         buyBtn.x = 480;
         buyBtn.y = 383;
         addChild(buyBtn);
-        buyBtn.addEventListener(Event.TRIGGERED, onTapBuyHandler)
+        buyBtn.addEventListener(Event.TRIGGERED, onTapBuyHandler);
     }
 
     private function onTapBuyHandler(e:Event):void {
@@ -296,7 +298,7 @@ public class ShoppingClothesListLayout extends Sprite {
         var list:Array=avatar[cate];
         var cashpass:Boolean=false;
         var bought:Boolean=false;
-        var scene:Sprite = ViewsContainer.MainScene;
+        var scene:Sprite = ViewsContainer.currentScene;
         var msg:String="";
         if(current_item.price<cash){
             cashpass=true;
@@ -337,7 +339,6 @@ public class ShoppingClothesListLayout extends Sprite {
             var gameinfo:Sprite = ViewsContainer.gameinfo;
             gameinfo.dispatchEventWith("UPDATE_INFO", false);
 
-            scene.dispatchEventWith("SHOPPING_PAIED");
 
             var evtObj:Object = new Object();
             var scene_name:String = DataContainer.currentScene;
@@ -348,11 +349,18 @@ public class ShoppingClothesListLayout extends Sprite {
 
         }
     }
+    private function updatePrice():void{
+
+        var scene:Sprite = ViewsContainer.currentScene;
+        var _data:Object=new Object();
+        _data.price=current_item.price;
+        scene.dispatchEventWith("UPDATED_PRICE",false,_data);
+    }
     private function onRemovedHandler(e:Event):void{
 
         itemSprite.removeFromParent(true);
         itemname.removeFromParent();
-        price.removeFromParent();
+        //price.removeFromParent();
         numbers.removeFromParent();
         arrowLeft.removeFromParent(true);
         arrowRight.removeFromParent(true);

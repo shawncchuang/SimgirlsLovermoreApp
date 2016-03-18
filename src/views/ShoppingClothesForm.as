@@ -22,6 +22,7 @@ import starling.display.Image;
 import starling.display.Sprite;
 import starling.events.Event;
 import starling.text.TextField;
+import starling.text.TextFormat;
 
 
 import utils.ViewsContainer;
@@ -32,18 +33,21 @@ public class ShoppingClothesForm extends Sprite {
     private var panelAssets:Image;
     private var flox:FloxInterface=new FloxCommand();
     private var command:MainInterface=new MainCommand();
-    private var casshtext:TextField;
+    private var pricetext:TextField;
     private var font:String="SimNeogreyMedium";
     private var clotheslayout:ShoppingClothesListLayout;
-
+    private var price:Number=0;
     public function ShoppingClothesForm() {
 
         base_sprite=new Sprite();
         addChild(base_sprite);
         this.addEventListener(Event.REMOVED_FROM_STAGE, onRemovedHandler);
 
+        var scene:Sprite=ViewsContainer.currentScene;
+        scene.addEventListener("UPDATED_PRICE",onUpdatePrice);
+
         initPanel();
-        initCashFormat();
+
     }
     private function initPanel():void{
 
@@ -52,33 +56,39 @@ public class ShoppingClothesForm extends Sprite {
         panelbase.y=159;
         addChild(panelbase);
 
-
-
         panelAssets=new Image(Assets.getTexture("ShoppingAssets"));
         panelbase.addChild(panelAssets);
 
+        initPriceFormat();
+
         clotheslayout=new ShoppingClothesListLayout();
         panelbase.addChild(clotheslayout);
-
-        var scene:Sprite=ViewsContainer.currentScene;
-        scene.addEventListener("SHOPPING_PAIED",onUpdateCash);
 
 
         var templete:MenuTemplate=new MenuTemplate();
         templete.addBackStepButton(doCannelHandler);
         addChild(templete);
     }
-    private function onUpdateCash(e:Event):void
-    {
+    private function initPriceFormat():void{
 
-        var cash:Number=flox.getSaveData("cash");
-        casshtext.text=DataContainer.currencyFormat(cash);
+        var priceStr:String=DataContainer.currencyFormat(price);
+        pricetext=new TextField(150,25,priceStr);
+        //pricetext.autoSize=TextFieldAutoSize.LEFT;
+        pricetext.format.setTo(font,20,0,"left");
+        pricetext.x=117;
+        pricetext.y=30;
+
+        panelbase.addChild(pricetext);
+    }
+    private function onUpdatePrice(e:Event):void
+    {
+        price= e.data.price;
+        pricetext.text=DataContainer.currencyFormat(price);
 
     }
 
     private function doCannelHandler(e:Event):void
     {
-
 
 
         var _data:Object=new Object();
@@ -87,21 +97,7 @@ public class ShoppingClothesForm extends Sprite {
 
 
     }
-    private function initCashFormat():void{
 
-
-
-        var cash:Number=flox.getSaveData("cash");
-        var format:Object=new Object();
-        format.font=font;
-        format.size=20;
-        format.color=0x000000;
-
-        casshtext=addTextField(this,new Rectangle(117,30,158,25),format);
-        casshtext.name="cash";
-        casshtext.text=DataContainer.currencyFormat(cash);
-        panelbase.addChild(casshtext);
-    }
     private function addTextField(target:Sprite,rec:Rectangle,format:Object):TextField
     {
 

@@ -233,6 +233,8 @@ public class DrawManager implements DrawerInterface
                 var eyes_texture:Texture=Assets.getTexture(gender+"Eyes");
                 eyes=new Image(eyes_texture);
                 eyes.name=target;
+                eyes.width=51;
+                eyes.height=9.3;
                 eyes.x=pos.x;
                 eyes.y=pos.y;
                 _color=avatar.eyescolor;
@@ -527,12 +529,12 @@ public class DrawManager implements DrawerInterface
             "Male_HairStyle":new Point(223,-33),
             "Female_HairStyle":new Point(54,-39),
             "Male_Eyes":new Point(112,70),
-            "Female_Eyes":new Point(108,59),
+            "Female_Eyes":new Point(107,58.55),
             //"Male_Pants":new Point(-2,401),
             "Male_Pants":new Point(-4,351.5),
             "Female_Pants":new Point(16,352),
             "Male_Clothes":new Point(-21,81),
-            "Female_Clothes":new Point(7,117),
+            "Female_Clothes":new Point(4,-38),
             "Male_Features":new Point(80,3),
             "Female_Features":new Point(30,-14)
         }
