@@ -37,7 +37,7 @@ public class BeachScene extends Scenes
     private var flox:FloxInterface=new FloxCommand();
 
     private var getAP:Number=10;
-
+    private var attr:String="";
 
     public function BeachScene()
     {
@@ -115,12 +115,12 @@ public class BeachScene extends Scenes
                 command.sceneDispatch(SceneEvent.CHANGED,_data);
                 break
             case "Rest":
-
-                command.doRest(true);
+                attr="FreeRest";
+                command.doRest(true,"FreeRest");
                 break
             case "ani_complete":
 
-                command.showCommandValues(this,"FreeRest");
+                command.showCommandValues(this,attr);
 
                 break
             case "ani_complete_clear_character":

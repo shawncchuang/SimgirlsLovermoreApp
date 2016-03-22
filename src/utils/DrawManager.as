@@ -206,7 +206,7 @@ public class DrawManager implements DrawerInterface
 
         //DebugTrace.msg("DrawManager.updateBaseModel gender:"+ gender)
         //DebugTrace.msg("DrawManager.updateBaseModel featuresIndex:"+ featuresIndex)
-        var pos:Point=switchPosition(target);
+        var pos:*=switchPosition(target);
         var _color:Number;
         var xml:XML=new XML();
         switch(target)
@@ -233,8 +233,8 @@ public class DrawManager implements DrawerInterface
                 var eyes_texture:Texture=Assets.getTexture(gender+"Eyes");
                 eyes=new Image(eyes_texture);
                 eyes.name=target;
-                eyes.width=51;
-                eyes.height=9.3;
+                eyes.width=pos.width;
+                eyes.height=pos.height;
                 eyes.x=pos.x;
                 eyes.y=pos.y;
                 _color=avatar.eyescolor;
@@ -518,23 +518,23 @@ public class DrawManager implements DrawerInterface
         bonbody = armature.getBone(target);
         return bonbody
     }
-    private function switchPosition(part:String):Point
+    private function switchPosition(part:String):*
     {
         //
-        var p:Point=new Point();
+        var p:*;
         var attr:String=gender+"_"+part;
         var pos:Object={
             "Male_Hair":new Point(69,-30),
             "Female_Hair":new Point(44.4,-39),
             "Male_HairStyle":new Point(223,-33),
             "Female_HairStyle":new Point(54,-39),
-            "Male_Eyes":new Point(112,70),
-            "Female_Eyes":new Point(107,58.55),
+            "Male_Eyes":new flash.geom.Rectangle(112,70,47,6.95),
+            "Female_Eyes":new flash.geom.Rectangle(107,58.55,51,9.3),
             //"Male_Pants":new Point(-2,401),
             "Male_Pants":new Point(-4,351.5),
             "Female_Pants":new Point(16,352),
             "Male_Clothes":new Point(-21,81),
-            "Female_Clothes":new Point(4,-38),
+            "Female_Clothes":new Point(-30,-38),
             "Male_Features":new Point(80,3),
             "Female_Features":new Point(30,-14)
         }

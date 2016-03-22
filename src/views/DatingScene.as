@@ -491,7 +491,10 @@ public class DatingScene extends Scenes {
     private function initLayout():void {
 
 
-        //var bgImg:Image = drawcom.drawBackground();
+        var dating:String = DataContainer.currentDating;
+        var rel:String = flox.getSaveData("rel")[dating];
+        rel=rel.split(" ").join("");
+
 
         bgSprtie =  drawcom.drawBackground();
 
@@ -505,11 +508,11 @@ public class DatingScene extends Scenes {
         bgEffectImg = new Image(effterxture);
         addChild(bgEffectImg);
 
-        titleIcon = new Image(Assets.getTexture("IconDatingSceneTitle"));
-        titleIcon.pivotX = titleIcon.width / 2;
-        titleIcon.pivotY = titleIcon.height / 2;
-        titleIcon.x = 99;
-        titleIcon.y = 112;
+
+
+        titleIcon = new Image(Assets.getTexture("IconRel_"+rel));
+        titleIcon.x = 34;
+        titleIcon.y = 11;
         addChild(titleIcon);
 
 
@@ -522,8 +525,6 @@ public class DatingScene extends Scenes {
         quad1.x = 5;
         relactionInfo.addChild(quad1);
 
-        var dating:String = DataContainer.currentDating;
-        var rel:String = flox.getSaveData("rel")[dating];
         if(rel=="spouse"){
             rel="soulmate";
         }
@@ -1288,7 +1289,7 @@ public class DatingScene extends Scenes {
         switch (com) {
             case "Chat":
                 relPass = true;
-                limitMood = mood_level["bored-Min"];
+                limitMood = mood_level["annoyed-Min"];
                 break;
             case "Give":
                 relPass = true;

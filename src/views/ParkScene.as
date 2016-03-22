@@ -29,7 +29,7 @@ public class ParkScene extends Scenes
     private var command:MainInterface=new MainCommand();
     private var button:Button;
     private var scencom:SceneInterface=new SceneCommnad();
-
+    private var attr:String="";
 
     public function ParkScene()
     {
@@ -90,13 +90,13 @@ public class ParkScene extends Scenes
                 command.sceneDispatch(SceneEvent.CHANGED,_data);
                 break;
             case "Rest":
-
-                command.doRest(true);
+                attr="FreeRest";
+                command.doRest(true,attr);
 
                 break;
             case "ani_complete":
 
-                command.showCommandValues(this,"FreeRest");
+                command.showCommandValues(this,attr);
                 break
             case "story_complete":
 

@@ -565,8 +565,29 @@ public class AssetEmbeds
     [Embed(source="../../media/textures/icons/sound_toggle_down.png")]
     public static const IconToggleDown:Class;
 
-    [Embed(source="../../media/textures/icons/title_icon_datingscene.png")]
-    public static const IconDatingSceneTitle:Class;
+    //[Embed(source="../../media/textures/icons/title_icon_datingscene.png")]
+    //public static const IconDatingSceneTitle:Class;
+
+    [Embed(source="../../media/textures/icons/relationship/acqt.png")]
+    public static const IconRel_acquaintance:Class;
+
+    [Embed(source="../../media/textures/icons/relationship/close friend.png")]
+    public static const IconRel_closefriend:Class;
+
+    [Embed(source="../../media/textures/icons/relationship/dating.png")]
+    public static const IconRel_datingpartner:Class;
+
+    [Embed(source="../../media/textures/icons/relationship/foe.png")]
+    public static const IconRel_foe:Class;
+
+    [Embed(source="../../media/textures/icons/relationship/friend.png")]
+    public static const IconRel_friend:Class;
+
+    [Embed(source="../../media/textures/icons/relationship/lover.png")]
+    public static const IconRel_lover:Class;
+
+    [Embed(source="../../media/textures/icons/relationship/soul-mate.png")]
+    public static const IconRel_spouse:Class;
 
 
     [Embed(source="../../media/textures/icons/ani/com_cloud_sprites.xml", mimeType="application/octet-stream")]
@@ -847,8 +868,6 @@ public class AssetEmbeds
     public static const npc022:Class;
     [Embed(source="../../media/textures/npc/npc023.png")]
     public static const npc023:Class;
-    [Embed(source="../../media/textures/npc/npc024.png")]
-    public static const npc024:Class;
     [Embed(source="../../media/textures/npc/npc025.png")]
     public static const npc025:Class;
     [Embed(source="../../media/textures/npc/npc026.png")]
@@ -944,6 +963,10 @@ public class AssetEmbeds
     public static const npc066:Class;
     [Embed(source="../../media/textures/npc/npc067.png")]
     public static const npc067:Class;
+
+    [Embed(source="../../media/textures/npc/npc069.png")]
+    public static const npc069:Class;
+
 
     [Embed(source="../../media/textures/characters/styles/ceil/twin.png")]
     public static const ceil_twin:Class;

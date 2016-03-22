@@ -93,16 +93,12 @@ import events.GameEvent;
 					command.sceneDispatch(SceneEvent.CHANGED,_data);
 					break;
 				case "Dine":
-						command.doDine();
+					command.playCommonAnimation("Dine");
 					break;
 				case "story_complete":
-
 						onStoryComplete();
-
-					break
+					break;
 				case "ani_complete":
-				 
-					
 					//var value_data:Object=new Object();
 					//value_data.attr="honor";
 					//value_data.values="+10";

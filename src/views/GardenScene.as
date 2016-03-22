@@ -1,13 +1,16 @@
 package views
 {
-	
-	
-	
-	import controller.FloxCommand;
+
+
+import com.greensock.loading.LoaderMax;
+
+import controller.FloxCommand;
 	import controller.FloxInterface;
 	import controller.MainCommand;
 	import controller.MainInterface;
-	import controller.SceneCommnad;
+import controller.MediaCommand;
+import controller.MediaInterface;
+import controller.SceneCommnad;
 	import controller.SceneInterface;
 	
 	import events.GameEvent;
@@ -88,10 +91,9 @@ package views
 					command.sceneDispatch(SceneEvent.CHANGED,_data);
 					break
 				case "Think":
-						command.doThink();
+						command.playCommonAnimation("Think");
 					break
 				case "Rest":
-					
 					command.doRest(true);
 			 
 					break

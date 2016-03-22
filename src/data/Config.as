@@ -52,13 +52,12 @@ public class Config
         "bank":"npc015",
         "dan":"npc016",
         "pier_guy":"npc017",
-        "pier_gal":"npc018",
+        "garden":"npc018",
         "airport_guy":"npc019",
         "airport_gal":"npc020",
         "themedpark_boy":"npc021",
         "museum":"npc022",
         "park_guy":"npc023",
-        "park_gal":"npc024",
         "primero":"npc025",
         "beach":"npc026",
         "fitnessclub":"npc027",
@@ -104,7 +103,10 @@ public class Config
         "akira1":"npc064",
         "akira2":"npc065",
         "restaurant1":"npc066",
-        "restaurant2":"npc067"
+        "restaurant2":"npc067",
+
+        "coffeshop":"npc069"
+
 
     };
     //schedule [index+ current month]
@@ -684,50 +686,50 @@ public class Config
                 ceil: 0
             },
             "image":{
-                player:200,
-                lenus: 120,
-                sirena:357,
-                dea: 160,
-                sao: 162,
-                klr: 180,
-                tomoru: 294,
-                zack: 0,
-                ceil: 189
+                player:300,
+                lenus: 180,
+                sirena:536,
+                dea: 240,
+                sao: 243,
+                klr: 270,
+                tomoru: 441,
+                zack: 300,
+                ceil: 284
             },
             "wealth":0,
             "int":{
-                player:200,
-                lenus: 360,
-                sirena:153,
-                dea: 379,
-                sao: 108,
-                klr: 180,
-                tomoru: 126,
-                zack: 100,
-                ceil: 81
+                player:300,
+                lenus: 540,
+                sirena:230,
+                dea: 569,
+                sao: 162,
+                klr: 270,
+                tomoru: 189,
+                zack: 300,
+                ceil: 122
             },
             "love":{
                 //love==Max se
-                player:200,
-                lenus: 200,
-                sirena:200,
-                dea: 200,
-                sao: 200,
-                klr: 200,
-                tomoru: 200,
-                zack: 200,
-                ceil: 200
+                player:300,
+                lenus: 320,
+                sirena:320,
+                dea: 330,
+                sao: 290,
+                klr: 310,
+                tomoru: 320,
+                zack: 300,
+                ceil: 300
             },
             "se":{
-                lenus: 200,
-                sirena: 200,
-                dea: 200,
-                sao: 200,
-                klr: 200,
-                tomoru: 200,
-                ceil: 200,
-                zack: 200,
-                player:200
+                lenus: 320,
+                sirena: 320,
+                dea: 330,
+                sao: 290,
+                klr: 310,
+                tomoru: 320,
+                ceil: 300,
+                zack: 300,
+                player:300
             },
             "s_ele":"air",
             "skills":
@@ -950,7 +952,7 @@ public class Config
                 t9_6 : {"seMax":"","se":100} ,
                 t9_7 : {"seMax":"","se":100},
 
-                t10_0 :{"seMax":1200,"se":1200},
+                t10_0 :{"seMax":1600,"se":1600},
                 t10_1 : {"seMax":0,"se":0},
                 t10_2 : {"seMax":0,"se":0},
                 t10_3 : {"seMax":0,"se":0},

@@ -7,7 +7,7 @@ package controller
 		[Embed(source="../../media/textures/sound/popup.mp3")]
 		public static const Popup:Class;
 		
-		[Embed(source="../../media/textures/sound/timer bell.mp3")]
+		[Embed(source="../../media/textures/sound/button_fin.mp3")]
 		public static const Break:Class;
 		
 		[Embed(source="../../media/textures/sound/bingo.mp3")]

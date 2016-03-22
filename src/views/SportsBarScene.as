@@ -93,7 +93,7 @@ import events.GameEvent;
 					command.sceneDispatch(SceneEvent.CHANGED,_data);
 					break;
 				case "Drink":
-					command.doDrink();
+					command.playCommonAnimation("Drink");
 					break;
 				case "ani_complete":
 					var value_data:Object=new Object();

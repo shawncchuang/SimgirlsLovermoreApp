@@ -88,7 +88,7 @@ package views
 					command.sceneDispatch(SceneEvent.CHANGED,_data);
 					break;
 				case "WatchMovies":
-					command.doWatchMovies();
+					command.playCommonAnimation("WatchMovies");
 					break;
 				case "ani_complete":
 					var value_data:Object=new Object();

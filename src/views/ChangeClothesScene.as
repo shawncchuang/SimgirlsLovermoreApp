@@ -363,6 +363,7 @@ public class ChangeClothesScene extends Scenes {
 
         current_avatar.clothes=Number(upperstyles[upperstyleIndex]);
         current_avatar.pants=lowerstyleIndex;
+        DataContainer.contanstAvatar=current_avatar;
         flox.save("avatar",current_avatar);
 
     }
@@ -392,9 +393,9 @@ public class ChangeClothesScene extends Scenes {
             case "confirm":
 
                 var contanstAvatar:Object=DataContainer.contanstAvatar;
-                flox.save("avatar",contanstAvatar,onSaveChanfedComplete);
-                DebugTrace.msg("ChangeClothesScence contanstAvatar="+JSON.stringify(contanstAvatar));
-
+                flox.save("avatar",contanstAvatar);
+                //DebugTrace.msg("ChangeClothesScence contanstAvatar="+JSON.stringify(contanstAvatar));
+                onSaveChangedComplete();
                 break;
             case "cancel":
 //                var current_avatar:Object=flox.getSaveData("avatar");
@@ -409,7 +410,7 @@ public class ChangeClothesScene extends Scenes {
 
 
     }
-    private function onSaveChanfedComplete():void{
+    private function onSaveChangedComplete():void{
         var _data:Object=new Object();
         _data.name="ChangingRoomScene";
         command.sceneDispatch(SceneEvent.CHANGED,_data);

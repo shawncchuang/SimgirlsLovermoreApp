@@ -138,6 +138,7 @@ public class CommandCloud extends Sprite
 
     private function doClickComCloud(e:TouchEvent):void
     {
+        var consum_verfiy:Boolean=true;
         cloud = e.currentTarget as Sprite;
         com=cloud.name.split("^").join("");
         var began:Touch = e.getTouch(cloud, TouchPhase.BEGAN);
@@ -165,10 +166,18 @@ public class CommandCloud extends Sprite
                 if(!switch_verifies[0] && battle_verfiy)
                 {
                     //no story yet && no battle day
-                    var consum_verfiy:Boolean=true;
-                    if(com=="Sail"){
-                        consum_verfiy=command.consumeHandle(com);
+                    var scene:String=DataContainer.currentLabel;
+                    var attr:String=com;
+                    if(attr.indexOf("Rest")!=-1){
+                        if(scene=="HotelScene"){
+                            attr="PayRest";
+                        }else{
+                            attr="FreeRest";
+                        }
                     }
+
+                    consum_verfiy=command.consumeHandle(attr);
+
                     if(consum_verfiy)
                     onCloudClicked();
 

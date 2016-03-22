@@ -153,7 +153,6 @@ public class BlackMarketScene extends Scenes
 
 		var texture:Texture=Assets.getTexture("Bunny");
 		var bunny:Image=new Image(texture);
-		bunny.x=20;
 		addChild(bunny);
 
 	}

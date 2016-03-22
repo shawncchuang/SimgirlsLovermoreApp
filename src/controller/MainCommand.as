@@ -270,25 +270,25 @@ public class MainCommand implements MainInterface {
 
         DebugTrace.msg("MainCommand.addAlertMsg msg="+msg);
         //if(alertmsg){
-            var format:TextFormat = new TextFormat();
-            format.size = 20;
-            format.align = "center";
-            format.font = "SimFutura";
-            var topview:flash.display.MovieClip = SimgirlsLovemore.topview;
-            alertmsg = new AlertMsgUI();
-            alertmsg.name = "alert";
-            alertmsg.msg.embedFonts = true;
-            alertmsg.msg.defaultTextFormat = format;
-            alertmsg.confirm.buttonMode = true;
-            alertmsg.cancelbtn.visible=false;
-            //alertmsg.mouseChildren = false;
-            alertmsg.confirm.addEventListener(MouseEvent.MOUSE_DOWN, doColseAlertmsg);
-            alertmsg.x = 1024 / 2;
-            alertmsg.y = 768 / 2;
-            alertmsg.msg.text = msg;
-            topview.addChild(alertmsg);
+        var format:TextFormat = new TextFormat();
+        format.size = 20;
+        format.align = "center";
+        format.font = "SimFutura";
+        var topview:flash.display.MovieClip = SimgirlsLovemore.topview;
+        alertmsg = new AlertMsgUI();
+        alertmsg.name = "alert";
+        alertmsg.msg.embedFonts = true;
+        alertmsg.msg.defaultTextFormat = format;
+        alertmsg.confirm.buttonMode = true;
+        alertmsg.cancelbtn.visible=false;
+        //alertmsg.mouseChildren = false;
+        alertmsg.confirm.addEventListener(MouseEvent.MOUSE_DOWN, doColseAlertmsg);
+        alertmsg.x = 1024 / 2;
+        alertmsg.y = 768 / 2;
+        alertmsg.msg.text = msg;
+        topview.addChild(alertmsg);
 
-       // }
+        // }
 
 
         //var command:MainInterface=new MainCommand();
@@ -844,6 +844,7 @@ public class MainCommand implements MainInterface {
         var flox:FloxInterface = new FloxCommand();
         var moods:Object = flox.getSaveData("mood");
         var rel:Object=flox.getSaveData("rel");
+        var loveObj:Object=flox.getSaveData("love");
         var maintainDecline:Object = {"close friend":-111,"dating partner":-222,"lover":-333,"spouse":-333};
         for(var _name:String in rel){
             switch(rel[_name]){
@@ -851,21 +852,31 @@ public class MainCommand implements MainInterface {
                 case "dating partner":
                 case "lover":
                 case "spouse":
-                        var uptoMood:Number=Math.abs(maintainDecline[rel[_name]])*2;
-                        if(moods[_name]>uptoMood){
-                            moods[_name]=uptoMood;
-                        }else{
-                            moods[_name]+=maintainDecline[rel[_name]];
-                        }
+                    var uptoMood:Number=Math.abs(maintainDecline[rel[_name]])*2;
+                    if(moods[_name]>uptoMood){
+                        moods[_name]=uptoMood;
+                    }else{
+                        moods[_name]+=maintainDecline[rel[_name]];
+                    }
+                    break;
+                default:
+                    uptoMood=Math.floor(Math.random()*601)-400;
+                    moods[_name]=uptoMood;
                     break
             }
             if(moods[_name]<-9999){
                 moods[_name]=-9999;
             }
+
+            if(moods[_name]<Config.moodStep["sickened-Max"]){
+                loveObj[_name]=Math.floor(loveObj[_name]*0.9);
+            }
+
+
         }
         //DebugTrace.msg("MainCommand.serNowMood="+JSON.stringify(moods));
         flox.save("mood", moods);
-
+        flox.save("love", loveObj);
 
     }
 
@@ -1282,24 +1293,25 @@ public class MainCommand implements MainInterface {
         var gameEvent:GameEvent = SimgirlsLovemore.gameEvent;
         gameEvent._name = "clear_comcloud";
         gameEvent.displayHandler();
-
-
+        var restObj:Object=new Object();
         if (free) {
-            var restObj:Object = sysCommad.FreeRest;
+            restObj = sysCommad.FreeRest;
         }
         else {
-
+            //pay rest
             switch(from){
                 case "Sail":
                     restObj = sysCommad[from];
                     break;
                 default:
+                    //Pay Rest
                     restObj = sysCommad.PayRest;
+
                     break
             }
             cash += restObj.values.cash;
+            //flox.save("cash", cash);
 
-            flox.save("cash", cash);
         }
         //if
 
@@ -1311,13 +1323,14 @@ public class MainCommand implements MainInterface {
         }
 
         flox.save("ap", ap);
+
         onFinishAnimated();
 
 
-        var evtObj:Object = new Object();
-        var scene:String = DataContainer.currentScene;
-        evtObj.command = "Rest@"+scene;
-        flox.logEvent("CloudCommand", evtObj);
+//        var evtObj:Object = new Object();
+//        var scene:String = DataContainer.currentScene;
+//        evtObj.command = "Rest@"+scene;
+//        flox.logEvent("CloudCommand", evtObj);
     }
 
     public function doStay(days:Number):void {
@@ -1396,7 +1409,6 @@ public class MainCommand implements MainInterface {
 
         rewards = new Object();
         rewards.image = reward_img;
-        //rewards.cash = cash_pay;
 
         //cash += cash_pay;
         //flox.save("cash", cash);
@@ -1730,6 +1742,42 @@ public class MainCommand implements MainInterface {
         }
 
     }
+
+    public function playCommonAnimation(cate:String):void{
+
+        var flox:FloxInterface=new FloxCommand();
+        var dating:String=flox.getSaveData("dating");
+        var aniSrc:String="self_date1";
+        if(dating!=""){
+            aniSrc="date1";
+        }
+
+        var media:MediaInterface=new MediaCommand();
+        media.SWFPlayer("transform","../swf/"+aniSrc+".swf",onAniComplete);
+
+        function onAniComplete():void{
+
+            var loaderQueue:LoaderMax=ViewsContainer.loaderQueue;
+            loaderQueue.empty(true,true);
+            switch (cate){
+                case "Think":
+                    doThink();
+                    break;
+                case "WatchMovies":
+                    doWatchMovies();
+                    break;
+                case "Drink":
+                    doDrink();
+                    break
+                case "Dine":
+                    doDine();
+                    break
+            }
+
+        }
+    }
+
+
     public function PlayBattleTutorial():void{
 
         comType = "BattleTutorial";
@@ -2100,7 +2148,7 @@ public class MainCommand implements MainInterface {
         var flox:FloxInterface = new FloxCommand();
         var ap:Number = flox.getSaveData("ap");
         var sysCommand:Object = flox.getSyetemData("command");
-        var payCash:Number = 0;
+        var payCash:* = 0;
         var alert:AlertMessage;
         var msg:String = "";
         if (com.indexOf("\n") != -1) {
@@ -2179,7 +2227,9 @@ public class MainCommand implements MainInterface {
 
         var payAP:Number = sysCommand[com].ap;
         if (sysCommand[com].values) {
-            payCash = sysCommand[com].values.cash;
+            if(sysCommand[com].values.cash!=undefined){
+                payCash = Number(sysCommand[com].values.cash);
+            }
         }
 
         if (payAP < 0) {
@@ -2210,13 +2260,11 @@ public class MainCommand implements MainInterface {
         if (payCash < 0) {
 
             var cash:Number = flox.getSaveData("cash");
-            var cash_pay:Number = sysCommand[com].values.cash;
-            cash += cash_pay;
+            //var cash_pay:Number = sysCommand[com].values.cash;
+            cash += payCash;
             if (cash >= 0) {
 
                 pass_cash = true;
-
-                //flox.save("cash",cash);
 
             } else {
 
@@ -2256,12 +2304,11 @@ public class MainCommand implements MainInterface {
 
 
             }
-            if(cash_pay<0){
+            if(payCash<0){
                 //have to spend Cash
                 flox.save("cash", cash);
-
                 attrArr.push("cash");
-                valuesArr.push(cash_pay);
+                valuesArr.push(payCash);
 
             }
             try{
@@ -2275,6 +2322,7 @@ public class MainCommand implements MainInterface {
 
 
             if(attrArr.length>0){
+
                 var command:MainInterface = new MainCommand();
                 value_data.attr = attrArr.toString();
                 value_data.values =valuesArr.toString();
@@ -2601,6 +2649,8 @@ public class MainCommand implements MainInterface {
         var switch_verifies:Array=scenecom.switchGateway("Rest");
         var battle_verify:Boolean=switch_verifies[switch_verifies.length-1];
         var playStroy:Boolean=true;
+        var consum_verfiy:Boolean=true;
+        var free:Boolean=true;
         if(DataContainer.shortcuts=="Rest"){
             playStroy=switch_verifies[0];
         }else{
@@ -2611,13 +2661,32 @@ public class MainCommand implements MainInterface {
 
             if(toScene!="" && shortcutsScene!=toScene && shortcutsScene.indexOf("Game")==-1){
                 DebugTrace.msg("MainCommand.doShortcuts  toScene="+toScene+" , shortcutsScene="+shortcutsScene);
-                var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
-                gameEvent._name="clear_comcloud";
-                gameEvent.displayHandler();
 
-                var _data:Object=new Object();
-                _data.name=toScene;
-                sceneDispatch(SceneEvent.CHANGED,_data);
+                if(DataContainer.shortcuts=="Rest"){
+                    var attr:String="FreeRest";
+                    if(toScene=="HotelScene"){
+                        attr="PayRest";
+                    }
+                    consum_verfiy=consumeHandle(attr);
+                }
+
+                if(consum_verfiy){
+
+                    var delayID:uint=Starling.juggler.delayCall(onReadToChanged,1);
+
+                    function onReadToChanged():void{
+                        Starling.juggler.removeByID(delayID);
+
+                        var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
+                        gameEvent._name="clear_comcloud";
+                        gameEvent.displayHandler();
+
+                        var _data:Object=new Object();
+                        _data.name=toScene;
+                        sceneDispatch(SceneEvent.CHANGED,_data);
+                    }
+
+                }
 
             }else{
                 DataContainer.shortcuts="";

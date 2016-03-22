@@ -82,7 +82,7 @@ public class SkillStroeCaptain extends Sprite {
         var rec:Rectangle=new Rectangle(0,-30,276,510);
         if(gender=="Female"){
             _point=new Point(64,240);
-            rec=new Rectangle(0,-50,276,510);
+            rec=new Rectangle(-30,-50,350,510);
         }
         basemodel.x=_point.x;
         basemodel.y=_point.y;

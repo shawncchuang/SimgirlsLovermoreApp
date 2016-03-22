@@ -47,6 +47,7 @@ public interface MainInterface
     function doDrink():void
     function doDine():void
     function doPlayGamble():void
+    function playCommonAnimation(cate:String):void
     function PlayBattleTutorial():void
     function drawPlayer(target:Sprite,avatar:Object=null):Sprite
     function drawCharacter(target:Sprite,style:String):Image

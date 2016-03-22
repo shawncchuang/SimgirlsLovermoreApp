@@ -84,6 +84,8 @@ public class GameInfobar extends Sprite
     private var apIcon:Image;
     private var current_dating:String;
     private var dating_icon:Sprite;
+    private var tweenID:uint=0;
+    private var delayID:uint=0;
     public function GameInfobar()
     {
 
@@ -189,14 +191,20 @@ public class GameInfobar extends Sprite
             dayImg.visible=false;
         }
 
-        //var progress:Number=flox.getPlayerData("inGameProgress");
-        //proTxt.text="No."+progress;
+       /*
         current_dating=flox.getSaveData("dating");
         if(current_dating!=""){
-            this.dispatchEventWith("UPDATE_DATING");
+            delayID=Starling.juggler.delayCall(showDatingIcon,1);
         }
+        */
 
     }
+    /*
+    private  function showDatingIcon():void{
+        Starling.juggler.removeByID(delayID);
+        this.dispatchEventWith("UPDATE_DATING");
+    }
+    */
 
     private function showDate():void
     {
@@ -393,9 +401,6 @@ public class GameInfobar extends Sprite
                 gameEvent.displayHandler();
             }
 
-            //var _data:Object=new Object();
-            //_data.name="MenuScene";
-            //command.sceneDispatch(SceneEvent.CHANGED,_data);
         }
 
     }
@@ -685,17 +690,21 @@ public class GameInfobar extends Sprite
 
     private function gameInfobarFadeout():void{
 
+        profileFadeout();
+        tweenID=Starling.juggler.tween(infoDataView,1,{y:-(infoDataView.height),transition:Transitions.EASE_IN_OUT_BACK,
+        onComplete:onGameInfoFadoutComplete});
 
+        /*
         var tween:Tween=new Tween(infoDataView,1,Transitions.EASE_IN_OUT_BACK);
         tween.animate("y",-(infoDataView.height));
         tween.onComplete=onGameInfoFadoutComplete;
         Starling.juggler.add(tween);
-
+        */
 
     }
     private function onGameInfoFadoutComplete():void{
 
-        Starling.juggler.removeTweens(infoDataView);
+        Starling.juggler.removeByID(tweenID);
 
 
         var _data:Object=new Object();

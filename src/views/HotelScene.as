@@ -55,6 +55,8 @@ public class HotelScene extends Scenes
     private var days:Number=1;
     private var NO_CASH_REST:String="You don't have enough cash.";
     private var delaycall:DelayedCall;
+    private var attr:String="";
+    private var tweenID:uint=0;
     public function HotelScene()
     {
         /*var pointbgTexture:Texture=Assets.getTexture("PointsBg");
@@ -94,10 +96,12 @@ public class HotelScene extends Scenes
         }else{
 
             if(DataContainer.shortcuts=="Rest"){
+
                 var _data:Object=new Object();
                 _data.removed=DataContainer.shortcuts;
                 command.topviewDispatch(TopViewEvent.REMOVE,_data);
                 DataContainer.shortcuts="";
+
             }
 
         }
@@ -180,39 +184,19 @@ public class HotelScene extends Scenes
                 gameEvent.displayHandler();
                 _data.name="MainScene";
                 command.sceneDispatch(SceneEvent.CHANGED,_data);
-                break
+                break;
             case "Rest":
             case "Stay":
-
-                userHotelPermit(e.data.removed);
-                break
+                attr="PayRest";
+                command.doRest(false,attr);
+                break;
             case "ani_complete":
 
-                if(type=="Rest")
-                {
-                    var attr:String="PayRest";
-                    command.showCommandValues(this,attr);
-                }
-                else
-                {
-                    attr="Stay";
-                    var values:Object=sysCommand.Stay.values;
-                    //var pay:Number=values.cash*days;
-                    //DebugTrace.msg("HotelScene.doTopViewDispatch cash:"+values.cash+"; pay:"+pay);
-                    for(var i:String in values)
-                    {
-                        _data[i]=values[i];
-                    }
-                    _data.cash=pay;
-                    command.showCommandValues(this,attr,_data);
-                }
 
+                command.showCommandValues(this,attr);
+                tweenID=Starling.juggler.delayCall(onAnimateComplete,1);
 
-                delaycall=new DelayedCall(onAnimateComplete,1);
-                Starling.juggler.add(delaycall);
-
-
-                break
+                break;
             case "restart":
                 init();
                 break;
@@ -230,8 +214,8 @@ public class HotelScene extends Scenes
 
     }
     private function onAnimateComplete():void{
-        delaycall.removeEventListeners();
-        Starling.juggler.remove(delaycall);
+        Starling.juggler.removeByID(tweenID);
+
         var _data:Object=new Object();
         _data.name=DataContainer.currentScene;
         command.sceneDispatch(SceneEvent.CHANGED,_data);
