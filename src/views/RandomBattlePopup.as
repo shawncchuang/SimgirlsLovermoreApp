@@ -44,14 +44,27 @@ public class RandomBattlePopup extends Sprite {
     public function init():void{
 
         var msg:String="Got into a street fight !!";
+        var current_scene:String=DataContainer.currentScene;
+        var scene:String=current_scene.split("Scene").join("");
+        var criminals:Array=DataContainer.Criminals;
+        var se:Number=0;
+        for(var i:uint=0;i<criminals.length;i++){
+            var location:String=criminals[i].location;
+            if(location==scene){
+                se=criminals[i].se;
+                break
+            }
+        }
+        msg+="\n Enemy's average SE\n"+se;
+
         popup=new Sprite();
         var bgTexture:Texture=Assets.getTexture("PopupBg");
         var bg:Image=new Image(bgTexture);
 
-        var msgTxt:TextField=new TextField(370,80,msg);
-        msgTxt.format.setTo(font,16);
+        var msgTxt:TextField=new TextField(370,200,msg);
+        msgTxt.format.setTo(font,25);
         msgTxt.x=15;
-        msgTxt.y=30;
+
 
         var okBtn:Button=new Button();
         okBtn.label="Fight";

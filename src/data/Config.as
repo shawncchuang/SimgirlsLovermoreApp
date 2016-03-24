@@ -105,8 +105,8 @@ public class Config
         "restaurant1":"npc066",
         "restaurant2":"npc067",
 
-        "coffeshop":"npc069"
-
+        "coffeshop":"npc069",
+        "Bunny":"Bunny"
 
     };
     //schedule [index+ current month]
@@ -184,9 +184,9 @@ public class Config
 
     }
 
-    public static var CriminalRanking:Array=[{"rank":"S","se":7000,"rewards":1600},
-        {"rank":"A","se":5000,"rewards":1300},
-        {"rank":"B","se":3500,"rewards":1000},
+    public static var CriminalRanking:Array=[{"rank":"S","se":5000,"rewards":1400},
+        {"rank":"A","se":4000,"rewards":1200},
+        {"rank":"B","se":3000,"rewards":1000},
         {"rank":"C","se":2000,"rewards":800},
         {"rank":"D","se":1000,"rewards":600},
         {"rank":"E","se":500,"rewards":450},
@@ -502,7 +502,7 @@ public class Config
             "first_name":"",
             "last_name":"",
             "date":"Wed.1.Jun.2033|24",
-            "ap":100,
+            "ap":0,
             "ap_max":100,
             "dating":"",
             "ch_cash":{
@@ -553,7 +553,7 @@ public class Config
                     "Kiss":1,
                     "Flirt":4,
                     "TakePhoto":1,
-                    "Chat":6,
+                    "Chat":8,
                     "Date":1,
                     "Give":1
                 },
@@ -561,7 +561,7 @@ public class Config
                     "Kiss":1,
                     "Flirt":4,
                     "TakePhoto":1,
-                    "Chat":6,
+                    "Chat":8,
                     "Date":1,
                     "Give":1
                 },
@@ -569,7 +569,7 @@ public class Config
                     "Kiss":1,
                     "Flirt":4,
                     "TakePhoto":1,
-                    "Chat":6,
+                    "Chat":8,
                     "Date":1,
                     "Give":1
                 },
@@ -577,7 +577,7 @@ public class Config
                     "Kiss":1,
                     "Flirt":4,
                     "TakePhoto":1,
-                    "Chat":6,
+                    "Chat":8,
                     "Date":1,
                     "Give":1
                 },
@@ -585,7 +585,7 @@ public class Config
                     "Kiss":1,
                     "Flirt":4,
                     "TakePhoto":1,
-                    "Chat":6,
+                    "Chat":8,
                     "Date":1,
                     "Give":1
                 },
@@ -593,7 +593,7 @@ public class Config
                     "Kiss":1,
                     "Flirt":4,
                     "TakePhoto":1,
-                    "Chat":6,
+                    "Chat":8,
                     "Date":1,
                     "Give":1
                 },
@@ -601,7 +601,7 @@ public class Config
                     "Kiss":1,
                     "Flirt":4,
                     "TakePhoto":1,
-                    "Chat":6,
+                    "Chat":8,
                     "Date":1,
                     "Give":1
                 },
@@ -609,7 +609,7 @@ public class Config
                     "Kiss":1,
                     "Flirt":4,
                     "TakePhoto":1,
-                    "Chat":6,
+                    "Chat":8,
                     "Date":1,
                     "Give":1
                 }
@@ -686,50 +686,50 @@ public class Config
                 ceil: 0
             },
             "image":{
-                player:300,
-                lenus: 180,
-                sirena:536,
-                dea: 240,
-                sao: 243,
-                klr: 270,
-                tomoru: 441,
-                zack: 300,
-                ceil: 284
+                player:1000,
+                lenus: 780,
+                sirena:1136,
+                dea: 840,
+                sao: 843,
+                klr: 870,
+                tomoru: 1041,
+                zack: 900,
+                ceil: 884
             },
             "wealth":0,
             "int":{
-                player:300,
-                lenus: 540,
-                sirena:230,
-                dea: 569,
-                sao: 162,
-                klr: 270,
-                tomoru: 189,
-                zack: 300,
-                ceil: 122
+                player:1000,
+                lenus: 1140,
+                sirena:830,
+                dea: 1169,
+                sao: 762,
+                klr: 870,
+                tomoru: 789,
+                zack: 900,
+                ceil: 722
             },
             "love":{
                 //love==Max se
-                player:300,
-                lenus: 320,
-                sirena:320,
-                dea: 330,
-                sao: 290,
-                klr: 310,
-                tomoru: 320,
-                zack: 300,
-                ceil: 300
+                player:500,
+                lenus: 620,
+                sirena:620,
+                dea: 630,
+                sao: 490,
+                klr: 510,
+                tomoru: 520,
+                zack: 500,
+                ceil: 500
             },
             "se":{
-                lenus: 320,
-                sirena: 320,
-                dea: 330,
-                sao: 290,
-                klr: 310,
-                tomoru: 320,
-                ceil: 300,
-                zack: 300,
-                player:300
+                lenus: 620,
+                sirena: 620,
+                dea: 630,
+                sao: 490,
+                klr: 510,
+                tomoru: 520,
+                ceil: 500,
+                zack: 500,
+                player:0
             },
             "s_ele":"air",
             "skills":
@@ -907,41 +907,41 @@ public class Config
                 t4_6 : {"seMax":4500,"se":4500} ,
                 t4_7 : {"seMax":4500,"se":4500} ,
 
-                t5_0 : {"seMax":11000,"se":11000} ,
-                t5_1 : {"seMax":5500,"se":5500} ,
-                t5_2 : {"seMax":5500,"se":5500} ,
-                t5_3 : {"seMax":5500,"se":5500} ,
-                t5_4 : {"seMax":5500,"se":5500} ,
-                t5_5 : {"seMax":5500,"se":5500} ,
-                t5_6 : {"seMax":5500,"se":5500} ,
-                t5_7 : {"seMax":5500,"se":5500} ,
+                t5_0 : {"seMax":10500,"se":10500} ,
+                t5_1 : {"seMax":5250,"se":5250} ,
+                t5_2 : {"seMax":5250,"se":5250} ,
+                t5_3 : {"seMax":5250,"se":5250} ,
+                t5_4 : {"seMax":5250,"se":5250} ,
+                t5_5 : {"seMax":5250,"se":5250} ,
+                t5_6 : {"seMax":5250,"se":5250} ,
+                t5_7 : {"seMax":5250,"se":5250} ,
 
-                t6_0 : {"seMax":13000,"se":13000} ,
-                t6_1 : {"seMax":6500,"se":6500} ,
-                t6_2 : {"seMax":6500,"se":6500} ,
-                t6_3 : {"seMax":6500,"se":6500} ,
-                t6_4 : {"seMax":6500,"se":6500} ,
-                t6_5 : {"seMax":6500,"se":6500} ,
-                t6_6 : {"seMax":6500,"se":6500} ,
-                t6_7 : {"seMax":6500,"se":6500} ,
+                t6_0 : {"seMax":12000,"se":12000} ,
+                t6_1 : {"seMax":6000,"se":6000} ,
+                t6_2 : {"seMax":6000,"se":6000} ,
+                t6_3 : {"seMax":6000,"se":6000} ,
+                t6_4 : {"seMax":6000,"se":6000} ,
+                t6_5 : {"seMax":6000,"se":6000} ,
+                t6_6 : {"seMax":6000,"se":6000} ,
+                t6_7 : {"seMax":6000,"se":6000} ,
 
-                t7_0 : {"seMax":15000,"se":15000} ,
-                t7_1 : {"seMax":7500,"se":7500} ,
-                t7_2 : {"seMax":7500,"se":7500} ,
-                t7_3 : {"seMax":7500,"se":7500} ,
-                t7_4 : {"seMax":7500,"se":7500} ,
-                t7_5 : {"seMax":7500,"se":7500} ,
-                t7_6 : {"seMax":7500,"se":7500} ,
-                t7_7 : {"seMax":7500,"se":7500} ,
+                t7_0 : {"seMax":13500,"se":13500} ,
+                t7_1 : {"seMax":6750,"se":6750} ,
+                t7_2 : {"seMax":6750,"se":6750} ,
+                t7_3 : {"seMax":6750,"se":6750} ,
+                t7_4 : {"seMax":6750,"se":6750} ,
+                t7_5 : {"seMax":6750,"se":6750} ,
+                t7_6 : {"seMax":6750,"se":6750} ,
+                t7_7 : {"seMax":6750,"se":6750} ,
 
-                t8_0 : {"seMax":17000,"se":17000} ,
-                t8_1 : {"seMax":8500,"se":8500} ,
-                t8_2 : {"seMax":8500,"se":8500} ,
-                t8_3 : {"seMax":8500,"se":8500} ,
-                t8_4 : {"seMax":8500,"se":8500} ,
-                t8_5 : {"seMax":8500,"se":8500} ,
-                t8_6 : {"seMax":8500,"se":8500} ,
-                t8_7 : {"seMax":8500,"se":8500} ,
+                t8_0 : {"seMax":15000,"se":15000} ,
+                t8_1 : {"seMax":7500,"se":7500} ,
+                t8_2 : {"seMax":7500,"se":7500} ,
+                t8_3 : {"seMax":7500,"se":7500} ,
+                t8_4 : {"seMax":7500,"se":7500} ,
+                t8_5 : {"seMax":7500,"se":7500} ,
+                t8_6 : {"seMax":7500,"se":7500} ,
+                t8_7 : {"seMax":7500,"se":7500} ,
 
                 t9_0 : {"seMax":"","se":100} ,
                 t9_1 : {"seMax":"","se":100} ,
@@ -970,7 +970,7 @@ public class Config
                 t11_6 : {"seMax":500,"se":500} ,
                 t11_7 : {"seMax":500,"se":500} ,
 
-                t12_0 : {"seMax":38000,"se":38000} ,
+                t12_0 : {"seMax":33000,"se":33000} ,
                 t12_1 : {"seMax":0,"se":0} ,
                 t12_2 : {"seMax":0,"se":0} ,
                 t12_3 : {"seMax":0,"se":0} ,
@@ -979,7 +979,7 @@ public class Config
                 t12_6 : {"seMax":0,"se":0} ,
                 t12_7 : {"seMax":0,"se":0} ,
 
-                t13_0 : {"seMax":6000,"se":6000} ,
+                t13_0 : {"seMax":4000,"se":4000} ,
                 t13_1 : {"seMax":0,"se":0} ,
                 t13_2 : {"seMax":0,"se":0} ,
                 t13_3 : {"seMax":0,"se":0} ,

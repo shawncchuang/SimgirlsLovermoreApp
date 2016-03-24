@@ -122,7 +122,7 @@ package views
 		 
 		private function updateMemberAct(e:Event):void
 		{
-			DebugTrace.msg("Member.updateMemberAct form:"+e.target.from);
+			DebugTrace.msg("Member.updateMemberAct act:"+e.target.act);
 			super.processMember(e.target.act);
 			
 		}

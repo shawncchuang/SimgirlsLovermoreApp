@@ -915,29 +915,20 @@ public class Character extends MovieClip
             if(index!=-1)
             {
                 //skill ready
+                /*
                 if(!boss_model)
                 {
-                    var swfloader:SWFLoader = LoaderMax.getLoader(name);
-                    if(swfloader){
-                        skillAni=swfloader.getSWFChild(_gender) as MovieClip;
-                    }
-
-
+                    var swfloader:SWFLoader=LoaderMax.getLoader(name);
+                    skillAni=swfloader.getSWFChild(_gender) as MovieClip;
                 }
 
-                try
-                {
-
+                if(skillAni){
                     skillAni.visible=true;
-                    actModel=skillAni;
+                }
+                */
+                skillAni.visible=true;
+                actModel=skillAni;
 
-                }
-                catch(e:Error)
-                {
-                    DebugTrace.msg("Character.processMember None skillAni");
-                    //actModel=character;
-                }
-                //try
                 if(status=="scared")
                 {
 
@@ -946,8 +937,8 @@ public class Character extends MovieClip
 
                     try
                     {
-                        actModel.visible=true;
-                        actModel.alpha=0;
+                        actModel.visible=false;
+                        //actModel.alpha=0;
                     }
                     catch(e:Error)
                     {
@@ -1052,10 +1043,10 @@ public class Character extends MovieClip
 
                     effect.visible=false;
                 }
-                catch(e:Error)
-                {
+                catch(e:Error) {
                     DebugTrace.msg("Character.processMember effect Null");
                 }
+
                 try
                 {
 
@@ -1063,12 +1054,10 @@ public class Character extends MovieClip
 
                     actModel.gotoAndStop(actlabel);
 
+                } catch(e:Error) {
+                    DebugTrace.msg("Character.processMember actModel Null");
                 }
-                catch(e:Error)
-                {
-                    DebugTrace.msg("Character.processMember actModel Error");
-                }
-                //try
+
             }
             //if
 
@@ -1130,15 +1119,9 @@ public class Character extends MovieClip
             {
 
                 _part=part_pack[k];
+                //DebugTrace.msg("Character.processMember actModel.body.act _part="+_part);
+                actModel.body.act[_part].visible=false;
 
-                try
-                {
-                    actModel.body.act[_part].visible=false;
-                }
-                catch(e:Error)
-                {
-                    DebugTrace.msg("Character.processMember actModel.body.act Null");
-                }
             }
             //for
         }
@@ -1217,33 +1200,29 @@ public class Character extends MovieClip
                         if(actlabel==Character.death && ch_name=="rfs"){
 
 
-                                actlabel="SPArmour";
-                                OnArmour=true;
-                                memberscom.BattleOver=true;
-                                memberscom.ShotDownPower();
-                                DataContainer.Armour=OnArmour;
-                                actModel.gotoAndStop(actlabel);
-                                actModel.body.act.addEventListener(Event.ENTER_FRAME,doArmourPlaying);
-
+                            actlabel="SPArmour";
+                            OnArmour=true;
+                            memberscom.BattleOver=true;
+                            memberscom.ShotDownPower();
+                            DataContainer.Armour=OnArmour;
+                            actModel.gotoAndStop(actlabel);
+                            var _duration:Number=Number((actModel.body.act.totalFrames/24).toFixed(2));
+                            TweenMax.to(actModel.body.act,_duration,{frame:actModel.body.act.totalFrames,onComplete:doArmourPlaying});
 
                         }else{
 
                             if(ch_name!="rvn")
-                            actModel.gotoAndStop(actlabel);
+                                actModel.gotoAndStop(actlabel);
                         }
 
-                        function doArmourPlaying(e:Event):void{
+                        function doArmourPlaying():void{
 
-                            if(e.target.currentFrame==e.target.totalFrames)
-                            {
+                            TweenMax.killTweensOf(doArmourPlaying);
+                            actModel.gotoAndStop(Character.ready);
+                            memberscom.BattleOver=false;
+                            bossOnArmour(actModel);
+                            processAction();
 
-                                e.target.removeEventListener(Event.ENTER_FRAME,doArmourPlaying);
-                                actModel.gotoAndStop(Character.ready);
-                                memberscom.BattleOver=false;
-                                bossOnArmour(actModel);
-                                processAction();
-
-                            }
                         }
 
                     }
@@ -1289,7 +1268,7 @@ public class Character extends MovieClip
          }
          //try*/
         if(ch_name=="rfs")
-        bossOnArmour(character);
+            bossOnArmour(character);
 
     }
     private function updatelColorEffect(actModel:MovieClip,avatar:Object):void
@@ -1307,7 +1286,7 @@ public class Character extends MovieClip
             //skinColor.setTint(avatar.skincolor, 0.5);
             //actModel.body.act.skin.transform.colorTransform = skinColor;
 
-            TweenMax.to(actModel.body.act.skin,0.1, {colorTransform:{tint:avatar.skincolor, tintAmount:0.5}});
+            TweenMax.to(actModel.body.act.skin,0.1, {onComplete:onChangedColor,colorTransform:{tint:avatar.skincolor, tintAmount:0.5}});
             //var acc_color:Number=0x1397C0;
             //TweenMax.to(actModel.body.act.acc,0.2, {colorTransform:{tint:acc_color, tintAmount:0.5}});
 
@@ -1319,6 +1298,10 @@ public class Character extends MovieClip
             var accCT:ColorTransform = actModel.body.act.acc.transform.colorTransform;
             accCT.color = 0x1397C0;
             actModel.body.act.acc.transform.colorTransform = accCT;
+
+            function onChangedColor():void{
+                TweenMax.killTweensOf(onChangedColor);
+            }
 
         }
         else
@@ -1358,7 +1341,7 @@ public class Character extends MovieClip
                 TweenMax.to(actModel.body.act.shn,0, {colorTransform:{tint:0x666666, tintAmount:0.9},onComplete:onColorTFComplete,onCompleteParams:[actModel.body.act.shn]});
             }
             if(power.name=="lenus"){
-              //lenus Tint Hair color
+                //lenus Tint Hair color
                 TweenMax.to(actModel.body.act.lenus,0, {colorTransform:{tint:0xCC9900, tintAmount:0.55},onComplete:onColorTFComplete,onCompleteParams:[actModel.body.act.shn]});
             }
         }
@@ -1367,8 +1350,8 @@ public class Character extends MovieClip
     }
     private function onColorTFComplete(target):void
     {
-        TweenMax.killChildTweensOf(target);
-
+        //TweenMax.killChildTweensOf(onColorTFComplete);
+        TweenMax.killTweensOf(onColorTFComplete);
     }
     private function onRageComplete(e:Event):void
     {
@@ -1490,81 +1473,80 @@ public class Character extends MovieClip
         _from=from;
         DebugTrace.msg("Character.actComplete from:"+_from);
 
-        character.body.act.addEventListener(Event.ENTER_FRAME,onActComplete);
+        var _duration:Number=Number((character.body.act.totalFrames/24).toFixed(2));
+        TweenMax.to( character.body.act,_duration,{frame:character.body.act.totalFrames,onComplete:onActComplete})
 
     }
-    protected function onActComplete(e:Event):void
+
+    protected function onActComplete():void
     {
 
-        if(e.target.currentFrame==e.target.totalFrames)
+
+        DebugTrace.msg("Character.onActComplete _from="+_from +", name="+name);
+
+        TweenMax.killTweensOf(onActComplete);
+
+        switch(_from)
         {
-
-            DebugTrace.msg("Character.onActComplete _from="+_from +", name="+name);
-            e.target.removeEventListener(Event.ENTER_FRAME,onActComplete);
-            var eff:String="";
-
-            switch(_from)
-            {
-                case "Assist":
-                case "CombineSkill":
-                case "Mind Control":
-                    processAction();
-                    break
-                case "Rage":
-                    status="rage";
-                    //processAction();
-                    processMember(status);
-                    break
-                case "CompleteKnockback":
-                case "BootComplete":
-                    DebugTrace.msg("Character.onActComplete status="+status);
-                    if(power.se>0)
+            case "Assist":
+            case "CombineSkill":
+            case "Mind Control":
+                processAction();
+                break
+            case "Rage":
+                status="rage";
+                //processAction();
+                processMember(status);
+                break
+            case "CompleteKnockback":
+            case "BootComplete":
+                DebugTrace.msg("Character.onActComplete status="+status);
+                if(power.se>0)
+                {
+                    if(status!="" && status!="heal")
                     {
-                        if(status!="" && status!="heal")
-                        {
 
-                            processMember(status);
-                        }
-                        else
+                        processMember(status);
+                    }
+                    else
+                    {
+                        //normal status
+                        if(power.target!="")
                         {
-                            //normal status
-                            if(power.target!="")
+                            var act:String=power.label;
+                            DebugTrace.msg("Character.onActComplete act="+act);
+                            if(!boss_model && act!=null)
                             {
-                                var act:String=power.label;
-                                DebugTrace.msg("Character.onActComplete act="+act);
-                                if(!boss_model && act!=null)
-                                {
-                                    act=act.charAt(0)+"_RDY";
-                                    //setupSkillAni();
-                                    reasetSkillAni();
-                                }
-                                else
-                                {
-                                    if(status=="")
-                                    {
-                                        processMember(ready);
-                                    }
-                                    else
-                                    {
-                                        processMember(status);
-                                    }
-                                }
-                                //if
+                                act=act.charAt(0)+"_RDY";
+                                //setupSkillAni();
+                                reasetSkillAni();
                             }
                             else
                             {
-
-                                processMember(ready);
+                                if(status=="")
+                                {
+                                    processMember(ready);
+                                }
+                                else
+                                {
+                                    processMember(status);
+                                }
                             }
                             //if
                         }
+                        else
+                        {
+
+                            processMember(ready);
+                        }
                         //if
                     }
-                    break
-            }
-            //switch
+                    //if
+                }
+                break
         }
-        //if
+        //switch
+
     }
     private var ele:String;
     private var skillSWf:String;
@@ -1581,19 +1563,7 @@ public class Character extends MovieClip
             part_pack=bpart_pack;
             gender="B";
             _gender="Boy";
-//            if(acatar.gender=="Male")
-//            {
-//                part_pack=bpart_pack;
-//                gender="B";
-//                _gender="Boy";
-//            }
-//            else
-//            {
-//                part_pack=gpart_pack
-//                gender="G";
-//                _gender="Girl";
-//            }
-//            //if
+
         }
         else
         {

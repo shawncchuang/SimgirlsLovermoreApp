@@ -12,7 +12,7 @@
               <dependency linkage="Merged" />
             </entry>
           </entries>
-          <sdk name="AIRSDK 20.0" />
+          <sdk name="AIRSDK 21.0" />
         </dependencies>
         <compiler-options>
           <map>
@@ -20,7 +20,7 @@
             <entry key="compiler.keep-generated-actionscript" value="true" />
             <entry key="compiler.locale" value="en_US" />
           </map>
-          <option name="additionalOptions" value="-swf-version=31 -frame=StartupFrame,SimgirlsLovemore -default-size 1024 768 -debug=true" />
+          <option name="additionalOptions" value="-swf-version=32 -frame=StartupFrame,SimgirlsLovemore -default-size 1024 768 -debug=true" />
         </compiler-options>
         <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/src/Main-app.xml" package-file-name="Simgirls">
           <files-to-package>
@@ -45,7 +45,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/assets" isTestSource="false" />
     </content>
-    <orderEntry type="jdk" jdkName="AIRSDK 20.0" jdkType="Flex SDK Type (new)" />
+    <orderEntry type="jdk" jdkName="AIRSDK 21.0" jdkType="Flex SDK Type (new)" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="lib" level="project" />
     <orderEntry type="library" exported="" name="bin" level="project" />

@@ -160,28 +160,28 @@ public class BattleData
     public function skillCard(member:Member,power:Number):Number
     {
         //var member_power:Object=cupsys;
-        var skill_power:Number=power;
+
+        var bp:Number=BattleData.bp;
         var de_power:Number=power;
         var _skill:Object=new Object();
         var se:Number=member.power.se;
 
-        if(member.power.skillID.indexOf("n")!=-1)
+        if(member.power.skillID.indexOf("n")!=-1 && member.power.skillID.length==2)
         {
             se=member.power.seMax;
         }
-
-
-        var dp:Number=BattleData.bp;
-
-        //power=Math.floor(power+power*bp*Number((se/9999).toFixed(2)));
-        power=Number(Math.floor(power*bp*Number((se/9999).toFixed(2))));
+        var buffer:Number=9999;
+        if(member.power.seMax>9999){
+            buffer=99999;
+        }
+        var skill_power:Number=Math.floor(de_power*bp*(se/buffer));
         //var extra_power:Number=Math.floor(power/10);
         //var extra:Number=extra_power-Math.floor(Math.random()*(extra_power*2));
-        var extra:Number=0;
-        skill_power=(skill_power*2)+power+extra;
+        var extra:Number=Math.floor(Math.random()*10);
+        skill_power=(skill_power*2)+extra;
         if(skill_power==0)
         {
-            skill_power=de_power
+            skill_power=de_power;
         }
 
         return skill_power;

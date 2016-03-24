@@ -107,5 +107,9 @@ package controller
 
 		[Embed(source="../../media/textures/music/sexy.mp3")]
 		public static const sexy:Class;
+
+		[Embed(source="../../media/textures/music/rufusbattle.mp3")]
+		public static const FinalBattleMusic:Class;
+
 	}
 }

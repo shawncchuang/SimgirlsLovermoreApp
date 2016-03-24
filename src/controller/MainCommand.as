@@ -845,25 +845,32 @@ public class MainCommand implements MainInterface {
         var moods:Object = flox.getSaveData("mood");
         var rel:Object=flox.getSaveData("rel");
         var loveObj:Object=flox.getSaveData("love");
-        var maintainDecline:Object = {"close friend":-111,"dating partner":-222,"lover":-333,"spouse":-333};
+        var maintainDecline:Object = {"close friend":-55,"dating partner":-222,"lover":-333,"spouse":-333};
         for(var _name:String in rel){
-            switch(rel[_name]){
-                case "close friend":
-                case "dating partner":
-                case "lover":
-                case "spouse":
-                    var uptoMood:Number=Math.abs(maintainDecline[rel[_name]])*2;
-                    if(moods[_name]>uptoMood){
+            if(_name=="sao"){
+                uptoMood=Math.floor(Math.random()*601)-400;
+                moods[_name]=uptoMood;
+            }else{
+                switch(rel[_name]){
+                    case "close friend":
+                    case "dating partner":
+                    case "lover":
+                    case "spouse":
+                        var uptoMood:Number=Math.abs(maintainDecline[rel[_name]])*2;
+                        if(moods[_name]>uptoMood){
+                            moods[_name]=uptoMood;
+                        }else{
+                            moods[_name]+=maintainDecline[rel[_name]];
+                        }
+                        break;
+                    default:
+                        uptoMood=Math.floor(Math.random()*601)-400;
                         moods[_name]=uptoMood;
-                    }else{
-                        moods[_name]+=maintainDecline[rel[_name]];
-                    }
-                    break;
-                default:
-                    uptoMood=Math.floor(Math.random()*601)-400;
-                    moods[_name]=uptoMood;
-                    break
+                        break
+                }
+
             }
+
             if(moods[_name]<-9999){
                 moods[_name]=-9999;
             }
@@ -1451,13 +1458,13 @@ public class MainCommand implements MainInterface {
         var rate: Number = Number(((Math.floor(Math.random() * 30) + 1) / 100));
         switch (scene) {
             case "NightclubScene":
-                income = 20+Math.floor(image / 7.5 * (rate+1));
+                income = 150+Math.floor(image / 7.5 * (rate+1));
                 break
             case "BankScene":
-                income = 25+Math.floor(int / 5 * (rate+1));
+                income = 150+Math.floor(int / 5 * (rate+1));
                 break
             case "ThemedParkScene":
-                income = 200+Math.floor(love / 15 * (rate+1));
+                income = 250+Math.floor(love / 15 * (rate+1));
                 break
         }
         if(dating!=""){
@@ -2722,6 +2729,7 @@ public class MainCommand implements MainInterface {
         var records:Array=new Array();
         var location:Array=new Array();
         var ranks:Array=new Array();
+        var reArray:Array=new Array();
         var rewardslist:Array=new Array();
 
         for(var loc:String in Config.stagepoints){
@@ -2730,6 +2738,7 @@ public class MainCommand implements MainInterface {
         }
         for(var j:uint=0;j<ranking.length;j++){
             ranks.push(ranking[j].rank);
+            reArray.push(ranking[j].se);
             rewardslist.push(ranking[j].rewards);
         }
 
@@ -2738,6 +2747,7 @@ public class MainCommand implements MainInterface {
             var criminial:Object=new Object();
             criminial.location=location[i];
             var index:Number=Math.floor(Math.random()*ranks.length);
+            criminial.se=reArray[index];
             criminial.rank=ranks[index];
             criminial.rewards=rewardslist[index];
             records.push(criminial);

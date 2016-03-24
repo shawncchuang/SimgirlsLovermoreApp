@@ -693,10 +693,10 @@ public class DatingScene extends Scenes {
 
         var cloudAttr:Array = [{name: "Kiss", pos: new Point(182, 410)},
             {name: "Flirt", pos: new Point(120, 530)},
-            {name: "TakePhoto", pos: new Point(85, 654)},
+            {name: "TakePhoto", pos: new Point(880, 558)},
             {name: "Chat", pos: new Point(945, 322)},
             {name: "Give", pos: new Point(920, 439)},
-            {name: "Date", pos: new Point(880, 558)},
+            {name: "Date", pos: new Point(85, 654)},
             {name: "Leave", pos: new Point(825, 675)}
         ];
 
@@ -1296,7 +1296,7 @@ public class DatingScene extends Scenes {
                 limitMood = mood_level["depressed-Min"];
                 break;
             case "Flirt":
-                relPass = true;
+                limitRel = relationship_level["datingpartner-Min"];
                 limitMood = mood_level["smitten-Min"];
                 break;
             case "TakePhoto":
@@ -1304,11 +1304,11 @@ public class DatingScene extends Scenes {
                 limitMood = mood_level["pleased-Min"];
                 break;
             case "Date":
-                limitRel = relationship_level["datingpartner-Min"];
+                limitRel = relationship_level["closefriend-Min"];
                 limitMood = mood_level["delighted-Min"];
                 break;
             case "Kiss":
-                limitRel = relationship_level["datingpartner-Min"];
+                limitRel = relationship_level["lover-Min"];
                 limitMood = mood_level["loved-Min"];
                 break;
             case "Leave":
@@ -1356,7 +1356,7 @@ public class DatingScene extends Scenes {
         if (!moodPass) {
 
             if (!bubble) {
-                chat = "Sorry!\nI am not in this mood.";
+                chat = "Sorry!\nI am not in the mood.";
                 initBubble(attr);
                 bubbleFadeoutHandle();
             }
