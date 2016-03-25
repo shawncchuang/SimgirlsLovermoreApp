@@ -2044,7 +2044,7 @@ public class BattleScene extends Sprite
 							else
 							{
 								//cpu
-								movingX=movingX-offer;
+								movingX=movingX-(offer+10);
 
 							}
 							//if
@@ -2115,6 +2115,7 @@ public class BattleScene extends Sprite
 						var target_combat:Number=battleteam[target].power.combat;
 						if(attack_member.name.indexOf("player")!=-1)
 						{
+							/*
 							if(target_combat==0 || target_combat==1 || target_combat==3 || target_combat==4)
 							{
 								movingX=748+memberWH;
@@ -2125,18 +2126,21 @@ public class BattleScene extends Sprite
 								movingX=698+memberWH;
 								movingY=1020;
 							}
+							*/
+							movingY=768-memberWH;
 
 						}
 						else
 						{
 
-							movingX=Starling.current.stage.stageWidth/2-attack_member.width/2;
+							movingX=512-(memberWH*2);
 							movingY=950;
 
 						}
 						//if
 						if(attack_member.power.skillID=="w2" || attack_member.power.skillID=="f2")
 						{
+
 							movingY=950;
 						}
 						switch(attack_member.power.target)
@@ -2416,7 +2420,7 @@ public class BattleScene extends Sprite
 				{
 					_memberWH=memberWH/2;
 				}
-				if(attack_member.skillAni.body.currentFrame==11)
+				if(currentFrame==11)
 				{
 
 					if(attack_member.name.indexOf("player")!=-1)
@@ -2735,7 +2739,6 @@ public class BattleScene extends Sprite
 	private function doAttackCompleteHandle(member,damage,reflect:Boolean):void
 	{
 		DebugTrace.msg("BattleScene.doAttackCompleteHandle-------"+member.name+" ,reflect="+reflect);
-		//TweenMax.killTweensOf(member);
 
 		var memberEvt:BattleEvent=member.memberEvt;
 		memberEvt.processAction();
@@ -2916,7 +2919,6 @@ public class BattleScene extends Sprite
 		function updateFocus():void
 		{
 			TweenMax.killDelayedCallsTo(updateFocus);
-			//focusHandle("solider");
 
 		}
 	}
@@ -3044,11 +3046,6 @@ public class BattleScene extends Sprite
 		if(!area)
 			area=new Array();
 
-		//attack_member.updateStatus("");
-
-
-		//battleEvt=attack_member.memberEvt;
-		//battleEvt.processAction();
 
 		var _target_member:Member;
 		if(area.length<=1)
@@ -3065,12 +3062,10 @@ public class BattleScene extends Sprite
 
 			if(from=="player")
 			{
-
 				var txt_x:Number=_target_member.x-memberWH/2;
 			}
 			else
 			{
-
 				txt_x=_target_member.x+memberWH/2;
 			}
 			//if
@@ -3113,7 +3108,7 @@ public class BattleScene extends Sprite
 				_target_member=area_member[i];
 				if(_target_member.power.se>0)
 				{
-					DebugTrace.msg("BattleScene.onAssistActComplete _target_member.power:"+JSON.stringify(_target_member.power));
+					//DebugTrace.msg("BattleScene.onAssistActComplete _target_member.power:"+JSON.stringify(_target_member.power));
 					if(from=="player")
 					{
 
@@ -3130,9 +3125,6 @@ public class BattleScene extends Sprite
 					_target_member.power.se=_target_member.power.se+extrareg;
 					_target_member.updatePower(_target_member.power);
 
-					//var _battleEvt:BattleEvent=_target_member.memberEvt;
-					//_battleEvt.act="heal";
-					//_battleEvt.updateMemberAct();
 
 				}
 				//if
@@ -3191,7 +3183,6 @@ public class BattleScene extends Sprite
 		var extradmg:Number=damage-_damage;
 
 
-
 		//DebugTrace.msg("BattleScene.displayDamage extradmg:"+extradmg);
 
 		var predamage:Number=Math.floor(extradmg/targetIDlist.length);
@@ -3200,7 +3191,7 @@ public class BattleScene extends Sprite
 		{
 
 			var battledata:BattleData=new BattleData();
-			predamage=Math.floor(Math.floor((Math.random()*800)+200));
+			predamage=Math.floor((Math.random()*800)+200);
 			predamage=battledata.skillCard(attack_member,predamage);
 			var w3_predamage:Number=_predamage+Math.floor(predamage/targetIDlist.length);
 		}
@@ -3342,11 +3333,11 @@ public class BattleScene extends Sprite
 			var heal_member:Member=healMembers[i];
 			if(heal_member.name.indexOf("player")!=-1)
 			{
-				var  txt_x:Number=heal_member.x-heal_member.width/2;
+				var  txt_x:Number=Math.floor(heal_member.x-heal_member.width/2);
 			}
 			else
 			{
-				txt_x=heal_member.x+heal_member.width/2;
+				txt_x=Math.floor(heal_member.x+heal_member.width/2);
 			}
 			//if
 			if(heal_member.power.se>0)
@@ -3368,11 +3359,11 @@ public class BattleScene extends Sprite
 			var damage_member:Member=damageMembers[j];
 			if(damage_member.name.indexOf("player")!=-1)
 			{
-				txt_x=damage_member.x-damage_member.width/2;
+				txt_x=Math.floor(damage_member.x-damage_member.width/2);
 			}
 			else
 			{
-				txt_x=damage_member.x+damage_member.width/2;
+				txt_x=Math.floor(damage_member.x+damage_member.width/2);
 			}
 			//if
 			if(damage_member.power.se>0)
@@ -3383,8 +3374,6 @@ public class BattleScene extends Sprite
 				}
 				showSplitTextField(damage_member,perDamage,damage_txt,txt_x);
 				damage_member.updateDamage("",perDamage);
-
-
 			}
 			//if
 			if(damage_member.power.se>0)
@@ -3632,14 +3621,7 @@ public class BattleScene extends Sprite
 		if(enable)
 		{
 			updateStepLayout("itempanel");
-			//TweenMax.to(menuscene,1,{y:700,ease:Expo.easeOut});
-			/*TweenMax.to(menuscene,1,{y:700,ease:Expo.easeOut});
 
-			 TweenMax.to(starttab,0.8,{y:90,ease:Expo.easeOut});
-			 if(cardsSprtie)
-			 {
-			 TweenMax.to(cardsSprtie,0.5,{y:450,onComplete:onCardCleared,ease:Expo.easeOut});
-			 }*/
 			if(!itemspanel)
 			{
 				itemspanel=new CommanderItemsPanel();
@@ -3650,13 +3632,10 @@ public class BattleScene extends Sprite
 			}
 			//if
 
-
 		}
 		else
 		{
 
-			//TweenMax.to(menuscene,1,{y:354,ease:Expo.easeOut});
-			//TweenMax.to(starttab,0.8,{y:0,ease:Expo.easeOut});	
 			if(itemspanel)
 			{
 				updateStepLayout("disabled itempanel");
@@ -3670,31 +3649,25 @@ public class BattleScene extends Sprite
 	}
 	private function onItemPenelFadoutComplete():void
 	{
+		TweenMax.killTweensOf(itemspanel);
 		try
 		{
-			TweenMax.killTweensOf(itemspanel);
 			removeChild(itemspanel);
 			itemspanel=null;
 		}
-		catch(e:Error)
-		{
-
-		}
+		catch(e:Error) {}
 		//try
 	}
 	private function onCardCleared():void
 	{
+		TweenMax.killTweensOf(cardsSprtie);
 		try
 		{
-			TweenMax.killTweensOf(cardsSprtie);
 			menuscene.removeChild(cardsSprtie);
 			cardsSprtie=null;
 		}
-		catch(e:Error)
-		{
+		catch(e:Error) {}
 
-		}
-		//try
 		initSkillCard();
 		memberscom.playerReadyPickupCard(current_player.name);
 	}
@@ -3712,7 +3685,6 @@ public class BattleScene extends Sprite
 
 		TweenMax.to(itemspanel,0.5,{y:800,ease:Expo.easeOut,onComplete:onItemPenelFadoutComplete});
 
-		//showItemsPanel(false);
 
 	}
 	private function showUseItemConfirm():void

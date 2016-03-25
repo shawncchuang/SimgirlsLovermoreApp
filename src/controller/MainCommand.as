@@ -1381,13 +1381,18 @@ public class MainCommand implements MainInterface {
         gameEvent._name = "clear_comcloud";
         gameEvent.displayHandler();
 
+        var flox:FloxInterface = new FloxCommand();
+
+        var workoutSWF:String="workout";
+        var dating:String=flox.getSaveData("dating");
+        if(dating!=""){
+            workoutSWF="workout_girl";
+        }
 
         var mediacom:MediaInterface = new MediaCommand();
-        mediacom.SWFPlayer("transform", "../swf/workout.swf", onFinishAnimated);
+        mediacom.SWFPlayer("transform", "../swf/"+workoutSWF+".swf", onFinishAnimated);
 
 
-        var savegame:SaveGame = new SaveGame();
-        var flox:FloxInterface = new FloxCommand();
         var dating:String = flox.getSaveData("dating");
         var comObj:Object = flox.getSyetemData("command");
 
@@ -1493,13 +1498,18 @@ public class MainCommand implements MainInterface {
         var gameEvent:GameEvent = SimgirlsLovemore.gameEvent;
         gameEvent._name = "clear_comcloud";
         gameEvent.displayHandler();
-
-
-        var mediacom:MediaInterface = new MediaCommand();
-        mediacom.SWFPlayer("transform", "../swf/research.swf", onFinishAnimated);
-
-
         var flox:FloxInterface = new FloxCommand();
+
+        var researchSWF:String="research";
+        var dating:String=flox.getSaveData("dating");
+        if(dating!=""){
+            researchSWF="research_girl";
+        }
+        var mediacom:MediaInterface = new MediaCommand();
+        mediacom.SWFPlayer("transform", "../swf/"+researchSWF+".swf", onFinishAnimated);
+
+
+
         var sysCommand:Object = flox.getSyetemData("command");
         var dating:String = flox.getSaveData("dating");
         var valuesInt:String = sysCommand.Research.values.int;

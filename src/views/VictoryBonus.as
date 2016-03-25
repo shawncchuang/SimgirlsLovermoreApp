@@ -166,8 +166,6 @@ import utils.DebugTrace;
 				DebugTrace.msg("VictoryBonus.createNewStar Stop Bonus ---> score="+score);
 
 
-
-				
 				var format:TextFormat=new TextFormat();
 				format.color=0xFFFFFF;
 				format.font="SimImpact";
@@ -176,28 +174,28 @@ import utils.DebugTrace;
 				bunosAlert.honor.defaultTextFormat=format;
 			 
 				addChild(bunosAlert);
-				bunosAlert.addEventListener(Event.ENTER_FRAME,doScoreRunning);
+
+				TweenMax.to(bunosAlert,0.1,{repeat:score,onRepeat:doScoreRunning,onComplete:onScoreReady});
+				//bunosAlert.addEventListener(Event.ENTER_FRAME,doScoreRunning);
 				bunosAlert.confirm.addEventListener(MouseEvent.MOUSE_DOWN,doConfirmHandle);
-				//TweenMax.delayedCall(3,onBonusFadeout)
-					
-				starPhysicsHandle();
-					
+
+				function doScoreRunning():void
+				{
+					score_num++;
+					bunosAlert.honor.text="+"+score_num;
+
+				}
+				function onScoreReady():void{
+					TweenMax.killTweensOf(bunosAlert);
+					starPhysicsHandle();
+				}
+
+				saveBonusHonor();
 			}
 			//if
 			
 		}
-		private function doScoreRunning(e:Event):void
-		{
-			score_num++;
 
-			if(score_num>=score)
-			{
-				bunosAlert.removeEventListener(Event.ENTER_FRAME,doScoreRunning);
-				score_num=score;
-			}
-			//if
-			bunosAlert.honor.text="+"+score_num;
-		}
 		private function starPhysicsHandle():void
 		{
 		
@@ -207,7 +205,7 @@ import utils.DebugTrace;
 		{
 
 			bunosAlert.confirm.removeEventListener(MouseEvent.MOUSE_DOWN,doConfirmHandle);
-			saveBonusHonor();
+
 			onBonusFadeout();
 			
 		}
@@ -223,7 +221,7 @@ import utils.DebugTrace;
 				var _name:String=memberpower[i].chname;
 				if(characters.indexOf(_name)!=-1 || _name=="player"){
 					var honor:Number = honors[_name];
-					honor += score_num;
+					honor += score;
 					honors[_name] = honor;
 				}
 			}
