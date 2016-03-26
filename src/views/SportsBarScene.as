@@ -118,6 +118,7 @@ import events.GameEvent;
 			var gameEvent:GameEvent = SimgirlsLovemore.gameEvent;
 			DebugTrace.msg("SportsBarScene.onStoryComplete switchID="+current_switch);
 			switch(current_switch){
+
 				case "s033|off":
 					DataContainer.battleType="story_battle_s033";
 					_data=new Object();

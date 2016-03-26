@@ -50,6 +50,7 @@ import starling.display.Sprite;
 		private static var current_clouds:Array;
 		private static var scene_countainer:Sprite;
 		private static var game_scene:Sprite;
+		private static var dating_scene:Sprite;
 		public static function set GameStage(st:Stage):void
 		{
 			game_st=st;	
@@ -310,5 +311,14 @@ import starling.display.Sprite;
 			return game_scene;
 
 		}
+
+		public static function set datingScene(view:Sprite):void{
+			dating_scene=view;
+		}
+
+		public static function get datingScene():Sprite{
+			return dating_scene;
+		}
+
 	}
 }

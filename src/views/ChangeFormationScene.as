@@ -96,20 +96,22 @@ public class ChangeFormationScene extends Scenes
     {
 
         soldilers_name=new Array();
-        var formation:Object=flox.getSaveData("se");
+        var seObj:Object=flox.getSaveData("se");
         var pts:Object=flox.getSaveData("pts");
         var reLv:Object=flox.getSyetemData("relationship_level");
-        for(var name:String in formation)
+        for(var name:String in seObj)
         {
-            if(formation[name]>0)
-            {
-                if(pts[name]>reLv["closefriend-Min"] || name=="player"){
-                    soldilers_name.push(name);
-                }
 
-
+            if(seObj[name]==0){
+                seObj[name]=1;
             }
+
+            if(pts[name]>reLv["closefriend-Min"] || name=="player"){
+                soldilers_name.push(name);
+            }
+
         }
+        flox.save("se",seObj);
         DebugTrace.msg("ChangeFormationScene.init soldilers_name:"+soldilers_name)
 
     }
@@ -117,8 +119,6 @@ public class ChangeFormationScene extends Scenes
     {
         scencom.init("ChangeFormationScene",base_sprite,18,onCallback);
         scencom.start();
-
-
 
         var title:Image=new Image(getTexture("ChangeFormationTitle"));
         title.y=21;

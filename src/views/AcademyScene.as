@@ -34,7 +34,7 @@ import events.GameEvent;
 		private var command:MainInterface=new MainCommand();
 		private var button:Button;
 		private var scencom:SceneInterface=new SceneCommnad();
-		private var floxcom:FloxInterface=new FloxCommand();
+		private var flox:FloxInterface=new FloxCommand();
 		
 		private var store:Sprite;
 		public function AcademyScene()
@@ -125,13 +125,38 @@ import events.GameEvent;
 					init();
 					break
 				case "story_complete":
-                    _data.name= "AcademyScene";
-                    _data.from="story";
-                    command.sceneDispatch(SceneEvent.CHANGED,_data);
+
+						onStoryComplete();
+
 					break
 				
 			}
 			
+		}
+		private function onStoryComplete():void{
+			var _data:Object=new Object();
+			var current_switch:String=flox.getSaveData("current_switch");
+			DebugTrace.msg("HotelScene.onStoryComplete switchID="+current_switch);
+			var switchs:Object=flox.getSyetemData("switchs");
+			var switchID:String=current_switch.split("|")[0];
+			var nextSwitch:String=switchs[switchID].result.on;
+
+			switch (current_switch){
+				case "s011|on":
+					// jump to Nov
+					var switchToDay:String="Fri.18.Nov.2033|12";
+					flox.save("date",switchToDay);
+					_data.name="MainScene";
+					_data.from="story";
+					command.sceneDispatch(SceneEvent.CHANGED,_data);
+					command.updateInfo();
+					break;
+				default:
+					_data.name= "AcademyScene";
+					_data.from="story";
+					command.sceneDispatch(SceneEvent.CHANGED,_data);
+					break
+			}
 		}
 		
 		private function onClosedAlert():void

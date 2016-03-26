@@ -110,7 +110,6 @@ public class SceneCommnad implements SceneInterface
         part_index=lbr_part;
 
 
-
         talks=new Array();
 
         // DebugTrace.msg("SceneCommand.init talks:"+talks);
@@ -509,8 +508,7 @@ public class SceneCommnad implements SceneInterface
                     }
                     break
                 case "display":
-                    //target=praseTwinFlameFormat(target);
-                    createCharacter(target,pos);
+                    checkDisplay(target,pos);
                     break
                 case "move":
                     //target=praseTwinFlameFormat(target);
@@ -624,6 +622,19 @@ public class SceneCommnad implements SceneInterface
     private function onBubbleComplete():void{
 
         addTouchArea();
+    }
+    private function checkDisplay(name:String,p:String):void{
+        var dateStr:String=flox.getSaveData("date").split("|")[0];
+        var _date:Number=Number(dateStr.split(".")[1]);
+        var _month:String=dateStr.split(".")[2];
+        if(name=="mansion" && _month=="Dec"){
+            if(_date<=13 || _date>=23){
+                createCharacter(name,p);
+            }
+        }else{
+            createCharacter(name,p);
+        }
+
     }
     public function createCharacter(name:String,p:String):void
     {
@@ -1010,9 +1021,16 @@ public class SceneCommnad implements SceneInterface
             // ViewsContainer.gameinfo.visible=false;
 
             doClearAll();
-            part=Number(switchID.split("s").join(""))-1;
 
-            var talks:Array=StoryDAO.switchStory(switchID);
+            talks=new Array();
+            if(switchID.indexOf("t")!=-1){
+                part=Number(switchID.split("t").join(""))-1;
+                talks=TwinDAO.switchTwinDAO(switchID);
+            }else{
+                part=Number(switchID.split("s").join(""))-1;
+                talks=StoryDAO.switchStory(switchID);
+            }
+
             if(!talks){
                 talks=new Array();
             }
@@ -1151,7 +1169,15 @@ public class SceneCommnad implements SceneInterface
 
 
         part_index=part;
-        talks=StoryDAO.switchStory(switchID);
+
+        talks=new Array();
+        if(switchID.indexOf("t")!=-1){
+
+            talks=TwinDAO.switchTwinDAO(switchID);
+        }else{
+            talks=StoryDAO.switchStory(switchID);
+        }
+
 
 
         var switchs:Object=flox.getSyetemData("switchs");

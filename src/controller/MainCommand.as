@@ -1609,6 +1609,7 @@ public class MainCommand implements MainInterface {
         intObj.player+=rewards.int;
         flox.save("int",intObj);
 
+
         var scene:Sprite = ViewsContainer.currentScene;
         showCommandValues(scene,"Think",rewards);
 
@@ -1646,6 +1647,8 @@ public class MainCommand implements MainInterface {
         intObj.player+=rewards.int;
         flox.save("int",intObj);
 
+
+
         var scene:Sprite = ViewsContainer.currentScene;
         showCommandValues(scene,"WatchMovies",rewards);
 
@@ -1682,6 +1685,7 @@ public class MainCommand implements MainInterface {
         imgObj.player+=rewards.image;
         flox.save("image",imgObj);
 
+
         var scene:Sprite = ViewsContainer.currentScene;
         showCommandValues(scene,"Drink",rewards);
 
@@ -1716,6 +1720,7 @@ public class MainCommand implements MainInterface {
         }
         imgObj.player+=rewards.image;
         flox.save("image",imgObj);
+
 
         var scene:Sprite = ViewsContainer.currentScene;
         showCommandValues(scene,"Dine",rewards);
@@ -2463,8 +2468,7 @@ public class MainCommand implements MainInterface {
 
 
                         if(_month=="Dec" && character=="tomoru"){
-                            if(_date>=2 && _date<=4){
-
+                            if(_date>=9 && _date<=11){
                                 likes=0;
                             }
 

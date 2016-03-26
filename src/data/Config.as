@@ -710,26 +710,26 @@ public class Config
             },
             "love":{
                 //love==Max se
-                player:500,
-                lenus: 620,
-                sirena:620,
-                dea: 630,
-                sao: 490,
-                klr: 510,
-                tomoru: 520,
-                zack: 500,
-                ceil: 500
+                player:300,
+                lenus: 420,
+                sirena:420,
+                dea: 430,
+                sao: 290,
+                klr: 310,
+                tomoru: 320,
+                zack: 300,
+                ceil: 300
             },
             "se":{
-                lenus: 620,
-                sirena: 620,
-                dea: 630,
-                sao: 490,
-                klr: 510,
-                tomoru: 520,
-                ceil: 500,
-                zack: 500,
-                player:0
+                player:0,
+                lenus: 420,
+                sirena:420,
+                dea: 430,
+                sao: 290,
+                klr: 310,
+                tomoru: 320,
+                zack: 300,
+                ceil: 300
             },
             "s_ele":"air",
             "skills":

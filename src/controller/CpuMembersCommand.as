@@ -589,18 +589,9 @@ public class CpuMembersCommand implements CpuMembersInterface
             {
                 power[j]=skill[j];
             }
-            //for
 
-            //var skillpower:Object=battledata.skillCard(member,skill);
             var skillPower:Number=battledata.skillCard(member,Number(skill.power));
-            /*	for(var m:String in skillpower)
-             {
-             power[m]=skillpower[m];
-             }
-             //for
-             */
             var boss_index:Number=Config.bossModels.indexOf(power.ch_name);
-            var update_power:Boolean=false;
             var skillLv:Number=Number(power.skillID.charAt(1));
 
             if(power.id=="t7_0" || power.id=="t4_0")
@@ -765,7 +756,7 @@ public class CpuMembersCommand implements CpuMembersInterface
     }
     private function getMember(id:String):Member
     {
-        var member:Member
+        var member:Member;
         for(var i:uint=0;i<cputeam.length;i++)
         {
             if(cputeam[i].name==id)

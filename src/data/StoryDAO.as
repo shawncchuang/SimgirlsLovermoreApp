@@ -5,7 +5,7 @@ package data {
 public class StoryDAO {
     private static var access:Array=new Array();
 
-    public static const container:Object={"s001":s001(),"s002":s002(),"s003":s003(),"s004":s004(),
+    public static const container:Object={"s001":s001(),"s002":s002(),"s003":s003(),"s606":s606(),"s608":s608(),"s004":s004(),
         "s005":s005(),"s006a":s006a(),"s006b":s006b(),"s007":s007(),"s008":s008(),"s009":s009(),"s010":s010(),
         "s011":s011(), "s012":s012(),"s013":s013(),"s014":s014(),"s015":s015(),
         "s016":s016(),"s017":s017(),"s018":s018(),"s019":s019(),"s020":s020(),
@@ -50,62 +50,27 @@ public class StoryDAO {
     //  "com|display_sao_swimsuit_center",
     private static function s002():Array{
 
-        return [
-            "com|bg_BeachScene#com|music-on_beachparty",
-            "com|display_sao_swimsuit_center",
-            "spC|What are you waiting for!? Go get changed! The bitches are waiting!",
-            "player|I went into the empty changing room.",
-            "com|remove_sao_swimsuit_center",
-            "com|bg_ChangingRoomScene",
-            "player|Just when I removed all my clothes<> a stranger rushes into the changing room.",
-            "com|display_ceil_swimsuit1_center",
-            "spC|Have you seen my cat!?",
-            "player|The blonde girl seemed very worried and the fact that I was butt-naked didn't seem to bother her at all. Uneasy<> I covered myself with my hands.",
-            "com|photo-on_ChangingCat",
-            "player|She showed me a selfie of her with the cat. The cat was cute ... and the girl had a fantastic body!",
-            "player|Blonde Girl: My cat! Tom Yum! Have you seen him!?",
-            "com|photo-off#com|music-off_beachparty",
-            "com|photo-on_ChangingCeil",
-            "player|I raised my hands and shrugged my shoulders. ",
-            "com|swf-on_fxzok",
-            "player|AAAAHHHHHHHH!",
-            "player|I uncovered myself... and the girl runs outside flustered.",
-            "com|photo-off",
-            "com|remove_ceil_swimsuit1_center",
-            "END"
-        ]
+        return ["com|bg_BeachScene#com|music-on_beachparty","com|display_sao_swimsuit_center","spC|What are you waiting for!? Go get changed! The bitches are waiting!","player|I went into the empty changing room.","com|remove_sao_swimsuit_center#com|bg_ChangingRoomScene","player|As I got naked ...","player|a stranger barges into the changing room!","com|display_ceil_swimsuit1_center","spC|Excuse me","player|She looked worried ... so worried that she didn't even notice that I was naked!  Uneasy<> I cover myself with my hands.","spC|My cat disappeared... I have a picture!","player|She shows me a selfie of her and her cat.","com|photo-on_ChangingCat","player|The cat was cute ... but the girl was the real cutie.","player|Blonde Girl: My cat! Tom Yum! Have you seen him!?","com|photo-off","player|I raise my hands and shrug my shoulders. ","com|photo-on_ChangingCeil","com|swf-on_fxzok","player|Hmm?  KYAAAAHHHH!","player|Whoops!  I forgot I was naked!  The girl runs out of the room with a red face.","com|remove_ceil_swimsuit1_center#com|photo-off","com|bg_BeachScene","com|display_sao_swimsuit_center","spC|Oh my goodness<> the girls in Shambala are so hot!","spC|Check out that babe!!  Good lord... That body!!","com|remove_sao_swimsuit_center#com|display_fitnessclub_center","player|She works out a lot.  That body is athletic fit!","com|remove_fitnessclub_center","com|display_sao_swimsuit_center","spC|I'm going to try to get her number!  I thought of a great pickup line!","spC|Come with me $$$<> you're my wingman!","player|We approach the dark skinned beauty.","com|move_sao_swimsuit_left","com|display_fitnessclub_right","spL|Was your father a mechanic? How did you get such a finely tuned body?","spR|Oh!  Teehee.  You guys must be new here!","spL|How did you know?","spR|You guys clearly havn't worked on your **SELF-IMAGE** yet. Hahaha!","spL|Huh?","spR|Let me explain<> in Shambala<> we live by high standards.","spR|You'll run into many of hot girls here<> but you'll have to be quite special to stand a chance with them!","spR|Just look at my body.  My **SELF-IMAGE** is clearly above 6000.  I only like guys with SELF-IMAGE over 7000!","spL|Self-Image huh.  How do we work on it?","spR|Easy!  Go to the *Fitness Center* and Train!","spR|1500 SELF-IMAGE is the minimum. But over 7000 is considered f**king attractive!","spR|But don't get lazy!  You may need an even higher rating for the hotter girls!","player| Alright!  We need a SELF-IMAGE of at least 1500!","player|SELF-IMAGE is represented by a Camera Icon. To check your current stats quickly<> move your mouse over the MENU button located at the top right corner of the screen.","player|You can work on Self-Image at the Fitness Center<> Restaurant<> and at the Sports Bar.  Look for the Camera Icon!","spR|If you train enough<> maybe you'll even have a chance with me!  Teeheehee","spL|Hahaha!  Okay! We're going to get sexy!","spR|Alright<> I'm off to the Fitness Center!  These buns need more toning!  Bye~","com|remove_fitnessclub_right","com|move_sao_swimsuit_center","spC|Looks like we have to work on our Self-Image!  The hotties will be drooling over us in no time!!","END"]
+
 
     }
     private static function s003():Array{
-        return[
-            "com|bg_MuseumScene#com|music-on_liberty",
-            "com|display_sao_casual1_center",
-            "spC|Now that's wacky. Shambala was founded by a legendary Mega-playboy<> Primero Lovemore!",
-            "com|photo-on_MuseumStatue",
-            "player|Sao shows me a statue of the 'Mega-playboy' Primero Lovemore. There were a lot of stories about Mr. Lovemore. ",
-            "player|He was the founding father of this new nation Shambala... ",
-            "com|photo-off",
-            "com|photo-on_MuseumMarry",
-            "player|...but he became famous mostly because he had four very beautiful wives. That's why people call him the Mega-playboy.",
-            "player|Sao: Wait-a-sec!! Four wives!? What a lucky guy! I would give anything to be him!",
-            "com|photo-off",
-            "com|move_sao_casual1_left",
-            "com|display_lenus_work_right",
-            "spR|......",
-            "com|photo-on_MuseumLenus",
-            "player|A tall young man next to us shakes his head and sighs. ",
-            "player|Sao: What's the problem man? This dude is a boss!",
-            "player|Stranger: You know nothing about this man.",
-            "player|The young man walks away before Sao could respond to the bitter comment. ",
-            "com|photo-off",
-            "com|remove_lenus_work_right",
-            "spL|Whatever 'Nerdyman'!... I can't stand people with that 'know-it-all' attitude.",
-            "player|Strangely<> I thought the man kinda looked like the statue of the Mega-playboy Lovemore. ",
-            "com|music-off_liberty",
-            "END"
-        ]
+
+        return["com|bg_MuseumScene","com|display_sao_casual1_center","spC|Now that's crazy! Shambala was created by some guy known as the 'legendary Mega-playboy.'","com|photo-on_MuseumStatue#com|music-on_liberty","player|Sao shows me a statue of the 'Mega-playboy' Primero Lovemore. There were a lot of stories about Mr. Lovemore. ","player|He was the founding father of Shambala... ","com|photo-off","com|photo-on_MuseumMarry","player|...he was famous for marrying four very beautiful wives. That's why people call him the Mega-playboy.","player|Sao: Wait-a-sec!! Four wives!? What a lucky guy! I would give anything to be him!","com|photo-off#com|photo-on_MuseumLenus","player| ...","com|photo-off#com|move_sao_casual1_left#com|display_lenus_work_right","player|Next to us<> a tall young man shakes his head in disapproval. ","spL|What's the problem man? This dude is a boss!","spR|You don't know anything about that guy.","com|photo-off","com|remove_lenus_work_right","player|The young man walks off before Sao could respond to the comment. ","spL|Whatever dweeb... I can't stand people with arrogant attitudes.","player|Strangely<> that guy kinda resembled the statue.","com|move_sao_casual1_center","spC|There's gotta be some girls here!  Mmmmm... There!","spC|She's cute<> and my Self-Image is higher than hers too!  Wing me $$$!","com|remove_sao_casual1_center","com|display_sao_casual1_left#com|display_bank_right","spL| ...","spL|Wow ... This Primero sounds like an interesting guy.","player|Sao flexes his muscles.","spR| ...","spL|He had over a hundred girlfriends at once.  His Self-Image must be ridiculous!","spR|Self-Image isn't everything!  He had high **INTELLIGENCE** too. -blushes-","spL| !!!","spR|Self-Image is good<> but *INTELLIGENCE is much sexier to me.","spL|I thought Shambalian girls only cared about high Self-Image!","spR|-scoffs- ","spR|Excuse me?  It's superficial people that ONLY care about Self-Image!","player|She's annoyed<> but collects her emotions.","spR|Hmm<> it seems like someone gave you some misleading advice.","spL|The fitness girl told us to work on Self-Image.","spR|Oh my god.  That fitness girl is obsessed with Self-Image!  She practically lives at the Fitness Center!","spR|Classy Girls think **INTELLIGENCE** is much more attractive.  You need balance.","spR|Well<> I have no interest talking to guys with Intelligence under 1500.  But if you get over 7000<> you won't keep me off you!","spR|Well<> I have to continue my Research now<> maybe this will help you.","com|remove_bank","player|She hands us a Pamphlet and walks off.","player|INTELLIGENCE is represented by a Light Bulb Icon. To check your current stats quickly<> move your mouse over the MENU button located at the top right corner of the screen.","player|High Intelligence means you make more money at jobs and improve chatting.  ","player|Intelligence Activities can be found at the Museum<> Garden<> and Cinema. Look for the Light Bulb Icon! ","player|Try to get AT LEAST 1500 Intelligence before dating!","com|move_sao_casual1_center","spC|Looks like we need to work on our Intelligence too!","END"]
 
     }
+
+    private static function s606():Array{
+        return["com|bg_ThemedParkBg","com|display_Bunny_center#com|display_pier_guy_right","spC|Hey cuties!  We havn't seen you here before!  How about showing us a good time!?","com|display_sao_casual1_left","spL|Hey ladies!  Looking sexy as hell!","spR|heehee<> we're getting ready for the club!  Wanna take us for drinks!?","spC|You can buy us dinner too!  I would totally have a Filet Mignon right now!","spL|Hahaha!  You girls sure know what you want huh.","player|Sao checks his empty wallet.","spC|...","spR|...","thL|My Self-Image is high!  My Intelligence is enough.  This will work!","spL|How about we hang out here?  We can get some popcorn and go on some rides.","spC|We're already bored.  Let's go shopping!","spR|Yeah! Shopping! Wheee!","spL|hehehe<> how about the beach?","spC|...","spR|...","spR|Don't you guys have jobs?","spL|...","spC|I thought you guys were rich tourists.","player|*phone melody rings*  One of the girls picks up her phone.","spR|Hey<> I think Zack is going to the pier.  He has a yacht!  Lets go~","spL|Wait a second!!  I learned the secret tongue arts from Primero Lovemore.","spC|That old hermit?  He ain't got the goods no more!","com|remove_Bunny","spR|Ciao~","com|remove_pier_guy","spL|What the F**k?!","com|move_sao_casual1_center","spC|I guess I shouldn't try to lie about Primero Lovemore anymore.  Hahaha!","spC|We're going to need jobs to date these gold diggers ","spC|...","spC|... for one night!  Hahaha!","player|We spot a job board nearby.","player|JOB OPENINGS:  Theme Park<> Bank<> Night Club","spC|Work?! *groans*  You do that!  I'm going to make money at the casino!","END"]
+
+    }
+
+    private static function s608():Array{
+
+        return ["com|bg_ShoppingCentreScene#com|music-on_epicbegins","com|display_sao_casual1_center","spC|Hmmmm<> this Shopping Mall is awesome!","spC|She looks pretty!  Let's check out that store!","com|move_sao_casual1_left","com|display_shoppingmall_right","spR|Hi!  How can I help you today?","spL|Hmmmmmmm","spR|Heehee!  We have a lot of options!  But chocolate is a good start!  ","spR|Make sure you know which Brand of Chocolate they like.  Girls can be picky!","player|When I talk to girls<> I should remember what brands they like.","com|display_blackmarket_center","spC|Move worm! Girl<> give me three of everything you have!","spR|One moment please<> these gentlemen were--","spC|I'm a Shambalian Mafia member!  If you know whats good for you--","spR|S-Shambalian M-Mafia?! Y-yes sir<> right away! ","spL|...","com|remove_blackmarket_center","spR|Sorry<> I really have to help this man.  I'll be right with you.","spL|Hmm?","player|The sales girl looked worried.  The Shambalian Mafia sounds dangerous!","com|remove_sao_casual1_left#com|display_blackmarket_left","spL|Three of everything!  Zack wants his bitches to be happy.  Move it!","com|remove_blackmarket","player|He throws money at the girl and leaves with the gifts.  Zack again?  Who is this Zack?","com|display_sao_casual1_left","spL|What a jerk!  Reminds me of an asshole I met before.","spR|I-I'm sorry<> they are known for breaking things when they are mad.","spL|Jerks deserve an ass-whooping!  ","spR|It's b-better if you don't cause p-problems with those gangsters.","spL|Don't worry honey<>  I'll protect you.","spR|A-anyways ... girls like chocolate a-and ... flowers are always good ...","spL|You seem nervous.  We can come back another time.  You're safe with me babe.","spR|Ah.. I'm sorry.  Another time then.  Thank you for coming.","player|Gifts are VERY IMPORTANT for speeding up the relationship of your date.  Choosing the wrong gifts may have negative impacts. ","player|Make sure you get the right gift for the right person.","END"]
+
+    }
+
     private static function s004():Array{
         return [
             "com|bg_NightclubScene#com|music-on_clubmusic",

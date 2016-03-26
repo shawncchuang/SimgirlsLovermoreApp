@@ -50,7 +50,8 @@ public class ChatScene extends Sprite
 //    private var clickmouse:Sprite;
 //    private var quad:Quad;
     private var alert:Sprite;
-    private var delaycall:DelayedCall;
+    private var tweenID:uint=0;
+
     public function ChatScene()
     {
         initBingo();
@@ -58,19 +59,21 @@ public class ChatScene extends Sprite
         initBubble();
         initBingoMachine();
 
+        ViewsContainer.datingScene=this;
         this.addEventListener(Event.REMOVED_FROM_STAGE, onChatSceneRemoved);
+        this.addEventListener("DATING_CHAT_COMPLETE",onChatComplete);
     }
     private function initBingo():void
     {
         //80% bingo,20% trash talking
         var bingo:uint=80;
         var moodBingo:uint=60;
-        var chat_bingo:Number=uint(Math.random()*100)+1;
+        var chat_bingo:Number=Math.ceil(Math.random()*100);
 
         if(chat_bingo<=bingo)
         {
             //chate bingo, item bingo
-            var item_bingo:Number=uint(Math.random()*100)+1;
+            var item_bingo:Number=Math.ceil(Math.random()*100);
 
             if(item_bingo>=1 && item_bingo<=moodBingo)
             {
@@ -396,7 +399,7 @@ public class ChatScene extends Sprite
                 sentence=seretchat[ratingLv];
                 sentence=sentence.split("^brand").join(assets.brand);
                 sentence=sentence.split("^item").join(assets.name);
-                nothinghHappenHandler();
+                initCancelHandle();
                 break
             case "2,2,2":
                 //secrets
@@ -408,15 +411,14 @@ public class ChatScene extends Sprite
                 var secretsQ:String=sysSecrets[id].q;
                 var ans:String=dating_secrets[index].ans;
                 sentence=secretsQ.split("|~|").join(ans);
-
-                nothinghHappenHandler();
+                initCancelHandle();
                 break
             default:
                 //no bingo talking
                 var trashtalkings:Array=flox.getSyetemData("trashtalking");
                 var talkingIndex:Number=Math.floor(Math.random()*trashtalkings.length);
                 sentence=trashtalkings[talkingIndex];
-                nothinghHappenHandler();
+                initCancelHandle();
                 break
         }
         //switch
@@ -427,16 +429,13 @@ public class ChatScene extends Sprite
         bubble.alpha=0;
         bubble.texture=chatbubbleTex;
 
-        var tween:Tween=new Tween(bubble,0.5,Transitions.EASE_OUT_ELASTIC);
-        tween.animate("scaleX",-1);
-        tween.animate("scaleY",1);
-        tween.animate("alpha",1);
-        tween.onComplete=onBubbleComplete;
-        Starling.juggler.add(tween);
+        tweenID=Starling.juggler.tween(bubble,0.5,{scaleX:-1,scaleY:1,alpha:1,
+            transition:Transitions.EASE_OUT_ELASTIC,onComplete:onBubbleComplete});
+
     }
     private function onBubbleComplete():void
     {
-        Starling.juggler.removeTweens(bubble);
+        Starling.juggler.removeByID(tweenID);
 
         var chatTxt:TextField=new TextField(255,190,sentence);
         chatTxt.format.setTo("SimImpact",20,0x000000,"left");
@@ -469,7 +468,7 @@ public class ChatScene extends Sprite
         //for
         sceneslist.sortOn("likes",Array.NUMERIC);
 
-        var scene_index:uint=uint(sceneslist.length*ratinglv/100)-1;
+        var scene_index:Number=Math.floor(sceneslist.length*ratinglv/100)-1;
 
         DebugTrace.msg("ChatScene.praseSceneRating scene_index:"+scene_index);
         scene=sceneslist[scene_index].scene;
@@ -529,6 +528,11 @@ public class ChatScene extends Sprite
         Starling.juggler.removeTweens(bubble);
         bubble.removeFromParent(true);
         bingo.removeFromParent(true);
+
+    }
+    private function onChatComplete(e:Event):void{
+
+        initCancelHandle();
 
     }
 

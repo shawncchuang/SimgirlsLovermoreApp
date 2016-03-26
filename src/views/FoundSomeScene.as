@@ -130,7 +130,16 @@ public class FoundSomeScene extends Scenes
 	private function setNPC():void
 	{
 		var npclocated:Object=flox.getSyetemData("npcLocated");
-		if(npclocated[current_scene])
+		var NPCLoc:Object=npclocated[current_scene];
+		var dateStr:String=flox.getSaveData("date").split("|")[0];
+		var _date:Number=Number(dateStr.split(".")[1]);
+		var _month:String=dateStr.split(".")[2];
+		if(current_scene=="LovemoreMansion" && _month=="Dec"){
+			if(_date>=14 && _date<=22){
+				NPCLoc=null;
+			}
+		}
+		if(NPCLoc)
 		{
 			var npcIDs:String=npclocated[current_scene].id;
 			var switchIDs:String=npclocated[current_scene].switchID;

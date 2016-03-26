@@ -140,28 +140,23 @@ public class Character extends MovieClip
                 target=_data.target;
             }
             //if
-            for(var i:String in _data)
+            for(var attr:String in _data)
             {
 
-                if(status=="scared" && i=="speed")
+                if(status=="scared" && attr=="speed")
                 {
-                    _data[i]=Math.floor(_data[i]*scared_reduce_speed);
+                    _data[attr]=Math.floor(_data[attr]*scared_reduce_speed);
                 }
                 //if
 
-                if(i=="se")
+                if(attr=="se")
                 {
-                    if(_data[i]>maxSE)
-                        _data[i]=maxSE;
+                    if(_data[attr]>maxSE)
+                        _data[attr]=maxSE;
                 }
 
 
-                power[i]=_data[i];
-//                if(OnArmour && power.id=="t12_0"){
-//                    //final boss
-//                    power.se=9999;
-//                    power.seMax=9999;
-//                }
+                power[attr]=_data[attr];
 
             }
             //for
@@ -289,9 +284,7 @@ public class Character extends MovieClip
     private var heal_target:Array;
     private function onOverPlayer(e:MouseEvent):void
     {
-
-
-
+        
         var memberscom:MembersInterface=new MemebersCommand();
         var battleteam:Object=memberscom.getBattleTeam();
         var top_index:uint=memberscom.getTopIndex();

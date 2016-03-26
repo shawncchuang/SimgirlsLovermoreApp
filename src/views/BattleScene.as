@@ -3176,31 +3176,16 @@ public class BattleScene extends Sprite
 		//DebugTrace.msg("BattleScene.displayDamage targetlist:"+targetlist);
 		var targetIDlist:Array=new Array();
 		targetIDlist=getRangeTargetList(targetlist,from);
-		//var enemy:Number=attack_member.power.enemy;
-
 
 		var _damage:Number=Math.floor(damage*0.1);
 		var extradmg:Number=damage-_damage;
 
-
 		//DebugTrace.msg("BattleScene.displayDamage extradmg:"+extradmg);
 
 		var predamage:Number=Math.floor(extradmg/targetIDlist.length);
-		var  _predamage:Number=predamage;
-		if(attack_member.power.skillID=="w3")
-		{
-
-			var battledata:BattleData=new BattleData();
-			predamage=Math.floor((Math.random()*800)+200);
-			predamage=battledata.skillCard(attack_member,predamage);
-			var w3_predamage:Number=_predamage+Math.floor(predamage/targetIDlist.length);
-		}
-
 
 		for(var k:uint=0;k<targetIDlist.length;k++)
 		{
-
-			predamage=_predamage;
 			var _target_member:Member=battleteam[targetIDlist[k]];
 
 			//DebugTrace.msg("BattleScene.displayDamage _target_member.status:"+_target_member.status);
@@ -3228,13 +3213,9 @@ public class BattleScene extends Sprite
 				txt_x=_target_member.x-_memberWH/2-damage_txt.width/2;
 
 			}
-			//if
-			if(attack_member.power.skillID=="w3")
-			{
-				predamage=w3_predamage-Math.floor(Math.random()*w3_predamage*0.1);
 
-			}
-			//if
+			predamage=damage-Math.floor(Math.floor(Math.random()*damage)*0.01);
+
 			if(_target_member.power.shielded=="true")
 			{
 				//target shielded	

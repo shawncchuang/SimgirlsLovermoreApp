@@ -101,6 +101,8 @@ public class DatingScene extends Scenes {
     private var cancelImg:Image;
     private var tweenID:uint=0;
     private var mediacom:MediaInterface = new MediaCommand();
+
+    private var cloudcom:String="";
     public function DatingScene() {
 
         base_sprite = new Sprite();
@@ -1286,6 +1288,7 @@ public class DatingScene extends Scenes {
         var ptsObj:Object=flox.getSaveData("pts");
         var pts:Number = ptsObj[dating];
         DebugTrace.msg("DatingScene.specificChecking com=" + com + " , mood=" + mood + " , pts=" + pts);
+        cloudcom=com;
         switch (com) {
             case "Chat":
                 relPass = true;
@@ -1629,17 +1632,24 @@ public class DatingScene extends Scenes {
     }
     private function doNoneRelationshipHandle(e:Event):void{
 
-        try{
-            screenview.removeFromParent(true);
-        }catch(e:Error){}
 
 
-        //if(com=="TakeFlirtReward" || com=="TakePhotosReward" || com=="SendGift" || com=="Reward_Mood"){
+        if(cloudcom=="Chat"){
 
-        var _data:Object=new Object();
-        _data.name=DataContainer.currentLabel;
-        command.sceneDispatch(SceneEvent.CHANGED,_data);
-        //}
+            var datingscene:Sprite=ViewsContainer.datingScene;
+            datingscene.dispatchEventWith("DATING_CHAT_COMPLETE");
+
+        }else{
+
+            try{
+                screenview.removeFromParent(true);
+            }catch(e:Error){}
+
+            var _data:Object=new Object();
+            _data.name=DataContainer.currentLabel;
+            command.sceneDispatch(SceneEvent.CHANGED,_data);
+
+        }
 
 
     }

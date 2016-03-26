@@ -214,7 +214,8 @@ public class MiniGameCommand implements MiniGameInterface
 	public function createPlayerBike():void
 	{
 		var avatar:Object=flox.getSaveData("avatar");
-		var gender:String=avatar.gender;
+		//var gender:String=avatar.gender;
+		var gender:String="Male";
 		loaderRequest("player",playerSrc[game+"_"+gender],onPlayerComplete);
 
 	}

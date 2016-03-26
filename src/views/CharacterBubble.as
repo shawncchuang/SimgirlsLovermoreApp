@@ -71,8 +71,12 @@ public class CharacterBubble extends Sprite
 				break
 			case "Story":
 				var switchID:String=flox.getSaveData("current_switch").split("|")[0];
-				talks=StoryDAO.switchStory(switchID);
-				break
+				if(switchID.indexOf("t")!=-1){
+					talks=TwinDAO.switchTwinDAO(switchID);
+				}else{
+					talks=StoryDAO.switchStory(switchID);
+				}
+				break;
 			case "TwinStory":
 				var dating:String=DataContainer.currentDating;
 				var rel:Object=flox.getSaveData("rel");
@@ -80,11 +84,11 @@ public class CharacterBubble extends Sprite
 				var datingtwin:Object=flox.getSaveData("datingtwin");
 				var id:String=datingtwin[current_rel].id;
 				talks=TwinDAO.switchTwinDAO(id);
-				break
+				break;
 			case "StoryPreview":
 				library=DataContainer.previewStory;
 				talks=library[part_index];
-				break
+				break;
 			default:
 				library=flox.getSyetemData("scenelibrary");
 				talks=library[part_index];

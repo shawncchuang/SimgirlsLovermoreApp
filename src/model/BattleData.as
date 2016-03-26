@@ -131,60 +131,29 @@ public class BattleData
         DebugTrace.msg("BattleData.rangeMatrix matrix:"+JSON.stringify(matrix));
         return matrix
     }
-    /*public function skillCard(member:Member,skill:Object):Object
-     {
-     //var member_power:Object=cupsys;
-     var _skill:Object=new Object();
-     var se:Number=member.power.se;
-     var power:Number=Number(skill.power);
-     if(member.power.skillID.indexOf("n")!=-1)
-     {
-     se=member.power.seMax;
-     }
-
-
-     var dp:Number=BattleData.bp;
-     //power=Math.floor(power+power*bp*Number((se/9999).toFixed(2)));
-     power=Math.floor(power*bp*Number((se/9999).toFixed(2)));
-     var extra:Number=10-Math.floor(Math.random()*20);
-     skill.power=power+extra;
-
-     for(var attr:String in skill)
-     {
-     _skill[attr]=skill[attr];
-     }
-
-
-     return _skill;
-     }*/
     public function skillCard(member:Member,power:Number):Number
     {
-        //var member_power:Object=cupsys;
 
         var bp:Number=BattleData.bp;
-        var de_power:Number=power;
-        var _skill:Object=new Object();
+        var skill_power:Number=power;
         var se:Number=member.power.se;
 
         if(member.power.skillID.indexOf("n")!=-1 && member.power.skillID.length==2)
         {
             se=member.power.seMax;
         }
+        if(skill_power==0){
+            //w3(random damage) ,gor_s_1
+            skill_power=Math.floor(Math.random()*301)+200;
+        }
+
         var buffer:Number=9999;
         if(member.power.seMax>9999){
             buffer=99999;
         }
-        var skill_power:Number=Math.floor(de_power*bp*(se/buffer));
-        //var extra_power:Number=Math.floor(power/10);
-        //var extra:Number=extra_power-Math.floor(Math.random()*(extra_power*2));
-        var extra:Number=Math.floor(Math.random()*10);
-        skill_power=(skill_power*2)+extra;
-        if(skill_power==0)
-        {
-            skill_power=de_power;
-        }
+        var atk_power:Number=Math.floor(skill_power*bp*(se/buffer)*1.5);
 
-        return skill_power;
+        return atk_power;
     }
     public function damageCaculator(member_power:Object):Number
     {
