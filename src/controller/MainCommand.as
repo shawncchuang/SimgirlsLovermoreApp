@@ -1393,9 +1393,7 @@ public class MainCommand implements MainInterface {
         mediacom.SWFPlayer("transform", "../swf/"+workoutSWF+".swf", onFinishAnimated);
 
 
-        var dating:String = flox.getSaveData("dating");
         var comObj:Object = flox.getSyetemData("command");
-
         var cash_pay:Number = comObj.Train.values.cash;
         var valuesImg:String = comObj.Train.values.image;
         var cash:Number = flox.getSaveData("cash");
@@ -1499,9 +1497,9 @@ public class MainCommand implements MainInterface {
         gameEvent._name = "clear_comcloud";
         gameEvent.displayHandler();
         var flox:FloxInterface = new FloxCommand();
-
-        var researchSWF:String="research";
         var dating:String=flox.getSaveData("dating");
+        var researchSWF:String="research";
+
         if(dating!=""){
             researchSWF="research_girl";
         }
@@ -1509,12 +1507,10 @@ public class MainCommand implements MainInterface {
         mediacom.SWFPlayer("transform", "../swf/"+researchSWF+".swf", onFinishAnimated);
 
 
-
         var sysCommand:Object = flox.getSyetemData("command");
-        var dating:String = flox.getSaveData("dating");
         var valuesInt:String = sysCommand.Research.values.int;
         var cash_pay:Number = sysCommand.Research.values.cash;
-        DebugTrace.msg("MainCommand.doLearn cash_pay=" + cash_pay);
+        //DebugTrace.msg("MainCommand.doLearn cash_pay=" + cash_pay);
         var cash:Number = flox.getSaveData("cash");
         var ap:Number = flox.getSaveData("ap");
         var intObj:Object = flox.getSaveData("int");
@@ -2918,7 +2914,7 @@ public class MainCommand implements MainInterface {
         var dayStr:String=today.split("|")[0];
         var month:String=dayStr.split(".")[2];
         var switchID:String=current_switch.split("|")[0];
-        var enableObj:Object={"AcademyScene":"s009","SpiritTempleScene":"s010","LovemoreMansionScene":"s007","PoliceStationScene":"s013"};
+        var enableObj:Object={"AcademyScene":"s011","SpiritTempleScene":"s010","LovemoreMansionScene":"s007","PoliceStationScene":"s013"};
         var storyID:String=enableObj[scene];
 
         if(storyID){
