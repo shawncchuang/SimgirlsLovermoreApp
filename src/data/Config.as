@@ -686,7 +686,7 @@ public class Config
                 ceil: 0
             },
             "image":{
-                player:1000,
+                player:800,
                 lenus: 780,
                 sirena:1136,
                 dea: 840,
@@ -698,7 +698,7 @@ public class Config
             },
             "wealth":0,
             "int":{
-                player:1000,
+                player:800,
                 lenus: 1140,
                 sirena:830,
                 dea: 1169,

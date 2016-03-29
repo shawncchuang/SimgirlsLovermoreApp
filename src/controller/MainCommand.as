@@ -1461,10 +1461,10 @@ public class MainCommand implements MainInterface {
         var rate: Number = Number(((Math.floor(Math.random() * 30) + 1) / 100));
         switch (scene) {
             case "NightclubScene":
-                income = 150+Math.floor(image / 7.5 * (rate+1));
+                income = Math.floor(image / 7.5 * (rate+1));
                 break
             case "BankScene":
-                income = 150+Math.floor(int / 5 * (rate+1));
+                income = Math.floor(int / 5 * (rate+1));
                 break
             case "ThemedParkScene":
                 income = 250+Math.floor(love / 15 * (rate+1));
