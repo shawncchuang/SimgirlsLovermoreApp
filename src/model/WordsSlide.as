@@ -52,7 +52,6 @@ public class WordsSlide
 			else
 			{
 
-				//juggler.removeTweens(onSlideNext);
 				Starling.juggler.removeByID(tweedID);
 				_target.dispatchEventWith(MyTalkingDisplay.TALKING_COMPLETE);
 			}

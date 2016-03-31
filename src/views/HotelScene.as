@@ -118,8 +118,16 @@ public class HotelScene extends Scenes
         var switchID:String=current_switch.split("|")[0];
         var nextSwitch:String=switchs[switchID].result.on;
         switch(current_switch){
+            case "s011|on":
+                // jump to Nov
+                var switchToDay:String="Fri.18.Nov.2033|12";
+                flox.save("date",switchToDay);
+                _data.name="MainScene";
+                _data.from="story";
+                command.sceneDispatch(SceneEvent.CHANGED,_data);
+                command.updateInfo();
+                break;
             case "s006b|off":
-
                 //over next day
                 var nextDay:String=switchs[nextSwitch].date+"|12";
                 flox.save("date",nextDay);

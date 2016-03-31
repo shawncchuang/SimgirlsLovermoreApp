@@ -358,6 +358,11 @@ public class AssetEmbeds
     public static const zackFacials:Class;
 
 
+    [Embed(source="../../media/textures/icons/rating_stamps.xml", mimeType="application/octet-stream")]
+    public static const RatingStampsXML:Class;
+    [Embed(source="../../media/textures/icons/rating_stamps.png")]
+    public static const RatingStamps:Class;
+
     /*[Embed(source="../../media/textures/icons/items/items.xml", mimeType="application/octet-stream")]
      public static const ItemsXML:Class;
      [Embed(source="../../media/textures/icons/items/items.png")]
@@ -462,7 +467,6 @@ public class AssetEmbeds
 
     [Embed(source="../../media/textures/icons/icon_skillPts1.png")]
     public static const SkillPtsValueIcon:Class;
-
 
     [Embed(source="../../media/textures/icons/danger.png")]
     public static const DangerSign:Class;

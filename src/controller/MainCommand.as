@@ -1697,6 +1697,47 @@ public class MainCommand implements MainInterface {
             sceneDispatch(SceneEvent.CHANGED, _data);
         }
     }
+    public function doHangAround():void{
+
+        var flox:FloxInterface=new FloxCommand();
+        var dating:String=flox.getSaveData("dating");
+        var imgObj:Object=flox.getSaveData("image");
+        var moods:Object=flox.getSaveData("mood");
+        var commands:Object=flox.getSyetemData("command");
+        rewards = new Object();
+        rewards.image = commands["HangAround"].values.image;
+
+        if(dating!=""){
+            var reward_mood:Number=Math.floor((imgObj.player+imgObj[dating])/24);
+            rewards.mood=reward_mood;
+            moods[dating]+=reward_mood;
+            imgObj[dating]+=rewards.image;
+            flox.save("mood",moods);
+
+        }
+        imgObj.player+=rewards.image;
+        flox.save("image",imgObj);
+
+
+        var scene:Sprite = ViewsContainer.currentScene;
+        showCommandValues(scene,"Drink",rewards);
+
+        var gameinfo:Sprite = ViewsContainer.gameinfo;
+        gameinfo.dispatchEventWith("UPDATE_INFO");
+
+        tweenID = Starling.juggler.delayCall(onThinkComplete,1);
+        function onThinkComplete():void{
+            Starling.juggler.removeByID(tweenID);
+
+            var _data:Object = new Object();
+            _data.name = DataContainer.currentScene;
+            sceneDispatch(SceneEvent.CHANGED, _data);
+        }
+
+
+
+
+    }
 
     public function doDine():void{
         var flox:FloxInterface=new FloxCommand();
@@ -1786,6 +1827,9 @@ public class MainCommand implements MainInterface {
                     break;
                 case "Drink":
                     doDrink();
+                    break
+                case "HangAround":
+                    doHangAround();
                     break
                 case "Dine":
                     doDine();
@@ -3001,7 +3045,7 @@ public class MainCommand implements MainInterface {
     public function checkMemory():void{
 
 
-        var tweenID:uint=Starling.juggler.repeatCall(StartCheck,300,100);
+        var tweenID:uint=Starling.juggler.repeatCall(StartCheck,180,1000);
 
         function StartCheck():void{
 
@@ -3013,7 +3057,7 @@ public class MainCommand implements MainInterface {
 
             if(!DataContainer.popupMessage && freeMemory<5 && totalMemory>100){
 
-                var msg:String="Free memory is running low. If the game is experiencing significant slowdowns please save your progress and restart the game.";
+                var msg:String="Free memory is running low.\nIf the game is experiencing significant slowdowns please save your progress and restart the game.";
 
                 var popup:PopupManager=new PopupManager();
                 popup.attr="memory";

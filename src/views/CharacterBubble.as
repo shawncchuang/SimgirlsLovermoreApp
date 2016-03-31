@@ -4,6 +4,11 @@ import data.Config;
 import data.StoryDAO;
 import data.TwinDAO;
 
+import feathers.controls.Label;
+
+import feathers.controls.text.TextFieldTextRenderer;
+import feathers.core.ITextRenderer;
+
 import flash.geom.Point;
 
 import controller.AssetEmbeds;
@@ -14,6 +19,8 @@ import controller.MainCommand;
 import controller.MainInterface;
 
 import data.DataContainer;
+
+import flash.text.TextFormat;
 
 import starling.animation.Juggler;
 
@@ -146,7 +153,7 @@ public class CharacterBubble extends Sprite
 		if(onBubbleComplete)
 			onBubbleComplete();
 		//Starling.juggler.removeTweens(bubble);
-	    Starling.juggler.removeByID(tweenID);
+		Starling.juggler.removeByID(tweenID);
 		addBubbleTxt();
 	}
 	private function addBubbleTxt():void
@@ -163,11 +170,13 @@ public class CharacterBubble extends Sprite
 			sentence=filterScentance(pure_talks[talk_index]);
 		}
 		//DebugTrace.msg("addBubbleTxt: "+talks[talk_index]);
-
+		var htmltext:String="<body>"+sentence.split("<>").join(",")+"</body>";
 		bubbletext=new TextField(200,200,"");
 		bubbletext.format.setTo("SimImpact",22);
 		bubbletext.autoScale=true;
-		bubbletext.text=sentence.split("<>").join(",");
+		bubbletext.isHtmlText=true;
+		bubbletext.text=htmltext;
+
 		bubbletext.pivotX=Math.floor(bubbletext.width/2+20*diraction);
 		var pioveY:Number=Math.floor(bubbletext.height/2+15);
 		if(texture_name=="BubbleThink" || texture_name=="BubbleShout")
@@ -175,6 +184,7 @@ public class CharacterBubble extends Sprite
 			pioveY=Math.floor(bubbletext.height/2+45);
 		}
 		bubbletext.pivotY=pioveY;
+
 
 		addChild(bubbletext);
 	}

@@ -32,7 +32,7 @@ package views
 		private var command:MainInterface=new MainCommand();
 		private var button:Button;
 		private var scencom:SceneInterface=new SceneCommnad();
-		private var floxcom:FloxInterface=new FloxCommand();
+		private var flox:FloxInterface=new FloxCommand();
 		
 	 
 		public function CoffeeShopScene()
@@ -90,11 +90,9 @@ package views
 					_data.name="MainScene";
 					command.sceneDispatch(SceneEvent.CHANGED,_data);
 					break
-				case "":
-					
-					
-			 
-					break
+				case "HangAround":
+					command.playCommonAnimation("HangAround");
+					break;
 				case "ani_complete":
 				 
 					

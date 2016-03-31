@@ -28,6 +28,7 @@ import model.Scenes;
 
 import starling.display.Button;
 import starling.display.Image;
+import starling.display.Image;
 import starling.display.MovieClip;
 import starling.display.Quad;
 import starling.display.Sprite;
@@ -36,6 +37,7 @@ import starling.events.Event;
 import starling.text.TextField;
 import starling.text.TextFieldAutoSize;
 import starling.textures.Texture;
+import starling.textures.TextureAtlas;
 
 import utils.DebugTrace;
 
@@ -98,6 +100,11 @@ public class ProfileScene extends Scenes
 
     private var templete:MenuTemplate;
     private var chbg:Image;
+
+    private var intIndex:uint=0;
+    private var imgIndex:uint=0;
+    private var intStamp:Image;
+    private var imgStamp:Image;
     public static function set CharacterName(str:String):void
     {
         ch_name=str;
@@ -124,6 +131,7 @@ public class ProfileScene extends Scenes
         initSkillsData();
 
         initProIcons();
+        initRatingStamps();
         //initCancelHandle();
 
         this.addEventListener(Event.REMOVED_FROM_STAGE, onRemovedHandler);
@@ -141,7 +149,7 @@ public class ProfileScene extends Scenes
 
         var _data:Object=new Object();
         _data.name="MenuScene";
-        command.sceneDispatch(SceneEvent.CHANGED,_data)
+        command.sceneDispatch(SceneEvent.CHANGED,_data);
     }
     private function initLayout():void
     {
@@ -312,6 +320,8 @@ public class ProfileScene extends Scenes
 
         updateData();
 
+
+
     }
     private function addTextField(target:Sprite,rec:Rectangle,format:Object):TextField
     {
@@ -368,7 +378,54 @@ public class ProfileScene extends Scenes
         intTxt.text=intStr;
         imgTxt.text=imgStr;
 
+
+
     }
+
+    private function initRatingStamps():void{
+
+        var intObj:Object=flox.getSaveData("int");
+        var intNum:Number=intObj[character];
+        var imgObj:Object=flox.getSaveData("image");
+        var imgNum:Number=imgObj[character];
+        var rating:Object={"LameMin":0,"LameMax":2500,"OkMin":2501,"OkMax":5000,
+            "CoolMin":5001,"CoolMax":7500,"BadAssMin":7501,"BadAssMax":9999};
+        if(intNum>=rating.LameMin && intNum<=rating.LameMax){
+            intIndex=3;
+        }else if(intNum>=rating.OkMin && intNum<=rating.OkMax){
+            intIndex=2;
+        }else if(intNum>=rating.CoolMin && intNum<=rating.CoolMax){
+            intIndex=1;
+        }else if(intNum>=rating.BadAssMin && intNum<=rating.BadAssMax){
+            intIndex=0;
+        }
+        if(imgNum>=rating.LameMin && imgNum<=rating.LameMax){
+            imgIndex=3;
+        }else if(imgNum>=rating.OkMin && imgNum<=rating.OkMax){
+            imgIndex=2;
+        }else if(imgNum>=rating.CoolMin && imgNum<=rating.CoolMax){
+            imgIndex=1;
+        }else if(imgNum>=rating.BadAssMin && imgNum<=rating.BadAssMax){
+            imgIndex=0;
+        }
+
+        var xml:XML=Assets.getAtalsXML("RatingStampsXML");
+        var texture:Texture=Assets.getTexture("RatingStamps");
+        var textureAltas:TextureAtlas=new TextureAtlas(texture,xml);
+        var intStampTexture:Texture=textureAltas.getTexture("stamps"+intIndex);
+        var imgStampTexture:Texture=textureAltas.getTexture("stamps"+imgIndex);
+
+        intStamp=new Image(intStampTexture);
+        intStamp.x=486;
+        intStamp.y=350;
+        imgStamp=new Image(imgStampTexture);
+        imgStamp.x=486;
+        imgStamp.y=418;
+
+        personal.addChild(intStamp);
+        personal.addChild(imgStamp);
+    }
+
     private function initAsssetsData():void
     {
         CharacterName="player";
@@ -458,6 +515,9 @@ public class ProfileScene extends Scenes
         updateAssets();
         updateSkills();
 
+        intStamp.removeFromParent(true);
+        imgStamp.removeFromParent(true);
+        initRatingStamps();
 
     }
     private function updateSkills():void

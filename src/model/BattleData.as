@@ -138,7 +138,8 @@ public class BattleData
         var skill_power:Number=power;
         var se:Number=member.power.se;
 
-        if(member.power.skillID.indexOf("n")!=-1 && member.power.skillID.length==2)
+        var skillID:String=member.power.skillID;
+        if(skillID.charAt(0)=="n" && skillID.length==2)
         {
             se=member.power.seMax;
         }

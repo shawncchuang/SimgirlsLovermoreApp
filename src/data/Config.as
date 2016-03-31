@@ -8,9 +8,10 @@ public class Config
 {
     public static var permision:String="black!@spears#$";
     public static var deadline:Number=20;
-    public static var payCoinURL:String="http://localhost:8888/simgilrs/dgpayment/index.php?cate=coin&authkey=";
-    //public static var payCoinURL:String="http://blackspears.com/black-market.html";
-    public static var payGameURL:String="http://localhost:8888/simgilrs/payment/index.php?cate=game&authkey=";
+    //public static var payCoinURL:String="https://seancch.x10.bz:8890/simgirls/dgpayment/?cate=coin&authkey=";
+    //public static var payCoinURL:String="http://localhost:8888/simgirls/dgpayment/index.php?cate=coin&authkey=";
+    public static var payCoinURL:String="http://blackspears.com/black-market.html";
+    public static var payGameURL:String="http://localhost:8888/simgirls/payment/index.php?cate=game&authkey=";
     private static var points:Object=new Object();
     private static var playerInfo:Object=new Object();
     public static var modelObj:Object={"Male":new Rectangle(0,-20,276,660),

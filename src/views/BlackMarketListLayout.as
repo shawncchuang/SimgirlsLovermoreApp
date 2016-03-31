@@ -136,7 +136,7 @@ public class BlackMarketListLayout extends PanelScreen {
             nameHeader.format.setTo(font,12,0x333333,"left");
             itemRender.addChild(nameHeader);
 
-            var nameTxt:TextField = new TextField(120, renderH, item.name);
+            var nameTxt:TextField = new TextField(150, renderH, item.name);
             nameTxt.x = nameHeader.x;
             nameTxt.format.setTo(font,20,0x000000,"left");
 

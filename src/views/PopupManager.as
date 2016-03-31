@@ -44,9 +44,10 @@ public class PopupManager extends Sprite{
 
 //        var bgTexture:Texture=Assets.getTexture("PopupBg");
 //        var bg:Image=new Image(bgTexture);
-
-
         var bg:Quad = new Quad( 400, 80, 0x000000 );
+        if(attr=="memory"){
+            bg=new Quad( 400, 80, 0xEF1F22 );
+        }
 
         var msgTxt:TextField=new TextField(400,80,msg);
         msgTxt.format.setTo(font,20,0xFFFFFF);
@@ -73,7 +74,6 @@ public class PopupManager extends Sprite{
 
 
         PopUpManager.addPopUp(popup,false,false);
-
         DataContainer.popupMessage=true;
 
 

@@ -219,7 +219,11 @@ public class BlackMarketScene extends Scenes
 		if(auth=="email") {
 			authKey = loaderReq.getSharedObject("email");
 		}
-		var url:String=Config.payCoinURL+authKey+"&auth="+auth;
+		if(Config.payCoinURL.indexOf("blackspears.com")!=-1){
+			var url:String=Config.payCoinURL;
+		}else{
+			url=Config.payCoinURL+authKey+"&auth="+auth;
+		}
 		DebugTrace.msg("BlackTileList onClickItemHandler url:"+url);
 		var req:URLRequest=new URLRequest(url);
 		navigateToURL(req,"_blank");

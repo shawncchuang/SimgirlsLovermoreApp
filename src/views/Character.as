@@ -155,7 +155,6 @@ public class Character extends MovieClip
                         _data[attr]=maxSE;
                 }
 
-
                 power[attr]=_data[attr];
 
             }

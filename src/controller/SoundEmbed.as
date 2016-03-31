@@ -85,5 +85,8 @@ package controller
 		//futuristic gun
 		[Embed(source="../../media/textures/sound/futuristic gun.mp3")]
 		public static const FuturisticGun:Class;
+
+		[Embed(source="../../media/textures/sound/cat.mp3")]
+		public static const cat:Class;
 	}
 }

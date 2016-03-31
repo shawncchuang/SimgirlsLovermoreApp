@@ -80,15 +80,16 @@ public class MyTalkingDisplay extends Sprite
 			sentance=sentance.split("player|").join("");
 			sentance=sentance.split("$$$").join(first_name);
 			sentance=sentance.split("@@@").join(fullname);
-
+			var htmltext:String="<body>"+sentance+"</body>";
 
 			subtitle=new TextField(785,120,"");
 			subtitle.format.setTo("SimImpact",24,0xFFFFFF);
 			subtitle.autoScale=true;
 			subtitle.x=125;
 			subtitle.y=650;
+			subtitle.isHtmlText=true;
 		    addChild(subtitle);
-		    new WordsSlide(this,subtitle,sentance);
+		    new WordsSlide(this,subtitle,htmltext);
 			this.addEventListener(MyTalkingDisplay.TALKING_COMPLETE,onCompleteWordsSlide);
 		}
 		 
