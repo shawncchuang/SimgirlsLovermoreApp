@@ -208,7 +208,7 @@ public class DrawManager implements DrawerInterface
         //DebugTrace.msg("DrawManager.updateBaseModel featuresIndex:"+ featuresIndex)
         var pos:*=switchPosition(target);
         var _color:Number;
-        var xml:XML=new XML();
+        var xml:XML;
         switch(target)
         {
             case "Hair":
@@ -492,7 +492,7 @@ public class DrawManager implements DrawerInterface
 
         var ship:Sprite=bonmodel.container;
         ship.addChild(dispay_armature);
-        armature.animation.gotoAndPlay(bonmodel.cate,-1,-1,null)
+        armature.animation.gotoAndPlay(bonmodel.cate,-1,-1,null);
 
 
         //bonbody = armature.getBone("body");

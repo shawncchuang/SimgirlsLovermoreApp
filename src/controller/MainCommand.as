@@ -1587,6 +1587,7 @@ public class MainCommand implements MainInterface {
 
     }
     public function doThink():void{
+
         var flox:FloxInterface=new FloxCommand();
         var dating:String=flox.getSaveData("dating");
         var intObj:Object=flox.getSaveData("int");
@@ -1615,7 +1616,6 @@ public class MainCommand implements MainInterface {
         tweenID = Starling.juggler.delayCall(onThinkComplete,1);
         function onThinkComplete():void{
             Starling.juggler.removeByID(tweenID);
-
             var _data:Object = new Object();
             _data.name = DataContainer.currentScene;
             sceneDispatch(SceneEvent.CHANGED, _data);
@@ -3067,6 +3067,37 @@ public class MainCommand implements MainInterface {
 
         }
 
+    }
+    public function versioncommand():void{
+
+        var version:String=DataContainer.currentVersion;
+        var flox:FloxInterface=new FloxCommand();
+        var rewards:Object=flox.getPlayerData("rewards");
+       switch(version){
+           case "2.0":
+
+                   if(rewards){
+                       if(rewards.coin!=1){
+                           var coin:Number=flox.getPlayerData("coin");
+                           coin+=20;
+                           var _data:Object=new Object();
+                           _data.coin=coin;
+                           flox.savePlayer(_data);
+                       }
+
+                   }else{
+                       rewards=new Object();
+                       rewards.coin=1;
+                       _data=new Object();
+                       _data.rewards=rewards;
+                       _data.coin=20;
+                       flox.savePlayer(_data);
+                   }
+
+
+               break
+
+       }
     }
 
 }

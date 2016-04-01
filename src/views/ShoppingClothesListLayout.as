@@ -119,7 +119,7 @@ public class ShoppingClothesListLayout extends Sprite {
         if(itemSprite.height>220){
 
             //itemSprite.clipRect=new flash.geom.Rectangle(-(itemSprite.pivotX/2),-(itemSprite.pivotY/2),itemSprite.width*2,440);
-            itemSprite.mask=new Quad(itemSprite.width*2,height);
+            itemSprite.mask=new Quad(itemSprite.width*2,height+10);
             itemSprite.mask.x=-(itemSprite.pivotX/2);
             itemSprite.mask.y=-(itemSprite.pivotY/2);
         }

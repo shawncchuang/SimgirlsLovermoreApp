@@ -28,7 +28,7 @@ package model
 		public var items:Object;
 		public var commander_items:Array;
 		public var hashkey:String;
-
+		public var rewards:Object;
 
 
 		public function CustomPlayer()

@@ -51,9 +51,13 @@ public class ChatScene extends Sprite
 //    private var quad:Quad;
     private var alert:Sprite;
     private var tweenID:uint=0;
-
+    private var con_assets:Array=new Array();
+    private var misc_assets:Array=new Array();
+    private var fs_assets:Array=new Array();
     public function ChatScene()
     {
+
+        initFilterAssets();
         initBingo();
         //initCharacter();
         initBubble();
@@ -348,7 +352,7 @@ public class ChatScene extends Sprite
         var chatDataAttr:String="chat_"+dating;
         var switchRate:Number=Math.floor(Math.random()*100);
 
-        if(switchRate<50){
+        if(switchRate<20){
             chatDataAttr="chat_"+dating+"_loc";
         }
         var chat:Object=flox.getSyetemData(chatDataAttr);
@@ -366,7 +370,7 @@ public class ChatScene extends Sprite
                 var result:Object=praseRelAndMood({mood:mood,pts:pts,dating:dating});
                 //DebugTrace.msg("SimgirlsLovemore.onChatWithPlayer result:"+JSON.stringify(result));
                 var condition:String=result["mood"];
-                if(switchRate<50) {
+                if(chatDataAttr.indexOf("loc")!=-1) {
                     condition=DataContainer.currentScene.split("Scene").join("");
                 }
 
@@ -387,7 +391,7 @@ public class ChatScene extends Sprite
                 // item 100~-100
 
                 item=praseItemRating();
-                    var rating:Number=0;
+                var rating:Number=0;
                 for(var id:String in item){
                     var item_id:String=id;
                     rating=item[id];
@@ -474,6 +478,18 @@ public class ChatScene extends Sprite
         scene=sceneslist[scene_index].scene;
         return scene
     }
+    private function initFilterAssets():void{
+        var assets_rating:Object=flox.getSaveData("assets");
+        var dating:String=DataContainer.currentDating;
+        var assets:Array=assets_rating[dating];
+
+        con_assets=filterAssets(assets,"cons");
+        misc_assets=filterAssets(assets,"misc");
+        fs_assets=filterAssets(assets,"fs");
+        //DebugTrace.msg("DatingScene.initFilterAssets con_assets"+JSON.stringify(con_assets));
+        //DebugTrace.msg("DatingScene.initFilterAssets misc_assets"+JSON.stringify(misc_assets));
+        //DebugTrace.msg("DatingScene.initFilterAssets fs_assets"+JSON.stringify(fs_assets));
+    }
     private function praseItemRating():Object
     {
 
@@ -481,13 +497,45 @@ public class ChatScene extends Sprite
         //var unreleased_assets:Object=flox.getSaveData("unreleased_assets");
         var assets_rating:Object=flox.getSaveData("assets");
         var dating:String=DataContainer.currentDating;
-        var assets:Array=assets_rating[dating];
+        var assets:Array=new Array();
+        var relObj:Object=flox.getSaveData("rel");
+        var rel:String=relObj[dating];
+
+        switch(rel){
+            case "acquaintance":
+                assets=con_assets;
+                break;
+            case "friend":
+                assets=con_assets.concat(misc_assets);
+                break;
+            case "close friend":
+                var cm_assets:Array=con_assets.concat(misc_assets);
+                assets= cm_assets.concat(fs_assets);
+                break;
+            default:
+                assets=assets_rating[dating];
+                break
+
+        }
 
         var item_index:Number=Math.floor(Math.random()*assets.length);
         item=assets[item_index];
         DebugTrace.msg("ChatScnen.praseItemRating  item="+JSON.stringify(item));
 
         return item
+    }
+    private function filterAssets(dAssets:Array,attr:String):Array{
+        var fAssets:Array=new Array();
+        for(var i:uint=0;i<dAssets.length;i++){
+            var assets:Object=dAssets[i];
+            for(var id:String in assets){
+                if(id.indexOf(attr)!=-1){
+                    fAssets.push(assets);
+                }
+
+            }
+        }
+        return fAssets
     }
     private function initCancelHandle():void
     {

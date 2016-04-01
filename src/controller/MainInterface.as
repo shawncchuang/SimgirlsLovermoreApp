@@ -75,6 +75,6 @@ public interface MainInterface
 
     function checkSceneEnable(scene:String):Boolean
     function checkMemory():void
-
+    function versioncommand():void
 }
 }

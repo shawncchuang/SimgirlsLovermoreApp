@@ -133,8 +133,9 @@ public class Game extends Sprite
 		}
 
 			command.initCriminalsRecord();
-
 		    command.checkMemory();
+			command.versioncommand();
+
 	}
 	private function doTopViewDispatch(e:TopViewEvent):void
 	{

@@ -362,7 +362,7 @@ public class ChangeClothesScene extends Scenes {
         var current_avatar:Object=flox.getSaveData("avatar");
 
         current_avatar.clothes=Number(upperstyles[upperstyleIndex]);
-        current_avatar.pants=lowerstyleIndex;
+        current_avatar.pants=Number(lowerstyles[lowerstyleIndex]);
         DataContainer.contanstAvatar=current_avatar;
         flox.save("avatar",current_avatar);
 

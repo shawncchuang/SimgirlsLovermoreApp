@@ -265,9 +265,10 @@ public class CommandCloud extends Sprite
 
     private function onCloudClicked():void{
         cloud.removeEventListeners();
-
         visibleCommandDirecation();
         command.playSound("Break");
+
+        command.removeShortcuts();
 
         var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
         gameEvent._name="clear_comcloud";
@@ -393,6 +394,7 @@ public class CommandCloud extends Sprite
                 }
 
             }else{
+
                 _data.removed=de_label;
                 command.topviewDispatch(TopViewEvent.REMOVE,_data);
             }
