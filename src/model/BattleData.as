@@ -143,9 +143,14 @@ public class BattleData
         {
             se=member.power.seMax;
         }
-        if(skill_power==0){
+        if(skillID=="w3"){
             //w3(random damage) ,gor_s_1
             skill_power=Math.floor(Math.random()*301)+200;
+        }
+        if(skillID.charAt(1)=="0")
+        {
+            //shield skill
+            skill_power=50;
         }
 
         var buffer:Number=9999;

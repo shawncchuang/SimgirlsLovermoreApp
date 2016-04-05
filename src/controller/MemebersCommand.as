@@ -695,14 +695,16 @@ public class MemebersCommand implements MembersInterface
                 var battle_type:String=DataContainer.battleType;
 
                 if(battle_type=="schedule"){
+
+                    var ranking:Array=flox.getSaveData("ranking");
                     var rank:Number=command.checkRanking();
                     var dateStr:String=flox.getSaveData("date");
                     var day:String=dateStr.split(".")[1];
                     var month:String=dateStr.split(".")[2];
                     var today:String=month+"_"+day;
                     var battleDays:Array=Config.battleDays;
-                    if(rank>2 && today==battleDays[battleDays.length-1]){
-                        //the last battle
+                    if(rank<(ranking.length-3) && today==battleDays[battleDays.length-1]){
+                        //the last battle, top 2 to be continued
                         flox.save("current_switch","s9999|on");
                     }
 

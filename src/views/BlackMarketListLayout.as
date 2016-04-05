@@ -5,6 +5,8 @@ package views {
 import controller.Assets;
 import controller.FloxCommand;
 import controller.FloxInterface;
+import controller.MainCommand;
+import controller.MainInterface;
 
 import feathers.controls.Button;
 
@@ -317,6 +319,11 @@ public class BlackMarketListLayout extends PanelScreen {
             var success:Boolean=checkCurrentItem();
 
             if(success){
+
+                //GodRewards
+                var command:MainInterface=new MainCommand();
+                command.playSound("GodRewards");
+
                 var _data:Object=new Object();
                 _data.price=price;
                 _data.item_id=item_id;

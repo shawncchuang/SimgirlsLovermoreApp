@@ -90,7 +90,7 @@ public class KissScene extends Sprite
         }
         else
         {
-            love+=(lv*10);
+            love+=(lv*10*2);
 
             characterFilter();
         }

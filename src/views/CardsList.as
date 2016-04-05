@@ -323,7 +323,7 @@ public class CardsList extends Sprite
 //                alertmsg=new AlertMessage(msg);
 //                alertmsg.alpha=0;
 //                skillStore.addChild(alertmsg);
-
+                command.playSound("DoorOpen");
                 currentSkill.removeEventListener(TouchEvent.TOUCH,onTouchlockSkill);
 
                 lockTween=new Tween(currentSkill,0.1);

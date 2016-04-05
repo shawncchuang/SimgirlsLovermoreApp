@@ -293,6 +293,7 @@ public class ShoppingListLayout extends PanelScreen {
             value_data.attr = "cash";
             value_data.values = String(amount*-1);
             var command:MainInterface = new MainCommand();
+            command.playSound("GodRewards");
             command.displayUpdateValue(scene, value_data);
 
             cash-=amount;

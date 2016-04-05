@@ -665,10 +665,10 @@ public class MainCommand implements MainInterface {
                 battleData.checkBattleSchedule("CpuBattleRanking","cpu_team");
             }
 
-            var current_switch:String=flox.getSaveData("current_switch");
-            if(current_switch=="s1427_1|on"){
-                checkFinalRankingBattle();
-            }
+//            var current_switch:String=flox.getSaveData("current_switch");
+//            if(current_switch=="s1427_1|on"){
+//                checkFinalRankingBattle();
+//            }
             if(new_date=="Tue.14.Feb.2034|12"){
 
                 checkTwinFlamePts();
@@ -1213,7 +1213,7 @@ public class MainCommand implements MainInterface {
                 onTouchConfirmBegan(e);
             }
             catch (e:Error) {
-                onTouchConfirmBegan();
+
             }
             //try...catch
 
@@ -1461,13 +1461,13 @@ public class MainCommand implements MainInterface {
         var rate: Number = Number(((Math.floor(Math.random() * 30) + 1) / 100));
         switch (scene) {
             case "NightclubScene":
-                income = Math.floor(image / 7.5 * (rate+1));
+                income = Math.floor(image / 5.5 * (rate+1));
                 break
             case "BankScene":
-                income = Math.floor(int / 5 * (rate+1));
+                income = Math.floor(int / 3.5 * (rate+1));
                 break
             case "ThemedParkScene":
-                income = 250+Math.floor(love / 15 * (rate+1));
+                income = 250+Math.floor(love / 11 * (rate+1));
                 break
         }
         if(dating!=""){
@@ -2935,15 +2935,16 @@ public class MainCommand implements MainInterface {
         var flox:FloxInterface=new FloxCommand();
         var ranking:Array=flox.getSaveData("ranking");
         ranking=ranking.sortOn("win",Array.NUMERIC,Array.DESCENDING);
-        DebugTrace.msg("MainCommand.checkTanking ranking="+ranking);
+        DebugTrace.msg("MainCommand.checkTanking ranking="+JSON.stringify(ranking));
 
         for(var i:uint=0;i<ranking.length;i++){
             var team:Object=ranking[i];
             if(team.team_id == "player"){
-                rank=(i+1);
+                rank=i;
                 break
             }
         }
+
         return rank
 
     }
@@ -3006,28 +3007,7 @@ public class MainCommand implements MainInterface {
 
 
     }
-    private function checkFinalRankingBattle():void{
 
-        var flox:FloxInterface=new FloxCommand();
-        var command:MainInterface=new MainCommand();
-        var ranking:Array=flox.getSaveData("ranking");
-        ranking=ranking.sortOn("win",Array.NUMERIC,Array.DESCENDING);
-        var winIndex:uint=0;
-        for(var i:uint=0;i<ranking.length;i++){
-            var rankInfo:Object=ranking[i];
-            if(rankInfo.team_id =="player"){
-                winIndex=i;
-            }
-        }
-        if(winIndex<ranking.length-2){
-            //not top 2, game over
-            flox.save("current_switch","s9999|on");
-
-
-        }
-
-
-    }
     private function checkTwinFlamePts():void{
 
         var flox:FloxInterface=new FloxCommand();

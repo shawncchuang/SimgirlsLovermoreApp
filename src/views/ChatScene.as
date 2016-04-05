@@ -71,7 +71,8 @@ public class ChatScene extends Sprite
     {
         //80% bingo,20% trash talking
         var bingo:uint=80;
-        var moodBingo:uint=60;
+        var moodBingo:uint=55;
+        var secretBingo:uint=5;
         var chat_bingo:Number=Math.ceil(Math.random()*100);
 
         if(chat_bingo<=bingo)
@@ -81,18 +82,18 @@ public class ChatScene extends Sprite
 
             if(item_bingo>=1 && item_bingo<=moodBingo)
             {
-                // moood reward ,location match 60%
+                // moood reward ,location match 55%
                 setResult(0);
             }
-            else if(item_bingo>moodBingo && item_bingo<=moodBingo+10)
+            else if(item_bingo>moodBingo && item_bingo<=moodBingo+secretBingo)
             {
-                //secrets match 10%
+                //secrets match 5%
                 setResult(2);
 
             }
             else
             {
-                //gift match 30%
+                //gift match 40%
                 setResult(1);
 
             }

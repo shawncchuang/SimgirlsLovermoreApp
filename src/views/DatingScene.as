@@ -1692,7 +1692,7 @@ public class DatingScene extends Scenes {
 
         if (!bubble && !twinflame && pts==relLv["closefriend-Max"]) {
             chat = "I'm not looking to date anyone right now \n" +
-                    "(a special event is required to further improve relationship).";
+                    "(can only further improve relationship after SSCC Gala Dinner).";
             initBubble(attr);
             bubbleFadeoutHandle();
         }

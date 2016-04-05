@@ -91,10 +91,13 @@ public class MessagingScene extends Sprite{
         var str1:String="My Main Mission in Shambala: \n1. Stay alive. Get prepared before the dangerous days marked on the calendar.\n" +
                 "2. Reach the highest relationship level (soulmate) with my destined lover (twin flame) before the Valentine's Day.\n" +
                 "3. Enter the SSCC Final. The SSCC will start in Jan 2034. The top two teams with most wins will enter the final at the end of Feb 2034.";
-        var message1:TextField=new TextField(panelBg.width-20,200,str1);
+
+        str1+="\n\n\nRELATIONSHIP POINTS REQUIREMENT\nCLOSE FRIEND: 166 PTS\nDATING PARTNER: 1000 PTS\nLOVER: 3333 PTS\nSOULMATE: 6666 PTS";
+
+        var message1:TextField=new TextField(panelBg.width-20,400,str1);
         message1.format.setTo(font,16,0,"left");
         message1.x=10;
-        message1.y=btn.y+btn.height+50;
+        message1.y=btn.y+btn.height+20;
 
         massaging.addChild(btn);
         massaging.addChild(message);

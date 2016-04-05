@@ -116,9 +116,9 @@ public class CpuMembersCommand implements CpuMembersInterface
     public function setupFinalBoss():void{
 
         var teams:Object=flox.getSaveData("cpu_teams");
-        var attrs:Object=Config.PlayerAttributes();
+        //var attrs:Object=Config.PlayerAttributes();
         for(var j:uint=0;j<mem_perteam;j++){
-            var se:Number=attrs.cpu_teams["t12_0"].seMax;
+            var se:Number=teams["t12_0"].seMax;
             if(j>0){
                 se=0;
             }
@@ -633,7 +633,7 @@ public class CpuMembersCommand implements CpuMembersInterface
                 switch(boss)
                 {
                     case "gor":
-                        if(jewel<=2)
+                        if(jewel<=1)
                         {
                             level="lv2";
                         }
@@ -661,19 +661,20 @@ public class CpuMembersCommand implements CpuMembersInterface
                         if(jewel<=2)
                         {
                             level="lv1";
-                        }else if(jewel==3)
+                        }else if(jewel>=3 && jewel<=4)
                         {
                             level="lv2";
-                        }else
+                        }else if(jewel==5)
                         {
                             level="lv3";
                         }
                         break;
                     case "rvn":
-                        if(jewel<=2)
+                        if(jewel<=1)
                         {
                             level="lv2";
-                        }else
+                        }
+                        else
                         {
                             level="lv3";
                         }
@@ -706,19 +707,12 @@ public class CpuMembersCommand implements CpuMembersInterface
                 }
             }
             //if
-            if(skillPower==0)
-            {
-                //shield skill
-                skillPower=Math.floor(Math.random()*100)+100;
-            }
+
             var chModelBossIndex:Number= Config.ch_bossModels.indexOf(power.ch_name);
-            //boss
-            var reduce:Number=2;
-            if(power.ch_name=="fat"){
-                reduce=5;
-            }
+            var bossModelsIndex:Number=Config.bossModels.indexOf(power.ch_name);
+            var reduce:Number=3;
             power.power=Math.floor(skillPower/reduce);
-            if(chModelBossIndex!=-1)
+            if(chModelBossIndex==-1 && bossModelsIndex==-1)
             {
                 power.power=Math.floor(skillPower);
 

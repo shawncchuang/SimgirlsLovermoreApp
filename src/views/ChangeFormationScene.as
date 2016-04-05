@@ -99,6 +99,23 @@ public class ChangeFormationScene extends Scenes
         var seObj:Object=flox.getSaveData("se");
         var pts:Object=flox.getSaveData("pts");
         var reLv:Object=flox.getSyetemData("relationship_level");
+
+
+        var items:Object=flox.getPlayerData("items");
+        var prms_enable:Boolean=false;
+        var smn_enable:Boolean=false;
+
+        for(var itemID:String in items){
+            if(itemID=="bm_8"){
+                prms_enable=items.bm_8.enable;
+            }
+
+            if(itemID=="bm_9"){
+                smn_enable=items.bm_9.enable;
+            }
+
+        }
+
         for(var name:String in seObj)
         {
 
@@ -106,10 +123,17 @@ public class ChangeFormationScene extends Scenes
                 seObj[name]=1;
             }
 
-            if(pts[name]>reLv["closefriend-Min"] || name=="player"){
-                soldilers_name.push(name);
+            if(name!="prms" && name!="smn"){
+                if(pts[name]>reLv["closefriend-Min"] || name=="player"){
+                    soldilers_name.push(name);
+                }
             }
-
+        }
+        if(prms_enable){
+            soldilers_name.push("prms");
+        }
+        if(smn_enable){
+            soldilers_name.push("smn");
         }
         flox.save("se",seObj);
         DebugTrace.msg("ChangeFormationScene.init soldilers_name:"+soldilers_name)
@@ -244,23 +268,8 @@ public class ChangeFormationScene extends Scenes
         //DebugTrace.msg("ChangeFormationScene.initSubstitues soldilers name:"+ soldilers_name[subsindex])
         var avatar_attr:Object={"name":soldilers_name[subsindex],"side":-1,"pos":avatar_pos[subsindex],"gender":avatar.gender};
         DebugTrace.msg(JSON.stringify(avatar_attr));
-        var items:Object=flox.getPlayerData("items");
-        var _enable:Boolean=true;
-        if(avatar_attr.name=="prms" || avatar_attr.name=="smn" ){
-            if(avatar_attr.name=="prms")
-            {
-                _enable=items.bm_8.enable;
-            }else{
-                _enable=items.bm_9.enable;
-            }
 
-        }
-
-        if(_enable){
-            avatarcom.createAvatar(onReadyComplete,avatar_attr);
-        }else{
-            onReadyComplete();
-        }
+        avatarcom.createAvatar(onReadyComplete,avatar_attr);
 
 
 

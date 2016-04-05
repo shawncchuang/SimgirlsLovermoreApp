@@ -195,6 +195,7 @@ public class SkillStroeCaptain extends Sprite {
             value_data.attr = "skillPts";
             value_data.values =  String(pts*-1);
             var command:MainInterface = new MainCommand();
+            command.playSound("GodRewards");
             command.displayUpdateValue(this, value_data);
             current_pts-=pts;
             skillPts.player=current_pts;

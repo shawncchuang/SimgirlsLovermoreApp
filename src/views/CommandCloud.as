@@ -13,6 +13,8 @@ import controller.MainInterface;
 import controller.SceneCommnad;
 import controller.SceneInterface;
 
+import data.Config;
+
 import data.DataContainer;
 
 import events.GameEvent;

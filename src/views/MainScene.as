@@ -360,11 +360,11 @@ public class MainScene extends Scenes
                     openDay=false;
                     openNight=true;
                     break
-                case "BlackMarketScene":
-                    msg="The Black Market'll open at night.";
-                    openDay=false;
-                    openNight=true;
-                    break
+//                case "BlackMarketScene":
+//                    msg="The Black Market'll open at night.";
+//                    openDay=false;
+//                    openNight=true;
+//                    break
                 case "SportBarScene":
                     msg="The Sport Bar'll open at night.";
                     openDay=false;

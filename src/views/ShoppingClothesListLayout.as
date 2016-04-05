@@ -321,6 +321,7 @@ public class ShoppingClothesListLayout extends Sprite {
 
         }
         if(cashpass && !bought){
+
             list.push(current_item.id);
             avatar[cate]=list;
             flox.save("avatar",avatar);
@@ -329,7 +330,9 @@ public class ShoppingClothesListLayout extends Sprite {
             var value_data:Object = new Object();
             value_data.attr = "cash";
             value_data.values = String(amount*-1);
+
             var command:MainInterface = new MainCommand();
+            command.playSound("GodRewards");
             command.displayUpdateValue(scene, value_data);
 
             cash-=amount;

@@ -82,11 +82,23 @@ package controller
 		[Embed(source="../../media/textures/sound/main map waves.mp3")]
 		public static const MapWaves:Class;
 
-		//futuristic gun
 		[Embed(source="../../media/textures/sound/futuristic gun.mp3")]
 		public static const FuturisticGun:Class;
 
 		[Embed(source="../../media/textures/sound/cat.mp3")]
 		public static const cat:Class;
+
+		[Embed(source="../../media/textures/sound/glassbreak.mp3")]
+		public static const glassbreak:Class;
+
+		[Embed(source="../../media/textures/sound/gunfire.mp3")]
+		public static const gunfire:Class;
+
+		[Embed(source="../../media/textures/sound/raven.mp3")]
+		public static const raven:Class;
+
+		[Embed(source="../../media/textures/sound/roar.mp3")]
+		public static const roar:Class;
+
 	}
 }

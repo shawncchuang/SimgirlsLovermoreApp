@@ -148,7 +148,7 @@ import starling.animation.Transitions;
 			var hoverlv:String=target_hover.split("_")[1];
 			var lv:Number=Number(hoverlv.split("lv").join(""));
 			
-			var loveStr:String="Love +"+(lv*10);
+			var loveStr:String="Love +"+(lv*10*2);
 			if(lv==4)
 			{
                 loveStr="Love -10";
