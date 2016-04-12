@@ -1297,6 +1297,7 @@ public class BattleScene extends Sprite
 
 
 		var command:MainInterface=new MainCommand();
+		command.stopBackgroudSound();
 		var _data:Object=new Object();
 		if(comType=="item")
 		{
@@ -3712,7 +3713,7 @@ public class BattleScene extends Sprite
 		switch(itemid)
 		{
 			case "com0":
-
+				//change formation
 				savePlayerTeamSE();
 				break;
 			case "com1":
@@ -4102,7 +4103,8 @@ public class BattleScene extends Sprite
 			seObj[power.name]=power.se;
 		}
 		//for
-		flox.save("se",seObj,onPlayerSaveComplete);
+		flox.save("se",seObj);
+		onPlayerSaveComplete();
 	}
 	private function changeCPUFormationHandle():void
 	{

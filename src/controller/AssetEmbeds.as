@@ -1509,6 +1509,10 @@ public class AssetEmbeds
 
     [Embed(source="../../media/textures/panels/dating_scene_AP.png")]
     public static const apPanel:Class;
+
+    [Embed(source="../../media/textures/panels/softlens.png")]
+    public static const softlens:Class;
+
     /*-------------------panels-------------------------------------------------------------------*/
 
 

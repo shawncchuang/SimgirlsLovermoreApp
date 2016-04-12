@@ -439,10 +439,26 @@ public class SaveandLoadList extends Sprite
     }
     private function onSynsBackupSavedComplete(result:*=null):void{
         DebugTrace.msg("SaveandLoadList.onSynsBackupSavedComplete");
-        flox.loadEntities();
+       // flox.loadEntities();
+
+
+
         var gameinfo:Sprite=ViewsContainer.gameinfo;
         if(gameinfo){
             gameinfo.dispatchEventWith("UPDATE_PROFILE");
+        }
+
+        var restart:Boolean=DataContainer.restart;
+        if(restart){
+
+            var gamescene:Sprite=ViewsContainer.gameScene;
+            gamescene.dispatchEventWith("LOAD_TO_RESTART");
+
+        }else{
+            var _data:Object=new Object();
+            _data.removed="loadtoStart";
+            command.topviewDispatch(TopViewEvent.REMOVE,_data);
+
         }
 
 

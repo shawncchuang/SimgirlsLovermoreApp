@@ -39,6 +39,7 @@ import views.BattleScene;
 		private function initItemsPanel():void
 		{
 			items=flox.getSaveData("skills").captain;
+
 			DebugTrace.msg("CommanderItemsPanel.initItemsPanel items="+JSON.stringify(items));
 			panel=new CommanderItems();
 			addChild(panel);
@@ -49,37 +50,37 @@ import views.BattleScene;
 			format.color=0xFFFFFF;
 
 			var row:Number=0;
-			var column:Number=0;
+			var column:Number=-1;
 			for(var i:uint=0;i< items.length;i++)
 			{
 				
 				// var name:String="libItem"+i;
 
 				var itemid:String=items[i].id;
+				if(itemid!="com0"){
+					var item:MovieClip=itemspool[itemid];
+					column++;
+					//column=i;
+//					if(i>2){
+//						row=1;
+//						column=i-3;
+//					}
 
-				var item:MovieClip=itemspool[itemid];
-				column=i;
-				if(i>2){
-					row=1;
-					column=i-3;
+					item.name=itemid;
+					item.mouseChildren=false;
+					item.buttonMode=true;
+
+					item.qty.embedFonts=true;
+					item.qty.defaultTextFormat=format;
+					item.qty.text="x"+items[i].qty;
+					item.x=column*(item.width+5);
+					item.y=row*(item.height+5);
+					item.addEventListener(MouseEvent.MOUSE_DOWN,doSpendItem);
+					item.addEventListener(MouseEvent.MOUSE_OVER,doMouseOverItem);
+					item.addEventListener(MouseEvent.MOUSE_OUT,doMouseOutItem);
+					panel.addChild(item);
+
 				}
-
-				item.name=itemid;
-				item.mouseChildren=false;
-				item.buttonMode=true;
-				
-				item.qty.embedFonts=true;
-				item.qty.defaultTextFormat=format;
-				item.qty.text="x"+items[i].qty;
-				item.x=column*(item.width+5);
-				item.y=row*(item.height+5);
-				item.addEventListener(MouseEvent.MOUSE_DOWN,doSpendItem);
-				item.addEventListener(MouseEvent.MOUSE_OVER,doMouseOverItem);
-				item.addEventListener(MouseEvent.MOUSE_OUT,doMouseOutItem);
-				panel.addChild(item);
-
-
-
 
 			}
 			//for

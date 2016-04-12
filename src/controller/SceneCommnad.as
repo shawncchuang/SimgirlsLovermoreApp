@@ -88,7 +88,9 @@ public class SceneCommnad implements SceneInterface
     private var delaycall:DelayedCall;
     private var XAltImag:Image=null;
     private var storyverify:Array=new Array();
-
+    private var _character:Image;
+    private var tweenID:uint=0;
+    private var softlens:Image=null;
     public function set currentSwitch(id:String):void
     {
         switchID=id.split("|")[0];
@@ -264,9 +266,9 @@ public class SceneCommnad implements SceneInterface
         var twinflame:Boolean=false;
         var current_switch:String=flox.getSaveData("current_switch");
         var current_switchID:String=current_switch.split("|")[0];
-       if(current_switchID=="s051"){
-           twinflame=true;
-       }
+        if(current_switchID=="s051"){
+            twinflame=true;
+        }
         return twinflame;
     }
 
@@ -500,12 +502,12 @@ public class SceneCommnad implements SceneInterface
                         talkmask=null;
                     }
                     if(display_container[target]){
-                        var _character:Image= display_container[target];
-                        Starling.juggler.removeTweens(_character);
-                        _character.dispose();
-                        _character.removeFromParent(true);
+                        _character= display_container[target];
+
                         display_container[target]=null;
+                        removeHandler(_character);
                     }
+
                     break
                 case "display":
                     checkDisplay(target,pos);
@@ -570,6 +572,13 @@ public class SceneCommnad implements SceneInterface
             //if
         }
         //if
+    }
+    private function removeHandler(target:Image):void {
+        tweenID = Starling.juggler.tween(target, 0.5, {alpha: 0, onComplete: onRemoveComplete});
+        function onRemoveComplete():void {
+            Starling.juggler.removeByID(tweenID);
+            _character.removeFromParent(true);
+        }
     }
     private function creartePlayerChat():void
     {
@@ -722,6 +731,10 @@ public class SceneCommnad implements SceneInterface
     private function createPhotoMessage(todo:String,target:String):void {
         DebugTrace.msg("SceneCommand.createPhotoMessage");
 
+        var softlensTexture:Texture=Assets.getTexture("softlens");
+        softlens=new Image(softlensTexture);
+        _target.addChild(softlens);
+
         photoframe = new PhotoMessage(todo,target);
         photoframe.name = "photoframe";
         _target.addChild(photoframe);
@@ -734,14 +747,14 @@ public class SceneCommnad implements SceneInterface
             photoframe.removeFromParent(true);
             photoframe = null;
         }
+        if(softlens){
+            softlens.removeFromParent(true);
+            softlens=null;
+        }
     }
     private function displayVideo(src:String):void
     {
 
-//        var gameEvent:GameEvent=SimgirlsLovemore.gameEvent;
-//        gameEvent._name="show_video";
-//        gameEvent.video=src;
-//        gameEvent.displayHandler();
         command.stopBackgroudSound();
         disableAll();
 
@@ -1086,7 +1099,7 @@ public class SceneCommnad implements SceneInterface
         if(battleDays.indexOf(current_date)!=-1){
 
             var resultlist:Array=current_battle[current_date];
-           // var battle_result:String=resultlist.toString();
+            // var battle_result:String=resultlist.toString();
             if(resultlist[0]=="0|0"){
                 //didn't battle yet
                 verify=false;

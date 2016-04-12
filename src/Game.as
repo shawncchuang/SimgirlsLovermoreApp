@@ -251,7 +251,7 @@ public class Game extends Sprite
 		ViewsContainer.MainScene=scene;
 		addChild(scene);
 
-		command.setNowMood();
+		//command.setNowMood();
 		//command.initContextMenu();
 
 		var cpucom:CpuMembersInterface=new CpuMembersCommand();

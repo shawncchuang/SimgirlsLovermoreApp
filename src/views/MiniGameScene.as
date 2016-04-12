@@ -297,12 +297,11 @@ import flash.ui.Keyboard;
 		{
 			var timeStr:String=setTimeFormat(sec);
 			var color:Number=0xFFFFFF;
+			var se:Object=flox.getSaveData("se");
+			current_se=se.player;
 			if(game=="TrainingGame")
 			{
 				color=0xBC3327;
-				
-				var se:Object=flox.getSaveData("se");
-				current_se=se.player;
 				seTxt=new TextField(120,60,timeStr);
 				seTxt.format.setTo("SimNeogreyMedium",30,color);
 				seTxt.autoSize=TextFieldAutoSize.BOTH_DIRECTIONS;

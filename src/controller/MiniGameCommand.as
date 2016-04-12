@@ -326,21 +326,22 @@ public class MiniGameCommand implements MiniGameInterface
 		player.x+=posX*speed;
 		player.y+=posY*speed;
 
-
-		if(enemy.hit1.hitTestObject(player.hit) || enemy.hit2.hitTestObject(player.hit) || enemy.hit3.hitTestObject(player.hit))
-		{
-			DebugTrace.msg("MiniGameCommand.onplayerMoving player hit anemy");
-			//fail
-			evt.onHitHandle();
-		}
-		//if
-
-		if(enemy.act.currentLabel=="mace_loop")
-		{
-			if(enemy.act.hit.hitTestObject(player.hit))
+		if(enemy){
+			if(enemy.hit1.hitTestObject(player.hit) || enemy.hit2.hitTestObject(player.hit) || enemy.hit3.hitTestObject(player.hit))
 			{
+				DebugTrace.msg("MiniGameCommand.onplayerMoving player hit anemy");
 				//fail
 				evt.onHitHandle();
+			}
+			//if
+
+			if(enemy.act.currentLabel=="mace_loop")
+			{
+				if(enemy.act.hit.hitTestObject(player.hit))
+				{
+					//fail
+					evt.onHitHandle();
+				}
 			}
 		}
 	}

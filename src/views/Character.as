@@ -1278,7 +1278,7 @@ public class Character extends MovieClip
             //skinColor.setTint(avatar.skincolor, 0.5);
             //actModel.body.act.skin.transform.colorTransform = skinColor;
 
-            TweenMax.to(actModel.body.act.skin,0.1, {onComplete:onChangedColor,colorTransform:{tint:avatar.skincolor, tintAmount:0.5}});
+            //TweenMax.to(actModel.body.act.skin,0.1, {onComplete:onChangedColor,colorTransform:{tint:avatar.skincolor, tintAmount:0.5}});
             //var acc_color:Number=0x1397C0;
             //TweenMax.to(actModel.body.act.acc,0.2, {colorTransform:{tint:acc_color, tintAmount:0.5}});
 
@@ -1287,9 +1287,9 @@ public class Character extends MovieClip
             //actModel.body.act.acc.transform.colorTransform = accColor;
 
 
-            var accCT:ColorTransform = actModel.body.act.acc.transform.colorTransform;
-            accCT.color = 0x1397C0;
-            actModel.body.act.acc.transform.colorTransform = accCT;
+            //var accCT:ColorTransform = actModel.body.act.acc.transform.colorTransform;
+            //accCT.color = 0x1397C0;
+            //actModel.body.act.acc.transform.colorTransform = accCT;
 
             function onChangedColor():void{
                 TweenMax.killTweensOf(onChangedColor);
