@@ -69,6 +69,9 @@ public class Character extends MovieClip
     protected var dissytap:EffectTapView;
     private var round:Number=0;
     private var rage_round:Number=0;
+    private var rage_round_max:Number=3;
+    private var dizzy_round_max:Number=3;
+    private var scared_round_max:Number=3;
     private var timer:Timer;
     private var scared_reduce_speed:Number=0.5;
     protected var plus_speed:Number=100;
@@ -532,7 +535,7 @@ public class Character extends MovieClip
     {
         status=type;
     }
-    private var dizzy_round:Number=3;
+
     public function updateDamage(effect:String,damage:Number):void
     {
         //DebugTrace.msg("Character.updateDamage id:"+name+"; effect="+ effect+"; status="+status);
@@ -608,7 +611,7 @@ public class Character extends MovieClip
 
                         var index:Number=0;
                         //var time:Number=Math.floor((Math.random()*30))+20;
-                        DebugTrace.msg("Character.updateDamage dizzy_round="+dizzy_round);
+
 
                         //timer=new Timer(1000,time);
                         //timer.addEventListener(TimerEvent.TIMER_COMPLETE,onHealStatus);
@@ -709,7 +712,7 @@ public class Character extends MovieClip
             {
                 case "dizzy":
                     round++;
-                    if(round==dizzy_round)
+                    if(round==dizzy_round_max)
                     {
                         removeClickTap();
                     }
@@ -717,7 +720,7 @@ public class Character extends MovieClip
                     break
                 case "scared":
                     round++;
-                    if(round==4)
+                    if(round==scared_round_max)
                     {
                         status="";
                         processMember("ready");
@@ -737,15 +740,15 @@ public class Character extends MovieClip
                     //timer.stop();
                     round++;
 
-                    if(round>dizzy_round)
+                    if(round>dizzy_round_max)
                     {
                         removeClickTap();
                     }
-                    DebugTrace.msg("Character.updateRound round="+round+" ; dizzy_round="+dizzy_round);
+                    DebugTrace.msg("Character.updateRound round="+round+" ; dizzy_round_max="+dizzy_round_max);
                     break
                 case "scared":
                     round++;
-                    if(round==4)
+                    if(round==scared_round_max)
                     {
                         status="";
                         processMember("ready");
@@ -757,11 +760,11 @@ public class Character extends MovieClip
 
         }
         //if
-        if(power.speeded=="true")
+        if(power.speeded=="true" && status!="death")
         {
             rage_round++;
-            //DebugTrace.msg("Character.updateRound name="+power.name+" ; rage_round="+rage_round);
-            if(rage_round>2)
+            //DebugTrace.msg("Character.updateRound name="+power.name+" ; rage_round_max="+rage_round_max);
+            if(rage_round==rage_round_max)
             {
                 rage_round=0;
                 power.speeded="false";
@@ -783,7 +786,6 @@ public class Character extends MovieClip
         }
 
 
-
         try
         {
             //DebugTrace.msg("Character.updateRound remove effShield name="+power.name+" , effShield="+effShield.name);
@@ -792,9 +794,8 @@ public class Character extends MovieClip
         }
         catch(e:Error)
         {
-            DebugTrace.msg("Character.updateRound  effShield = NULL ");
+            DebugTrace.msg("Character.updateRound  effShield = NULL");
         }
-
 
         power.shielded="false";
         power.target="";
@@ -869,7 +870,7 @@ public class Character extends MovieClip
 
         bossOnArmour(character);
 
-        if(power.se>0 ){
+        if(power.se>0){
             processMember(act);
         }
 
@@ -894,7 +895,6 @@ public class Character extends MovieClip
             skillAni.visible=false;
 
 
-        character.alpha=1;
         updatelColorEffect(character,avatar);
         var actlabel:String="";
         actlabel=act;
@@ -1345,17 +1345,17 @@ public class Character extends MovieClip
         //TweenMax.killChildTweensOf(onColorTFComplete);
         TweenMax.killTweensOf(onColorTFComplete);
     }
-    private function onRageComplete(e:Event):void
-    {
-        if(e.target.currentFrame==e.target.totalFrames)
-        {
-            DebugTrace.msg("Character.onRageComplete");
-            e.target.removeEventListener(Event.ENTER_FRAME,onRageComplete);
-            processMember("stand");
-
-        }
-        //if
-    }
+//    private function onRageComplete(e:Event):void
+//    {
+//        if(e.target.currentFrame==e.target.totalFrames)
+//        {
+//            DebugTrace.msg("Character.onRageComplete");
+//            e.target.removeEventListener(Event.ENTER_FRAME,onRageComplete);
+//            processMember("stand");
+//
+//        }
+//        //if
+//    }
     protected function enabledMemberHeal():void
     {
         DebugTrace.msg("Character.enabledMemberHeal");
@@ -1484,16 +1484,17 @@ public class Character extends MovieClip
             case "CombineSkill":
             case "Mind Control":
                 processAction();
-                break
+                break;
             case "Rage":
                 status="rage";
-                //processAction();
-                processMember(status);
-                break
+                if(power.se>0) {
+                    processMember(status);
+                }
+                break;
             case "CompleteKnockback":
             case "BootComplete":
                 DebugTrace.msg("Character.onActComplete status="+status);
-                if(power.se>0)
+                if(power.se>0 && status!="death")
                 {
                     if(status!="" && status!="heal")
                     {

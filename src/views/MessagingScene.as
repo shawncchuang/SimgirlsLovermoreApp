@@ -69,9 +69,10 @@ public class MessagingScene extends Sprite{
         massaging.x=253;
         massaging.y=179;
 
+
         var panelBg:Image=new Image(Assets.getTexture("ContactsPanelBg"));
         massaging.addChild(panelBg);
-
+        /*
         var str:String="Bonus gift! \n Download Simgirls 7.0 here:";
         var message:TextField=new TextField(panelBg.width,80,str);
         message.format.setTo(font,20);
@@ -86,6 +87,7 @@ public class MessagingScene extends Sprite{
         btn.y=message.y+message.height+5;
         btn.labelFactory =  getItTextRender;
         btn.addEventListener(Event.TRIGGERED, doClickDownload);
+        */
 
 
         var str1:String="My Main Mission in Shambala: \n1. Stay alive. Get prepared before the dangerous days marked on the calendar.\n" +
@@ -97,10 +99,11 @@ public class MessagingScene extends Sprite{
         var message1:TextField=new TextField(panelBg.width-20,400,str1);
         message1.format.setTo(font,16,0,"left");
         message1.x=10;
-        message1.y=btn.y+btn.height+20;
+        //message1.y=btn.y+btn.height+20;
+        message1.y=20;
 
-        massaging.addChild(btn);
-        massaging.addChild(message);
+        //massaging.addChild(btn);
+        //massaging.addChild(message);
         massaging.addChild(message1);
         addChild(massaging);
 

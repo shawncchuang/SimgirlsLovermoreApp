@@ -1171,19 +1171,22 @@ public class BattleScene extends Sprite
 		}
 		//if
 
+		if(commander.power.se>0){
 
-		commander.power.speeded="true";
-		commander.updatePower(commander.power);
-		commander.updateStatus("");
+			commander.power.speeded="true";
+			commander.updatePower(commander.power);
+			commander.updateStatus("");
 
-		var battleEvt:BattleEvent=commander.memberEvt;
-		battleEvt.act="BattleCry";
-		battleEvt.updateMemberAct();
-		battleEvt.from="Rage";
-		battleEvt.actComplete();
+			var battleEvt:BattleEvent=commander.memberEvt;
+			battleEvt.act="BattleCry";
+			battleEvt.updateMemberAct();
+			battleEvt.from="Rage";
+			battleEvt.actComplete();
 
 
-		TweenMax.delayedCall(2,onMemberBattleCry,[members]);
+			TweenMax.delayedCall(2,onMemberBattleCry,[members]);
+		}
+
 	}
 	private function onMemberBattleCry(members:Array):void
 	{

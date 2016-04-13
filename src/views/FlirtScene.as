@@ -134,7 +134,13 @@ public class FlirtScene extends Sprite{
             tween.onComplete=onFlipCard;
             Starling.juggler.add(tween);
 
-            selType=types[Math.floor(Math.random()*types.length)];
+            var rang:Number=Math.floor(Math.random()*100);
+            if(rang<30){
+                selType=dating_card;
+            }else{
+                selType=types[Math.floor(Math.random()*types.length)];
+            }
+
             var card:Image=getCard(selType);
             card.pivotX=card.width/2;
             card.x=target.x;

@@ -269,6 +269,13 @@ public class MainCommand implements MainInterface {
     public static function addAlertMsg(msg:String):void {
 
         DebugTrace.msg("MainCommand.addAlertMsg msg="+msg);
+
+        if(msg.indexOf("IO Error #2032")!=-1){
+            msg="IO Error 2032: Cannot talk to the server please make sure your"+
+                    " internet connection is good and unrestricted, or the server may be busy please try again later.";
+        }
+
+
         //if(alertmsg){
         var format:TextFormat = new TextFormat();
         format.size = 20;

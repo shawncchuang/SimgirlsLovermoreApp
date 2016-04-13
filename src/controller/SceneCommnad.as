@@ -233,7 +233,8 @@ public class SceneCommnad implements SceneInterface
             var boss:Boolean=checkBossIn();
             var twinflameSel:Boolean=checkTwinflame();
             var current_switch:String=flox.getSaveData("current_switch");
-            if(storyverify[0] && !comcloud && !XAltImag && !boss && !twinflameSel && current_switch!="s9999|on"){
+            if(storyverify[0] && !comcloud && !XAltImag && !boss && !twinflameSel && current_switch!="s9999|on"
+            && current_switch!="s010|on"){
                 addSkipButton();
             }
 
