@@ -890,6 +890,7 @@ public class Character extends MovieClip
         var effect:MovieClip=membermc.getChildByName("effect") as MovieClip;
 
         var eleLabel:Array=["A","E","F","W","N","S"];
+
         character.visible=false;
         if(skillAni)
             skillAni.visible=false;
@@ -899,44 +900,20 @@ public class Character extends MovieClip
         var actlabel:String="";
         actlabel=act;
 
-        if(power.label!="")
+        if(power.skillID!="")
         {
             //skill ready
             var index:Number=eleLabel.indexOf(act.charAt(0));
 
             if(index!=-1)
             {
-                //skill ready
-                /*
-                if(!boss_model)
-                {
-                    var swfloader:SWFLoader=LoaderMax.getLoader(name);
-                    skillAni=swfloader.getSWFChild(_gender) as MovieClip;
-                }
-
-                if(skillAni){
-                    skillAni.visible=true;
-                }
-                */
+                //skill  with skill animation
                 skillAni.visible=true;
                 actModel=skillAni;
 
                 if(status=="scared")
                 {
-
-                    character.visible=true;
-                    //character.alpha=1;
-
-                    try
-                    {
-                        actModel.visible=false;
-                        //actModel.alpha=0;
-                    }
-                    catch(e:Error)
-                    {
-                        DebugTrace.msg("Character.processMember Scared  None skillAni");
-                    }
-                    //try
+                    character.visible=false;
                 }
                 //if
             }
@@ -985,7 +962,6 @@ public class Character extends MovieClip
         try
         {
             effect.x=0;
-            //effect.visible=true;
         }
         catch(e:Error)
         {
@@ -1105,6 +1081,7 @@ public class Character extends MovieClip
         //if
         DebugTrace.msg("Character.processMember part_pack="+part_pack);
         DebugTrace.msg("Character.processMember boss_model="+boss_model);
+
         if(!boss_model)
         {
             for(var k:uint=0;k<part_pack.length;k++)
@@ -1125,12 +1102,11 @@ public class Character extends MovieClip
             ch_name="ciel";
         }
         //if
-        DebugTrace.msg("Character.processMember ch_name="+ch_name);
-        DebugTrace.msg("Character.processMember actlabel="+actlabel);
+        //DebugTrace.msg("Character.processMember ch_name="+ch_name);
+        //DebugTrace.msg("Character.processMember actlabel="+actlabel);
+        //actModel.visible=true;
         if(id.indexOf("player")!=-1)
         {
-            //playerb:maskb,playera:maskb
-            //var girls:String="sirena,tomoru,dea,ceil";
 
 
             if(ch_name=="player")
@@ -1140,8 +1116,6 @@ public class Character extends MovieClip
                 {
                     actModel.body.act.playera.visible=true;
                     actModel.body.act.playerb.visible=true;
-                    //actModel.body.act.playera.play();
-                    //actModel.body.act.playerb.play();
                 }
             }
             else
@@ -1149,7 +1123,6 @@ public class Character extends MovieClip
                 if(actModel)
                 {
                     actModel.body.act[ch_name].visible=true;
-                    //actModel.body.act[ch_name].play();
                 }
             }
             //if
@@ -1226,7 +1199,6 @@ public class Character extends MovieClip
         //if
         var arrow:DisplayObject=membermc.getChildByName("arrow");
         arrow.visible=false;
-
 
         if(!boss_model)
         {
@@ -1777,14 +1749,9 @@ public class Character extends MovieClip
         try
         {
             DebugTrace.msg("Character.removeSkillAni :"+name);
-            //var queue:LoaderMax=ViewsContainer.loaderQueue;
-            //queue.unload();
 
-
-            //skillAni.body.gotoAndStop(1)
-
-            LoaderMax.getLoader(name).unload();
-
+            var queue:LoaderMax=ViewsContainer.loaderQueue;
+            queue.getLoader(name).unload();
 
             skillAni=null;
         }

@@ -90,7 +90,7 @@ import utils.DebugTrace;
 			this.addEventListener(Event.REMOVED_FROM_STAGE, onRemovedHandler);
 
 			praseNowType();
-
+			displaySharedObejct();
 		}
 		 
 		private function doBackSignin(e:MouseEvent):void
@@ -214,7 +214,7 @@ import utils.DebugTrace;
 				panel.preorder_signin_ui.visible=true;
 			}
 			//if
-			displaySharedObejct();
+
 		}
 		private function displaySharedObejct():void{
 			var loaderReq:LoaderRequest=new LoaderRequest();

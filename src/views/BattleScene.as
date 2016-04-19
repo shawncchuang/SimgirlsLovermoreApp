@@ -619,6 +619,7 @@ public class BattleScene extends Sprite
 		//for
 		DebugTrace.msg("BattleScene.doSelectPlayer  player_index:"+player_index);
 		DebugTrace.msg("BattleScene.doSelectPlayer  current_player:"+current_player.name+" , power="+JSON.stringify(power));
+		//memberscom.reomoveSkill();
 		updateProfile(profile_name);
 		if(power.name!="smn" && power.name!="prms"){
 			updateHonourSkillPts(power.name);
@@ -638,7 +639,6 @@ public class BattleScene extends Sprite
 			{
 				DebugTrace.msg("BattleScene.doSelectPlayer : Didn't select gems yet")
 			}
-
 			//current_player.onSelected();
 			power.label="";
 			power.skillID="";
@@ -646,7 +646,6 @@ public class BattleScene extends Sprite
 			power.targetlist=new Array();
 			current_player.updatePower(power);
 			play_power[player_index]=null;
-
 			memberscom.removeEquipedCard();
 			reseatCpuTeam();
 			updateESbar();
@@ -907,7 +906,9 @@ public class BattleScene extends Sprite
 		}
 		else
 		{
+
 			removeElEmentPanel();
+
 			memberscom.removeEquipedCard();
 			if(player_index<5)
 			{
@@ -1559,6 +1560,8 @@ public class BattleScene extends Sprite
 		starttab.wall.visible=false;
 		TweenMax.to(starttab.btn,2,{y:709});
 
+		var loaderQueue:LoaderMax= ViewsContainer.loaderQueue;
+		loaderQueue.empty(true,true);
 
 		memberscom.nextRound();
 		reseatCpuTeam();
@@ -2111,41 +2114,20 @@ public class BattleScene extends Sprite
 						attackTweenHandler(attack_member,duration,{x:Math.floor(movingX),y:Math.floor(movingY)});
 						doAttackHandle();
 					}
-					function doHoppingToCenter():void
-					{
+					function doHoppingToCenter():void {
 						//var _body:MovieClip=attack_member.character.body;
 						var target:String=attack_member.power.target;
 						var battleteam:Object=memberscom.getBattleTeam();
 						var target_combat:Number=battleteam[target].power.combat;
-						if(attack_member.name.indexOf("player")!=-1)
-						{
-							/*
-							if(target_combat==0 || target_combat==1 || target_combat==3 || target_combat==4)
-							{
-								movingX=748+memberWH;
-								movingY=882;
-							}
-							else
-							{
-								movingX=698+memberWH;
-								movingY=1020;
-							}
-							*/
-							movingY=768-memberWH;
-
+						movingY=950;
+						if(attack_member.power.from=="cpu") {
+							movingX=186;
+						} else {
+							movingX=770;
 						}
-						else
-						{
-
-							movingX=512-(memberWH*2);
-							movingY=950;
-
-						}
-						//if
 						if(attack_member.power.skillID=="w2" || attack_member.power.skillID=="f2")
 						{
 
-							movingY=950;
 						}
 						switch(attack_member.power.target)
 						{
@@ -2234,7 +2216,6 @@ public class BattleScene extends Sprite
 			if(members[i].name!=id)
 			{
 				members[i].visible=_visilbe;
-
 			}
 			//if
 
@@ -2258,7 +2239,7 @@ public class BattleScene extends Sprite
 	{
 		DebugTrace.msg("BattleScene.doAttackHandle");
 		hitT=0;
-		TweenMax.killChildTweensOf(attack_member);
+		TweenMax.killTweensOf(doAttackHandle);
 		attack_member.character.gotoAndStop(1);
 		//playing skill visible effect
 		var membermc:MovieClip=attack_member.membermc;
@@ -2334,7 +2315,9 @@ public class BattleScene extends Sprite
 				member.character.visible=false;
 				_totalFrames=member.skillAni.body.act.totalFrames;
 				_duration=Number((_totalFrames/24).toFixed(2));
-				TweenMax.to(member.skillAni.body.act,_duration,{frame:_totalFrames,onUpdate:doActPlaying,onUpdateParams:[member.skillAni.body.act],onComplete:onActPlayComplete});
+				var actMC:MovieClip=member.skillAni.body.act;
+				var bodyMC:MovieClip=member.skillAni.body;
+				TweenMax.to(bodyMC,_duration,{frame:_totalFrames,onUpdate:doActPlaying,onUpdateParams:[bodyMC],onComplete:onActPlayComplete,onCompleteParams:[bodyMC]});
 
 			}
 			catch(e:Error)
@@ -2359,7 +2342,9 @@ public class BattleScene extends Sprite
 			//member.character.body.act.addEventListener(Event.ENTER_FRAME,doActPlaying);
 			_totalFrames=member.character.body.act.totalFrames;
 			_duration=Number((_totalFrames/24).toFixed(2));
-			TweenMax.to(member.character.body.act,_duration,{frame:_totalFrames,onUpdate:doActPlaying,onUpdateParams:[member.character.body.act],onComplete:onActPlayComplete});
+			actMC=member.character.body.act;
+			bodyMC=member.character.body;
+			TweenMax.to(bodyMC,_duration,{frame:_totalFrames,onUpdate:doActPlaying,onUpdateParams:[bodyMC],onComplete:onActPlayComplete,onCompleteParams:[bodyMC]});
 		}
 		//if
 	}
@@ -2508,8 +2493,8 @@ public class BattleScene extends Sprite
 			{
 				hitHandle();
 			}
+
 		}
-		//if
 		function hitHandle():void
 		{
 			var battleteam:Object=memberscom.getBattleTeam();
@@ -2556,9 +2541,9 @@ public class BattleScene extends Sprite
 
 	}
 
-	private function onActPlayComplete():void{
+	private function onActPlayComplete(target:MovieClip):void{
 		DebugTrace.msg("BattleScene.onActPlayComplete");
-
+		target.stop();
 		TweenMax.killTweensOf(doActPlaying);
 		TweenMax.killTweensOf(onActPlayComplete);
 
@@ -2568,7 +2553,12 @@ public class BattleScene extends Sprite
 
 
 		var member:Member=battleteam[allpowers[attack_index].id];
-		despearBatttleTeam(1,member.name);
+		var jewels:Number=Number(member.power.jewel.split("|")[0]);
+		var bossIndex:Number=Config.bossModels.indexOf(member.power.ch_name);
+		if(jewels==5 || bossIndex!=-1){
+			despearBatttleTeam(1,member.name);
+		}
+
 
 		var battledata:BattleData=new BattleData();
 		var damage:Number=battledata.damageCaculator(member.power);
@@ -2638,7 +2628,7 @@ public class BattleScene extends Sprite
 			//attack
 
 			DebugTrace.msg("BattleScene.doActPlaying attack_member.power:"+JSON.stringify(attack_member.power));
-
+			member.character.visible=true;
 			if(attack_member.power.skillID=="n3")
 			{
 				var loves:Object=flox.getSaveData("love");
@@ -2683,14 +2673,17 @@ public class BattleScene extends Sprite
 
 
 		attack_member.visible=false;
-		TweenMax.delayedCall(0.2,onBeforeAttackComplete,[start_pos,attack_member,damage,reincarnation]);
+		//doAttackCompleteHandle(attack_member,damage,reincarnation);
+		TweenMax.to(attack_member,0.2,{visible:true,x:start_pos.x,y:start_pos.y,onCompleteParams:[start_pos,attack_member,damage,reincarnation],onComplete:onBeforeAttackComplete});
+		//TweenMax.delayedCall(0.2,onBeforeAttackComplete,[start_pos,attack_member,damage,reincarnation]);
 
 		function onBeforeAttackComplete(start_pos,attack_member,damage,reincarnation):void
 		{
-			TweenMax.killDelayedCallsTo(onBeforeAttackComplete);
-			attack_member.visible=true;
-			attack_member.x=start_pos.x;
-			attack_member.y=start_pos.y;
+			TweenMax.killTweensOf(onBeforeAttackComplete);
+			//TweenMax.killDelayedCallsTo(onBeforeAttackComplete);
+			//attack_member.visible=true;
+			//attack_member.x=start_pos.x;
+			//attack_member.y=start_pos.y;
 			doAttackCompleteHandle(attack_member,damage,reincarnation);
 		}
 	}

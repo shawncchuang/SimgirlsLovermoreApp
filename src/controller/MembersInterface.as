@@ -34,5 +34,6 @@ package controller
 		function get getBattleOver():Boolean
 		function reseatCPUPower(name:String):void
 		function set BattleOver(type:Boolean):void
+		function reomoveSkill():void
 	}
 }

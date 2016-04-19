@@ -881,7 +881,7 @@ public class CpuMembersCommand implements CpuMembersInterface
         var boss_seMax:Number=boss_power.seMax;
         var seper:Number=Math.floor((boss_se/boss_seMax)*100);
         var gems_reqs:Array=["1","2","3","5"];
-        var lvP:Array=[60,40,20,0];
+        var lvP:Array=[0,40,20,0];
 
         if(seper<100 && seper>=lvP[0])
         {

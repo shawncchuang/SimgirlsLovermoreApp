@@ -144,7 +144,7 @@ import flash.net.URLRequest;
 
 			onComplete=callback;
 			loaderdata= new URLLoader();
-			loaderdata.dataFormat = URLLoaderDataFormat.VARIABLES;
+			//loaderdata.dataFormat = URLLoaderDataFormat.VARIABLES;
 			loaderdata.addEventListener(Event.COMPLETE, onLoadedComplete);
 
 			var request:URLRequest = new URLRequest(url);
@@ -153,7 +153,7 @@ import flash.net.URLRequest;
 		}
 		private function onLoadedComplete(e:Event):void{
 
-			onComplete(loaderdata.data);
+			onComplete(e.target.data);
 
 		}
 

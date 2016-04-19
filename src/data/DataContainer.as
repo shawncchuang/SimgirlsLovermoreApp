@@ -6,6 +6,8 @@ import flash.globalization.LocaleID;
 import controller.FloxCommand;
 import controller.FloxInterface;
 
+import flash.utils.Dictionary;
+
 import utils.DebugTrace;
 
 public class DataContainer
@@ -69,6 +71,9 @@ public class DataContainer
     private static var popup:Boolean;
     private static var ending_replay:Boolean;
     private static var rewardsObj:Object;
+
+    private static var sysDir:Dictionary;
+
     public static function set AssetsId(ids:Array):void
     {
         assets_id=ids;
@@ -930,6 +935,13 @@ public class DataContainer
     }
     public static function get rewards():Object{
         return rewardsObj;
+    }
+
+    public static function set SystemDictionary(dir:Dictionary):void{
+        sysDir=dir;
+    }
+    public static function get SystemDictionary():Dictionary{
+        return sysDir;
     }
 }
 }

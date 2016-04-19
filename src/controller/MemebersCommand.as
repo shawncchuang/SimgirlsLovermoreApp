@@ -867,15 +867,22 @@ public class MemebersCommand implements MembersInterface
             TweenMax.to(equipedcard,0.25,{x:posX+50,y:posY+10,scaleX:0.8,scaleY:0.8,onComplete:onMotionEquiped,ease:Cubic.easeOut});
             function onMotionEquiped():void
             {
-                TweenMax.to(equipedcard,0.5,{x:posX+300,y:posY+20,scaleX:0.1,scaleY:0.1,onComplete:onEquipedFadeout,ease:Cubic.easeOut});
+                TweenMax.to(equipedcard,0.25,{x:posX+100,y:posY+20,scaleX:0.1,scaleY:0.1,onComplete:onEquipedFadeout,ease:Cubic.easeOut});
             }
 
         }
         //if
     }
+    public function reomoveSkill():void{
+
+        if(playerteam[player_index].power.skillID!=""){
+            playerteam[player_index].removeSkillAni();
+        }
+
+    }
     private function onEquipedFadeout():void
     {
-        TweenMax.killTweensOf(equipedcard);
+        TweenMax.killChildTweensOf(equipedcard);
         try
         {
             playerteam[player_index].removeChild(equipedcard);

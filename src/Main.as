@@ -1,7 +1,8 @@
 package
 {
 	//import flash.display.DisplayObject;
-	import flash.desktop.NativeApplication;
+
+import flash.desktop.NativeApplication;
 	import flash.display.MovieClip;
 	import flash.display.Shape;
 	import flash.display.StageAlign;

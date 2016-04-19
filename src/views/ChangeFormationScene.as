@@ -123,7 +123,7 @@ public class ChangeFormationScene extends Scenes
                 seObj[name]=1;
             }
 
-            if(name!="prms" && name!="smn"){
+            if(name!="prms" && name!="smn" && name!="zack"){
                 if(pts[name]>reLv["closefriend-Min"] || name=="player"){
                     soldilers_name.push(name);
                 }

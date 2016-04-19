@@ -7,13 +7,7 @@ import flash.utils.Dictionary;
 
 public class SystemData extends Entity
 {
-    public var s001:Array;
-    public var s002:Array;
-    public var s003:Array;
-    public var s004:Array;
-    public var s005:Array;
-    public var s006a:Array;
-    public var s006b:Array;
+
     public var scenelibrary:Array;
     public var schedule:Array;
     public var secrets_chat:Array;
@@ -56,118 +50,7 @@ public class SystemData extends Entity
     public var domainPrecious:String;
     public var upperbodyitems:Array;
     public var lowerbodyitems:Array;
-    public var switchs:Object=
-    {
-        "s001":{
-            hints:"(I should check into the hotel first...)",
-            date:"",
-            time:"",
-            location:"hotel",
-            people:"",
-            enabled:true,
-            result:{
-                off:"s001",
-                on:"s002"
-            }
-        },
-        "s002":{
-            hints:"(I want to visit the beach on the magazine first...)",
-            date:"",
-            time:"",
-            location:"beach",
-            people:"",
-            enabled:true,
-            result:{
-                off:"s002",
-                on:""
-            }
-        },
-        "s003":{
-            hints:"(I should meet Sao at the museum first...)",
-            date:"Wed.2.Mar.2022",
-            time:"12",
-            location:"museum",
-            people:"",
-            enabled:true,
-            result:{
-                off:"s003",
-                on:""
-            }
-        },
-        "s004":{
-            hints:"",
-            date:"Wed.2.Mar.2022",
-            time:"12",
-            location:"museum",
-            people:"",
-            enabled:true,
-            result:{
-                off:"s004",
-                on:""
-            }
-        },
-        "s005":{
-            hints:"(I should go pubbing with Sao...)",
-            date:"Wed.2.Mar.2022",
-            time:"24",
-            location:"sportsbar",
-            people:"",
-            enabled:true,
-            result:{
-                off:"s005",
-                on:""
-            }
-        },
-        "s006":{
-            hints:"(I am supposed to meet Sao at the temple...)",
-            date:"Wed.3.Mar.2022",
-            time:"12",
-            location:"spirittemple",
-            people:"",
-            enabled:true,
-            result:{
-                off:"s006",
-                on:""
-            }
-        },
-        "s007":{
-            hints:"",
-            date:"Wed.3.Mar.2022",
-            time:"24",
-            location:"restaurant",
-            people:"",
-            enabled:true,
-            result:{
-                off:"s007",
-                on:""
-            }
-        },
-        "s008":{
-            hints:"(Friday Night! Clubbing time...)",
-            date:"Wed.4.Mar.2022",
-            time:"24",
-            location:"restaurant",
-            people:"",
-            enabled:true,
-            result:{
-                off:"s008",
-                on:""
-            }
-        },
-        "s009":{
-            hints:"(I am going to casino tonight...)",
-            date:"Wed.5.Mar.2022",
-            time:"24",
-            location:"casino",
-            people:"",
-            enabled:true,
-            result:{
-                off:"s009",
-                on:""
-            }
-        }
-
-    }
+    public var switchs:Object;
     public var style_schedule:Object;
     /*{
         "ceil":[

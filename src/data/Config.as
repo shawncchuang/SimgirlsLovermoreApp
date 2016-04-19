@@ -1390,6 +1390,13 @@ public class Config
     public static  var dangersScenes:Object={"s023|on":"Restaurant","s033|on":"SportsBar","s036|on":"PrivateIsland","s042|on":"Casino",
         "s046|on":"LovemoreMansion","s260|on":"SSCCArena"};
 
+    public static var systemdata:Array=["assets","blackmarket","chat_ceil","chat_ceil_loc","chat_dea_loc","chat_dea",
+        "chat_klr_loc","chat_klr","chat_lenus_loc","chat_lenus","chat_sao","chat_sirena_loc","chat_sirena",
+        "chat_tomoru_loc","chat_tomoru","chat_zack_loc","chat_zack","command","commander_items","cpu_teams",
+        "date_response","domainPrecious","lowerbodyitems","main_story","mood_level","npcLocated",
+        "npcs","preciousphotos","rating_level","relationship_level","scenelibrary","schedule",
+        "secrets_chat","secrets","skillsys","status","story_battle","style_schedule","switchs","trashtalking","upperbodyitems"];
+
     public function Config()
     {
 
