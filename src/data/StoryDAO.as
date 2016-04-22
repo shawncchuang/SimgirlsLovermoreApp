@@ -6,7 +6,7 @@ public class StoryDAO {
     private static var access:Array=new Array();
 
     public static const container:Object={"s001":s001(),"s002":s002(),"s003":s003(),"s606":s606(),"s608":s608(),"s004":s004(),
-        "s005":s005(),"s006a":s006a(),"s006b":s006b(),"s007":s007(),"s008":s008(),"s009":s009(),"s010":s010(),
+        "s005":s005(),"s006a":s006a(),"s006b":s006b(),"s007":s007(),"s007b":s007b(),"s008":s008(),"s009":s009(),"s010":s010(),
         "s011":s011(), "s012":s012(),"s013":s013(),"s014":s014(),"s015":s015(),
         "s016":s016(),"s017":s017(),"s018":s018(),"s019":s019(),"s020":s020(),
         "s021":s021(),"s022":s022(),"s023":s023(),"s024":s024(),"s025":s025(),
@@ -450,8 +450,29 @@ public class StoryDAO {
             "player|The High Priestess playing guitar in the garden<> Dea Lovemore. ","com|photo-off#com|photo-on_MansionSirena","player|Well and of course... Little Miss S<> aka Sirena Lovemore!",
             "com|photo-off#com|photo-on_MuseumLenus","player|Finally<> the nerdyman at the museum<> Lenus Lovemore. ",
             "com|photo-off#com|music-off_sexy","player|Sirena mentioned that once we've become <font color='#FF0000'>CLOSE FRIENDS</font> with the Lovemore children they will join the team.",
+                "spL|Oh one last thing! All tourists can only stay in Shambala for two weeks<> maximum.",
+                "shR|Oh shit! What... can we do?",
+                "spL|Go to the <font color='#FF0000'>Black Market</font> and get a fake <font color='#FF0000'>Citizenship Card</font>.",
+                "spL|Tell them you are referred by Sirena Lovemore.",
+                "spR|Errr... okay...",
             "END"]
 
+    }
+    private static function s007b():Array {
+
+        return [
+            "com|bg_Sky",
+            "com|display_sirena_swimsuit1_center",
+            "spC|Have you got your IDs?",
+                "player|......",
+            "spC|All tourists can only stay in Shambala for two weeks<> maximum.",
+            "player|Oh shit! What... can we do again?",
+            "spC|Go to the <font color='#FF0000'>Black Market</font> and get a fake <font color='#FF0000'>Citizenship Card</font>.",
+            "spC|Tell them you are referred by Sirena Lovemore.",
+            "player|Errr... okay...",
+            "END"
+
+        ];
     }
     private static function s008():Array{
         return ["com|bg_Sky#com|music-on_robotdance","player|Humpty called us and gave us some new instructions. He wants us to look for <font color='#FF0000'>Master Akira Kudo</font>. ",

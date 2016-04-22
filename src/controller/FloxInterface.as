@@ -35,7 +35,7 @@ package controller
 		function syncSaved(callback:Function=null):void
 		function syncBackupSaved(callback:Function=null):void
         function loadBackupsaved(callback:Function=null):void
-			
+		function resetPassword(email:String):void
 		
 	}
 }

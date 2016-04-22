@@ -404,8 +404,8 @@ public class SaveandLoadList extends Sprite
         if(_type=="Save"){
             //save game
 
+            flox.save("saved",true);
             flox.savePlayerData("inGameProgress",progress);
-            //flox.savePlayerData("saved",current_saved);
             flox.syncSaved(onSynsComplete);
 
         }else{

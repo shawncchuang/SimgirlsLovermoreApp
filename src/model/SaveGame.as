@@ -58,6 +58,7 @@ package model
 		public var twinflame:String;
 		public var goodevail:Number;
 		public var datingtwin:Object;
+		public var saved:Boolean;
 		public function SaveGame()
 		{
 	 

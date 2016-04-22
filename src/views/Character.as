@@ -205,6 +205,7 @@ public class Character extends MovieClip
         //DebugTrace.msg("Character.updatePower status="+status);
         DebugTrace.msg("Character.updatePower power="+ JSON.stringify(power));
 
+
     }
     /*public function onSelected():void
      {
@@ -785,10 +786,8 @@ public class Character extends MovieClip
             //if
         }
 
-
         try
         {
-            //DebugTrace.msg("Character.updateRound remove effShield name="+power.name+" , effShield="+effShield.name);
             removeChild(effShield);
             effShield=null;
         }
@@ -796,6 +795,7 @@ public class Character extends MovieClip
         {
             DebugTrace.msg("Character.updateRound  effShield = NULL");
         }
+
 
         power.shielded="false";
         power.target="";
@@ -882,7 +882,6 @@ public class Character extends MovieClip
         //play_power=BattleScene.play_power;
         //status="scared";
         DebugTrace.msg("Character.processMember "+name+" ,status="+status+" , act="+ act);
-
         boss_model=checkBossModel();
         var avatar:Object=flox.getSaveData("avatar");
 
@@ -892,8 +891,9 @@ public class Character extends MovieClip
         var eleLabel:Array=["A","E","F","W","N","S"];
 
         character.visible=false;
-        if(skillAni)
-            skillAni.visible=false;
+        character.gotoAndStop(1);
+       if(skillAni)
+           skillAni.visible=false;
 
 
         updatelColorEffect(character,avatar);
@@ -910,7 +910,6 @@ public class Character extends MovieClip
                 //skill  with skill animation
                 skillAni.visible=true;
                 actModel=skillAni;
-
                 if(status=="scared")
                 {
                     character.visible=false;
@@ -1081,7 +1080,6 @@ public class Character extends MovieClip
         //if
         DebugTrace.msg("Character.processMember part_pack="+part_pack);
         DebugTrace.msg("Character.processMember boss_model="+boss_model);
-
         if(!boss_model)
         {
             for(var k:uint=0;k<part_pack.length;k++)
@@ -1196,7 +1194,7 @@ public class Character extends MovieClip
 
 
         }
-        //if
+
         var arrow:DisplayObject=membermc.getChildByName("arrow");
         arrow.visible=false;
 
@@ -1753,7 +1751,7 @@ public class Character extends MovieClip
             var queue:LoaderMax=ViewsContainer.loaderQueue;
             queue.getLoader(name).unload();
 
-            skillAni=null;
+            //skillAni=null;
         }
         catch(e:Error)
         {

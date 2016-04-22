@@ -2,6 +2,8 @@ package views
 {
 
 
+import com.gamua.flox.Flox;
+
 import controller.Assets;
 
 
@@ -51,6 +53,7 @@ public class CommandCloud extends Sprite
 {
     private var _label:String;
     private var cloudTxt:TextField;
+    private var flox:FloxInterface=new FloxCommand();
     private var command:MainInterface=new MainCommand();
     private var scenecom:SceneInterface=new SceneCommnad();
     private var pos:Object={"L1":new Point(3,374),"L2":new Point(-11,469),"L3":new Point(-8,278),"L4":new Point(2,565),"L5":new Point(1,182),
@@ -112,6 +115,17 @@ public class CommandCloud extends Sprite
         cloud.addChild(cloudMC);
         Starling.juggler.add(cloudMC);
 
+        if(_label=="Save"){
+
+            var saved:Boolean=flox.getSaveData("saved");
+            if(saved){
+                _label+="\nx0";
+            }else{
+                _label+="\nx1";
+            }
+
+        }
+
         cloudTxt=new TextField(cloudMC.width, cloudMC.height-5,_label);
         cloudTxt.format.setTo("SimImpact",25,0x66CCFF);
         cloudTxt.name="txt";
@@ -119,6 +133,9 @@ public class CommandCloud extends Sprite
         cloudTxt.pivotY = cloudTxt.height / 2;
         cloudTxt.autoScale=true;
         cloud.addChild(cloudTxt);
+
+
+
 
         cloud.x+=(cloudMC.width/2-10);
         addChild(cloud);
@@ -232,8 +249,6 @@ public class CommandCloud extends Sprite
                             }
 
                         }
-
-
                         break;
                     case "Practice":
                         survivor=battledata.checkSurvivor();
@@ -244,7 +259,6 @@ public class CommandCloud extends Sprite
                         }
 
                         break;
-
                     default :
                         success=command.consumeHandle(com);
                         if(com=="LookAround"){
@@ -362,6 +376,9 @@ public class CommandCloud extends Sprite
 
         var _data:Object=new Object();
         de_label=_label.split("\n").join("");
+        if(de_label.indexOf("Save")!=-1){
+            de_label="Save";
+        }
         DebugTrace.msg("CommandCloud.doComCloudEnterFrame de_label:"+de_label);
 
 

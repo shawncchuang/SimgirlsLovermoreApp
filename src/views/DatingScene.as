@@ -1262,7 +1262,11 @@ public class DatingScene extends Scenes {
 
 
         DebugTrace.msg("DatingScene.onDateActComplete reward_mood=" + reward_mood);
-        bubble.removeFromParent(true);
+        try{
+            bubble.removeFromParent(true);
+        }catch (e:Error){
+
+        }
 
         updateMood();
 

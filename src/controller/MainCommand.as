@@ -650,6 +650,7 @@ public class MainCommand implements MainInterface {
         flox.save("date", new_date);
         healSpiritEngine();
         if (overday) {
+
             reseatDating();
             setNowMood();
             praseOwnedAssets(1);
@@ -660,7 +661,7 @@ public class MainCommand implements MainInterface {
         }
 
         if (comType == "Rest") {
-
+            flox.save("saved",false);
             _data = new Object();
             var scene:Sprite = ViewsContainer.currentScene;
             _data.removed = "ani_complete";
@@ -2292,6 +2293,20 @@ public class MainCommand implements MainInterface {
             scene.addChild(popup);
 
             return false;
+        }
+
+        if(com.indexOf("Save")!=-1){
+            var saved:Boolean=flox.getSaveData("saved");
+            var toSave:Boolean=false;
+            if(!saved){
+                toSave=true;
+            }else{
+                msg = "You can only save once every half-day.";
+                alert = new AlertMessage(msg, onClosedAlert,alertType);
+                scene.addChild(alert);
+            }
+
+            return toSave;
         }
 
         var payAP:Number = sysCommand[com].ap;
