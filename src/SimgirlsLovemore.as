@@ -145,6 +145,7 @@ public class SimgirlsLovemore extends MovieClip
 		DataContainer.player=new Object();
 		DataContainer.restart=false;
 		DataContainer.popupMessage=false;
+		ViewsContainer.loaderQueue=new Object();
 
 		var evt:GameEvent=new GameEvent();
 		evt.addEventListener(GameEvent.SHOWED,displayHandler);
@@ -228,9 +229,9 @@ public class SimgirlsLovemore extends MovieClip
 			case "remove_waving":
 				try
 				{
-					//LoaderMax.getLoader("waving").unload();
-					var queue:LoaderMax=ViewsContainer.loaderQueue;
-					queue.empty(true,true);
+					LoaderMax.getLoader("waving").unload();
+					//var queue:LoaderMax=ViewsContainer.loaderQueue;
+					//queue.empty(true,true);
 
 				}
 				catch(e:Error)
@@ -320,8 +321,9 @@ public class SimgirlsLovemore extends MovieClip
 				topview.addChild(battlescene);
 				break;
 			case "remove_battle":
-				queue=ViewsContainer.loaderQueue;
-				queue.empty(true,true);
+				//queue=ViewsContainer.loaderQueue;
+				//queue.empty(true,true);
+				new LoaderMax().empty(true,true);
 				topview.removeChild(battlescene);
 				break;
 			case  "blackmarket_form":
@@ -340,8 +342,9 @@ public class SimgirlsLovemore extends MovieClip
 				topview.addChild(minigamescene);
 				break;
 			case "remove_mini_game":
-				queue=ViewsContainer.loaderQueue;
-				queue.empty(true,true);
+				//queue=ViewsContainer.loaderQueue;
+				//queue.empty(true,true);
+				new LoaderMax().empty(true,true);
 				topview.removeChild(minigamescene);
 				break;
 

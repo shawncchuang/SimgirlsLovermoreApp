@@ -696,8 +696,7 @@ public class MiniGameCommand implements MiniGameInterface
 		catch(e:Error){}
 		player.removeEventListener(Event.ENTER_FRAME,onPlayerMoving);
 
-		var loderQueue:LoaderMax=ViewsContainer.loaderQueue;
-		loderQueue.unload();
+		new LoaderMax().empty(true,true);
 	}
 	private var gameAlert:MovieClip;
 

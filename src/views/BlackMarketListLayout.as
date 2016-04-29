@@ -59,6 +59,7 @@ public class BlackMarketListLayout extends PanelScreen {
 
     public function BlackMarketListLayout() {
 
+
         this.height=340;
         this.addEventListener(FeathersEventType.INITIALIZE, initializeHandler);
         this.addEventListener(Event.REMOVED_FROM_STAGE,onRemovedStageHandler);
@@ -163,6 +164,7 @@ public class BlackMarketListLayout extends PanelScreen {
             {
                 renderBtn.addEventListener(Event.TRIGGERED, onTapBuyHandler);
             }else{
+                //use layout
                 renderBtn.addEventListener(Event.TRIGGERED, onTapUseHandler);
             }
 
@@ -172,10 +174,14 @@ public class BlackMarketListLayout extends PanelScreen {
             {
                 itemRender.addChild(priceHeader);
                 itemRender.addChild(priceTxt);
+                itemRender.addChild(renderBtn);
+            }else{
+                //use
+                if(item.id!="bm_10"){
+                    itemRender.addChild(renderBtn);
+                }
             }
 
-
-            itemRender.addChild(renderBtn);
             addChild(itemRender);
 
             itemRender.addEventListener(TouchEvent.TOUCH,onTouchedHoverItem);
@@ -194,29 +200,52 @@ public class BlackMarketListLayout extends PanelScreen {
         price=Number(marketlist[item_id].price);
         //DebugTrace.msg("BlackTileList.onPurchaseItem coin:"+coin+" ; price:"+price);
 
-        var msg:String ="";
+        var msg:String ="Are you sure you want to parchase this item ?\nNo refund or exchange at the Black market.";
+        var alertMsg:AlertMessage;
+        var paid:Boolean=flox.getPlayerData("paid");
+        var scene:Sprite = ViewsContainer.MainScene;
+        //the player is  a citizenship
         if(coin>=price)
         {
-            //enough pay this item
+            //enough USD to purchase this item
 
-            msg="Are you sure you want to parchase this item ?\nNo refund or exchange at the Black market.";
+            if(!paid){
+                //the player is not a citizenship
+                if(item_id=="bm_10"){
+                    //citizenship card
+                    addConfirmPoup(msg);
+                }else{
+                    //other items
+                    msg="You must have a citizenship to approve using Black Market.";
+                    alertMsg=new AlertMessage(msg);
+                    scene.addChild(alertMsg);
+                }
 
-            addConfirmPoup(msg);
+            }else{
+                //the player is a citizenship
+                if(item_id=="bm_10"){
+                    msg="You already owned a Citizenship Card.";
+                    alertMsg=new AlertMessage(msg);
+                    scene.addChild(alertMsg);
+                }else{
+                    addConfirmPoup(msg);
+                }
+
+            }
 
         }
         else
         {
 
             msg = "Not enough USD.";
-            var scene:Sprite = ViewsContainer.MainScene;
-            var alertMsg:AlertMessage=new AlertMessage(msg);
+            alertMsg=new AlertMessage(msg);
             scene.addChild(alertMsg);
 
         }
 
     }
     private function onTapUseHandler(e:Event):void{
-    //tap use
+        //tap use
         var popupMsg:String="Use this item?\nWarning! Once it is used it will be gone for good.";
 
         switch(item_id){
@@ -243,7 +272,7 @@ public class BlackMarketListLayout extends PanelScreen {
 
             case "bm_8":
             case "bm_9":
-                    //bm_8 :primero ; bm_9:simman
+                //bm_8 :primero ; bm_9:simman
                 popupMsg="Enable primero or simman";
                 popupPlus=new BlackMarketPlusPopup();
                 popupPlus.item_id=item_id;
@@ -324,6 +353,11 @@ public class BlackMarketListLayout extends PanelScreen {
                 var command:MainInterface=new MainCommand();
                 command.playSound("GodRewards");
 
+                if(item_id=="bm_10"){
+                    //citizenship card
+                    flox.savePlayer({"paid":true});
+                }
+
                 var _data:Object=new Object();
                 _data.price=price;
                 _data.item_id=item_id;
@@ -365,7 +399,7 @@ public class BlackMarketListLayout extends PanelScreen {
 
 
 
-        private function getItTextRender():ITextRenderer{
+    private function getItTextRender():ITextRenderer{
         var textRenderer:TextFieldTextRenderer = new TextFieldTextRenderer();
         textRenderer.textFormat = new TextFormat( font, 16, 0x000000 );
         textRenderer.embedFonts = true;
@@ -391,12 +425,12 @@ public class BlackMarketListLayout extends PanelScreen {
         }
 
 
-       try{
+        try{
             PopUpManager.removePopUp(popup,true);
 
         }catch (error:Error){
 
-       }
+        }
         if(popupTM){
             popupTM.dispatchEventWith("REMOVED_FROM_SCENE");
 
@@ -410,7 +444,7 @@ public class BlackMarketListLayout extends PanelScreen {
     private function cancelButton_triggeredHandler(e:Event):void{
 
 
-            PopUpManager.removePopUp(popup,true);
+        PopUpManager.removePopUp(popup,true);
 
     }
 

@@ -87,8 +87,8 @@ package controller
 		[Embed(source="../../media/textures/music/gangster.mp3")]
 		public static const gangster:Class;
 
-		[Embed(source="../../media/textures/music/captainrising.mp3")]
-		public static const captainrising:Class;
+		[Embed(source="../../media/textures/music/rainfall.mp3")]
+		public static const rainfall:Class;
 
 		[Embed(source="../../media/textures/music/precioustime.mp3")]
 		public static const precioustime:Class;

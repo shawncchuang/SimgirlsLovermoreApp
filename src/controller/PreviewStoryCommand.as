@@ -573,9 +573,8 @@ public class PreviewStoryCommand implements PreviewStoryInterface {
 
     }
     private function onFinishAnimated():void{
-        var queue:LoaderMax=ViewsContainer.loaderQueue;
-        queue.empty(true,true);
 
+        new LoaderMax().empty(true,true);
     }
 
     public function addDisplayContainer(src:String):void

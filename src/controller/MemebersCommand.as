@@ -29,6 +29,8 @@ import events.SceneEvent;
 import model.BattleData;
 import model.SaveGame;
 
+import services.LoaderRequest;
+
 import starling.animation.DelayedCall;
 import starling.core.Starling;
 
@@ -538,8 +540,8 @@ public class MemebersCommand implements MembersInterface
                 command.stopBackgroudSound();
                 Starling.juggler.remove(delaycall);
 
-                var loaderQueue:LoaderMax=ViewsContainer.loaderQueue;
-                loaderQueue.unload();
+                var loaderReq:LoaderRequest=new LoaderRequest();
+                loaderReq.EmptyLoaderMax();
 
                 var gameEvt:GameEvent=SimgirlsLovemore.gameEvent;
                 gameEvt._name="remove_battle";
@@ -558,10 +560,9 @@ public class MemebersCommand implements MembersInterface
             player_gameover=false;
         }
 
-
         if(type=="final_battle"){
 
-            BattleScene.battleEvt.battleEndHandle();
+
             if(cpu_gameover){
                 battleover=true;
             }
@@ -578,12 +579,11 @@ public class MemebersCommand implements MembersInterface
                 function onFinalBattleComplete():void{
                     Starling.juggler.remove(delaycall);
 
+                    BattleScene.battleEvt.battleEndHandle();
+
                     var gameEvt:GameEvent=SimgirlsLovemore.gameEvent;
                     gameEvt._name="remove_battle";
                     gameEvt.displayHandler();
-
-                    var loaderQueue:LoaderMax=ViewsContainer.loaderQueue;
-                    loaderQueue.unload();
 
                     var armour:Boolean=DataContainer.Armour;
                     if(!armour){
@@ -764,8 +764,8 @@ public class MemebersCommand implements MembersInterface
 
                     }
 
-                    var loaderQueue:LoaderMax=ViewsContainer.loaderQueue;
-                    loaderQueue.unload();
+                    //var loaderQueue:LoaderMax=ViewsContainer.loaderQueue;
+                    //loaderQueue.unload();
 
                     var _data:Object=new Object();
                     _data.name= scene;

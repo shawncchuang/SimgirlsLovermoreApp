@@ -1824,8 +1824,8 @@ public class MainCommand implements MainInterface {
 
         function onAniComplete():void{
 
-            var loaderQueue:LoaderMax=ViewsContainer.loaderQueue;
-            loaderQueue.empty(true,true);
+            var loaderQueue:LoaderMax=ViewsContainer.loaderQueue["transform"];
+            loaderQueue.getLoader("transform").unload();
             switch (cate){
                 case "Think":
                     doThink();
@@ -2145,9 +2145,9 @@ public class MainCommand implements MainInterface {
 
     private function onFinishAnimated():void {
 
-        var queue:LoaderMax=ViewsContainer.loaderQueue;
-        queue.empty(true,true);
 
+        var loaderReq:LoaderRequest=new LoaderRequest();
+        loaderReq.EmptyLoaderMax();
         try {
             Starling.current.nativeOverlay.removeChild(playerBitmap);
         }

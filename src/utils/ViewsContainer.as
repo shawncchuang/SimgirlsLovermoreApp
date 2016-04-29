@@ -38,7 +38,7 @@ import starling.display.Sprite;
 		private static var groundeff_player:MovieClip;
 		private static var groundeff_cpu:MovieClip;
 		private static var _battlescene:flash.display.Sprite;
-		private static var content:LoaderMax;
+		private static var queue:Object;
 		private static var battleview:MovieClip;
 		private static var battletop:MovieClip;
 		private static var battlealert:MovieClip;
@@ -221,14 +221,14 @@ import starling.display.Sprite;
 		{
 			return _battlescene;
 		}
-		public static function set loaderQueue(loader:LoaderMax):void
+		public static function set loaderQueue(queueObj:Object):void
 		{
-			content=loader;
+			queue=queueObj;
 			
 		}
-		public static function get loaderQueue():LoaderMax
+		public static function get loaderQueue():Object
 		{
-			return content;
+			return queue;
 			
 		}
 		public static function set battleView(view:MovieClip):void

@@ -970,7 +970,7 @@ public class Character extends MovieClip
         if(status!=death)
         {
             if(actModel)
-                actModel.gotoAndStop(1);
+               actModel.gotoAndStop(1);
             if(effect)
                 effect.gotoAndStop(1);
         }
@@ -1170,7 +1170,8 @@ public class Character extends MovieClip
                             DataContainer.Armour=OnArmour;
                             actModel.gotoAndStop(actlabel);
                             var _duration:Number=Number((actModel.body.act.totalFrames/24).toFixed(2));
-                            TweenMax.to(actModel.body.act,_duration,{frame:actModel.body.act.totalFrames,onComplete:doArmourPlaying});
+                            var bodyMC:MovieClip=actModel.body;
+                            bodyMC.addEventListener(Event.ENTER_FRAME, doArmourComplete);
 
                         }else{
 
@@ -1178,13 +1179,15 @@ public class Character extends MovieClip
                                 actModel.gotoAndStop(actlabel);
                         }
 
-                        function doArmourPlaying():void{
+                        function doArmourComplete(e:Event):void{
+                            if(e.target.currentFrame== e.target.totalFrames){
+                                e.target.removeEventListener(Event.ENTER_FRAME, doArmourComplete);
+                                actModel.gotoAndStop(Character.ready);
+                                memberscom.BattleOver=false;
+                                bossOnArmour(actModel);
+                                processAction();
+                            }
 
-                            TweenMax.killTweensOf(doArmourPlaying);
-                            actModel.gotoAndStop(Character.ready);
-                            memberscom.BattleOver=false;
-                            bossOnArmour(actModel);
-                            processAction();
 
                         }
 
@@ -1578,24 +1581,20 @@ public class Character extends MovieClip
                 skillSWf=gender+power.skillID+"SP";
             }
 
-            DebugTrace.msg("Character.setupSkillAni skillSWf="+skillSWf+", name="+name);
+            DebugTrace.msg("Character.setupSkillAni LoaderQueue ID="+power.id+"_skillAni");
             var loaderReq:LoaderRequest=new LoaderRequest();
-            loaderReq.setLoaderQueue(name,"../swf/skills/"+skillSWf+".swf",membermc,onSkillComplete);
+            loaderReq.setLoaderQueue(power.id+"_skillAni","../swf/skills/"+skillSWf+".swf",membermc,onSkillComplete);
         }
-        else
-        {
 
-
-
-        }
 
     }
     private function onSkillComplete(e:LoaderEvent):void
     {
         DebugTrace.msg("Character.onSkillComplete sp="+sp+" ; skillSWf="+skillSWf);
-        var content:ContentDisplay=LoaderMax.getContent(name);
-
-        var swfloader:SWFLoader = LoaderMax.getLoader(name);
+        var queueID:String=power.id+"_skillAni";
+        var loaderQueue:LoaderMax=ViewsContainer.loaderQueue[queueID];
+        var content:ContentDisplay=loaderQueue.getContent(queueID);
+        var swfloader:SWFLoader = loaderQueue.getLoader(queueID);
         skillAni=swfloader.getSWFChild(_gender) as MovieClip;
 
         if(id.indexOf("player")!=-1)
@@ -1644,9 +1643,11 @@ public class Character extends MovieClip
     }
     private function onVicDanceComplete(e:LoaderEvent):void
     {
-        DebugTrace.msg("Character.onVicDanceComplete name="+name+"_dance"+" ; _gender="+_gender);
-        var content:ContentDisplay=LoaderMax.getContent(name+"_dance");
-        var swfloader:SWFLoader = LoaderMax.getLoader(name+"_dance");
+        //DebugTrace.msg("Character.onVicDanceComplete name="+name+"_dance"+" ; _gender="+_gender);
+        var queueID:String=name+"_dance";
+        var loaderQueue:LoaderMax=ViewsContainer.loaderQueue[queueID];
+        var content:ContentDisplay=loaderQueue.getContent(queueID);
+        var swfloader:SWFLoader = loaderQueue.getLoader(queueID);
         skillAni=swfloader.getSWFChild(_gender) as MovieClip;
 
         if(id.indexOf("player")!=-1)
@@ -1712,7 +1713,10 @@ public class Character extends MovieClip
         if(e.target.currentFrame==e.target.totalFrames)
         {
             e.target.removeEventListener(Event.ENTER_FRAME,doCheckDancing);
-            LoaderMax.getLoader(name+"_dance").unload();
+
+            var queueID:String=name+"_dance";
+            var loaderQueue:LoaderMax=ViewsContainer.loaderQueue[queueID];
+            loaderQueue.getLoader(queueID).unload();
 
             var battlealert:MovieClip=ViewsContainer.BattleAlert;
             TweenMax.to(battlealert,1,{alpha:1,delay:5});
@@ -1738,26 +1742,22 @@ public class Character extends MovieClip
     }
     public function removeSkillAni():void
     {
-
+        DebugTrace.msg("Character.removeSkillAni :"+power.id+"_skillAni");
         if(power.shielded=="true")
         {
             effShield.visible=true;
         }
 
-        try
-        {
-            DebugTrace.msg("Character.removeSkillAni :"+name);
-
-            var queue:LoaderMax=ViewsContainer.loaderQueue;
-            queue.getLoader(name).unload();
-
-            //skillAni=null;
-        }
-        catch(e:Error)
-        {
+        var boss:Array=Config.bossModels;
+        if(boss.indexOf(ch_name)==-1){
+            var loaderQueue:LoaderMax=ViewsContainer.loaderQueue[power.id+"_skillAni"];
+            if(loaderQueue){
+                loaderQueue.getLoader(power.id+"_skillAni").unload();
+                skillAni=null;
+            }
 
         }
-        //try
+
     }
     protected function hitHandle():void
     {

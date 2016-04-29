@@ -47,8 +47,15 @@ public class TwinDAO {
 
     }
     private static function t002():Array{
-        return ["com|bg_BlackMarketScene","com|display_sao_casual1_center","spC|Hey buddy<> I want you to meet my new friends. Come here.","com|photo-on_CheatCouple","player|This is Bunny and Jim. ","player|Why don't we have a wild party tonight? The four of us... ","player|......","com|photo-off","spC|Oh come on<> $$$! Just chill for an hour or so! ","com|remove_sao_casual1_center#com|bg_HotelScene","player|At the end we went back to Sao's hotel room. Everyone got drunk except me. ","com|photo-on_CheatPhoto","player|Bunny and Jim started making out in front of us. ",
-            "player|Sao: Let's join them!","player|...........","player|Have fun guys... I will go for a walk.","com|photo-off#com|display_sao_casual1_center","thC|......","spC|Fine! Later!","END"]
+        return ["com|bg_BlackMarketScene","com|display_sao_casual1_center","spC|Hey buddy<> I want you to meet my new friends. Come here.","com|photo-on_CheatCouple","player|This is Bunny and Jim. ","player|Why don't we have a wild party tonight? The four of us... ","player|......","com|photo-off","spC|Oh come on<> $$$! Just chill for an hour or so! ","com|remove_sao_casual1_center#com|bg_HotelBgNight","player|At the end we went back to Sao's hotel room. Everyone got drunk except me. ","com|photo-on_CheatPhoto","player|Bunny and Jim started making out in front of us. ",
+            "player|Sao: Let's join them!","player|...........","player|Have fun guys... I will go for a walk.","com|photo-off#com|display_sao_casual1_center","thC|......","spC|Fine! Later!",
+            "com|music-on_rainfall","com|bg_Rain","player|It is raining very hard outside...","com|display_@@@_twin_center",
+            "spC|Hey...","com|twin-photo-on_Rain@@@","player|@@@ is standing soaking wet in the rain...","player|Oh dear... what are you doing here?","player|I've been looking for you all night<> $$$.",
+            "player|Why didn't you just call...","player|Oh shit... I just noticed my phone is dead.","player|I am... sorry<> @@@.","com|twin-photo-off","spC|It's alright. I finally found it...","com|music-off_rainfall",
+            "com|photo-on_TempleCrystal","com|music-on_precioustime","player|@@@ shows me the black crystal ball I dropped at the water fountain...","com|photo-off","spC|It took me a little while...",
+            "spC|But I think this is quite important for us... hehe.","player|I pull @@@ into my arms.","com|photo-on_Rain","player|Rain falls like it means to wash us away.","player|The gusting wind carrying it in wild vortices one moment and in diagonal sheets the next.",
+            "player|As it runs down my face as a thin layer...","player|...I secretly make a promise to myself.","player|I won't be able to fix all problems<> but I will never let @@@ face them all alone.",
+            "com|music-off_precioustime","END"]
 
     }
     private static function t003():Array{
@@ -56,17 +63,18 @@ public class TwinDAO {
         return ["com|bg_RestaurantScene#com|music-on_precioustime",
             "com|display_@@@_twin_center","spC|Hey... thanks for surprise. I am so not prepared.",
             "player|There is another surprise I want to give you tonight.","com|photo-on_LoveNecklace",
-            "player|I showed @@@ a necklace I made. ","player|Oh my Universe! I thought you dropped it at the fountain... ",
-            "player|I found it. I just didn't tell you. And I turned it into this necklace. ",
-            "player|The black crystal ball is glowing in white light.","player|Let me help you.",
-            "com|photo-off#com|twin-photo-on_Love@@@",
-            "player|The black crystal is now filled with our Spirit of Love. I think it is the best gift for you. ",
+            "player|I showed @@@ a necklace I made. ",
+            "player|I turned the black crystal ball into this necklace. ",
+            "player|The black crystal ball is glowing in white light.","com|photo-off","spC|Oh my...","player|Let me help you.",
+            "com|twin-photo-on_Love@@@",
+            "player|The black crystal is now filled with our SOL<> Spirit of Love. ",
+            "player|I think it is the best gift for @@@. ",
             "player|It looks perfect on you<> @@@!","player|......",
             "player|Will you marry me<> @@@?","player|Waaaa...",
             "com|twin-photo-off","com|remove_@@@_twin_center#com|display_@@@kiss_center",
             "player|@@@ nodded. We kissed. ","player|For a short moment<> we feel that our spirit energies are blended into one. ",
             "player|And they said only Twin Flames can perfectly combine their energies. ","player|Finally<> we've found the other half of the soul...",
-            "player|It comes out from nowhere<> but suddenly<> I also have a bad feeling about this.",
+            "player|It comes out from nowhere<> but suddenly<> I also have a bad feeling about this.","com|music-off_precioustime",
             "END"]
     }
 

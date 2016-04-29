@@ -27,7 +27,7 @@ public class LoginPanel extends MovieClip
 	private var signin:MovieClip;
 	private var signup_submit:MovieClip;
 	private var signin_submit:MovieClip;
-	private var type:String="preorder";
+	private var type:String="signin";
 	private var flox:FloxInterface=new FloxCommand();
 	private var preorder:MovieClip;
 	private var preorder_submit:MovieClip;
@@ -51,6 +51,7 @@ public class LoginPanel extends MovieClip
 
 		preorder=panel.preorder;
 		preorder_submit=panel.preorder_signin_ui.submit;
+
 
 		signup_submit.buttonMode=true;
 		signup_submit.mouseChildren=false;

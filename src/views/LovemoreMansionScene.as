@@ -132,7 +132,20 @@ public class LovemoreMansionScene extends Scenes
 
 		DebugTrace.msg("LovemoreMansionScene.onStoryComplete current_switch:"+current_switch);
 		switch (current_switch){
+			case "s007|off":
+			case "s007b|off":
+				var paid:Boolean=flox.getPlayerData("paid");
+				if(paid){
+					current_switch="s008|on";
+				}else{
+					current_switch="s007b|on"
+				}
+				flox.save("current_switch",current_switch);
+				_data.name= "MainScene";
+				_data.from="story";
+				command.sceneDispatch(SceneEvent.CHANGED,_data);
 
+				break;
 			case "s046|off":
 
 				DataContainer.battleType="story_battle_s046";
@@ -140,17 +153,17 @@ public class LovemoreMansionScene extends Scenes
 				_data.name="ChangeFormationScene";
 				command.sceneDispatch(SceneEvent.CHANGED,_data);
 
-				break
+				break;
 			case "s047|on":
 				_data.name= "MainScene";
 				_data.from="story";
 				command.sceneDispatch(SceneEvent.CHANGED,_data);
-				break
+				break;
 			case "s9999|off":
 				var gameEvent:GameEvent = SimgirlsLovemore.gameEvent;
 				gameEvent._name = "restart-game";
 				gameEvent.displayHandler();
-				break
+				break;
 			default:
 				_data.name= "LovemoreMansionScene";
 				_data.from="story";

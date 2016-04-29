@@ -116,11 +116,14 @@ import flash.net.URLRequest;
             if(id=="transform" || id=="battletutorial"){
                 autoplay=true;
             }
+
 			var queue:LoaderMax = new LoaderMax({name:"mainQueue", onProgress:progressHandler, onComplete:callback, onError:errorHandler});
 			queue.append( new SWFLoader(src, {name:id, container:target, autoPlay:autoplay}) );
 			queue.load();
 			
-		   ViewsContainer.loaderQueue=queue;
+		   var queueObj:Object=ViewsContainer.loaderQueue;
+			queueObj[id]=queue;
+			ViewsContainer.loaderQueue=queueObj;
 		}
 		 
 		private function progressHandler(e:LoaderEvent):void 
@@ -157,6 +160,15 @@ import flash.net.URLRequest;
 
 		}
 
+		public function EmptyLoaderMax():void{
+			var loaderQueueObj:Object= ViewsContainer.loaderQueue;
+			for(var queueID:String in loaderQueueObj){
+				var loaderqueue :LoaderMax=loaderQueueObj[queueID];
+				loaderqueue.empty(true,true);
+			}
+			ViewsContainer.loaderQueue=new Object();
+
+		}
 
 	}
 }

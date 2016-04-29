@@ -8,9 +8,8 @@ public class Config
 {
     public static var permision:String="black!@spears#$";
     public static var deadline:Number=20;
-    //public static var payCoinURL:String="https://seancch.x10.bz:8890/simgirls/dgpayment/?cate=coin&authkey=";
-    //public static var payCoinURL:String="https://megastore99.globat.com/files/payment/paypal/index.php?cate=coin&authkey=";
-    public static var payCoinURL:String="http://blackspears.com/black-market.html";
+    public static var payCoinURL:String="https://megastore99.globat.com/files/payment/paypal/index.php?cate=coin&authkey=";
+    //public static var payCoinURL:String="http://blackspears.com/black-market.html";
     public static var payGameURL:String="https://megastore99.globat.com/files/payment/paypal/index.php?cate=game&authkey=";
     private static var points:Object=new Object();
     private static var playerInfo:Object=new Object();

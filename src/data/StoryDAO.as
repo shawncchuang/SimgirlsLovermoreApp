@@ -461,7 +461,7 @@ public class StoryDAO {
     private static function s007b():Array {
 
         return [
-            "com|bg_Sky",
+            "com|bg_SkyNight",
             "com|display_sirena_swimsuit1_center",
             "spC|Have you got your IDs?",
                 "player|......",

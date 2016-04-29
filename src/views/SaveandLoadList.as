@@ -23,6 +23,7 @@ import starling.core.Starling;
 import starling.display.Button;
 import starling.display.Image;
 import starling.display.Sprite;
+import starling.display.Sprite;
 import starling.events.Event;
 import starling.events.Touch;
 import starling.events.TouchEvent;
@@ -63,8 +64,9 @@ public class SaveandLoadList extends Sprite
 
         }else{
             DataContainer.SaveRecord=new Array();
-            flox.loadBackupsaved(onLoadCompleteToInit);
             addBuffer();
+            flox.loadBackupsaved(onLoadCompleteToInit);
+
         }
 
 
@@ -74,7 +76,6 @@ public class SaveandLoadList extends Sprite
     {
 
         DebugTrace.msg("SaveandLoadList.onLoadCompleteToInit ");
-
         buffer.removeFromParent(true);
         init();
 
@@ -90,6 +91,10 @@ public class SaveandLoadList extends Sprite
         {
             //piad for more save operations
             renderEmpty();
+        }else{
+
+            var msg:String="You must obtain a Citizenship Card (game license) from the Black Market to unlock this feature.";
+            MainCommand.addAlertMsg(msg);
         }
         renderCloseButton();
 
