@@ -40,7 +40,7 @@ public class AlertMessage extends Sprite
     private var btn:Button;
     private var onClosed:Function;
     private var command:MainInterface=new MainCommand();
-    private var font:String="SimMyriadPro";
+    private var font:String="SimImpact";
     private var msg:String="";
     private var quad:Quad;
     private var clickmouse:Sprite;
@@ -138,8 +138,9 @@ public class AlertMessage extends Sprite
         comfirm.addChild(alertframe);
 
 
-        var txt:TextField=new TextField(1024,80,msg);
+        var txt:TextField=new TextField(785,80,msg);
         txt.format.setTo(font,20);
+        txt.autoScale=true;
         txt.format.color=0xFFFFFF;
         txt.x=-512;
         txt.y=290;

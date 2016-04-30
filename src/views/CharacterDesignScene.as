@@ -427,7 +427,7 @@ public class CharacterDesignScene extends Scenes
             var texture:Texture=getTexture(gender+"Features");
             var xml:XML=Assets.getAtalsXML(gender+"FeaturesXML");
             featuresMax=xml.SubTexture.length();
-            DebugTrace.msg("CharacterDesignScene.addFeatures featuresMax:"+featuresMax)
+            //DebugTrace.msg("CharacterDesignScene.addFeatures featuresMax:"+featuresMax)
             var featuresAtlas:TextureAtlas = new TextureAtlas(texture, xml);
             var feateursTexture:Texture=featuresAtlas.getTexture("features"+featuresIndex);
             var featuresImg:Image=new Image(feateursTexture);
@@ -435,7 +435,7 @@ public class CharacterDesignScene extends Scenes
             featuresdemo.x=795;
             featuresdemo.y=440;
             featuresImg.width=113;
-            featuresImg.height=123;
+            featuresImg.height=143;
             featuresdemo.addChild(featuresImg);
             addChild(featuresdemo);
             updateSaveData();

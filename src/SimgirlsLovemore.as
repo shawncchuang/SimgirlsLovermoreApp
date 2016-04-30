@@ -127,7 +127,7 @@ public class SimgirlsLovemore extends MovieClip
 	private var battlescene:flash.display.Sprite;
 	private var blackmarketform:flash.display.Sprite;
 	private var minigamescene:flash.display.Sprite;
-
+	private var loaderReq:LoaderRequest;
 	public function SimgirlsLovemore():void
 	{
 		//var paypal:PayPal=new PayPal();
@@ -222,7 +222,7 @@ public class SimgirlsLovemore extends MovieClip
 				break;
 			case "waving":
 
-				var loaderReq:LoaderRequest=new LoaderRequest();
+				loaderReq=new LoaderRequest();
 				loaderReq.setLoaderQueue("waving","../swf/map_anim.swf",e.target.container);
 
 				break;
@@ -321,9 +321,6 @@ public class SimgirlsLovemore extends MovieClip
 				topview.addChild(battlescene);
 				break;
 			case "remove_battle":
-				//queue=ViewsContainer.loaderQueue;
-				//queue.empty(true,true);
-				new LoaderMax().empty(true,true);
 				topview.removeChild(battlescene);
 				break;
 			case  "blackmarket_form":
@@ -342,9 +339,8 @@ public class SimgirlsLovemore extends MovieClip
 				topview.addChild(minigamescene);
 				break;
 			case "remove_mini_game":
-				//queue=ViewsContainer.loaderQueue;
-				//queue.empty(true,true);
-				new LoaderMax().empty(true,true);
+				loaderReq=new LoaderRequest();
+				loaderReq.EmptyLoaderMax();
 				topview.removeChild(minigamescene);
 				break;
 

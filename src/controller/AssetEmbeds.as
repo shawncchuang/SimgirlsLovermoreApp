@@ -472,62 +472,62 @@ public class AssetEmbeds
     public static const DangerSign:Class;
 
 
-    [Embed(source="../../assets/images/items/art.jpg")]
+    [Embed(source="../../assets/images/items/art.png")]
     public static const Art:Class;
 
-    [Embed(source="../../assets/images/items/watch.jpg")]
+    [Embed(source="../../assets/images/items/watch.png")]
     public static const Watch:Class;
 
 
-    [Embed(source="../../assets/images/items/flowers.jpg")]
+    [Embed(source="../../assets/images/items/flowers.png")]
     public static const Flowers:Class;
 
-    [Embed(source="../../assets/images/items/chocolate.jpg")]
+    [Embed(source="../../assets/images/items/chocolate.png")]
     public static const Chocolate:Class;
 
-    [Embed(source="../../assets/images/items/ring.jpg")]
+    [Embed(source="../../assets/images/items/ring.png")]
     public static const Ring:Class;
 
-    [Embed(source="../../assets/images/items/necklace.jpg")]
+    [Embed(source="../../assets/images/items/necklace.png")]
     public static const Necklace:Class;
 
-    [Embed(source="../../assets/images/items/controller.jpg")]
+    [Embed(source="../../assets/images/items/controller.png")]
     public static const Controller:Class;
 
-    [Embed(source="../../assets/images/items/walletb.jpg")]
+    [Embed(source="../../assets/images/items/walletb.png")]
     public static const Wallet:Class;
 
-    [Embed(source="../../assets/images/items/gadget.jpg")]
+    [Embed(source="../../assets/images/items/gadget.png")]
     public static const Gadget:Class;
 
-    [Embed(source="../../assets/images/items/smartband.jpg")]
+    [Embed(source="../../assets/images/items/smartband.png")]
     public static const SmartBand:Class;
 
-    [Embed(source="../../assets/images/items/perfume.jpg")]
+    [Embed(source="../../assets/images/items/perfume.png")]
     public static const Perfume:Class;
 
-    [Embed(source="../../assets/images/items/earring.jpg")]
+    [Embed(source="../../assets/images/items/earring.png")]
     public static const Earrings:Class;
 
-    [Embed(source="../../assets/images/items/book.jpg")]
+    [Embed(source="../../assets/images/items/book.png")]
     public static const Book:Class;
 
-    [Embed(source="../../assets/images/items/purse.jpg")]
+    [Embed(source="../../assets/images/items/purse.png")]
     public static const Purse:Class;
 
-    [Embed(source="../../assets/images/items/dressshoes.jpg")]
+    [Embed(source="../../assets/images/items/dressshoes.png")]
     public static const Shoes:Class;
 
-    [Embed(source="../../assets/images/items/plush.jpg")]
+    [Embed(source="../../assets/images/items/plush.png")]
     public static const Plush:Class;
 
-    [Embed(source="../../assets/images/items/boat.jpg")]
+    [Embed(source="../../assets/images/items/boat.png")]
     public static const Boat:Class;
 
-    [Embed(source="../../assets/images/items/car.jpg")]
+    [Embed(source="../../assets/images/items/car.png")]
     public static const Car:Class;
 
-    [Embed(source="../../assets/images/items/house.jpg")]
+    [Embed(source="../../assets/images/items/house.png")]
     public static const House:Class;
 
     [Embed(source="../../assets/images/blackmarket/bm_1.png")]

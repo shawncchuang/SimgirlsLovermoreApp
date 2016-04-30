@@ -447,13 +447,13 @@ public class Character extends MovieClip
                 //ch_name="vdk";
                 if(bpart_pack.indexOf(ch_name)!=-1)
                 {
-                    characters=["zack","xns","vdk","smn","shn","prms","prml","fan","bdh"];
+                    characters=Config.maleCharacters;
                     character=new Boy();
                 }
                 else
                 {
                     part_pack=gpart_pack;
-                    characters=["mia","san","chef","akr"];
+                    characters=Config.femaleCharacters;
                     character=new Girl();
 
                 }
@@ -471,7 +471,7 @@ public class Character extends MovieClip
 
                     //XS Sana & Xenos
                     part_pack = gpart_pack;
-                    characters = ["mia", "san", "chef", "akr"];
+                    characters = Config.femaleCharacters;
                     character = new Girl();
 
                     break
@@ -479,7 +479,7 @@ public class Character extends MovieClip
                     //gor and zack
 
                     part_pack = bpart_pack;
-                    characters = ["zack", "xns", "vdk", "smn", "shn", "prms", "prml", "fan", "bdh"];
+                    characters = Config.maleCharacters;
                     character = new Boy();
 
                     break
@@ -1705,7 +1705,7 @@ public class Character extends MovieClip
         updatelColorEffect(skillAni,avatar);
 
 
-        //skillAni.body.addEventListener(Event.ENTER_FRAME,doCheckDancing);
+        skillAni.body.addEventListener(Event.ENTER_FRAME,doCheckDancing);
 
     }
     private function doCheckDancing(e:Event):void
@@ -1718,8 +1718,7 @@ public class Character extends MovieClip
             var loaderQueue:LoaderMax=ViewsContainer.loaderQueue[queueID];
             loaderQueue.getLoader(queueID).unload();
 
-            var battlealert:MovieClip=ViewsContainer.BattleAlert;
-            TweenMax.to(battlealert,1,{alpha:1,delay:5});
+
         }
         //if
 

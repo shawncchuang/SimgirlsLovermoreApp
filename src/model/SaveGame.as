@@ -59,6 +59,7 @@ package model
 		public var goodevail:Number;
 		public var datingtwin:Object;
 		public var saved:Boolean;
+		public var mission:Object;
 		public function SaveGame()
 		{
 	 

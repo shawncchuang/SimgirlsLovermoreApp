@@ -155,6 +155,7 @@ public class BattleScene extends Sprite
         current_skillPts=flox.getSaveData("skillPts");
         init();
 
+        this.addEventListener(Event.REMOVED_FROM_STAGE, battleEndHandle);
         ViewsContainer.battlescene=this;
 
         var switchID:String=flox.getSaveData("current_switch");
@@ -2323,39 +2324,15 @@ public class BattleScene extends Sprite
         {
             //attack skill
 
-            /*
-             try
-             {
-             //member.skillAni.visible=true;
-             //member.character.visible=true;
-             _totalFrames=member.skillAni.body.act.totalFrames;
-             _duration=Number((_totalFrames/24).toFixed(2));
-             var actMC:MovieClip=member.skillAni.body.act;
-             var bodyMC:MovieClip=member.skillAni.body;
-             bodyMC.addEventListener(Event.ENTER_FRAME,doActPlaying);
-             }
-             catch(e:Error)
-             {
-             DebugTrace.msg("BattleScene.doAttackHandle attack_member.skillAni Null");
-             TweenMax.delayedCall(2,onWaitingSkillAni);
-
-             function onWaitingSkillAni():void
-             {
-             TweenMax.killDelayedCallsTo(onWaitingSkillAni);
-             doAttackHandle();
-             }
-             }
-             //try
-             */
             member.getSkillAni();
 
             var bodyMC:MovieClip;
             var loaderQueue:LoaderMax=ViewsContainer.loaderQueue[member.power.id+"_skillAni"];
             if(loaderQueue){
-                var gender:String="";
-                if(member.gender=="B" || member.chname=="smn" || member.chname=="prms" || member.chname=="player"){
-                    gender="Boy";
-                }else{
+                var gender:String="Boy";
+                //var maleCharacters:Array=Config.maleCharacters;
+                var femaleCharacters:Array=Config.femaleCharacters;
+                if(member.gender=="G" || femaleCharacters.indexOf(member.chname)!=-1){
                     gender="Girl";
                 }
                 var swfloader:SWFLoader = loaderQueue.getLoader(member.power.id+"_skillAni");
@@ -4213,7 +4190,8 @@ public class BattleScene extends Sprite
         var laoderReq:LoaderRequest=new LoaderRequest();
         laoderReq.EmptyLoaderMax();
 
-
+        ViewsContainer.loaderQueue=new Object();
     }
+
 }
 }

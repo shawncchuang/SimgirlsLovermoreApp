@@ -6,7 +6,7 @@ import flash.utils.Dictionary;
 
 public class Config
 {
-    public static var permision:String="black!@spears#$";
+    public static var permision:String="π®´ø∂´®black!@spears#$";
     public static var deadline:Number=20;
     public static var payCoinURL:String="https://megastore99.globat.com/files/payment/paypal/index.php?cate=coin&authkey=";
     //public static var payCoinURL:String="http://blackspears.com/black-market.html";
@@ -30,6 +30,8 @@ public class Config
         "sirena":119,"dea":54,"sao":54,"klr":60,"tomoru":98,"ceil":63,"zack":0};
     //zack don't show up in somewhere
     public static const characters:Array=["lenus","sirena","dea","sao","klr","tomoru","ceil"];
+    public static const maleCharacters:Array=["zack", "xns", "vdk", "smn", "shn", "prms", "prml", "fan", "bdh"];
+    public static const femaleCharacters:Array=["mia", "san", "chef", "akr","sirena","dea","klr","ceil","tomoru"];
     public static const datingCharacters:Array=["lenus","sirena","dea","zack","klr","tomoru","ceil"];
     public static const fullnameCharacters:Array=["Lenus","Sirena","Dea","Zack","Klaire","Tomoru","Ceil"];
     public static const fullnames:Object={"lenus":"Lenus","sirena":"Sirena","dea":"Dea","zack":"Zack",
@@ -184,12 +186,12 @@ public class Config
 
     }
 
-    public static var CriminalRanking:Array=[{"rank":"S","se":5000,"rewards":1400},
-        {"rank":"A","se":4000,"rewards":1200},
-        {"rank":"B","se":3000,"rewards":1000},
-        {"rank":"C","se":2000,"rewards":800},
-        {"rank":"D","se":1000,"rewards":600},
-        {"rank":"E","se":500,"rewards":450},
+    public static var CriminalRanking:Array=[{"rank":"S","se":5000,"rewards":3000},
+        {"rank":"A","se":4000,"rewards":2500},
+        {"rank":"B","se":3000,"rewards":2000},
+        {"rank":"C","se":2000,"rewards":1500},
+        {"rank":"D","se":1000,"rewards":1000},
+        {"rank":"E","se":500,"rewards":600},
         {"rank":"F","se":200,"rewards":300}];
 
     public static function set AccType(value:String):void

@@ -7,6 +7,8 @@ import com.greensock.loading.LoaderMax;
 
 import data.StoryDAO;
 
+import events.BattleEvent;
+
 import flash.desktop.NativeApplication;
 import flash.display.MovieClip;
 import flash.display.Sprite;
@@ -579,8 +581,6 @@ public class MemebersCommand implements MembersInterface
                 function onFinalBattleComplete():void{
                     Starling.juggler.remove(delaycall);
 
-                    BattleScene.battleEvt.battleEndHandle();
-
                     var gameEvt:GameEvent=SimgirlsLovemore.gameEvent;
                     gameEvt._name="remove_battle";
                     gameEvt.displayHandler();
@@ -612,7 +612,7 @@ public class MemebersCommand implements MembersInterface
         if(cpu_gameover ||  player_gameover)
         {
             //GameOver--------------------------------
-            BattleScene.battleEvt.battleEndHandle();
+
 
             SoundMixer.stopAll();
             command.stopBackgroudSound();
@@ -689,6 +689,7 @@ public class MemebersCommand implements MembersInterface
             function onBattleAlertFadeout():void
             {
                 //disabled on Beta version
+
                 TweenMax.killAll();
                 var command:MainInterface=new MainCommand();
                 command.stopBackgroudSound();
@@ -741,9 +742,7 @@ public class MemebersCommand implements MembersInterface
 //                    DebugTrace.msg("MembersCommand.memberCommand battle_type="+battle_type+" ,scene="+scene);
                     if(battle_type=="schedule")
                     {
-
                         scene="SSCCArenaScene";
-
 
                     }else if(battle_type=="practice"){
 
@@ -764,8 +763,7 @@ public class MemebersCommand implements MembersInterface
 
                     }
 
-                    //var loaderQueue:LoaderMax=ViewsContainer.loaderQueue;
-                    //loaderQueue.unload();
+                    BattleScene.battleEvt.battleEndHandle();
 
                     var _data:Object=new Object();
                     _data.name= scene;

@@ -1,7 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:6bee2b9260e8e02b4c743d039fd35376:baf735537ac754b1421975c6b3bae3a1:df89aac49825119bf37d9397b71d55b8$ -->
-<TextureAtlas imagePath="malefeatures.png">
-    <SubTexture name="features0" x="2" y="33" width="1" height="1" frameX="0" frameY="0" frameWidth="108" frameHeight="129"/>
-    <SubTexture name="features1" x="2" y="2" width="28" height="29" frameX="-40" frameY="-97" frameWidth="108" frameHeight="129"/>
-</TextureAtlas>
+﻿<?xml version="1.0" encoding="utf-8"?><TextureAtlas imagePath="malefeatures.png">	<!-- Created with Adobe Animate version 15.1.1.13 -->	<!-- http://www.adobe.com/products/animate.html -->	<SubTexture name="features0" x="0" y="0" width="108" height="149" pivotX="0" pivotY="0"/>	<SubTexture name="features1" x="0" y="149" width="108" height="149"/>	<SubTexture name="features2" x="0" y="298" width="108" height="149"/>	<SubTexture name="features3" x="108" y="0" width="108" height="149"/>	<SubTexture name="features4" x="216" y="0" width="108" height="149"/>	<SubTexture name="features5" x="324" y="0" width="108" height="149"/>	<SubTexture name="features6" x="108" y="149" width="108" height="149"/>	<SubTexture name="features7" x="108" y="298" width="108" height="149"/>	<SubTexture name="features8" x="216" y="149" width="108" height="149"/>	<SubTexture name="features9" x="216" y="298" width="108" height="149"/>	<SubTexture name="features10" x="324" y="149" width="108" height="149"/></TextureAtlas>

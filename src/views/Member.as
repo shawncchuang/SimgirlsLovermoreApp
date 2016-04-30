@@ -178,8 +178,7 @@ package views
 		}
 		private function battleEndHandle(e:Event):void
 		{
-			var boss_index:Number=Config.bossModels.indexOf(chname);
-			if(boss_index==-1)
+
 			super.setupVictoryDace();
 		}
 		public function getGender():void
