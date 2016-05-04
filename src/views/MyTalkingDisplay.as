@@ -53,7 +53,7 @@ public class MyTalkingDisplay extends Sprite
 			
 			
 		}
-		public function addTextField(sentance:String,callback:Function=null):void
+		public function addTextField(sentence:String,callback:Function=null):void
 		{
 			//Starling.juggler.remove(tween);
 			addMask();
@@ -76,11 +76,11 @@ public class MyTalkingDisplay extends Sprite
 				twinflame=twinflame.toLowerCase();
 			}
 			var fullname:String=Config.fullnames[twinflame];
-			sentance=sentance.split("<>").join(",");
-			sentance=sentance.split("player|").join("");
-			sentance=sentance.split("$$$").join(first_name);
-			sentance=sentance.split("@@@").join(fullname);
-			var htmltext:String="<body>"+sentance+"</body>";
+			sentence=sentence.split("<>").join(",");
+			sentence=sentence.split("player|").join("");
+			sentence=sentence.split("$$$").join(first_name);
+			sentence=sentence.split("@@@").join(fullname);
+			var htmltext:String="<body>"+sentence+"</body>";
 
 			subtitle=new TextField(785,120,"");
 			subtitle.format.setTo("SimImpact",24,0xFFFFFF);

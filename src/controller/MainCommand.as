@@ -3101,6 +3101,83 @@ public class MainCommand implements MainInterface {
 
        }
     }
+    public function checkMission(msnID:String=null):Object{
+        var flox:FloxInterface=new FloxCommand();
+        var mission:Array=flox.getSaveData("mission");
+        var msnObj:Object;
+        if(msnID){
+
+            for(var i:uint=0;i<mission.length;i++){
+                if(mission[i].id==msnID){
+                    mission[i].completed=true;
+                    mission[i].enable=false;
+                    msnObj= mission[i];
+                    break
+                }
+            }
+
+        }else{
+
+            var index:uint=0;
+            mission.sortOn("completed");
+            for(var j:uint=0;j<mission.length;j++){
+                if(mission[j].completed){
+                    index=j;
+                    break
+                }
+            }
+            var en_mission:Array=mission.splice(index);
+            if(mission.length>0){
+                var ran:Number=Math.floor(Math.random()*mission.length);
+                mission[ran].enable=true;
+                msnObj=mission[ran];
+            }else{
+                en_mission[0].enable=true;
+                msnObj=en_mission[0];
+            }
+
+            mission=mission.concat(en_mission);
+
+        }
+
+        flox.save("mission",mission);
+        return msnObj;
+    }
+
+    public function ConsumAssets(item_id:String):void{
+        var flox:FloxInterface=new FloxCommand();
+        var owned_assets:Object=flox.getSaveData("owned_assets");
+        var assetslist:Array=owned_assets.player;
+        var index:Number=-1;
+        for(var i:uint=0;i<assetslist.length;i++)
+        {
+            var id:String=assetslist[i].id;
+            if(item_id==id)
+            {
+                index=i;
+                break
+            }
+        }
+
+        var qty:Number=assetslist[index].qty;
+        qty--;
+        if(qty==0)
+        {
+
+            var _assetslist:Array=assetslist.splice(index);
+            _assetslist.shift();
+            var new_assetslist:Array=assetslist.concat(_assetslist);
+
+            owned_assets.player=new_assetslist;
+        }else
+        {
+            assetslist[index].qty=qty;
+            owned_assets.player=assetslist;
+
+        }
+        flox.save("owned_assets",owned_assets);
+
+    }
 
 }
 }

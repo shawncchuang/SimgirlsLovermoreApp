@@ -6,6 +6,8 @@ package views {
 import controller.Assets;
 import controller.FloxCommand;
 import controller.FloxInterface;
+import controller.MainCommand;
+import controller.MainInterface;
 
 import data.DataContainer;
 
@@ -291,12 +293,14 @@ public class AssetsTiledLayout extends PanelScreen{
 
             if(enabled){
                 // witch dating person who didn't have this item, send item to some him/her
-                //disableSubmit();
                 submited=true;
 
                 var assetslist:Array=owned_assets.player;
                 index=searchID(assetslist,item_id);
-
+                var command:MainInterface=new MainCommand();
+                command.ConsumAssets(item_id);
+                owned_assets=flox.getSaveData("owned_assets");
+                /*
                 var qty:Number=myItem.qty;
                 qty--;
                 if(qty==0)
@@ -313,6 +317,7 @@ public class AssetsTiledLayout extends PanelScreen{
                     owned_assets.player=assetslist;
 
                 }
+                */
 
                 var new_item:Object=new Object();
                 new_item.id=item_id;
@@ -361,6 +366,8 @@ public class AssetsTiledLayout extends PanelScreen{
 
 
     }
+
+
     private function searchID(list:Array,item_id:String):Number
     {
         var index:Number=-1;
@@ -377,5 +384,6 @@ public class AssetsTiledLayout extends PanelScreen{
         //for
         return index
     }
+
 }
 }

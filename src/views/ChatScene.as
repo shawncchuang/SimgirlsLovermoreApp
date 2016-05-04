@@ -22,6 +22,9 @@ import starling.display.Image;
 import starling.display.Quad;
 import starling.display.Sprite;
 import starling.events.Event;
+import starling.events.Touch;
+import starling.events.TouchEvent;
+import starling.events.TouchPhase;
 
 import starling.text.TextField;
 import starling.textures.Texture;
@@ -54,6 +57,11 @@ public class ChatScene extends Sprite
     private var con_assets:Array=new Array();
     private var misc_assets:Array=new Array();
     private var fs_assets:Array=new Array();
+    private var msnID:String="";
+    private var msnObj:Object;
+    private var dialogues:Number=0;
+    private var dialogueIndex:Number=0;
+    private var chatTxt:TextField;
     public function ChatScene()
     {
 
@@ -360,6 +368,7 @@ public class ChatScene extends Sprite
         var datingScene:Sprite=ViewsContainer.baseSprite;
         var _data:Object=new Object();
         //Chat Formula
+        relist=[2,2,2];
         switch(relist.toString())
         {
             case "0,0,0":
@@ -407,16 +416,28 @@ public class ChatScene extends Sprite
                 initCancelHandle();
                 break
             case "2,2,2":
-                //secrets
-                var sysSecrets:Object=flox.getSyetemData("secrets");
-                var secrets:Object=flox.getSaveData("secrets");
-                var dating_secrets:Array=secrets[dating];
-                var index:uint=uint(Math.random()*dating_secrets.length);
-                id=dating_secrets[index].id;
-                var secretsQ:String=sysSecrets[id].q;
-                var ans:String=dating_secrets[index].ans;
-                sentence=secretsQ.split("|~|").join(ans);
-                initCancelHandle();
+                    //check mission
+                    msnObj=command.checkMission();
+                    if(msnObj){
+                        //mission
+                        msnID=msnObj.id;
+                        missioningDialogue();
+
+                    }else{
+                        //secrets
+                        var sysSecrets:Object=flox.getSyetemData("secrets");
+                        var secrets:Object=flox.getSaveData("secrets");
+                        var dating_secrets:Array=secrets[dating];
+                        var index:uint=uint(Math.random()*dating_secrets.length);
+                        id=dating_secrets[index].id;
+                        var secretsQ:String=sysSecrets[id].q;
+                        var ans:String=dating_secrets[index].ans;
+                        sentence=secretsQ.split("|~|").join(ans);
+
+                        initCancelHandle();
+                    }
+
+
                 break
             default:
                 //no bingo talking
@@ -429,6 +450,27 @@ public class ChatScene extends Sprite
         //switch
 
         DebugTrace.msg("ChatScene.onChatWithPlayer sentence:"+sentence);
+        bubbleFadeIn();
+
+    }
+    private function missioningDialogue():void{
+
+
+        var mission:Object=flox.getSyetemData("missions")[msnID];
+        dialogues=mission["mission_dialogue"].length;
+        sentence=mission["mission_dialogue"][dialogueIndex];
+
+        var first_name:String=flox.getSaveData("first_name");
+        var assets:Object=flox.getSyetemData("assets");
+        var brand:String=assets[mission.req].brand;
+        sentence=sentence.split("<>").join(",");
+        sentence=sentence.split("$$$").join(first_name);
+        sentence=sentence.split("XXX").join(brand);
+
+
+    }
+    private function bubbleFadeIn():void{
+
         bubble.scaleX=0;
         bubble.scaleY=0;
         bubble.alpha=0;
@@ -436,17 +478,45 @@ public class ChatScene extends Sprite
 
         tweenID=Starling.juggler.tween(bubble,0.5,{scaleX:-1,scaleY:1,alpha:1,
             transition:Transitions.EASE_OUT_ELASTIC,onComplete:onBubbleComplete});
-
     }
     private function onBubbleComplete():void
     {
         Starling.juggler.removeByID(tweenID);
 
-        var chatTxt:TextField=new TextField(255,190,sentence);
+        var htmltext:String="<body>"+sentence+"</body>";
+        chatTxt=new TextField(255,190,htmltext);
         chatTxt.format.setTo("SimImpact",20,0x000000,"left");
         chatTxt.x=634;
         chatTxt.y=110;
+        chatTxt.isHtmlText=true;
         addChild(chatTxt);
+        if(relist.toString()=="2,2,2"){
+
+            if(msnID!="" && dialogueIndex<dialogues){
+
+                if(dialogueIndex==dialogues-1){
+                    initCancelHandle();
+                }else{
+                    var baseSprite:Sprite=ViewsContainer.baseSprite;
+                    baseSprite.addEventListener(TouchEvent.TOUCH, doNextDialogueHandler);
+                }
+            }
+        }
+
+    }
+    private function doNextDialogueHandler(e:TouchEvent):void{
+
+
+        var target:Sprite=e.currentTarget as Sprite;
+        var began:Touch = e.getTouch(target, TouchPhase.BEGAN);
+        if(began){
+            var baseSprite:Sprite=ViewsContainer.baseSprite;
+            baseSprite.removeEventListener(TouchEvent.TOUCH, doNextDialogueHandler);
+            chatTxt.removeFromParent();
+            dialogueIndex++;
+            missioningDialogue();
+            bubbleFadeIn();
+        }
 
     }
     private function nothinghHappenHandler():void{

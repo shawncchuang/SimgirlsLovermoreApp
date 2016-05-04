@@ -170,7 +170,22 @@ public class CharacterBubble extends Sprite
 			sentence=filterScentance(pure_talks[talk_index]);
 		}
 		//DebugTrace.msg("addBubbleTxt: "+talks[talk_index]);
-		var htmltext:String="<body>"+sentence.split("<>").join(",")+"</body>";
+		var flox:FloxInterface=new FloxCommand();
+		var first_name:String=flox.getSaveData("first_name");
+		var brand:String="";
+		var msnObj:Object=command.checkMission();
+		if(msnObj){
+			var msnID:String=msnObj.id;
+			var mission:Object=flox.getSyetemData("missions")[msnID];
+			var assets:Object=flox.getSyetemData("assets");
+			brand=assets[mission.req].brand;
+		}
+
+		sentence=sentence.split("<>").join(",");
+		sentence=sentence.split("$$$").join(first_name);
+		sentence=sentence.split("XXX").join(brand);
+
+		var htmltext:String="<body>"+sentence+"</body>";
 		bubbletext=new TextField(200,200,"");
 		bubbletext.format.setTo("SimImpact",22);
 		bubbletext.autoScale=true;

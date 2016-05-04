@@ -1,6 +1,7 @@
 package views
 {
 
+
 import flash.geom.Point;
 
 import controller.Assets;
@@ -70,7 +71,10 @@ public class FoundSomeScene extends Scenes
 	private var bubbleTween:Tween;
 	private var schedule:Array;
 	private var datingdelay:DelayedCall;
-
+	private var startMission:Boolean=false;
+	private var missionComplete:Boolean=false;
+	private var clickmouse:ClickMouseIcon;
+	private var msnObj:Object;
 
 	public function FoundSomeScene()
 	{
@@ -399,7 +403,7 @@ public class FoundSomeScene extends Scenes
 		}
 
 
-		var clickmouse:ClickMouseIcon=new ClickMouseIcon();
+		clickmouse=new ClickMouseIcon();
 		clickmouse.x=973;
 		clickmouse.y=704;
 		addChild(clickmouse);
@@ -416,18 +420,34 @@ public class FoundSomeScene extends Scenes
 		npcTween.onComplete=onNPCFadeIn;
 		Starling.juggler.add(npcTween);
 
-		var index:Number=npcIDList.indexOf(npcID);
-		var switchID:String=switchIDList[index];
 		var nps:Object=flox.getSyetemData("npcs");
-		speaking=nps[npcID][switchID];
+		var msnObj:Object=command.checkMission();
+
+		if(msnObj){
+			var mission:Object=flox.getSyetemData("missions")[msnObj.id];
+			if(msnObj.enable && mission.target==npcID){
+				startMission=true;
+				speaking=mission.target_dialogue;
+
+			}else{
+				noMissionHandler();
+			}
+		}else{
+			noMissionHandler();
+		}
+
+		function noMissionHandler():void{
+
+			var index:Number=npcIDList.indexOf(npcID);
+			var switchID:String=switchIDList[index];
+
+			speaking=nps[npcID][switchID];
+		}
+
+
 		DebugTrace.msg("FoundSomeScene.npcSpeakingHandle speaking="+speaking);
 		DataContainer.NpcTalkinglibrary=speaking;
-
 		this.addEventListener(TouchEvent.TOUCH,onNextSpeaking);
-
-
-
-
 
 	}
 	private function addNewBubble():void
@@ -469,10 +489,33 @@ public class FoundSomeScene extends Scenes
 
 				this.removeEventListener(TouchEvent.TOUCH,onNextSpeaking);
 				Starling.juggler.remove(bubbleTween);
-				initNPCRewards();
+
+				if(startMission){
 
 
-				//doCanceleHandler();
+					if(missionComplete){
+						clickmouse.removeFromParent();
+						initCancelHandle();
+					}else{
+
+						msnObj=command.checkMission();
+						if(msnObj){
+							this.addEventListener(TouchEvent.TOUCH,onNextSpeaking);
+							initMissionReward();
+
+							if(!missionComplete){
+								this.removeEventListener(TouchEvent.TOUCH,onNextSpeaking);
+								clickmouse.removeFromParent();
+								initCancelHandle();
+							}
+						}
+					}
+
+				}else{
+					initNPCRewards();
+				}
+
+
 			}
 
 			//if
@@ -511,6 +554,88 @@ public class FoundSomeScene extends Scenes
 		command.sceneDispatch(SceneEvent.CHANGED,_data);
 
 	}
+
+	private function initMissionReward():void{
+
+
+		var msnID:String=msnObj.id;
+		var mission:Object=flox.getSyetemData("missions")[msnID];
+		var itemReq:String=mission.req;
+		var missionReward:String=mission.reward;
+		var rewardCate:String=missionReward.split("|")[0];
+		var rewardValue:String=missionReward.split("|")[1];
+		var ownedAeests:Array=flox.getSaveData("owned_assets").player;
+
+		for(var i:uint=0;i<ownedAeests.length;i++){
+			var assets:Object=ownedAeests[i];
+			if(itemReq==assets.id){
+
+				missionComplete=true;
+
+				var honors:Object=flox.getSaveData("honor");
+				honors.player+=Number(rewardValue);
+				flox.save("honor",honors);
+
+
+				var values:Object=new Object();
+				values[rewardCate]=Number(rewardValue);
+				command.showCommandValues(this,rewardCate,values);
+
+				sIndex=0;
+				speaking=mission.complete_dialogue;
+				DataContainer.NpcTalkinglibrary=speaking;
+				command.ConsumAssets(itemReq);
+
+				var gameinfo:Sprite = ViewsContainer.gameinfo;
+				gameinfo.dispatchEventWith("UPDATE_INFO");
+
+				if(sIndex<speaking.length){
+					addNewBubble();
+				}
+				command.checkMission(msnID);
+
+				addConsumItemAni();
+
+				break;
+			}
+
+		}
+
+
+
+	}
+	private function addConsumItemAni():void{
+		var msnID:String=msnObj.id;
+		var mission:Object=flox.getSyetemData("missions")[msnID];
+		var itemReq:String=mission.req;
+		var assets:Object=flox.getSyetemData("assets");
+		var itemTexture:String=assets[itemReq].texture;
+		var texture:Texture=Assets.getTexture(itemTexture);
+		var missionItemImg:Image=new Image(texture);
+		missionItemImg.pivotX=missionItemImg.width/2;
+		missionItemImg.pivotY=missionItemImg.height/2;
+		missionItemImg.x=Starling.current.stage.stageWidth/2;
+		missionItemImg.y=Starling.current.stage.stageHeight/2;
+		addChild(missionItemImg);
+
+		//var posX:Number=missionItemImg.x+(Math.ceil(Math.random()*200)-100);
+		var posY:Number=missionItemImg.y-200;
+		var tweenID:uint=Starling.juggler.tween(missionItemImg,0.5,{y:posY,transition:Transitions.EASE_IN_OUT_BOUNCE,onComplete:onItemConsumAni1});
+
+		function onItemConsumAni1():void{
+
+			Starling.juggler.removeByID(tweenID);
+			tweenID=Starling.juggler.tween(missionItemImg,1,{delay:0.5,scaleX:0,scaleY:0,transition:Transitions.EASE_OUT,onComplete:onItemConsumAni2});
+
+		}
+		function onItemConsumAni2():void{
+			Starling.juggler.removeByID(tweenID);
+			missionItemImg.removeFromParent(true);
+		}
+	}
+
+
+
 	private function initNPCRewards():void{
 		var rewardslist:Array=["image","int","cash"];
 		//image 5-15 , int 5-15 , cash 50-100

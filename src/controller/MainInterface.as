@@ -76,5 +76,7 @@ public interface MainInterface
     function checkSceneEnable(scene:String):Boolean
     function checkMemory():void
     function versioncommand():void
+    function checkMission(msnID:String=null):Object
+    function ConsumAssets(item_id:String):void
 }
 }
