@@ -327,17 +327,23 @@ public class ShoppingClothesListLayout extends Sprite {
             flox.save("avatar",avatar);
 
             var amount:Number=current_item.price;
+            var imageObj:Object=flox.getSaveData("image");
+            var rewardImg:Number=Math.floor(amount/3);
+
             var value_data:Object = new Object();
-            value_data.attr = "cash";
-            value_data.values = String(amount*-1);
+            value_data.attr = "cash,image";
+            value_data.values = String(amount*-1)+",+"+rewardImg;
 
             var command:MainInterface = new MainCommand();
             command.playSound("GodRewards");
             command.displayUpdateValue(scene, value_data);
 
-            cash-=amount;
-            flox.save("cash",cash);
 
+            cash-=amount;
+            imageObj.player+=rewardImg;
+
+            flox.save("cash",cash);
+            flox.save("image",imageObj);
 
             var gameinfo:Sprite = ViewsContainer.gameinfo;
             gameinfo.dispatchEventWith("UPDATE_INFO", false);

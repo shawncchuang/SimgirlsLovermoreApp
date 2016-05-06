@@ -30,6 +30,7 @@
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/video" path-in-package="video" />
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/images" path-in-package="images" />
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/collection" path-in-package="collection" />
+            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/json" path-in-package="json" />
           </files-to-package>
           <AirSigningOptions keystore-path="$MODULE_DIR$/release/simgirl_cer.p12" use-temp-certificate="false" />
         </packaging-air-desktop>

@@ -173,7 +173,7 @@ public class CharacterBubble extends Sprite
 		var flox:FloxInterface=new FloxCommand();
 		var first_name:String=flox.getSaveData("first_name");
 		var brand:String="";
-		var msnObj:Object=command.checkMission();
+		var msnObj:Object=DataContainer.CurrentMission;
 		if(msnObj){
 			var msnID:String=msnObj.id;
 			var mission:Object=flox.getSyetemData("missions")[msnID];

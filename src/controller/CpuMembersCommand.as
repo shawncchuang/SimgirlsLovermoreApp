@@ -37,7 +37,7 @@ public class CpuMembersCommand implements CpuMembersInterface
     //private var combinTeam:String="t0";
     private var cpuIndex:Number=0;
     private var gems_req:Number=0;
-    private var gemsMax:Number=9;
+    private var gemsMax:Number=8;
     //Attack
     private var atkPers:Array=[10,20,20,25];
     private var _atkPers:Array=[20,60,50,0];

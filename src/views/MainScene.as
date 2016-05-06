@@ -311,7 +311,13 @@ public class MainScene extends Scenes
         var xml:XML = XML(Assets.getAtalsXML("SignsSheetXML"));
         var atlas:TextureAtlas = new TextureAtlas(texture, xml);
         var stagepoints:Object=Config.stagepoints;
-
+        var datingCharacters:Array=Config.datingCharacters;
+        var ran:Number=Math.floor(Math.random()*datingCharacters.length);
+        var character:String=datingCharacters[ran];
+        var flox:FloxInterface=new FloxCommand();
+        var scenelikes:Object=flox.getSaveData("scenelikes");
+        var likes:Array=scenelikes[character];
+        var located:String=likes[0].name;
         for(var p:String in stagepoints)
         {
             //DebugTrace.msg(p);
@@ -323,6 +329,16 @@ public class MainScene extends Scenes
             signImg.y=stagepoints[p][1]-signImg.height;
             signImg.addEventListener(TouchEvent.TOUCH,doTouchSign);
             container.addChild(signImg);
+
+            if(p==located){
+                var CMSTexture:Texture = Assets.getTexture("ContactMapSign");
+                var CMSImage:Image=new Image(CMSTexture);
+                CMSImage.x=stagepoints[p][0]-signImg.width/2-CMSImage.width;
+                CMSImage.y=stagepoints[p][1]-signImg.height;
+                container.addChild(CMSImage);
+
+            }
+
         }
 
         var dangersRe:Object=checkDangerSign();

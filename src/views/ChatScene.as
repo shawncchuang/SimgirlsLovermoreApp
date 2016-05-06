@@ -77,9 +77,9 @@ public class ChatScene extends Sprite
     }
     private function initBingo():void
     {
-        //80% bingo,20% trash talking
-        var bingo:uint=80;
-        var moodBingo:uint=55;
+        //95% bingo,5% trash talking
+        var bingo:uint=95;
+        var moodBingo:uint=60;
         var secretBingo:uint=5;
         var chat_bingo:Number=Math.ceil(Math.random()*100);
 
@@ -90,7 +90,7 @@ public class ChatScene extends Sprite
 
             if(item_bingo>=1 && item_bingo<=moodBingo)
             {
-                // moood reward ,location match 55%
+                // moood reward ,location match 60%
                 setResult(0);
             }
             else if(item_bingo>moodBingo && item_bingo<=moodBingo+secretBingo)
@@ -101,7 +101,7 @@ public class ChatScene extends Sprite
             }
             else
             {
-                //gift match 40%
+                //gift match 35%
                 setResult(1);
 
             }
@@ -368,7 +368,7 @@ public class ChatScene extends Sprite
         var datingScene:Sprite=ViewsContainer.baseSprite;
         var _data:Object=new Object();
         //Chat Formula
-        relist=[2,2,2];
+        //relist=[2,2,2];
         switch(relist.toString())
         {
             case "0,0,0":
@@ -421,6 +421,7 @@ public class ChatScene extends Sprite
                     if(msnObj){
                         //mission
                         msnID=msnObj.id;
+                        DataContainer.CurrentMission=msnObj;
                         missioningDialogue();
 
                     }else{

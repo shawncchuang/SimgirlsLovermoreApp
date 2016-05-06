@@ -428,16 +428,16 @@ public class AssetEmbeds
     [Embed(source="../../media/textures/icons/bingo_items_moving.png")]
     public static const BingoItemsMoving:Class;
 
-    [Embed(source="../../media/textures/icons/heart64x64.png")]
+    [Embed(source="../../media/textures/icons/heart80x80.png")]
     public static const HeartLv1:Class;
 
-    [Embed(source="../../media/textures/icons/heart32x32.png")]
+    [Embed(source="../../media/textures/icons/heart64x64.png")]
     public static const HeartLv2:Class;
 
-    [Embed(source="../../media/textures/icons/heart16x16.png")]
+    [Embed(source="../../media/textures/icons/heart32x32.png")]
     public static const HeartLv3:Class;
 
-    [Embed(source="../../media/textures/icons/heartbreak64x64.png")]
+    [Embed(source="../../media/textures/icons/heartbreak.png")]
     public static const HeartLv4:Class;
 
     [Embed(source="../../media/textures/icons/icon_consumable.png")]
@@ -656,7 +656,8 @@ public class AssetEmbeds
     [Embed(source="../../media/textures/icons/icon_captainskills_badge.png")]
     public static const CaptainSkillItemIcon:Class;
 
-
+    [Embed(source="../../media/textures/icons/icon_contact_map.png")]
+    public static const ContactMapSign:Class;
 
     /*------------------icons-------------------------------------------------*/
 

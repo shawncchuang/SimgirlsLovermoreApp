@@ -8,8 +8,8 @@ public class Config
 {
     public static var permision:String="π®´ø∂´®black!@spears#$";
     public static var deadline:Number=20;
-    public static var payCoinURL:String="https://megastore99.globat.com/files/payment/paypal/index.php?cate=coin&authkey=";
-    //public static var payCoinURL:String="http://blackspears.com/black-market.html";
+    //public static var payCoinURL:String="https://megastore99.globat.com/files/payment/paypal/index.php?cate=coin&authkey=";
+    public static var payCoinURL:String="http://blackspears.com/black-market.html";
     public static var payGameURL:String="https://megastore99.globat.com/files/payment/paypal/index.php?cate=game&authkey=";
     private static var points:Object=new Object();
     private static var playerInfo:Object=new Object();
@@ -688,37 +688,37 @@ public class Config
                 ceil: 0
             },
             "image":{
-                player:800,
-                lenus: 780,
-                sirena:1136,
-                dea: 840,
-                sao: 843,
-                klr: 870,
-                tomoru: 1041,
-                zack: 900,
-                ceil: 884
+                player:700,
+                lenus: 680,
+                sirena:1036,
+                dea: 740,
+                sao: 743,
+                klr: 770,
+                tomoru: 941,
+                zack: 800,
+                ceil: 784
             },
             "wealth":0,
             "int":{
-                player:800,
-                lenus: 1140,
-                sirena:830,
-                dea: 1169,
-                sao: 762,
-                klr: 870,
-                tomoru: 789,
-                zack: 900,
-                ceil: 722
+                player:700,
+                lenus: 1040,
+                sirena:730,
+                dea: 1069,
+                sao: 662,
+                klr: 770,
+                tomoru: 689,
+                zack: 800,
+                ceil: 622
             },
             "love":{
                 //love==Max se
-                player:300,
-                lenus: 420,
-                sirena:420,
-                dea: 430,
-                sao: 290,
-                klr: 310,
-                tomoru: 320,
+                player:700,
+                lenus: 820,
+                sirena:820,
+                dea: 830,
+                sao: 690,
+                klr: 710,
+                tomoru: 720,
                 zack: 300,
                 ceil: 300
             },
@@ -1398,7 +1398,9 @@ public class Config
         "npcs","preciousphotos","rating_level","relationship_level","scenelibrary","schedule",
         "secrets_chat","secrets","skillsys","status","story_battle","style_schedule","switchs","trashtalking","upperbodyitems"];
 
-    public static var mission:Array=[{"id":"m001","completed":false,"enable":false}];
+    public static var mission:Array=[{"id":"m001","completed":false,"enable":false},
+        {"id":"m002","completed":false,"enable":false},
+        {"id":"m003","completed":false,"enable":false}];
 
     public function Config()
     {

@@ -1,6 +1,7 @@
 package views
 {
 import controller.Assets;
+import controller.FilterInterface;
 import controller.FloxCommand;
 import controller.FloxInterface;
 
@@ -24,6 +25,8 @@ import starling.display.Image;
 import starling.display.Sprite;
 import starling.events.Event;
 
+import utils.FilterManager;
+
 
 //import starling.events.Event;
 import starling.events.Touch;
@@ -42,6 +45,7 @@ public class PhotoMessage extends Sprite
 	private var domainPath:String;
 	private var photo:Sprite;
 	private var flox:FloxInterface=new FloxCommand();
+	private var filters:FilterInterface=new FilterManager();
 	public function PhotoMessage(todo:String,target:String,callback:Function=null):void
 	{
 
@@ -63,6 +67,8 @@ public class PhotoMessage extends Sprite
 		photosloader.source="/images/story/"+target+".jpg";
 		photosloader.addEventListener(Event.COMPLETE, onPhotoLoadedComplete);
 		addChild(photosloader);
+
+		filters.setShadow(photosloader);
 
 		//this.addEventListener(Event.TRIGGERED,onTouchAlertFrame);
 	}

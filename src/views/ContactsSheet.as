@@ -118,11 +118,12 @@ public class ContactsSheet extends PanelScreen {
         {
             var renderObj:Object=new Object();
             renderObj.text=switchNameFormat(contacts[j].name)+"\nLocation: "+contacts[j].location;
-
-            var xml:XML=Assets.getAtalsXML(contacts[j].name+"FacialsXML");
-            var textrue:Texture=Assets.getTexture(contacts[j].name+"Facials");
+            var chname:String=contacts[j].name;
+            var xml:XML=Assets.getAtalsXML(chname+"FacialsXML");
+            var textrue:Texture=Assets.getTexture(chname+"Facials");
             var textureAtlas:TextureAtlas=new TextureAtlas(textrue,xml);
-            var _texture:Texture=textureAtlas.getTexture(contacts[j].name+"-pleased1");
+            var mood:String=DataContainer.getFacialMood(chname);
+            var _texture:Texture=textureAtlas.getTexture(chname+"-"+mood+"1");
             renderObj.thumbnail=_texture;
             _data.push(renderObj);
         }

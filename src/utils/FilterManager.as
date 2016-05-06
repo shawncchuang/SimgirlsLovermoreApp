@@ -112,7 +112,7 @@ import starling.utils.Color;
 			colorMatrixFilter.adjustBrightness(value); // darken image
 			target.filter = colorMatrixFilter;
 		}
-		public function setShadow(src:Sprite):void
+		public function setShadow(src:*):void
 		{
 			shadow=src;
 			var dropShadow:DropShadowFilter = new DropShadowFilter();

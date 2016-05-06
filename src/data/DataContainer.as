@@ -74,6 +74,8 @@ public class DataContainer
 
     private static var sysDir:Dictionary;
 
+    private static var currentMission:Object;
+
     public static function set AssetsId(ids:Array):void
     {
         assets_id=ids;
@@ -942,6 +944,13 @@ public class DataContainer
     }
     public static function get SystemDictionary():Dictionary{
         return sysDir;
+    }
+
+    public static function set CurrentMission(mission:Object):void{
+        currentMission=mission;
+    }
+    public static function get CurrentMission():Object{
+        return currentMission;
     }
 }
 }

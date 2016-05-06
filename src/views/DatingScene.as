@@ -425,7 +425,9 @@ public class DatingScene extends Scenes {
         var dating:String = DataContainer.currentDating;
         var loveObj:Object = flox.getSaveData("love");
         var moodObj:Object = flox.getSaveData("mood");
+        var honorObj:Object= flox.getSaveData("honor");
         var love:Number=loveObj.player;
+        var honor:Number=honorObj.player;
 
         player_love = loveObj.player;
         ch_love = loveObj[dating];
@@ -440,14 +442,13 @@ public class DatingScene extends Scenes {
 
         var _int:Number=flox.getSaveData("int").player;
         var _img:Number=flox.getSaveData("image").player;
-        var reward_mood:Number=Math.floor(love/6);
+        var reward_mood:Number=Math.floor(love/6)+Math.floor(honor/6);
         mood = moodObj[dating];
         mood += reward_mood;
         moodObj[dating] = mood;
-        var savegame:SaveGame = FloxCommand.savegame;
-        savegame.mood = moodObj;
-        savegame.love = loveObj;
-        FloxCommand.savegame = savegame;
+
+        flox.save("mood",moodObj);
+        flox.save("love",loveObj);
 
         var reward_love:String = String(_love);
         if (_love >= 0) {
@@ -1124,10 +1125,7 @@ public class DatingScene extends Scenes {
             gameinfo.dispatchEventWith("UPDATE_DATING", false, _data);
             DataContainer.currentDating=dating;
 
-            reward_mood = Math.floor(love / 18);
-//            mood += reward_mood;
-//            moodObj[dating] = mood;
-//            flox.save("mood", moodObj);
+            reward_mood = Math.floor(love / 18)+ Math.floor(honorObj.player/18);
 
             dateBubble();
             actTransform("../swf/date.swf",onDateActComplete);

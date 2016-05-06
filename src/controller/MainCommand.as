@@ -1106,7 +1106,7 @@ public class MainCommand implements MainInterface {
         var sysAssets:Object = flox.getSyetemData("assets");
         var price:Number = sysAssets[item_id].price;
         var rating:Number = searchAssetRating(item_id);
-        var mood:Number = 100+Math.floor((300+price) * rating / 100);
+        var mood:Number = 400+Math.floor(price * rating / 80);
         DebugTrace.msg("MainCommand.moodCalculator item_id="+item_id+", mood=" + mood + ", price=" + price + ", rating=" + rating);
 
         return mood
@@ -3104,6 +3104,7 @@ public class MainCommand implements MainInterface {
     public function checkMission(msnID:String=null):Object{
         var flox:FloxInterface=new FloxCommand();
         var mission:Array=flox.getSaveData("mission");
+        var en_mission:Array=new Array();
         var msnObj:Object;
         if(msnID){
 
@@ -3112,13 +3113,15 @@ public class MainCommand implements MainInterface {
                     mission[i].completed=true;
                     mission[i].enable=false;
                     msnObj= mission[i];
+                    DataContainer.CurrentMission=null;
                     break
                 }
             }
 
         }else{
 
-            var index:uint=0;
+            var index:Number=-1;
+            var enable:Number=-1;
             mission.sortOn("completed");
             for(var j:uint=0;j<mission.length;j++){
                 if(mission[j].completed){
@@ -3126,16 +3129,29 @@ public class MainCommand implements MainInterface {
                     break
                 }
             }
-            var en_mission:Array=mission.splice(index);
+
+            for(var k:uint=0;k<mission.length;k++){
+                if(mission[k].enable){
+                    enable=k;
+                    break
+                }
+            }
+            if(index!=-1)
+                en_mission=mission.splice(index);
             if(mission.length>0){
-                var ran:Number=Math.floor(Math.random()*mission.length);
-                mission[ran].enable=true;
-                msnObj=mission[ran];
+                var numMax:uint=mission.length;
+                if(enable==-1){
+                    var msnIndex:uint=Math.floor(Math.random()*numMax);
+                }else{
+                    msnIndex=enable;
+                }
+                mission[msnIndex].enable=true;
+                msnObj=mission[msnIndex];
             }else{
                 en_mission[0].enable=true;
                 msnObj=en_mission[0];
             }
-
+            if(en_mission.length >0 && mission.length>0)
             mission=mission.concat(en_mission);
 
         }

@@ -287,7 +287,7 @@ public class Character extends MovieClip
     private var heal_target:Array;
     private function onOverPlayer(e:MouseEvent):void
     {
-        
+
         var memberscom:MembersInterface=new MemebersCommand();
         var battleteam:Object=memberscom.getBattleTeam();
         var top_index:uint=memberscom.getTopIndex();
@@ -892,8 +892,8 @@ public class Character extends MovieClip
 
         character.visible=false;
         character.gotoAndStop(1);
-       if(skillAni)
-           skillAni.visible=false;
+        if(skillAni)
+            skillAni.visible=false;
 
 
         updatelColorEffect(character,avatar);
@@ -970,7 +970,7 @@ public class Character extends MovieClip
         if(status!=death)
         {
             if(actModel)
-               actModel.gotoAndStop(1);
+                actModel.gotoAndStop(1);
             if(effect)
                 effect.gotoAndStop(1);
         }
@@ -1636,9 +1636,16 @@ public class Character extends MovieClip
 
 
             skillSWf=gender+"_VicDance";
+            var modelIndex:Number=Config.bossModels.indexOf(ch_name);
+            if(modelIndex==-1) {
+                //except boss model
+                var loaderReq:LoaderRequest=new LoaderRequest();
+                loaderReq.setLoaderQueue(name+"_dance","../swf/skills/"+skillSWf+".swf",membermc,onVicDanceComplete);
+            }else{
+                var seTxt:TextField=membermc.getChildByName("se") as TextField;
+                membermc.removeChild(seTxt);
+            }
 
-            var loaderReq:LoaderRequest=new LoaderRequest();
-            loaderReq.setLoaderQueue(name+"_dance","../swf/skills/"+skillSWf+".swf",membermc,onVicDanceComplete);
         }
     }
     private function onVicDanceComplete(e:LoaderEvent):void
@@ -1654,7 +1661,7 @@ public class Character extends MovieClip
         {
             content.scaleX=-1;
         }
-        //character.visible=false;
+
         membermc.removeChild(character);
         var seTxt:TextField=membermc.getChildByName("se") as TextField;
         membermc.removeChild(seTxt);
@@ -1662,6 +1669,9 @@ public class Character extends MovieClip
         //skillAni.gotoAndStop(ele.toUpperCase()+"_RDY");
         //var ch_name:String=power.name;
         DebugTrace.msg("Character.onVicDanceComplet ch_name="+ch_name);
+
+
+
         for(var i:uint=0;i<part_pack.length;i++)
         {
             //DebugTrace.msg("Character.onVicDanceComplet part_pack["+i+"]="+part_pack[i]);
@@ -1700,13 +1710,11 @@ public class Character extends MovieClip
 
 
         }
-        //if
+
+
         var avatar:Object=flox.getSaveData("avatar");
         updatelColorEffect(skillAni,avatar);
-
-
         skillAni.body.addEventListener(Event.ENTER_FRAME,doCheckDancing);
-
     }
     private function doCheckDancing(e:Event):void
     {

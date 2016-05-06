@@ -421,7 +421,7 @@ public class FoundSomeScene extends Scenes
 		Starling.juggler.add(npcTween);
 
 		var nps:Object=flox.getSyetemData("npcs");
-		var msnObj:Object=command.checkMission();
+		var msnObj:Object=DataContainer.CurrentMission;
 
 		if(msnObj){
 			var mission:Object=flox.getSyetemData("missions")[msnObj.id];
@@ -498,12 +498,13 @@ public class FoundSomeScene extends Scenes
 						initCancelHandle();
 					}else{
 
-						msnObj=command.checkMission();
+						msnObj= DataContainer.CurrentMission;
 						if(msnObj){
 							this.addEventListener(TouchEvent.TOUCH,onNextSpeaking);
 							initMissionReward();
 
 							if(!missionComplete){
+
 								this.removeEventListener(TouchEvent.TOUCH,onNextSpeaking);
 								clickmouse.removeFromParent();
 								initCancelHandle();

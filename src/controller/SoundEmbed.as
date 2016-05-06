@@ -85,6 +85,12 @@ package controller
 		[Embed(source="../../media/textures/sound/futuristic gun.mp3")]
 		public static const FuturisticGun:Class;
 
+		[Embed(source="../../media/textures/sound/PhoneRing.mp3")]
+		public static const PhoneRing:Class;
+
+		[Embed(source="../../media/textures/sound/CarHorn.mp3")]
+		public static const CarHorn:Class;
+
 		[Embed(source="../../media/textures/sound/cat.mp3")]
 		public static const cat:Class;
 
