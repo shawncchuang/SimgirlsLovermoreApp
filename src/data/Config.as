@@ -1405,6 +1405,7 @@ public class Config
         {"id":"m002","completed":false,"enable":false},
         {"id":"m003","completed":false,"enable":false}];
 
+    public static var BONUS_COIN:Number=25;
     public function Config()
     {
 

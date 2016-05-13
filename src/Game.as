@@ -40,6 +40,8 @@ import starling.utils.ScaleMode;
 
 import utils.DrawManager;
 
+import views.PopupManager;
+
 import views.StoryPreview;
 
 //import model.Avatar;
@@ -103,12 +105,13 @@ public class Game extends Sprite
 		var scenes:Scenes=new Scenes();
 		scenes.setupEvent();
 
-        ViewsContainer.gameScene=this;
+		ViewsContainer.gameScene=this;
 		ViewsContainer.currentScene=this;
 		this.addEventListener(TopViewEvent.REMOVE,doTopViewDispatch);
 		this.addEventListener("PAY_CHECK",onPayCheck);
-        this.addEventListener("RESTART_GAME",onRestartGame);
-        this.addEventListener("LOAD_TO_RESTART",onLoadToRestart);
+		this.addEventListener("RESTART_GAME",onRestartGame);
+		this.addEventListener("LOAD_TO_RESTART",onLoadToRestart);
+		this.addEventListener("BONUS_USER",checkBonusUserHandler);
 
 		var assets:Assets=new Assets();
 		assets.initMusicAssetsManager();
@@ -142,11 +145,12 @@ public class Game extends Sprite
 			}
 		}
 
-			command.initCriminalsRecord();
-		    command.checkMemory();
-			command.versioncommand();
+		command.initCriminalsRecord();
+		command.checkMemory();
+		command.versioncommand();
 
-		Starling.current.stage.addEventListener(ResizeEvent.RESIZE, onStageResized);
+		command.initBonusList();
+		//Starling.current.stage.addEventListener(ResizeEvent.RESIZE, onStageResized);
 		Starling.current.stage.addEventListener(KeyboardEvent.KEY_DOWN,onKeyDownHandler);
 	}
 	private function doTopViewDispatch(e:TopViewEvent):void
@@ -194,27 +198,27 @@ public class Game extends Sprite
 		}
 		//switch
 	}
-    private function onRestartGame(e:Event):void{
+	private function onRestartGame(e:Event):void{
 
 
-        if(loadgame)
-        {
-            initLoadScene();
-        }
-        else
-        {
-            initUI();
-            initMainScene();
+		if(loadgame)
+		{
+			initLoadScene();
+		}
+		else
+		{
+			initUI();
+			initMainScene();
 
-        }
+		}
 
-    }
-    private function onLoadToRestart(e:Event):void{
-        saveloadlist.removeFromParent(true);
-        bgImg.removeFromParent(true);
-        initUI();
-        initMainScene();
-    }
+	}
+	private function onLoadToRestart(e:Event):void{
+		saveloadlist.removeFromParent(true);
+		bgImg.removeFromParent(true);
+		initUI();
+		initMainScene();
+	}
 
 	private function initLoadScene():void
 	{
@@ -396,6 +400,30 @@ public class Game extends Sprite
 
 	}
 
+	private function checkBonusUserHandler(e:Event):void{
+
+		var rewards:Object=flox.getPlayerData("rewards");
+		var email:String=flox.getPlayerData("email");
+		var from:String=flox.getPlayerData("from");
+		var bonuslist:Array=DataContainer.MembersMail;
+		var listStr:String=JSON.stringify(bonuslist);
+		DebugTrace.msg("Game.checkBonusUserHandler listStr="+listStr);
+		var userIndex:Number=listStr.indexOf(email);
+		if(!rewards){
+			rewards=new Object();
+		}
+		if(!rewards.bonus_coin && userIndex!=-1 && from=="pre_order"){
+
+			var popup:PopupManager=new PopupManager();
+			popup.attr="bonus";
+			popup.msg="Apply Bonus Credit ?";
+			popup.init();
+			this.addChild(popup);
+
+
+		}
+
+	}
 
 }
 }

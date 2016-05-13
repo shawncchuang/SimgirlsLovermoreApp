@@ -399,7 +399,35 @@ public class MainCommand implements MainInterface {
             var floxMg:FloxManagerView = ViewsContainer.FloxManager;
             floxMg.currentAccount();
         }
-        DebugTrace.msg("MainCommand.completePreOrderAccount emails="+JSON.stringify(emails));
+        //DebugTrace.msg("MainCommand.completePreOrderAccount emails="+JSON.stringify(emails));
+    }
+    public  function initBonusList():void{
+
+        csv = new CSV();
+        //csv.headerOverwrite = false
+        //csv.header = ['Email'];
+
+        csv.addEventListener(Event.COMPLETE, completeBonusList);
+        csv.load(new URLRequest('csv/bonus_list.csv'));
+
+    }
+    private  function completeBonusList(e:Event):void{
+        var bonuslist:Array = csv.data;
+        if(bonuslist.length>0){
+            DataContainer.MembersMail = bonuslist;
+
+           // var floxMg:FloxManagerView = ViewsContainer.FloxManager;
+            // floxMg.setupBonusList();
+
+
+
+            var current_scence:Sprite=ViewsContainer.gameScene;
+            current_scence.dispatchEventWith("BONUS_USER");
+
+        }
+
+
+
     }
 
     public function initSceneLibrary():void {

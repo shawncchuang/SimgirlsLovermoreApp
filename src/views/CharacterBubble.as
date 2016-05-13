@@ -171,7 +171,12 @@ public class CharacterBubble extends Sprite
 		}
 		//DebugTrace.msg("addBubbleTxt: "+talks[talk_index]);
 		var flox:FloxInterface=new FloxCommand();
-		var first_name:String=flox.getSaveData("first_name");
+		try{
+			var first_name:String=flox.getSaveData("first_name");
+		}catch(e:Error){
+			first_name=" ";
+		}
+
 		var brand:String="";
 		var msnObj:Object=DataContainer.CurrentMission;
 		if(msnObj){
@@ -180,7 +185,6 @@ public class CharacterBubble extends Sprite
 			var assets:Object=flox.getSyetemData("assets");
 			brand=assets[mission.req].brand;
 		}
-
 		sentence=sentence.split("<>").join(",");
 		sentence=sentence.split("$$$").join(first_name);
 		sentence=sentence.split("XXX").join(brand);

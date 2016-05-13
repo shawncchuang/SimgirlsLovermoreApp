@@ -78,5 +78,6 @@ public interface MainInterface
     function versioncommand():void
     function checkMission(msnID:String=null):Object
     function ConsumAssets(item_id:String):void
+    function initBonusList():void
 }
 }

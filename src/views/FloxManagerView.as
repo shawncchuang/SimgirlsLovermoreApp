@@ -42,6 +42,10 @@ package views
 			managerUI.schedulelbr.addEventListener(MouseEvent.CLICK,doSaveScheduleEntites);
 			managerUI.mainstory.addEventListener(MouseEvent.CLICK,doSaveMainStoryEntites);
 			managerUI.updateitems.addEventListener(MouseEvent.CLICK,doUpdatePlayerItems);
+
+			managerUI.initbonus.addEventListener(MouseEvent.CLICK,initBonusList);
+
+
 			addChild(managerUI);
 			
 			
@@ -137,9 +141,32 @@ package views
 			var key:String=managerUI.key.text;
 			var items:Array=[  { "id": "com1", "qty": 3 },{ "id": "com2", "qty": 9999 }, { "id": "com3", "qty": 9999 } ];
 			flox.updatePlayer(cons,key,items);
-			
-			
+
 		}
+
+		private var listIndex:Number=0;
+		public function initBonusList(e:MouseEvent):void{
+			//add coin;
+			listIndex=0;
+			command.initBonusList();
+		}
+		public function setupBonusList():void{
+
+			DebugTrace.msg("FloxManagerView.setupBonusList");
+			var bonuslist:Array=DataContainer.MembersMail;
+
+			if(listIndex<bonuslist.length){
+
+				flox.queryPlayerByEmail(bonuslist[listIndex],setupPlayerBonus);
+			}
+
+		}
+		private function setupPlayerBonus():void{
+
+			listIndex++;
+			setupBonusList();
+		}
+
 		
 	}
 }

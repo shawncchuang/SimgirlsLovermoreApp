@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="Flex" version="4">
-  <component name="FlexBuildConfigurationManager" active="SimgirlsLovermore">
+  <component name="FlexBuildConfigurationManager" active="Lovermore">
     <configurations>
-      <configuration name="SimgirlsLovermore" target-platform="Desktop" pure-as="true" main-class="Main" output-file="Main.swf" output-folder="$MODULE_DIR$/bin-debug">
+      <configuration name="Lovermore" target-platform="Desktop" pure-as="true" main-class="Main" output-file="Main.swf" output-folder="$MODULE_DIR$/bin-debug">
         <dependencies>
           <entries>
             <entry library-name="lib" library-level="project">
@@ -22,7 +22,7 @@
           </map>
           <option name="additionalOptions" value="-swf-version=32 -frame=StartupFrame,SimgirlsLovemore -default-size 1024 768 -debug=true" />
         </compiler-options>
-        <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/src/Main-app.xml" package-file-name="Simgirls">
+        <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/src/Main-app.xml" package-file-name="Lovemore">
           <files-to-package>
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/src/update_config.xml" path-in-package="update_config.xml" />
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/fonts" path-in-package="fonts" />
@@ -31,6 +31,7 @@
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/images" path-in-package="images" />
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/collection" path-in-package="collection" />
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/json" path-in-package="json" />
+            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/csv/bonus_list.csv" path-in-package="csv/bonus_list.csv" />
           </files-to-package>
           <AirSigningOptions keystore-path="$MODULE_DIR$/release/simgirl_cer.p12" use-temp-certificate="false" />
         </packaging-air-desktop>

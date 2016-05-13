@@ -6,6 +6,8 @@ import controller.Assets;
 import controller.FloxCommand;
 import controller.FloxInterface;
 
+import data.Config;
+
 import data.DataContainer;
 
 import feathers.controls.Button;
@@ -25,6 +27,7 @@ import starling.text.TextField;
 import starling.textures.Texture;
 
 import utils.DebugTrace;
+import utils.ViewsContainer;
 
 
 public class PopupManager extends Sprite{
@@ -34,6 +37,9 @@ public class PopupManager extends Sprite{
     public var attr:String;
     public var data:*;
     public var msg:String;
+    private var bg:*;
+    private var msgTxt:TextField;
+    private var btn:Button;
 
 
     public function init():void {
@@ -42,49 +48,97 @@ public class PopupManager extends Sprite{
 
         popup=new Sprite();
 
-//        var bgTexture:Texture=Assets.getTexture("PopupBg");
-//        var bg:Image=new Image(bgTexture);
-        var bg:Quad = new Quad( 400, 80, 0x000000 );
+        var isCentered:Boolean=false;
+        var isModal:Boolean=false;
+        switch(attr){
+
+            case "bonus":
+                isCentered=true;
+                isModal=true;
+                bonusLayout();
+
+                break;
+            default:
+                defaultLayout();
+
+                break
+
+        }
+
+        popup.addChild(bg);
+        popup.addChild(msgTxt);
+        popup.addChild(btn);
+
+
+        PopUpManager.addPopUp(popup,isModal,isCentered);
+        DataContainer.popupMessage=true;
+
+
+    }
+    private function defaultLayout():void{
+        bg = new Quad( 400, 80, 0x000000 );
         if(attr=="memory"){
             bg=new Quad( 400, 80, 0xEF1F22 );
         }
 
-        var msgTxt:TextField=new TextField(400,80,msg);
+        msgTxt=new TextField(400,80,msg);
         msgTxt.format.setTo(font,20,0xFFFFFF);
         msgTxt.autoScale=true;
-//        msgTxt.x=15;
-//        msgTxt.y=30;
+        btn=new Button();
+        btn.setSize(400, 80);
+        btn.addEventListener(Event.TRIGGERED, doTryAgainHandler);
 
-//        var tryagain:Button=new Button();
-//        tryagain.label="Click Here & Try Again";
-//        tryagain.setSize(200,40);
-//        tryagain.x=bg.width/2-100;
-//        tryagain.y=145;
-//        tryagain.labelFactory =  getItTextRender;
-
-        var tryagain:Button=new Button();
-        tryagain.setSize(400, 80);
-        tryagain.addEventListener(Event.TRIGGERED, doTryAgainHandler);
 
         popup.x=Starling.current.stage.stageWidth-bg.width-5;
         popup.y=Starling.current.stage.stageHeight-bg.height-5;
-        popup.addChild(bg);
-        popup.addChild(msgTxt);
-        popup.addChild(tryagain);
-
-
-        PopUpManager.addPopUp(popup,false,false);
-        DataContainer.popupMessage=true;
-
-
-
     }
+    private function bonusLayout():void{
+
+
+        var bgTexture:Texture=Assets.getTexture("PopupBg");
+        bg=new Image(bgTexture);
+
+
+        msgTxt=new TextField(400,80,msg);
+        msgTxt.format.setTo(font,20,0x000000);
+        msgTxt.autoScale=true;
+        msgTxt.x=15;
+        msgTxt.y=30;
+
+
+        btn=new Button();
+        btn.label="Confirm";
+        btn.setSize(200,40);
+        btn.x=bg.width/2-100;
+        btn.y=145;
+        btn.labelFactory =  getItTextRender;
+
+        btn.addEventListener(Event.TRIGGERED, doBonusConfirmHandler);
+    }
+
     private function doTryAgainHandler(e:Event):void{
         DebugTrace.msg("PopupManager.doTryAgainHandler data="+JSON.stringify(data));
 
         //flox.save(this.attr,this.data);
         PopUpManager.removePopUp(popup,true);
         DataContainer.popupMessage=false;
+
+    }
+    private function doBonusConfirmHandler(e:Event):void{
+        PopUpManager.removePopUp(popup,true);
+        DataContainer.popupMessage=false;
+
+
+        var flox:FloxInterface=new FloxCommand();
+        var rewards:Object=flox.getPlayerData("rewards");
+        var coin:Number=flox.getPlayerData("coin");
+        coin+=Config.BONUS_COIN;
+        if(!rewards){
+            rewards=new Object();
+        }
+        rewards.bonus_coin=true;
+        flox.savePlayer({"coin":coin,"rewards":rewards});
+
 
     }
     private function getItTextRender():ITextRenderer{
