@@ -6,9 +6,12 @@ import flash.desktop.NativeApplication;
 	import flash.display.MovieClip;
 	import flash.display.Shape;
 	import flash.display.StageAlign;
-	import flash.events.ErrorEvent;
+import flash.display.StageDisplayState;
+import flash.display.StageScaleMode;
+import flash.events.ErrorEvent;
 	import flash.events.Event;
-	import flash.text.TextField;
+import flash.events.MouseEvent;
+import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
 	import flash.utils.getDefinitionByName;
@@ -43,20 +46,31 @@ import flash.desktop.NativeApplication;
 		private var appUpdater:ApplicationUpdaterUI=new ApplicationUpdaterUI();
 		public function Main()
 		{
+			stage.scaleMode = StageScaleMode.NO_BORDER;
+			stage.align = StageAlign.TOP;
 
 			var parameters:Object=this.loaderInfo.parameters;
 			DebugTrace.msg("Preloader.auth\\Key:"+parameters.authkey);
 			verifyKey=parameters.authkey;
 			Config.verifyKey=verifyKey;
 
+			this.stage.addEventListener(Event.RESIZE, onResize);
 			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			stop();
+
+		}
+		private function onResize(e:Event):void
+		{
+			if(stage.displayState == StageDisplayState.NORMAL)
+			{
+				this.scaleY = this.scaleX = 1;
+			}
+
 		}
 
 		private function onAddedToStage(event:Event):void
 		{
-			//stage.scaleMode = StageScaleMode.SHOW_ALL;
-			stage.align = StageAlign.TOP_LEFT;
+
 			ViewsContainer.GameStage=stage;
 
 			var format:TextFormat=new TextFormat();
@@ -193,5 +207,6 @@ import flash.desktop.NativeApplication;
 
 			addChildAt(startupObject, 0);
 		}
+
 	}
 }

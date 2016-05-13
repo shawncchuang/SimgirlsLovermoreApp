@@ -15,7 +15,9 @@ import flash.net.URLLoader;
 import flash.net.URLLoader;
 import flash.net.URLLoaderDataFormat;
 import flash.net.URLRequest;
-	import flash.net.navigateToURL;
+import flash.net.URLRequestMethod;
+import flash.net.URLVariables;
+import flash.net.navigateToURL;
 	
 	import controller.FloxCommand;
 	import controller.FloxInterface;
@@ -168,6 +170,19 @@ import flash.net.URLRequest;
 			}
 			ViewsContainer.loaderQueue=new Object();
 
+		}
+
+		public function navigateToURLHandler(url:String,value:Object=null):void{
+
+			var request:URLRequest = new URLRequest(url);
+			var vars:URLVariables = new URLVariables();
+			vars.exampleSessionId = new Date().getTime();
+			if(value){
+				vars.authKey=value.authKey;
+			}
+			request.data = vars;
+			request.method = URLRequestMethod.POST;
+			navigateToURL(request,"_self");
 		}
 
 	}

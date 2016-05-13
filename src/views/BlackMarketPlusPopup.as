@@ -90,6 +90,7 @@ public class BlackMarketPlusPopup extends Sprite {
         switch(item_id){
             case "bm_1":
             case "bm_7":
+            case "bm_7_1":
                 character="player";
                 break
             case "bm_2":
@@ -97,6 +98,10 @@ public class BlackMarketPlusPopup extends Sprite {
             case "bm_4":
             case "bm_5":
             case "bm_6":
+            case "bm_2_1":
+            case "bm_4_1":
+            case "bm_5_1":
+            case "bm_6_1":
                 viewcom.characterIcons(popup,"blackmarket");
                 break
             case "bm_8":

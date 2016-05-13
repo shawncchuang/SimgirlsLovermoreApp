@@ -3105,7 +3105,7 @@ public class MainCommand implements MainInterface {
         var flox:FloxInterface=new FloxCommand();
         var mission:Array=flox.getSaveData("mission");
         var en_mission:Array=new Array();
-        var msnObj:Object;
+        var msnObj:Object=null;
         if(msnID){
 
             for(var i:uint=0;i<mission.length;i++){

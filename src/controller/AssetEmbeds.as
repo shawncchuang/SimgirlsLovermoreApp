@@ -972,6 +972,10 @@ public class AssetEmbeds
     [Embed(source="../../media/textures/npc/npc069.png")]
     public static const npc069:Class;
 
+    [Embed(source="../../media/textures/npc/npc070.png")]
+    public static const npc070:Class;
+    [Embed(source="../../media/textures/npc/npc071.png")]
+    public static const npc071:Class;
 
     [Embed(source="../../media/textures/characters/styles/ceil/twin.png")]
     public static const ceil_twin:Class;

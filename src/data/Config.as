@@ -8,8 +8,8 @@ public class Config
 {
     public static var permision:String="π®´ø∂´®black!@spears#$";
     public static var deadline:Number=20;
-    //public static var payCoinURL:String="https://megastore99.globat.com/files/payment/paypal/index.php?cate=coin&authkey=";
-    public static var payCoinURL:String="http://blackspears.com/black-market.html";
+    public static var payCoinURL:String="https://megastore99.globat.com/files/payment/stripe/index.php";
+    //public static var payCoinURL:String="http://blackspears.com/black-market.html";
     public static var payGameURL:String="https://megastore99.globat.com/files/payment/paypal/index.php?cate=game&authkey=";
     private static var points:Object=new Object();
     private static var playerInfo:Object=new Object();
@@ -108,7 +108,10 @@ public class Config
         "restaurant2":"npc067",
 
         "coffeshop":"npc069",
-        "Bunny":"Bunny"
+        "Bunny":"Bunny",
+
+        "blubird":"npc070",
+        "rockfellow":"npc071"
 
     };
     //schedule [index+ current month]

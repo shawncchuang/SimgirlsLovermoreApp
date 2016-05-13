@@ -412,7 +412,7 @@ public class MainScene extends Scenes
             if(enabled){
                 changeScene(target,openDay,openNight,time,msg);
             }else{
-                msg="This place is not open to tourists.";
+                msg="This place is not open to the public.";
                 var alert:Sprite=new AlertMessage(msg);
                 Starling.current.stage.addChild(alert);
 

@@ -20,14 +20,23 @@ import events.GameEvent;
 import events.SceneEvent;
 import events.TopViewEvent;
 
+import flash.display.StageDisplayState;
+
 import flash.display.StageQuality;
+import flash.geom.Point;
+import flash.geom.Rectangle;
 import flash.system.System;
 
 import flash.ui.ContextMenu;
+import flash.ui.Keyboard;
 
 import model.BattleData;
 
 import starling.display.Sprite;
+import starling.events.KeyboardEvent;
+import starling.events.ResizeEvent;
+import starling.utils.RectangleUtil;
+import starling.utils.ScaleMode;
 
 import utils.DrawManager;
 
@@ -137,6 +146,8 @@ public class Game extends Sprite
 		    command.checkMemory();
 			command.versioncommand();
 
+		Starling.current.stage.addEventListener(ResizeEvent.RESIZE, onStageResized);
+		Starling.current.stage.addEventListener(KeyboardEvent.KEY_DOWN,onKeyDownHandler);
 	}
 	private function doTopViewDispatch(e:TopViewEvent):void
 	{
@@ -365,5 +376,26 @@ public class Game extends Sprite
 		}
 		//if
 	}
+
+	private function onStageResized(e:starling.events.ResizeEvent,size:Point):void{
+
+		RectangleUtil.fit(
+				new flash.geom.Rectangle(0, 0, stage.stageWidth, stage.stageHeight),
+				new flash.geom.Rectangle(0, 0, size.x, size.y),
+				ScaleMode.SHOW_ALL,false,
+				Starling.current.viewPort);
+
+
+	}
+	private function onKeyDownHandler(e:KeyboardEvent):void{
+
+		if(e.keyCode==27){
+			Starling.current.nativeStage.displayState = StageDisplayState.NORMAL;
+
+		}
+
+	}
+
+
 }
 }

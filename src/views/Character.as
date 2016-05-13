@@ -937,6 +937,7 @@ public class Character extends MovieClip
                 else
                 {
                     // not boss ,normal action
+
                     character.visible=true;
                     actModel=character;
                     actlabel=Character[act];

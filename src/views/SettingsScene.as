@@ -20,7 +20,11 @@ import feathers.events.FeathersEventType;
 import feathers.layout.HorizontalLayout;
 import feathers.layout.VerticalLayout;
 
+import flash.display.StageDisplayState;
+
 import flash.geom.Point;
+
+import starling.core.Starling;
 
 import starling.display.Button;
 
@@ -39,7 +43,9 @@ public class SettingsScene extends Sprite{
     private var templete:MenuTemplate;
     private var font:String="SimMyriadPro";
     private var toggle:Image;
+    private var screenToggle:Image;
     private var enabled:Boolean=true;
+    private var screenEnabled:Boolean=true;
     public function SettingsScene():void{
 
         base_sprite=new Sprite();
@@ -94,6 +100,15 @@ public class SettingsScene extends Sprite{
         toggle.addEventListener(TouchEvent.TOUCH, toggleSwitchChangeHandler);
 
 
+        /*
+        var fullscreenToggle:String="IconToggleDefault";
+        screenToggle=new Image(Assets.getTexture(fullscreenToggle));
+        screenToggle.useHandCursor=true;
+        screenToggle.x=toggle.x;
+        screenToggle.y=toggle.y+screenToggle.height+5;
+        addChild(screenToggle);
+        screenToggle.addEventListener(TouchEvent.TOUCH, screenToggleSwitchChangeHandler);
+        */
     }
     private function toggleSwitchChangeHandler(e:TouchEvent):void{
 
@@ -117,6 +132,40 @@ public class SettingsScene extends Sprite{
 
         }
     }
+    private function screenToggleSwitchChangeHandler(e:TouchEvent):void{
+
+        var toggle:Image =  e.currentTarget as Image;
+
+        var began:Touch=e.getTouch(toggle,TouchPhase.BEGAN);
+        //trace("SettingScene.toggleSwitchChangeHandler -> toggle.isSelected:",toggle.isSelected);
+        if(began){
+
+            if(screenEnabled){
+                screenEnabled=false;
+
+                screenToggle.texture=Assets.getTexture("IconToggleDown");
+
+
+            }else{
+                screenEnabled=true;
+                screenToggle.texture=Assets.getTexture("IconToggleDefault");
+
+            }
+            if(Starling.current.nativeStage.displayState == StageDisplayState.FULL_SCREEN)
+            {
+                Starling.current.nativeStage.displayState = StageDisplayState.NORMAL;
+            }
+            else
+            {
+                Starling.current.nativeStage.displayState = StageDisplayState.FULL_SCREEN;
+            }
+
+
+        }
+
+    }
+
+
     private function doCannelHandler():void
     {
 

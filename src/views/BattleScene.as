@@ -1950,7 +1950,7 @@ public class BattleScene extends Sprite
             movingX=175;
         }
         //if
-        despearBatttleTeam(0,id);
+        //despearBatttleTeam(0,id);
         movingY=950;
         //y=-578 battle
         attack_member.x=movingX;
@@ -2586,7 +2586,7 @@ public class BattleScene extends Sprite
         var member:Member=battleteam[allpowers[attack_index].id];
         var jewels:Number=Number(member.power.jewel.split("|")[0]);
         var bossIndex:Number=Config.bossModels.indexOf(member.power.ch_name);
-        if(jewels==5 && bossIndex==-1){
+        if(jewels==5 ){
             despearBatttleTeam(1,member.name);
         }
 

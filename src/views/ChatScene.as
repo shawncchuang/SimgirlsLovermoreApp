@@ -141,6 +141,7 @@ public class ChatScene extends Sprite
             //if
         }
         //for
+        relist=[2,2,2];
         DebugTrace.msg("ChatScene.setResult relist:"+relist);
 
     }
@@ -368,7 +369,7 @@ public class ChatScene extends Sprite
         var datingScene:Sprite=ViewsContainer.baseSprite;
         var _data:Object=new Object();
         //Chat Formula
-        //relist=[2,2,2];
+
         switch(relist.toString())
         {
             case "0,0,0":

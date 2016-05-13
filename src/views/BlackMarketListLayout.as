@@ -104,7 +104,7 @@ public class BlackMarketListLayout extends PanelScreen {
             item.texture= _item.texture;
             itemlist.push(item);
         }
-
+        itemlist.sortOn("price",Array.NUMERIC|Array.DESCENDING);
         var layout:VerticalLayout=new VerticalLayout();
         layout.gap=2;
         layout.horizontalAlign=TiledRowsLayout.HORIZONTAL_ALIGN_LEFT;
@@ -264,6 +264,11 @@ public class BlackMarketListLayout extends PanelScreen {
             case "bm_5":
             case "bm_6":
             case "bm_7":
+            case "bm_2_1":
+            case "bm_4_1":
+            case "bm_5_1":
+            case "bm_6_1":
+            case "bm_7_1":
                 popupPlus=new BlackMarketPlusPopup();
                 popupPlus.item_id=item_id;
                 popupPlus.msg=popupMsg;

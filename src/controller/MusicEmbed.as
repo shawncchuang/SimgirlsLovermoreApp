@@ -111,5 +111,11 @@ package controller
 		[Embed(source="../../media/textures/music/rufusbattle.mp3")]
 		public static const FinalBattleMusic:Class;
 
+		[Embed(source="../../media/textures/music/rapper.mp3")]
+		public static const rapper:Class;
+
+		[Embed(source="../../media/textures/music/ssccopening.mp3")]
+		public static const ssccopening:Class;
+
 	}
 }

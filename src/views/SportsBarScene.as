@@ -126,11 +126,11 @@ import events.GameEvent;
 					command.sceneDispatch(SceneEvent.CHANGED,_data);
 					break;
 
-				case "s034|off":
-					_data.name= "MainScene";
-					_data.from="story";
-					command.sceneDispatch(SceneEvent.CHANGED,_data);
-					break;
+//				case "s034|off":
+//					_data.name= "MainScene";
+//					_data.from="story";
+//					command.sceneDispatch(SceneEvent.CHANGED,_data);
+//					break;
 				case "s9999|off":
 					this.removeFromParent(true);
 

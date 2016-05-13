@@ -213,21 +213,12 @@ public class BlackMarketScene extends Scenes
 		var auth:String=loaderReq.getSharedObject("auth");
 
 		var email:String=flox.getPlayerData("email");
-		var hashkey:String=flox.getPlayerData("hashkey");
-		//var permision:String=Config.permision;
-		//SHA256.hashString(String(email+permision+pwd));
-		var authKey:String=hashkey;
-//		if(auth=="email") {
-//			authKey = loaderReq.getSharedObject("email");
-//		}
-		if(Config.payCoinURL.indexOf("blackspears.com")!=-1){
-			var url:String=Config.payCoinURL;
-		}else{
-			url=Config.payCoinURL+authKey;
-		}
-		DebugTrace.msg("BlackTileList onClickItemHandler url:"+url);
-		var req:URLRequest=new URLRequest(url);
-		navigateToURL(req,"_blank");
+		var authKey:String=flox.getPlayerData("hashkey");
+
+
+		var dataReq:Object=new Object();
+		dataReq.authKey=authKey;
+		loaderReq.navigateToURLHandler(Config.payCoinURL,dataReq);
 
 
 		var command:MainInterface=new MainCommand();

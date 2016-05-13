@@ -2,18 +2,13 @@ package
 {
 import com.demonsters.debugger.MonsterDebugger;
 import com.gamua.flox.Player;
-import com.greensock.TweenMax;
-import com.greensock.loading.LoaderMax;
 import com.greensock.loading.LoaderMax;
 import com.greensock.loading.SWFLoader;
-
-import events.GameEvent;
 
 import flash.desktop.NativeApplication;
 import flash.display.MovieClip;
 import flash.display.Sprite;
 import flash.display.StageAlign;
-import flash.display.StageQuality;
 import flash.display.StageScaleMode;
 import flash.events.Event;
 
@@ -30,6 +25,7 @@ import data.DataContainer;
 import events.GameEvent;
 import events.SceneEvent;
 import events.TopViewEvent;
+
 
 import flash.geom.Rectangle;
 import flash.system.System;
@@ -510,22 +506,26 @@ public class SimgirlsLovemore extends MovieClip
 	}
 	private function start():void
 	{
-		//stage.scaleMode = StageScaleMode.NO_SCALE;
+		//stage.scaleMode = StageScaleMode.SHOW_ALL;
+		//stage.align = StageAlign.TOP;
 		//stage.quality=StageQuality.LOW;
-		//stage.align = StageAlign.TOP_LEFT;
+
 
 		//Starling.multitouchEnabled = true; // useful on mobile devices
-
 		var vp:Rectangle=new flash.geom.Rectangle(0, 0, 1024, 768);
 		_starling=new Starling(Game,stage,vp,null,"auto","auto");
+
 		_starling.showStats=false;
 		Starling.current.nativeStage.frameRate = 24;
 		//_starling.enableErrorChecking=Capabilities.isDebugger;
 
 		_starling.start();
-		//_starling.stage3D.addEventListener(Event.CONTEXT3D_CREATE,onContextCreated);
 
+
+		//_starling.stage3D.addEventListener(Event.CONTEXT3D_CREATE,onContextCreated);
 		_starling.addEventListener(starling.events.Event.ROOT_CREATED, onContextCreated);
+
+
 
 		this.stage.addEventListener(flash.events.Event.DEACTIVATE, stage_deactiveHadnler,false, 0, true);
 	}
@@ -575,6 +575,7 @@ public class SimgirlsLovemore extends MovieClip
 		}
 
 	}
+
 
 
 }
