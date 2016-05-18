@@ -393,18 +393,14 @@ public class DatingScene extends Scenes {
         value_data.values = "MOOD " + mood_value;
         command.displayUpdateValue(this, value_data);
 
-
-        delayCall= new DelayedCall(doUpdateRelationship,2);
-        Starling.juggler.add(delayCall);
-
-        function doUpdateRelationship():void{
-            Starling.juggler.remove(delayCall);
-            command.updateRelationship();
-        }
+        command.addedCancelButton(this, doCancelDating);
+        //tweenID=Starling.juggler.delayCall(doUpdateRelationship,3);
 
     }
-
-
+    private function doUpdateRelationship():void{
+        Starling.juggler.removeByID(tweenID);
+        command.updateRelationship();
+    }
     private var pts_index:Number;
     private var old_pts:Number;
 
@@ -634,10 +630,7 @@ public class DatingScene extends Scenes {
         addChild(character);
 
         tweenID=Starling.juggler.tween(character, 0.5,{transition:Transitions.EASE_IN_OUT,alpha:1,onComplete:onCharaacterComplete});
-//        var tween:Tween = new Tween(character, 0.5, Transitions.EASE_IN_OUT);
-//        tween.fadeTo(1);
-//        tween.onComplete=onCharaacterComplete;
-//        Starling.juggler.add(tween);
+
         function onCharaacterComplete():void{
             //Starling.juggler.removeTweens(character);
             Starling.juggler.removeByID(tweenID);
@@ -1067,16 +1060,7 @@ public class DatingScene extends Scenes {
     private var chats:Array;
 
     private function confirmDating():void {
-        /*
-         acquaintance      X
-         new friend    1600
-         friend   1200
-         clsoe firned  800
-         dating partner    400
-         lover         200
-         spouse          100
-         mood/rel=x/100
-         */
+
         var relExp:Object =
         {
             "acquaintance": 1600,
@@ -1127,7 +1111,6 @@ public class DatingScene extends Scenes {
 
             reward_mood = Math.floor(love / 18)+ Math.floor(honorObj.player/18);
 
-            dateBubble();
             actTransform("../swf/date.swf",onDateActComplete);
 
 
@@ -1144,8 +1127,19 @@ public class DatingScene extends Scenes {
 
     private function dateBubble():void {
 
-        var index:Number = Math.floor(Math.random() * chats.length);
-        chat = chats[index];
+        //var index:Number = Math.floor(Math.random() * chats.length);
+        //chat = chats[index];
+        //talk about secret
+        var dating:String=DataContainer.currentDating;
+        var sysSecrets:Object=flox.getSyetemData("secrets");
+        var secrets:Object=flox.getSaveData("secrets");
+        var dating_secrets:Array=secrets[dating];
+        var index:uint=uint(Math.random()*dating_secrets.length);
+        var id:String=dating_secrets[index].id;
+        var secretsQ:String=sysSecrets[id].q;
+        var ans:String=dating_secrets[index].ans;
+        chat=secretsQ.split("|~|").join(ans);
+
         initBubble();
 
 
@@ -1260,12 +1254,8 @@ public class DatingScene extends Scenes {
 
 
         DebugTrace.msg("DatingScene.onDateActComplete reward_mood=" + reward_mood);
-        try{
-            bubble.removeFromParent(true);
-        }catch (e:Error){
 
-        }
-
+        dateBubble();
         updateMood();
 
         //drawcom.updatePieChart(mood);
@@ -1679,6 +1669,10 @@ public class DatingScene extends Scenes {
 
         character.removeFromParent(true);
         mainProfile.removeFromParent(true);
+        try{
+            bubble.removeFromParent(true);
+        }catch (e:Error){}
+
 
     }
     private function twinflameWarning():void{

@@ -141,7 +141,7 @@ public class ChatScene extends Sprite
             //if
         }
         //for
-        relist=[2,2,2];
+        //relist=[2,2,2];
         DebugTrace.msg("ChatScene.setResult relist:"+relist);
 
     }
@@ -355,7 +355,7 @@ public class ChatScene extends Sprite
         var systemAssets:Object=flox.getSyetemData("assets");
 
         var ratingLv:Number;
-        var likes:String;
+        var index:Number=0;
         var dating:String=DataContainer.currentDating;
         var assets:Object;
         var item:Object;
@@ -369,7 +369,6 @@ public class ChatScene extends Sprite
         var datingScene:Sprite=ViewsContainer.baseSprite;
         var _data:Object=new Object();
         //Chat Formula
-
         switch(relist.toString())
         {
             case "0,0,0":
@@ -419,6 +418,10 @@ public class ChatScene extends Sprite
             case "2,2,2":
                     //check mission
                     msnObj=command.checkMission();
+                msnID=msnObj.id;
+                DataContainer.CurrentMission=msnObj;
+                missioningDialogue();
+                    /*
                     if(msnObj){
                         //mission
                         msnID=msnObj.id;
@@ -438,7 +441,7 @@ public class ChatScene extends Sprite
 
                         initCancelHandle();
                     }
-
+*/
 
                 break
             default:

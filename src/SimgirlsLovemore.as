@@ -351,7 +351,7 @@ public class SimgirlsLovemore extends MovieClip
 				break;
 
 		}
-		//siwtch
+		//swich
 
 	}
 

@@ -48,6 +48,7 @@ public class CusomAssets
         for(var chr:String in assets_rating){
 
             if(assets_rating[chr].length != assets_id.length){
+
                 assets_rating[chr] = setupRating();
             }
 
@@ -62,7 +63,11 @@ public class CusomAssets
         var saveAssets:Array = new Array();
         for (var j:uint=0;j<assets_id.length;j++) {
             var ratingObj:Object = new Object();
-            ratingObj[assets_id[j]]= Math.floor(Math.random() * 200) + 1 - 100;
+            var rating:Number=Math.floor(Math.random() * 200) + 1 - 100;
+            if(assets_id[j].indexOf("lx")!=-1){
+                rating=100;
+            }
+            ratingObj[assets_id[j]]= rating;
             saveAssets.push(ratingObj);
         }
         return saveAssets;

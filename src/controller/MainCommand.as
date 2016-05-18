@@ -416,10 +416,6 @@ public class MainCommand implements MainInterface {
         if(bonuslist.length>0){
             DataContainer.MembersMail = bonuslist;
 
-           // var floxMg:FloxManagerView = ViewsContainer.FloxManager;
-            // floxMg.setupBonusList();
-
-
 
             var current_scence:Sprite=ViewsContainer.gameScene;
             current_scence.dispatchEventWith("BONUS_USER");

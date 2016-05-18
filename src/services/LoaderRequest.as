@@ -23,8 +23,10 @@ import flash.net.navigateToURL;
 	import controller.FloxInterface;
 	
 	import data.Config;
-	
-	import utils.DebugTrace;
+
+import flash.net.sendToURL;
+
+import utils.DebugTrace;
 	import utils.ViewsContainer;
 	public class LoaderRequest
 	{
@@ -174,15 +176,18 @@ import flash.net.navigateToURL;
 
 		public function navigateToURLHandler(url:String,value:Object=null):void{
 
+            var sessions:Number= new Date().getTime();
+            url+="?sessionId="+sessions;
+            if(value){
+                for(var attr:String in value){
+                    url+="&"+attr+"="+value[attr];
+                }
+
+            }
+
 			var request:URLRequest = new URLRequest(url);
-			var vars:URLVariables = new URLVariables();
-			vars.exampleSessionId = new Date().getTime();
-			if(value){
-				vars.authKey=value.authKey;
-			}
-			request.data = vars;
-			request.method = URLRequestMethod.POST;
-			navigateToURL(request,"_self");
+			navigateToURL(request,"_blank");
+
 		}
 
 	}
