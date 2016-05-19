@@ -37,6 +37,7 @@ package controller
         function loadBackupsaved(callback:Function=null):void
 		function resetPassword(email:String):void
 		function queryPlayerByEmail(email:String,callback:Function):void
+		function playerEditor(key:String):void
 		
 	}
 }

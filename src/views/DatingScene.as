@@ -394,6 +394,7 @@ public class DatingScene extends Scenes {
         command.displayUpdateValue(this, value_data);
 
         command.addedCancelButton(this, doCancelDating);
+        command.updateRelationship();
         //tweenID=Starling.juggler.delayCall(doUpdateRelationship,3);
 
     }

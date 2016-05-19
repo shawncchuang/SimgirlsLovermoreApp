@@ -662,7 +662,7 @@ public class Config
                 lenus: 0,
                 sirena: 0,
                 dea: 0,
-                sao: 700,
+                sao: 999,
                 klr: 0,
                 tomoru: 0,
                 ceil: 0,
@@ -722,19 +722,19 @@ public class Config
                 sao: 690,
                 klr: 710,
                 tomoru: 720,
-                zack: 300,
-                ceil: 300
+                zack: 700,
+                ceil: 700
             },
             "se":{
                 player:0,
-                lenus: 420,
-                sirena:420,
-                dea: 430,
-                sao: 290,
-                klr: 310,
-                tomoru: 320,
-                zack: 300,
-                ceil: 300
+                lenus: 820,
+                sirena:820,
+                dea: 830,
+                sao: 690,
+                klr: 710,
+                tomoru: 720,
+                zack: 700,
+                ceil: 700
             },
             "s_ele":"air",
             "skills":
@@ -1406,6 +1406,17 @@ public class Config
         {"id":"m003","completed":false,"enable":false}];
 
     public static var BONUS_COIN:Number=25;
+
+    public static var HonorRank:Object={
+        "lv1_min":0,"lv1_max":29,
+        "lv2_min":30,"lv2_max":99,
+        "lv3_min":100,"lv3_max":299,
+        "lv4_min":300,"lv4_max":999,
+        "lv5_min":1000,"lv5_max":2999,
+        "lv6_min":3000,"lv6_max":7999,
+        "lv7_min":8000,"lv7_max":9999
+    };
+
     public function Config()
     {
 

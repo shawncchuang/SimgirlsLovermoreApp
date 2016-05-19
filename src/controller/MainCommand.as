@@ -3219,5 +3219,28 @@ public class MainCommand implements MainInterface {
 
     }
 
+    public function praseFighterRank(honor:Number):String{
+
+        var honorRL:Object=Config.HonorRank;
+        var rank:String="";
+        if(honor>=honorRL.lv1_min && honor<=honorRL.lv1_max){
+            rank="Rookie";
+        }else if(honor>=honorRL.lv2_min && honor<=honorRL.lv2_max){
+            rank="Pro";
+        }else if(honor>=honorRL.lv3_min && honor<=honorRL.lv3_max) {
+            rank="Veteran";
+        }else if(honor>=honorRL.lv4_min && honor<=honorRL.lv4_max){
+            rank="Master";
+        }else if(honor>=honorRL.lv5_min && honor<=honorRL.lv5_max){
+            rank="Grand Master";
+        }else if(honor>=honorRL.lv6_min && honor<=honorRL.lv6_max){
+            rank="SMA Legend";
+        }else if(honor>=honorRL.lv7_min && honor<=honorRL.lv7_max){
+            rank="SMA God";
+        }
+        return rank;
+
+    }
+
 }
 }

@@ -76,6 +76,8 @@ public class DataContainer
 
     private static var currentMission:Object;
 
+    private static var edited_value:Number;
+
     public static function set AssetsId(ids:Array):void
     {
         assets_id=ids;
@@ -951,6 +953,13 @@ public class DataContainer
     }
     public static function get CurrentMission():Object{
         return currentMission;
+    }
+
+    public static function set EDITED_VALUE(value:Number):void{
+        edited_value=value;
+    }
+    public static function get EDITED_VALUE():Number{
+        return edited_value;
     }
 }
 }

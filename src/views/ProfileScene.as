@@ -343,8 +343,11 @@ public class ProfileScene extends Scenes
         var status:String=savedata.status;
         var rel:String=String(savedata.rel[character]);
         var rel_pts:String=String(savedata.pts[character]);
-        var rank:String=savedata.rank;
-        var honor:String=savedata.honor[character];
+        //var rank:String=savedata.rank;
+        var honor:Number=savedata.honor[character];
+        var rank:String=command.praseFighterRank(honor);
+        flox.save("rank","");
+
         var love:String=String(savedata.love[character]);
         var spt_eng:String=savedata.se[character]+"/"+love;
 
@@ -371,7 +374,7 @@ public class ProfileScene extends Scenes
         relTxt.text=rel;
         relPointTxt.text=rel_pts;
         rankTxt.text=rank;
-        honorTxt.text=honor;
+        honorTxt.text=String(honor);
 
         seTxt.text=spt_eng;
         loveTxt.text=love;

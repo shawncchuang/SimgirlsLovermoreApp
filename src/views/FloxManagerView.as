@@ -44,7 +44,7 @@ package views
 			managerUI.updateitems.addEventListener(MouseEvent.CLICK,doUpdatePlayerItems);
 
 			managerUI.initbonus.addEventListener(MouseEvent.CLICK,initBonusList);
-
+			managerUI.updateplayer.addEventListener(MouseEvent.CLICK,doUpdatePlayer);
 
 			addChild(managerUI);
 			
@@ -167,6 +167,11 @@ package views
 			setupBonusList();
 		}
 
+		private function doUpdatePlayer(e:MouseEvent):void{
+			var new_value:Number=Number(managerUI.new_value.text);
+			DataContainer.EDITED_VALUE=new_value;
+			flox.playerEditor(managerUI.hashkey.text);
+		}
 		
 	}
 }

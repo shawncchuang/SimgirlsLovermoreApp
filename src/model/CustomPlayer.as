@@ -30,6 +30,8 @@ package model
 		public var hashkey:String;
 		public var rewards:Object;
 
+		public var token:String;
+		public var chargeslog:Array;
 
 		public function CustomPlayer()
 		{

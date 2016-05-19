@@ -79,5 +79,6 @@ public interface MainInterface
     function checkMission(msnID:String=null):Object
     function ConsumAssets(item_id:String):void
     function initBonusList():void
+    function praseFighterRank(honor:Number):String
 }
 }

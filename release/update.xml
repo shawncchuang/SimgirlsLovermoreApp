@@ -1,1 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?><update xmlns="http://ns.adobe.com/air/framework/update/description/1.0"><versionNumber>3.5</versionNumber><url>https://storage.googleapis.com/lovemore/Lovermore.air</url><description><![CDATA[]]></description></update>
+<?xml version="1.0" encoding="UTF-8"?>
+<update xmlns="http://ns.adobe.com/air/framework/update/description/1.0">
+<versionNumber>3.6</versionNumber>
+<url>https://storage.googleapis.com/lovemore/Lovermore.air</url>
+<description><![CDATA[
+May.18.2016 v3.6
+]]></description>
+</update>
