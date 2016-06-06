@@ -12,10 +12,7 @@
 	import flash.net.SharedObject;
 	import flash.net.SharedObjectFlushStatus;
 import flash.net.URLLoader;
-import flash.net.URLLoader;
-import flash.net.URLLoaderDataFormat;
 import flash.net.URLRequest;
-import flash.net.URLRequestMethod;
 import flash.net.URLVariables;
 import flash.net.navigateToURL;
 	
@@ -188,6 +185,17 @@ import utils.DebugTrace;
 			var request:URLRequest = new URLRequest(url);
 			navigateToURL(request,"_blank");
 
+		}
+
+		public function navigateToMail(subject:String,body:String):void{
+
+			var emStr:String="mailto:";
+			var variables:URLVariables = new URLVariables();
+			variables.subject = subject;
+			variables.body = body;
+			var email:URLRequest= new URLRequest(emStr);
+			email.data = variables;
+			navigateToURL(email);
 		}
 
 	}

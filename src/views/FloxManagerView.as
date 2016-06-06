@@ -1,6 +1,10 @@
 package views
 {
-	import flash.display.MovieClip;
+import com.gamua.flox.utils.SHA256;
+
+import data.Config;
+
+import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
@@ -21,9 +25,10 @@ package views
 		private var managerUI:MovieClip;
 		private var mail:String;
 		private var type:String="Player";
-		private var key:String="Fh9jSxC3pKzMJIeO";
+		private var key:String="";
 		public function FloxManagerView()
 		{
+			key=FloxCommand.heroKey;
 			flox.LoginForDestroyPlayer(key,"");
 			
 		}
@@ -45,6 +50,9 @@ package views
 
 			managerUI.initbonus.addEventListener(MouseEvent.CLICK,initBonusList);
 			managerUI.updateplayer.addEventListener(MouseEvent.CLICK,doUpdatePlayer);
+
+
+			managerUI.indicesplayer.addEventListener(MouseEvent.CLICK,doIndicesPlayer);
 
 			addChild(managerUI);
 			
@@ -171,6 +179,25 @@ package views
 			var new_value:Number=Number(managerUI.new_value.text);
 			DataContainer.EDITED_VALUE=new_value;
 			flox.playerEditor(managerUI.hashkey.text);
+		}
+
+		private function doIndicesPlayer(e:MouseEvent):void{
+			var email:String=managerUI.email.text;
+			var spaces:RegExp = / /gi;
+			email=email.replace(spaces,"");
+
+			var cons:String="hashkey == ?";
+			var permision:String=Config.permision;
+			key=SHA256.hashString(String(email+permision));
+			flox.indicesPlayer(cons,key,onQueryUserIndices,onIndicesError);
+		}
+		private function onQueryUserIndices(players:Array):void
+		{
+			DebugTrace.msg("FloxManagerView.onQueryUserIndices players="+JSON.stringify(players));
+		}
+		private function onIndicesError(error:String):void
+		{
+			DebugTrace.msg("FloxManagerView.onIndicesError error="+error);
 		}
 		
 	}

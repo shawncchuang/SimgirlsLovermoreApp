@@ -60,7 +60,10 @@ public class BlackMarketPlusPopup extends Sprite {
         var bgTexture:Texture=Assets.getTexture("PopupBg");
         var bg:Image=new Image(bgTexture);
         font=BlackMarketListLayout.font;
-        var msgTxt:TextField=new TextField(370,80,msg);
+        var htmltext:String="<body>"+msg+"</body>";
+        var msgTxt:TextField=new TextField(370,80,htmltext);
+        msgTxt.isHtmlText=true;
+        msgTxt.autoScale=true;
         msgTxt.x=15;
         msgTxt.y=30;
         msgTxt.format.setTo(font,16);
@@ -70,7 +73,7 @@ public class BlackMarketPlusPopup extends Sprite {
         var okBtn:Button=new Button();
         okBtn.label="OK";
         okBtn.x=90;
-        okBtn.y=145;
+        okBtn.y=155;
         okBtn.setSize(80,40);
         okBtn.labelFactory =  getItTextRender;
         okBtn.addEventListener(Event.TRIGGERED, usePlusItemHandler);
@@ -78,7 +81,7 @@ public class BlackMarketPlusPopup extends Sprite {
         var cancelBtn:Button=new Button();
         cancelBtn.label="Cancel";
         cancelBtn.x=220;
-        cancelBtn.y=145;
+        cancelBtn.y=155;
         cancelBtn.setSize(80,40);
         cancelBtn.labelFactory =  getItTextRender;
         cancelBtn.addEventListener(Event.TRIGGERED, cancelButton_triggeredHandler);

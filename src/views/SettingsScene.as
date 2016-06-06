@@ -87,6 +87,7 @@ public class SettingsScene extends Sprite{
 
 
 
+        /*
         var Mute:Boolean=SoundController.Mute;
         var soundtoggle:String="IconToggleDefault";
         if(Mute){
@@ -98,7 +99,7 @@ public class SettingsScene extends Sprite{
         toggle.y=290;
         addChild(toggle);
         toggle.addEventListener(TouchEvent.TOUCH, toggleSwitchChangeHandler);
-
+        */
 
         /*
         var fullscreenToggle:String="IconToggleDefault";

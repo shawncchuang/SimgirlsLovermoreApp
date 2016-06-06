@@ -1475,9 +1475,13 @@ public class MainCommand implements MainInterface {
 
         var scene:String = DataContainer.currentScene;
         var mediacom:MediaInterface = new MediaCommand();
-        //mediacom.VideoPlayer(new Point(1024,250),new Point(0,260))
-        //mediacom.play("video/"+scene+"-work-animated.flv",false,onFinishAnimated);
-        mediacom.SWFPlayer("transform", "../swf/" + scene + "Work.swf", onFinishAnimated);
+        var workSWF:String=scene+"Work";
+        var flox:FloxInterface=new FloxCommand();
+        var dating:String=flox.getSaveData("dating");
+        if(dating!=""){
+            workSWF+="_girl";
+        }
+        mediacom.SWFPlayer("transform", "../swf/" + workSWF + ".swf", onFinishAnimated);
 
         var attr:String = scene.split("Scene").join("Work");
 
@@ -2395,9 +2399,6 @@ public class MainCommand implements MainInterface {
 
         }
 
-
-
-
         if (pass_ap && pass_cash && pass_se) {
             var value_data:Object = new Object();
             var attrArr:Array=new Array();
@@ -3241,6 +3242,144 @@ public class MainCommand implements MainInterface {
         return rank;
 
     }
+
+    public function praseBundlePool(id:String):String{
+
+        var flox:FloxInterface=new FloxCommand();
+        var ownerId:String=flox.getPlayerData("ownerId");
+        var bundlelist:Array=flox.getBundlePool("list");
+        var rewards:Object=flox.getBundlePool("rewards");
+        var bundled:Boolean=false;
+        var response:String="";
+        var status:String="";
+        var timeStamp:String=new Date().toLocaleString();
+        if(bundlelist && ownerId!=id && id!=""){
+            for(var i:uint=0;i<bundlelist.length;i++){
+                var bundle:String=bundlelist[i];
+                if(bundle==id+"~"+ownerId){
+                    bundled=true;
+                    status="EXIST";
+                    break
+                }
+                if(bundle.indexOf(ownerId)!=-1){
+
+                    bundled=true;
+                    var childID:String=bundle.split("~")[1];
+                    var parentID:String=bundle.split("~")[0];
+                    if(childID==ownerId && parentID!=id){
+                        //update bundle
+                        status="UPDATE";
+                        bundlelist[i]=id+"~"+ownerId;
+
+                        if(!rewards[id]){
+                            // create new ID to record
+                            setUpReward();
+                        }else{
+                            var history:String=rewards[id].history;
+                            history+="|updated@ "+timeStamp+" by "+ownerId;
+                            rewards[id].enable=true;
+                            rewards[id].history=history;
+                        }
+                        var _data:Object=new Object();
+                        _data.parentId=id;
+                        flox.savePlayer(_data);
+
+                    }
+                    if(parentID==ownerId && childID==id){
+                        // can not bundle
+                        status="BUNDLED";
+                    }
+                    break
+                }
+
+            }
+            if(!bundled){
+                status="ADD";
+                bundlelist.push(id+"~"+ownerId);
+                if(!rewards){
+                    rewards=new Object();
+                }
+                setUpReward();
+
+                var _data:Object=new Object();
+                _data.parentId=id;
+                flox.savePlayer(_data);
+
+            }
+            flox.saveBundlePool("list",bundlelist);
+            flox.saveBundlePool("rewards",rewards);
+        }else{
+            status="ID_ERROR";
+        }
+
+        function setUpReward():void{
+
+            rewards[id]={
+                "enable":true,
+                "coin":0,
+                "withdraw":0,
+                "history":"created@ "+timeStamp+" by "+ownerId
+            }
+        }
+
+        switch(status){
+
+
+            case "ID_ERROR":
+                response="Please input correct Shambala ID.";
+                break
+            case "UPDATE":
+                response="You updated this Shambala ID.";
+                break;
+            case "ADD":
+                response="Congratulations!\nThis Shambala ID have bundled with you.";
+                break
+            case "EXIST":
+                response="You already setted up this Shambala ID.";
+                break
+            case "BUNDLED":
+                response="You have bundled by this Shambala ID.";
+                break
+
+        }
+
+        return response
+
+    }
+
+    public function dismissBundle():void{
+
+        var flox:FloxInterface=new FloxCommand();
+        var bundleList:Array=flox.getBundlePool("list");
+        var ownerId:String=flox.getPlayerData("ownerId");
+        var parentId:String=flox.getPlayerData("parentId");
+        for(var i:uint=0;i<bundleList.length;i++){
+            var bundle:String=bundleList[i];
+
+            var childId:String=bundle.split("~")[1];
+            if(childId==ownerId){
+                bundleList[i]="~"+ownerId;
+                break
+            }
+
+        }
+        var timeStamp:String=new Date().toLocaleString();
+        var rewards:Object=flox.getBundlePool("rewards");
+        if(rewards[parentId]){
+            rewards[parentId].enable=false;
+            var history:String=rewards[parentId].history;
+            history+="|dismiss@ "+timeStamp+" by "+ownerId;
+            rewards[parentId].history=history;
+            flox.saveBundlePool("rewards",rewards);
+
+        }
+
+
+
+
+
+    }
+
 
 }
 }

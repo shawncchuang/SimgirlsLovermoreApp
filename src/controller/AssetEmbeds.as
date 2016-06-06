@@ -471,6 +471,32 @@ public class AssetEmbeds
     [Embed(source="../../media/textures/icons/danger.png")]
     public static const DangerSign:Class;
 
+    [Embed(source="../../media/textures/icons/SignsSheet.xml", mimeType="application/octet-stream")]
+    public static const SignsSheetXML:Class;
+    [Embed(source="../../media/textures/icons/SignsSheet.png")]
+    public static const SignsSheet:Class;
+
+
+    [Embed(source="../../media/textures/icons/whitebg.jpg")]
+    public static const Whitebg:Class;
+
+    [Embed(source="../../media/textures/icons/icon_confirm.png")]
+    public static const IconConfirm:Class;
+
+    [Embed(source="../../media/textures/icons/icon_dismiss.png")]
+    public static const IconDismiss:Class;
+
+    [Embed(source="../../media/textures/icons/icon_help.png")]
+    public static const IconHelp:Class;
+
+    [Embed(source="../../media/textures/icons/icon_copy.png")]
+    public static const IconCopy:Class;
+
+    [Embed(source="../../media/textures/icons/icon_copied.png")]
+    public static const IconCopied:Class;
+
+    [Embed(source="../../media/textures/icons/icon_email.png")]
+    public static const IconEmail:Class;
 
     [Embed(source="../../assets/images/items/art.png")]
     public static const Art:Class;
@@ -1413,20 +1439,17 @@ public class AssetEmbeds
     [Embed(source="../../media/textures/panels/huntcriminal_bg.png")]
     public static const HuntCriminalPanel:Class;
 
+
+    [Embed(source="../../media/textures/panels/blackmarket_input_id_UI.png")]
+    public static const InputID_UI:Class;
+
+    [Embed(source="../../media/textures/panels/blackmarket_share_id_UI.png")]
+    public static const SharedID_UI:Class;
+
     /*-------------------panels-------------------------------------------------------------------*/
     [Embed(source = "../../media/textures/scenes/battle_scene.jpg")]
     public static const BattleScene:Class;
 
-
-
-    [Embed(source="../../media/textures/icons/SignsSheet.xml", mimeType="application/octet-stream")]
-    public static const SignsSheetXML:Class;
-    [Embed(source="../../media/textures/icons/SignsSheet.png")]
-    public static const SignsSheet:Class;
-
-
-    [Embed(source="../../media/textures/icons/whitebg.jpg")]
-    public static const Whitebg:Class;
     //avatar
     //[Embed(source = "../../assets/Knight_output.swf", mimeType = "application/octet-stream")]
     //public static const ResourcesData:Class;

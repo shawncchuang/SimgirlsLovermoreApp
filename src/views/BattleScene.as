@@ -326,10 +326,9 @@ public class BattleScene extends Sprite
         addChild(battletop);
         ViewsContainer.battleTop=battletop;
 
-        var soundctrl:SoundController=new SoundController();
-        soundctrl.x=985;
-
-        addChild(soundctrl);
+        //var soundctrl:SoundController=new SoundController();
+        //soundctrl.x=985;
+        //addChild(soundctrl);
 
     }
     private function onStageBGComplete(e:LoaderEvent):void

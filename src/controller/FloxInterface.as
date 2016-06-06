@@ -38,6 +38,9 @@ package controller
 		function resetPassword(email:String):void
 		function queryPlayerByEmail(email:String,callback:Function):void
 		function playerEditor(key:String):void
+
+		function saveBundlePool(attr:String,data:*):void
+		function getBundlePool(attr:String):*
 		
 	}
 }

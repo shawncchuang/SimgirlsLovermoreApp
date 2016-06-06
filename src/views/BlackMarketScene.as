@@ -1,9 +1,6 @@
 package views
 {
 
-
-import com.gamua.flox.utils.SHA256;
-
 import controller.Assets;
 import controller.FloxCommand;
 import controller.FloxInterface;
@@ -21,16 +18,12 @@ import events.SceneEvent;
 import events.TopViewEvent;
 
 import flash.geom.Rectangle;
-import flash.net.URLRequest;
-import flash.net.navigateToURL;
-import flash.text.TextFieldAutoSize;
 
 import model.SaveGame;
 import model.Scenes;
 
 import services.LoaderRequest;
 
-import starling.core.Starling;
 import starling.display.Button;
 import starling.display.Image;
 import starling.display.Sprite;
@@ -53,6 +46,7 @@ public class BlackMarketScene extends Scenes
 	private var panelbase:Sprite;
 	private var panellist:Image;
 	private var coinTxt:TextField;
+	private var warringTxt:TextField;
 	private var font:String="SimMyriadPro";
 	private var desc:Sprite;
 	private var descTxt:TextField;
@@ -61,6 +55,9 @@ public class BlackMarketScene extends Scenes
 
 	//BlackMarketUseAssets , BlackMarketAssets
 	private var PANEL_TEXTURE_BG:String="";
+
+	public static var discount_rate:Number=0.05;
+	public static var rewards_rate:Number=0.17;
 
 	public function BlackMarketScene()
 	{
@@ -86,6 +83,7 @@ public class BlackMarketScene extends Scenes
 		this.addEventListener("UPDATE_DESC",doUpdateDESC);
 		this.addEventListener("BUY_BLACKMARKET_ITEM",doBuyItem);
 		this.addEventListener("CONSUME_BLACKMARKET_ITEM",doConsumeItem);
+		this.addEventListener("REFLASH_LISTLAYOUT",doReflashListLayout);
 
 	}
 	private function onStartStory():void
@@ -116,8 +114,8 @@ public class BlackMarketScene extends Scenes
 		}
 		var blackmarket:Object=flox.getSyetemData("blackmarket");
 		var itemData:Object=blackmarket[id];
+		itemData.createAt=e.data.createAt;
 		items[id]=itemData;
-
 		var _data:Object=new Object();
 		_data.coin=coin;
 		_data.items=items;
@@ -160,7 +158,7 @@ public class BlackMarketScene extends Scenes
 	{
 		panelbase=new Sprite();
 		panelbase.x=360;
-		panelbase.y=159;
+		panelbase.y=120;
 		addChild(panelbase);
 
 
@@ -169,7 +167,35 @@ public class BlackMarketScene extends Scenes
 		panelbase.addChild(panellist);
 
 
-        templete=new MenuTemplate();
+		if(type=="Use"){
+			var format:Object=new Object();
+			format.font=font;
+			format.size=20;
+			format.color=0xFF0000;
+
+			var msg:String="Once you used the consumable items they will be consumed. We highly recommend saving the game progress after using them.";
+			warringTxt=addTextField(this,new Rectangle(385,146,550,40),format);
+			warringTxt.name="warring";
+			warringTxt.text=msg;
+
+		}else{
+
+			//add share / input id panel
+			var inputComponent:Sprite=new InputIDComponent();
+			inputComponent.y=465;
+			panelbase.addChild(inputComponent);
+
+			var paid:Boolean=flox.getPlayerData("paid");
+
+			if(paid){
+				var sharedComponent:Sprite=new ShareIDComponent();
+				sharedComponent.y=555;
+				panelbase.addChild(sharedComponent);
+			}
+
+		}
+
+		templete=new MenuTemplate();
 		templete.addBackStepButton(doCannelHandler);
 		addChild(templete);
 		this.addEventListener("USE_BLACKMARTET_ITEM",onUseBlackMarketItem);
@@ -191,7 +217,23 @@ public class BlackMarketScene extends Scenes
 		format.size=20;
 		format.color=0x000000;
 
-		coinTxt=addTextField(this,new Rectangle(435,187,158,25),format);
+		var ownerId:String=flox.getPlayerData("ownerId");
+		var rewards:Object=flox.getBundlePool("rewards");
+		if(rewards[ownerId]){
+			if(rewards[ownerId].enable){
+				var withdraw:Number=rewards[ownerId].withdraw;
+				coin+=withdraw;
+				rewards[ownerId].withdraw=0;
+				flox.saveBundlePool("rewards",rewards);
+
+				flox.savePlayerData("coin",coin);
+
+			}
+
+		}
+
+
+		coinTxt=addTextField(this,new Rectangle(435,150,158,25),format);
 		coinTxt.name="coin";
 		coinTxt.text=DataContainer.currencyFormat(coin);
 
@@ -201,7 +243,7 @@ public class BlackMarketScene extends Scenes
 		var buytexture:Texture=Assets.getTexture("BuyNowBtn");
 		var buybtn:Button=new Button(buytexture);
 		buybtn.x=825;
-		buybtn.y=175;
+		buybtn.y=142;
 		addChild(buybtn);
 		buybtn.addEventListener(Event.TRIGGERED,doBuyNow);
 
@@ -306,7 +348,7 @@ public class BlackMarketScene extends Scenes
         marketlayout=new BlackMarketListLayout();
 		marketlayout.type=type;
 		marketlayout.x=390;
-		marketlayout.y=250;
+		marketlayout.y=215;
 		addChild(marketlayout);
 
 	}
@@ -327,7 +369,7 @@ public class BlackMarketScene extends Scenes
 
 		desc=new Sprite();
 		desc.x=24;
-		desc.y=275;
+		desc.y=245;
 		var bgTexture:Texture=Assets.getTexture("ExcerptBox");
 		var bg:Image=new Image(bgTexture);
 
@@ -362,12 +404,18 @@ public class BlackMarketScene extends Scenes
 
 		var txt:TextField=new TextField(rec.width,rec.height,"");
 		txt.format.setTo(font,format.size,format.color,"left");
-		txt.autoSize=TextFieldAutoSize.LEFT;
+		txt.autoScale=true;
 		txt.x=rec.x;
 		txt.y=rec.y;
 		target.addChild(txt);
 
 		return txt
+	}
+
+	private function doReflashListLayout(e:Event):void{
+		marketlayout.removeFromParent(true);
+
+		onRefreshComplete();
 	}
 
 }

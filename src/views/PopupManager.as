@@ -53,6 +53,7 @@ public class PopupManager extends Sprite{
         switch(attr){
 
             case "bonus":
+            case "bundle":
                 isCentered=true;
                 isModal=true;
                 bonusLayout();
@@ -76,21 +77,22 @@ public class PopupManager extends Sprite{
 
     }
     private function defaultLayout():void{
-        bg = new Quad( 400, 80, 0x000000 );
+        var stageW:Number=Starling.current.stage.stageWidth;
+        bg = new Quad(stageW, 60, 0x000000 );
         if(attr=="memory"){
-            bg=new Quad( 400, 80, 0xEF1F22 );
+            bg=new Quad( stageW, 60, 0xEF1F22 );
         }
 
-        msgTxt=new TextField(400,80,msg);
+        msgTxt=new TextField(stageW,60,msg);
         msgTxt.format.setTo(font,20,0xFFFFFF);
         msgTxt.autoScale=true;
         btn=new Button();
-        btn.setSize(400, 80);
+        btn.setSize(stageW, 60);
         btn.addEventListener(Event.TRIGGERED, doTryAgainHandler);
 
 
-        popup.x=Starling.current.stage.stageWidth-bg.width-5;
-        popup.y=Starling.current.stage.stageHeight-bg.height-5;
+        //popup.x=Starling.current.stage.stageWidth-bg.width-5;
+        popup.y=Starling.current.stage.stageHeight-bg.height-3;
     }
     private function bonusLayout():void{
 

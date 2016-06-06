@@ -80,5 +80,8 @@ public interface MainInterface
     function ConsumAssets(item_id:String):void
     function initBonusList():void
     function praseFighterRank(honor:Number):String
+
+    function praseBundlePool(id:String):String
+    function dismissBundle():void
 }
 }

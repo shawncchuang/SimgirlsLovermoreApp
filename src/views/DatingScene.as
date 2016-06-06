@@ -395,7 +395,7 @@ public class DatingScene extends Scenes {
 
         command.addedCancelButton(this, doCancelDating);
         command.updateRelationship();
-        //tweenID=Starling.juggler.delayCall(doUpdateRelationship,3);
+        //tweenID=Starling.juggler.delayCall(doUpdateRelationship,5);
 
     }
     private function doUpdateRelationship():void{
@@ -1202,7 +1202,7 @@ public class DatingScene extends Scenes {
 
     private function doCancelDating():void {
         character.removeFromParent(true);
-
+        Starling.juggler.removeByID(tweenID);
         var _data:Object = new Object();
         _data.name = DataContainer.currentLabel;
         command.sceneDispatch(SceneEvent.CHANGED, _data);
@@ -1634,13 +1634,17 @@ public class DatingScene extends Scenes {
 
         }else{
 
-            try{
-                screenview.removeFromParent(true);
-            }catch(e:Error){}
+            if(cloudcom!="Date"){
 
-            var _data:Object=new Object();
-            _data.name=DataContainer.currentLabel;
-            command.sceneDispatch(SceneEvent.CHANGED,_data);
+                try{
+                    screenview.removeFromParent(true);
+                }catch(e:Error){}
+
+                var _data:Object=new Object();
+                _data.name=DataContainer.currentLabel;
+                command.sceneDispatch(SceneEvent.CHANGED,_data);
+            }
+
 
         }
 

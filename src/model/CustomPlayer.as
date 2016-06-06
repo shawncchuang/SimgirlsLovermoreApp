@@ -33,6 +33,9 @@ package model
 		public var token:String;
 		public var chargeslog:Array;
 
+
+		public var parentId:String;
+
 		public function CustomPlayer()
 		{
 			currentPlayer=Player.current

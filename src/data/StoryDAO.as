@@ -5,7 +5,7 @@ package data {
 public class StoryDAO {
     private static var access:Array=new Array();
 
-    public static const container:Object={"s001":s001(),"s002":s002(),"s003":s003(),"s606":s606(),"s608":s608(),"s004":s004(),
+    public static const container:Object={"s001":s001(),"s002":s002(),"s003":s003(),"s003_1":s606(),"s003_2":s608(),"s004":s004(),
         "s005":s005(),"s006a":s006a(),"s006b":s006b(),"s007":s007(),"s007b":s007b(),"s008":s008(),"s009":s009(),"s010":s010(),
         "s011":s011(), "s012":s012(),"s013":s013(),"s014":s014(),"s015":s015(),
         "s016":s016(),"s017":s017(),"s018":s018(),"s019":s019(),"s020":s020(),

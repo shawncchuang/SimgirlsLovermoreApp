@@ -2,6 +2,8 @@
  * Created by shawnhuang on 15-09-24.
  */
 package views {
+import com.gamua.flox.TimeScope;
+
 import controller.Assets;
 import controller.FloxCommand;
 import controller.FloxInterface;
@@ -36,6 +38,8 @@ import starling.textures.Texture;
 import utils.DebugTrace;
 import utils.ViewsContainer;
 
+import views.PopupManager;
+
 public class BlackMarketListLayout extends PanelScreen {
 
     private var flox:FloxInterface=new FloxCommand();
@@ -57,6 +61,13 @@ public class BlackMarketListLayout extends PanelScreen {
     private var itemRenderlist:Array;
     private var renderBtns:Array;
 
+    private var discount:Boolean=false;
+    private var discount_rate:Number=0;
+
+
+    private var popupMsg:String="Use this item?\nWarning! Once it is used it will be gone for good.\n"+
+            "<font color='#FF0000'>We highly recommend saving the game progress after using them.</font>";
+
     public function BlackMarketListLayout() {
 
 
@@ -70,6 +81,14 @@ public class BlackMarketListLayout extends PanelScreen {
 
 
         if(type=="Buy"){
+
+            var parentId:String=flox.getPlayerData("parentId");
+            var rewards:Object= flox.getBundlePool("rewards");
+            if(parentId && parentId!=""){
+                //have discount
+                discount=true;
+                discount_rate=BlackMarketScene.discount_rate;
+            }
             marketlist=flox.getSyetemData("blackmarket");
             BUTTON_MOUSEUP_TEXTURE="BuyButtonDe_Skin";
             BUTTON_MOUSEDOWN_TEXTURE="BuyButtonDown_Skin";
@@ -79,7 +98,6 @@ public class BlackMarketListLayout extends PanelScreen {
             BUTTON_MOUSEUP_TEXTURE="UseButtonDe_Skin";
             BUTTON_MOUSEDOWN_TEXTURE="UseButtonDown_Skin";
         }
-
 
         initMarketList();
 
@@ -118,7 +136,6 @@ public class BlackMarketListLayout extends PanelScreen {
         this.verticalScrollPolicy = ScrollContainer.SCROLL_POLICY_ON;
         this.snapScrollPositionsToPixels = true;
 
-
         for(var j:uint=0;j<itemlist.length;j++) {
             item = itemlist[j];
 
@@ -147,9 +164,19 @@ public class BlackMarketListLayout extends PanelScreen {
             priceHeader.x = 265;
             priceHeader.format.setTo(font,12,0x333333,"left");
 
-            var priceTxt:TextField = new TextField(100, renderH, item.price);
+
+            var price_color:Number=0x000000;
+            var price:Number=Number(item.price);
+
+            if(discount){
+                price_color=0xD0021B;
+                price*=(1-discount_rate);
+                item.price=price.toFixed(2);
+            }
+
+            var priceTxt:TextField = new TextField(100, renderH,item.price);
             priceTxt.x = priceHeader.x;
-            priceTxt.format.setTo(font,20,0x000000,"left");
+            priceTxt.format.setTo(font,20,price_color,"left");
 
             var renderBtn:Button = new Button();
             renderBtn.x = priceTxt.x + 120;
@@ -198,6 +225,13 @@ public class BlackMarketListLayout extends PanelScreen {
 
         DebugTrace.msg("BlackTileList.onPurchaseItem item_id:"+item_id);
         price=Number(marketlist[item_id].price);
+
+        if(discount){
+
+            price*=(1-discount_rate);
+            price=Number(price.toFixed(2));
+        }
+
         //DebugTrace.msg("BlackTileList.onPurchaseItem coin:"+coin+" ; price:"+price);
 
         var msg:String ="Are you sure you want to parchase this item ?\nNo refund or exchange at the Black market.";
@@ -246,7 +280,6 @@ public class BlackMarketListLayout extends PanelScreen {
     }
     private function onTapUseHandler(e:Event):void{
         //tap use
-        var popupMsg:String="Use this item?\nWarning! Once it is used it will be gone for good.";
 
         switch(item_id){
             case "bm_1":
@@ -366,10 +399,41 @@ public class BlackMarketListLayout extends PanelScreen {
                 var _data:Object=new Object();
                 _data.price=price;
                 _data.item_id=item_id;
+                _data.createAt=new Date().toLocaleString();
                 var scene:Sprite=ViewsContainer.currentScene;
                 scene.dispatchEventWith("BUY_BLACKMARKET_ITEM",false,_data);
-                //var command:MainInterface=new MainCommand();
-                //command.addToBlackMarketItemCollection(item_id);
+
+                var parentId:String=flox.getPlayerData("parentId");
+                if(parentId && parentId!=""){
+                    var rewards:Object=flox.getBundlePool("rewards");
+
+                    if(rewards[parentId]) {
+                        if (rewards[parentId].enable) {
+                            var dePrice:Number = Number(marketlist[item_id].price);
+                            dePrice *= (BlackMarketScene.rewards_rate);
+                            var extra_coin:Number = rewards[parentId].coin;
+                            extra_coin += dePrice;
+                            rewards[parentId].coin = Number(extra_coin.toFixed(2));
+
+                            var withdraw:Number= rewards[parentId].withdraw;
+                            withdraw+=dePrice;
+                            rewards[parentId].withdraw=Number(withdraw.toFixed(2));
+
+                            flox.saveBundlePool("rewards", rewards);
+
+
+                            /*
+                            var msg:String="The Shambala ID you bundled increasing USD bonus.";
+                            var reminder:PopupManager=new PopupManager();
+                            reminder.msg=msg;
+                            reminder.init();
+                            */
+                        }
+
+                    }
+
+                }
+
 
             }else{
 

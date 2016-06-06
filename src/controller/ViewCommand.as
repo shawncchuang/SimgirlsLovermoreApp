@@ -165,6 +165,10 @@ public class ViewCommand  implements ViewInterface{
                 icon.y=120;
 
             }
+            if(cate=="blackmarket"){
+                player_icon.y=140;
+                icon.y=140;
+            }
 
             target.addChild(icon);
             icons.push(icon);
