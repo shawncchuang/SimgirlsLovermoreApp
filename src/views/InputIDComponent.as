@@ -36,6 +36,7 @@ public class InputIDComponent extends Sprite {
     private var inputTxt:TextInput;
     private var command:MainInterface=new MainCommand();
     private var flox:FloxInterface=new FloxCommand();
+    private var SUCCESS
 
     public function InputIDComponent() {
         init();
@@ -66,7 +67,7 @@ public class InputIDComponent extends Sprite {
         inputTxt.promptFactory=function():ITextRenderer{
             var textRenderer:TextFieldTextRenderer = new TextFieldTextRenderer();
             textRenderer.styleProvider = null;
-            textRenderer.textFormat = new flash.text.TextFormat( format.font, format.size, 0xD7D6D6 );
+            textRenderer.textFormat = new TextFormat( format.font, format.size, 0xD7D6D6 );
             textRenderer.embedFonts = true;
             return textRenderer;
         };
@@ -78,18 +79,17 @@ public class InputIDComponent extends Sprite {
             textEditor.fontFamily = format.font;
             textEditor.fontSize = format.size;
             textEditor.color = format.color;
-            textEditor
             return textEditor;
         };
 
-        var confirmTexture:Texture=Assets.getTexture("IconConfirm");
+        var confirmTexture:Texture=Assets.getTexture("IconApply");
         var confirm:Button=new Button(confirmTexture,"");
         confirm.x=330;
         confirm.y=42;
         confirm.addEventListener(TouchEvent.TOUCH, onTouchConfirm);
 
 
-        var dismissTexture:Texture=Assets.getTexture("IconDismiss");
+        var dismissTexture:Texture=Assets.getTexture("IconRemove");
         var dismiss:Button=new Button(dismissTexture,"");
         dismiss.x=415;
         dismiss.y=42;
@@ -106,7 +106,7 @@ public class InputIDComponent extends Sprite {
         this.addChild(inputTxt);
         this.addChild(confirm);
         this.addChild(dismiss);
-        this.addChild(help);
+        //this.addChild(help);
 
     }
     private function onTouchConfirm(e:TouchEvent):void{
@@ -144,6 +144,9 @@ public class InputIDComponent extends Sprite {
 
             }
 
+        }else{
+            indicesError()
+
         }
 
     }
@@ -151,12 +154,20 @@ public class InputIDComponent extends Sprite {
     {
 
         DebugTrace.msg("IndicesError: " + error);
-        var msg:String="This Shambala ID is invalid.\nPlease input correct Shambala ID.";
+        var popup:PopupManager=new PopupManager();
+        popup.attr="bundle";
+        popup.msg=error;
+        popup.init();
+
+
+    }
+    private function indicesError():void{
+
+        var msg:String="This Citizenship code is invalid.\nPlease input correct Citizenship code.";
         var popup:PopupManager=new PopupManager();
         popup.attr="bundle";
         popup.msg=msg;
         popup.init();
-
 
     }
 
@@ -174,7 +185,7 @@ public class InputIDComponent extends Sprite {
                 var current_scene:Sprite=ViewsContainer.currentScene;
                 current_scene.dispatchEventWith("REFLASH_LISTLAYOUT");
 
-                var msg:String="Success!\n Your bundle Shambala ID dismissed.";
+                var msg:String="The Citizenship code has been removed. You'll no longer get any special offer.";
                 var popup:PopupManager=new PopupManager();
                 popup.attr="bundle";
                 popup.msg=msg;

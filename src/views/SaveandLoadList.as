@@ -17,6 +17,8 @@ import data.DataContainer;
 import events.GameEvent;
 import events.TopViewEvent;
 
+import flash.utils.Timer;
+
 import model.SaveGame;
 
 import starling.core.Starling;
@@ -97,6 +99,7 @@ public class SaveandLoadList extends Sprite
             MainCommand.addAlertMsg(msg);
         }
         renderCloseButton();
+
 
     }
     private function renderBackground():void
@@ -498,20 +501,13 @@ public class SaveandLoadList extends Sprite
     }
     private function doCloseConfirm(e:Event):void
     {
-//        if(save_new)
-//        {
-//            playerData=DataContainer.player;
-//            var saved:Array=flox.getPlayerData("saved");
-//            if(saved.length>0)
-//            {
-//                saved.pop();
-//                playerData.saved=saved;
-//                DataContainer.player=playerData;
-//            }
-//        }
+
         comfirm.removeFromParent(true);
 
     }
+
+
+
 
 }
 }

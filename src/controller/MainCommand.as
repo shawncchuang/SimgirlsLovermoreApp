@@ -270,15 +270,15 @@ public class MainCommand implements MainInterface {
 
         DebugTrace.msg("MainCommand.addAlertMsg msg="+msg);
 
-        if(msg.indexOf("IO Error #2032")!=-1){
-            msg="IO Error 2032: Cannot talk to the server please make sure your"+
+        if(msg.indexOf("2032")!=-1){
+            msg="IO Error 2032: Cannot talk to the aserver please make sure your"+
                     " internet connection is good and unrestricted, or the server may be busy please try again later.";
         }
 
 
         //if(alertmsg){
         var format:TextFormat = new TextFormat();
-        format.size = 20;
+        format.size = 18;
         format.align = "center";
         format.font = "SimFutura";
         var topview:flash.display.MovieClip = SimgirlsLovemore.topview;
@@ -1484,14 +1484,12 @@ public class MainCommand implements MainInterface {
         mediacom.SWFPlayer("transform", "../swf/" + workSWF + ".swf", onFinishAnimated);
 
         var attr:String = scene.split("Scene").join("Work");
-
-        var flox:FloxInterface = new FloxCommand();
         var cash:Number = flox.getSaveData("cash");
         var ap:Number = flox.getSaveData("ap");
         var image:Number = flox.getSaveData("image").player;
         var int:Number = flox.getSaveData("int").player;
         var love:Number=flox.getSaveData("love").player;
-        var dating:String = flox.getSaveData("dating");
+
 
         var income:Number = 0;
         var rate: Number = Number(((Math.floor(Math.random() * 30) + 1) / 100));
@@ -3301,7 +3299,7 @@ public class MainCommand implements MainInterface {
                 }
                 setUpReward();
 
-                var _data:Object=new Object();
+                _data=new Object();
                 _data.parentId=id;
                 flox.savePlayer(_data);
 
@@ -3317,7 +3315,7 @@ public class MainCommand implements MainInterface {
             rewards[id]={
                 "enable":true,
                 "coin":0,
-                "withdraw":0,
+                "payout":0,
                 "history":"created@ "+timeStamp+" by "+ownerId
             }
         }
@@ -3326,19 +3324,17 @@ public class MainCommand implements MainInterface {
 
 
             case "ID_ERROR":
-                response="Please input correct Shambala ID.";
+                response="Please input correct Citizenship code.";
                 break
             case "UPDATE":
-                response="You updated this Shambala ID.";
+                response="Ok! We've updated the record. This person'll be your senior from now on.";
                 break;
             case "ADD":
-                response="Congratulations!\nThis Shambala ID have bundled with you.";
-                break
             case "EXIST":
-                response="You already setted up this Shambala ID.";
+                response="Great!\nThe Citizenship code is valid and you'll get special discounts from now on.";
                 break
             case "BUNDLED":
-                response="You have bundled by this Shambala ID.";
+                response="According to our record, this person was referred by you to the Black Market.\nPlease enter another Citizenship code.";
                 break
 
         }

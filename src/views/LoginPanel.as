@@ -1,15 +1,23 @@
 package views
 {
+import com.gamua.flox.utils.Base64;
+import com.gamua.flox.utils.SHA256;
 import com.greensock.TweenMax;
+
+import data.Config;
+import data.DataContainer;
 
 import flash.display.MovieClip;
 import flash.events.Event;
 import flash.events.MouseEvent;
+import flash.events.TimerEvent;
 import flash.net.SharedObject;
 
 import controller.FloxCommand;
 import controller.FloxInterface;
 import controller.MainCommand;
+
+import flash.utils.Timer;
 
 import services.LoaderRequest;
 
@@ -32,6 +40,8 @@ public class LoginPanel extends MovieClip
 	private var preorder:MovieClip;
 	private var preorder_submit:MovieClip;
 	private var resetPanel:MovieClip;
+	private var code:String;
+	private var timer:Timer;
 	public function LoginPanel()
 	{
 
@@ -98,6 +108,8 @@ public class LoginPanel extends MovieClip
 		this.addEventListener(Event.REMOVED_FROM_STAGE, onRemovedHandler);
 		praseNowType();
 		displaySharedObejct();
+
+		createVerifyCode();
 	}
 
 	private function initRestPasswordPanel():void{
@@ -135,7 +147,7 @@ public class LoginPanel extends MovieClip
 		var mail:String=panel.account.text;
 		var pwd:String=panel.pswd.text;
 		//var player_name:String=panel.signup_ui.player_name.text;
-		DebugTrace.msg("LoingPaenl.doSubmitSignup mail="+mail+" , pwd="+pwd);
+		DebugTrace.msg("LoingPal.doSubmitSignup mail="+mail+" , pwd="+pwd);
 		var success:Boolean=false;
 		var msg:String="";
 		if(mail!="" && pwd!="")
@@ -143,16 +155,30 @@ public class LoginPanel extends MovieClip
 			success=true
 		}
 
+		var text_code:String=panel.input_code.text;
+		var spaces:RegExp = / /gi;
+		var input_code:String=text_code.replace(spaces,"");
+
+		if(input_code!=code){
+			success=false;
+
+		}
+
 		if(!success)
 		{
-			msg=" Please input correct email and password !!";
+
+			if(input_code!=code){
+				msg=" Please input correct code !!";
+			}else{
+				msg=" Please input correct email and password !!";
+			}
 			MainCommand.addAlertMsg(msg);
 
 		}
 		else
 		{
 
-			if(validateEmail(mail))
+			if(DataContainer.validateEmail(mail))
 			{
 
 				success=true;
@@ -163,11 +189,17 @@ public class LoginPanel extends MovieClip
 				msg=" Please input correct email format!!";
 				MainCommand.addAlertMsg(msg);
 			}
-			//if
 
+
+		}
+		if(success){
+			timer.stop();
 			flox.signupAccount(mail,pwd);
 		}
-		//if
+
+		timer.reset();
+		initCode();
+
 	}
 	private function doSignin(e:MouseEvent):void
 	{
@@ -195,17 +227,8 @@ public class LoginPanel extends MovieClip
 		flox.loginWithEmail(panel.preorder_signin_ui.account.text);
 
 	}
-	private function validateEmail(str:String):Boolean
-	{
-		var pattern:RegExp = /(\w|[_.\-])+@((\w|-)+\.)+\w{2,4}+/;
-		var result:Object = pattern.exec(str);
-		if(result == null)
-		{
-			return false;
-		}
-		//if
-		return true;
-	}
+
+
 	private function doMouseOverHandle(e:MouseEvent):void
 	{
 		e.target.gotoAndStop(2);
@@ -279,6 +302,32 @@ public class LoginPanel extends MovieClip
 		function onResetPanelFadIn():void{
 			TweenMax.killChildTweensOf(resetPanel);
 		}
+	}
+
+	private function createVerifyCode():void{
+
+		timer=new Timer(20000);
+		timer.addEventListener(TimerEvent.TIMER, reflashCodeHandler);
+		timer.start();
+
+
+
+		function reflashCodeHandler(e:TimerEvent):void{
+			initCode();
+		}
+
+		initCode();
+	}
+	private function initCode():void{
+
+		var d:Date=new Date();
+		var t:Number= d.getTime();
+		var data:String=String(t+1980092410160);
+		var decode:String=SHA256.hashString(data);
+		//DebugTrace.msg(decode);
+		var index:Number=Math.floor(Math.random()*(decode.length-4));
+		code=decode.slice(index,index+4);
+		panel.code.text=code;
 	}
 
 }

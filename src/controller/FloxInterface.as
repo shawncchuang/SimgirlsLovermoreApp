@@ -41,6 +41,8 @@ package controller
 
 		function saveBundlePool(attr:String,data:*):void
 		function getBundlePool(attr:String):*
+		function savePersonalLog(attr,data:*):void
+		function getPersonalLog(attr:String):*
 		
 	}
 }

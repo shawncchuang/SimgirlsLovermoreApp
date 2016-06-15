@@ -32,10 +32,9 @@ public class ShareIDComponent extends Sprite{
     private var flox:FloxInterface=new FloxCommand();
     private var ownerId:String="";
 
-    private var clipboardTxt:String="After 14 years as the Most Played Dating Sim of all time;\n"+
-        "The sequel to Simgirls, Lovemore, is finally out!!\n"+
-        "For a limited time, try the first ever RS-RPG for free at\n"+
-        "www.Blackspears.com\n"+
+    private var clipboardTxt:String="The original maker of Simgirls, the Most Played Flash Game of all time," +
+            "has created the first ever RS-RPG: LOVEMORE.\n\n" +
+            "Play the game at: www.blackspears.com\n\n"+
         "Get 5% off the game and every item by entering the code upon purchase.\n";
 
     public function ShareIDComponent() {
@@ -109,7 +108,7 @@ public class ShareIDComponent extends Sprite{
 
         if(began){
             var loaderReq:LoaderRequest=new LoaderRequest();
-            var subject:String="It's my Citizenship Code";
+            var subject:String="The First Ever RS-RPG Lovemore is Released! Get Special Offer Now!";
             var body:String=clipboardTxt+ownerId;
 
             loaderReq.navigateToMail(subject,body);
@@ -122,7 +121,9 @@ public class ShareIDComponent extends Sprite{
         var began:Touch= e.getTouch(btn,TouchPhase.BEGAN);
         if(began){
 
-
+            var loaderReq:LoaderRequest=new LoaderRequest();
+            var url:String="http://blackspears.com/referral-program.html";
+            loaderReq.navigateToURLHandler(url);
         }
     }
 }

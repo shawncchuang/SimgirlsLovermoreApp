@@ -195,7 +195,7 @@ public class BlackMarketListLayout extends PanelScreen {
                 renderBtn.addEventListener(Event.TRIGGERED, onTapUseHandler);
             }
 
-            //itemRender.addChild(itemImg);
+
             itemRender.addChild(nameTxt);
             if(type=="Buy")
             {
@@ -404,21 +404,27 @@ public class BlackMarketListLayout extends PanelScreen {
                 scene.dispatchEventWith("BUY_BLACKMARKET_ITEM",false,_data);
 
                 var parentId:String=flox.getPlayerData("parentId");
+                var ownerId:String=flox.getPlayerData("ownerId");
                 if(parentId && parentId!=""){
                     var rewards:Object=flox.getBundlePool("rewards");
 
                     if(rewards[parentId]) {
                         if (rewards[parentId].enable) {
                             var dePrice:Number = Number(marketlist[item_id].price);
-                            dePrice *= (BlackMarketScene.rewards_rate);
+                            var _reward:Number=Number((dePrice*BlackMarketScene.rewards_rate).toFixed(2));
                             var extra_coin:Number = rewards[parentId].coin;
-                            extra_coin += dePrice;
+                            extra_coin += _reward;
                             rewards[parentId].coin = Number(extra_coin.toFixed(2));
 
-                            var withdraw:Number= rewards[parentId].withdraw;
-                            withdraw+=dePrice;
-                            rewards[parentId].withdraw=Number(withdraw.toFixed(2));
+                            var payout:Number= rewards[parentId].payout;
+                            payout+=_reward;
+                            rewards[parentId].payout=Number(payout.toFixed(2));
 
+                            var history:String=rewards[parentId].history;
+                            var timeStamp:String=new Date().toLocaleString();
+                            var log:String="Obtain $"+_reward+" from "+ownerId+"@"+timeStamp;
+                            history+="|"+log;
+                            rewards[parentId].history=history;
                             flox.saveBundlePool("rewards", rewards);
 
 

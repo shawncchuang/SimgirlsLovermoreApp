@@ -480,11 +480,18 @@ public class AssetEmbeds
     [Embed(source="../../media/textures/icons/whitebg.jpg")]
     public static const Whitebg:Class;
 
-    [Embed(source="../../media/textures/icons/icon_confirm.png")]
-    public static const IconConfirm:Class;
+      [Embed(source="../../media/textures/icons/icon_submit.png")]
+    public static const IconSubmit:Class;
 
-    [Embed(source="../../media/textures/icons/icon_dismiss.png")]
-    public static const IconDismiss:Class;
+    [Embed(source="../../media/textures/icons/icon_apply.png")]
+    public static const IconApply:Class;
+
+    [Embed(source="../../media/textures/icons/icon_remove.png")]
+    public static const IconRemove:Class;
+
+    [Embed(source="../../media/textures/icons/icon_cancel.png")]
+    public static const IconCancel:Class;
+
 
     [Embed(source="../../media/textures/icons/icon_help.png")]
     public static const IconHelp:Class;
@@ -1446,6 +1453,9 @@ public class AssetEmbeds
     [Embed(source="../../media/textures/panels/blackmarket_share_id_UI.png")]
     public static const SharedID_UI:Class;
 
+    [Embed(source="../../media/textures/panels/blackmarket_payout_UI.png")]
+    public static const Payout_UI:Class;
+
     /*-------------------panels-------------------------------------------------------------------*/
     [Embed(source = "../../media/textures/scenes/battle_scene.jpg")]
     public static const BattleScene:Class;
@@ -1517,8 +1527,23 @@ public class AssetEmbeds
      [Embed(source="../../media/textures/previews/RestaurantPreview.jpg")]
      public static const Restau
      */
+
+    //pickerlist_default.png
+    [Embed(source="../../media/textures/btns/pickerlist_default.png")]
+    public static const PickerListDefault:Class;
+
     [Embed(source="../../media/textures/btns/btn_buynow.png")]
     public static const BuyNowBtn:Class;
+
+    [Embed(source="../../media/textures/btns/btn_payout.png")]
+    public static const PayoutBtn:Class;
+
+    [Embed(source="../../media/textures/btns/default_checkbox.png")]
+    public static const DefaultCheckbox:Class;
+
+    [Embed(source="../../media/textures/btns/selected_checkbox.png")]
+    public static const SelectedCheckbox:Class;
+
 
     [Embed(source="../../media/textures/panels/skillstore_tab.png")]
     public static const PanelSkillsStore:Class;

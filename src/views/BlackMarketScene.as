@@ -26,6 +26,7 @@ import services.LoaderRequest;
 
 import starling.display.Button;
 import starling.display.Image;
+import starling.display.Quad;
 import starling.display.Sprite;
 import starling.events.Event;
 import starling.text.TextField;
@@ -59,6 +60,8 @@ public class BlackMarketScene extends Scenes
 	public static var discount_rate:Number=0.05;
 	public static var rewards_rate:Number=0.17;
 
+	private var payoutComponent:PayoutComponent;
+
 	public function BlackMarketScene()
 	{
 		/*var pointbgTexture:Texture=Assets.getTexture("PointsBg");
@@ -84,6 +87,7 @@ public class BlackMarketScene extends Scenes
 		this.addEventListener("BUY_BLACKMARKET_ITEM",doBuyItem);
 		this.addEventListener("CONSUME_BLACKMARKET_ITEM",doConsumeItem);
 		this.addEventListener("REFLASH_LISTLAYOUT",doReflashListLayout);
+		this.addEventListener("REMOVE_PAYOUT",doRemovePayoutComponent);
 
 	}
 	private function onStartStory():void
@@ -173,8 +177,14 @@ public class BlackMarketScene extends Scenes
 			format.size=20;
 			format.color=0xFF0000;
 
+			var rec:Rectangle=new flash.geom.Rectangle(385,146,550,40);
+			var quad:Quad=new Quad(562,rec.height,0xFFFFFF);
+			quad.x=rec.x;
+			quad.y=rec.y;
+			this.addChild(quad);
+
 			var msg:String="Once you used the consumable items they will be consumed. We highly recommend saving the game progress after using them.";
-			warringTxt=addTextField(this,new Rectangle(385,146,550,40),format);
+			warringTxt=addTextField(this,rec,format);
 			warringTxt.name="warring";
 			warringTxt.text=msg;
 
@@ -187,11 +197,11 @@ public class BlackMarketScene extends Scenes
 
 			var paid:Boolean=flox.getPlayerData("paid");
 
-			if(paid){
+			//if(paid){
 				var sharedComponent:Sprite=new ShareIDComponent();
 				sharedComponent.y=555;
 				panelbase.addChild(sharedComponent);
-			}
+			//}
 
 		}
 
@@ -221,9 +231,9 @@ public class BlackMarketScene extends Scenes
 		var rewards:Object=flox.getBundlePool("rewards");
 		if(rewards[ownerId]){
 			if(rewards[ownerId].enable){
-				var withdraw:Number=rewards[ownerId].withdraw;
-				coin+=withdraw;
-				rewards[ownerId].withdraw=0;
+				var payout:Number=rewards[ownerId].payout;
+				coin+=payout;
+				rewards[ownerId].payout=0;
 				flox.saveBundlePool("rewards",rewards);
 
 				flox.savePlayerData("coin",coin);
@@ -238,15 +248,21 @@ public class BlackMarketScene extends Scenes
 		coinTxt.text=DataContainer.currencyFormat(coin);
 
 	}
-	private function initGetMoreUSDIcon():void{
+	private function initCurrencyBtns():void{
 
 		var buytexture:Texture=Assets.getTexture("BuyNowBtn");
 		var buybtn:Button=new Button(buytexture);
-		buybtn.x=825;
+		buybtn.x=835 - buybtn.width - 5;
 		buybtn.y=142;
 		addChild(buybtn);
 		buybtn.addEventListener(Event.TRIGGERED,doBuyNow);
 
+		var payoutTexture:Texture=Assets.getTexture("PayoutBtn");
+		var payoutbtn:Button=new Button(payoutTexture);
+		payoutbtn.x=835;
+		payoutbtn.y=142;
+		addChild(payoutbtn);
+		payoutbtn.addEventListener(Event.TRIGGERED,doPayout);
 	}
 	private function doBuyNow(e:Event):void
 	{
@@ -267,6 +283,13 @@ public class BlackMarketScene extends Scenes
 		var _data:Object=new Object();
 		_data.name="BlackMarketScene";
 		command.sceneDispatch(SceneEvent.CHANGED,_data);
+
+	}
+
+	private function doPayout(e:Event):void{
+
+		payoutComponent=new PayoutComponent();
+		this.addChild(payoutComponent);
 
 	}
 
@@ -306,6 +329,12 @@ public class BlackMarketScene extends Scenes
 		}
 
 	}
+
+	private function initGetPaid():void{
+
+
+	}
+
 	private function onStoryComplete():void {
 
 		var _data:Object = new Object();
@@ -333,7 +362,8 @@ public class BlackMarketScene extends Scenes
 				initCharacter();
 				initPanel();
 				initCoin();
-				initGetMoreUSDIcon();
+				initCurrencyBtns();
+				initGetPaid();
 				break
 			case "Use":
 				PANEL_TEXTURE_BG="BlackMarketUseAssets";
@@ -416,6 +446,13 @@ public class BlackMarketScene extends Scenes
 		marketlayout.removeFromParent(true);
 
 		onRefreshComplete();
+	}
+	private function doRemovePayoutComponent(e:Event):void{
+		payoutComponent.removeFromParent(true);
+
+
+		var coin:Number=flox.getPlayerData("coin");
+		coinTxt.text=DataContainer.currencyFormat(coin);
 	}
 
 }

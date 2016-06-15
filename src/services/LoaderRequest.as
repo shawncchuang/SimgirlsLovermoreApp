@@ -13,6 +13,7 @@
 	import flash.net.SharedObjectFlushStatus;
 import flash.net.URLLoader;
 import flash.net.URLRequest;
+import flash.net.URLRequestMethod;
 import flash.net.URLVariables;
 import flash.net.navigateToURL;
 	
@@ -76,7 +77,7 @@ import utils.DebugTrace;
 			
 		}
 		
-		public function sendtoSharedObject(auth:String,email:String):void
+		public function sendtoSharedObject(attr:String,data:String):void
 		{
 			 
 			var so:SharedObject = SharedObject.getLocal("simgirls");
@@ -94,8 +95,7 @@ import utils.DebugTrace;
 						
 						break;
 					case SharedObjectFlushStatus.FLUSHED:
-						so.data.auth=auth;
-						so.data.email=email;
+						so.data[attr]=data;
 						DebugTrace.msg("Value flushed to disk.\n");
 						break;
 				}
@@ -196,6 +196,22 @@ import utils.DebugTrace;
 			var email:URLRequest= new URLRequest(emStr);
 			email.data = variables;
 			navigateToURL(email);
+		}
+
+		public function sendDataToURL(url:String,data:Object):void{
+
+			var variables:URLVariables=new URLVariables();
+			//variables.sessionID=new Date().getTime();
+			if(data) {
+				for (var attr:String in data) {
+					variables[attr] = data[attr];
+				}
+			}
+			var req:URLRequest=new URLRequest(url);
+			req.method=URLRequestMethod.POST;
+			req.data = variables;
+			sendToURL(req);
+
 		}
 
 	}

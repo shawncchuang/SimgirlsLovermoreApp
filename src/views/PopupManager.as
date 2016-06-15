@@ -52,6 +52,7 @@ public class PopupManager extends Sprite{
         var isModal:Boolean=false;
         switch(attr){
 
+            case "payout":
             case "bonus":
             case "bundle":
                 isCentered=true;
@@ -69,6 +70,7 @@ public class PopupManager extends Sprite{
         popup.addChild(bg);
         popup.addChild(msgTxt);
         popup.addChild(btn);
+
 
 
         PopUpManager.addPopUp(popup,isModal,isCentered);
@@ -109,13 +111,17 @@ public class PopupManager extends Sprite{
 
 
         btn=new Button();
-        btn.label="Confirm";
+        btn.label="Close";
         btn.setSize(200,40);
         btn.x=bg.width/2-100;
         btn.y=145;
         btn.labelFactory =  getItTextRender;
+        if(attr=="payout"){
+            btn.addEventListener(Event.TRIGGERED, doTryAgainHandler);
+        }else{
+            btn.addEventListener(Event.TRIGGERED, doBonusConfirmHandler);
+        }
 
-        btn.addEventListener(Event.TRIGGERED, doBonusConfirmHandler);
     }
 
     private function doTryAgainHandler(e:Event):void{

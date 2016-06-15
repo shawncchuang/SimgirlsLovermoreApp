@@ -961,5 +961,19 @@ public class DataContainer
     public static function get EDITED_VALUE():Number{
         return edited_value;
     }
+
+    public static function validateEmail(str:String):Boolean
+    {
+        var pattern:RegExp = /(\w|[_.\-])+@((\w|-)+\.)+\w{2,4}+/;
+        var result:Object = pattern.exec(str);
+        if(result == null)
+        {
+            return false;
+        }
+        //if
+        return true;
+    }
+
+
 }
 }
