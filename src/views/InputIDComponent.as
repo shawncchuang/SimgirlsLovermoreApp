@@ -36,7 +36,6 @@ public class InputIDComponent extends Sprite {
     private var inputTxt:TextInput;
     private var command:MainInterface=new MainCommand();
     private var flox:FloxInterface=new FloxCommand();
-    private var SUCCESS
 
     public function InputIDComponent() {
         init();
@@ -76,6 +75,7 @@ public class InputIDComponent extends Sprite {
         {
             var textEditor:StageTextTextEditor = new StageTextTextEditor();
             textEditor.styleProvider = null;
+            textEditor.styleProvider = null;
             textEditor.fontFamily = format.font;
             textEditor.fontSize = format.size;
             textEditor.color = format.color;
@@ -85,14 +85,14 @@ public class InputIDComponent extends Sprite {
         var confirmTexture:Texture=Assets.getTexture("IconApply");
         var confirm:Button=new Button(confirmTexture,"");
         confirm.x=330;
-        confirm.y=42;
+        confirm.y=39;
         confirm.addEventListener(TouchEvent.TOUCH, onTouchConfirm);
 
 
         var dismissTexture:Texture=Assets.getTexture("IconRemove");
         var dismiss:Button=new Button(dismissTexture,"");
         dismiss.x=415;
-        dismiss.y=42;
+        dismiss.y=39;
         dismiss.addEventListener(TouchEvent.TOUCH, onTouchDismiss);
 
 
@@ -131,6 +131,7 @@ public class InputIDComponent extends Sprite {
         if(players.length>0){
 
             var response:String=command.praseBundlePool(players[0].ownerId);
+
             var popup:PopupManager=new PopupManager();
             popup.attr="bundle";
             popup.msg=response;
@@ -180,7 +181,6 @@ public class InputIDComponent extends Sprite {
             var parentId:String=flox.getPlayerData("parentId");
             if(parentId!="" || parentId){
                 command.dismissBundle();
-                flox.savePlayerData("parentId","");
                 inputTxt.text="";
                 var current_scene:Sprite=ViewsContainer.currentScene;
                 current_scene.dispatchEventWith("REFLASH_LISTLAYOUT");
@@ -196,13 +196,14 @@ public class InputIDComponent extends Sprite {
 
     }
 
-    private function onTouchHelp(e:TouchEvent):void{
-        var btn:Button= e.currentTarget as Button;
-        var began:Touch= e.getTouch(btn,TouchPhase.BEGAN);
-        if(began){
+    private function onTouchHelp(e:TouchEvent):void {
+        var btn:Button = e.currentTarget as Button;
+        var began:Touch = e.getTouch(btn, TouchPhase.BEGAN);
+        if (began) {
 
 
         }
     }
+
 }
 }

@@ -320,9 +320,9 @@ public class LoginPanel extends MovieClip
 	}
 	private function initCode():void{
 
-		var d:Date=new Date();
-		var t:Number= d.getTime();
-		var data:String=String(t+1980092410160);
+
+		var timestamp:Number= new Date().getTime();
+		var data:String=String(timestamp+1980092410160);
 		var decode:String=SHA256.hashString(data);
 		//DebugTrace.msg(decode);
 		var index:Number=Math.floor(Math.random()*(decode.length-4));

@@ -72,6 +72,7 @@ public class CommandCloud extends Sprite
     private var cloudMC:MovieClip;
     private var cloudAltas:TextureAtlas;
     private var delayID:uint;
+    private var font:String="SimMyriadPro";
     public function CommandCloud(src:String):void{
         //L1_^Departures
         var p:String=src.split("_")[0];
@@ -126,15 +127,13 @@ public class CommandCloud extends Sprite
 
         }
 
-        cloudTxt=new TextField(cloudMC.width, cloudMC.height-5,_label);
-        cloudTxt.format.setTo("SimImpact",25,0x66CCFF);
+        cloudTxt=new TextField(135, cloudMC.height-5,_label);
+        cloudTxt.format.setTo("SimImpact",22,0x66CCFF);
+        cloudTxt.autoScale=true;
         cloudTxt.name="txt";
         cloudTxt.pivotX = cloudTxt.width / 2;
         cloudTxt.pivotY = cloudTxt.height / 2;
-        cloudTxt.autoScale=true;
         cloud.addChild(cloudTxt);
-
-
 
 
         cloud.x+=(cloudMC.width/2-10);

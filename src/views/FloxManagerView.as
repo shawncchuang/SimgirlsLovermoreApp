@@ -1,8 +1,11 @@
 package views
 {
 import com.gamua.flox.utils.SHA256;
+import com.greensock.TweenMax;
 
 import data.Config;
+
+import fl.controls.ComboBox;
 
 import flash.display.MovieClip;
 	import flash.events.Event;
@@ -26,6 +29,10 @@ import flash.display.MovieClip;
 		private var mail:String;
 		private var type:String="Player";
 		private var key:String="";
+		private var msg:String="";
+		private var fadeIn:Boolean=false;
+		private var accType:*="pre_order";
+		private var ownerId:String="";
 		public function FloxManagerView()
 		{
 			key=FloxCommand.heroKey;
@@ -50,10 +57,12 @@ import flash.display.MovieClip;
 
 			managerUI.initbonus.addEventListener(MouseEvent.CLICK,initBonusList);
 			managerUI.updateplayer.addEventListener(MouseEvent.CLICK,doUpdatePlayer);
-
+			managerUI.accounttype.addEventListener(Event.CHANGE,onAccountTypeChanged);
 
 			managerUI.indicesplayer.addEventListener(MouseEvent.CLICK,doIndicesPlayer);
-
+			managerUI.resultMC.closebtn.addEventListener(MouseEvent.CLICK,doFadeoutResultArea);
+			managerUI.resultMC.closebtn.buttonMode=true;
+			managerUI.resultMC.x=955;
 			addChild(managerUI);
 			
 			
@@ -103,6 +112,7 @@ import flash.display.MovieClip;
 			{
 				managerUI.mailtxt.text="List["+index+"]/"+emails.length+":"+mail+" created Account";		
 				DebugTrace.msg("FloxManagerView.currentAccount mail="+mail);
+				showResult("FloxManagerView.currentAccount mail="+mail);
 				createAccount();
 			}
 		}
@@ -176,9 +186,21 @@ import flash.display.MovieClip;
 		}
 
 		private function doUpdatePlayer(e:MouseEvent):void{
-			var new_value:Number=Number(managerUI.new_value.text);
-			DataContainer.EDITED_VALUE=new_value;
-			flox.playerEditor(managerUI.hashkey.text);
+			var USD:Number=Number(managerUI.new_value.text);
+			if(USD!=0){
+				DataContainer.EDITED_VALUE=USD;
+				flox.playerEditor(ownerId);
+			}
+			showResult("FloxManagerView.doUpdatePlayer USD="+USD+", ownerId="+ownerId);
+		}
+		private function onAccountTypeChanged(e:Event):void{
+			var cb:ComboBox = e.currentTarget as ComboBox;
+			var value:Number=Number(cb.value);
+			if(value==0){
+				accType="pre_order";
+			}else{
+				accType=null;
+			}
 		}
 
 		private function doIndicesPlayer(e:MouseEvent):void{
@@ -193,12 +215,53 @@ import flash.display.MovieClip;
 		}
 		private function onQueryUserIndices(players:Array):void
 		{
-			DebugTrace.msg("FloxManagerView.onQueryUserIndices players="+JSON.stringify(players));
+
+
+			if(players.length>1){
+
+				for(var i:uint=0;i<players.length;i++){
+					if(players[i].from==accType){
+						var playerData:String=JSON.stringify(players[i]);
+						ownerId=players[i].ownerId;
+						break
+					}
+				}
+			}else{
+				playerData=JSON.stringify(players);
+				ownerId=players[0].ownerId;
+			}
+
+			DebugTrace.msg("FloxManagerView.onQueryUserIndices players="+playerData);
+			showResult("FloxManagerView.onQueryUserIndices players="+playerData);
+
+
 		}
 		private function onIndicesError(error:String):void
 		{
 			DebugTrace.msg("FloxManagerView.onIndicesError error="+error);
+			showResult("FloxManagerView.onIndicesError error="+error);
 		}
-		
+
+		private function showResult(result:String):void{
+			managerUI.resultMC.visible=true;
+			msg+="\n"+result;
+			managerUI.resultMC.textarea.text=msg
+		}
+		private function doFadeoutResultArea(e:MouseEvent):void{
+
+			fadeIn=!fadeIn;
+			if(fadeIn){
+				var posX:Number=0;
+				managerUI.resultMC.closebtn.gotoAndStop(2);
+			}else{
+				posX=955;
+				managerUI.resultMC.closebtn.gotoAndStop(1);
+			}
+
+			TweenMax.to(managerUI.resultMC,0.5,{x:posX,onComplete:onTweenComplete});
+			function onTweenComplete():void{
+				TweenMax.killAll();
+			}
+		}
 	}
 }

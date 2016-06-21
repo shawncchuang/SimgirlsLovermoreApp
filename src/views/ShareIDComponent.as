@@ -8,10 +8,13 @@ import controller.FloxInterface;
 
 import feathers.controls.TextInput;
 import feathers.controls.text.StageTextTextEditor;
+import feathers.controls.text.TextFieldTextRenderer;
 import feathers.core.ITextEditor;
+import feathers.core.ITextRenderer;
 
 import flash.desktop.Clipboard;
 import flash.desktop.ClipboardFormats;
+import flash.text.TextFormat;
 
 import services.LoaderRequest;
 
@@ -32,10 +35,9 @@ public class ShareIDComponent extends Sprite{
     private var flox:FloxInterface=new FloxCommand();
     private var ownerId:String="";
 
-    private var clipboardTxt:String="The original maker of Simgirls, the Most Played Flash Game of all time," +
-            "has created the first ever RS-RPG: LOVEMORE.\n\n" +
-            "Play the game at: www.blackspears.com\n\n"+
-        "Get 5% off the game and every item by entering the code upon purchase.\n";
+    private var clipboardTxt:String="Try the first ever rs-rpg LOVEMORE at: www.blackspears.com\n\n" +
+        "Made by the creator of the most played flash game in the World.\n\n"+
+        "Get 5% off the game and every item by entering the code upon purchase!\n";
 
     public function ShareIDComponent() {
         init();
@@ -47,33 +49,50 @@ public class ShareIDComponent extends Sprite{
 
         var format:Object=new Object();
         format.font=font;
-        format.size=18;
+        format.font_size=18;
         format.color=0x000000;
 
         ownerId=flox.getPlayerData("ownerId");
 
-        var sharedTxt:TextField=new TextField(290,22,"");
-        sharedTxt.format.setTo(font,format.size,format.color,"left");
+        var sharedTxt:TextInput=new TextInput();
+        sharedTxt.isEditable=false;
+        sharedTxt.isSelectable=true;
+        sharedTxt.setSize(290,22);
         sharedTxt.x=28;
         sharedTxt.y=45;
         sharedTxt.text=ownerId;
+
+        sharedTxt.textEditorFactory=function():ITextEditor
+        {
+            var textEditor:StageTextTextEditor = new StageTextTextEditor();
+            textEditor.styleProvider = null;
+            textEditor.fontFamily = format.font;
+            textEditor.fontSize = format.font_size;
+            textEditor.color = format.color;
+            return textEditor;
+        };
+//        var sharedTxt:TextField=new TextField(290,22,"");
+//        sharedTxt.format.setTo(font,format.size,format.color,"left");
+//        sharedTxt.x=28;
+//        sharedTxt.y=45;
+//        sharedTxt.text=ownerId;
 
         var copyTexture:Texture=Assets.getTexture("IconCopy");
 
         var copybtn:Button=new Button(copyTexture,"");
         copybtn.x=330;
-        copybtn.y=42;
+        copybtn.y=39;
         copybtn.addEventListener(TouchEvent.TOUCH, onTouchCopy);
 
         var eMailTexture:Texture=Assets.getTexture("IconEmail");
         var eMailbtn:Button=new Button(eMailTexture,"");
         eMailbtn.x=415;
-        eMailbtn.y=42;
+        eMailbtn.y=39;
         eMailbtn.addEventListener(TouchEvent.TOUCH, onTouchEmail);
 
         var helpTexture:Texture=Assets.getTexture("IconHelp");
         var help:Button=new Button(helpTexture,"");
-        help.x=588;
+        help.x=585;
         help.addEventListener(TouchEvent.TOUCH,onTouchHelp);
 
         this.addChild(sharedBg);

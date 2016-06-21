@@ -3,6 +3,10 @@
  */
 package views {
 
+import com.gamua.flox.TimeScope;
+import com.gamua.flox.utils.Base64;
+import com.gamua.flox.utils.createUID;
+
 import controller.Assets;
 import controller.FloxCommand;
 import controller.FloxInterface;
@@ -43,6 +47,9 @@ import starling.display.Quad;
 
 import starling.display.Sprite;
 import starling.events.Event;
+import starling.events.Touch;
+import starling.events.TouchEvent;
+import starling.events.TouchPhase;
 import starling.text.TextField;
 
 
@@ -64,7 +71,7 @@ public class PayoutComponent extends PanelScreen{
     private var policy_check:Boolean=false;
     private var payout_amount:Number=0;
     private var command:MainInterface=new MainCommand();
-
+    private var coming_soon:Boolean=true;
 
     public function PayoutComponent() {
         this.width=Starling.current.stage.stageWidth;
@@ -169,8 +176,8 @@ public class PayoutComponent extends PanelScreen{
             var spaces:RegExp = / /gi;
             email=email.replace(spaces,"");
             validated=DataContainer.validateEmail(email);
-            DebugTrace.msg("PayoutComponent.input_focusOutHandler email="+email);
-            DebugTrace.msg("PayoutComponent.input_focusOutHandler validate="+validated);
+           // DebugTrace.msg("PayoutComponent.input_focusOutHandler email="+email);
+            //DebugTrace.msg("PayoutComponent.input_focusOutHandler validate="+validated);
 
             if(!validated){
                 var msg:String="Please input correct email";
@@ -212,8 +219,8 @@ public class PayoutComponent extends PanelScreen{
         checkbox.isSelected = false;
         checkbox.width=20;
         checkbox.height=20;
-        checkbox.x=35;
-        checkbox.y=372;
+        checkbox.x=27;
+        checkbox.y=367;
         var defaultTexture:Texture=Assets.getTexture("DefaultCheckbox");
         var selectedTexture:Texture=Assets.getTexture("SelectedCheckbox");
         checkbox.upSkin=new Image( defaultTexture );
@@ -224,14 +231,14 @@ public class PayoutComponent extends PanelScreen{
 
         var submitTexture:Texture=Assets.getTexture("IconSubmit");
         var submitBtn:starling.display.Button=new starling.display.Button(submitTexture);
-        submitBtn.x=415;
-        submitBtn.y=370;
+        submitBtn.x=413;
+        submitBtn.y=364;
         submitBtn.addEventListener( Event.TRIGGERED, submitBtnHandler );
 
         var cancelTexture:Texture=Assets.getTexture("IconCancel");
         var cancelBtn:starling.display.Button=new starling.display.Button(cancelTexture);
-        cancelBtn.x=415+submitBtn.width+5;
-        cancelBtn.y=370;
+        cancelBtn.x=503;
+        cancelBtn.y=364;
         cancelBtn.addEventListener( Event.TRIGGERED, cancelBtnHandler );
 
 
@@ -245,6 +252,26 @@ public class PayoutComponent extends PanelScreen{
         container.addChild( checkbox );
         container.addChild( submitBtn );
         container.addChild( cancelBtn );
+
+
+        if(coming_soon){
+            var coverTexture:Texture=Assets.getTexture("ComingSoon_UI");
+            var cover:Image=new Image(coverTexture);
+            cover.useHandCursor=true;
+            container.addChild( cover );
+            cover.addEventListener(TouchEvent.TOUCH, doTouchCooimgSoon );
+
+            function doTouchCooimgSoon(e:TouchEvent):void{
+                var target:Image= e.currentTarget as Image;
+                var began:Boolean= e.getTouch(target,TouchPhase.BEGAN);
+                if(began){
+
+                    var current_scene:Sprite=ViewsContainer.currentScene;
+                    current_scene.dispatchEventWith("REMOVE_PAYOUT");
+                }
+            }
+        }
+
 
         this.addChild(bgQuad);
         this.addChild(container);
@@ -279,7 +306,7 @@ public class PayoutComponent extends PanelScreen{
             command.showSaveError("payout",new Object(),msg);
         }else{
 
-            if(coin>payout_amount){
+            if(coin>=payout_amount){
                 payout=true;
                 coin-=payout_amount;
                 flox.savePlayerData("coin",coin);
@@ -291,22 +318,29 @@ public class PayoutComponent extends PanelScreen{
         }
 
         if(validated && policy_check && payout){
-            var payout_history:Array=flox.getPersonalLog("payout_history");
-            var timeStamp:String=new Date().toLocaleString();
-            var node:Object={createdAt:timeStamp,email:email,payout:payout_amount,balance:coin};
-            if(!payout_history){
-                payout_history=new Array();
-            }
-            payout_history.push(node);
-            flox.savePersonalLog("payout_history",payout_history);
 
-            var msg:String="Your payout request is submitted. It'll usually take 1-2 business days to process. If there is any issue we'll contact you at the email entered. Thank you for joining us at the Black Market!";
+
+            msg="Your payout request is submitted. It'll usually take 1-2 business days to process. If there is any issue we'll contact you at the email entered. Thank you for joining us at the Black Market!";
             command.showSaveError("payout",new Object(),msg);
 
             var current_scene:Sprite=ViewsContainer.currentScene;
             current_scene.dispatchEventWith("REMOVE_PAYOUT");
 
+            var ownerID:String=flox.getPlayerData("ownerId");
+            var request_id:String=createUID(16,ownerID+String(new Date().getTime()));
+            var payoutData:Object=new Object();
 
+            payoutData.request_id= request_id;
+            payoutData.from=ownerID;
+            payoutData.paypalEmail=email;
+            payoutData.amount=payout_amount;
+            flox.savePayoutListEntity(payoutData);
+
+            var payout_history:Array=flox.getPersonalLog("payout_history");
+            var timeStamp:String=new Date().toLocaleString();
+            var node:Object={request_id:request_id,createdAt:timeStamp,email:email,payout:payout_amount,balance:coin};
+            payout_history.push(node);
+            flox.savePersonalLog("payout_history",payout_history);
 
         }
 
@@ -317,24 +351,6 @@ public class PayoutComponent extends PanelScreen{
         var current_scene:Sprite=ViewsContainer.currentScene;
         current_scene.dispatchEventWith("REMOVE_PAYOUT");
 
-//
-//        var serviceURL:String="https://megastore99.globat.com/files/payment/mailservices/mailgun.php";
-
-//        var serviceURL:String="https://api:key-004f3ac21d626b611f0ab4f039dd08ce@api.mailgun.net/v3/samples.mailgun.org/messages";
-        var loaderReq:LoaderRequest=new LoaderRequest();
-//        var _data:Object=new Object();
-//        _data.from="Lovemore <postmaster@sandboxec73155164604d51a2115c7524699d46.mailgun.org>";
-//        _data.to="Shawn <shawncc.huang@gmail.com>";
-//        _data.subject="Hello";
-//        _data.text="Testing some Mailgun awesomness!";
-
-        var serviceURL:String="https://usX.api.mailchimp.com/3.0/conversations/{conversation_id}/messages";
-        var _data:Object=new Object();
-        _data.from_email="shawncc.huang@gmail.com";
-        _data.subject="Hello";
-        _data.message="Testing some Mailgun awesomness!";
-        _data.read=false;
-        loaderReq.sendDataToURL(serviceURL,_data);
 
     }
 

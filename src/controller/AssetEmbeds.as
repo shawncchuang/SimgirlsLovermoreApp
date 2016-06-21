@@ -692,6 +692,9 @@ public class AssetEmbeds
     [Embed(source="../../media/textures/icons/icon_contact_map.png")]
     public static const ContactMapSign:Class;
 
+    [Embed(source="../../media/textures/icons/icon_crown.png")]
+    public static const Crown:Class;
+
     /*------------------icons-------------------------------------------------*/
 
 
@@ -1455,6 +1458,12 @@ public class AssetEmbeds
 
     [Embed(source="../../media/textures/panels/blackmarket_payout_UI.png")]
     public static const Payout_UI:Class;
+
+    [Embed(source="../../media/textures/panels/blackmarket_comingsoon.png")]
+    public static const ComingSoon_UI:Class;
+
+    [Embed(source="../../media/textures/panels/leaderboard_bg.png")]
+    public static const LeaderboardPanel:Class;
 
     /*-------------------panels-------------------------------------------------------------------*/
     [Embed(source = "../../media/textures/scenes/battle_scene.jpg")]

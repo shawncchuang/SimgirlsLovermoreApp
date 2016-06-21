@@ -39,10 +39,14 @@ package controller
 		function queryPlayerByEmail(email:String,callback:Function):void
 		function playerEditor(key:String):void
 
-		function saveBundlePool(attr:String,data:*):void
+		function saveBundlePool(data:Object,callback:Function=null):void
+		function loadBundlePoolEntity():void
+		function refleshBundlePool(callback:Function):void
 		function getBundlePool(attr:String):*
 		function savePersonalLog(attr,data:*):void
 		function getPersonalLog(attr:String):*
+		function savePayoutListEntity(data:Object):void
+		function indicesParentId(callback:Function,id:String):void
 		
 	}
 }

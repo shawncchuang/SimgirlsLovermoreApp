@@ -1,7 +1,7 @@
 package
 {
 
-import com.demonsters.debugger.MonsterDebugger;
+
 
 import controller.Assets;
 import controller.CpuMembersCommand;
@@ -90,7 +90,7 @@ public class Game extends Sprite
 	{
 		Starling.current.nativeStage.quality=StageQuality.LOW;
 
-		MonsterDebugger.initialize(this);
+
 		//Starling.current.stage.stageWidth=1024;
 		//Starling.current.stage.stageHeight=768;
 

@@ -116,10 +116,11 @@ public class PopupManager extends Sprite{
         btn.x=bg.width/2-100;
         btn.y=145;
         btn.labelFactory =  getItTextRender;
-        if(attr=="payout"){
-            btn.addEventListener(Event.TRIGGERED, doTryAgainHandler);
-        }else{
+        if(attr=="bonus"){
             btn.addEventListener(Event.TRIGGERED, doBonusConfirmHandler);
+        }else{
+            btn.addEventListener(Event.TRIGGERED, doTryAgainHandler);
+
         }
 
     }

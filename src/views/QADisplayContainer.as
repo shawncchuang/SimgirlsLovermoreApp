@@ -109,8 +109,10 @@ import flash.display.MovieClip;
 				_data.last_name=templete.lastname.text;
 				DataContainer.PlayerFullName=_data;
 				flox.save("first_name",_data.first_name);
-				flox.save("last_name",_data.last_name);
-				//floxcom.updateSavegame(_data);
+				//flox.save("last_name",_data.last_name);
+
+				flox.savePlayerData("player_name",_data.last_name);
+
 
 				if(onComplete)
 				onComplete();

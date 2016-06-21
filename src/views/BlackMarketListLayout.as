@@ -425,7 +425,7 @@ public class BlackMarketListLayout extends PanelScreen {
                             var log:String="Obtain $"+_reward+" from "+ownerId+"@"+timeStamp;
                             history+="|"+log;
                             rewards[parentId].history=history;
-                            flox.saveBundlePool("rewards", rewards);
+                            flox.saveBundlePool({"rewards":rewards});
 
 
                             /*

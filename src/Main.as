@@ -50,7 +50,7 @@ import flash.text.TextField;
 			stage.align = StageAlign.TOP;
 
 			var parameters:Object=this.loaderInfo.parameters;
-			DebugTrace.msg("Preloader.auth\\Key:"+parameters.authkey);
+			DebugTrace.msg("Preloader.auth Key:"+parameters.authkey);
 			verifyKey=parameters.authkey;
 			Config.verifyKey=verifyKey;
 
@@ -174,7 +174,7 @@ import flash.text.TextField;
 		{
 			var appXML:XML=NativeApplication.nativeApplication.applicationDescriptor;
 			var ns:Namespace=appXML.namespace();
-			trace("checkAppVersion Current version is " +appXML.ns::versionNumber);
+			//trace("checkAppVersion Current version is " +appXML.ns::versionNumber);
 			DataContainer.currentVersion=appXML.ns::versionNumber;
 		}
 		private function onUpdate(e:UpdateEvent):void

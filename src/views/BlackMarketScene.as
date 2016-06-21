@@ -38,7 +38,7 @@ import utils.ViewsContainer;
 public class BlackMarketScene extends Scenes
 {
 	private var marketlayout:BlackMarketListLayout;
-    private var templete:MenuTemplate;
+	private var templete:MenuTemplate;
 	private var speaker_sprite:Sprite;
 	private var command:MainInterface=new MainCommand();
 	private var button:Button;
@@ -61,6 +61,7 @@ public class BlackMarketScene extends Scenes
 	public static var rewards_rate:Number=0.17;
 
 	private var payoutComponent:PayoutComponent;
+	private var preload:Sprite;
 
 	public function BlackMarketScene()
 	{
@@ -88,6 +89,8 @@ public class BlackMarketScene extends Scenes
 		this.addEventListener("CONSUME_BLACKMARKET_ITEM",doConsumeItem);
 		this.addEventListener("REFLASH_LISTLAYOUT",doReflashListLayout);
 		this.addEventListener("REMOVE_PAYOUT",doRemovePayoutComponent);
+		this.addEventListener("REQUEST_LOADING",initLoadingBuffer);
+		this.addEventListener("COMPLETE_LOADING",removeLoadingBuffer);
 
 	}
 	private function onStartStory():void
@@ -135,7 +138,7 @@ public class BlackMarketScene extends Scenes
 		var items:Object=flox.getPlayerData("items");
 		var currentItems:Object=new Object();
 
-        DebugTrace.msg("BlackMarketScene.doConsumeItem id="+id);
+		DebugTrace.msg("BlackMarketScene.doConsumeItem id="+id);
 
 		for(var item_id:String in items){
 
@@ -198,9 +201,9 @@ public class BlackMarketScene extends Scenes
 			var paid:Boolean=flox.getPlayerData("paid");
 
 			//if(paid){
-				var sharedComponent:Sprite=new ShareIDComponent();
-				sharedComponent.y=555;
-				panelbase.addChild(sharedComponent);
+			var sharedComponent:Sprite=new ShareIDComponent();
+			sharedComponent.y=555;
+			panelbase.addChild(sharedComponent);
 			//}
 
 		}
@@ -214,8 +217,8 @@ public class BlackMarketScene extends Scenes
 	}
 	private function onUseBlackMarketItem(e:Event):void{
 		panelbase.removeFromParent(true);
-        marketlayout.removeFromParent(true);
-        templete.removeFromParent(true);
+		marketlayout.removeFromParent(true);
+		templete.removeFromParent(true);
 	}
 
 	private function initCoin():void{
@@ -234,7 +237,7 @@ public class BlackMarketScene extends Scenes
 				var payout:Number=rewards[ownerId].payout;
 				coin+=payout;
 				rewards[ownerId].payout=0;
-				flox.saveBundlePool("rewards",rewards);
+				flox.saveBundlePool({"rewards":rewards});
 
 				flox.savePlayerData("coin",coin);
 
@@ -317,6 +320,13 @@ public class BlackMarketScene extends Scenes
 				flox.refreshPlayer(onRefreshComplete);
 				//onRefreshComplete();
 				break
+			case "Leaderboard":
+				gameEvent._name="clear_comcloud";
+				gameEvent.displayHandler();
+				var leaderboard:Sprite=new LeaderboardForm();
+				addChild(leaderboard);
+
+				break
 			case "ani_complete":
 
 				break
@@ -340,10 +350,10 @@ public class BlackMarketScene extends Scenes
 		var _data:Object = new Object();
 		var current_switch:String = flox.getSaveData("current_switch");
 		DebugTrace.msg("BlackStoreScene.onStoryComplete switchID=" + current_switch);
-        var gameEvent:GameEvent = SimgirlsLovemore.gameEvent;
+		var gameEvent:GameEvent = SimgirlsLovemore.gameEvent;
 		switch (current_switch) {
 
- 
+
 			default:
 				_data.name= "BlackMarketScene";
 				_data.from="story";
@@ -374,13 +384,17 @@ public class BlackMarketScene extends Scenes
 
 		initDesc();
 
+		initBlackMaretLayout();
 
-        marketlayout=new BlackMarketListLayout();
+
+
+	}
+	private function initBlackMaretLayout():void{
+		marketlayout=new BlackMarketListLayout();
 		marketlayout.type=type;
 		marketlayout.x=390;
 		marketlayout.y=215;
 		addChild(marketlayout);
-
 	}
 	private function doCannelHandler():void
 	{
@@ -443,9 +457,11 @@ public class BlackMarketScene extends Scenes
 	}
 
 	private function doReflashListLayout(e:Event):void{
-		marketlayout.removeFromParent(true);
 
-		onRefreshComplete();
+
+		marketlayout.removeFromParent(true);
+		initBlackMaretLayout();
+
 	}
 	private function doRemovePayoutComponent(e:Event):void{
 		payoutComponent.removeFromParent(true);
@@ -453,6 +469,15 @@ public class BlackMarketScene extends Scenes
 
 		var coin:Number=flox.getPlayerData("coin");
 		coinTxt.text=DataContainer.currencyFormat(coin);
+	}
+
+	private function initLoadingBuffer(e:Event):void{
+
+		//preload=new LoadingBuffer();
+		//addChild(preload);
+	}
+	private function removeLoadingBuffer():void{
+		//preload.removeFromParent(true);
 	}
 
 }

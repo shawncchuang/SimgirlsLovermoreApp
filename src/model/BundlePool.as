@@ -8,6 +8,7 @@ public class BundlePool extends Entity{
 
     public var list:Array=new Array();
     public var rewards:Object=new Object();
+    public var statistics:Array=new Array();
 
 }
 }

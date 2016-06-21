@@ -197,7 +197,7 @@ public class SimgirlsLovemore extends MovieClip
 		}
 		//if
 
-
+		MonsterDebugger.initialize(this);
 
 		NativeApplication.nativeApplication.addEventListener(flash.events.Event.EXITING,onNavieAppExit);
 

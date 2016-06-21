@@ -46,6 +46,7 @@ import starling.core.Starling;
 import starling.display.Image;
 import starling.display.MovieClip;
 import starling.display.Sprite;
+import starling.display.Sprite;
 import starling.events.KeyboardEvent;
 import starling.events.Touch;
 import starling.events.TouchEvent;
@@ -3098,31 +3099,31 @@ public class MainCommand implements MainInterface {
         var version:String=DataContainer.currentVersion;
         var flox:FloxInterface=new FloxCommand();
         var rewards:Object=flox.getPlayerData("rewards");
-       switch(version){
-           case "2.0":
+        switch(version){
+            case "2.0":
 
-                   if(rewards){
-                       if(rewards.coin!=1){
-                           var coin:Number=flox.getPlayerData("coin");
-                           coin+=20;
-                           var _data:Object=new Object();
-                           _data.coin=coin;
-                           flox.savePlayer(_data);
-                       }
+                if(rewards){
+                    if(rewards.coin!=1){
+                        var coin:Number=flox.getPlayerData("coin");
+                        coin+=20;
+                        var _data:Object=new Object();
+                        _data.coin=coin;
+                        flox.savePlayer(_data);
+                    }
 
-                   }else{
-                       rewards=new Object();
-                       rewards.coin=1;
-                       _data=new Object();
-                       _data.rewards=rewards;
-                       _data.coin=20;
-                       flox.savePlayer(_data);
-                   }
+                }else{
+                    rewards=new Object();
+                    rewards.coin=1;
+                    _data=new Object();
+                    _data.rewards=rewards;
+                    _data.coin=20;
+                    flox.savePlayer(_data);
+                }
 
 
-               break
+                break
 
-       }
+        }
     }
     public function checkMission(msnID:String=null):Object{
         var flox:FloxInterface=new FloxCommand();
@@ -3175,7 +3176,7 @@ public class MainCommand implements MainInterface {
                 msnObj=en_mission[0];
             }
             if(en_mission.length >0 && mission.length>0)
-            mission=mission.concat(en_mission);
+                mission=mission.concat(en_mission);
 
         }
 
@@ -3240,13 +3241,13 @@ public class MainCommand implements MainInterface {
         return rank;
 
     }
-
+    private var bundle_rewards:Object;
     public function praseBundlePool(id:String):String{
 
         var flox:FloxInterface=new FloxCommand();
         var ownerId:String=flox.getPlayerData("ownerId");
         var bundlelist:Array=flox.getBundlePool("list");
-        var rewards:Object=flox.getBundlePool("rewards");
+        bundle_rewards=flox.getBundlePool("rewards");
         var bundled:Boolean=false;
         var response:String="";
         var status:String="";
@@ -3262,28 +3263,30 @@ public class MainCommand implements MainInterface {
                 if(bundle.indexOf(ownerId)!=-1){
 
                     bundled=true;
-                    var childID:String=bundle.split("~")[1];
-                    var parentID:String=bundle.split("~")[0];
-                    if(childID==ownerId && parentID!=id){
+                    var childId:String=bundle.split("~")[1];
+                    var parentId:String=bundle.split("~")[0];
+                    if(childId==ownerId && parentId!=id){
                         //update bundle
                         status="UPDATE";
                         bundlelist[i]=id+"~"+ownerId;
-
-                        if(!rewards[id]){
-                            // create new ID to record
-                            setUpReward();
+                        if(!bundle_rewards){
+                            bundle_rewards=new Object();
                         }else{
-                            var history:String=rewards[id].history;
-                            history+="|updated@ "+timeStamp+" by "+ownerId;
-                            rewards[id].enable=true;
-                            rewards[id].history=history;
+
+                            if(!bundle_rewards[id]){
+                                // create new ID to record
+                                setUpReward();
+                            }else{
+                                var history:String=bundle_rewards[id].history;
+                                history+="|updated@ "+timeStamp+" by "+ownerId;
+                                bundle_rewards[id].enable=true;
+                                bundle_rewards[id].history=history;
+                            }
                         }
-                        var _data:Object=new Object();
-                        _data.parentId=id;
-                        flox.savePlayer(_data);
+                        flox.savePlayerData("parentId",id);
 
                     }
-                    if(parentID==ownerId && childID==id){
+                    if(parentId==ownerId && childId==id){
                         // can not bundle
                         status="BUNDLED";
                     }
@@ -3294,25 +3297,28 @@ public class MainCommand implements MainInterface {
             if(!bundled){
                 status="ADD";
                 bundlelist.push(id+"~"+ownerId);
-                if(!rewards){
-                    rewards=new Object();
-                }
                 setUpReward();
-
-                _data=new Object();
-                _data.parentId=id;
-                flox.savePlayer(_data);
+                flox.savePlayerData("parentId",id);
 
             }
-            flox.saveBundlePool("list",bundlelist);
-            flox.saveBundlePool("rewards",rewards);
+            if(status =="ADD" || status=="UPDATE"){
+                flox.saveBundlePool({"list":bundlelist,"rewards":bundle_rewards},onSaveComplete);
+                function onSaveComplete():void{
+                    updateBundleStatistics("add",id);
+                }
+
+            }
+
         }else{
             status="ID_ERROR";
+            if(ownerId==id){
+                status="SAME_ID";
+            }
         }
 
         function setUpReward():void{
 
-            rewards[id]={
+            bundle_rewards[id]={
                 "enable":true,
                 "coin":0,
                 "payout":0,
@@ -3321,8 +3327,9 @@ public class MainCommand implements MainInterface {
         }
 
         switch(status){
-
-
+            case "SAME_ID":
+                response="Opps! Must be referred by someone other than yourself.";
+                break
             case "ID_ERROR":
                 response="Please input correct Citizenship code.";
                 break
@@ -3360,20 +3367,90 @@ public class MainCommand implements MainInterface {
 
         }
         var timeStamp:String=new Date().toLocaleString();
-        var rewards:Object=flox.getBundlePool("rewards");
-        if(rewards[parentId]){
-            rewards[parentId].enable=false;
-            var history:String=rewards[parentId].history;
+        bundle_rewards=flox.getBundlePool("rewards");
+        if(bundle_rewards[parentId]){
+            bundle_rewards[parentId].enable=false;
+            var history:String=bundle_rewards[parentId].history;
             history+="|dismiss@ "+timeStamp+" by "+ownerId;
-            rewards[parentId].history=history;
-            flox.saveBundlePool("rewards",rewards);
+            bundle_rewards[parentId].history=history;
+
 
         }
 
+        flox.savePlayerData("parentId","");
+        flox.saveBundlePool({"list":bundleList,"rewards":bundle_rewards},onSaveComplete);
+        function onSaveComplete():void{
+            updateBundleStatistics("remove",parentId);
+        }
 
 
+    }
+    private var statisticsType:String;
+    private var ownerId:String;
+    private function updateBundleStatistics(type:String,id:String):void{
+        statisticsType=type;
+        ownerId=id;
+        var flox:FloxInterface=new FloxCommand();
+        flox.refleshBundlePool(onRefleshBundlePoolComplete);
+        var surrenc_scene:Sprite=ViewsContainer.currentScene;
+        surrenc_scene.dispatchEventWith("REQUEST_LOADING");
+    }
+    private function onRefleshBundlePoolComplete():void{
 
+        var flox:FloxInterface=new FloxCommand();
+        var statistics:Array=flox.getBundlePool("statistics");
+        if(!statistics){
+            statistics=new Array();
+        }
+        flox.indicesPlayer("ownerId == ?",ownerId,getPlayerInfo,onIndicesError);
 
+        function getPlayerInfo(players:Array):void{
+            var nickname:String=players[0].player_name;
+            var exist:Boolean=false;
+            if(statistics.length>0){
+
+                for(var i:uint=0;i<statistics.length;i++){
+                    var parentId:String=statistics[i].id;
+                    if(parentId==ownerId){
+                        exist=true;
+                        var numbers:Number = statistics[i].numbers;
+                        if(statisticsType=="add") {
+                            numbers++;
+                        }else{
+                            numbers--;
+                        }
+
+                        statistics[i].numbers = numbers;
+                        break;
+                    }
+                }
+
+                if(!exist && statisticsType=="add"){
+
+                    setupNewParentNode();
+
+                }
+
+            }else{
+                setupNewParentNode();
+            }
+            function setupNewParentNode():void{
+                var _data:Object=new Object();
+                _data.id=ownerId;
+                _data.numbers=1;
+                _data.nickname=nickname;
+                statistics.push(_data);
+            }
+            flox.saveBundlePool({"statistics":statistics});
+
+            var surrenc_scene:Sprite=ViewsContainer.currentScene;
+            surrenc_scene.dispatchEventWith("COMPLETE_LOADING");
+        }
+
+    }
+
+    private function onIndicesError(error:String,httpStatus:int):void{
+        DebugTrace.msg("Maincommand.onIndicesError: " + error+" \nhttpStatus: "+httpStatus);
     }
 
 
