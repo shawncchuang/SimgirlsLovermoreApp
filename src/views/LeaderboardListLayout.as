@@ -76,7 +76,11 @@ public class LeaderboardListLayout extends PanelScreen{
         this.snapScrollPositionsToPixels = true;
 
         itemslist=new Array();
-        for(var i:uint=0;i<statistics.length;i++){
+        var leaderNumbers:Number=statistics.length;
+         if(statistics.length>100)
+             leaderNumbers=100;
+
+        for(var i:uint=0;i<leaderNumbers;i++){
 
             var itemRender:Sprite=new Sprite();
             var parentNode:Object=statistics[i];
@@ -87,6 +91,7 @@ public class LeaderboardListLayout extends PanelScreen{
 
             var nicknameTxt:TextField=new TextField(183,30,parentNode.nickname);
             nicknameTxt.format.setTo(font,24,0x333333);
+            nicknameTxt.autoScale=true;
             nicknameTxt.x=112;
             itemRender.addChild(nicknameTxt);
 
@@ -100,7 +105,7 @@ public class LeaderboardListLayout extends PanelScreen{
                 var crownTexture:Texture=Assets.getTexture("Crown");
                 var crown:Image=new Image(crownTexture);
                 crown.x=numbersTxt.x+numbersTxt.width-30;
-                crown.y=-10;
+                crown.y=-7;
                 itemRender.addChild(crown);
 
             }
@@ -113,7 +118,7 @@ public class LeaderboardListLayout extends PanelScreen{
     }
     private function onRemovedHandler(e:Event):void {
 
-        if(itemslist.length>0){
+        if(itemslist){
             for(var i:uint=0;i<itemslist.length;i++){
                 var item:Sprite= itemslist[i];
                 item.removeFromParent(true);

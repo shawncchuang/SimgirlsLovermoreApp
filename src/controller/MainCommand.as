@@ -267,7 +267,7 @@ public class MainCommand implements MainInterface {
 
     }
 
-    public static function addAlertMsg(msg:String):void {
+    public static function addAlertMsg(msg:String,type:*=null):void {
 
         DebugTrace.msg("MainCommand.addAlertMsg msg="+msg);
 
@@ -283,17 +283,24 @@ public class MainCommand implements MainInterface {
         format.align = "center";
         format.font = "SimFutura";
         var topview:flash.display.MovieClip = SimgirlsLovemore.topview;
-        alertmsg = new AlertMsgUI();
+        if(type=="pic"){
+            alertmsg =new AlertMsgUIPic();
+            alertmsg.buttonMode = true;
+            alertmsg.addEventListener(MouseEvent.MOUSE_DOWN, doColseAlertmsg);
+        }else{
+            alertmsg = new AlertMsgUI();
+            alertmsg.confirm.buttonMode = true;
+            alertmsg.cancelbtn.visible=false;
+            //alertmsg.mouseChildren = false;
+            alertmsg.msg.embedFonts = true;
+            alertmsg.msg.defaultTextFormat = format;
+            alertmsg.msg.text = msg;
+            alertmsg.confirm.addEventListener(MouseEvent.MOUSE_DOWN, doColseAlertmsg);
+        }
+
         alertmsg.name = "alert";
-        alertmsg.msg.embedFonts = true;
-        alertmsg.msg.defaultTextFormat = format;
-        alertmsg.confirm.buttonMode = true;
-        alertmsg.cancelbtn.visible=false;
-        //alertmsg.mouseChildren = false;
-        alertmsg.confirm.addEventListener(MouseEvent.MOUSE_DOWN, doColseAlertmsg);
         alertmsg.x = 1024 / 2;
         alertmsg.y = 768 / 2;
-        alertmsg.msg.text = msg;
         topview.addChild(alertmsg);
 
         // }
@@ -3406,6 +3413,7 @@ public class MainCommand implements MainInterface {
 
         function getPlayerInfo(players:Array):void{
             var nickname:String=players[0].player_name;
+            var paid:Boolean=flox.getPlayerData("paid");
             var exist:Boolean=false;
             if(statistics.length>0){
 
@@ -3414,13 +3422,15 @@ public class MainCommand implements MainInterface {
                     if(parentId==ownerId){
                         exist=true;
                         var numbers:Number = statistics[i].numbers;
-                        if(statisticsType=="add") {
-                            numbers++;
-                        }else{
-                            numbers--;
-                        }
+                        if(paid) {
+                            if(statisticsType=="add") {
+                                numbers++;
+                            }else{
+                                numbers--;
+                            }
 
-                        statistics[i].numbers = numbers;
+                            statistics[i].numbers = numbers;
+                        }
                         break;
                     }
                 }
@@ -3431,13 +3441,18 @@ public class MainCommand implements MainInterface {
 
                 }
 
+
             }else{
                 setupNewParentNode();
             }
             function setupNewParentNode():void{
                 var _data:Object=new Object();
                 _data.id=ownerId;
-                _data.numbers=1;
+                if(paid){
+                    _data.numbers=1;
+                }else{
+                    _data.numbers=0;
+                }
                 _data.nickname=nickname;
                 statistics.push(_data);
             }

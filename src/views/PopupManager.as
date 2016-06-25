@@ -60,6 +60,11 @@ public class PopupManager extends Sprite{
                 bonusLayout();
 
                 break;
+            case "pic":
+                isCentered=true;
+                isModal=true;
+                popupPicLayout();
+                break;
             default:
                 defaultLayout();
 
@@ -68,7 +73,9 @@ public class PopupManager extends Sprite{
         }
 
         popup.addChild(bg);
+        if(msgTxt)
         popup.addChild(msgTxt);
+        if(btn)
         popup.addChild(btn);
 
 
@@ -122,6 +129,14 @@ public class PopupManager extends Sprite{
             btn.addEventListener(Event.TRIGGERED, doTryAgainHandler);
 
         }
+
+    }
+    private function popupPicLayout():void{
+
+
+        var texture:Texture=Assets.getTexture(data);
+        bg=new Image(texture);
+
 
     }
 

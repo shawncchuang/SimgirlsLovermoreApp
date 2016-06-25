@@ -1575,6 +1575,9 @@ public class AssetEmbeds
     [Embed(source="../../media/textures/panels/softlens.png")]
     public static const softlens:Class;
 
+    [Embed(source="../../media/textures/panels/confirmation_guild.jpg")]
+    public static const ConfirmationGuild:Class;
+
     /*-------------------panels-------------------------------------------------------------------*/
 
 
@@ -1583,6 +1586,8 @@ public class AssetEmbeds
 
     [Embed(source="../../media/textures/photos/preview_lock.png")]
     public static const PreviewLock:Class;
+
+
 
     /*----------------------------------------*/
 }

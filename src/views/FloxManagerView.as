@@ -62,6 +62,8 @@ import flash.display.MovieClip;
 			managerUI.indicesplayer.addEventListener(MouseEvent.CLICK,doIndicesPlayer);
 			managerUI.resultMC.closebtn.addEventListener(MouseEvent.CLICK,doFadeoutResultArea);
 			managerUI.resultMC.closebtn.buttonMode=true;
+			managerUI.resultMC.trashcan.addEventListener(MouseEvent.CLICK,doClearResultArea);
+			managerUI.resultMC.trashcan.buttonMode=true;
 			managerUI.resultMC.x=955;
 			addChild(managerUI);
 			
@@ -217,18 +219,20 @@ import flash.display.MovieClip;
 		{
 
 
-			if(players.length>1){
+			if(players.length>0){
+				if(players.length>1){
 
-				for(var i:uint=0;i<players.length;i++){
-					if(players[i].from==accType){
-						var playerData:String=JSON.stringify(players[i]);
-						ownerId=players[i].ownerId;
-						break
+					for(var i:uint=0;i<players.length;i++){
+						if(players[i].from==accType){
+							var playerData:String=JSON.stringify(players[i]);
+							ownerId=players[i].ownerId;
+							break
+						}
 					}
+				}else{
+					playerData=JSON.stringify(players);
+					ownerId=players[0].ownerId;
 				}
-			}else{
-				playerData=JSON.stringify(players);
-				ownerId=players[0].ownerId;
 			}
 
 			DebugTrace.msg("FloxManagerView.onQueryUserIndices players="+playerData);
@@ -262,6 +266,10 @@ import flash.display.MovieClip;
 			function onTweenComplete():void{
 				TweenMax.killAll();
 			}
+		}
+		private function doClearResultArea(e:MouseEvent):void{
+			msg="";
+			managerUI.resultMC.textarea.text=msg;
 		}
 	}
 }

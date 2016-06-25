@@ -48,6 +48,8 @@ import views.CommandCloud;
 import views.GameStartPanel;
 import views.LoginPanel;
 import views.MainScene;
+import views.PopupManager;
+import views.PopupManager;
 import views.QADisplayContainer;
 import views.SceneVideo;
 import views.StoryPreview;
@@ -497,11 +499,12 @@ public class SimgirlsLovemore extends MovieClip
 
 
 	}
-	private function onLoginFailed(re:String):void
+	private function onLoginFailed(type:String,msg:String):void
 	{
 
 
-		MainCommand.addAlertMsg(re);
+			MainCommand.addAlertMsg(msg,type);
+
 
 	}
 	private function start():void
