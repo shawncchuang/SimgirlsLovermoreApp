@@ -83,5 +83,6 @@ public interface MainInterface
 
     function praseBundlePool(id:String):String
     function dismissBundle():void
+    function updateStatistics():void
 }
 }

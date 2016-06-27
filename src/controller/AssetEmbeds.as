@@ -695,6 +695,16 @@ public class AssetEmbeds
     [Embed(source="../../media/textures/icons/icon_crown.png")]
     public static const Crown:Class;
 
+    [Embed(source="../../media/textures/icons/inputTextField.png")]
+    public static const InputTextField:Class;
+
+    [Embed(source="../../media/textures/icons/icon_change.png")]
+    public static const IconChange:Class;
+
+    [Embed(source="../../media/textures/icons/icon_changed.png")]
+    public static const IconChanged:Class;
+
+
     /*------------------icons-------------------------------------------------*/
 
 

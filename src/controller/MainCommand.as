@@ -3421,6 +3421,7 @@ public class MainCommand implements MainInterface {
                     var parentId:String=statistics[i].id;
                     if(parentId==ownerId){
                         exist=true;
+                        statistics[i].nickname=nickname;
                         var numbers:Number = statistics[i].numbers;
                         if(paid) {
                             if(statisticsType=="add") {
@@ -3462,6 +3463,24 @@ public class MainCommand implements MainInterface {
             surrenc_scene.dispatchEventWith("COMPLETE_LOADING");
         }
 
+    }
+    public function updateStatistics():void{
+        var flox:FloxInterface=new FloxCommand();
+        var ownerId:String=flox.getPlayerData("ownerId");
+        var nickanme:String=flox.getPlayerData("player_name");
+        var statistics:Array=flox.getBundlePool("statistics");
+        var updated:Boolean=false;
+        for(var i:uint=0;i<statistics.length;i++){
+
+            if(statistics[i].id==ownerId){
+                updated=true;
+                statistics[i].nickname=nickanme;
+                break
+            }
+        }
+        if(updated){
+            flox.saveBundlePool({"statistics":statistics});
+        }
     }
 
     private function onIndicesError(error:String,httpStatus:int):void{

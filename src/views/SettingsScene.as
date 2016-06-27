@@ -1,8 +1,11 @@
+
 /**
  * Created by shawnhuang on 2014-08-15.
  */
 package views {
 import controller.Assets;
+import controller.FloxCommand;
+import controller.FloxInterface;
 import controller.MainCommand;
 import controller.MainInterface;
 import controller.SceneCommnad;
@@ -14,8 +17,13 @@ import events.SceneEvent;
 import feathers.controls.PanelScreen;
 
 import feathers.controls.ScrollContainer;
+import feathers.controls.TextInput;
 
 import feathers.controls.ToggleSwitch;
+import feathers.controls.text.StageTextTextEditor;
+import feathers.controls.text.TextFieldTextRenderer;
+import feathers.core.ITextEditor;
+import feathers.core.ITextRenderer;
 import feathers.events.FeathersEventType;
 import feathers.layout.HorizontalLayout;
 import feathers.layout.VerticalLayout;
@@ -23,6 +31,7 @@ import feathers.layout.VerticalLayout;
 import flash.display.StageDisplayState;
 
 import flash.geom.Point;
+import flash.text.TextFormat;
 
 import starling.core.Starling;
 
@@ -34,6 +43,8 @@ import starling.events.Event;
 import starling.events.Touch;
 import starling.events.TouchEvent;
 import starling.events.TouchPhase;
+import starling.text.TextField;
+import starling.textures.Texture;
 
 public class SettingsScene extends Sprite{
 
@@ -46,6 +57,9 @@ public class SettingsScene extends Sprite{
     private var screenToggle:Image;
     private var enabled:Boolean=true;
     private var screenEnabled:Boolean=true;
+    private var flox:FloxInterface=new FloxCommand();
+    private var inputText:TextInput;
+    private var nickname:String;
     public function SettingsScene():void{
 
         base_sprite=new Sprite();
@@ -82,9 +96,63 @@ public class SettingsScene extends Sprite{
 
         var panel:Image=new Image(Assets.getTexture("SettingPanel"));
         panel.x=330;
-        panel.y=270;
+        panel.y=200;
         addChild(panel);
 
+        nickname = flox.getPlayerData("player_name");
+        var title:String="Nickname (for online leaderboard)";
+        var nicknametxt:TextField=new TextField(350,30,title);
+        nicknametxt.format.setTo(font,20,0,"left");
+        nicknametxt.x=330;
+        nicknametxt.y=540;
+        addChild(nicknametxt);
+
+        var inputFieldTexture:Texture=Assets.getTexture("InputTextField");
+        var inputField:Image=new Image(inputFieldTexture);
+        inputField.x=330;
+        inputField.y=565;
+        addChild(inputField);
+
+        inputText=new TextInput();
+        inputText.width=inputField.width;
+        inputText.height=inputField.height;
+        inputText.x=inputField.x;
+        inputText.y=inputField.y;
+        inputText.maxChars=10;
+        inputText.prompt=nickname;
+
+        var textformat:Object=new Object();
+        textformat.font=font;
+        textformat.size=20;
+        textformat.color=0x000000;
+        inputText.promptFactory=function():ITextRenderer{
+            var textRenderer:TextFieldTextRenderer = new TextFieldTextRenderer();
+            textRenderer.styleProvider = null;
+            textRenderer.textFormat = new TextFormat(textformat.font,textformat.size,0x999999);
+            textRenderer.embedFonts = true;
+            return textRenderer;
+        };
+
+        inputText.textEditorFactory=function():ITextEditor
+        {
+            var textEditor:StageTextTextEditor = new StageTextTextEditor();
+            textEditor.styleProvider = null;
+            textEditor.styleProvider = null;
+            textEditor.fontFamily = textformat.font;
+            textEditor.fontSize = textformat.size;
+            textEditor.color = textformat.color;
+            return textEditor;
+        };
+
+        addChild(inputText);
+
+        var changeTexture:Texture=Assets.getTexture("IconChange");
+
+        var change:Button=new Button(changeTexture);
+        change.x=640;
+        change.y=565;
+        addChild(change);
+        change.addEventListener(TouchEvent.TOUCH, onTouchChanged);
 
 
         /*
@@ -174,5 +242,27 @@ public class SettingsScene extends Sprite{
         _data.name="MenuScene";
         command.sceneDispatch(SceneEvent.CHANGED,_data)
     }
+
+    private function onTouchChanged(e:TouchEvent):void{
+
+        var btn:Button=e.currentTarget as Button;
+        var began:Touch=e.getTouch(btn,TouchPhase.BEGAN);
+        if(began){
+
+            nickname=inputText.text;
+            var spaces:RegExp = / /gi;
+            nickname=nickname.replace(spaces,"");
+
+            if(nickname!=""){
+                var changedTexture:Texture=Assets.getTexture("IconChanged");
+                btn.upState=changedTexture;
+                flox.savePlayerData("player_name",nickname);
+                command.updateStatistics();
+            }
+
+        }
+
+    }
+
 }
 }
