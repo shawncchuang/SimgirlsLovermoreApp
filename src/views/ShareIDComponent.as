@@ -36,8 +36,8 @@ public class ShareIDComponent extends Sprite{
     private var ownerId:String="";
 
     private var clipboardTxt:String="Try the first ever rs-rpg LOVEMORE at: www.blackspears.com\n\n" +
-        "Made by the creator of the most played flash game in the World.\n\n"+
-        "Get 5% off the game and every item by entering the code upon purchase!\n";
+        "Made by SimMan, creator of the MOST PLAYED Flash Game in the World.\n\n"+
+        "Get 5% off the game and every item by entering the code $ownerId upon purchase!\n";
 
     public function ShareIDComponent() {
         init();
@@ -53,6 +53,7 @@ public class ShareIDComponent extends Sprite{
         format.color=0x000000;
 
         ownerId=flox.getPlayerData("ownerId");
+        clipboardTxt=clipboardTxt.replace("$ownerId",ownerId);
 
         var sharedTxt:TextInput=new TextInput();
         sharedTxt.isEditable=false;
@@ -112,7 +113,7 @@ public class ShareIDComponent extends Sprite{
 
 
             Clipboard.generalClipboard.clear();
-            Clipboard.generalClipboard.setData(ClipboardFormats.TEXT_FORMAT,clipboardTxt+ownerId);
+            Clipboard.generalClipboard.setData(ClipboardFormats.TEXT_FORMAT,clipboardTxt);
 
             var copiedTexture:Texture=Assets.getTexture("IconCopied");
             btn.upState=copiedTexture;
@@ -128,9 +129,7 @@ public class ShareIDComponent extends Sprite{
         if(began){
             var loaderReq:LoaderRequest=new LoaderRequest();
             var subject:String="The First Ever RS-RPG Lovemore is Released! Get Special Offer Now!";
-            var body:String=clipboardTxt+ownerId;
-
-            loaderReq.navigateToMail(subject,body);
+            loaderReq.navigateToMail(subject,clipboardTxt);
 
         }
 

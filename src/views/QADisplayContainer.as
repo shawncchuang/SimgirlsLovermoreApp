@@ -111,7 +111,24 @@ import flash.display.MovieClip;
 				flox.save("first_name",_data.first_name);
 				//flox.save("last_name",_data.last_name);
 
-				flox.savePlayerData("player_name",_data.last_name);
+
+				var spaces:RegExp = / /gi;
+				var nickname:String=templete.lastname.text;
+				nickname = nickname.replace(spaces,"");
+				flox.savePlayerData("player_name",nickname);
+
+//				flox.indicesPlayer("player_name == ?",nickname,onIndicesComplete,onIndicesError);
+//				function onIndicesComplete(players:Array):void{
+//					if(players.length==0){
+//						flox.savePlayerData("player_name",nickname);
+//					}else{
+//
+//						msg="Your nickname was already used. Please change another nickname.";
+//						MainCommand.addAlertMsg(msg);
+//					}
+//
+//				}
+
 
 
 				if(onComplete)
@@ -174,6 +191,11 @@ import flash.display.MovieClip;
 			scenecom.onStoryFinished();
 		 
 			
+		}
+		private function onIndicesError(error:String,httpStatus:int):void {
+
+			DebugTrace.msg("QADisplayContainer.onIndicesError: " + error + " \nhttpStatus: " + httpStatus);
+			MainCommand.addAlertMsg(error);
 		}
 	}
 }

@@ -46,6 +46,8 @@ import starling.events.TouchPhase;
 import starling.text.TextField;
 import starling.textures.Texture;
 
+import utils.DebugTrace;
+
 public class SettingsScene extends Sprite{
 
     private var command:MainInterface=new MainCommand();
@@ -254,14 +256,47 @@ public class SettingsScene extends Sprite{
             nickname=nickname.replace(spaces,"");
 
             if(nickname!=""){
+
                 var changedTexture:Texture=Assets.getTexture("IconChanged");
                 btn.upState=changedTexture;
                 flox.savePlayerData("player_name",nickname);
                 command.updateStatistics();
+
+
+//                flox.indicesPlayer("player_name == ?",nickname,onIndicesComplete,onIndicesError);
+//                function onIndicesComplete(players:Array):void{
+//                    if(players.length==0){
+//
+//                        var changedTexture:Texture=Assets.getTexture("IconChanged");
+//                        btn.upState=changedTexture;
+//                        flox.savePlayerData("player_name",nickname);
+//                        command.updateStatistics();
+//
+//                    }else{
+//
+//                        var msg:String="Your nickname was already used. Please change another nickname.";
+//                        var popup:PopupManager=new PopupManager();
+//                        popup.msg=msg;
+//                        popup.attr="";
+//                        popup.init();
+//
+//                    }
+//
+//                }
+
+
             }
 
         }
 
+    }
+    private function onIndicesError(error:String,httpStatus:int):void {
+
+        DebugTrace.msg("SettingScene.onIndicesError: " + error + " \nhttpStatus: " + httpStatus);
+        var popup:PopupManager=new PopupManager();
+        popup.msg=error;
+        popup.attr="";
+        popup.init();
     }
 
 }

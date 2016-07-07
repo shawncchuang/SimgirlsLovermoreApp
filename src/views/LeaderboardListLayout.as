@@ -97,7 +97,7 @@ public class LeaderboardListLayout extends PanelScreen{
 
 
             var numbersTxt:TextField=new TextField(194,30,String(parentNode.numbers));
-            numbersTxt.format.setTo(font,24,0x333333);
+            numbersTxt.format.setTo("SimNeogreyMedium",24,0x333333);
             numbersTxt.x=344;
             itemRender.addChild(numbersTxt);
 

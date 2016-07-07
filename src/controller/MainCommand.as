@@ -272,7 +272,7 @@ public class MainCommand implements MainInterface {
         DebugTrace.msg("MainCommand.addAlertMsg msg="+msg);
 
         if(msg.indexOf("2032")!=-1){
-            msg="IO Error 2032: Cannot talk to the aserver please make sure your"+
+            msg="IO Error 2032: Cannot talk to the server please make sure your"+
                     " internet connection is good and unrestricted, or the server may be busy please try again later.";
         }
 
@@ -3393,10 +3393,10 @@ public class MainCommand implements MainInterface {
 
     }
     private var statisticsType:String;
-    private var ownerId:String;
+    private var targetId:String;
     private function updateBundleStatistics(type:String,id:String):void{
         statisticsType=type;
-        ownerId=id;
+        targetId=id;
         var flox:FloxInterface=new FloxCommand();
         flox.refleshBundlePool(onRefleshBundlePoolComplete);
         var surrenc_scene:Sprite=ViewsContainer.currentScene;
@@ -3409,17 +3409,16 @@ public class MainCommand implements MainInterface {
         if(!statistics){
             statistics=new Array();
         }
-        flox.indicesPlayer("ownerId == ?",ownerId,getPlayerInfo,onIndicesError);
+        flox.indicesPlayer("ownerId == ?",targetId,getPlayerInfo,onIndicesError);
 
         function getPlayerInfo(players:Array):void{
             var nickname:String=players[0].player_name;
             var paid:Boolean=flox.getPlayerData("paid");
             var exist:Boolean=false;
             if(statistics.length>0){
-
                 for(var i:uint=0;i<statistics.length;i++){
                     var parentId:String=statistics[i].id;
-                    if(parentId==ownerId){
+                    if(parentId==targetId){
                         exist=true;
                         statistics[i].nickname=nickname;
                         var numbers:Number = statistics[i].numbers;
@@ -3448,7 +3447,7 @@ public class MainCommand implements MainInterface {
             }
             function setupNewParentNode():void{
                 var _data:Object=new Object();
-                _data.id=ownerId;
+                _data.id=targetId;
                 if(paid){
                     _data.numbers=1;
                 }else{

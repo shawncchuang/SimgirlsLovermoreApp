@@ -168,7 +168,8 @@ public class SceneCommnad implements SceneInterface
 
                         if(dir.charAt(0)=="R"){
                             rIndex++;
-                            talks[j]=talks[j].split(dir).join("R"+rIndex);
+//                            talks[j]=talks[j].split(dir).join("R"+rIndex);
+                            talks[j]=talks[j].replace(dir,"R"+rIndex);
                         }
 
                     }
@@ -196,7 +197,8 @@ public class SceneCommnad implements SceneInterface
 
                         if(dir.charAt(0)=="R"){
                             rIndex++;
-                            talks[k]=talks[k].split(dir).join("R"+rIndex);
+//                            talks[k]=talks[k].split(dir).join("R"+rIndex);
+                            talks[k]=talks[k].replace(dir,"R"+rIndex);
                         }
 
                     }
@@ -943,7 +945,8 @@ public class SceneCommnad implements SceneInterface
             var switchs:Object=flox.getSyetemData("switchs");
             scene=DataContainer.currentScene;
             var value:Object=switchs[switchID];
-            var _scene:String=scene.split("Scene").join("").toLowerCase();
+//            var _scene:String=scene.split("Scene").join("").toLowerCase();
+            var _scene:String=scene.replace("Scene","").toLowerCase();
             location=value.location;
             var date:String=flox.getSaveData("date");
             switch_date=value.date;
@@ -1038,10 +1041,12 @@ public class SceneCommnad implements SceneInterface
 
             talks=new Array();
             if(switchID.indexOf("t")!=-1){
-                part=Number(switchID.split("t").join(""))-1;
+//                part=Number(switchID.split("t").join(""))-1;
+                part=Number(switchID.replace("t",""))-1;
                 talks=TwinDAO.switchTwinDAO(switchID);
             }else{
-                part=Number(switchID.split("s").join(""))-1;
+//                part=Number(switchID.split("s").join(""))-1;
+                part=Number(switchID.replace("s",""))-1;
                 talks=StoryDAO.switchStory(switchID);
             }
 
@@ -1260,7 +1265,8 @@ public class SceneCommnad implements SceneInterface
             var twinflame:String=flox.getSaveData("twinflame");
             if(twinflame){
                 twinflame=twinflame.toLowerCase();
-                name=name.split("@@@").join(twinflame);
+//                name=name.split("@@@").join(twinflame);
+                name=name.replace("@@@",twinflame);
             }
         }
         return name;

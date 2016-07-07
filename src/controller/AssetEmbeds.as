@@ -1475,6 +1475,10 @@ public class AssetEmbeds
     [Embed(source="../../media/textures/panels/leaderboard_bg.png")]
     public static const LeaderboardPanel:Class;
 
+    [Embed(source="../../media/textures/panels/personal_jr_numbers.png")]
+    public static const PersonalJrNumbersField:Class;
+
+
     /*-------------------panels-------------------------------------------------------------------*/
     [Embed(source = "../../media/textures/scenes/battle_scene.jpg")]
     public static const BattleScene:Class;

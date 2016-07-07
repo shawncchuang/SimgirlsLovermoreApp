@@ -185,9 +185,13 @@ public class CharacterBubble extends Sprite
 			var assets:Object=flox.getSyetemData("assets");
 			brand=assets[mission.req].brand;
 		}
-		sentence=sentence.split("<>").join(",");
-		sentence=sentence.split("$$$").join(first_name);
-		sentence=sentence.split("XXX").join(brand);
+//		sentence=sentence.split("<>").join(",");
+//		sentence=sentence.split("$$$").join(first_name);
+//		sentence=sentence.split("XXX").join(brand);
+
+		sentence=sentence.replace("<>",",");
+		sentence=sentence.replace("$$$",first_name);
+		sentence=sentence.replace("XXX",brand);
 
 		var htmltext:String="<body>"+sentence+"</body>";
 		bubbletext=new TextField(200,200,"");
@@ -222,33 +226,21 @@ public class CharacterBubble extends Sprite
 		}
 		if(re.indexOf("$$$")!=-1)
 		{
-			re=String(re.split("$$$").join(first_name));
+//			re=String(re.split("$$$").join(first_name));
+			re=String(re.replace("$$$",first_name));
 		}
 		if(re.indexOf("@@@")!=-1){
 			var fullname:String=Config.fullnames[twinflame];
 
-			re=String(re.split("@@@").join(fullname));
-
+//			re=String(re.split("@@@").join(fullname));
+			re=String(re.replace("@@@",fullname));
 		}
 		//if
-//			switch(scene)
-//			{
-//				case "TarotReading":
-//					var fullname:Object=DataContainer.PlayerFullName;
-//					if(re.indexOf("$$$")!=-1)
-//					{
-//						re=String(re.split("$$$").join(fullname.first_name));
-//					}
-//					//if
-//					break
-//				case "":
-//
-//					break
-//			}
-//			//siwtch
+
 		if(texture_name=="BubbleThink")
 		{
-			re=String(re.split("|think|").join(""));
+//			re=String(re.split("|think|").join(""));
+			re=String(re.replace("|think|",""));
 		}
 		return re;
 	}
