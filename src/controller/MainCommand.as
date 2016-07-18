@@ -3397,10 +3397,13 @@ public class MainCommand implements MainInterface {
     private function updateBundleStatistics(type:String,id:String):void{
         statisticsType=type;
         targetId=id;
-        var flox:FloxInterface=new FloxCommand();
-        flox.refleshBundlePool(onRefleshBundlePoolComplete);
-        var surrenc_scene:Sprite=ViewsContainer.currentScene;
-        surrenc_scene.dispatchEventWith("REQUEST_LOADING");
+        if(targetId!="" && targetId){
+            var flox:FloxInterface=new FloxCommand();
+            flox.refleshBundlePool(onRefleshBundlePoolComplete);
+            var surrenc_scene:Sprite=ViewsContainer.currentScene;
+            surrenc_scene.dispatchEventWith("REQUEST_LOADING");
+        }
+
     }
     private function onRefleshBundlePoolComplete():void{
 
@@ -3409,6 +3412,7 @@ public class MainCommand implements MainInterface {
         if(!statistics){
             statistics=new Array();
         }
+        if(targetId!="" && targetId)
         flox.indicesPlayer("ownerId == ?",targetId,getPlayerInfo,onIndicesError);
 
         function getPlayerInfo(players:Array):void{

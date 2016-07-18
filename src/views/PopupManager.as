@@ -40,6 +40,7 @@ public class PopupManager extends Sprite{
     private var bg:*;
     private var msgTxt:TextField;
     private var btn:Button;
+    public var callback:Function;
 
 
     public function init():void {
@@ -55,6 +56,7 @@ public class PopupManager extends Sprite{
             case "payout":
             case "bonus":
             case "bundle":
+            case "campaign":
                 isCentered=true;
                 isModal=true;
                 bonusLayout();
@@ -146,6 +148,10 @@ public class PopupManager extends Sprite{
         //flox.save(this.attr,this.data);
         PopUpManager.removePopUp(popup,true);
         DataContainer.popupMessage=false;
+
+        if(callback){
+            callback();
+        }
 
     }
     private function doBonusConfirmHandler(e:Event):void{

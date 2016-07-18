@@ -10,6 +10,8 @@ package views
 	import controller.SceneCommnad;
 	import controller.SceneInterface;
 
+import data.Config;
+
 import data.DataContainer;
 
 import events.GameEvent;
@@ -18,8 +20,10 @@ import events.GameEvent;
 	
 	import model.SaveGame;
 	import model.Scenes;
-	
-	import starling.animation.Tween;
+
+import services.LoaderRequest;
+
+import starling.animation.Tween;
 	import starling.core.Starling;
 	import starling.display.Button;
 	import starling.display.Sprite;
@@ -115,6 +119,10 @@ import events.GameEvent;
 						onStoryComplete();
 
 					break
+				case "SweepTicket":
+						initCampaign();
+
+					break
 				
 			}
 			
@@ -184,5 +192,50 @@ import events.GameEvent;
 			_data.name= "MainScene";
 			command.sceneDispatch(SceneEvent.CHANGED,_data);
 		}
+
+		private function initCampaign():void{
+
+
+			var url:String=Config.campaignUrl;
+			var loaderReq:LoaderRequest=new LoaderRequest();
+			loaderReq.LoaderDataHandle(url,loadedCampaignComplete);
+		}
+		private function loadedCampaignComplete(data:String):void{
+
+			var campaignData:Object=JSON.parse(data);
+			if(campaignData.active){
+
+
+//				var campaignView:CampaignView=new CampaignView();
+//				campaignView.x=350;
+//				campaignView.y=300;
+//				addChild(campaignView);
+//				var ownerId:String=
+//				var reqloader:LoaderRequest=new LoaderRequest();
+//				var url:String="?authKey=?";
+//				reqloader.navigateToURLHandler(Config.campaignShare);
+
+			}else{
+
+				var popup:PopupManager=new PopupManager();
+				popup.attr="campaign";
+				popup.msg="There is no campaign.";
+				popup.callback=doClosePopup;
+				popup.init();
+
+			}
+
+
+		}
+		private function doClosePopup():void{
+
+			Starling.juggler.removeTweens(this);
+			var _data:Object=new Object();
+			_data.name= "PrivateIslandScene";
+			command.sceneDispatch(SceneEvent.CHANGED,_data);
+		}
+
+
+
 	}
 }

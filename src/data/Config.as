@@ -197,6 +197,8 @@ public class Config
         {"rank":"E","se":500,"rewards":600},
         {"rank":"F","se":200,"rewards":300}];
 
+    public static var campaignUrl:String="https://megastore99.globat.com/files/cacella/campaign.json";
+
     public static function set AccType(value:String):void
     {
         acctype=value;

@@ -170,7 +170,7 @@ public class GameInfobar extends Sprite
         var ap:Number=flox.getSaveData("ap");
         var honor:Object=flox.getSaveData("honor");
         var ap_max:Number=flox.getSaveData("ap_max");
-        var cash:Number=flox.getPlayerData("coin");
+        var cash:Number=flox.getSaveData("cash");
         var love:Object=flox.getSaveData("love");
         var time:String=String(flox.getSaveData("date").split("|")[1]);
         cashTxt.text=DataContainer.currencyFormat(cash);

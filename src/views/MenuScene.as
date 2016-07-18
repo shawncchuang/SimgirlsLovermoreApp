@@ -12,6 +12,10 @@ import data.DataContainer;
 import events.SceneEvent;
 import model.Scenes;
 
+import services.LoaderRequest;
+
+import starling.animation.Juggler;
+
 import starling.animation.Transitions;
 import starling.animation.Tween;
 import starling.core.Starling;
@@ -60,6 +64,8 @@ public class MenuScene extends Scenes
     private var options:Array=new Array();
     private var optionTxts:Array=new Array();
 
+    private var fwTxt:TextField;
+    private var tweenId:uint;
     public function MenuScene()
     {
 
@@ -114,6 +120,8 @@ public class MenuScene extends Scenes
         network.scaleY=0.1;
         network.alpha=0;
         addChild(network);
+        network.addEventListener(TouchEvent.TOUCH,doEnanbleMenuHandler);
+
 
         /*
          titleIcon=new Image(getTexture("IconMenuTitle"));
@@ -245,6 +253,14 @@ public class MenuScene extends Scenes
             var iconimg:Image=iconsimg[i];
             iconimg.addEventListener(TouchEvent.TOUCH,doTouchIconHandler);
         }
+
+        fwTxt=new TextField(100,30,"Freedom Wall");
+        fwTxt.format.setTo(font,30,0x292929);
+        fwTxt.autoScale=true;
+        fwTxt.x=network.x-(network.width/2);
+        fwTxt.y=network.y+(network.height/2)+3;
+        fwTxt.alpha=0;
+        addChild(fwTxt);
 
     }
     private function doTouchIconHandler(e:TouchEvent):void
@@ -481,11 +497,26 @@ public class MenuScene extends Scenes
 
         var target:Image=e.currentTarget as Image;
         var began:Touch= e.getTouch(target, TouchPhase.BEGAN);
+        var hover:Touch= e.getTouch(target,TouchPhase.HOVER);
+        if(hover){
+
+            fwTxt.alpha=1;
+
+        }else{
+            fwTxt.alpha=0;
+
+        }
+
         if(began){
 
             onTranstionToMenuScene();
             onIconsComplete();
-            network.removeEventListener(TouchEvent.TOUCH,doEnanbleMenuHandler);
+
+            var req:LoaderRequest=new LoaderRequest();
+            var url:String="http://www.freedomwall.info";
+            req.navigateToURLHandler(url);
+
+            //network.removeEventListener(TouchEvent.TOUCH,doEnanbleMenuHandler);
         }
 
     }
