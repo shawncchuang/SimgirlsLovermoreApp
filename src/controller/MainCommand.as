@@ -8,10 +8,14 @@ import com.greensock.loading.SWFLoader;
 import com.shortybmc.data.parser.CSV;
 
 import data.StoryDAO;
+
+import feathers.utils.display.stageToStarling;
+
 import flash.display.Bitmap;
 import flash.display.MovieClip;
 
 import flash.desktop.NativeApplication;
+import flash.display.Stage;
 import flash.events.ContextMenuEvent;
 import flash.events.Event;
 import flash.events.MouseEvent;
@@ -176,17 +180,20 @@ public class MainCommand implements MainInterface {
     }
 
     public function addLoadind(msg:String):void {
-        var topview:flash.display.MovieClip = SimgirlsLovemore.topview;
+
         loading = new LoadingAni();
+        loading.name="LoadingAni";
         loading.txt.text = msg;
-        topview.addChild(loading);
+
+        ViewsContainer.GameStage.addChild(loading);
 
     }
 
     public function removeLoading():void {
-        var topview:flash.display.MovieClip = SimgirlsLovemore.topview;
+
         try {
-            topview.removeChild(loading);
+
+            ViewsContainer.GameStage.removeChild(loading);
         }
         catch (e:Error) {
             DebugTrace.msg("MainCommand.removeLoading Null");
@@ -3413,7 +3420,7 @@ public class MainCommand implements MainInterface {
             statistics=new Array();
         }
         if(targetId!="" && targetId)
-        flox.indicesPlayer("ownerId == ?",targetId,getPlayerInfo,onIndicesError);
+            flox.indicesPlayer("ownerId == ?",targetId,getPlayerInfo,onIndicesError);
 
         function getPlayerInfo(players:Array):void{
             var nickname:String=players[0].player_name;

@@ -2,12 +2,17 @@ package
 {
 import com.demonsters.debugger.MonsterDebugger;
 import com.gamua.flox.Player;
+import com.gamua.flox.TimeScope;
+import com.gamua.flox.utils.DateUtil;
+import com.gamua.flox.utils.SHA256;
 import com.greensock.TweenMax;
 import com.greensock.easing.Elastic;
 import com.greensock.events.LoaderEvent;
 import com.greensock.loading.LoaderMax;
 import com.greensock.loading.SWFLoader;
 import com.greensock.loading.display.ContentDisplay;
+
+import data.MD5;
 
 import flash.desktop.NativeApplication;
 import flash.display.MovieClip;
@@ -100,7 +105,8 @@ public class SimgirlsLovemore extends MovieClip
             embedAsCFF="false")]
     public static const SimMyriadPro:String;
 
-    private var manager:Boolean=false;
+    private var manager:Boolean=true;
+    public static var preview:Boolean=true;
     public static var previewStory:Boolean=false;
 
     public static var verifyKey:String;
@@ -183,11 +189,11 @@ public class SimgirlsLovemore extends MovieClip
         //DebugTrace.msg("SimgirlsLovemore.verifyKey:"+Preloader.verifyKey);
         var currentPlayer:CustomPlayer=Player.current as CustomPlayer;
         DebugTrace.msg("player verify :"+currentPlayer.verify+" ; "+Main.verifyKey);
-        if(Main.verifyKey)
-        {
-            Config.verifyKey=Main.verifyKey;
-            flox.loginWithKey("%*%%!@#(","%*%%!@#(");
-        }
+//        if(Main.verifyKey)
+//        {
+//            Config.verifyKey=Main.verifyKey;
+//            flox.loginWithKey("%*%%!@#(","%*%%!@#(");
+//        }
 
 
         if(previewStory){
@@ -223,17 +229,16 @@ public class SimgirlsLovemore extends MovieClip
 
         loadCampaign();
 
-
     }
     private function loadCampaign():void
     {
+        command.addLoadind("");
         var url:String=Config.campaignUrl;
         var loaderReq:LoaderRequest=new LoaderRequest();
         loaderReq.LoaderDataHandle(url,loadedCampaignComplete);
     }
     private function loadedCampaignComplete(data:String):void{
         DebugTrace.msg("SimgirlsLovemore.loadedCampaignComplete data="+data);
-
         campaignData=JSON.parse(data);
         if(campaignData.active){
 
@@ -241,13 +246,16 @@ public class SimgirlsLovemore extends MovieClip
             var loaderReq:LoaderRequest=new LoaderRequest();
             loaderReq.setLoaderQueue("campaign",campaignData.assets.src,this,loadedVisualComplete);
 
+        }else{
+            command.removeLoading();
+
         }
     }
 
     private function loadedVisualComplete(e:LoaderEvent):void{
 
 
-
+        command.removeLoading();
         campaign_visual = LoaderMax.getContent("campaign");
         campaign_visual.buttonMode=true;
         campaign_visual.addEventListener(MouseEvent.MOUSE_DOWN, doCampaignFadeOut);

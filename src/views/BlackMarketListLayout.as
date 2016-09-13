@@ -388,13 +388,16 @@ public class BlackMarketListLayout extends PanelScreen {
 
             if(success){
 
-                //GodRewards
+                //GotRewards
                 var command:MainInterface=new MainCommand();
                 command.playSound("GodRewards");
 
                 if(item_id=="bm_10"){
                     //citizenship card
-                    flox.savePlayer({"paid":true});
+                    flox.savePlayer({"paid":true},onSavePlayerComplete);
+                }
+                function onSavePlayerComplete():void{
+                    flox.refreshPlayer()
                 }
 
                 var _data:Object=new Object();
@@ -462,12 +465,16 @@ public class BlackMarketListLayout extends PanelScreen {
         var success:Boolean=true;
         var flox:FloxInterface=new FloxCommand();
         var items:Object=flox.getPlayerData("items");
+        var paid:Object=flox.getPlayerData("paid");
         for(var id:String in items){
 
             if(id==item_id){
                 success=false;
                 break
             }
+        }
+        if(!paid){
+            success=false;
         }
         return success;
 

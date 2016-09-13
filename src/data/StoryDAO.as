@@ -273,6 +273,7 @@ public class StoryDAO {
         return [
             "com|bg_HotelBgNight",
             "player|We found the place. We walked inside the dimly lit hotel room. The girl was waiting for us.",
+            "com|video_SRN-HOTEL",
             "com|photo-on_CasinoSofa",
             "player|The blonde was lying comfortably on the sofa with a cigarette in hand. ",
             "player|She had left her high heels on the floor and fully displayed her beautiful long legs. ",

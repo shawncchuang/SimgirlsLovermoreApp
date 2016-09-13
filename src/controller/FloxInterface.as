@@ -5,7 +5,7 @@ package controller
 		function init():void
 		//function AdministerSave(data:Object=null,callback:Function=null):void
 		function signupAccount(email:String,pwd:String):void
-		function loginWithKey(email:String,pwd:String):void
+		function loginWithKey(key:String):void
 		function setupSaveGame():void
 		function getSaveData(attr:String=null):*
 	    function getSyetemData(attr:String):*
@@ -25,9 +25,10 @@ package controller
 		function updatePlayer(cons:String,key:String,value:*):void
 		function submitCoins():void
 	    function updateSavegame(data:Object):void
-		function refreshPlayer(callback:Function):void
+		function refreshPlayer(callback:Function=null):void
 		function showlog(msg:String):void
 		function signupWithEmail(email:String):void
+		function signupWithKey(key:String):void
 		function loginWithEmail(email:String):void
 		function LoginForDestroyPlayer(key:String="",email:String=""):void
 		function destoryEntities(type:String,id:String):void
@@ -47,6 +48,7 @@ package controller
 		function getPersonalLog(attr:String):*
 		function savePayoutListEntity(data:Object):void
 		function indicesParentId(callback:Function,id:String):void
+		function getUID():String
 		
 	}
 }

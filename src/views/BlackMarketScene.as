@@ -126,7 +126,11 @@ public class BlackMarketScene extends Scenes
 		var _data:Object=new Object();
 		_data.coin=coin;
 		_data.items=items;
-		flox.savePlayer(_data);
+		flox.savePlayer(_data,onSaveComplete);
+		function onSaveComplete():void{
+
+			flox.refreshPlayer();
+		}
 
 		coinTxt.text=String(coin);
 	}

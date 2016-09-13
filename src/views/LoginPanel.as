@@ -40,12 +40,12 @@ public class LoginPanel extends MovieClip
 	private var preorder:MovieClip;
 	private var preorder_submit:MovieClip;
 	private var resetPanel:MovieClip;
+	private var preview:MovieClip;
 	private var code:String;
 	private var timer:Timer;
+
 	public function LoginPanel()
 	{
-
-
 
 
 		panel=new LoginUI();
@@ -54,6 +54,8 @@ public class LoginPanel extends MovieClip
 		panel.y=768/2;
 		addChild(panel);
 
+		preview=panel.preview_signin_ui;
+		preview.visible=false;
 		newaccount=panel.signup;
 		signin=panel.signin;
 		signup_submit=panel.signup_ui.signup_submit;
@@ -110,6 +112,15 @@ public class LoginPanel extends MovieClip
 		displaySharedObejct();
 
 		createVerifyCode();
+
+		if(SimgirlsLovemore.preview){
+			signin.visible=false;
+			preorder.visible=false;
+			preview.visible=true;
+			preview.submit.addEventListener(MouseEvent.CLICK,doPreViewSubmit);
+
+		}
+
 	}
 
 	private function initRestPasswordPanel():void{
@@ -152,7 +163,7 @@ public class LoginPanel extends MovieClip
 		var msg:String="";
 		if(mail!="" && pwd!="")
 		{
-			success=true
+			success=true;
 		}
 
 		var text_code:String=panel.input_code.text;
@@ -201,12 +212,14 @@ public class LoginPanel extends MovieClip
 		initCode();
 
 	}
+	/*
 	private function doSignin(e:MouseEvent):void
 	{
 
 		flox.loginWithKey(panel.account.text,panel.pswd.text);
 
 	}
+	*/
 	private function doSignup(e:MouseEvent):void
 	{
 		type=e.target.name;
@@ -227,7 +240,11 @@ public class LoginPanel extends MovieClip
 		flox.loginWithEmail(panel.preorder_signin_ui.account.text);
 
 	}
+	private function doPreViewSubmit(e:MouseEvent):void{
 
+
+		flox.loginWithKey(preview.account.text);
+	}
 
 	private function doMouseOverHandle(e:MouseEvent):void
 	{
