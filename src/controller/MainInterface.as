@@ -84,5 +84,6 @@ public interface MainInterface
     function praseBundlePool(id:String):String
     function dismissBundle():void
     function updateStatistics():void
+    function downloadImagFile(image:starling.display.Sprite):void
 }
 }

@@ -57,6 +57,7 @@ public class PhotosScene extends Sprite {
     private  var leftArrow:Button;
     private var rightArrow:Button;
     private var trash:Button;
+    private var download:Button;
     private var bgSprite:Sprite;
 
     public function PhotosScene() {
@@ -109,6 +110,15 @@ public class PhotosScene extends Sprite {
         pages.y=645;
         addChild(pages);
 
+        var downloadTexture:Texture=Assets.getTexture("IconDownload");
+        download=new Button(downloadTexture);
+        download.width=80;
+        download.height=80;
+        download.x=930;
+        download.y=166;
+        addChild(download);
+        download.addEventListener(Event.TRIGGERED,onTriggeredDownload);
+
         var emptyTexture:Texture=Assets.getTexture("IconTrashEmpty");
         trash=new Button(emptyTexture);
         trash.width=80;
@@ -148,6 +158,15 @@ public class PhotosScene extends Sprite {
 
         this.addEventListener(Event.REMOVED_FROM_STAGE,onRemoveHandler);
 
+    }
+    private function  onTriggeredDownload(e:Event):void{
+        command.downloadImagFile(photo);
+
+        var popup:PopupManager=new PopupManager();
+        popup.attr="saved_picture";
+        popup.msg="Saved into your Desktop/Lovemore Pictures folder";
+        popup.init();
+        this.addChild(popup);
     }
     private function onTriggeredTrash(e:Event):void{
 
@@ -298,51 +317,15 @@ public class PhotosScene extends Sprite {
     private function onRemoveHandler(e:Event):void{
 
         if(bgSprite)
-        bgSprite.removeFromParent(true);
+            bgSprite.removeFromParent(true);
         if(photo)
-        photo.removeFromParent(true);
+            photo.removeFromParent(true);
     }
-    /*
-     save file
-
-     private function saveImageFile(image:ByteArray,imgTxt:String):void{
-     var filename:String="xxxx."+imgTxt;
-         var file:File = new File();
-         file.nativePath = fileName;
-         var fileStream:FileStream = new FileStream();
-         fileStream.open(file, FileMode.WRITE);
-         fileStream.writeBytes(image);
-         fileStream.close();
-     }
-
-
-     */
-
-    /*
-     public function copyToBitmap(disp:DisplayObject, scl:Number=1.0):BitmapData
-     {
-     var rc:Rectangle = new Rectangle();
-     disp.getBounds(disp, rc);
-
-     var stage:Stage= Starling.current.stage;
-     var rs:RenderSupport = new RenderSupport();
-
-     rs.clear();
-     rs.scaleMatrix(scl, scl);
-     rs.setOrthographicProjection(0, 0, stage.stageWidth, stage.stageHeight);
-     rs.translateMatrix(-rc.x, -rc.y); // move to 0,0
-     disp.render(rs, 1.0);
-     rs.finishQuadBatch();
-
-     var outBmp:BitmapData = new BitmapData(rc.width*scl, rc.height*scl, true);
-     Starling.context.drawToBitmapData(outBmp);
-
-     return outBmp;
-     }
 
 
 
-     */
+
+
 
 }
 }

@@ -68,6 +68,8 @@ public class PopupManager extends Sprite{
                 popupPicLayout();
                 break;
             default:
+                if(attr=="saved_picture")
+                    isModal=true;
                 defaultLayout();
 
                 break
@@ -76,9 +78,9 @@ public class PopupManager extends Sprite{
 
         popup.addChild(bg);
         if(msgTxt)
-        popup.addChild(msgTxt);
+            popup.addChild(msgTxt);
         if(btn)
-        popup.addChild(btn);
+            popup.addChild(btn);
 
 
 
@@ -89,21 +91,37 @@ public class PopupManager extends Sprite{
     }
     private function defaultLayout():void{
         var stageW:Number=Starling.current.stage.stageWidth;
-        bg = new Quad(stageW, 60, 0x000000 );
-        if(attr=="memory"){
-            bg=new Quad( stageW, 60, 0xEF1F22 );
+        var stageH:Number=Starling.current.stage.stageHeight;
+        var _color:uint=0;
+        switch(attr){
+            case "memory":
+                _color= 0xEF1F22;
+                break;
+            case "saved_picture":
+                _color=0x00CC66;
+                break;
+            default:
+                _color= 0x000000;
+                break
         }
+        bg=new Quad( stageW, 60, _color );
 
         msgTxt=new TextField(stageW,60,msg);
         msgTxt.format.setTo(font,20,0xFFFFFF);
         msgTxt.autoScale=true;
         btn=new Button();
-        btn.setSize(stageW, 60);
+        if(attr=="saved_picture"){
+            btn.setSize(stageW, stageH);
+            msgTxt.y=bg.y=stageH-bg.height-3;
+        }else{
+            btn.setSize(stageW, 60);
+            popup.y=stageH-bg.height-3;
+        }
+
+
         btn.addEventListener(Event.TRIGGERED, doTryAgainHandler);
 
 
-        //popup.x=Starling.current.stage.stageWidth-bg.width-5;
-        popup.y=Starling.current.stage.stageHeight-bg.height-3;
     }
     private function bonusLayout():void{
 

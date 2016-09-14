@@ -500,11 +500,12 @@ public class MenuScene extends Scenes
         var hover:Touch= e.getTouch(target,TouchPhase.HOVER);
         if(hover){
 
+            if(fwTxt)
             fwTxt.alpha=1;
 
         }else{
+            if(fwTxt)
             fwTxt.alpha=0;
-
         }
 
         if(began){

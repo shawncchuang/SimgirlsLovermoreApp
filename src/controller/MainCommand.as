@@ -1,5 +1,6 @@
 package controller {
 
+import com.adobe.images.JPGEncoder;
 import com.greensock.TweenLite;
 import com.greensock.TweenMax;
 import com.greensock.events.LoaderEvent;
@@ -12,6 +13,7 @@ import data.StoryDAO;
 import feathers.utils.display.stageToStarling;
 
 import flash.display.Bitmap;
+import flash.display.BitmapData;
 import flash.display.MovieClip;
 
 import flash.desktop.NativeApplication;
@@ -19,6 +21,9 @@ import flash.display.Stage;
 import flash.events.ContextMenuEvent;
 import flash.events.Event;
 import flash.events.MouseEvent;
+import flash.filesystem.File;
+import flash.filesystem.FileMode;
+import flash.filesystem.FileStream;
 import flash.geom.Point;
 import flash.geom.Rectangle;
 import flash.media.SoundChannel;
@@ -37,6 +42,7 @@ import events.GameEvent;
 import events.SceneEvent;
 import events.TopViewEvent;
 
+import flash.utils.ByteArray;
 
 
 import model.BattleData;
@@ -47,6 +53,7 @@ import starling.animation.DelayedCall;
 import starling.animation.Transitions;
 import starling.animation.Tween;
 import starling.core.Starling;
+import starling.display.DisplayObject;
 import starling.display.Image;
 import starling.display.MovieClip;
 import starling.display.Sprite;
@@ -3496,6 +3503,41 @@ public class MainCommand implements MainInterface {
     private function onIndicesError(error:String,httpStatus:int):void{
         DebugTrace.msg("Maincommand.onIndicesError: " + error+" \nhttpStatus: "+httpStatus);
     }
+
+    public function downloadImagFile(image:starling.display.Sprite):void{
+
+        var w:Number=Starling.current.stage.stageWidth;
+        var h:Number= Starling.current.stage.stageHeight;
+
+        var stageBMD:BitmapData = new BitmapData(w,h,false);
+        Starling.current.stage.drawToBitmapData(stageBMD);
+//        DebugTrace.msg("MainCommand.downloadImagFile image{"+image.width+","+image.height+"}");
+        var imgW:Number=Math.floor(image.width);
+        var imgH:Number=430;
+        var imgBMD:BitmapData=new BitmapData(imgW,imgH);
+        imgBMD.copyPixels(stageBMD,new flash.geom.Rectangle(image.x,image.y,imgW,imgH),new Point(0,0));
+
+
+        var jpgEncoder:JPGEncoder = new JPGEncoder( 90 );
+        var byteArray:ByteArray = jpgEncoder.encode( imgBMD );
+
+        var timeStamp:String=new Date().toLocaleString();
+
+        var filename:String = "lovemore_"+timeStamp+".jpg";
+
+        var file:File = File.desktopDirectory.resolvePath("Lovemore Pictures/"+filename);
+
+        var wr:File = new File(file.nativePath);
+
+        var stream:FileStream = new FileStream();
+
+        stream.open( wr , FileMode.WRITE);
+
+        stream.writeBytes ( byteArray, 0, byteArray.length );
+
+        stream.close();
+    }
+
 
 
 }

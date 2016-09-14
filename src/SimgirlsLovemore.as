@@ -105,8 +105,8 @@ public class SimgirlsLovemore extends MovieClip
             embedAsCFF="false")]
     public static const SimMyriadPro:String;
 
-    private var manager:Boolean=true;
-    public static var preview:Boolean=true;
+    private var manager:Boolean=false;
+    public static var preview:Boolean=false;
     public static var previewStory:Boolean=false;
 
     public static var verifyKey:String;

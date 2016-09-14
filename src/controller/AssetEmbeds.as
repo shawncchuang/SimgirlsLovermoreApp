@@ -642,6 +642,9 @@ public class AssetEmbeds
     [Embed(source="../../media/textures/icons/icon_trash_full.png")]
     public static const IconTrashFull:Class;
 
+    [Embed(source="../../media/textures/icons/icon_download.png")]
+    public static const IconDownload:Class;
+
     [Embed(source="../../media/textures/icons/buy_button_de_skin.png")]
     public static const BuyButtonDe_Skin:Class;
 
