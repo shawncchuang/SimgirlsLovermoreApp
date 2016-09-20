@@ -707,6 +707,14 @@ public class AssetEmbeds
     [Embed(source="../../media/textures/icons/icon_changed.png")]
     public static const IconChanged:Class;
 
+    [Embed(source="../../media/textures/icons/icon_blackspears.png")]
+    public static const IconBlackSpears:Class;
+
+    [Embed(source="../../media/textures/icons/icon_share_de.png")]
+    public static const IconShareDe:Class;
+
+    [Embed(source="../../media/textures/icons/icon_share_up.png")]
+    public static const IconShareUp:Class;
 
     /*------------------icons-------------------------------------------------*/
 

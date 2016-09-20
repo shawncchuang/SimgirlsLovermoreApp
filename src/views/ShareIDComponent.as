@@ -140,7 +140,7 @@ public class ShareIDComponent extends Sprite{
         if(began){
 
             var loaderReq:LoaderRequest=new LoaderRequest();
-            var url:String="http://blackspears.com/referral-program.html";
+            var url:String="http://www.blackspears.com/how-to-make-usd.html";
             loaderReq.navigateToURLHandler(url);
         }
     }

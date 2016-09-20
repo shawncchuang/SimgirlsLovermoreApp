@@ -11,8 +11,20 @@ import controller.SceneInterface;
 import events.SceneEvent;
 
 import feathers.controls.Button;
+import feathers.controls.List;
+import feathers.controls.ScreenNavigator;
+import feathers.controls.ScreenNavigatorItem;
+import feathers.controls.renderers.DefaultListItemRenderer;
+import feathers.controls.renderers.IListItemRenderer;
 import feathers.controls.text.TextFieldTextRenderer;
 import feathers.core.ITextRenderer;
+import feathers.data.ListCollection;
+import feathers.layout.TiledRowsLayout;
+import feathers.layout.VerticalLayout;
+import feathers.motion.Cover;
+import feathers.motion.Fade;
+import feathers.motion.Slide;
+import feathers.motion.Wipe;
 
 import flash.geom.Point;
 import flash.net.URLRequest;
@@ -21,10 +33,15 @@ import flash.text.TextFormat;
 
 
 import starling.display.Image;
+import starling.display.Quad;
 
 import starling.display.Sprite;
 import starling.events.Event;
 import starling.text.TextField;
+
+import utils.DebugTrace;
+
+import utils.ViewsContainer;
 
 public class MessagingScene extends Sprite{
     private var base_sprite:Sprite;
@@ -33,6 +50,8 @@ public class MessagingScene extends Sprite{
     private var font:String="SimMyriadPro";
     private var command:MainInterface=new MainCommand();
     private var hyperlink:String="https://storage.googleapis.com/lovemore/sim73.swf";
+    private var vlayout:VerticalLayout;
+    private var navigator:ScreenNavigator;
     public function MessagingScene() {
 
 
@@ -40,8 +59,19 @@ public class MessagingScene extends Sprite{
 
         base_sprite=new Sprite();
         addChild(base_sprite);
+        ViewsContainer.currentScene=this;
 
+        this.addEventListener("MESSAGE_NAV",navigateViewHandler);
         initailizeLayoutHandler();
+
+    }
+    private function navigateViewHandler(e:Event):void{
+
+        DebugTrace.msg("MessagingScene.navigateViewHandler item_name="+ e.data.item_name);
+        var view_name:String=e.data.item_name;
+        if(view_name.indexOf("_")!=-1)
+            view_name=e.data.item_name.split("_")[0];
+        navigator.showScreen(view_name,Wipe.createWipeLeftTransition());
 
     }
     private function initailizeLayoutHandler():void{
@@ -72,22 +102,7 @@ public class MessagingScene extends Sprite{
 
         var panelBg:Image=new Image(Assets.getTexture("ContactsPanelBg"));
         massaging.addChild(panelBg);
-        /*
-        var str:String="Bonus gift! \n Download Simgirls 7.0 here:";
-        var message:TextField=new TextField(panelBg.width,80,str);
-        message.format.setTo(font,20);
-        message.y=10;
 
-
-        var btn:Button=new Button();
-        btn.useHandCursor=true;
-        btn.label="Download";
-        btn.setSize(panelBg.width,30);
-        btn.width=panelBg.width;
-        btn.y=message.y+message.height+5;
-        btn.labelFactory =  getItTextRender;
-        btn.addEventListener(Event.TRIGGERED, doClickDownload);
-        */
 
 
         var str1:String="My Main Mission in Shambala: \n1. Stay alive. Get prepared before the dangerous days marked on the calendar.\n" +
@@ -101,15 +116,29 @@ public class MessagingScene extends Sprite{
         message1.x=10;
         //message1.y=btn.y+btn.height+20;
         message1.y=20;
+        //massaging.addChild(message1);
 
-        //massaging.addChild(btn);
-        //massaging.addChild(message);
-        massaging.addChild(message1);
+
+        navigator=new ScreenNavigator();
+        navigator.height=panelBg.height;
+        navigator.addScreen("MassageShare",new ScreenNavigatorItem(MessagingShare));
+        navigator.addScreen("MassageShareList",new ScreenNavigatorItem(MessagingShareList));
+        massaging.addChild( navigator );
+        navigator.showScreen( "MassageShare" );
+
+
         addChild(massaging);
 
 
 
     }
+
+    private function listChangeHandle(e:Event):void{
+        var list:List = List( e.currentTarget );
+        trace( "selectedIndex:", list.selectedIndex );
+    }
+
+
     private function doClickDownload(e:Event):void{
 
         navigateToURL(new URLRequest(hyperlink));
